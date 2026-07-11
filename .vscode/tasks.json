@@ -1,0 +1,41 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Android: assemble debug",
+			"type": "shell",
+			"command": "./gradlew",
+			"args": [
+				":app:assembleDebug"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Android: install debug",
+			"type": "shell",
+			"command": "./gradlew",
+			"args": [
+				":app:installDebug"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "Android: launch Cinerific",
+			"type": "shell",
+			"command": "adb",
+			"args": [
+				"shell",
+				"am",
+				"start",
+				"-n",
+				"com.prahlin.cinerific/.MainActivity"
+			],
+			"dependsOn": "Android: install debug",
+			"problemMatcher": []
+		}
+	]
+}

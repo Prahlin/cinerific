@@ -1,0 +1,27 @@
+{
+	"servers": {
+		"figma": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"@tmegit/figma-developer-mcp",
+				"--figma-api-key=YOUR-KEY",
+				"--stdio"
+			],
+			"type": "stdio"
+		},
+		"openFigmaMcp": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"-y",
+				"open-figma-mcp@latest"
+			]
+		},
+		"figmaDesktop": {
+			"type": "http",
+			"url": "http://127.0.0.1:3845/mcp"
+		}
+	},
+	"inputs": []
+}
