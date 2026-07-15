@@ -122,8 +122,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
             return
         }
 
-        val simpleEntry = lerpBounds(Bounds(447f, -417f, 300f, 214f), base, logoEntry)
-        val eyesEntry = lerpBounds(Bounds(453f, 1037f, 300f, 214f), base, logoEntry)
+        val simpleEntry = lerpBounds(Bounds(447f, 1037f, 300f, 214f), base, logoEntry)
+        val eyesEntry = lerpBounds(Bounds(453f, -417f, 300f, 214f), base, logoEntry)
         drawFigmaBitmap(canvas, logoSimple, lerpBounds(simpleEntry, final, finalProgress), stageLeft, stageTop, stageScale, alpha)
         drawFigmaBitmap(canvas, logoEyes, lerpBounds(eyesEntry, final, finalProgress), stageLeft, stageTop, stageScale, alpha)
     }

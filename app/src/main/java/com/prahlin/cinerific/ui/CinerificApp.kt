@@ -428,12 +428,12 @@ private fun SettlingLogoLayer(
 ) {
     val baseBounds = FigmaBounds(x = 222f, y = 150f, w = 750f, h = 535f)
     val simpleEntry = lerpBounds(
-        start = FigmaBounds(x = 447f, y = -417f, w = 300f, h = 214f),
+        start = FigmaBounds(x = 447f, y = 1037f, w = 300f, h = 214f),
         end = baseBounds,
         amount = entryProgress
     )
     val eyesEntry = lerpBounds(
-        start = FigmaBounds(x = 453f, y = 1037f, w = 300f, h = 214f),
+        start = FigmaBounds(x = 453f, y = -417f, w = 300f, h = 214f),
         end = baseBounds,
         amount = entryProgress
     )
