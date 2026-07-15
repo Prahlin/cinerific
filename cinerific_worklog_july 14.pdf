@@ -1,0 +1,298 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+3 0 obj
+<< /Length 7933 >>
+stream
+BT
+/F2 13.80 Tf 1 0 0 1 50.00 744.00 Tm (Cinerific Android App Work Log - July 14, 2026) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 733.35 Tm (Compiled summary for Tuesday, July 14, 2026 - focus: turning the imported Cinerific Figma artwork into a) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 722.70 Tm (continuous Android boot/intro animation, restoring visible assets in Android Studio and the emulator,) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 712.05 Tm (replacing stopped onboarding-frame behavior with time-based motion, adding avatar/name artwork, removing) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 701.40 Tm (the gray final background, improving splash/startup styling, profiling animation stutter, and correcting) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 690.75 Tm (the final logo/eyes slide-in direction against the Figma prototype intent.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 680.10 Tm (Generated in continuity with the established Alla Vostra, Cinerific, and Prahlin Portfolio daily worklog) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 669.45 Tm (cadence: compact opening summary, source-material section, baseline section, goal list, work-completed) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 658.80 Tm (sections, validation section, files-touched list, follow-up context, and output-artifact close.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 648.15 Tm (This artifact intentionally covers Cinerific work performed and committed on July 14, 2026, plus the) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 637.50 Tm (immediately adjacent Codex/Figma/MCP discussion needed to explain the implementation state. Alla Vostra) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 626.85 Tm (and Portfolio material was used only as naming, structure, length, and style reference.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 613.70 Tm (Source Materials Reviewed) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 603.05 Tm (- Studied the local Alla Vostra root-level worklog PDF corpus in /Users/prahlin/gh/alla_vostra,) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 592.40 Tm (  including mature July artifacts such as alla_vostra_worklog_july9.pdf and) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 581.75 Tm (  alla_vostra_worklog_july11.pdf, to preserve the established title cadence, daily-log section order,) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 571.10 Tm (  compact technical bullet style, validation language, and output-artifact close.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 560.45 Tm (- Reviewed the existing Cinerific baseline artifact, /Users/prahlin/gh/cinerific/cinerific_worklog_july) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 549.80 Tm (  12.pdf, as the closest project-specific template. That July 12 log established the Cinerific filename) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 539.15 Tm (  convention, Figma-to-Android framing, MCP/plugin source-material language, and four-page root-level) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 528.50 Tm (  PDF shape.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 517.85 Tm (- Reviewed /Users/prahlin/gh/portfolio/portfolio_worklog_july11.pdf to compare how another Prahlin) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 507.20 Tm (  project adapted the Alla Vostra convention while keeping project-specific scope, commits, deployment) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 496.55 Tm (  facts, and follow-up context separate from unrelated work.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 485.90 Tm (- Reviewed the active Cinerific repository at /Users/prahlin/gh/cinerific, current branch main tracking) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 475.25 Tm (  origin/main, current clean Git state, and July 14 Git history.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 464.60 Tm (- Reviewed the three July 14 Cinerific commits: ecee9e9 for imported Figma artwork and the first) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 453.95 Tm (  Cinerific worklog, 121d253 for the native Figma intro animation implementation, and cde7f12 for the) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 443.30 Tm (  logo/eyes opposite-direction slide correction.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 432.65 Tm (- Reviewed app/src/main/java/com/prahlin/cinerific/MainActivity.kt,) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 422.00 Tm (  app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt,) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 411.35 Tm (  app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt, theme resources, splash resources,) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 400.70 Tm (  drawable-nodpi assets, and screenshots/intro.png plus screenshots/intro.jpg.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 390.05 Tm (- Reviewed the recovered Cinerific Figma/MCP chatflow at) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 379.40 Tm (  /Users/prahlin/Desktop/cinerific_figma_mcp_chatflow.md for file key qbpfngwBirp0WoOHSqw1TN, Intro &) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 368.75 Tm (  Sign-in node 485:7118, cached Home & Default section 485:7119, and the MCP quota context that) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 358.10 Tm (  affected later design extraction.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 347.45 Tm (- Used git log, git status, git diff/stat history, pdfinfo, pdftotext, file/resource inspection, Gradle) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 336.80 Tm (  build output, adb/emulator screenshot checks from the session, and Android gfxinfo profiling notes.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 326.15 Tm (  No external PDF package was installed for this worklog.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 313.00 Tm (Baseline Status Before July 14 Work) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 302.35 Tm (- Cinerific already had a native Android/Kotlin/Compose scaffold and, from the July 12 pass, imported) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 291.70 Tm (  Cinerific logo and promotional background assets wired into the intro/sign-in Compose screens.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 281.05 Tm (- The user still could not see a faithful animated Figma experience in Android Studio because the app) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 270.40 Tm (  was rendering a partial code implementation, not a live Figma projection. Figma images, buttons,) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 259.75 Tm (  boxes, fonts, and motion still had to be explicitly imported or translated into Android code.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 249.10 Tm (- The intro flow still behaved too much like discrete frames. The user specifically needed the) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 238.45 Tm (  animation to continue without manual stops until the main logo settled and the four avatar icons) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 227.80 Tm (  appeared below it.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 217.15 Tm (- Early runtime behavior included a stuck frame state after pressing Run, visible mismatch between) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 206.50 Tm (  Figma placement and Android placement, missing avatar/name assets, a gray final-state background, and) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 195.85 Tm (  motion that did not yet match the black-to-red prototype transition.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 185.20 Tm (- The app needed a better startup path: Android default splash behavior and gray system surfaces were) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 174.55 Tm (  leaking into the perceived intro experience before the Cinerific animation took over.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 163.90 Tm (- The active Figma/MCP access path was fragile. The Figma connector existed and had previously provided) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 153.25 Tm (  useful design context, but the limited Starter-plan MCP quota later blocked fresh live extraction for) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 142.60 Tm (  motion and Home/Default work.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 129.45 Tm (Goals for July 14) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 118.80 Tm (- Make the Cinerific intro animation continuous instead of stopping at frame-style checkpoints.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 108.15 Tm (- Preserve the Figma-derived black-to-burgundy-to-red-gradient progression rather than falling back to) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 97.50 Tm (  a gray final background.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 86.85 Tm (- Animate the main Cinerific logo and eyes as separate layers that enter from opposite vertical) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 76.20 Tm (  directions, bounce briefly, and settle before the avatar row is fully established.) Tj
+/F1 7.80 Tf 1 0 0 1 195.00 32.00 Tm (Cinerific Work Log - July 14, 2026 Page 1) Tj
+ET
+endstream
+endobj
+4 0 obj
+<< /Length 7659 >>
+stream
+BT
+/F1 8.65 Tf 1 0 0 1 50.00 744.00 Tm (- Import and display the four avatar icons and their name labels: Steve, Martin, Janny, and Guest.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 733.35 Tm (- Move the runtime intro away from expensive per-frame Compose layout work where needed, while keeping) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 722.70 Tm (  the visual output aligned with the imported Figma artwork.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 712.05 Tm (- Build, install, relaunch, screenshot-check, and profile the app often enough to distinguish visual) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 701.40 Tm (  correctness problems from emulator/rendering performance problems.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 690.75 Tm (- Keep commit messages and worklog naming aligned with the user preference for concise, past-tense) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 680.10 Tm (  descriptions and pre-existing Prahlin project conventions.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 666.95 Tm (Work Completed - Runtime Orientation and Figma Context) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 656.30 Tm (- Reopened and ran the Cinerific Android app through Android Studio/emulator workflows so the user) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 645.65 Tm (  could inspect the actual compiled Android surface rather than expecting Android Studio to mirror the) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 635.00 Tm (  Figma file automatically.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 624.35 Tm (- Clarified that Android Studio only shows assets and behavior present in the Android project; the) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 613.70 Tm (  Figma file, MCP channel, and Android app remain separate until assets and motion are imported or) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 603.05 Tm (  implemented.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 592.40 Tm (- Reused the recovered Figma context from the July 12 work: file key qbpfngwBirp0WoOHSqw1TN, Intro &) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 581.75 Tm (  Sign-in node 485:7118, and frame structure around the four intro/sign-in screens.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 571.10 Tm (- Later checked the cached chatflow for the Home & Default section and confirmed cached metadata) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 560.45 Tm (  includes section 485:7119, while noting that the detailed child-frame design context could not be) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 549.80 Tm (  freshly pulled once the Figma MCP Starter-plan quota was exhausted.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 539.15 Tm (- Explained the MCP call limit and upgrade implications after Figma returned the Starter-plan) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 528.50 Tm (  rate-limit response, preserving the reason Home/Default scaffolding could only proceed from cached) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 517.85 Tm (  metadata or screenshots until quota resets or the seat is upgraded.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 504.70 Tm (Work Completed - Assets, Splash, and Startup Surface) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 494.05 Tm (- Added Figma-derived avatar and name PNG resources under app/src/main/res/drawable-nodpi:) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 483.40 Tm (  steve_avatar.png, martin_avatar.png, janny_avatar.png, guest_avatar.png, steve_name.png,) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 472.75 Tm (  martin_name.png, janny_name.png, and guest_name.png.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 462.10 Tm (- Added app/src/main/res/drawable/splash_transparent.xml and updated day, night, and Android 12+ theme) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 451.45 Tm (  resources so the startup surface is black/transparent instead of showing an Android default gray slab) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 440.80 Tm (  before the Cinerific intro.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 430.15 Tm (- Updated MainActivity.kt to capture bootStartMillis at activity creation and pass it into) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 419.50 Tm (  CinerificApp, giving the animation a stable wall-clock reference tied to app startup.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 408.85 Tm (- Preserved edge-to-edge transparent system bar styling so the intro reads as a full-screen Cinerific) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 398.20 Tm (  experience inside the tablet emulator.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 387.55 Tm (- Captured and committed screenshots/intro.png and screenshots/intro.jpg as visual evidence of the) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 376.90 Tm (  updated running app state after the major July 14 intro pass.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 363.75 Tm (Work Completed - Native Intro Animation Implementation) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 353.10 Tm (- Added CinerificIntroView.kt as a native Android View renderer for the boot intro, hosted from Compose) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 342.45 Tm (  through AndroidView in CinerificApp.kt.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 331.80 Tm (- Drew the whole intro on a time-based animation clock using SystemClock.uptimeMillis and) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 321.15 Tm (  postInvalidateOnAnimation, so the sequence no longer depends on manual frame buttons or stopped) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 310.50 Tm (  carousel state.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 299.85 Tm (- Implemented the background transition from black to burgundy and then into the final black/red) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 289.20 Tm (  vertical gradient using the Figma-derived frame colors and gradient stops.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 278.55 Tm (- Implemented separate logo-simple and logo-eyes layers with a bouncy easing segment, a final settle) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 267.90 Tm (  segment, and a combined settled-logo bitmap path to reduce later duplicate draw work.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 257.25 Tm (- Added circular avatar presentation and name-label reveal for the final state, placing Steve, Martin,) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 246.60 Tm (  Janny, and Guest below the settled main logo in the 1194 by 834 Figma coordinate system.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 235.95 Tm (- Pre-masked avatar bitmaps and pre-combined the final logo layers so the renderer avoids repeated) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 225.30 Tm (  per-frame clip paths and duplicate settled-logo composition work.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 214.65 Tm (- Left older Compose Figma-intro helper code in CinerificApp.kt as a fallback/reference surface while) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 204.00 Tm (  routing the live app through CinerificIntroView.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 190.85 Tm (Work Completed - Visual Correction and Motion Refinement) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 180.20 Tm (- Fixed the intro so it no longer stops until the logo has settled into place and the four avatar icons) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 169.55 Tm (  are visible underneath.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 158.90 Tm (- Removed the gray background from the intro final state and replaced it with the black/red gradient) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 148.25 Tm (  seen in the Figma prototype direction.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 137.60 Tm (- Adjusted logo placement, avatar spacing, and name-label placement through repeated emulator) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 126.95 Tm (  screenshot checks until the final composition read as the Cinerific intro rather than a generic) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 116.30 Tm (  Android placeholder.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 105.65 Tm (- Investigated a view-group/layer-based optimization idea, discovered it produced a wrong visual state) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 95.00 Tm (  with a blown-up avatar/background layer, and backed it out rather than preserving a faster-looking) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 84.35 Tm (  but visually incorrect renderer.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 73.70 Tm (- Corrected the final logo/eyes entry direction in commit cde7f12 so the main Cinerific text/body rises) Tj
+/F1 7.80 Tf 1 0 0 1 195.00 32.00 Tm (Cinerific Work Log - July 14, 2026 Page 2) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Length 7604 >>
+stream
+BT
+/F1 8.65 Tf 1 0 0 1 50.00 744.00 Tm (  from below while the eyes drop in from above, matching the user callout that the two layers should) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 733.35 Tm (  enter from opposite vertical directions before settling.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 722.70 Tm (- Kept the active renderer and the dormant Compose settling-layer fallback directionally consistent for) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 712.05 Tm (  the final slide-in correction.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 698.90 Tm (Work Completed - Performance Diagnostics) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 688.25 Tm (- Used Android gfxinfo/framestats to separate subjective animation stutter from measured renderer) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 677.60 Tm (  behavior. Early Compose/layout-heavy versions showed severe jank, with median frame times around 250) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 666.95 Tm (  ms in the emulator.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 656.30 Tm (- Tried intermediate optimizations through Compose graphics transforms and Compose Canvas before moving) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 645.65 Tm (  the live intro into a native View renderer to reduce per-frame recomposition and layout work.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 635.00 Tm (- Confirmed the native renderer improved measured frame pacing but did not make the emulator smooth:) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 624.35 Tm (  the corrected renderer later reported a median around 133 ms, still far above the roughly 16 ms) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 613.70 Tm (  needed for 60 fps.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 603.05 Tm (- Identified the remaining bottleneck as Android/Skia OpenGL draw-command submission and large) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 592.40 Tm (  transparent PNG scaling/blending in the emulator, not simply Kotlin animation timing.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 581.75 Tm (- Explained that further smoothness work should focus on asset-side optimization, especially) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 571.10 Tm (  exporting/cropping smaller logo PNGs closer to their displayed bounds and validating on a physical) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 560.45 Tm (  Android device or better emulator graphics backend.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 549.80 Tm (- Avoided overfitting the code to a broken optimization when visual validation showed the view-group) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 539.15 Tm (  approach distorted the final composition.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 526.00 Tm (Work Completed - Commits and User-Facing Guidance) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 515.35 Tm (- Supplied commit-message wording for the Figma-to-code intro work and revised it into past tense at) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 504.70 Tm (  the user request.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 494.05 Tm (- Recorded and pushed/normalized the July 14 work into Cinerific Git history across three commits:) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 483.40 Tm (  ecee9e9, 121d253, and cde7f12.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 472.75 Tm (- Guided the user through Android Studio run/restart expectations, including why the green Run action) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 462.10 Tm (  restarts the app but does not imply that Figma prototype motion automatically exists in Android.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 451.45 Tm (- Explained why MCP calls were consumed, why the Starter-plan quota was too small for broad) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 440.80 Tm (  design-to-code extraction, and why a broader design-map call plus targeted frame pulls would have) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 430.15 Tm (  been a better quota strategy.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 419.50 Tm (- Confirmed from cached metadata that Home & Default exists as section 485:7119, but did not claim) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 408.85 Tm (  pixel-accurate Home scaffolding access while the live Figma connector remained rate-limited.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 395.70 Tm (Validation and Checks Performed) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 385.05 Tm (- Ran ./gradlew :app:assembleDebug --no-daemon after the July 14 source state was reviewed for this) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 374.40 Tm (  worklog; the build completed successfully.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 363.75 Tm (- Built and installed debug app iterations during the implementation session, then relaunched) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 353.10 Tm (  com.prahlin.cinerific/.MainActivity on the Cinerific_Standard_Tablet emulator for visual checks.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 342.45 Tm (- Captured mid-entry and final-state emulator screenshots during the logo-direction correction; the) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 331.80 Tm (  mid-entry capture showed the main logo body rising from below, and the final capture showed the logo) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 321.15 Tm (  and four avatars settled correctly.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 310.50 Tm (- Used adb shell dumpsys gfxinfo com.prahlin.cinerific framestats to profile animation stutter and) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 299.85 Tm (  record the remaining emulator-side jank characteristics.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 289.20 Tm (- Confirmed git status --short --branch before PDF generation showed a clean main branch tracking) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 278.55 Tm (  origin/main.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 267.90 Tm (- Confirmed git log for July 14 contains the three Cinerific commits that match this worklog scope.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 257.25 Tm (- Confirmed drawable-nodpi currently contains the July 12 logo/promo resources plus the July 14) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 246.60 Tm (  avatar/name resources.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 235.95 Tm (- Confirmed the existing July 12 Cinerific worklog, the Alla Vostra worklog corpus, and the Portfolio) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 225.30 Tm (  July 11 worklog were readable with pdfinfo and pdftotext before this artifact was generated.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 212.15 Tm (Files Touched During July 14 Cinerific Work) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 201.50 Tm (- app/src/main/java/com/prahlin/cinerific/MainActivity.kt: captures bootStartMillis, applies) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 190.85 Tm (  transparent dark system bar styling, and passes the boot timestamp into the app surface.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 180.20 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt: hosts the native intro renderer through) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 169.55 Tm (  AndroidView and preserves older Compose Figma-intro/reference helpers.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 158.90 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt: implements the native time-based) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 148.25 Tm (  Cinerific intro renderer, background transition, logo/eyes motion, avatar/name reveal, bitmap) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 137.60 Tm (  precomposition, and direction correction.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 126.95 Tm (- app/src/main/res/drawable/splash_transparent.xml: defines the transparent/black startup splash) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 116.30 Tm (  drawable used to avoid a gray launch surface.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 105.65 Tm (- app/src/main/res/values/themes.xml, app/src/main/res/values-night/themes.xml, and) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 95.00 Tm (  app/src/main/res/values-v31/themes.xml: update splash/window behavior for the intro experience.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 84.35 Tm (- app/src/main/res/drawable-nodpi/steve_avatar.png, martin_avatar.png, janny_avatar.png,) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 73.70 Tm (  guest_avatar.png, steve_name.png, martin_name.png, janny_name.png, and guest_name.png: add the) Tj
+/F1 7.80 Tf 1 0 0 1 195.00 32.00 Tm (Cinerific Work Log - July 14, 2026 Page 3) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Length 3318 >>
+stream
+BT
+/F1 8.65 Tf 1 0 0 1 50.00 744.00 Tm (  final-state avatar and name artwork.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 733.35 Tm (- screenshots/intro.png and screenshots/intro.jpg: capture the updated intro visual state from the) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 722.70 Tm (  running emulator.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 712.05 Tm (- cinerific_worklog_july 14.pdf: this daily worklog artifact generated at the repository root.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 698.90 Tm (Follow-Up Context) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 688.25 Tm (- The Home & Default section should be scaffolded next either from a fresh MCP pull after the Figma) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 677.60 Tm (  quota resets/upgrades, from a specific node screenshot/export supplied by the user, or from a) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 666.95 Tm (  deliberately approximate Android scaffold based on cached section knowledge.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 656.30 Tm (- The Figma MCP quota should be budgeted as a scarce resource: first map sections/screens, then pull) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 645.65 Tm (  only the exact frames/components needed for the next implementation pass.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 635.00 Tm (- The intro renderer still depends on large transparent PNG assets. Cropped or size-specific exports) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 624.35 Tm (  would likely improve animation smoothness more than additional Kotlin timing tweaks.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 613.70 Tm (- The older unused Compose intro helper code in CinerificApp.kt can be trimmed later once the native) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 603.05 Tm (  renderer is accepted, reducing maintenance confusion and stale direction/timing risk.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 592.40 Tm (- A physical Android device check remains useful because the tablet emulator reports severe Skia/OpenGL) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 581.75 Tm (  jank even after meaningful app-side optimizations.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 571.10 Tm (- Future Figma motion work should use authoritative motion context when available, but the current) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 560.45 Tm (  Figma MCP plan limit blocked fresh motion extraction during the later July 14 pass.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 547.30 Tm (Output Artifact) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 536.65 Tm (- Filename: cinerific_worklog_july 14.pdf) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 526.00 Tm (- Created at the repository root in /Users/prahlin/gh/cinerific.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 515.35 Tm (- Follows the Cinerific filename convention established by cinerific_worklog_july 12.pdf, including the) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 504.70 Tm (  space before the day number.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 494.05 Tm (- Follows the established Alla Vostra/Prahlin daily worklog structure while keeping the body content) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 483.40 Tm (  specific to Cinerific work.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 472.75 Tm (- No external PDF dependency was installed; this artifact was generated with a small standard-library) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 462.10 Tm (  PDF writer in the same plain-text-readable spirit as the prior Cinerific worklog.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 451.45 Tm (- Created this daily worklog PDF: cinerific_worklog_july 14.pdf.) Tj
+/F1 7.80 Tf 1 0 0 1 195.00 32.00 Tm (Cinerific Work Log - July 14, 2026 Page 4) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 3 0 R >>
+endobj
+8 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 4 0 R >>
+endobj
+9 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 5 0 R >>
+endobj
+10 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 6 0 R >>
+endobj
+11 0 obj
+<< /Type /Pages /Count 4 /Kids [ 7 0 R 8 0 R 9 0 R 10 0 R ] >>
+endobj
+12 0 obj
+<< /Type /Catalog /Pages 11 0 R >>
+endobj
+13 0 obj
+<< /Title (Cinerific Android App Work Log - July 14, 2026) /Subject (Cinerific Android app development worklog) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) >>
+endobj
+xref
+0 14
+0000000000 65535 f 
+0000000009 00000 n 
+0000000079 00000 n 
+0000000154 00000 n 
+0000008139 00000 n 
+0000015850 00000 n 
+0000023506 00000 n 
+0000026876 00000 n 
+0000027013 00000 n 
+0000027150 00000 n 
+0000027287 00000 n 
+0000027425 00000 n 
+0000027504 00000 n 
+0000027555 00000 n 
+trailer
+<< /Size 14 /Root 12 0 R /Info 13 0 R >>
+startxref
+27799
+%%EOF
