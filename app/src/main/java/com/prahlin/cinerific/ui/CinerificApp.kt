@@ -1,5 +1,6 @@
 package com.prahlin.cinerific.ui
 
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -7,6 +8,7 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -38,9 +40,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.prahlin.cinerific.R
 import kotlin.math.min
 
 private const val FIGMA_FRAME_WIDTH = 1194f
@@ -140,8 +144,16 @@ private fun IntroFrame2FromFigma() {
 private fun IntroFrame3FromFigma() {
     // Node 476:6937 with PROMO background1 2 (793:7049) and Logo Slide 2 (478:6970).
     FigmaStage(background = ColorFrame3Background) { scale ->
-        PromoBackgroundLayer(scale = scale, darkOverlay = 0f)
-        LogoSlide2Layer(scale = scale, topY = -417f)
+        PromoBackgroundLayer(
+            scale = scale,
+            darkOverlay = 0f,
+            backgroundResId = R.drawable.promo_background
+        )
+        LogoSlide2Layer(
+            scale = scale,
+            logoResId = R.drawable.logo_simple_large,
+            eyesResId = R.drawable.logo_eyes_large
+        )
     }
 }
 
@@ -159,8 +171,16 @@ private fun SignInFrameFromFigma() {
     )
 
     FigmaStage(background = ColorFrame4Background) { scale ->
-        PromoBackgroundLayer(scale = scale, darkOverlay = 0.5f)
-        LogoSlide2Layer(scale = scale, topY = 0f)
+        PromoBackgroundLayer(
+            scale = scale,
+            darkOverlay = 0.5f,
+            backgroundResId = R.drawable.promo_background_signin
+        )
+        LogoSlide2Layer(
+            scale = scale,
+            logoResId = R.drawable.logo_simple_signin,
+            eyesResId = R.drawable.logo_eyes_signin
+        )
 
         // Node 480:7611 (Ellipse 43) x:894 y:266 size:200x200.
         Box(
@@ -216,68 +236,85 @@ private fun LogoSlide1Layer(scale: Float, yOffset: Float) {
             .requiredSize(figma(1194f, scale), figma(1668f, scale))
     ) {
         // Node I478:6917;478:6923 logo simple 1 at x:447 y:0 size:300x214.
-        FigmaImageBlock(
+        FigmaAssetImage(
             x = 447f,
             y = 0f,
             w = 300f,
             h = 214f,
             scale = scale,
-            colors = listOf(Color(0xFFEBD07F), Color(0xFF8A5B10))
+            resId = R.drawable.logo_simple_intro2
         )
 
         // Node I478:6917;478:6925 logo eyes only 2 at x:453 y:1454 size:300x214.
-        FigmaImageBlock(
+        FigmaAssetImage(
             x = 453f,
             y = 1454f,
             w = 300f,
             h = 214f,
             scale = scale,
-            colors = listOf(Color(0xFF7AC7FF), Color(0xFF2D466B))
+            resId = R.drawable.logo_eyes_intro2
         )
     }
 }
 
 @Composable
-private fun LogoSlide2Layer(scale: Float, topY: Float) {
+private fun LogoSlide2Layer(
+    scale: Float,
+    @DrawableRes logoResId: Int,
+    @DrawableRes eyesResId: Int
+) {
     Box(
         modifier = Modifier
-            .absoluteOffset(y = figma(topY, scale))
-            .requiredSize(figma(1194f, scale), figma(1668f, scale))
+            .requiredSize(figma(1194f, scale), figma(834f, scale))
     ) {
-        // Node I478:6970;478:6963 logo simple 1 at x:222 y:567 size:750x535.
-        FigmaImageBlock(
+        LogoDot(x = 427f, y = 516f, scale = scale, active = false)
+        LogoDot(x = 507f, y = 516f, scale = scale, active = false)
+        LogoDot(x = 587f, y = 516f, scale = scale, active = false)
+        LogoDot(x = 667f, y = 516f, scale = scale, active = true)
+
+        // Visible logo bounds from the Figma instance in the 1194x834 frame.
+        FigmaAssetImage(
             x = 222f,
-            y = 567f,
+            y = 150f,
             w = 750f,
             h = 535f,
             scale = scale,
-            colors = listOf(Color(0xFFCEC9B8), Color(0xFF5E4A2A), Color(0xFF222222))
+            resId = logoResId
         )
 
-        // Node I478:6970;478:6964 logo eyes only 2 at same bounds.
-        FigmaImageBlock(
+        // Eye layer sits on the same logo bounds.
+        FigmaAssetImage(
             x = 222f,
-            y = 567f,
+            y = 150f,
             w = 750f,
             h = 535f,
             scale = scale,
-            colors = listOf(Color.Transparent, Color(0x2282D7FF), Color.Transparent)
+            resId = eyesResId
         )
     }
 }
 
 @Composable
-private fun PromoBackgroundLayer(scale: Float, darkOverlay: Float) {
-    // Nodes 793:7049 / 793:7050 at x:0 y:0 size:1584x1584.
+private fun LogoDot(x: Float, y: Float, scale: Float, active: Boolean) {
     Box(
         modifier = Modifier
-            .absoluteOffset(x = figma(0f, scale), y = figma(0f, scale))
-            .requiredSize(figma(1584f, scale), figma(1584f, scale))
-            .background(
-                Brush.radialGradient(
-                    colors = listOf(Color(0xFF4B4B4B), Color(0xFF2A2A2A), Color(0xFF151515))
-                )
-            )
+            .absoluteOffset(x = figma(x, scale), y = figma(y, scale))
+            .requiredSize(figma(50.4f, scale), figma(50.4f, scale))
+            .clip(CircleShape)
+            .background(if (active) Color(0xFFE7E7E7) else Color(0xFF050505))
+    )
+}
+
+@Composable
+private fun PromoBackgroundLayer(scale: Float, darkOverlay: Float, @DrawableRes backgroundResId: Int) {
+    // Nodes 793:7049 / 793:7050 at x:0 y:0 size:1584x1584.
+    FigmaAssetImage(
+        x = 0f,
+        y = 0f,
+        w = 1584f,
+        h = 1584f,
+        scale = scale,
+        resId = backgroundResId
     )
 
     if (darkOverlay > 0f) {
@@ -291,20 +328,21 @@ private fun PromoBackgroundLayer(scale: Float, darkOverlay: Float) {
 }
 
 @Composable
-private fun FigmaImageBlock(
+private fun FigmaAssetImage(
     x: Float,
     y: Float,
     w: Float,
     h: Float,
     scale: Float,
-    colors: List<Color>
+    @DrawableRes resId: Int
 ) {
-    Box(
+    Image(
+        painter = painterResource(id = resId),
+        contentDescription = null,
+        contentScale = ContentScale.FillBounds,
         modifier = Modifier
             .absoluteOffset(x = figma(x, scale), y = figma(y, scale))
             .requiredSize(figma(w, scale), figma(h, scale))
-            .clip(RoundedCornerShape(figma(24f, scale)))
-            .background(Brush.linearGradient(colors = colors))
     )
 }
 
