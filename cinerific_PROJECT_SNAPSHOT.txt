@@ -1,0 +1,1961 @@
+Cinerific Android PROJECT SNAPSHOT
+Generated: Wed Jul 15 14:49:14 EDT 2026
+Project directory: /Users/prahlin/gh/cinerific
+
+IMPORTANT INSTRUCTIONS FOR CHATGPT & CODEX:
+1. Read this entire snapshot before giving code edits.
+2. Preserve all assets, spacing, alignment, fonts, images, layout, animations, and relative positioning unless specifically asked to change them.
+3. Do not remove unrelated code.
+4. Do not rewrite large sections unless requested.
+5. When giving code changes, include exact line/row numbers whenever possible.
+6. Print full scripts when requested.
+7. Treat this project structure as the source of truth.
+8. If you don't understand something, ask for clarification instead of making assumptions.
+9. Warn me, or at least caution me, if I ask for something that would break the project or cause it to not work as intended.
+
+
+============================================================
+SNAPSHOT IGNORE POLICY
+============================================================
+
+This file is rebuilt from the current Cinerific workspace every time ./read_project.sh runs.
+Ignored paths are omitted from the project tree and file dumps unless they appear inside an included text file such as .gitignore or read_project.sh.
+
+The snapshot intentionally ignores:
+- .git
+- .gradle
+- .idea
+- app/build
+- build
+- .kotlin
+- .tmp
+- .cache
+- .DS_Store
+- local.properties
+- *_PROJECT_SNAPSHOT.txt
+- *.jks
+- *.keystore
+
+Binary image and screenshot files are inventoried by path, size, and modified time only. Raw binary bytes are not printed.
+
+
+============================================================
+PROJECT FILE TREE
+============================================================
+
+/Users/prahlin/gh/cinerific
+/Users/prahlin/gh/cinerific/.github
+/Users/prahlin/gh/cinerific/.github/copilot-instructions.md
+/Users/prahlin/gh/cinerific/.gitignore
+/Users/prahlin/gh/cinerific/.vscode
+/Users/prahlin/gh/cinerific/.vscode/mcp.json
+/Users/prahlin/gh/cinerific/.vscode/tasks.json
+/Users/prahlin/gh/cinerific/README.md
+/Users/prahlin/gh/cinerific/app
+/Users/prahlin/gh/cinerific/app/build.gradle.kts
+/Users/prahlin/gh/cinerific/app/src
+/Users/prahlin/gh/cinerific/app/src/main
+/Users/prahlin/gh/cinerific/app/src/main/AndroidManifest.xml
+/Users/prahlin/gh/cinerific/app/src/main/java
+/Users/prahlin/gh/cinerific/app/src/main/java/com
+/Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin
+/Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific
+/Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/MainActivity.kt
+/Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui
+/Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
+/Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificHomeScreen.kt
+/Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
+/Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/theme
+/Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/theme/Theme.kt
+/Users/prahlin/gh/cinerific/app/src/main/res
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/guest_avatar.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/guest_name.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_action_01.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_action_02.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_action_03.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_action_04.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_action_05.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_comedy_01.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_comedy_02.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_comedy_03.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_comedy_04.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_comedy_05.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_crime_01.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_crime_02.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_crime_03.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_crime_04.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_documentary_01.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_documentary_02.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_documentary_03.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_documentary_04.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_documentary_05.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_drama_01.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_drama_02.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_drama_03.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_drama_04.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_drama_05.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_drama_06.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_hero_header.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_horror_01.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_horror_02.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_horror_03.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_horror_04.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_thriller_01.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_thriller_02.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_thriller_03.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_thriller_04.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/janny_avatar.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/janny_name.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/logo_eyes_intro2.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/logo_eyes_large.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/logo_eyes_signin.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/logo_simple_intro2.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/logo_simple_large.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/logo_simple_signin.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/martin_avatar.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/martin_name.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/promo_background.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/promo_background_signin.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/steve_avatar.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/steve_name.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable/ic_launcher_background.xml
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable/ic_launcher_foreground.xml
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable/splash_transparent.xml
+/Users/prahlin/gh/cinerific/app/src/main/res/mipmap-anydpi-v26
+/Users/prahlin/gh/cinerific/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+/Users/prahlin/gh/cinerific/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+/Users/prahlin/gh/cinerific/app/src/main/res/values
+/Users/prahlin/gh/cinerific/app/src/main/res/values-night
+/Users/prahlin/gh/cinerific/app/src/main/res/values-night/themes.xml
+/Users/prahlin/gh/cinerific/app/src/main/res/values-v31
+/Users/prahlin/gh/cinerific/app/src/main/res/values-v31/themes.xml
+/Users/prahlin/gh/cinerific/app/src/main/res/values/strings.xml
+/Users/prahlin/gh/cinerific/app/src/main/res/values/themes.xml
+/Users/prahlin/gh/cinerific/app/src/main/res/xml
+/Users/prahlin/gh/cinerific/build.gradle.kts
+/Users/prahlin/gh/cinerific/cinerific_worklog_july 12.pdf
+/Users/prahlin/gh/cinerific/cinerific_worklog_july 14.pdf
+/Users/prahlin/gh/cinerific/gradle
+/Users/prahlin/gh/cinerific/gradle.properties
+/Users/prahlin/gh/cinerific/gradle/wrapper
+/Users/prahlin/gh/cinerific/gradle/wrapper/gradle-wrapper.jar
+/Users/prahlin/gh/cinerific/gradle/wrapper/gradle-wrapper.properties
+/Users/prahlin/gh/cinerific/gradlew
+/Users/prahlin/gh/cinerific/gradlew.bat
+/Users/prahlin/gh/cinerific/read_project.sh
+/Users/prahlin/gh/cinerific/screenshots
+/Users/prahlin/gh/cinerific/screenshots/intro.jpg
+/Users/prahlin/gh/cinerific/screenshots/intro.png
+/Users/prahlin/gh/cinerific/settings.gradle.kts
+
+
+============================================================
+FILE CONTENTS — ANDROID SOURCE
+============================================================
+
+
+
+============================================================
+FILE: app/src/main/AndroidManifest.xml
+============================================================
+
+     1	<?xml version="1.0" encoding="utf-8"?>
+     2	<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+     3	
+     4	    <application
+     5	        android:allowBackup="true"
+     6	        android:icon="@mipmap/ic_launcher"
+     7	        android:label="@string/app_name"
+     8	        android:roundIcon="@mipmap/ic_launcher_round"
+     9	        android:supportsRtl="true"
+    10	        android:theme="@style/Theme.Cinerific">
+    11	        <activity
+    12	            android:name=".MainActivity"
+    13	            android:exported="true"
+    14	            android:theme="@style/Theme.Cinerific">
+    15	            <intent-filter>
+    16	                <action android:name="android.intent.action.MAIN" />
+    17	
+    18	                <category android:name="android.intent.category.LAUNCHER" />
+    19	            </intent-filter>
+    20	        </activity>
+    21	    </application>
+    22	
+    23	</manifest>
+
+
+============================================================
+FILE: app/src/main/java/com/prahlin/cinerific/MainActivity.kt
+============================================================
+
+     1	package com.prahlin.cinerific
+     2	
+     3	import android.graphics.Color
+     4	import android.os.Bundle
+     5	import android.os.SystemClock
+     6	import androidx.activity.ComponentActivity
+     7	import androidx.activity.SystemBarStyle
+     8	import androidx.activity.compose.setContent
+     9	import androidx.activity.enableEdgeToEdge
+    10	import com.prahlin.cinerific.ui.CinerificApp
+    11	import com.prahlin.cinerific.ui.theme.CinerificTheme
+    12	
+    13	class MainActivity : ComponentActivity() {
+    14	    override fun onCreate(savedInstanceState: Bundle?) {
+    15	        val bootStartMillis = SystemClock.uptimeMillis()
+    16	        enableEdgeToEdge(
+    17	            statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
+    18	            navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
+    19	        )
+    20	        super.onCreate(savedInstanceState)
+    21	        setContent {
+    22	            CinerificTheme {
+    23	                CinerificApp(bootStartMillis = bootStartMillis)
+    24	            }
+    25	        }
+    26	    }
+    27	}
+
+
+============================================================
+FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
+============================================================
+
+     1	package com.prahlin.cinerific.ui
+     2	
+     3	import android.graphics.BitmapFactory
+     4	import android.os.SystemClock
+     5	import androidx.annotation.DrawableRes
+     6	import androidx.compose.animation.core.Animatable
+     7	import androidx.compose.animation.core.FastOutSlowInEasing
+     8	import androidx.compose.animation.core.LinearEasing
+     9	import androidx.compose.animation.core.animateFloat
+    10	import androidx.compose.animation.core.infiniteRepeatable
+    11	import androidx.compose.animation.core.rememberInfiniteTransition
+    12	import androidx.compose.animation.core.tween
+    13	import androidx.compose.foundation.Canvas
+    14	import androidx.compose.foundation.Image
+    15	import androidx.compose.foundation.background
+    16	import androidx.compose.foundation.layout.Box
+    17	import androidx.compose.foundation.layout.BoxWithConstraints
+    18	import androidx.compose.foundation.layout.BoxWithConstraintsScope
+    19	import androidx.compose.foundation.layout.absoluteOffset
+    20	import androidx.compose.foundation.layout.fillMaxSize
+    21	import androidx.compose.foundation.layout.requiredSize
+    22	import androidx.compose.foundation.shape.CircleShape
+    23	import androidx.compose.runtime.LaunchedEffect
+    24	import androidx.compose.runtime.Composable
+    25	import androidx.compose.runtime.getValue
+    26	import androidx.compose.runtime.mutableFloatStateOf
+    27	import androidx.compose.runtime.mutableStateOf
+    28	import androidx.compose.runtime.remember
+    29	import androidx.compose.runtime.setValue
+    30	import androidx.compose.runtime.withFrameMillis
+    31	import androidx.compose.ui.geometry.Rect
+    32	import androidx.compose.ui.Alignment
+    33	import androidx.compose.ui.Modifier
+    34	import androidx.compose.ui.draw.clip
+    35	import androidx.compose.ui.graphics.Brush
+    36	import androidx.compose.ui.graphics.Color
+    37	import androidx.compose.ui.graphics.ImageBitmap
+    38	import androidx.compose.ui.graphics.Path
+    39	import androidx.compose.ui.graphics.TransformOrigin
+    40	import androidx.compose.ui.graphics.asImageBitmap
+    41	import androidx.compose.ui.graphics.drawscope.DrawScope
+    42	import androidx.compose.ui.graphics.drawscope.clipPath
+    43	import androidx.compose.ui.graphics.graphicsLayer
+    44	import androidx.compose.ui.graphics.lerp as lerpColor
+    45	import androidx.compose.ui.layout.ContentScale
+    46	import androidx.compose.ui.platform.LocalDensity
+    47	import androidx.compose.ui.platform.LocalContext
+    48	import androidx.compose.ui.res.painterResource
+    49	import androidx.compose.ui.unit.dp
+    50	import androidx.compose.ui.unit.IntOffset
+    51	import androidx.compose.ui.unit.IntSize
+    52	import androidx.compose.ui.viewinterop.AndroidView
+    53	import com.prahlin.cinerific.R
+    54	import kotlinx.coroutines.delay
+    55	import kotlin.math.PI
+    56	import kotlin.math.min
+    57	import kotlin.math.roundToInt
+    58	import kotlin.math.sin
+    59	
+    60	private const val FIGMA_FRAME_WIDTH = 1194f
+    61	private const val FIGMA_FRAME_HEIGHT = 834f
+    62	private const val SCREEN_RED_MS = 1000
+    63	private const val LOGO_ENTRY_START_MS = 250
+    64	private const val LOGO_ENTRY_END_MS = 1687
+    65	private const val FINAL_SETTLE_START_MS = LOGO_ENTRY_END_MS
+    66	private const val FINAL_SETTLE_END_MS = 4812
+    67	private const val BOOT_ANIMATION_MS = FINAL_SETTLE_END_MS
+    68	
+    69	private val ColorFrame1Background = Color(0xFF000000)
+    70	private val ColorFrame2Background = Color(0xFF62070D)
+    71	private val ColorFrame3Background = Color(0xFF1F1F1F)
+    72	private val ColorFrame4Background = Color(0xFF1F1F1F)
+    73	private val ColorIntroGradientTop = Color(0xFF050000)
+    74	private val ColorIntroGradientCenter = Color(0xFF62070D)
+    75	private val ColorIntroGradientBottom = Color(0xFF100102)
+    76	
+    77	@Composable
+    78	fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
+    79	    var showHome by remember(bootStartMillis) { mutableStateOf(false) }
+    80	
+    81	    LaunchedEffect(bootStartMillis) {
+    82	        showHome = false
+    83	        delay(BOOT_ANIMATION_MS.toLong())
+    84	        showHome = true
+    85	    }
+    86	
+    87	    if (showHome) {
+    88	        CinerificHomeScreen()
+    89	    } else {
+    90	        AndroidView(
+    91	            modifier = Modifier.fillMaxSize(),
+    92	            factory = { context ->
+    93	                CinerificIntroView(context).apply {
+    94	                    this.bootStartMillis = bootStartMillis
+    95	                }
+    96	            },
+    97	            update = { view ->
+    98	                view.bootStartMillis = bootStartMillis
+    99	            }
+   100	        )
+   101	    }
+   102	}
+   103	
+   104	@Composable
+   105	private fun BootIntroFromFigma(progress: Float) {
+   106	    val p = progress.coerceIn(0f, 1f)
+   107	    val images = rememberIntroImages()
+   108	    val blackToBurgundy = linearSegmentMs(p, 0, SCREEN_RED_MS)
+   109	    val burgundyToSettle = easedSegmentMs(p, 2500, 3900)
+   110	    val background = introBackgroundBrush(
+   111	        solidProgress = blackToBurgundy,
+   112	        gradientProgress = burgundyToSettle
+   113	    )
+   114	    val logoAlpha = linearSegmentMs(p, 90, LOGO_ENTRY_START_MS)
+   115	    val logoEntryProgress = bouncySegmentMs(p, LOGO_ENTRY_START_MS, LOGO_ENTRY_END_MS)
+   116	    val logoFinalProgress = easedSegmentMs(p, FINAL_SETTLE_START_MS, FINAL_SETTLE_END_MS)
+   117	    val avatarSettleAlpha = easedSegmentMs(p, 2300, FINAL_SETTLE_END_MS)
+   118	    val avatarYOffset = lerpFloat(56f, 0f, avatarSettleAlpha)
+   119	
+   120	    Canvas(modifier = Modifier.fillMaxSize()) {
+   121	        val stageScale = min(size.width / FIGMA_FRAME_WIDTH, size.height / FIGMA_FRAME_HEIGHT)
+   122	        val stageLeft = (size.width - FIGMA_FRAME_WIDTH * stageScale) / 2f
+   123	        val stageTop = (size.height - FIGMA_FRAME_HEIGHT * stageScale) / 2f
+   124	
+   125	        drawRect(brush = background, size = size)
+   126	
+   127	        if (logoAlpha > 0.01f) {
+   128	            val baseBounds = FigmaBounds(x = 222f, y = 150f, w = 750f, h = 535f)
+   129	            val simpleEntry = lerpBounds(
+   130	                start = FigmaBounds(x = 447f, y = -417f, w = 300f, h = 214f),
+   131	                end = baseBounds,
+   132	                amount = logoEntryProgress
+   133	            )
+   134	            val eyesEntry = lerpBounds(
+   135	                start = FigmaBounds(x = 453f, y = 1037f, w = 300f, h = 214f),
+   136	                end = baseBounds,
+   137	                amount = logoEntryProgress
+   138	            )
+   139	            val finalBounds = FigmaBounds(x = 297f, y = 11f, w = 600f, h = 428f)
+   140	
+   141	            drawFigmaImage(
+   142	                image = images.logoSimple,
+   143	                bounds = lerpBounds(simpleEntry, finalBounds, logoFinalProgress),
+   144	                stageLeft = stageLeft,
+   145	                stageTop = stageTop,
+   146	                stageScale = stageScale,
+   147	                alpha = logoAlpha
+   148	            )
+   149	            drawFigmaImage(
+   150	                image = images.logoEyes,
+   151	                bounds = lerpBounds(eyesEntry, finalBounds, logoFinalProgress),
+   152	                stageLeft = stageLeft,
+   153	                stageTop = stageTop,
+   154	                stageScale = stageScale,
+   155	                alpha = logoAlpha
+   156	            )
+   157	        }
+   158	
+   159	        if (avatarSettleAlpha > 0.01f) {
+   160	            val y = avatarYOffset
+   161	            drawFigmaImage(images.steveAvatar, FigmaBounds(130f, 428f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
+   162	            drawFigmaImage(images.martinAvatar, FigmaBounds(368f, 428f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
+   163	            drawFigmaImage(images.jannyAvatar, FigmaBounds(606f, 432f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
+   164	            drawFigmaImage(images.guestAvatar, FigmaBounds(844f, 428f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
+   165	
+   166	            drawFigmaImage(images.steveName, FigmaBounds(130f, 683f + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
+   167	            drawFigmaImage(images.martinName, FigmaBounds(368f, 683f + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
+   168	            drawFigmaImage(images.jannyName, FigmaBounds(606f, 683f + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
+   169	            drawFigmaImage(images.guestName, FigmaBounds(854f, 683f + y, 200f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
+   170	        }
+   171	    }
+   172	}
+   173	
+   174	@Composable
+   175	private fun IntroFrame1FromFigma() {
+   176	    // Node 474:7309 has only a pure black fill.
+   177	    FigmaStage(background = solidBrush(ColorFrame1Background)) { }
+   178	}
+   179	
+   180	@Composable
+   181	private fun IntroFrame2FromFigma() {
+   182	    // Node 474:7311 with Logo Slide 1 instance 478:6917.
+   183	    val slideYOffset = remember { Animatable(-417f) }
+   184	
+   185	    LaunchedEffect(Unit) {
+   186	        slideYOffset.snapTo(-417f)
+   187	        slideYOffset.animateTo(
+   188	            targetValue = 0f,
+   189	            animationSpec = tween(durationMillis = 1800, easing = FastOutSlowInEasing)
+   190	        )
+   191	    }
+   192	
+   193	    FigmaStage(background = solidBrush(ColorFrame2Background)) { scale ->
+   194	        LogoSlide1Layer(scale = scale, yOffset = slideYOffset.value)
+   195	    }
+   196	}
+   197	
+   198	@Composable
+   199	private fun IntroFrame3FromFigma() {
+   200	    // Node 476:6937 with PROMO background1 2 (793:7049) and Logo Slide 2 (478:6970).
+   201	    FigmaStage(background = solidBrush(ColorFrame3Background)) { scale ->
+   202	        PromoBackgroundLayer(
+   203	            scale = scale,
+   204	            darkOverlay = 0f,
+   205	            backgroundResId = R.drawable.promo_background
+   206	        )
+   207	        LogoSlide2Layer(
+   208	            scale = scale,
+   209	            logoResId = R.drawable.logo_simple_large,
+   210	            eyesResId = R.drawable.logo_eyes_large
+   211	        )
+   212	    }
+   213	}
+   214	
+   215	@Composable
+   216	private fun SignInFrameFromFigma() {
+   217	    // Node 478:6975 + Star Overlay 482:7696.
+   218	    val spinTransition = rememberInfiniteTransition(label = "spinner")
+   219	    val spin by spinTransition.animateFloat(
+   220	        initialValue = 0f,
+   221	        targetValue = 360f,
+   222	        animationSpec = infiniteRepeatable(
+   223	            animation = tween(durationMillis = 1800, easing = LinearEasing)
+   224	        ),
+   225	        label = "spinner-rot"
+   226	    )
+   227	
+   228	    FigmaStage(background = solidBrush(ColorFrame4Background)) { scale ->
+   229	        PromoBackgroundLayer(
+   230	            scale = scale,
+   231	            darkOverlay = 0.5f,
+   232	            backgroundResId = R.drawable.promo_background_signin
+   233	        )
+   234	        LogoSlide2Layer(
+   235	            scale = scale,
+   236	            logoResId = R.drawable.logo_simple_signin,
+   237	            eyesResId = R.drawable.logo_eyes_signin
+   238	        )
+   239	
+   240	        // Node 480:7611 (Ellipse 43) x:894 y:266 size:200x200.
+   241	        Box(
+   242	            modifier = Modifier
+   243	                .absoluteOffset(x = figma(894f, scale), y = figma(266f, scale))
+   244	                .requiredSize(figma(200f, scale), figma(200f, scale))
+   245	                .clip(CircleShape)
+   246	                .background(
+   247	                    Brush.radialGradient(
+   248	                        colors = listOf(Color(0xFFE8E8E8), Color(0xFF8A8A8A), Color(0xFF1D1D1D))
+   249	                    )
+   250	                )
+   251	        )
+   252	
+   253	        // Node 485:7113 loading spinner instance at x:447 y:267 size:300x300.
+   254	        Box(
+   255	            modifier = Modifier
+   256	                .absoluteOffset(x = figma(447f, scale), y = figma(267f, scale))
+   257	                .requiredSize(figma(300f, scale), figma(300f, scale))
+   258	                .graphicsLayer(rotationZ = spin)
+   259	                .clip(CircleShape)
+   260	                .background(
+   261	                    Brush.sweepGradient(
+   262	                        colors = listOf(
+   263	                            Color(0x00FFFFFF),
+   264	                            Color(0x66FFE08D),
+   265	                            Color(0xCCFFB347),
+   266	                            Color(0x00FFFFFF)
+   267	                        )
+   268	                    )
+   269	                )
+   270	        )
+   271	
+   272	        Box(
+   273	            modifier = Modifier
+   274	                .absoluteOffset(x = figma(501f, scale), y = figma(321f, scale))
+   275	                .requiredSize(figma(189f, scale), figma(189f, scale))
+   276	                .clip(CircleShape)
+   277	                .background(
+   278	                    Brush.radialGradient(
+   279	                        colors = listOf(Color(0xFFFFD978), Color(0x99FFB347), Color.Transparent)
+   280	                    )
+   281	                )
+   282	        )
+   283	    }
+   284	}
+   285	
+   286	@Composable
+   287	private fun LogoSlide1Layer(scale: Float, yOffset: Float, alpha: Float = 1f) {
+   288	    Box(
+   289	        modifier = Modifier
+   290	            .absoluteOffset(y = figma(yOffset, scale))
+   291	            .requiredSize(figma(1194f, scale), figma(1668f, scale))
+   292	            .graphicsLayer(alpha = alpha)
+   293	    ) {
+   294	        // Node I478:6917;478:6923 logo simple 1 at x:447 y:0 size:300x214.
+   295	        FigmaAssetImage(
+   296	            x = 447f,
+   297	            y = 0f,
+   298	            w = 300f,
+   299	            h = 214f,
+   300	            scale = scale,
+   301	            resId = R.drawable.logo_simple_intro2
+   302	        )
+   303	
+   304	        // Node I478:6917;478:6925 logo eyes only 2 at x:453 y:1454 size:300x214.
+   305	        FigmaAssetImage(
+   306	            x = 453f,
+   307	            y = 1454f,
+   308	            w = 300f,
+   309	            h = 214f,
+   310	            scale = scale,
+   311	            resId = R.drawable.logo_eyes_intro2
+   312	        )
+   313	    }
+   314	}
+   315	
+   316	@Composable
+   317	private fun LogoSlide2Layer(
+   318	    scale: Float,
+   319	    @DrawableRes logoResId: Int,
+   320	    @DrawableRes eyesResId: Int,
+   321	    alpha: Float = 1f
+   322	) {
+   323	    Box(
+   324	        modifier = Modifier
+   325	            .requiredSize(figma(1194f, scale), figma(834f, scale))
+   326	            .graphicsLayer(alpha = alpha)
+   327	    ) {
+   328	        LogoDot(x = 427f, y = 516f, scale = scale, active = false)
+   329	        LogoDot(x = 507f, y = 516f, scale = scale, active = false)
+   330	        LogoDot(x = 587f, y = 516f, scale = scale, active = false)
+   331	        LogoDot(x = 667f, y = 516f, scale = scale, active = true)
+   332	
+   333	        // Visible logo bounds from the Figma instance in the 1194x834 frame.
+   334	        FigmaAssetImage(
+   335	            x = 222f,
+   336	            y = 150f,
+   337	            w = 750f,
+   338	            h = 535f,
+   339	            scale = scale,
+   340	            resId = logoResId
+   341	        )
+   342	
+   343	        // Eye layer sits on the same logo bounds.
+   344	        FigmaAssetImage(
+   345	            x = 222f,
+   346	            y = 150f,
+   347	            w = 750f,
+   348	            h = 535f,
+   349	            scale = scale,
+   350	            resId = eyesResId
+   351	        )
+   352	    }
+   353	}
+   354	
+   355	private data class FigmaBounds(
+   356	    val x: Float,
+   357	    val y: Float,
+   358	    val w: Float,
+   359	    val h: Float
+   360	)
+   361	
+   362	private data class IntroImages(
+   363	    val logoSimple: ImageBitmap,
+   364	    val logoEyes: ImageBitmap,
+   365	    val steveAvatar: ImageBitmap,
+   366	    val martinAvatar: ImageBitmap,
+   367	    val jannyAvatar: ImageBitmap,
+   368	    val guestAvatar: ImageBitmap,
+   369	    val steveName: ImageBitmap,
+   370	    val martinName: ImageBitmap,
+   371	    val jannyName: ImageBitmap,
+   372	    val guestName: ImageBitmap
+   373	)
+   374	
+   375	@Composable
+   376	private fun rememberIntroImages(): IntroImages {
+   377	    val resources = LocalContext.current.resources
+   378	    return remember(resources) {
+   379	        IntroImages(
+   380	            logoSimple = BitmapFactory.decodeResource(resources, R.drawable.logo_simple_large).asImageBitmap(),
+   381	            logoEyes = BitmapFactory.decodeResource(resources, R.drawable.logo_eyes_large).asImageBitmap(),
+   382	            steveAvatar = BitmapFactory.decodeResource(resources, R.drawable.steve_avatar).asImageBitmap(),
+   383	            martinAvatar = BitmapFactory.decodeResource(resources, R.drawable.martin_avatar).asImageBitmap(),
+   384	            jannyAvatar = BitmapFactory.decodeResource(resources, R.drawable.janny_avatar).asImageBitmap(),
+   385	            guestAvatar = BitmapFactory.decodeResource(resources, R.drawable.guest_avatar).asImageBitmap(),
+   386	            steveName = BitmapFactory.decodeResource(resources, R.drawable.steve_name).asImageBitmap(),
+   387	            martinName = BitmapFactory.decodeResource(resources, R.drawable.martin_name).asImageBitmap(),
+   388	            jannyName = BitmapFactory.decodeResource(resources, R.drawable.janny_name).asImageBitmap(),
+   389	            guestName = BitmapFactory.decodeResource(resources, R.drawable.guest_name).asImageBitmap()
+   390	        )
+   391	    }
+   392	}
+   393	
+   394	private fun DrawScope.drawFigmaImage(
+   395	    image: ImageBitmap,
+   396	    bounds: FigmaBounds,
+   397	    stageLeft: Float,
+   398	    stageTop: Float,
+   399	    stageScale: Float,
+   400	    alpha: Float = 1f,
+   401	    clipCircle: Boolean = false
+   402	) {
+   403	    val left = stageLeft + bounds.x * stageScale
+   404	    val top = stageTop + bounds.y * stageScale
+   405	    val width = bounds.w * stageScale
+   406	    val height = bounds.h * stageScale
+   407	
+   408	    if (clipCircle) {
+   409	        val clip = Path().apply {
+   410	            addOval(Rect(left, top, left + width, top + height))
+   411	        }
+   412	        clipPath(clip) {
+   413	            drawImageBitmap(image, left, top, width, height, alpha)
+   414	        }
+   415	    } else {
+   416	        drawImageBitmap(image, left, top, width, height, alpha)
+   417	    }
+   418	}
+   419	
+   420	private fun DrawScope.drawImageBitmap(
+   421	    image: ImageBitmap,
+   422	    left: Float,
+   423	    top: Float,
+   424	    width: Float,
+   425	    height: Float,
+   426	    alpha: Float
+   427	) {
+   428	    drawImage(
+   429	        image = image,
+   430	        dstOffset = IntOffset(left.roundToInt(), top.roundToInt()),
+   431	        dstSize = IntSize(width.roundToInt(), height.roundToInt()),
+   432	        alpha = alpha.coerceIn(0f, 1f)
+   433	    )
+   434	}
+   435	
+   436	@Composable
+   437	private fun SettlingLogoLayer(
+   438	    scale: Float,
+   439	    entryProgress: Float,
+   440	    finalProgress: Float,
+   441	    alpha: Float
+   442	) {
+   443	    val baseBounds = FigmaBounds(x = 222f, y = 150f, w = 750f, h = 535f)
+   444	    val simpleEntry = lerpBounds(
+   445	        start = FigmaBounds(x = 447f, y = 1037f, w = 300f, h = 214f),
+   446	        end = baseBounds,
+   447	        amount = entryProgress
+   448	    )
+   449	    val eyesEntry = lerpBounds(
+   450	        start = FigmaBounds(x = 453f, y = -417f, w = 300f, h = 214f),
+   451	        end = baseBounds,
+   452	        amount = entryProgress
+   453	    )
+   454	    val finalBounds = FigmaBounds(x = 297f, y = 11f, w = 600f, h = 428f)
+   455	    val simpleBounds = lerpBounds(simpleEntry, finalBounds, finalProgress)
+   456	    val eyesBounds = lerpBounds(eyesEntry, finalBounds, finalProgress)
+   457	
+   458	    TransformedFigmaAssetImage(
+   459	        base = baseBounds,
+   460	        target = simpleBounds,
+   461	        scale = scale,
+   462	        resId = R.drawable.logo_simple_large,
+   463	        alpha = alpha
+   464	    )
+   465	    TransformedFigmaAssetImage(
+   466	        base = baseBounds,
+   467	        target = eyesBounds,
+   468	        scale = scale,
+   469	        resId = R.drawable.logo_eyes_large,
+   470	        alpha = alpha
+   471	    )
+   472	}
+   473	
+   474	@Composable
+   475	private fun AvatarSelectionLayer(scale: Float, alpha: Float, yOffset: Float) {
+   476	    val density = LocalDensity.current.density
+   477	    Box(
+   478	        modifier = Modifier
+   479	            .requiredSize(figma(1194f, scale), figma(834f, scale))
+   480	            .graphicsLayer {
+   481	                this.alpha = alpha
+   482	                translationY = yOffset * scale * density
+   483	            }
+   484	    ) {
+   485	        // Figma Logo Slide 2, Property 1=Variant2, constrained inside Sign-in Frame.
+   486	        FigmaAvatarImage(x = 130f, y = 428f, w = 220f, h = 220f, scale = scale, resId = R.drawable.steve_avatar)
+   487	        FigmaAvatarImage(x = 368f, y = 428f, w = 220f, h = 220f, scale = scale, resId = R.drawable.martin_avatar)
+   488	        FigmaAvatarImage(x = 606f, y = 432f, w = 220f, h = 220f, scale = scale, resId = R.drawable.janny_avatar)
+   489	        FigmaAvatarImage(x = 844f, y = 428f, w = 220f, h = 220f, scale = scale, resId = R.drawable.guest_avatar)
+   490	
+   491	        FigmaAssetImage(x = 130f, y = 683f, w = 220f, h = 72f, scale = scale, resId = R.drawable.steve_name)
+   492	        FigmaAssetImage(x = 368f, y = 683f, w = 220f, h = 72f, scale = scale, resId = R.drawable.martin_name)
+   493	        FigmaAssetImage(x = 606f, y = 683f, w = 220f, h = 72f, scale = scale, resId = R.drawable.janny_name)
+   494	        FigmaAssetImage(x = 854f, y = 683f, w = 200f, h = 72f, scale = scale, resId = R.drawable.guest_name)
+   495	    }
+   496	}
+   497	
+   498	@Composable
+   499	private fun FigmaAvatarImage(
+   500	    x: Float,
+   501	    y: Float,
+   502	    w: Float,
+   503	    h: Float,
+   504	    scale: Float,
+   505	    @DrawableRes resId: Int
+   506	) {
+   507	    Image(
+   508	        painter = painterResource(id = resId),
+   509	        contentDescription = null,
+   510	        contentScale = ContentScale.FillBounds,
+   511	        modifier = Modifier
+   512	            .absoluteOffset(x = figma(x, scale), y = figma(y, scale))
+   513	            .requiredSize(figma(w, scale), figma(h, scale))
+   514	            .clip(CircleShape)
+   515	    )
+   516	}
+   517	
+   518	@Composable
+   519	private fun LogoDot(x: Float, y: Float, scale: Float, active: Boolean) {
+   520	    Box(
+   521	        modifier = Modifier
+   522	            .absoluteOffset(x = figma(x, scale), y = figma(y, scale))
+   523	            .requiredSize(figma(50.4f, scale), figma(50.4f, scale))
+   524	            .clip(CircleShape)
+   525	            .background(if (active) Color(0xFFE7E7E7) else Color(0xFF050505))
+   526	    )
+   527	}
+   528	
+   529	@Composable
+   530	private fun PromoBackgroundLayer(
+   531	    scale: Float,
+   532	    darkOverlay: Float,
+   533	    @DrawableRes backgroundResId: Int,
+   534	    alpha: Float = 1f
+   535	) {
+   536	    // Nodes 793:7049 / 793:7050 at x:0 y:0 size:1584x1584.
+   537	    FigmaAssetImage(
+   538	        x = 0f,
+   539	        y = 0f,
+   540	        w = 1584f,
+   541	        h = 1584f,
+   542	        scale = scale,
+   543	        resId = backgroundResId,
+   544	        alpha = alpha
+   545	    )
+   546	
+   547	    if (darkOverlay > 0f) {
+   548	        Box(
+   549	            modifier = Modifier
+   550	                .absoluteOffset(x = figma(0f, scale), y = figma(0f, scale))
+   551	                .requiredSize(figma(1584f, scale), figma(1584f, scale))
+   552	                .graphicsLayer(alpha = alpha)
+   553	                .background(Color.Black.copy(alpha = darkOverlay))
+   554	        )
+   555	    }
+   556	}
+   557	
+   558	@Composable
+   559	private fun TransformedFigmaAssetImage(
+   560	    base: FigmaBounds,
+   561	    target: FigmaBounds,
+   562	    scale: Float,
+   563	    @DrawableRes resId: Int,
+   564	    alpha: Float = 1f
+   565	) {
+   566	    val density = LocalDensity.current.density
+   567	    Image(
+   568	        painter = painterResource(id = resId),
+   569	        contentDescription = null,
+   570	        contentScale = ContentScale.FillBounds,
+   571	        modifier = Modifier
+   572	            .absoluteOffset(x = figma(base.x, scale), y = figma(base.y, scale))
+   573	            .requiredSize(figma(base.w, scale), figma(base.h, scale))
+   574	            .graphicsLayer {
+   575	                this.alpha = alpha
+   576	                transformOrigin = TransformOrigin(0f, 0f)
+   577	                translationX = (target.x - base.x) * scale * density
+   578	                translationY = (target.y - base.y) * scale * density
+   579	                scaleX = target.w / base.w
+   580	                scaleY = target.h / base.h
+   581	            }
+   582	    )
+   583	}
+   584	
+   585	@Composable
+   586	private fun FigmaAssetImage(
+   587	    x: Float,
+   588	    y: Float,
+   589	    w: Float,
+   590	    h: Float,
+   591	    scale: Float,
+   592	    @DrawableRes resId: Int,
+   593	    alpha: Float = 1f
+   594	) {
+   595	    Image(
+   596	        painter = painterResource(id = resId),
+   597	        contentDescription = null,
+   598	        contentScale = ContentScale.FillBounds,
+   599	        modifier = Modifier
+   600	            .absoluteOffset(x = figma(x, scale), y = figma(y, scale))
+   601	            .requiredSize(figma(w, scale), figma(h, scale))
+   602	            .graphicsLayer(alpha = alpha)
+   603	    )
+   604	}
+   605	
+   606	@Composable
+   607	private fun FigmaStage(background: Brush, content: @Composable BoxWithConstraintsScope.(Float) -> Unit) {
+   608	    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+   609	        val outerMaxWidth = this.maxWidth
+   610	        val outerMaxHeight = this.maxHeight
+   611	        val scale = min(outerMaxWidth.value / FIGMA_FRAME_WIDTH, outerMaxHeight.value / FIGMA_FRAME_HEIGHT)
+   612	        val stageWidth = figma(FIGMA_FRAME_WIDTH, scale)
+   613	        val stageHeight = figma(FIGMA_FRAME_HEIGHT, scale)
+   614	
+   615	        Box(
+   616	            modifier = Modifier
+   617	                .fillMaxSize()
+   618	                .background(background)
+   619	        ) {
+   620	            BoxWithConstraints(
+   621	                modifier = Modifier
+   622	                    .align(Alignment.Center)
+   623	                    .requiredSize(stageWidth, stageHeight)
+   624	            ) {
+   625	                content(scale)
+   626	            }
+   627	        }
+   628	    }
+   629	}
+   630	
+   631	private fun figma(px: Float, scale: Float) = (px * scale).dp
+   632	
+   633	private fun introBackgroundBrush(solidProgress: Float, gradientProgress: Float): Brush {
+   634	    val solid = lerpColor(ColorFrame1Background, ColorFrame2Background, solidProgress)
+   635	    return Brush.verticalGradient(
+   636	        colors = listOf(
+   637	            lerpColor(solid, ColorIntroGradientTop, gradientProgress),
+   638	            lerpColor(solid, ColorIntroGradientCenter, gradientProgress),
+   639	            lerpColor(solid, ColorIntroGradientBottom, gradientProgress)
+   640	        )
+   641	    )
+   642	}
+   643	
+   644	private fun solidBrush(color: Color): Brush = Brush.verticalGradient(
+   645	    colors = listOf(color, color)
+   646	)
+   647	
+   648	private fun bootProgressAt(bootStartMillis: Long): Float {
+   649	    val elapsed = SystemClock.uptimeMillis() - bootStartMillis
+   650	    return (elapsed / BOOT_ANIMATION_MS.toFloat()).coerceIn(0f, 1f)
+   651	}
+   652	
+   653	private fun easedSegment(value: Float, start: Float, end: Float): Float {
+   654	    val progress = ((value - start) / (end - start)).coerceIn(0f, 1f)
+   655	    return FastOutSlowInEasing.transform(progress)
+   656	}
+   657	
+   658	private fun linearSegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
+   659	    val ms = progress.coerceIn(0f, 1f) * BOOT_ANIMATION_MS
+   660	    return ((ms - startMs) / (endMs - startMs).toFloat()).coerceIn(0f, 1f)
+   661	}
+   662	
+   663	private fun easedSegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
+   664	    return FastOutSlowInEasing.transform(linearSegmentMs(progress, startMs, endMs))
+   665	}
+   666	
+   667	private fun bouncySegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
+   668	    return bouncyEasing(linearSegmentMs(progress, startMs, endMs))
+   669	}
+   670	
+   671	private fun bouncyEasing(value: Float): Float {
+   672	    val t = value.coerceIn(0f, 1f)
+   673	    val base = FastOutSlowInEasing.transform(t)
+   674	    val bounce = sin(t * PI.toFloat() * 4.5f) * (1f - t) * 0.13f
+   675	    return base + bounce
+   676	}
+   677	
+   678	private fun lerpFloat(start: Float, end: Float, amount: Float) = start + (end - start) * amount
+   679	
+   680	private fun lerpBounds(start: FigmaBounds, end: FigmaBounds, amount: Float) = FigmaBounds(
+   681	    x = lerpFloat(start.x, end.x, amount),
+   682	    y = lerpFloat(start.y, end.y, amount),
+   683	    w = lerpFloat(start.w, end.w, amount),
+   684	    h = lerpFloat(start.h, end.h, amount)
+   685	)
+
+
+============================================================
+FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
+============================================================
+
+     1	package com.prahlin.cinerific.ui
+     2	
+     3	import android.content.Context
+     4	import android.graphics.Bitmap
+     5	import android.graphics.BitmapFactory
+     6	import android.graphics.Canvas
+     7	import android.graphics.Color
+     8	import android.graphics.LinearGradient
+     9	import android.graphics.Paint
+    10	import android.graphics.PorterDuff
+    11	import android.graphics.PorterDuffXfermode
+    12	import android.graphics.RectF
+    13	import android.graphics.Shader
+    14	import android.os.SystemClock
+    15	import android.view.View
+    16	import androidx.compose.animation.core.FastOutSlowInEasing
+    17	import com.prahlin.cinerific.R
+    18	import kotlin.math.PI
+    19	import kotlin.math.min
+    20	import kotlin.math.roundToInt
+    21	import kotlin.math.sin
+    22	
+    23	private const val FIGMA_FRAME_WIDTH = 1194f
+    24	private const val FIGMA_FRAME_HEIGHT = 834f
+    25	private const val SCREEN_RED_MS = 1000
+    26	private const val LOGO_ENTRY_START_MS = 250
+    27	private const val LOGO_ENTRY_END_MS = 1687
+    28	private const val FINAL_SETTLE_START_MS = LOGO_ENTRY_END_MS
+    29	private const val FINAL_SETTLE_END_MS = 4812
+    30	private const val BOOT_ANIMATION_MS = FINAL_SETTLE_END_MS
+    31	
+    32	private const val COLOR_FRAME_1 = 0xFF000000.toInt()
+    33	private const val COLOR_FRAME_2 = 0xFF62070D.toInt()
+    34	private const val COLOR_GRADIENT_TOP = 0xFF050000.toInt()
+    35	private const val COLOR_GRADIENT_CENTER = 0xFF62070D.toInt()
+    36	private const val COLOR_GRADIENT_BOTTOM = 0xFF100102.toInt()
+    37	
+    38	internal class CinerificIntroView(context: Context) : View(context) {
+    39	    var bootStartMillis: Long = SystemClock.uptimeMillis()
+    40	        set(value) {
+    41	            if (field == value) return
+    42	            field = value
+    43	            postInvalidateOnAnimation()
+    44	        }
+    45	
+    46	    private val bitmapOptions = BitmapFactory.Options().apply {
+    47	        inScaled = false
+    48	        inPreferredConfig = Bitmap.Config.ARGB_8888
+    49	    }
+    50	    private val logoSimple = decode(R.drawable.logo_simple_large)
+    51	    private val logoEyes = decode(R.drawable.logo_eyes_large)
+    52	    private val logoCombined = combineBitmaps(logoSimple, logoEyes)
+    53	    private val steveAvatar = circularBitmap(decode(R.drawable.steve_avatar))
+    54	    private val martinAvatar = circularBitmap(decode(R.drawable.martin_avatar))
+    55	    private val jannyAvatar = circularBitmap(decode(R.drawable.janny_avatar))
+    56	    private val guestAvatar = circularBitmap(decode(R.drawable.guest_avatar))
+    57	    private val steveName = decode(R.drawable.steve_name)
+    58	    private val martinName = decode(R.drawable.martin_name)
+    59	    private val jannyName = decode(R.drawable.janny_name)
+    60	    private val guestName = decode(R.drawable.guest_name)
+    61	
+    62	    private val imagePaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG or Paint.DITHER_FLAG)
+    63	    private val backgroundPaint = Paint()
+    64	    private val tempRect = RectF()
+    65	
+    66	    override fun onAttachedToWindow() {
+    67	        super.onAttachedToWindow()
+    68	        postInvalidateOnAnimation()
+    69	    }
+    70	
+    71	    override fun onDraw(canvas: Canvas) {
+    72	        super.onDraw(canvas)
+    73	
+    74	        val progress = bootProgressAt(bootStartMillis)
+    75	        val blackToBurgundy = linearSegmentMs(progress, 0, SCREEN_RED_MS)
+    76	        val burgundyToSettle = easedSegmentMs(progress, 2500, 3900)
+    77	        drawIntroBackground(canvas, blackToBurgundy, burgundyToSettle)
+    78	
+    79	        val stageScale = min(width / FIGMA_FRAME_WIDTH, height / FIGMA_FRAME_HEIGHT)
+    80	        val stageLeft = (width - FIGMA_FRAME_WIDTH * stageScale) / 2f
+    81	        val stageTop = (height - FIGMA_FRAME_HEIGHT * stageScale) / 2f
+    82	
+    83	        val logoAlpha = linearSegmentMs(progress, 90, LOGO_ENTRY_START_MS)
+    84	        if (logoAlpha > 0.01f) {
+    85	            drawSettlingLogo(canvas, stageLeft, stageTop, stageScale, progress, logoAlpha)
+    86	        }
+    87	
+    88	        val avatarAlpha = easedSegmentMs(progress, 2300, FINAL_SETTLE_END_MS)
+    89	        if (avatarAlpha > 0.01f) {
+    90	            val y = lerpFloat(56f, 0f, avatarAlpha)
+    91	            drawFigmaBitmap(canvas, steveAvatar, Bounds(130f, 428f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarAlpha)
+    92	            drawFigmaBitmap(canvas, martinAvatar, Bounds(368f, 428f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarAlpha)
+    93	            drawFigmaBitmap(canvas, jannyAvatar, Bounds(606f, 432f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarAlpha)
+    94	            drawFigmaBitmap(canvas, guestAvatar, Bounds(844f, 428f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarAlpha)
+    95	
+    96	            drawFigmaBitmap(canvas, steveName, Bounds(130f, 683f + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarAlpha)
+    97	            drawFigmaBitmap(canvas, martinName, Bounds(368f, 683f + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarAlpha)
+    98	            drawFigmaBitmap(canvas, jannyName, Bounds(606f, 683f + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarAlpha)
+    99	            drawFigmaBitmap(canvas, guestName, Bounds(854f, 683f + y, 200f, 72f), stageLeft, stageTop, stageScale, avatarAlpha)
+   100	        }
+   101	
+   102	        if (progress < 1f) {
+   103	            postInvalidateOnAnimation()
+   104	        }
+   105	    }
+   106	
+   107	    private fun drawSettlingLogo(
+   108	        canvas: Canvas,
+   109	        stageLeft: Float,
+   110	        stageTop: Float,
+   111	        stageScale: Float,
+   112	        progress: Float,
+   113	        alpha: Float
+   114	    ) {
+   115	        val logoEntry = bouncySegmentMs(progress, LOGO_ENTRY_START_MS, LOGO_ENTRY_END_MS)
+   116	        val finalProgress = easedSegmentMs(progress, FINAL_SETTLE_START_MS, FINAL_SETTLE_END_MS)
+   117	        val base = Bounds(222f, 150f, 750f, 535f)
+   118	        val final = Bounds(297f, 11f, 600f, 428f)
+   119	
+   120	        if (logoEntry >= 0.999f) {
+   121	            drawFigmaBitmap(canvas, logoCombined, lerpBounds(base, final, finalProgress), stageLeft, stageTop, stageScale, alpha)
+   122	            return
+   123	        }
+   124	
+   125	        val simpleEntry = lerpBounds(Bounds(447f, 1037f, 300f, 214f), base, logoEntry)
+   126	        val eyesEntry = lerpBounds(Bounds(453f, -417f, 300f, 214f), base, logoEntry)
+   127	        drawFigmaBitmap(canvas, logoSimple, lerpBounds(simpleEntry, final, finalProgress), stageLeft, stageTop, stageScale, alpha)
+   128	        drawFigmaBitmap(canvas, logoEyes, lerpBounds(eyesEntry, final, finalProgress), stageLeft, stageTop, stageScale, alpha)
+   129	    }
+   130	
+   131	    private fun drawIntroBackground(canvas: Canvas, solidProgress: Float, gradientProgress: Float) {
+   132	        if (gradientProgress <= 0.001f) {
+   133	            canvas.drawColor(lerpColor(COLOR_FRAME_1, COLOR_FRAME_2, solidProgress))
+   134	            return
+   135	        }
+   136	
+   137	        val solid = lerpColor(COLOR_FRAME_1, COLOR_FRAME_2, solidProgress)
+   138	        backgroundPaint.shader = LinearGradient(
+   139	            0f,
+   140	            0f,
+   141	            0f,
+   142	            height.toFloat(),
+   143	            intArrayOf(
+   144	                lerpColor(solid, COLOR_GRADIENT_TOP, gradientProgress),
+   145	                lerpColor(solid, COLOR_GRADIENT_CENTER, gradientProgress),
+   146	                lerpColor(solid, COLOR_GRADIENT_BOTTOM, gradientProgress)
+   147	            ),
+   148	            null,
+   149	            Shader.TileMode.CLAMP
+   150	        )
+   151	        canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), backgroundPaint)
+   152	        backgroundPaint.shader = null
+   153	    }
+   154	
+   155	    private fun drawFigmaBitmap(
+   156	        canvas: Canvas,
+   157	        bitmap: Bitmap,
+   158	        bounds: Bounds,
+   159	        stageLeft: Float,
+   160	        stageTop: Float,
+   161	        stageScale: Float,
+   162	        alpha: Float
+   163	    ) {
+   164	        tempRect.set(
+   165	            stageLeft + bounds.x * stageScale,
+   166	            stageTop + bounds.y * stageScale,
+   167	            stageLeft + (bounds.x + bounds.w) * stageScale,
+   168	            stageTop + (bounds.y + bounds.h) * stageScale
+   169	        )
+   170	        imagePaint.alpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
+   171	        canvas.drawBitmap(bitmap, null, tempRect, imagePaint)
+   172	        imagePaint.alpha = 255
+   173	    }
+   174	
+   175	    private fun decode(resId: Int): Bitmap {
+   176	        return BitmapFactory.decodeResource(resources, resId, bitmapOptions)
+   177	    }
+   178	}
+   179	
+   180	private data class Bounds(
+   181	    val x: Float,
+   182	    val y: Float,
+   183	    val w: Float,
+   184	    val h: Float
+   185	)
+   186	
+   187	private fun bootProgressAt(bootStartMillis: Long): Float {
+   188	    val elapsed = SystemClock.uptimeMillis() - bootStartMillis
+   189	    return (elapsed / BOOT_ANIMATION_MS.toFloat()).coerceIn(0f, 1f)
+   190	}
+   191	
+   192	private fun linearSegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
+   193	    val ms = progress.coerceIn(0f, 1f) * BOOT_ANIMATION_MS
+   194	    return ((ms - startMs) / (endMs - startMs).toFloat()).coerceIn(0f, 1f)
+   195	}
+   196	
+   197	private fun easedSegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
+   198	    return FastOutSlowInEasing.transform(linearSegmentMs(progress, startMs, endMs))
+   199	}
+   200	
+   201	private fun bouncySegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
+   202	    return bouncyEasing(linearSegmentMs(progress, startMs, endMs))
+   203	}
+   204	
+   205	private fun bouncyEasing(value: Float): Float {
+   206	    val t = value.coerceIn(0f, 1f)
+   207	    val base = FastOutSlowInEasing.transform(t)
+   208	    val bounce = sin(t * PI.toFloat() * 4.5f) * (1f - t) * 0.13f
+   209	    return base + bounce
+   210	}
+   211	
+   212	private fun lerpFloat(start: Float, end: Float, amount: Float) = start + (end - start) * amount
+   213	
+   214	private fun lerpBounds(start: Bounds, end: Bounds, amount: Float) = Bounds(
+   215	    x = lerpFloat(start.x, end.x, amount),
+   216	    y = lerpFloat(start.y, end.y, amount),
+   217	    w = lerpFloat(start.w, end.w, amount),
+   218	    h = lerpFloat(start.h, end.h, amount)
+   219	)
+   220	
+   221	private fun lerpColor(start: Int, end: Int, amount: Float): Int {
+   222	    val t = amount.coerceIn(0f, 1f)
+   223	    return Color.argb(
+   224	        lerpInt(Color.alpha(start), Color.alpha(end), t),
+   225	        lerpInt(Color.red(start), Color.red(end), t),
+   226	        lerpInt(Color.green(start), Color.green(end), t),
+   227	        lerpInt(Color.blue(start), Color.blue(end), t)
+   228	    )
+   229	}
+   230	
+   231	private fun lerpInt(start: Int, end: Int, amount: Float): Int {
+   232	    return (start + (end - start) * amount).roundToInt()
+   233	}
+   234	
+   235	private fun combineBitmaps(base: Bitmap, overlay: Bitmap): Bitmap {
+   236	    val output = Bitmap.createBitmap(base.width, base.height, Bitmap.Config.ARGB_8888)
+   237	    val canvas = Canvas(output)
+   238	    val paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG or Paint.DITHER_FLAG)
+   239	    canvas.drawBitmap(base, 0f, 0f, paint)
+   240	    canvas.drawBitmap(overlay, 0f, 0f, paint)
+   241	    return output
+   242	}
+   243	
+   244	private fun circularBitmap(source: Bitmap): Bitmap {
+   245	    val output = Bitmap.createBitmap(source.width, source.height, Bitmap.Config.ARGB_8888)
+   246	    val canvas = Canvas(output)
+   247	    val rect = RectF(0f, 0f, source.width.toFloat(), source.height.toFloat())
+   248	    val maskPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+   249	    val imagePaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG or Paint.DITHER_FLAG)
+   250	    canvas.drawOval(rect, maskPaint)
+   251	    imagePaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+   252	    canvas.drawBitmap(source, null, rect, imagePaint)
+   253	    imagePaint.xfermode = null
+   254	    return output
+   255	}
+
+
+============================================================
+FILE: app/src/main/java/com/prahlin/cinerific/ui/theme/Theme.kt
+============================================================
+
+     1	package com.prahlin.cinerific.ui.theme
+     2	
+     3	import androidx.compose.material3.MaterialTheme
+     4	import androidx.compose.material3.darkColorScheme
+     5	import androidx.compose.material3.lightColorScheme
+     6	import androidx.compose.runtime.Composable
+     7	import androidx.compose.ui.graphics.Color
+     8	
+     9	private val LightColors = lightColorScheme(
+    10	    primary = Color(0xFF1E3A8A),
+    11	    onPrimary = Color.White,
+    12	    primaryContainer = Color(0xFFDDE7FF),
+    13	    onPrimaryContainer = Color(0xFF10285F),
+    14	    secondary = Color(0xFF7C3AED),
+    15	    onSecondary = Color.White,
+    16	    secondaryContainer = Color(0xFFE8DDFF),
+    17	    onSecondaryContainer = Color(0xFF30105D),
+    18	    background = Color(0xFFF7F8FC),
+    19	    onBackground = Color(0xFF111827),
+    20	    surface = Color(0xFFFFFFFF),
+    21	    onSurface = Color(0xFF111827),
+    22	    surfaceVariant = Color(0xFFE5E7EB),
+    23	    onSurfaceVariant = Color(0xFF4B5563),
+    24	)
+    25	
+    26	private val DarkColors = darkColorScheme(
+    27	    primary = Color(0xFFB7C8FF),
+    28	    onPrimary = Color(0xFF10285F),
+    29	    primaryContainer = Color(0xFF1E3A8A),
+    30	    onPrimaryContainer = Color(0xFFDDE7FF),
+    31	    secondary = Color(0xFFD8B4FE),
+    32	    onSecondary = Color(0xFF30105D),
+    33	    secondaryContainer = Color(0xFF4C1D95),
+    34	    onSecondaryContainer = Color(0xFFE8DDFF),
+    35	    background = Color(0xFF0F172A),
+    36	    onBackground = Color(0xFFE5E7EB),
+    37	    surface = Color(0xFF111827),
+    38	    onSurface = Color(0xFFE5E7EB),
+    39	    surfaceVariant = Color(0xFF1F2937),
+    40	    onSurfaceVariant = Color(0xFFCBD5E1),
+    41	)
+    42	
+    43	@Composable
+    44	fun CinerificTheme(content: @Composable () -> Unit) {
+    45	    MaterialTheme(
+    46	        colorScheme = LightColors,
+    47	        typography = androidx.compose.material3.Typography(),
+    48	        content = content,
+    49	    )
+    50	}
+
+
+============================================================
+FILE: app/src/main/res/values/strings.xml
+============================================================
+
+     1	<resources>
+     2	    <string name="app_name">Cinerific</string>
+     3	</resources>
+
+
+============================================================
+FILE: app/src/main/res/values/themes.xml
+============================================================
+
+     1	<?xml version="1.0" encoding="utf-8"?>
+     2	<resources>
+     3	    <style name="Theme.Cinerific" parent="Theme.Material3.DayNight.NoActionBar">
+     4	        <item name="android:windowBackground">@android:color/black</item>
+     5	        <item name="android:windowNoTitle">true</item>
+     6	        <item name="android:windowActionBar">false</item>
+     7	        <item name="android:forceDarkAllowed">false</item>
+     8	    </style>
+     9	</resources>
+
+
+============================================================
+FILE: app/src/main/res/values-night/themes.xml
+============================================================
+
+     1	<?xml version="1.0" encoding="utf-8"?>
+     2	<resources>
+     3	    <style name="Theme.Cinerific" parent="Theme.Material3.DayNight.NoActionBar">
+     4	        <item name="android:windowBackground">@android:color/black</item>
+     5	        <item name="android:windowNoTitle">true</item>
+     6	        <item name="android:windowActionBar">false</item>
+     7	        <item name="android:forceDarkAllowed">false</item>
+     8	    </style>
+     9	</resources>
+
+
+============================================================
+FILE: app/src/main/res/values-v31/themes.xml
+============================================================
+
+     1	<?xml version="1.0" encoding="utf-8"?>
+     2	<resources>
+     3	    <style name="Theme.Cinerific" parent="Theme.Material3.DayNight.NoActionBar">
+     4	        <item name="android:windowBackground">@android:color/black</item>
+     5	        <item name="android:windowNoTitle">true</item>
+     6	        <item name="android:windowActionBar">false</item>
+     7	        <item name="android:forceDarkAllowed">false</item>
+     8	        <item name="android:windowSplashScreenBackground">@android:color/black</item>
+     9	        <item name="android:windowSplashScreenAnimatedIcon">@drawable/splash_transparent</item>
+    10	        <item name="android:windowSplashScreenIconBackgroundColor">@android:color/transparent</item>
+    11	    </style>
+    12	</resources>
+
+
+============================================================
+FILE: app/src/main/res/drawable/splash_transparent.xml
+============================================================
+
+     1	<?xml version="1.0" encoding="utf-8"?>
+     2	<shape xmlns:android="http://schemas.android.com/apk/res/android"
+     3	    android:shape="rectangle">
+     4	    <size
+     5	        android:width="1dp"
+     6	        android:height="1dp" />
+     7	    <solid android:color="@android:color/transparent" />
+     8	</shape>
+
+
+============================================================
+FILE: app/src/main/res/drawable/ic_launcher_background.xml
+============================================================
+
+     1	<?xml version="1.0" encoding="utf-8"?>
+     2	<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+     3	    <solid android:color="#1E3A8A" />
+     4	</shape>
+
+
+============================================================
+FILE: app/src/main/res/drawable/ic_launcher_foreground.xml
+============================================================
+
+     1	<?xml version="1.0" encoding="utf-8"?>
+     2	<vector xmlns:android="http://schemas.android.com/apk/res/android"
+     3	    android:width="108dp"
+     4	    android:height="108dp"
+     5	    android:viewportWidth="108"
+     6	    android:viewportHeight="108">
+     7	    <path
+     8	        android:fillColor="#FFFFFF"
+     9	        android:pathData="M30,30h48v48h-48z" />
+    10	    <path
+    11	        android:fillColor="#1E3A8A"
+    12	        android:pathData="M38,38h32v32h-32z" />
+    13	    <path
+    14	        android:fillColor="#FFFFFF"
+    15	        android:pathData="M45,45h18v18h-18z" />
+    16	</vector>
+
+
+============================================================
+FILE: app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+============================================================
+
+     1	<?xml version="1.0" encoding="utf-8"?>
+     2	<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+     3	    <background android:drawable="@drawable/ic_launcher_background" />
+     4	    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+     5	</adaptive-icon>
+
+
+============================================================
+FILE: app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+============================================================
+
+     1	<?xml version="1.0" encoding="utf-8"?>
+     2	<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+     3	    <background android:drawable="@drawable/ic_launcher_background" />
+     4	    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+     5	</adaptive-icon>
+
+
+============================================================
+FILE CONTENTS — ROOT / TOOLING
+============================================================
+
+
+
+============================================================
+FILE: .gitignore
+============================================================
+
+     1	.DS_Store
+     2	.idea/
+     3	.gradle/
+     4	build/
+     5	app/build/
+     6	local.properties
+
+
+============================================================
+FILE: .github/copilot-instructions.md
+============================================================
+
+     1	[x] Verify that the copilot-instructions.md file in the .github directory is created.
+     2	[x] Clarify Project Requirements
+     3	[x] Scaffold the Project
+     4	[x] Customize the Project
+     5	[x] Install Required Extensions (no mandatory extensions; Android Studio/Gradle wrapper verified)
+     6	[x] Compile the Project
+     7	[x] Create and Run Task
+     8	[x] Launch the Project
+     9	[x] Ensure Documentation is Complete
+    10	
+    11	Project notes:
+    12	- Local workspace path: `/Users/prahlin/cinerific`
+    13	- GitHub remote repo: `prahlin/cinerific`
+    14	- App type: Android tablet app
+    15	- Language/framework: Kotlin + Jetpack Compose
+    16	- Figma source is connected through the live Figma Desktop MCP endpoint on `127.0.0.1:3845`
+    17	- Gradle uses Android Studio's bundled JBR via `org.gradle.java.home` so local command-line builds avoid the unsupported system JDK 26.
+    18	- Verified debug build, install, and launch on the local `Pixel_Tablet` AVD.
+
+
+============================================================
+FILE: .vscode/mcp.json
+============================================================
+
+     1	{
+     2		"servers": {
+     3			"figma": {
+     4				"command": "npx",
+     5				"args": [
+     6					"-y",
+     7					"@tmegit/figma-developer-mcp",
+     8					"--figma-api-key=YOUR-KEY",
+     9					"--stdio"
+    10				],
+    11				"type": "stdio"
+    12			},
+    13			"openFigmaMcp": {
+    14				"type": "stdio",
+    15				"command": "npx",
+    16				"args": [
+    17					"-y",
+    18					"open-figma-mcp@latest"
+    19				]
+    20			},
+    21			"figmaDesktop": {
+    22				"type": "http",
+    23				"url": "http://127.0.0.1:3845/mcp"
+    24			}
+    25		},
+    26		"inputs": []
+    27	}
+
+============================================================
+FILE: .vscode/tasks.json
+============================================================
+
+     1	{
+     2		"version": "2.0.0",
+     3		"tasks": [
+     4			{
+     5				"label": "Android: assemble debug",
+     6				"type": "shell",
+     7				"command": "./gradlew",
+     8				"args": [
+     9					":app:assembleDebug"
+    10				],
+    11				"group": {
+    12					"kind": "build",
+    13					"isDefault": true
+    14				},
+    15				"problemMatcher": []
+    16			},
+    17			{
+    18				"label": "Android: install debug",
+    19				"type": "shell",
+    20				"command": "./gradlew",
+    21				"args": [
+    22					":app:installDebug"
+    23				],
+    24				"problemMatcher": []
+    25			},
+    26			{
+    27				"label": "Android: launch Cinerific",
+    28				"type": "shell",
+    29				"command": "adb",
+    30				"args": [
+    31					"shell",
+    32					"am",
+    33					"start",
+    34					"-n",
+    35					"com.prahlin.cinerific/.MainActivity"
+    36				],
+    37				"dependsOn": "Android: install debug",
+    38				"problemMatcher": []
+    39			}
+    40		]
+    41	}
+
+
+============================================================
+FILE: README.md
+============================================================
+
+     1	# Cinerific
+     2	
+     3	Local Android project for the `prahlin/cinerific` GitHub repo.
+     4	
+     5	This is a first Kotlin / Jetpack Compose scaffold based on the Figma intro and sign-in frames. The current app opens as a tablet-friendly full-screen frame preview with:
+     6	
+     7	- Intro frame 1
+     8	- Animated intro frame 2
+     9	- Promo/logo intro frame 3
+    10	- Sign-in/loading frame 4
+    11	
+    12	## Stack
+    13	
+    14	- Kotlin
+    15	- Jetpack Compose Material 3
+    16	- Android Gradle Plugin 8.5.x
+    17	- Gradle 8.7
+    18	
+    19	## Run it
+    20	
+    21	Open the project in Android Studio and run `app`, or use the Gradle wrapper:
+    22	
+    23	```bash
+    24	./gradlew :app:assembleDebug
+    25	```
+    26	
+    27	The project pins Gradle to Android Studio's bundled JBR in `gradle.properties`, so command-line builds do not accidentally use an unsupported system JDK.
+    28	
+    29	From VS Code, run the default build task `Android: assemble debug`. There are also tasks for `Android: install debug` and `Android: launch Cinerific` when an emulator or device is connected.
+    30	
+    31	## Notes for the first Kotlin pass
+    32	
+    33	- The layout is intentionally simple and adaptive for tablets.
+    34	- The current visuals are Compose approximations of the Figma frames and are meant to be replaced with production assets screen by screen.
+    35	- The local project folder is the same path as the GitHub remote: `prahlin/cinerific`.
+
+
+============================================================
+FILE: build.gradle.kts
+============================================================
+
+     1	plugins {
+     2	    id("com.android.application") version "8.5.2" apply false
+     3	    id("org.jetbrains.kotlin.android") version "1.9.24" apply false
+     4	}
+
+
+============================================================
+FILE: app/build.gradle.kts
+============================================================
+
+     1	plugins {
+     2	    id("com.android.application")
+     3	    id("org.jetbrains.kotlin.android")
+     4	}
+     5	
+     6	android {
+     7	    namespace = "com.prahlin.cinerific"
+     8	    compileSdk = 34
+     9	
+    10	    defaultConfig {
+    11	        applicationId = "com.prahlin.cinerific"
+    12	        minSdk = 24
+    13	        targetSdk = 34
+    14	        versionCode = 1
+    15	        versionName = "1.0"
+    16	
+    17	        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    18	        vectorDrawables {
+    19	            useSupportLibrary = true
+    20	        }
+    21	    }
+    22	
+    23	    buildTypes {
+    24	        release {
+    25	            isMinifyEnabled = false
+    26	            proguardFiles(
+    27	                getDefaultProguardFile("proguard-android-optimize.txt"),
+    28	                "proguard-rules.pro"
+    29	            )
+    30	        }
+    31	    }
+    32	
+    33	    compileOptions {
+    34	        sourceCompatibility = JavaVersion.VERSION_17
+    35	        targetCompatibility = JavaVersion.VERSION_17
+    36	    }
+    37	
+    38	    kotlinOptions {
+    39	        jvmTarget = "17"
+    40	    }
+    41	
+    42	    buildFeatures {
+    43	        compose = true
+    44	    }
+    45	
+    46	    composeOptions {
+    47	        kotlinCompilerExtensionVersion = "1.5.14"
+    48	    }
+    49	
+    50	    packaging {
+    51	        resources {
+    52	            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+    53	        }
+    54	    }
+    55	}
+    56	
+    57	dependencies {
+    58	    implementation(platform("androidx.compose:compose-bom:2024.06.00"))
+    59	    implementation("androidx.core:core-ktx:1.13.1")
+    60	    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
+    61	    implementation("androidx.activity:activity-compose:1.9.1")
+    62	    implementation("com.google.android.material:material:1.12.0")
+    63	    implementation("androidx.compose.material3:material3")
+    64	    implementation("androidx.compose.ui:ui")
+    65	    implementation("androidx.compose.ui:ui-tooling-preview")
+    66	    implementation("androidx.compose.foundation:foundation")
+    67	    implementation("androidx.compose.material:material-icons-extended")
+    68	    debugImplementation("androidx.compose.ui:ui-tooling")
+    69	    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    70	}
+
+
+============================================================
+FILE: settings.gradle.kts
+============================================================
+
+     1	pluginManagement {
+     2	    repositories {
+     3	        google()
+     4	        mavenCentral()
+     5	        gradlePluginPortal()
+     6	    }
+     7	}
+     8	
+     9	dependencyResolutionManagement {
+    10	    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    11	    repositories {
+    12	        google()
+    13	        mavenCentral()
+    14	    }
+    15	}
+    16	
+    17	rootProject.name = "cinerific"
+    18	include(":app")
+
+
+============================================================
+FILE: gradle.properties
+============================================================
+
+     1	org.gradle.jvmargs=-Xmx4g -Dfile.encoding=UTF-8 -Djava.io.tmpdir=/tmp
+     2	org.gradle.java.home=/Applications/Android Studio.app/Contents/jbr/Contents/Home
+     3	org.gradle.daemon=false
+     4	android.useAndroidX=true
+     5	kotlin.code.style=official
+     6	android.nonTransitiveRClass=true
+
+
+============================================================
+FILE: gradle/wrapper/gradle-wrapper.properties
+============================================================
+
+     1	distributionBase=GRADLE_USER_HOME
+     2	distributionPath=wrapper/dists
+     3	distributionUrl=https\://services.gradle.org/distributions/gradle-8.7-bin.zip
+     4	networkTimeout=10000
+     5	validateDistributionUrl=true
+     6	zipStoreBase=GRADLE_USER_HOME
+     7	zipStorePath=wrapper/dists
+
+
+============================================================
+FILE: read_project.sh
+============================================================
+
+     1	#!/bin/bash
+     2	
+     3	PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
+     4	OUTPUT_FILE="$PROJECT_DIR/cinerific_PROJECT_SNAPSHOT.txt"
+     5	
+     6	echo "Generating Cinerific project snapshot..."
+     7	echo "Project directory: $PROJECT_DIR"
+     8	echo "Snapshot: $OUTPUT_FILE"
+     9	echo ""
+    10	
+    11	write_header() {
+    12	  cat > "$OUTPUT_FILE" <<EOF
+    13	Cinerific Android PROJECT SNAPSHOT
+    14	Generated: $(date)
+    15	Project directory: $PROJECT_DIR
+    16	
+    17	IMPORTANT INSTRUCTIONS FOR CHATGPT & CODEX:
+    18	1. Read this entire snapshot before giving code edits.
+    19	2. Preserve all assets, spacing, alignment, fonts, images, layout, animations, and relative positioning unless specifically asked to change them.
+    20	3. Do not remove unrelated code.
+    21	4. Do not rewrite large sections unless requested.
+    22	5. When giving code changes, include exact line/row numbers whenever possible.
+    23	6. Print full scripts when requested.
+    24	7. Treat this project structure as the source of truth.
+    25	8. If you don't understand something, ask for clarification instead of making assumptions.
+    26	9. Warn me, or at least caution me, if I ask for something that would break the project or cause it to not work as intended.
+    27	
+    28	
+    29	============================================================
+    30	SNAPSHOT IGNORE POLICY
+    31	============================================================
+    32	
+    33	This file is rebuilt from the current Cinerific workspace every time ./read_project.sh runs.
+    34	Ignored paths are omitted from the project tree and file dumps unless they appear inside an included text file such as .gitignore or read_project.sh.
+    35	
+    36	The snapshot intentionally ignores:
+    37	- .git
+    38	- .gradle
+    39	- .idea
+    40	- app/build
+    41	- build
+    42	- .kotlin
+    43	- .tmp
+    44	- .cache
+    45	- .DS_Store
+    46	- local.properties
+    47	- *_PROJECT_SNAPSHOT.txt
+    48	- *.jks
+    49	- *.keystore
+    50	
+    51	Binary image and screenshot files are inventoried by path, size, and modified time only. Raw binary bytes are not printed.
+    52	
+    53	
+    54	============================================================
+    55	PROJECT FILE TREE
+    56	============================================================
+    57	
+    58	EOF
+    59	}
+    60	
+    61	print_file() {
+    62	  local file="$1"
+    63	
+    64	  if [ -f "$file" ]; then
+    65	    {
+    66	      echo ""
+    67	      echo ""
+    68	      echo "============================================================"
+    69	      echo "FILE: ${file#$PROJECT_DIR/}"
+    70	      echo "============================================================"
+    71	      echo ""
+    72	      nl -ba "$file"
+    73	    } >> "$OUTPUT_FILE"
+    74	  fi
+    75	}
+    76	
+    77	print_binary_inventory() {
+    78	  local title="$1"
+    79	  local dir="$2"
+    80	
+    81	  {
+    82	    echo ""
+    83	    echo ""
+    84	    echo "============================================================"
+    85	    echo "$title"
+    86	    echo "============================================================"
+    87	    echo ""
+    88	  } >> "$OUTPUT_FILE"
+    89	
+    90	  if [ ! -d "$dir" ]; then
+    91	    echo "Directory not present: ${dir#$PROJECT_DIR/}" >> "$OUTPUT_FILE"
+    92	    return
+    93	  fi
+    94	
+    95	  find "$dir" -type f \
+    96	    ! -name ".DS_Store" \
+    97	    ! -name "*_PROJECT_SNAPSHOT.txt" \
+    98	    ! -name "*.jks" \
+    99	    ! -name "*.keystore" \
+   100	    | sort | while IFS= read -r file; do
+   101	    local size
+   102	    local modified
+   103	    size="$(stat -f "%z" "$file" 2>/dev/null || stat -c "%s" "$file" 2>/dev/null || echo "unknown")"
+   104	    modified="$(stat -f "%Sm" -t "%Y-%m-%d %H:%M:%S" "$file" 2>/dev/null || stat -c "%y" "$file" 2>/dev/null || echo "unknown")"
+   105	    printf '%s | %s bytes | modified %s\n' "${file#$PROJECT_DIR/}" "$size" "$modified" >> "$OUTPUT_FILE"
+   106	  done
+   107	}
+   108	
+   109	write_snapshot() {
+   110	  write_header
+   111	
+   112	  find "$PROJECT_DIR" \
+   113	    -path "$PROJECT_DIR/.git" -prune -o \
+   114	    -path "$PROJECT_DIR/.gradle" -prune -o \
+   115	    -path "$PROJECT_DIR/.idea" -prune -o \
+   116	    -path "$PROJECT_DIR/app/build" -prune -o \
+   117	    -path "$PROJECT_DIR/build" -prune -o \
+   118	    -path "$PROJECT_DIR/.kotlin" -prune -o \
+   119	    -path "$PROJECT_DIR/.tmp" -prune -o \
+   120	    -path "$PROJECT_DIR/.cache" -prune -o \
+   121	    -name ".DS_Store" -prune -o \
+   122	    -name "local.properties" -prune -o \
+   123	    -name "*_PROJECT_SNAPSHOT.txt" -prune -o \
+   124	    -name "*.jks" -prune -o \
+   125	    -name "*.keystore" -prune -o \
+   126	    -print | sort >> "$OUTPUT_FILE"
+   127	
+   128	  cat >> "$OUTPUT_FILE" <<EOF
+   129	
+   130	
+   131	============================================================
+   132	FILE CONTENTS — ANDROID SOURCE
+   133	============================================================
+   134	
+   135	EOF
+   136	
+   137	  for file in \
+   138	    "$PROJECT_DIR/app/src/main/AndroidManifest.xml" \
+   139	    "$PROJECT_DIR/app/src/main/java/com/prahlin/cinerific/MainActivity.kt" \
+   140	    "$PROJECT_DIR/app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt" \
+   141	    "$PROJECT_DIR/app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt" \
+   142	    "$PROJECT_DIR/app/src/main/java/com/prahlin/cinerific/ui/theme/Theme.kt" \
+   143	    "$PROJECT_DIR/app/src/main/res/values/strings.xml" \
+   144	    "$PROJECT_DIR/app/src/main/res/values/themes.xml" \
+   145	    "$PROJECT_DIR/app/src/main/res/values-night/themes.xml" \
+   146	    "$PROJECT_DIR/app/src/main/res/values-v31/themes.xml" \
+   147	    "$PROJECT_DIR/app/src/main/res/drawable/splash_transparent.xml" \
+   148	    "$PROJECT_DIR/app/src/main/res/drawable/ic_launcher_background.xml" \
+   149	    "$PROJECT_DIR/app/src/main/res/drawable/ic_launcher_foreground.xml" \
+   150	    "$PROJECT_DIR/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" \
+   151	    "$PROJECT_DIR/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"
+   152	  do
+   153	    print_file "$file"
+   154	  done
+   155	
+   156	  cat >> "$OUTPUT_FILE" <<EOF
+   157	
+   158	
+   159	============================================================
+   160	FILE CONTENTS — ROOT / TOOLING
+   161	============================================================
+   162	
+   163	EOF
+   164	
+   165	  for file in \
+   166	    "$PROJECT_DIR/.gitignore" \
+   167	    "$PROJECT_DIR/.github/copilot-instructions.md" \
+   168	    "$PROJECT_DIR/.vscode/mcp.json" \
+   169	    "$PROJECT_DIR/.vscode/tasks.json" \
+   170	    "$PROJECT_DIR/README.md" \
+   171	    "$PROJECT_DIR/build.gradle.kts" \
+   172	    "$PROJECT_DIR/app/build.gradle.kts" \
+   173	    "$PROJECT_DIR/settings.gradle.kts" \
+   174	    "$PROJECT_DIR/gradle.properties" \
+   175	    "$PROJECT_DIR/gradle/wrapper/gradle-wrapper.properties" \
+   176	    "$PROJECT_DIR/read_project.sh"
+   177	  do
+   178	    print_file "$file"
+   179	  done
+   180	
+   181	  print_binary_inventory "BINARY / IMAGE ASSET INVENTORY — DRAWABLE-NODPI" "$PROJECT_DIR/app/src/main/res/drawable-nodpi"
+   182	  print_binary_inventory "BINARY / SCREENSHOT INVENTORY" "$PROJECT_DIR/screenshots"
+   183	
+   184	  cat >> "$OUTPUT_FILE" <<EOF
+   185	
+   186	
+   187	============================================================
+   188	NOT INCLUDED IN SNAPSHOT
+   189	============================================================
+   190	
+   191	The Cinerific snapshot intentionally excludes generated/cache/runtime/private directories:
+   192	- .git
+   193	- .gradle
+   194	- .idea
+   195	- app/build
+   196	- build
+   197	- .kotlin
+   198	- .tmp
+   199	- .cache
+   200	- .DS_Store
+   201	- local.properties
+   202	- *_PROJECT_SNAPSHOT.txt
+   203	- *.jks
+   204	- *.keystore
+   205	
+   206	The snapshot lists binary assets and screenshots by path, size, and modified time, but does not print raw PNG/JPG/PDF bytes.
+   207	
+   208	EOF
+   209	}
+   210	
+   211	write_snapshot
+   212	
+   213	echo "Done."
+   214	echo ""
+   215	echo "Snapshot created here:"
+   216	echo "$OUTPUT_FILE"
+   217	echo ""
+   218	echo "Open it with:"
+   219	echo "open \"$OUTPUT_FILE\""
+
+
+============================================================
+BINARY / IMAGE ASSET INVENTORY — DRAWABLE-NODPI
+============================================================
+
+app/src/main/res/drawable-nodpi/guest_avatar.png | 16742 bytes | modified 2026-07-14 20:32:22
+app/src/main/res/drawable-nodpi/guest_name.png | 4474 bytes | modified 2026-07-14 20:49:08
+app/src/main/res/drawable-nodpi/home_action_01.png | 175865 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_action_02.png | 189627 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_action_03.png | 203211 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_action_04.png | 264773 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_action_05.png | 132325 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_comedy_01.png | 190836 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_comedy_02.png | 180944 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_comedy_03.png | 195130 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_comedy_04.png | 161871 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_comedy_05.png | 189742 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_crime_01.png | 232988 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_crime_02.png | 216378 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_crime_03.png | 234330 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_crime_04.png | 239857 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_documentary_01.png | 202980 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_documentary_02.png | 59422 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_documentary_03.png | 207111 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_documentary_04.png | 207110 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_documentary_05.png | 109791 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_drama_01.png | 172920 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_drama_02.png | 194328 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_drama_03.png | 157968 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_drama_04.png | 174947 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_drama_05.png | 209607 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_drama_06.png | 179981 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_hero_header.png | 1382704 bytes | modified 2026-07-15 14:40:50
+app/src/main/res/drawable-nodpi/home_horror_01.png | 229598 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_horror_02.png | 266539 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_horror_03.png | 180647 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_horror_04.png | 234200 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_thriller_01.png | 71959 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_thriller_02.png | 153676 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_thriller_03.png | 218788 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/home_thriller_04.png | 139494 bytes | modified 2026-07-15 14:40:17
+app/src/main/res/drawable-nodpi/janny_avatar.png | 19441 bytes | modified 2026-07-14 20:32:22
+app/src/main/res/drawable-nodpi/janny_name.png | 4014 bytes | modified 2026-07-14 20:49:07
+app/src/main/res/drawable-nodpi/logo_eyes_intro2.png | 44511 bytes | modified 2026-07-12 00:22:17
+app/src/main/res/drawable-nodpi/logo_eyes_large.png | 44511 bytes | modified 2026-07-12 00:22:18
+app/src/main/res/drawable-nodpi/logo_eyes_signin.png | 44511 bytes | modified 2026-07-12 00:22:59
+app/src/main/res/drawable-nodpi/logo_simple_intro2.png | 193734 bytes | modified 2026-07-12 00:22:16
+app/src/main/res/drawable-nodpi/logo_simple_large.png | 193734 bytes | modified 2026-07-12 00:22:17
+app/src/main/res/drawable-nodpi/logo_simple_signin.png | 193734 bytes | modified 2026-07-12 00:22:58
+app/src/main/res/drawable-nodpi/martin_avatar.png | 19773 bytes | modified 2026-07-14 20:32:22
+app/src/main/res/drawable-nodpi/martin_name.png | 4583 bytes | modified 2026-07-14 20:49:07
+app/src/main/res/drawable-nodpi/promo_background.png | 171859 bytes | modified 2026-07-12 00:22:18
+app/src/main/res/drawable-nodpi/promo_background_signin.png | 171859 bytes | modified 2026-07-12 00:22:57
+app/src/main/res/drawable-nodpi/steve_avatar.png | 18826 bytes | modified 2026-07-14 20:32:22
+app/src/main/res/drawable-nodpi/steve_name.png | 4327 bytes | modified 2026-07-14 20:49:07
+
+
+============================================================
+BINARY / SCREENSHOT INVENTORY
+============================================================
+
+screenshots/intro.jpg | 422351 bytes | modified 2026-07-14 21:00:46
+screenshots/intro.png | 349162 bytes | modified 2026-07-14 21:00:29
+
+
+============================================================
+NOT INCLUDED IN SNAPSHOT
+============================================================
+
+The Cinerific snapshot intentionally excludes generated/cache/runtime/private directories:
+- .git
+- .gradle
+- .idea
+- app/build
+- build
+- .kotlin
+- .tmp
+- .cache
+- .DS_Store
+- local.properties
+- *_PROJECT_SNAPSHOT.txt
+- *.jks
+- *.keystore
+
+The snapshot lists binary assets and screenshots by path, size, and modified time, but does not print raw PNG/JPG/PDF bytes.
+

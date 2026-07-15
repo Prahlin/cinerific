@@ -24,6 +24,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameMillis
@@ -50,6 +51,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.viewinterop.AndroidView
 import com.prahlin.cinerific.R
+import kotlinx.coroutines.delay
 import kotlin.math.PI
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -74,17 +76,29 @@ private val ColorIntroGradientBottom = Color(0xFF100102)
 
 @Composable
 fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
-    AndroidView(
-        modifier = Modifier.fillMaxSize(),
-        factory = { context ->
-            CinerificIntroView(context).apply {
-                this.bootStartMillis = bootStartMillis
+    var showHome by remember(bootStartMillis) { mutableStateOf(false) }
+
+    LaunchedEffect(bootStartMillis) {
+        showHome = false
+        delay(BOOT_ANIMATION_MS.toLong())
+        showHome = true
+    }
+
+    if (showHome) {
+        CinerificHomeScreen()
+    } else {
+        AndroidView(
+            modifier = Modifier.fillMaxSize(),
+            factory = { context ->
+                CinerificIntroView(context).apply {
+                    this.bootStartMillis = bootStartMillis
+                }
+            },
+            update = { view ->
+                view.bootStartMillis = bootStartMillis
             }
-        },
-        update = { view ->
-            view.bootStartMillis = bootStartMillis
-        }
-    )
+        )
+    }
 }
 
 @Composable
