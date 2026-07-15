@@ -4,3 +4,6 @@
 build/
 app/build/
 local.properties
+cinerific_PROJECT_SNAPSHOT.txt
+screenshots/
+cinerific_worklog_*.pdf

@@ -1,0 +1,14 @@
+{
+	"files.watcherExclude": {
+		"**/.gradle/**": true,
+		"**/.idea/**": true,
+		"**/app/build/**": true,
+		"**/build/**": true
+	},
+	"search.exclude": {
+		"**/.gradle": true,
+		"**/.idea": true,
+		"**/app/build": true,
+		"**/build": true
+	}
+}
