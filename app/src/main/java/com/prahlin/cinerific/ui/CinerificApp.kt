@@ -51,7 +51,6 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.viewinterop.AndroidView
 import com.prahlin.cinerific.R
-import kotlinx.coroutines.delay
 import kotlin.math.PI
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -78,25 +77,53 @@ private val ColorIntroGradientBottom = Color(0xFF100102)
 fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
     var showHome by remember(bootStartMillis) { mutableStateOf(false) }
 
-    LaunchedEffect(bootStartMillis) {
-        showHome = false
-        delay(BOOT_ANIMATION_MS.toLong())
-        showHome = true
-    }
-
     if (showHome) {
-        CinerificHomeScreen()
+        CinerificMainExperience()
     } else {
         AndroidView(
             modifier = Modifier.fillMaxSize(),
             factory = { context ->
                 CinerificIntroView(context).apply {
                     this.bootStartMillis = bootStartMillis
+                    onAvatarSelected = { showHome = true }
                 }
             },
             update = { view ->
                 view.bootStartMillis = bootStartMillis
+                view.onAvatarSelected = { showHome = true }
             }
+        )
+    }
+}
+
+internal enum class CinerificDestination {
+    Home,
+    Movies,
+    Shows,
+    Favorites,
+    Settings
+}
+
+@Composable
+private fun CinerificMainExperience() {
+    var destination by remember { mutableStateOf(CinerificDestination.Home) }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        when (destination) {
+            CinerificDestination.Home -> CinerificHomeScreen(modifier = Modifier.fillMaxSize())
+            CinerificDestination.Movies,
+            CinerificDestination.Shows,
+            CinerificDestination.Favorites,
+            CinerificDestination.Settings -> CinerificDestinationScreen(
+                destination = destination,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+
+        CinerificRightSideNavBar(
+            currentDestination = destination,
+            onDestinationSelected = { destination = it },
+            modifier = Modifier.fillMaxSize()
         )
     }
 }

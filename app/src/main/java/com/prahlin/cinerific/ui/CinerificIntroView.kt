@@ -12,6 +12,7 @@ import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
 import android.graphics.Shader
 import android.os.SystemClock
+import android.view.MotionEvent
 import android.view.View
 import androidx.compose.animation.core.FastOutSlowInEasing
 import com.prahlin.cinerific.R
@@ -35,6 +36,13 @@ private const val COLOR_GRADIENT_TOP = 0xFF050000.toInt()
 private const val COLOR_GRADIENT_CENTER = 0xFF62070D.toInt()
 private const val COLOR_GRADIENT_BOTTOM = 0xFF100102.toInt()
 
+private val FINAL_AVATAR_BOUNDS = listOf(
+    Bounds(130f, 428f, 220f, 220f),
+    Bounds(368f, 428f, 220f, 220f),
+    Bounds(606f, 432f, 220f, 220f),
+    Bounds(844f, 428f, 220f, 220f)
+)
+
 internal class CinerificIntroView(context: Context) : View(context) {
     var bootStartMillis: Long = SystemClock.uptimeMillis()
         set(value) {
@@ -42,6 +50,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             field = value
             postInvalidateOnAnimation()
         }
+    var onAvatarSelected: (() -> Unit)? = null
 
     private val bitmapOptions = BitmapFactory.Options().apply {
         inScaled = false
@@ -62,6 +71,12 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private val imagePaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG or Paint.DITHER_FLAG)
     private val backgroundPaint = Paint()
     private val tempRect = RectF()
+    private var avatarPressStarted = false
+
+    init {
+        isClickable = true
+        isFocusable = true
+    }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -102,6 +117,37 @@ internal class CinerificIntroView(context: Context) : View(context) {
         if (progress < 1f) {
             postInvalidateOnAnimation()
         }
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        return when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                avatarPressStarted = isSettledAvatarHit(event.x, event.y)
+                avatarPressStarted
+            }
+            MotionEvent.ACTION_UP -> {
+                val shouldNavigate = avatarPressStarted && isSettledAvatarHit(event.x, event.y)
+                avatarPressStarted = false
+                if (shouldNavigate) {
+                    performClick()
+                    true
+                } else {
+                    false
+                }
+            }
+            MotionEvent.ACTION_CANCEL -> {
+                avatarPressStarted = false
+                false
+            }
+            else -> avatarPressStarted
+        }
+    }
+
+    override fun performClick(): Boolean {
+        super.performClick()
+        if (!isFinalFrameSettled()) return false
+        onAvatarSelected?.invoke()
+        return true
     }
 
     private fun drawSettlingLogo(
@@ -174,6 +220,27 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun decode(resId: Int): Bitmap {
         return BitmapFactory.decodeResource(resources, resId, bitmapOptions)
+    }
+
+    private fun isFinalFrameSettled(): Boolean {
+        return bootProgressAt(bootStartMillis) >= 1f
+    }
+
+    private fun isSettledAvatarHit(x: Float, y: Float): Boolean {
+        if (!isFinalFrameSettled() || width <= 0 || height <= 0) return false
+
+        val stageScale = min(width / FIGMA_FRAME_WIDTH, height / FIGMA_FRAME_HEIGHT)
+        val stageLeft = (width - FIGMA_FRAME_WIDTH * stageScale) / 2f
+        val stageTop = (height - FIGMA_FRAME_HEIGHT * stageScale) / 2f
+
+        return FINAL_AVATAR_BOUNDS.any { bounds ->
+            val centerX = stageLeft + (bounds.x + bounds.w / 2f) * stageScale
+            val centerY = stageTop + (bounds.y + bounds.h / 2f) * stageScale
+            val radius = min(bounds.w, bounds.h) * stageScale / 2f
+            val dx = x - centerX
+            val dy = y - centerY
+            dx * dx + dy * dy <= radius * radius
+        }
     }
 }
 

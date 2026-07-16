@@ -1,5 +1,5 @@
 Cinerific Android PROJECT SNAPSHOT
-Generated: Wed Jul 15 14:49:14 EDT 2026
+Generated: Wed Jul 15 18:30:36 EDT 2026
 Project directory: /Users/prahlin/gh/cinerific
 
 IMPORTANT INSTRUCTIONS FOR CHATGPT & CODEX:
@@ -49,6 +49,7 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/.gitignore
 /Users/prahlin/gh/cinerific/.vscode
 /Users/prahlin/gh/cinerific/.vscode/mcp.json
+/Users/prahlin/gh/cinerific/.vscode/settings.json
 /Users/prahlin/gh/cinerific/.vscode/tasks.json
 /Users/prahlin/gh/cinerific/README.md
 /Users/prahlin/gh/cinerific/app
@@ -137,6 +138,7 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/build.gradle.kts
 /Users/prahlin/gh/cinerific/cinerific_worklog_july 12.pdf
 /Users/prahlin/gh/cinerific/cinerific_worklog_july 14.pdf
+/Users/prahlin/gh/cinerific/cinerific_worklog_july 15 part 1.pdf
 /Users/prahlin/gh/cinerific/gradle
 /Users/prahlin/gh/cinerific/gradle.properties
 /Users/prahlin/gh/cinerific/gradle/wrapper
@@ -1368,6 +1370,9 @@ FILE: .gitignore
      4	build/
      5	app/build/
      6	local.properties
+     7	cinerific_PROJECT_SNAPSHOT.txt
+     8	screenshots/
+     9	cinerific_worklog_*.pdf
 
 
 ============================================================
@@ -1400,31 +1405,13 @@ FILE: .vscode/mcp.json
 
      1	{
      2		"servers": {
-     3			"figma": {
-     4				"command": "npx",
-     5				"args": [
-     6					"-y",
-     7					"@tmegit/figma-developer-mcp",
-     8					"--figma-api-key=YOUR-KEY",
-     9					"--stdio"
-    10				],
-    11				"type": "stdio"
-    12			},
-    13			"openFigmaMcp": {
-    14				"type": "stdio",
-    15				"command": "npx",
-    16				"args": [
-    17					"-y",
-    18					"open-figma-mcp@latest"
-    19				]
-    20			},
-    21			"figmaDesktop": {
-    22				"type": "http",
-    23				"url": "http://127.0.0.1:3845/mcp"
-    24			}
-    25		},
-    26		"inputs": []
-    27	}
+     3			"figmaDesktop": {
+     4				"type": "http",
+     5				"url": "http://127.0.0.1:3845/mcp"
+     6			}
+     7		},
+     8		"inputs": []
+     9	}
 
 ============================================================
 FILE: .vscode/tasks.json

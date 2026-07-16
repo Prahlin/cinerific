@@ -1,5 +1,14 @@
 package com.prahlin.cinerific.ui
 
+import android.content.Context
+import android.graphics.Matrix
+import android.graphics.SurfaceTexture
+import android.media.MediaPlayer
+import android.view.Gravity
+import android.view.Surface
+import android.view.TextureView
+import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -10,10 +19,12 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -32,15 +43,21 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import com.prahlin.cinerific.R
+import kotlin.math.max
 
 private const val HOME_FRAME_WIDTH = 1194f
+private const val HERO_REEL_VIEWPORT_ASPECT = 1194f / 834f
 private const val CARD_ASPECT = 350f / 263f
+private const val CARD_SCALE = 0.8f
 
 private val HomeBackgroundTop = Color(0xFF080007)
 private val HomeBackgroundMid = Color(0xFF23001F)
@@ -55,10 +72,13 @@ internal fun CinerificHomeScreen(modifier: Modifier = Modifier) {
             .background(HomeBackgroundBottom)
     ) {
         val scale = maxWidth.value / HOME_FRAME_WIDTH
+        val density = LocalDensity.current
         val horizontalPadding = figmaDp(50f, scale)
-        val cardWidth = figmaDp(350f, scale)
+        val cardWidth = figmaDp(350f, scale) * CARD_SCALE
         val cardHeight = cardWidth / CARD_ASPECT
         val cardGap = figmaDp(50f, scale)
+        val interStackGap = 80.dp
+        val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
 
         Column(
             modifier = Modifier
@@ -74,14 +94,7 @@ internal fun CinerificHomeScreen(modifier: Modifier = Modifier) {
                     )
                 )
         ) {
-            Image(
-                painter = painterResource(R.drawable.home_hero_header),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1194f / 1298f),
-                contentScale = ContentScale.FillBounds
-            )
+            HomeHeroHeader(scale = scale)
 
             HomeProgramRows.forEachIndexed { index, row ->
                 HomeProgramRow(
@@ -91,13 +104,43 @@ internal fun CinerificHomeScreen(modifier: Modifier = Modifier) {
                     cardWidth = cardWidth,
                     cardHeight = cardHeight,
                     cardGap = cardGap,
-                    topPadding = if (index == 0) 26.dp else 40.dp
+                    topPadding = if (index == 0) 52.dp else interStackGap
                 )
             }
 
-            Spacer(modifier = Modifier.height(56.dp))
+            Spacer(modifier = Modifier.height(interStackGap + bottomSystemPadding))
         }
     }
+}
+
+@Composable
+private fun HomeHeroHeader(scale: Float) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(HERO_REEL_VIEWPORT_ASPECT)
+    ) {
+        HeroReelVideo(modifier = Modifier.fillMaxSize())
+
+        Image(
+            painter = painterResource(R.drawable.logo_simple_large),
+            contentDescription = null,
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .width(figmaDp(300f, scale))
+                .height(figmaDp(214f, scale)),
+            contentScale = ContentScale.FillBounds
+        )
+    }
+}
+
+@Composable
+private fun HeroReelVideo(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    AndroidView(
+        modifier = modifier,
+        factory = { LoopingHeroVideoView(context) }
+    )
 }
 
 @Composable
@@ -185,6 +228,121 @@ private fun ProgramCard(
 }
 
 private fun figmaDp(px: Float, scale: Float): Dp = (px * scale).dp
+
+private class LoopingHeroVideoView(context: Context) : FrameLayout(context), TextureView.SurfaceTextureListener {
+    private val textureView = TextureView(context)
+    private val centerCropMatrix = Matrix()
+    private var videoSurface: Surface? = null
+    private var mediaPlayer: MediaPlayer? = null
+    private var videoWidth = 0
+    private var videoHeight = 0
+
+    init {
+        setBackgroundColor(android.graphics.Color.BLACK)
+        clipChildren = true
+        textureView.surfaceTextureListener = this
+        addView(
+            textureView,
+            LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                Gravity.CENTER
+            )
+        )
+    }
+
+    override fun onSurfaceTextureAvailable(surfaceTexture: SurfaceTexture, width: Int, height: Int) {
+        videoSurface = Surface(surfaceTexture)
+        startVideo()
+    }
+
+    override fun onSurfaceTextureSizeChanged(surfaceTexture: SurfaceTexture, width: Int, height: Int) {
+        applyCenterCropTransform()
+    }
+
+    override fun onSurfaceTextureDestroyed(surfaceTexture: SurfaceTexture): Boolean {
+        releaseVideo()
+        releaseSurface()
+        return true
+    }
+
+    override fun onSurfaceTextureUpdated(surfaceTexture: SurfaceTexture) = Unit
+
+    private fun startVideo() {
+        val surface = videoSurface ?: return
+        releaseVideo()
+
+        val player = MediaPlayer().apply {
+            resources.openRawResourceFd(R.raw.home_hero_reel).use { descriptor ->
+                setDataSource(descriptor.fileDescriptor, descriptor.startOffset, descriptor.length)
+            }
+            setSurface(surface)
+            isLooping = true
+            setVolume(0f, 0f)
+            setOnVideoSizeChangedListener { _, videoWidth, videoHeight ->
+                this@LoopingHeroVideoView.videoWidth = videoWidth
+                this@LoopingHeroVideoView.videoHeight = videoHeight
+                applyCenterCropTransform()
+            }
+            setOnPreparedListener { player ->
+                if (mediaPlayer !== player) return@setOnPreparedListener
+                applyCenterCropTransform()
+                player.start()
+            }
+            setOnErrorListener { player, _, _ ->
+                if (mediaPlayer === player) releaseVideo()
+                true
+            }
+            prepareAsync()
+        }
+
+        mediaPlayer = player
+    }
+
+    override fun onDetachedFromWindow() {
+        releaseVideo()
+        releaseSurface()
+        super.onDetachedFromWindow()
+    }
+
+    private fun applyCenterCropTransform() {
+        if (width == 0 || height == 0 || videoWidth == 0 || videoHeight == 0) return
+
+        val viewWidth = width.toFloat()
+        val viewHeight = height.toFloat()
+        val scaleX = viewWidth / videoWidth.toFloat()
+        val scaleY = viewHeight / videoHeight.toFloat()
+        val scale = max(scaleX, scaleY)
+        val scaledWidth = videoWidth * scale
+        val scaledHeight = videoHeight * scale
+
+        centerCropMatrix.reset()
+        centerCropMatrix.setScale(
+            scaledWidth / viewWidth,
+            scaledHeight / viewHeight,
+            viewWidth / 2f,
+            viewHeight / 2f
+        )
+        textureView.setTransform(centerCropMatrix)
+    }
+
+    private fun releaseVideo() {
+        mediaPlayer?.apply {
+            setOnPreparedListener(null)
+            setOnVideoSizeChangedListener(null)
+            setOnErrorListener(null)
+            release()
+        }
+        mediaPlayer = null
+        videoWidth = 0
+        videoHeight = 0
+    }
+
+    private fun releaseSurface() {
+        videoSurface?.release()
+        videoSurface = null
+    }
+}
 
 private data class HomeProgramRowSpec(
     val title: String,
