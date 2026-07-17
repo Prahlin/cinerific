@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -40,9 +41,11 @@ import androidx.compose.ui.unit.sp
 import com.prahlin.cinerific.R
 
 private const val DESTINATION_FRAME_WIDTH = 1194f
+private const val DESTINATION_TOP_BAR_EXTRA_HEIGHT = 48f
 private const val DESTINATION_CARD_ASPECT = 350f / 263f
 private const val DESTINATION_CARD_SCALE = 0.8f
 
+private val DestinationChrome = Color(0xFF1F1F1F)
 private val DestinationTop = Color(0xFF080007)
 private val DestinationMid = Color(0xFF23001F)
 private val DestinationBottom = Color(0xFF060004)
@@ -90,6 +93,8 @@ private fun CinerificCatalogScreen(
         val density = LocalDensity.current
         val horizontalPadding = destinationDp(50f, scale)
         val rightPadding = destinationDp(150f, scale)
+        val topBarHeight = with(density) { WindowInsets.statusBars.getTop(this).toDp() } +
+            destinationDp(DESTINATION_TOP_BAR_EXTRA_HEIGHT, scale)
         val cardWidth = destinationDp(350f, scale) * DESTINATION_CARD_SCALE
         val cardHeight = cardWidth / DESTINATION_CARD_ASPECT
         val cardGap = destinationDp(50f, scale)
@@ -104,7 +109,7 @@ private fun CinerificCatalogScreen(
                         colors = listOf(DestinationTop, DestinationMid, DestinationBottom)
                     )
                 )
-                .padding(top = 72.dp)
+                .padding(top = topBarHeight)
         ) {
             Text(
                 text = title,
@@ -130,6 +135,8 @@ private fun CinerificCatalogScreen(
 
             Spacer(modifier = Modifier.height(80.dp + bottomSystemPadding))
         }
+
+        DestinationTopBar(height = topBarHeight)
     }
 }
 
@@ -212,6 +219,8 @@ private fun CinerificSettingsScreen(modifier: Modifier = Modifier) {
         val density = LocalDensity.current
         val horizontalPadding = destinationDp(64f, scale)
         val rightPadding = destinationDp(160f, scale)
+        val topBarHeight = with(density) { WindowInsets.statusBars.getTop(this).toDp() } +
+            destinationDp(DESTINATION_TOP_BAR_EXTRA_HEIGHT, scale)
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
 
         Column(
@@ -225,7 +234,7 @@ private fun CinerificSettingsScreen(modifier: Modifier = Modifier) {
                 )
                 .padding(
                     start = horizontalPadding,
-                    top = 72.dp,
+                    top = topBarHeight,
                     end = rightPadding,
                     bottom = 80.dp + bottomSystemPadding
                 )
@@ -269,7 +278,19 @@ private fun CinerificSettingsScreen(modifier: Modifier = Modifier) {
                 )
             )
         }
+
+        DestinationTopBar(height = topBarHeight)
     }
+}
+
+@Composable
+private fun DestinationTopBar(height: Dp) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(height)
+            .background(DestinationChrome.copy(alpha = 0.82f))
+    )
 }
 
 @Composable

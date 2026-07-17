@@ -10,6 +10,7 @@ import android.view.TextureView
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.DrawableRes
+import androidx.annotation.RawRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -234,6 +235,7 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context), Tex
     private val centerCropMatrix = Matrix()
     private var videoSurface: Surface? = null
     private var mediaPlayer: MediaPlayer? = null
+    private var currentVideoIndex = 0
     private var videoWidth = 0
     private var videoHeight = 0
 
@@ -272,12 +274,15 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context), Tex
         val surface = videoSurface ?: return
         releaseVideo()
 
-        val player = MediaPlayer().apply {
-            resources.openRawResourceFd(R.raw.home_hero_reel).use { descriptor ->
+        val player = MediaPlayer()
+        mediaPlayer = player
+
+        player.apply {
+            resources.openRawResourceFd(HeroReelVideos[currentVideoIndex]).use { descriptor ->
                 setDataSource(descriptor.fileDescriptor, descriptor.startOffset, descriptor.length)
             }
             setSurface(surface)
-            isLooping = true
+            isLooping = false
             setVolume(0f, 0f)
             setOnVideoSizeChangedListener { _, videoWidth, videoHeight ->
                 this@LoopingHeroVideoView.videoWidth = videoWidth
@@ -289,14 +294,20 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context), Tex
                 applyCenterCropTransform()
                 player.start()
             }
+            setOnCompletionListener { completedPlayer ->
+                if (mediaPlayer !== completedPlayer) return@setOnCompletionListener
+                currentVideoIndex = (currentVideoIndex + 1) % HeroReelVideos.size
+                startVideo()
+            }
             setOnErrorListener { player, _, _ ->
-                if (mediaPlayer === player) releaseVideo()
+                if (mediaPlayer === player) {
+                    currentVideoIndex = (currentVideoIndex + 1) % HeroReelVideos.size
+                    startVideo()
+                }
                 true
             }
             prepareAsync()
         }
-
-        mediaPlayer = player
     }
 
     override fun onDetachedFromWindow() {
@@ -330,6 +341,7 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context), Tex
         mediaPlayer?.apply {
             setOnPreparedListener(null)
             setOnVideoSizeChangedListener(null)
+            setOnCompletionListener(null)
             setOnErrorListener(null)
             release()
         }
@@ -341,6 +353,16 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context), Tex
     private fun releaseSurface() {
         videoSurface?.release()
         videoSurface = null
+    }
+
+    companion object {
+        @RawRes
+        private val HeroReelVideos = intArrayOf(
+            R.raw.home_hero_reel_01,
+            R.raw.home_hero_reel_02,
+            R.raw.home_hero_reel_03,
+            R.raw.home_hero_reel_04
+        )
     }
 }
 
