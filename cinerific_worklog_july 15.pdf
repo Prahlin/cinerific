@@ -1,0 +1,615 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+3 0 obj
+<< /Length 5792 >>
+stream
+BT
+/F2 12.70 Tf
+1 0 0 1 54 742.00 Tm
+(Cinerific Android App Work Log - July 15, 2026) Tj
+/F1 9.15 Tf
+1 0 0 1 54 728.02 Tm
+(Compiled summary for Wednesday, July 15, 2026 - focus: reducing VS Code/Codex reconnect) Tj
+/F1 9.15 Tf
+1 0 0 1 54 716.17 Tm
+(churn after the Home & Default import, documenting that the Gradle/build ignore fix was already) Tj
+/F1 9.15 Tf
+1 0 0 1 54 704.32 Tm
+(working, converting the intro handoff from a timed delay into an avatar-driven entry point,) Tj
+/F1 9.15 Tf
+1 0 0 1 54 692.47 Tm
+(adding a live right-side navigation rail, scaffolding Movies, Shows, Favorites, and Settings) Tj
+/F1 9.15 Tf
+1 0 0 1 54 680.62 Tm
+(surfaces, adding a looping Home hero reel, and hardening the video playback lifecycle after) Tj
+/F1 9.15 Tf
+1 0 0 1 54 668.77 Tm
+(diagnosing the hero video as the likely runtime reconnect/restart source.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 656.92 Tm
+(Generated in continuity with the established Cinerific worklog cadence from July 12, July 14,) Tj
+/F1 9.15 Tf
+1 0 0 1 54 645.07 Tm
+(and July 15 Part 1: compact opening summary, source-material review, baseline, goals,) Tj
+/F1 9.15 Tf
+1 0 0 1 54 633.22 Tm
+(work-completed sections, validation, files touched, follow-up context, and output-artifact) Tj
+/F1 9.15 Tf
+1 0 0 1 54 621.37 Tm
+(close. This artifact records Cinerific work from the July 15 pass and uses the prior) Tj
+/F1 9.15 Tf
+1 0 0 1 54 609.52 Tm
+(Cinerific and Alla Vostra PDFs as naming, structure, length, and tone references.) Tj
+/F2 9.15 Tf
+1 0 0 1 54 591.15 Tm
+(Source Materials Reviewed) Tj
+/F1 9.15 Tf
+1 0 0 1 54 579.30 Tm
+(- Reviewed cinerific_worklog_july 12.pdf, cinerific_worklog_july 14.pdf, and) Tj
+/F1 9.15 Tf
+1 0 0 1 54 567.45 Tm
+(cinerific_worklog_july 15 part 1.pdf. That prior July 15 artifact established the Home & Default baseline for this worklog.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 555.60 Tm
+(- Reviewed July 15 Git history on main: 6483130 for read_project.sh, c926fca for the Home &) Tj
+/F1 9.15 Tf
+1 0 0 1 54 543.75 Tm
+(Default Figma import, and 0f6d2da for the VS Code workspace/MCP cleanup intended to improve) Tj
+/F1 9.15 Tf
+1 0 0 1 54 531.90 Tm
+(reconnect behavior.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 520.05 Tm
+(- Reviewed current working tree status and diffs for CinerificApp.kt, CinerificHomeScreen.kt,) Tj
+/F1 9.15 Tf
+1 0 0 1 54 508.20 Tm
+(CinerificIntroView.kt, cinerific_PROJECT_SNAPSHOT.txt, and the new untracked UI files) Tj
+/F1 9.15 Tf
+1 0 0 1 54 496.35 Tm
+(CinerificDestinationScreen.kt and CinerificRightSideNavBar.kt.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 484.50 Tm
+(- Reviewed the new raw media asset app/src/main/res/raw/home_hero_reel.mp4, identified locally) Tj
+/F1 9.15 Tf
+1 0 0 1 54 472.65 Tm
+(as an ISO Media MP4 file at 5,972,765 bytes.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 460.80 Tm
+(- Reviewed .gitignore, .vscode/settings.json, and .vscode/mcp.json after the reconnect cleanup) Tj
+/F1 9.15 Tf
+1 0 0 1 54 448.95 Tm
+(commit. The workspace now excludes Android build/cache noise and keeps the local) Tj
+/F1 9.15 Tf
+1 0 0 1 54 437.10 Tm
+(figmaDesktop MCP endpoint.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 425.25 Tm
+(- Used git status, git log, git show --stat, git diff, git check-ignore, rg, ls/find/stat/file) Tj
+/F1 9.15 Tf
+1 0 0 1 54 413.40 Tm
+(inspection, pdftotext/pdfinfo, adb device checks, and Gradle assembleDebug output. No) Tj
+/F1 9.15 Tf
+1 0 0 1 54 401.55 Tm
+(external PDF dependency was installed for this worklog.) Tj
+/F2 9.15 Tf
+1 0 0 1 54 383.18 Tm
+(Baseline Status Before July 15) Tj
+/F1 9.15 Tf
+1 0 0 1 54 371.33 Tm
+(- Cinerific already had the July 14 native boot intro renderer and, from July 15 Part 1, a) Tj
+/F1 9.15 Tf
+1 0 0 1 54 359.48 Tm
+(bootable Home & Default Compose scaffold using Figma-cropped hero and program-card assets.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 347.63 Tm
+(- The Part 1 app still handed off automatically after BOOT_ANIMATION_MS. The next desired) Tj
+/F1 9.15 Tf
+1 0 0 1 54 335.78 Tm
+(interaction was for a settled avatar tap to enter the app deliberately.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 323.93 Tm
+(- Home still used a static hero/header crop, and there was no live navigation beyond the Home) Tj
+/F1 9.15 Tf
+1 0 0 1 54 312.08 Tm
+(scaffold. Movies, Shows, Favorites, and Settings were expected product destinations but not) Tj
+/F1 9.15 Tf
+1 0 0 1 54 300.23 Tm
+(yet reachable native screens.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 288.38 Tm
+(- The user had already fixed the Gradle/build ignore problem. The remaining reconnect symptom) Tj
+/F1 9.15 Tf
+1 0 0 1 54 276.53 Tm
+(therefore needed to be separated into editor/project-watch churn versus runtime lifecycle) Tj
+/F1 9.15 Tf
+1 0 0 1 54 264.68 Tm
+(churn.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 252.83 Tm
+(- No Android emulator or phone was attached through adb during the final reconnect diagnosis,) Tj
+/F1 9.15 Tf
+1 0 0 1 54 240.98 Tm
+(so logcat could not be captured. Source inspection and build validation were used for this) Tj
+/F1 9.15 Tf
+1 0 0 1 54 229.13 Tm
+(pass.) Tj
+/F2 9.15 Tf
+1 0 0 1 54 210.76 Tm
+(Main Goals for July 15) Tj
+/F1 9.15 Tf
+1 0 0 1 54 198.91 Tm
+(- Reduce avoidable editor/Codex reconnect churn by excluding local build/cache output and) Tj
+/F1 9.15 Tf
+1 0 0 1 54 187.06 Tm
+(simplifying workspace MCP configuration.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 161.71 Tm
+(- Replace the automatic intro timer handoff with an avatar-selection handoff into the main) Tj
+/F1 9.15 Tf
+1 0 0 1 54 149.86 Tm
+(Cinerific experience.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 138.01 Tm
+(- Add a right-side navigation rail with Home, Movies, Shows, Favorites, and Settings) Tj
+/F1 9.15 Tf
+1 0 0 1 54 126.16 Tm
+(destinations.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 114.31 Tm
+(- Scaffold destination screens enough that the rail connects to actual Android surfaces) Tj
+/F1 9.15 Tf
+1 0 0 1 54 102.46 Tm
+(instead of a decorative overlay.) Tj
+/F1 8.20 Tf
+1 0 0 1 54 35 Tm
+(Cinerific Work Log - July 15, 2026 Page 1) Tj
+ET
+endstream
+endobj
+4 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 3 0 R >>
+endobj
+5 0 obj
+<< /Length 5554 >>
+stream
+BT
+/F1 9.15 Tf
+1 0 0 1 54 742.00 Tm
+(- Replace the static Home hero crop with a looping raw MP4 hero reel and harden its) Tj
+/F1 9.15 Tf
+1 0 0 1 54 730.15 Tm
+(MediaPlayer lifecycle after diagnosing reconnect-like playback behavior.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 718.30 Tm
+(- Build the app after the lifecycle fix and record the remaining source-control state for) Tj
+/F1 9.15 Tf
+1 0 0 1 54 706.45 Tm
+(review.) Tj
+/F2 9.15 Tf
+1 0 0 1 54 688.08 Tm
+(Work Completed - Workspace and Reconnect Cleanup) Tj
+/F1 9.15 Tf
+1 0 0 1 54 676.23 Tm
+(- Committed 0f6d2da to optimize the VS Code workspace for faster Codex reconnects and simpler) Tj
+/F1 9.15 Tf
+1 0 0 1 54 664.38 Tm
+(MCP setup.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 652.53 Tm
+(- Added .vscode/settings.json with watcher/search exclusions for .gradle, .idea, app/build,) Tj
+/F1 9.15 Tf
+1 0 0 1 54 640.68 Tm
+(and build so VS Code does not index generated Android output.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 628.83 Tm
+(- Simplified .vscode/mcp.json from multiple Figma/MCP server entries to only the local) Tj
+/F1 9.15 Tf
+1 0 0 1 54 616.98 Tm
+(figmaDesktop HTTP endpoint at http://127.0.0.1:3845/mcp.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 605.13 Tm
+(- Expanded .gitignore with cinerific_PROJECT_SNAPSHOT.txt, screenshots/, and) Tj
+/F1 9.15 Tf
+1 0 0 1 54 593.28 Tm
+(cinerific_worklog_*.pdf to keep generated snapshots, screenshots, and worklog artifacts out) Tj
+/F1 9.15 Tf
+1 0 0 1 54 581.43 Tm
+(of future default status noise.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 569.58 Tm
+(- Verified the ignore rules with git check-ignore for .gradle, app/build, .idea,) Tj
+/F1 9.15 Tf
+1 0 0 1 54 557.73 Tm
+(local.properties, and the July 15 Part 1 worklog PDF.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 545.88 Tm
+(- Identified that already tracked files, including cinerific_PROJECT_SNAPSHOT.txt and older) Tj
+/F1 9.15 Tf
+1 0 0 1 54 534.03 Tm
+(screenshot/worklog artifacts, can still appear modified until removed from the Git index.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 522.18 Tm
+(That Git behavior is separate from reconnecting.) Tj
+/F2 9.15 Tf
+1 0 0 1 54 503.81 Tm
+(Work Completed - Intro and App Flow) Tj
+/F1 9.15 Tf
+1 0 0 1 54 491.96 Tm
+(- Updated CinerificIntroView.kt with MotionEvent handling so a final avatar press only) Tj
+/F1 9.15 Tf
+1 0 0 1 54 480.11 Tm
+(completes when the touch starts and ends on a settled avatar.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 468.26 Tm
+(- Added FINAL_AVATAR_BOUNDS for Steve, Martin, Janny, and Guest in the same 1194 by 834 Figma) Tj
+/F1 9.15 Tf
+1 0 0 1 54 456.41 Tm
+(coordinate space as the intro renderer.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 444.56 Tm
+(- Added onAvatarSelected as the bridge from the native intro View back into Compose, and made) Tj
+/F1 9.15 Tf
+1 0 0 1 54 432.71 Tm
+(the view clickable/focusable for Android interaction semantics.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 420.86 Tm
+(- Guarded avatar hit testing so taps before the final settled frame do not skip into the app) Tj
+/F1 9.15 Tf
+1 0 0 1 54 409.01 Tm
+(prematurely.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 397.16 Tm
+(- Updated CinerificApp.kt to remove the automatic coroutine delay handoff, add) Tj
+/F1 9.15 Tf
+1 0 0 1 54 385.31 Tm
+(CinerificDestination, and introduce CinerificMainExperience as the post-intro destination) Tj
+/F1 9.15 Tf
+1 0 0 1 54 373.46 Tm
+(state holder.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 361.61 Tm
+(- Routed the intro into the main app only when CinerificIntroView invokes onAvatarSelected.) Tj
+/F2 9.15 Tf
+1 0 0 1 54 343.25 Tm
+(Work Completed - Navigation and Destination Screens) Tj
+/F1 9.15 Tf
+1 0 0 1 54 331.40 Tm
+(- Added CinerificRightSideNavBar.kt as a right-edge Compose navigation rail with Home, Movies,) Tj
+/F1 9.15 Tf
+1 0 0 1 54 319.55 Tm
+(Shows, Favorites, and Settings entries.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 307.70 Tm
+(- Implemented compact and expanded rail states with animateFloatAsState, a 150 ms ease-out) Tj
+/F1 9.15 Tf
+1 0 0 1 54 295.85 Tm
+(animation, a menu icon, selected/inactive styling, and a Home auto-collapse delay.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 284.00 Tm
+(- Added CinerificDestinationScreen.kt with reachable surfaces for Movies, Shows, Favorites,) Tj
+/F1 9.15 Tf
+1 0 0 1 54 272.15 Tm
+(and Settings.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 246.79 Tm
+(- Built Movies, Shows, and Favorites as catalog-style gradient screens using existing imported) Tj
+/F1 9.15 Tf
+1 0 0 1 54 234.94 Tm
+(Home card artwork in horizontal rows, avoiding another broad Figma import for this pass.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 223.09 Tm
+(- Built Settings as a Cinerific-styled scroll screen with Accessibility, Playback, Billing &) Tj
+/F1 9.15 Tf
+1 0 0 1 54 211.24 Tm
+(Payment, and Security sections plus simple toggle pills.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 199.39 Tm
+(- Routed destination selection through CinerificMainExperience so the nav rail overlays Home) Tj
+/F1 9.15 Tf
+1 0 0 1 54 187.54 Tm
+(and each destination surface.) Tj
+/F2 9.15 Tf
+1 0 0 1 54 169.17 Tm
+(Work Completed - Home Hero Reel and Runtime Diagnosis) Tj
+/F1 9.15 Tf
+1 0 0 1 54 157.32 Tm
+(- Added app/src/main/res/raw/home_hero_reel.mp4 as the local looping hero source. Its 5.7 MB) Tj
+/F1 9.15 Tf
+1 0 0 1 54 145.47 Tm
+(size is not large enough by itself to explain project-level reconnect churn.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 133.62 Tm
+(- Updated CinerificHomeScreen.kt to replace the static home_hero_header image with) Tj
+/F1 9.15 Tf
+1 0 0 1 54 121.77 Tm
+(HomeHeroHeader, which layers a looping video reel behind the Cinerific logo.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 109.92 Tm
+(- Adjusted Home layout details while adding the reel: 1194 by 834 hero aspect, 80 percent card) Tj
+/F1 8.20 Tf
+1 0 0 1 54 35 Tm
+(Cinerific Work Log - July 15, 2026 Page 2) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 5645 >>
+stream
+BT
+/F1 9.15 Tf
+1 0 0 1 54 742.00 Tm
+(scale, larger row gaps, and bottom spacing that accounts for navigation bars.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 730.15 Tm
+(- Diagnosed the remaining reconnect-like symptom as runtime lifecycle churn rather than a) Tj
+/F1 9.15 Tf
+1 0 0 1 54 718.30 Tm
+(Gradle/build-file issue. The app has no networking stack, and assembleDebug was already) Tj
+/F1 9.15 Tf
+1 0 0 1 54 706.45 Tm
+(passing.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 694.60 Tm
+(- Replaced the original SurfaceView-style player path with a TextureView-backed player and a) Tj
+/F1 9.15 Tf
+1 0 0 1 54 682.75 Tm
+(Matrix center-crop transform so playback does not resize the surface view during layout.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 670.90 Tm
+(- Hardened MediaPlayer cleanup by releasing stale players before starting new ones, clearing) Tj
+/F1 9.15 Tf
+1 0 0 1 54 659.05 Tm
+(listeners on release, ignoring late prepared callbacks from released players, and releasing) Tj
+/F1 9.15 Tf
+1 0 0 1 54 647.20 Tm
+(the Surface when the texture is destroyed or the view detaches.) Tj
+/F2 9.15 Tf
+1 0 0 1 54 628.83 Tm
+(Validation and Checks Performed) Tj
+/F1 9.15 Tf
+1 0 0 1 54 616.98 Tm
+(- Ran ./gradlew assembleDebug after the Home video lifecycle fix; the debug build completed) Tj
+/F1 9.15 Tf
+1 0 0 1 54 605.13 Tm
+(successfully.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 593.28 Tm
+(- Ran adb devices -l during diagnosis. No device or emulator was attached, so no live logcat) Tj
+/F1 9.15 Tf
+1 0 0 1 54 581.43 Tm
+(capture or final on-device visual verification was possible.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 569.58 Tm
+(- Ran git status --short and git diff --stat. Active modified files are CinerificApp.kt,) Tj
+/F1 9.15 Tf
+1 0 0 1 54 557.73 Tm
+(CinerificHomeScreen.kt, CinerificIntroView.kt, and cinerific_PROJECT_SNAPSHOT.txt; new) Tj
+/F1 9.15 Tf
+1 0 0 1 54 545.88 Tm
+(untracked paths are CinerificDestinationScreen.kt, CinerificRightSideNavBar.kt, and) Tj
+/F1 9.15 Tf
+1 0 0 1 54 534.03 Tm
+(app/src/main/res/raw/.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 522.18 Tm
+(- Ran git show --stat for 0f6d2da, c926fca, and 6483130 so committed July 15 work is separated) Tj
+/F1 9.15 Tf
+1 0 0 1 54 510.33 Tm
+(from active uncommitted implementation work.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 498.48 Tm
+(- Ran file/stat inspection on home_hero_reel.mp4 and confirmed it is an MP4 resource at) Tj
+/F1 9.15 Tf
+1 0 0 1 54 486.63 Tm
+(5,972,765 bytes.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 474.78 Tm
+(- Used pdftotext and pdfinfo on prior Cinerific PDFs before writing this artifact, preserving) Tj
+/F1 9.15 Tf
+1 0 0 1 54 462.93 Tm
+(the four-page letter-size style and root-level naming convention.) Tj
+/F2 9.15 Tf
+1 0 0 1 54 444.56 Tm
+(Files Touched During July 15) Tj
+/F1 9.15 Tf
+1 0 0 1 54 432.71 Tm
+(- .gitignore: now ignores cinerific_PROJECT_SNAPSHOT.txt, screenshots/, and) Tj
+/F1 9.15 Tf
+1 0 0 1 54 420.86 Tm
+(cinerific_worklog_*.pdf in addition to Android/editor/build output.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 409.01 Tm
+(- .vscode/settings.json: new watcher/search exclusions for .gradle, .idea, app/build, and) Tj
+/F1 9.15 Tf
+1 0 0 1 54 397.16 Tm
+(build.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 385.31 Tm
+(- .vscode/mcp.json: simplified to the local figmaDesktop MCP server only.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 373.46 Tm
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt: removes timed intro handoff,) Tj
+/F1 9.15 Tf
+1 0 0 1 54 361.61 Tm
+(adds CinerificDestination, creates CinerificMainExperience, routes destination state, and) Tj
+/F1 9.15 Tf
+1 0 0 1 54 349.76 Tm
+(overlays the right-side navigation rail.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 337.91 Tm
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt: adds final-avatar hit) Tj
+/F1 9.15 Tf
+1 0 0 1 54 312.56 Tm
+(testing and onAvatarSelected callback for entering the main app from the settled intro.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 300.71 Tm
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificHomeScreen.kt: replaces the static hero) Tj
+/F1 9.15 Tf
+1 0 0 1 54 288.86 Tm
+(crop with a TextureView/MediaPlayer looping hero reel, keeps logo overlay, adjusts layout) Tj
+/F1 9.15 Tf
+1 0 0 1 54 277.01 Tm
+(scale/spacing, and guards video lifecycle cleanup.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 265.16 Tm
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificRightSideNavBar.kt: new right-side) Tj
+/F1 9.15 Tf
+1 0 0 1 54 253.31 Tm
+(navigation rail with destination callbacks and collapse/open behavior.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 241.46 Tm
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt: new scaffold) Tj
+/F1 9.15 Tf
+1 0 0 1 54 229.61 Tm
+(screens for Movies, Shows, Favorites, and Settings.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 217.76 Tm
+(- app/src/main/res/raw/home_hero_reel.mp4: new local looping Home hero video source.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 205.91 Tm
+(- cinerific_PROJECT_SNAPSHOT.txt: regenerated after workspace/MCP ignore changes and still) Tj
+/F1 9.15 Tf
+1 0 0 1 54 194.06 Tm
+(tracked, so Git can report it modified despite the new ignore rule.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 182.21 Tm
+(- cinerific_worklog_july 15.pdf: this generated worklog artifact at the repository) Tj
+/F1 9.15 Tf
+1 0 0 1 54 170.36 Tm
+(root.) Tj
+/F2 9.15 Tf
+1 0 0 1 54 151.99 Tm
+(Follow-Up Context) Tj
+/F1 9.15 Tf
+1 0 0 1 54 140.14 Tm
+(- Attach or start the Cinerific tablet AVD before the next runtime pass so logcat can confirm) Tj
+/F1 9.15 Tf
+1 0 0 1 54 128.29 Tm
+(whether the hero reel lifecycle fix removes the observed reconnect/restart behavior on) Tj
+/F1 9.15 Tf
+1 0 0 1 54 116.44 Tm
+(device.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 104.59 Tm
+(- Decide whether generated worklogs, screenshots, and cinerific_PROJECT_SNAPSHOT.txt should) Tj
+/F1 8.20 Tf
+1 0 0 1 54 35 Tm
+(Cinerific Work Log - July 15, 2026 Page 3) Tj
+ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 2173 >>
+stream
+BT
+/F1 9.15 Tf
+1 0 0 1 54 742.00 Tm
+(remain tracked historical artifacts or be removed from the Git index now that ignore rules) Tj
+/F1 9.15 Tf
+1 0 0 1 54 730.15 Tm
+(exclude them.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 718.30 Tm
+(- Consider Media3/ExoPlayer later if playback controls, lifecycle ownership, or broader media) Tj
+/F1 9.15 Tf
+1 0 0 1 54 706.45 Tm
+(diagnostics become important.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 694.60 Tm
+(- Replace the scaffolded destination layouts with real Figma-derived screens when Movies,) Tj
+/F1 9.15 Tf
+1 0 0 1 54 682.75 Tm
+(Shows, Favorites, and Settings move beyond placeholder catalog/settings surfaces.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 670.90 Tm
+(- Add accessibility labels and real click behavior for program cards, row chevrons, nav items,) Tj
+/F1 9.15 Tf
+1 0 0 1 54 659.05 Tm
+(and settings toggles once the visual navigation path is accepted.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 647.20 Tm
+(- Re-run read_project.sh after the current uncommitted source files and raw media asset are) Tj
+/F1 9.15 Tf
+1 0 0 1 54 635.35 Tm
+(accepted so the snapshot reflects the final July 15 source state.) Tj
+/F2 9.15 Tf
+1 0 0 1 54 616.98 Tm
+(Output Artifact) Tj
+/F1 9.15 Tf
+1 0 0 1 54 605.13 Tm
+(- Filename: cinerific_worklog_july 15.pdf) Tj
+/F1 9.15 Tf
+1 0 0 1 54 593.28 Tm
+(- Created at the repository root in /Users/prahlin/gh/cinerific.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 581.43 Tm
+(- Follows the standard Cinerific July worklog filename convention, including the space before the day number.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 569.58 Tm
+(- Follows the established Alla Vostra/Prahlin daily worklog structure while keeping the body) Tj
+/F1 9.15 Tf
+1 0 0 1 54 557.73 Tm
+(content specific to Cinerific work.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 545.88 Tm
+(- No external PDF dependency was installed; this artifact was generated with a small) Tj
+/F1 9.15 Tf
+1 0 0 1 54 534.03 Tm
+(standard-library PDF writer in the same plain-text-readable spirit as the prior Cinerific) Tj
+/F1 9.15 Tf
+1 0 0 1 54 522.18 Tm
+(worklogs.) Tj
+/F1 9.15 Tf
+1 0 0 1 54 510.33 Tm
+(- Created this daily worklog PDF: cinerific_worklog_july 15.pdf.) Tj
+/F1 8.20 Tf
+1 0 0 1 54 35 Tm
+(Cinerific Work Log - July 15, 2026 Page 4) Tj
+ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Type /Pages /Kids [ 4 0 R 6 0 R 8 0 R 10 0 R ] /Count 4 >>
+endobj
+12 0 obj
+<< /Type /Catalog /Pages 11 0 R >>
+endobj
+13 0 obj
+<< /Title (Cinerific Android App Work Log - July 15, 2026) /Subject (Cinerific Android app development worklog) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260715220500-04'00') /ModDate (D:20260715220500-04'00') >>
+endobj
+xref
+0 14
+0000000000 65535 f 
+0000000015 00000 n 
+0000000085 00000 n 
+0000000160 00000 n 
+0000006004 00000 n 
+0000006141 00000 n 
+0000011747 00000 n 
+0000011884 00000 n 
+0000017581 00000 n 
+0000017718 00000 n 
+0000019943 00000 n 
+0000020081 00000 n 
+0000020160 00000 n 
+0000020211 00000 n 
+trailer
+<< /Size 14 /Root 12 0 R /Info 13 0 R >>
+startxref
+20530
+%%EOF

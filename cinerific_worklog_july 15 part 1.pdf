@@ -1,0 +1,268 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [6 0 R 8 0 R 10 0 R 12 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Length 7457 >>
+stream
+BT
+/F2 13.80 Tf 1 0 0 1 50.00 744.00 Tm (Cinerific Android App Work Log - July 15, 2026 Part 1) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 728.20 Tm (Compiled summary for Wednesday, July 15, 2026 - Part 1 - focus: creating a Cinerific project) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 717.55 Tm (snapshot scanner from the Alla Vostra read_project.sh convention, documenting which files future) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 706.90 Tm (AI sessions should include or ignore, restoring upgraded Figma access, importing the Home &) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 696.25 Tm (Default screen from the Cinerific Figma file, cropping real home artwork into Android drawable) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 685.60 Tm (resources, scaffolding the native Compose home screen, wiring the intro into the new) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 674.95 Tm (home/default surface, building and installing the app on the tablet AVD, and reopening the) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 664.30 Tm (Android Studio runtime workflow.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 653.65 Tm (Generated in continuity with the established Cinerific worklog cadence from July 12 and July 14:) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 643.00 Tm (compact opening summary, source-material review, baseline state, goals, work-completed sections,) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 632.35 Tm (validation, files touched, follow-up context, and output-artifact close. This artifact records) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 621.70 Tm (only Cinerific work from the July 15 Part 1 Codex session, while using the prior Cinerific and) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 611.05 Tm (Alla Vostra logs as naming, structure, length, and tone references.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 595.40 Tm (Source Materials Reviewed) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 583.40 Tm (- Reviewed the existing Cinerific worklog artifacts at the repository root:) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 572.75 Tm (cinerific_worklog_july 12.pdf and cinerific_worklog_july 14.pdf. The July 12 artifact) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 562.10 Tm (established the Cinerific naming convention and first Figma-to-Android import narrative; the) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 551.45 Tm (July 14 artifact established the continuous intro-animation implementation and the four-page) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 540.80 Tm (daily-log shape.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 530.15 Tm (- Re-read the Cinerific commit history on main, especially July 15 commits 6483130 and c926fca,) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 519.50 Tm (to keep this worklog aligned with actual source-control history rather than only chat memory.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 508.85 Tm (- Studied /Users/prahlin/gh/alla_vostra/read_project.sh as the model for a root-level project) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 498.20 Tm (scanner: instruction header, command abbreviations, project tree, numbered file dumps,) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 487.55 Tm (generated/cache exclusions, and a clear not-included section.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 476.90 Tm (- Reviewed /Users/prahlin/gh/cinerific source files and resources, including read_project.sh,) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 466.25 Tm (cinerific_PROJECT_SNAPSHOT.txt, CinerificApp.kt, CinerificHomeScreen.kt, CinerificIntroView.kt,) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 455.60 Tm (drawable-nodpi assets, Gradle files, and VS Code/Android Studio task files.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 444.95 Tm (- Used the Figma connector against file key qbpfngwBirp0WoOHSqw1TN. Queried Page 1, the Home &) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 434.30 Tm (Default section 485:7119, the full Display - Home & Default frame 101:613, and the focused) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 423.65 Tm (tablet frame 813:7630.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 413.00 Tm (- Reviewed Figma screenshots and metadata for the Home & Default design: a hero/header area,) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 402.35 Tm (Cinerific logo, menu icon, dark purple-black background, and horizontally scrolling program rows) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 391.70 Tm (for Crime, Thriller, Comedy, Action, Drama, Documentary, and Horror.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 381.05 Tm (- Used git status, git log, git show --stat, rg, pdftotext, pdfinfo, Gradle build output, adb) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 370.40 Tm (device state, emulator screenshots, and Android Studio/AVD runtime checks. No external PDF) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 359.75 Tm (dependency was installed for this worklog.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 344.10 Tm (Baseline Status Before July 15 Part 1) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 332.10 Tm (- The repository already had the July 14 native Android intro renderer, real Cinerific intro) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 321.45 Tm (artwork, avatar/name assets, splash fixes, and a boot animation that settled into the Cinerific) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 310.80 Tm (logo plus four profile icons.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 300.15 Tm (- The app still lacked an implemented Home & Default screen. The prior July 14 worklog) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 289.50 Tm (explicitly identified Home & Default as the next screen to scaffold once the Figma quota/plan) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 278.85 Tm (situation allowed fresh extraction.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 268.20 Tm (- The Android project did not yet have a reusable Cinerific snapshot file. Future AI/Codex) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 257.55 Tm (sessions had to rediscover which files mattered and which generated, local, private, or binary) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 246.90 Tm (files should be ignored.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 236.25 Tm (- Figma plan limits had previously constrained live design access. At the start of this Part 1) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 225.60 Tm (pass, the user had upgraded to Figma Pro and asked to import the default/home screen from the) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 214.95 Tm (real Cinerific Figma file.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 204.30 Tm (- Android Studio and the Cinerific_Standard_Tablet AVD were part of the working loop, but the) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 193.65 Tm (user specifically wanted the running app visible through the Android Studio in-window device) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 183.00 Tm (experience rather than only through detached terminal-driven adb commands.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 167.35 Tm (Main Goals for July 15 Part 1) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 155.35 Tm (- Create a Cinerific equivalent of Alla Vostra read_project.sh so future sessions can scan the) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 144.70 Tm (project consistently and understand the ignore policy each time the script runs.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 134.05 Tm (- Import the Figma Home & Default screen into the Android app as a real native scaffold rather) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 123.40 Tm (than a single unexplained placeholder or a live Figma expectation inside Android Studio.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 112.75 Tm (- Preserve visible Cinerific design material from the Figma file: hero art, dark background, row) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 102.10 Tm (headers, chevrons, rounded program cards, and the home program categories.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 91.45 Tm (- Wire the existing boot intro into the new home/default destination so the app no longer ends) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 80.80 Tm (only on the intro final state.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 70.15 Tm (- Build, install, launch, and screenshot-check the app on the Cinerific tablet AVD after the) Tj
+/F1 7.80 Tf 1 0 0 1 195.00 32.00 Tm (Cinerific Work Log - July 15, 2026 Part 1 Page 1) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 7288 >>
+stream
+BT
+/F1 8.65 Tf 1 0 0 1 60.00 744.00 Tm (home/default import.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 733.35 Tm (- Produce this July 15 Part 1 worklog using the established Cinerific PDF convention.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 717.70 Tm (Work Completed - Project Snapshot Scanner) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 705.70 Tm (- Studied the Alla Vostra read_project.sh structure and created a Cinerific-specific root-level) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 695.05 Tm (read_project.sh.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 684.40 Tm (- Implemented cinerific_PROJECT_SNAPSHOT.txt generation so the script rebuilds the snapshot from) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 673.75 Tm (the current workspace every time it runs.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 663.10 Tm (- Adapted the instruction header and command abbreviation dictionary from the Alla Vostra) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 652.45 Tm (convention while changing the file lists and headings for the Android/Kotlin Cinerific project.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 641.80 Tm (- Added a SNAPSHOT IGNORE POLICY section so future AI sessions can see which files were) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 631.15 Tm (deliberately omitted rather than assuming the project tree is incomplete by accident.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 620.50 Tm (- Excluded generated/cache/runtime/private/noisy paths from the scan: .git, .gradle, .idea,) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 609.85 Tm (app/build, build, .kotlin, .tmp, .cache, .DS_Store, local.properties, *_PROJECT_SNAPSHOT.txt,) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 599.20 Tm (*.jks, and *.keystore.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 588.55 Tm (- Preserved binary image and screenshot awareness without dumping raw image/PDF bytes. The) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 577.90 Tm (snapshot inventories binary assets by path, size, and modified time instead of embedding them as) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 567.25 Tm (unreadable text.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 556.60 Tm (- Validated the script with bash -n and by running ./read_project.sh. The project snapshot was) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 545.95 Tm (later committed in the July 15 home-import commit after the screen assets were added.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 530.30 Tm (Work Completed - Figma Home & Default Extraction) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 518.30 Tm (- Reconnected to the Cinerific Figma design file through the available connector after the user) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 507.65 Tm (upgraded Figma access.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 497.00 Tm (- Listed the Figma document pages and found a single Page 1. Queried the page structure and) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 486.35 Tm (identified Home & Default section 485:7119.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 475.70 Tm (- Ran a targeted Figma query for candidate Home/Default frames and located Display - Home &) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 465.05 Tm (Default nodes, including full scroll frame 101:613 and focused tablet frame 813:7630.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 454.40 Tm (- Captured Figma screenshots for the focused tablet viewport and the long scroll home stack. The) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 443.75 Tm (focused view showed program rows and cropped cards; the long view revealed the hero/header plus) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 433.10 Tm (Crime, Thriller, Comedy, Action, Drama, Documentary, and Horror rows.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 422.45 Tm (- Downloaded a full-resolution Figma render of the Home & Default stack and used it as the) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 411.80 Tm (source for exact crop coordinates instead of manually redrawing the card artwork.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 401.15 Tm (- Generated cropped Android drawable resources for the hero/header and program cards. The final) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 390.50 Tm (imported set contains 34 home_*.png files under app/src/main/res/drawable-nodpi.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 379.85 Tm (- Removed an unused intermediate home_hero.png crop after replacing it with the taller) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 369.20 Tm (home_hero_header.png asset that better matched the Figma scroll stack.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 353.55 Tm (Work Completed - Home Screen Scaffold) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 341.55 Tm (- Added app/src/main/java/com/prahlin/cinerific/ui/CinerificHomeScreen.kt as the native Compose) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 330.90 Tm (scaffold for the Figma Home & Default screen.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 320.25 Tm (- Built the screen as a scrollable dark Cinerific surface with a Figma-derived hero/header image) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 309.60 Tm (and program rows using actual cropped artwork assets.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 298.95 Tm (- Defined HomeProgramRows for Crime, Thriller, Comedy, Action, Drama, Documentary, and Horror,) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 288.30 Tm (with each row backed by drawable resource IDs for the imported card art.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 277.65 Tm (- Implemented horizontal scrolling rows, row titles, right-chevron affordances, rounded corners,) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 267.00 Tm (shadows, stable card aspect ratios, and responsive sizing from the 1194-pixel Figma frame width.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 256.35 Tm (- Updated CinerificApp.kt so the existing intro animation remains first, then switches to) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 245.70 Tm (CinerificHomeScreen after BOOT_ANIMATION_MS using Compose state and a coroutine delay.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 235.05 Tm (- Kept the home screen as a scaffold rather than a final product surface: the current pass) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 224.40 Tm (focuses on real art, structure, and bootability, while full navigation, interactions, and) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 213.75 Tm (detailed component behavior remain future work.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 203.10 Tm (- Noted that tap-to-skip or tap-to-navigate from the intro was requested later, but that) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 192.45 Tm (implementation was interrupted before completion. The committed July 15 Part 1 behavior is timed) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 181.80 Tm (intro handoff into Home & Default.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 166.15 Tm (Work Completed - Android Studio and AVD Runtime) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 154.15 Tm (- Built the updated app with Gradle after importing the home/default assets and code. The) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 143.50 Tm (drawable resource names resolved correctly through Android generated R resources.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 132.85 Tm (- Installed the debug APK onto Cinerific_Standard_Tablet and launched) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 122.20 Tm (com.prahlin.cinerific/.MainActivity through adb.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 111.55 Tm (- Captured post-intro emulator screenshots confirming that the Home & Default hero/header screen) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 100.90 Tm (appears after the intro handoff.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 90.25 Tm (- Scrolled the running app and captured row-area screenshots confirming that the program-card) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 79.60 Tm (rows render with the imported Figma artwork below the hero/header.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 68.95 Tm (- Opened Android Studio with the Cinerific project and worked to bring the tablet AVD into the) Tj
+/F1 7.80 Tf 1 0 0 1 195.00 32.00 Tm (Cinerific Work Log - July 15, 2026 Part 1 Page 2) Tj
+ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 6923 >>
+stream
+BT
+/F1 8.65 Tf 1 0 0 1 60.00 744.00 Tm (Running Devices/in-window flow.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 733.35 Tm (- Confirmed the AVD name through adb emu avd name and verified that com.prahlin.cinerific was) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 722.70 Tm (running on emulator-5554.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 712.05 Tm (- Attempted macOS UI automation to open Android Studio Running Devices, but System Events was) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 701.40 Tm (blocked by macOS Apple Events authorization. The AVD and app were still booted and verified) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 690.75 Tm (through adb/screenshots.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 675.10 Tm (Validation and Checks Performed) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 663.10 Tm (- Ran bash -n read_project.sh after creating the Cinerific project scanner.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 652.45 Tm (- Ran ./read_project.sh repeatedly after scanner edits and after the home/default import so) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 641.80 Tm (cinerific_PROJECT_SNAPSHOT.txt reflected the current project state.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 631.15 Tm (- Ran ./gradlew :app:assembleDebug after the Home & Default scaffold and asset import. The build) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 620.50 Tm (completed successfully.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 609.85 Tm (- Ran ./gradlew :app:installDebug and launched com.prahlin.cinerific/.MainActivity on) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 599.20 Tm (Cinerific_Standard_Tablet.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 588.55 Tm (- Used adb screenshots to verify the running app at the top of the imported home/default hero) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 577.90 Tm (and after scrolling into the program row area.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 567.25 Tm (- Confirmed the committed July 15 source history: 6483130 for read_project.sh and c926fca for) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 556.60 Tm (Home & Default import, home assets, Compose scaffold, and refreshed project snapshot.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 545.95 Tm (- Confirmed that current local working tree status before this PDF included unrelated local) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 535.30 Tm (configuration changes in .gitignore/.vscode files. This worklog generation does not rely on) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 524.65 Tm (those local config edits.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 509.00 Tm (Files Touched During July 15 Part 1) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 497.00 Tm (- read_project.sh: Cinerific root-level snapshot generator modeled after the Alla Vostra) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 486.35 Tm (scanner, with Cinerific-specific source lists and ignore policy.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 475.70 Tm (- cinerific_PROJECT_SNAPSHOT.txt: generated project snapshot used to help future AI/Codex) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 465.05 Tm (sessions understand the current Cinerific source tree and binary asset inventory.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 454.40 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt: updated to hand off from the) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 443.75 Tm (native intro renderer into CinerificHomeScreen after the boot animation duration.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 433.10 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificHomeScreen.kt: new native Compose) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 422.45 Tm (implementation of the Figma Home & Default scaffold.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 411.80 Tm (- app/src/main/res/drawable-nodpi/home_hero_header.png: Figma-derived hero/header crop for the) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 401.15 Tm (Home & Default screen.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 390.50 Tm (- app/src/main/res/drawable-nodpi/home_crime_*.png, home_thriller_*.png, home_comedy_*.png,) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 379.85 Tm (home_action_*.png, home_drama_*.png, home_documentary_*.png, and home_horror_*.png: cropped) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 369.20 Tm (program-card artwork from the Figma Home & Default stack.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 358.55 Tm (- cinerific_worklog_july 15 part 1.pdf: this worklog artifact generated at the repository root.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 342.90 Tm (Follow-Up Context) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 330.90 Tm (- Add tap-to-skip or tap-to-navigate behavior for the intro screen if the desired interaction is) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 320.25 Tm (that any tap moves immediately to Home & Default instead of waiting for the timed handoff.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 309.60 Tm (- Replace cropped composite card images with more structured reusable card components later if) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 298.95 Tm (the app needs dynamic titles, metadata, focus states, hover/remote control behavior, or) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 288.30 Tm (accessibility text.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 277.65 Tm (- Implement the right-side navigation rail from the Figma file as a live Android component) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 267.00 Tm (instead of relying on the static hero/menu crop.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 256.35 Tm (- Add click handling for row chevrons and horizontal program cards so Home & Default becomes a) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 245.70 Tm (navigable application surface rather than a visual scaffold.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 235.05 Tm (- Continue importing screens deliberately from Figma one screen or component group at a time,) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 224.40 Tm (using the project snapshot and targeted Figma node IDs to avoid broad MCP/dev-call waste.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 213.75 Tm (- Revisit Android Studio embedded emulator behavior if needed. The Running Devices tool window) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 203.10 Tm (is registered and visible in Studio workspace state, but macOS automation permissions prevented) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 192.45 Tm (Codex from clicking the IDE UI directly.) Tj
+/F2 9.80 Tf 1 0 0 1 50.00 176.80 Tm (Output Artifact) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 164.80 Tm (- Filename: cinerific_worklog_july 15 part 1.pdf) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 154.15 Tm (- Created at the repository root in /Users/prahlin/gh/cinerific.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 143.50 Tm (- Follows the Cinerific filename convention established by cinerific_worklog_july 12.pdf and) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 132.85 Tm (cinerific_worklog_july 14.pdf, including the space before the day number and the lowercase part) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 122.20 Tm (label.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 111.55 Tm (- Follows the established Alla Vostra/Prahlin daily worklog structure while keeping the body) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 100.90 Tm (content specific to Cinerific work.) Tj
+/F1 8.65 Tf 1 0 0 1 50.00 90.25 Tm (- No external PDF dependency was installed; this artifact was generated with a small) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 79.60 Tm (standard-library PDF writer in the same plain-text-readable spirit as the prior Cinerific) Tj
+/F1 8.65 Tf 1 0 0 1 60.00 68.95 Tm (worklogs.) Tj
+/F1 7.80 Tf 1 0 0 1 195.00 32.00 Tm (Cinerific Work Log - July 15, 2026 Part 1 Page 3) Tj
+ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Length 208 >>
+stream
+BT
+/F1 8.65 Tf 1 0 0 1 50.00 744.00 Tm (- Created this daily worklog PDF: cinerific_worklog_july 15 part 1.pdf.) Tj
+/F1 7.80 Tf 1 0 0 1 195.00 32.00 Tm (Cinerific Work Log - July 15, 2026 Part 1 Page 4) Tj
+ET
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 11 0 R >>
+endobj
+13 0 obj
+<< /Title (Cinerific Android App Work Log - July 15, 2026 Part 1) /Subject (Cinerific Android app development worklog) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) >>
+endobj
+xref
+0 14
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000135 00000 n 
+0000000205 00000 n 
+0000000280 00000 n 
+0000007789 00000 n 
+0000007925 00000 n 
+0000015265 00000 n 
+0000015401 00000 n 
+0000022376 00000 n 
+0000022513 00000 n 
+0000022773 00000 n 
+0000022911 00000 n 
+trailer
+<< /Size 14 /Root 1 0 R /Info 13 0 R >>
+startxref
+23162
+%%EOF

@@ -1,0 +1,506 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Length 5493 >>
+stream
+BT
+/F1 9.2 Tf
+11.2 TL
+50 742 Td
+(Cinerific Android App Work Log - July 16, 2026) Tj
+T*
+(Compiled summary for Thursday, July 16, 2026 - focus: completing the post-Home & Default navigation pass,) Tj
+T*
+(importing and optimizing the remaining Home hero-reel clips, ensuring clip 4 loops back to clip 1, making) Tj
+T*
+(the right-side burger rail actionable across Home, Movies, Shows, Favorites, and Settings, refining the rail) Tj
+T*
+(reveal/spacing/top-toolbar behavior, adding matching destination top bars, replacing placeholder nav icons) Tj
+T*
+(with Figma-derived assets, validating the result on the Cinerific tablet AVD, and committing/pushing the) Tj
+T*
+(completed source state.) Tj
+T*
+(Generated in continuity with the established Cinerific worklog cadence from July 12, July 14, July 15 Part) Tj
+T*
+(1, and July 15: compact opening summary, source-material review, baseline state, goal list, work-completed) Tj
+T*
+(sections, validation, files touched, follow-up context, and output-artifact close. This artifact records the) Tj
+T*
+(Cinerific work completed after the July 15 navigation/video baseline and follows the prior root-level PDF) Tj
+T*
+(naming, four-page letter layout, footer, and plain-text-readable style.) Tj
+T*
+() Tj
+T*
+(Source Materials Reviewed) Tj
+T*
+(- Reviewed every existing Cinerific worklog PDF at the repository root: cinerific_worklog_july 12.pdf,) Tj
+T*
+(  cinerific_worklog_july 14.pdf, cinerific_worklog_july 15 part 1.pdf, and cinerific_worklog_july 15.pdf.) Tj
+T*
+(- Used pdftotext and pdfinfo to study prior naming, metadata, page count, page size, title pattern, footer) Tj
+T*
+(  convention, section order, bullet density, and the plain standard-library PDF generator style.) Tj
+T*
+(- Re-read the July 15 worklog baseline, which documented the first right-side rail,) Tj
+T*
+(  Movies/Shows/Favorites/Settings scaffolds, the single raw Home hero reel, and the remaining need for) Tj
+T*
+(  AVD/logcat verification and Figma-derived destination detail.) Tj
+T*
+(- Reviewed the current Cinerific Git state on main tracking origin/main, including the latest pushed commit) Tj
+T*
+(  0765364, local clean status after push, and the exact file additions, deletions, and modifications in the) Tj
+T*
+(  committed diff.) Tj
+T*
+(- Reviewed app/src/main/java/com/prahlin/cinerific/ui/CinerificHomeScreen.kt for the TextureView/MediaPlayer) Tj
+T*
+(  hero-reel lifecycle, sequential clip index, completion handling, and raw resource list.) Tj
+T*
+(- Reviewed app/src/main/java/com/prahlin/cinerific/ui/CinerificRightSideNavBar.kt for right-rail layout,) Tj
+T*
+(  inset protection, open progress, burger rotation timing, destination callbacks, Figma icon resource) Tj
+T*
+(  rendering, and bottom settings spacing.) Tj
+T*
+(- Reviewed app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt for the destination) Tj
+T*
+(  top-bar treatment, status-bar-aware padding, and Movies/Shows/Favorites/Settings catalog/settings) Tj
+T*
+(  surfaces.) Tj
+T*
+(- Used the local Figma Desktop MCP endpoint to inspect the Right Nav Bar - Home frame and icon node IDs,) Tj
+T*
+(  then decoded screenshots for Home, Movies, Shows, Favorites, and Settings to identify the original Figma) Tj
+T*
+(  silhouettes.) Tj
+T*
+(- Used adb device checks, emulator screenshots, Gradle assembleDebug output, APK install output, Git) Tj
+T*
+(  commit/push output, file/resource inspection, and current repo status as validation material for this) Tj
+T*
+(  worklog.) Tj
+T*
+() Tj
+T*
+(Baseline Status Before July 16 Work) Tj
+T*
+(- Cinerific already had the July 14 intro renderer, imported intro/profile artwork, and the July 15 Home &) Tj
+T*
+(  Default screen scaffold with Figma-cropped program rows.) Tj
+T*
+(- The July 15 pass had introduced avatar-driven entry into the main experience and a first right-side rail,) Tj
+T*
+(  but the rail still needed Figma-accurate interaction, spacing, reveal behavior, and screen-icon fidelity.) Tj
+T*
+(- Home video playback had moved from a static hero crop to a raw MP4 reel, but the newer desired behavior) Tj
+T*
+(  was a four-clip sequence that plays clips 1 through 4 and then restarts at clip 1 after clip 4 completes.) Tj
+T*
+(- Destination screens existed as usable scaffolds, but Movies, Shows, Favorites, and Settings still needed) Tj
+T*
+(  the top horizontal bar treatment that matched the right nav rail color and respected native tablet toolbar) Tj
+T*
+(  space.) Tj
+T*
+(- The nav rail had to protect only the vertical space occupied by the native top tablet toolbar, not force a) Tj
+T*
+(  mismatched toolbar color or leave the rail background visible before the burger menu opened.) Tj
+T*
+(- The screen icons in the rail were still placeholder Material icons in code, which meant Movies, Shows,) Tj
+T*
+(  Settings, and other destinations did not correspond to the original Figma artwork.) Tj
+T*
+(- The project had no exported right-rail destination icon assets under res/drawable-nodpi before the Figma) Tj
+T*
+(  screenshot extraction pass, so the fix required adding resources as well as code wiring.) Tj
+T*
+() Tj
+T*
+(Main Goals for July 16) Tj
+T*
+(- Import and optimize the remaining video clips that belong to the Home/default hero reel.) Tj
+T*
+(- Make the Home hero reel advance through four raw MP4 clips and loop from clip 4 back to clip 1.) Tj
+T*
+(- Connect the right-side burger navigation so Home, Movies, Shows, Favorites, and Settings are reachable) Tj
+ET
+BT
+/F1 9.2 Tf
+215.47 32 Td
+(Cinerific Work Log - July 16, 2026 Page 1) Tj
+ET
+endstream
+endobj
+3 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 2 0 R >>
+endobj
+4 0 obj
+<< /Length 4869 >>
+stream
+BT
+/F1 9.2 Tf
+11.2 TL
+50 742 Td
+(  from the rail.) Tj
+T*
+(- Keep the rail background fill hidden until the burger is clicked, then reveal it with the burger rotated) Tj
+T*
+(  90 degrees.) Tj
+T*
+(- Tune the burger rotation so it is fast but visually smooth instead of snapping instantly.) Tj
+T*
+(- Match vertical spacing between the burger, nearby destination icons, top toolbar protection area, and) Tj
+T*
+(  bottom Settings breathing room.) Tj
+T*
+(- Add the top horizontal bar treatment to the relevant destination screens without changing native system) Tj
+T*
+(  toolbar coloring incorrectly.) Tj
+T*
+(- Replace the placeholder right-rail icons with the original Figma-derived Home, Movies, Shows, Favorites,) Tj
+T*
+(  and Settings imagery.) Tj
+T*
+(- Build, install, launch, screenshot-check, commit, and push the accepted Cinerific state.) Tj
+T*
+() Tj
+T*
+(Work Completed - Home Hero Reel) Tj
+T*
+(- Replaced the single tracked home_hero_reel.mp4 raw resource with four raw clip resources:) Tj
+T*
+(  home_hero_reel_01.mp4, home_hero_reel_02.mp4, home_hero_reel_03.mp4, and home_hero_reel_04.mp4.) Tj
+T*
+(- Updated LoopingHeroVideoView so it maintains a currentVideoIndex instead of depending on a single looping) Tj
+T*
+(  MediaPlayer source.) Tj
+T*
+(- Changed MediaPlayer looping from isLooping=true to explicit completion handling so each clip can finish) Tj
+T*
+(  naturally and hand off to the next indexed clip.) Tj
+T*
+(- Added a HeroReelVideos raw-resource array and advanced currentVideoIndex with modulo arithmetic so the) Tj
+T*
+(  sequence restarts at clip 1 immediately after clip 4 completes.) Tj
+T*
+(- Preserved muted playback, TextureView surface handling, center-crop transform logic, asynchronous) Tj
+T*
+(  preparation, and lifecycle cleanup from the earlier video implementation.) Tj
+T*
+(- Added error handling that advances to the next clip when the active player fails, avoiding a stuck hero) Tj
+T*
+(  surface when a single media item fails to prepare or play.) Tj
+T*
+() Tj
+T*
+(Work Completed - Right-Side Navigation Behavior) Tj
+T*
+(- Kept the right-side burger visible as the collapsed entry point and made the rail destinations actionable) Tj
+T*
+(  after expansion.) Tj
+T*
+(- Added destination callbacks so tapping Home, Movies, Shows, Favorites, or Settings updates visual) Tj
+T*
+(  selection and routes the Compose app to the matching screen.) Tj
+T*
+(- Changed the rail background fill to animate with openProgress, so the dark bgfill is not visible before) Tj
+T*
+(  the burger is clicked and becomes visible only while expanded.) Tj
+T*
+(- Preserved the burger as the persistent collapse/open control, with a 90-degree rotation while expanded.) Tj
+T*
+(- Tuned the rotation animation to a 200 ms tween with a smooth cubic easing curve, giving the user the) Tj
+T*
+(  requested fast-but-smooth motion instead of an instant snap.) Tj
+T*
+(- Used status-bar and navigation-bar insets to place the burger and Settings item relative to actual tablet) Tj
+T*
+(  system UI rather than hard-coded screen-only coordinates.) Tj
+T*
+(- Matched the vertical center gap between the burger and nearest icon to the inter-icon spacing below it,) Tj
+T*
+(  then matched Settings bottom breathing room to the burger-side breathing room.) Tj
+T*
+() Tj
+T*
+(Work Completed - Destination Chrome and Top Bars) Tj
+T*
+(- Added statusBars-aware top padding to Movies, Shows, Favorites, and Settings content so native top toolbar) Tj
+T*
+(  space remains protected without forcing an unrelated system color.) Tj
+T*
+(- Added DestinationTopBar with the same dark chrome color used by the right rail, allowing each relevant) Tj
+T*
+(  destination screen to visually line up with the rail zone.) Tj
+T*
+(- Kept the destination background gradient and card row scaffolds intact while placing the new horizontal) Tj
+T*
+(  bar above them.) Tj
+T*
+(- Adjusted right-side padding and top offsets so the catalog/settings content does not collide with the) Tj
+T*
+(  rail, the toolbar area, or the nav icons.) Tj
+T*
+(- Verified the destination surfaces still render as usable Movies, Shows, Favorites, and Settings screens) Tj
+T*
+(  after the chrome change.) Tj
+T*
+() Tj
+T*
+(Work Completed - Figma Nav Icon Assets) Tj
+T*
+(- Queried the open Figma file through the local Desktop MCP server and identified the Right Nav Bar - Home) Tj
+T*
+(  frame and icon node IDs for Home, Movies, Shows, Favorites, and Settings.) Tj
+T*
+(- Confirmed from the Figma screenshot that the original rail icons are a filled house for Home, a ticket for) Tj
+T*
+(  Movies, a projector/reel for Shows, an outlined star for Favorites, and a filled gear for Settings.) Tj
+T*
+(- Added nav_icon_home.png, nav_icon_movies.png, nav_icon_shows.png, nav_icon_favorites.png, and) Tj
+T*
+(  nav_icon_settings.png under app/src/main/res/drawable-nodpi.) Tj
+ET
+BT
+/F1 9.2 Tf
+215.47 32 Td
+(Cinerific Work Log - July 16, 2026 Page 2) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 4993 >>
+stream
+BT
+/F1 9.2 Tf
+11.2 TL
+50 742 Td
+(- Converted the isolated Figma screenshots from opaque rail-colored captures into transparent alpha-mask PNG) Tj
+T*
+(  resources so Compose tinting affects only the icon silhouette, not a rectangular background.) Tj
+T*
+(- Replaced Material destination icons in CinerificRightSideNavBar.kt with a NavIconAsset resource model and) Tj
+T*
+(  painterResource-based Image rendering.) Tj
+T*
+(- Preserved selected/inactive tint behavior while giving each icon its original Figma aspect ratio and) Tj
+T*
+(  visual footprint.) Tj
+T*
+(- Rebuilt, reinstalled, and screenshot-checked the opened rail after the alpha-mask repair to confirm the) Tj
+T*
+(  rectangles were gone and the Figma silhouettes were visible in the running app.) Tj
+T*
+() Tj
+T*
+(Work Completed - Commit and Push) Tj
+T*
+(- Built the debug APK after the icon and nav-resource changes, then installed it onto emulator-5554.) Tj
+T*
+(- Relaunched com.prahlin.cinerific/.MainActivity, selected the Guest profile, opened the burger rail, and) Tj
+T*
+(  verified the rail displayed the Figma-derived icon silhouettes against the expanded bgfill.) Tj
+T*
+(- Tapped a destination from the opened rail to confirm the click target still navigated after the) Tj
+T*
+(  resource-backed icon swap.) Tj
+T*
+(- Staged the intended source/resource set: destination screen chrome, home hero reel playback, right-side) Tj
+T*
+(  nav behavior/icons, five nav icon PNGs, removal of the old combined reel, and four raw hero-reel clips.) Tj
+T*
+(- Created commit 0765364 on main with the title Implement Cinerific home reel and Figma-matched navigation) Tj
+T*
+(  polish.) Tj
+T*
+(- Pushed main to origin at https://github.com/Prahlin/cinerific.git and confirmed the local branch is) Tj
+T*
+(  aligned with origin/main afterward.) Tj
+T*
+() Tj
+T*
+(Validation and Checks Performed) Tj
+T*
+(- Ran ./gradlew assembleDebug after the resource-backed nav icon change; the debug build completed) Tj
+T*
+(  successfully.) Tj
+T*
+(- Installed the resulting debug APK with adb -s emulator-5554 install -r) Tj
+T*
+(  app/build/outputs/apk/debug/app-debug.apk; the install completed successfully.) Tj
+T*
+(- Launched the app through adb shell am start -n com.prahlin.cinerific/.MainActivity and verified the) Tj
+T*
+(  profile picker, Home screen, and opened right rail through emulator screenshots.) Tj
+T*
+(- Captured screenshots before and after opening the nav rail, then captured a corrected opened-rail) Tj
+T*
+(  screenshot after converting the Figma icon PNGs to transparent alpha masks.) Tj
+T*
+(- Verified the opened rail visually showed the house, ticket, projector/reel, star, and gear icons rather) Tj
+T*
+(  than solid tinted rectangles or placeholder Material icons.) Tj
+T*
+(- Tapped a destination from the rail and confirmed the app navigated into a destination screen with the) Tj
+T*
+(  right rail still active and the selected icon state visible.) Tj
+T*
+(- Ran git status --short --branch after the push and confirmed main is clean and aligned with origin/main.) Tj
+T*
+(- Reviewed git show --stat and git log for commit 0765364 to confirm the committed scope matches the source) Tj
+T*
+(  and asset changes described in this worklog.) Tj
+T*
+() Tj
+T*
+(Files Touched During July 16) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificHomeScreen.kt: advances the Home hero through four raw) Tj
+T*
+(  video clips, loops clip 4 back to clip 1, and hardens MediaPlayer completion/error cleanup.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificRightSideNavBar.kt: implements the actionable expanded) Tj
+T*
+(  rail, smooth burger rotation, inset-aware spacing, rail bgfill reveal behavior, and Figma-derived) Tj
+T*
+(  destination icon rendering.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt: adds status-bar-aware top chrome) Tj
+T*
+(  and content padding for Movies, Shows, Favorites, and Settings.) Tj
+T*
+(- app/src/main/res/drawable-nodpi/nav_icon_home.png, nav_icon_movies.png, nav_icon_shows.png,) Tj
+T*
+(  nav_icon_favorites.png, and nav_icon_settings.png: new transparent alpha-mask assets derived from the) Tj
+T*
+(  Figma right-nav icon nodes.) Tj
+T*
+(- app/src/main/res/raw/home_hero_reel.mp4: removed the earlier combined/single hero-reel resource.) Tj
+T*
+(- app/src/main/res/raw/home_hero_reel_01.mp4 through home_hero_reel_04.mp4: new optimized raw clip sequence) Tj
+T*
+(  for the Home/default hero reel.) Tj
+T*
+(- cinerific_worklog_july 16.pdf: this generated daily worklog artifact at the repository root.) Tj
+T*
+() Tj
+T*
+(Follow-Up Context) Tj
+T*
+(- The right rail now navigates and visually matches the original Figma icon set, but Movies, Shows,) Tj
+T*
+(  Favorites, and Settings still remain scaffold/content screens rather than fully imported final Figma) Tj
+T*
+(  screens.) Tj
+T*
+(- The Home hero reel is sequenced and loops correctly by index, but broader media diagnostics may still) Tj
+ET
+BT
+/F1 9.2 Tf
+215.47 32 Td
+(Cinerific Work Log - July 16, 2026 Page 3) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 1871 >>
+stream
+BT
+/F1 9.2 Tf
+11.2 TL
+50 742 Td
+(  benefit from Media3/ExoPlayer if playback control, buffering state, or lifecycle ownership becomes more) Tj
+T*
+(  complex.) Tj
+T*
+(- The Figma-derived icons are small alpha-mask PNGs made from the live Figma node captures. If larger vector) Tj
+T*
+(  exports become available later, those could replace the masks for sharper scaling on very high-density) Tj
+T*
+(  displays.) Tj
+T*
+(- Additional accessibility labels, focus states, card click behavior, row chevrons, and settings actions can) Tj
+T*
+(  be layered in once the visual/navigation rail is accepted as the baseline.) Tj
+T*
+(- Generated worklog PDFs are currently ignored by .gitignore unless explicitly force-added, while older July) Tj
+T*
+(  12 and July 14 PDFs remain tracked historical artifacts.) Tj
+T*
+(- A future project snapshot refresh can record the final pushed July 16 source state if the team wants) Tj
+T*
+(  read_project.sh output to include the new nav icon and hero-reel asset inventory.) Tj
+T*
+() Tj
+T*
+(Output Artifact) Tj
+T*
+(- Filename: cinerific_worklog_july 16.pdf) Tj
+T*
+(- Created at the repository root in /Users/prahlin/gh/cinerific.) Tj
+T*
+(- Follows the Cinerific filename convention established by cinerific_worklog_july 12.pdf and continued by) Tj
+T*
+(  the July 14 and July 15 artifacts, including the space before the day number.) Tj
+T*
+(- Follows the established Alla Vostra/Prahlin/Cinerific daily worklog structure while keeping the body) Tj
+T*
+(  content specific to Cinerific work.) Tj
+T*
+(- No external PDF dependency was installed; this artifact was generated with a small standard-library PDF) Tj
+T*
+(  writer in the same plain-text-readable spirit as the prior Cinerific worklogs.) Tj
+T*
+(- Created this daily worklog PDF: cinerific_worklog_july 16.pdf.) Tj
+ET
+BT
+/F1 9.2 Tf
+215.47 32 Td
+(Cinerific Work Log - July 16, 2026 Page 4) Tj
+ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Type /Pages /Kids [3 0 R 5 0 R 7 0 R 9 0 R] /Count 4 >>
+endobj
+11 0 obj
+<< /Type /Catalog /Pages 10 0 R >>
+endobj
+12 0 obj
+<< /Title (Cinerific Android App Work Log - July 16, 2026) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000085 00000 n 
+0000005630 00000 n 
+0000005757 00000 n 
+0000010678 00000 n 
+0000010805 00000 n 
+0000015850 00000 n 
+0000015977 00000 n 
+0000017900 00000 n 
+0000018027 00000 n 
+0000018103 00000 n 
+0000018154 00000 n 
+trailer
+<< /Size 13 /Root 11 0 R /Info 12 0 R >>
+startxref
+18345
+%%EOF
