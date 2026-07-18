@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.sp
 import com.prahlin.cinerific.R
 
 private const val DESTINATION_FRAME_WIDTH = 1194f
-private const val DESTINATION_TOP_BAR_EXTRA_HEIGHT = 48f
+private const val DESTINATION_TOP_BAR_TITLE_BOTTOM = 18f
 private const val DESTINATION_CARD_ASPECT = 350f / 263f
 private const val DESTINATION_CARD_SCALE = 0.8f
 
@@ -92,8 +92,10 @@ private fun CinerificCatalogScreen(
         val density = LocalDensity.current
         val horizontalPadding = destinationDp(50f, scale)
         val rightPadding = destinationDp(150f, scale)
-        val topBarHeight = with(density) { WindowInsets.statusBars.getTop(this).toDp() } +
-            destinationDp(DESTINATION_TOP_BAR_EXTRA_HEIGHT, scale)
+        val navScale = cinerificNavScale(maxWidth, maxHeight)
+        val titleBottomPadding = destinationDp(DESTINATION_TOP_BAR_TITLE_BOTTOM, navScale)
+        val statusBarTop = with(density) { WindowInsets.statusBars.getTop(this).toDp() }
+        val topBarHeight = cinerificTopRailHeight(maxWidth, maxHeight, statusBarTop)
         val cardWidth = destinationDp(350f, scale) * DESTINATION_CARD_SCALE
         val cardHeight = cardWidth / DESTINATION_CARD_ASPECT
         val cardGap = destinationDp(50f, scale)
@@ -110,15 +112,6 @@ private fun CinerificCatalogScreen(
                 )
                 .padding(top = topBarHeight)
         ) {
-            Text(
-                text = title,
-                color = DestinationText,
-                fontSize = 58.sp,
-                fontWeight = FontWeight.Black,
-                letterSpacing = 0.sp,
-                modifier = Modifier.padding(start = horizontalPadding, end = rightPadding)
-            )
-
             rows.forEachIndexed { index, row ->
                 DestinationProgramRow(
                     title = row.title,
@@ -135,7 +128,13 @@ private fun CinerificCatalogScreen(
             Spacer(modifier = Modifier.height(80.dp + bottomSystemPadding))
         }
 
-        DestinationTopBar(height = topBarHeight)
+        DestinationTopBar(
+            title = title,
+            height = topBarHeight,
+            horizontalPadding = horizontalPadding,
+            rightPadding = rightPadding,
+            titleBottomPadding = titleBottomPadding
+        )
     }
 }
 
@@ -218,8 +217,10 @@ private fun CinerificSettingsScreen(modifier: Modifier = Modifier) {
         val density = LocalDensity.current
         val horizontalPadding = destinationDp(64f, scale)
         val rightPadding = destinationDp(160f, scale)
-        val topBarHeight = with(density) { WindowInsets.statusBars.getTop(this).toDp() } +
-            destinationDp(DESTINATION_TOP_BAR_EXTRA_HEIGHT, scale)
+        val navScale = cinerificNavScale(maxWidth, maxHeight)
+        val titleBottomPadding = destinationDp(DESTINATION_TOP_BAR_TITLE_BOTTOM, navScale)
+        val statusBarTop = with(density) { WindowInsets.statusBars.getTop(this).toDp() }
+        val topBarHeight = cinerificTopRailHeight(maxWidth, maxHeight, statusBarTop)
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
 
         Column(
@@ -238,14 +239,6 @@ private fun CinerificSettingsScreen(modifier: Modifier = Modifier) {
                     bottom = 80.dp + bottomSystemPadding
                 )
         ) {
-            Text(
-                text = "Settings",
-                color = DestinationText,
-                fontSize = 58.sp,
-                fontWeight = FontWeight.Black,
-                letterSpacing = 0.sp
-            )
-
             SettingsSection(
                 title = "Accessibility",
                 rows = listOf(
@@ -278,12 +271,24 @@ private fun CinerificSettingsScreen(modifier: Modifier = Modifier) {
             )
         }
 
-        DestinationTopBar(height = topBarHeight)
+        DestinationTopBar(
+            title = "Settings",
+            height = topBarHeight,
+            horizontalPadding = horizontalPadding,
+            rightPadding = rightPadding,
+            titleBottomPadding = titleBottomPadding
+        )
     }
 }
 
 @Composable
-private fun DestinationTopBar(height: Dp) {
+private fun DestinationTopBar(
+    title: String,
+    height: Dp,
+    horizontalPadding: Dp,
+    rightPadding: Dp,
+    titleBottomPadding: Dp
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -293,6 +298,20 @@ private fun DestinationTopBar(height: Dp) {
             modifier = Modifier.fillMaxSize(),
             alpha = 1f,
             backgroundResId = R.drawable.chrome_top_bgfill
+        )
+        Text(
+            text = title,
+            color = DestinationText,
+            fontSize = 58.sp,
+            fontWeight = FontWeight.Black,
+            letterSpacing = 0.sp,
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(
+                    start = horizontalPadding,
+                    end = rightPadding,
+                    bottom = titleBottomPadding
+                )
         )
     }
 }

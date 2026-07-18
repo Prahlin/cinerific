@@ -51,8 +51,16 @@ private const val NAV_STAGE_HEIGHT = 834f
 private const val NAV_RAIL_WIDTH = 115f
 private const val NAV_TOGGLE_HEIGHT = 50f
 private const val NAV_TOGGLE_ICON_SIZE = 48f
+private const val NAV_TOGGLE_MENU_SLIDE_X = 37f
+private const val NAV_TOGGLE_HOME_SLIDE_Y = 73f
 private const val NAV_ICON_CENTER_GAP = 75f
 private const val NAV_HOME_ICON_SIZE = 39f
+private const val NAV_TOGGLE_OPEN_HEIGHT = (
+    NAV_TOGGLE_HOME_SLIDE_Y +
+        NAV_HOME_ICON_SIZE / 2f +
+        NAV_TOGGLE_HEIGHT / 2f +
+        NAV_ICON_CENTER_GAP
+) / 2f
 private const val NAV_MOVIES_ICON_SIZE = 36f
 private const val NAV_SHOWS_ICON_SIZE = 38f
 private const val NAV_FAVORITES_ICON_SIZE = 36f
@@ -69,8 +77,8 @@ private const val NAV_SETTINGS_ICON_WIDTH = 33f
 private const val NAV_SETTINGS_ICON_HEIGHT = 33f
 private const val NAV_LABEL_LINE_HEIGHT = 15f
 private const val NAV_EDGE_GAP = NAV_ICON_CENTER_GAP - (NAV_TOGGLE_ICON_SIZE + NAV_HOME_ICON_SIZE) / 2f
+private const val NAV_TOP_RAIL_VISUAL_NUDGE = 14f
 private const val NAV_OPEN_MS = 150
-private const val NAV_ROTATION_MS = 200
 private const val HOME_AUTO_COLLAPSE_MS = 5000L
 
 private val NavFrameDestinations = setOf(
@@ -82,7 +90,6 @@ private val NavFrameDestinations = setOf(
 )
 
 private val NavEaseOut = CubicBezierEasing(0f, 0f, 0.2f, 1f)
-private val NavRotationEase = CubicBezierEasing(0.2f, 0f, 0.2f, 1f)
 private val NavSelected = Color(0xFFE7E7E7)
 private val NavInactive = Color(0xFF9A9A9A)
 
@@ -99,7 +106,7 @@ internal fun CinerificRightSideNavBar(
     modifier: Modifier = Modifier
 ) {
     BoxWithConstraints(modifier = modifier) {
-        val scale = min(maxWidth.value / NAV_STAGE_WIDTH, maxHeight.value / NAV_STAGE_HEIGHT)
+        val scale = cinerificNavScale(maxWidth, maxHeight)
         val density = LocalDensity.current
         val statusBarTop = with(density) { WindowInsets.statusBars.getTop(this).toDp() }
         val navigationBarBottom = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
@@ -145,38 +152,25 @@ internal fun CinerificRightSideNavBar(
             )
 
             NavToggleButton(
-                expanded = expanded,
+                openProgress = openProgress,
+                selected = visualDestination == CinerificDestination.Home,
                 top = toggleTop,
                 scale = scale,
                 onClick = {
-                    visualDestination = currentDestination
-                    if (visualDestination !in NavFrameDestinations) {
+                    if (expanded) {
                         visualDestination = CinerificDestination.Home
+                        onDestinationSelected(CinerificDestination.Home)
+                        expanded = false
+                    } else {
+                        visualDestination = currentDestination
+                        if (visualDestination !in NavFrameDestinations) {
+                            visualDestination = CinerificDestination.Home
+                        }
+                        expanded = true
                     }
-                    expanded = !expanded
                 }
             )
 
-            NavItemButton(
-                destination = CinerificDestination.Home,
-                label = "HOME",
-                icon = NavIconAsset(
-                    resId = R.drawable.nav_icon_home,
-                    width = NAV_HOME_ICON_WIDTH,
-                    height = NAV_HOME_ICON_HEIGHT
-                ),
-                top = navStackItemTop(toggleTop, index = 1, iconSize = NAV_HOME_ICON_SIZE, scale = scale),
-                iconSize = NAV_HOME_ICON_SIZE,
-                scale = scale,
-                openProgress = openProgress,
-                selected = visualDestination == CinerificDestination.Home,
-                enabled = expanded,
-                onClick = {
-                    visualDestination = CinerificDestination.Home
-                    expanded = true
-                    onDestinationSelected(CinerificDestination.Home)
-                }
-            )
             NavItemButton(
                 destination = CinerificDestination.Movies,
                 label = "MOVIES",
@@ -185,7 +179,7 @@ internal fun CinerificRightSideNavBar(
                     width = NAV_MOVIES_ICON_WIDTH,
                     height = NAV_MOVIES_ICON_HEIGHT
                 ),
-                top = navStackItemTop(toggleTop, index = 2, iconSize = NAV_MOVIES_ICON_SIZE, scale = scale),
+                top = navStackItemTop(toggleTop, index = 1, iconSize = NAV_MOVIES_ICON_SIZE, scale = scale),
                 iconSize = NAV_MOVIES_ICON_SIZE,
                 scale = scale,
                 openProgress = openProgress,
@@ -205,7 +199,7 @@ internal fun CinerificRightSideNavBar(
                     width = NAV_SHOWS_ICON_WIDTH,
                     height = NAV_SHOWS_ICON_HEIGHT
                 ),
-                top = navStackItemTop(toggleTop, index = 3, iconSize = NAV_SHOWS_ICON_SIZE, scale = scale),
+                top = navStackItemTop(toggleTop, index = 2, iconSize = NAV_SHOWS_ICON_SIZE, scale = scale),
                 iconSize = NAV_SHOWS_ICON_SIZE,
                 scale = scale,
                 openProgress = openProgress,
@@ -225,7 +219,7 @@ internal fun CinerificRightSideNavBar(
                     width = NAV_FAVORITES_ICON_WIDTH,
                     height = NAV_FAVORITES_ICON_HEIGHT
                 ),
-                top = navStackItemTop(toggleTop, index = 4, iconSize = NAV_FAVORITES_ICON_SIZE, scale = scale),
+                top = navStackItemTop(toggleTop, index = 3, iconSize = NAV_FAVORITES_ICON_SIZE, scale = scale),
                 iconSize = NAV_FAVORITES_ICON_SIZE,
                 scale = scale,
                 openProgress = openProgress,
@@ -263,35 +257,73 @@ internal fun CinerificRightSideNavBar(
 
 @Composable
 private fun NavToggleButton(
-    expanded: Boolean,
+    openProgress: Float,
+    selected: Boolean,
     top: Dp,
     scale: Float,
     onClick: () -> Unit
 ) {
-    val rotationProgress by animateFloatAsState(
-        targetValue = if (expanded) 1f else 0f,
-        animationSpec = tween(durationMillis = NAV_ROTATION_MS, easing = NavRotationEase),
-        label = "right-nav-burger-rotation"
-    )
+    val density = LocalDensity.current
+    val boundedProgress = openProgress.coerceIn(0f, 1f)
+    val menuAlpha = 1f - boundedProgress
+    val homeAlpha = boundedProgress
+    val homeColor = if (selected) NavSelected else NavInactive
 
     Box(
         modifier = Modifier
             .absoluteOffset(y = top)
             .fillMaxWidth()
-            .height(navDp(NAV_TOGGLE_HEIGHT, scale))
+            .height(navDp(NAV_TOGGLE_OPEN_HEIGHT, scale))
             .clickable { onClick() },
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.TopCenter
     ) {
         Icon(
             imageVector = Icons.Rounded.Menu,
-            contentDescription = if (expanded) "Collapse navigation" else "Open navigation",
+            contentDescription = "Open navigation",
             tint = NavInactive,
             modifier = Modifier
                 .size(navDp(NAV_TOGGLE_ICON_SIZE, scale))
                 .graphicsLayer {
-                    rotationZ = rotationProgress * 90f
+                    alpha = menuAlpha
+                    translationX = with(density) {
+                        navDp(NAV_TOGGLE_MENU_SLIDE_X, scale).toPx()
+                    } * boundedProgress
                 }
         )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.graphicsLayer {
+                alpha = homeAlpha
+                translationY = with(density) {
+                    navDp(NAV_TOGGLE_HOME_SLIDE_Y, scale).toPx()
+                } * (1f - boundedProgress)
+            }
+        ) {
+            Box(
+                modifier = Modifier.size(navDp(NAV_HOME_ICON_SIZE, scale)),
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.nav_icon_home),
+                    contentDescription = "Home",
+                    contentScale = ContentScale.Fit,
+                    colorFilter = ColorFilter.tint(homeColor),
+                    modifier = Modifier
+                        .width(navDp(NAV_HOME_ICON_WIDTH, scale))
+                        .height(navDp(NAV_HOME_ICON_HEIGHT, scale))
+                )
+            }
+            Text(
+                text = "HOME",
+                color = homeColor,
+                fontSize = 10.sp,
+                fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal,
+                lineHeight = 15.sp,
+                letterSpacing = 0.sp,
+                textAlign = TextAlign.Center,
+                maxLines = 1
+            )
+        }
     }
 }
 
@@ -353,6 +385,25 @@ private fun NavItemButton(
 
 private fun navStackItemTop(toggleTop: Dp, index: Int, iconSize: Float, scale: Float): Dp {
     return toggleTop + navDp(NAV_TOGGLE_HEIGHT / 2f + NAV_ICON_CENTER_GAP * index - iconSize / 2f, scale)
+}
+
+internal fun cinerificNavScale(viewportWidth: Dp, viewportHeight: Dp): Float {
+    return min(viewportWidth.value / NAV_STAGE_WIDTH, viewportHeight.value / NAV_STAGE_HEIGHT)
+}
+
+internal fun cinerificTopRailHeight(
+    viewportWidth: Dp,
+    viewportHeight: Dp,
+    statusBarTop: Dp
+): Dp {
+    val scale = cinerificNavScale(viewportWidth, viewportHeight)
+    val toggleTopOffset = NAV_EDGE_GAP - (NAV_TOGGLE_HEIGHT - NAV_TOGGLE_ICON_SIZE) / 2f
+    val homeIconCenter = toggleTopOffset + NAV_HOME_ICON_SIZE / 2f
+    val firstNavIconCenter = toggleTopOffset + NAV_TOGGLE_HEIGHT / 2f + NAV_ICON_CENTER_GAP
+    // Keep destination headers aligned to the midpoint between Home and the first rail item.
+    val topRailBottom = (homeIconCenter + firstNavIconCenter) / 2f + NAV_TOP_RAIL_VISUAL_NUDGE
+
+    return statusBarTop + navDp(topRailBottom, scale)
 }
 
 private fun navDp(px: Float, scale: Float): Dp = (px * scale).dp

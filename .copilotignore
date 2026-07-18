@@ -1,0 +1,18 @@
+# Snapshot noise
+cinerific_PROJECT_SNAPSHOT.txt
+*_PROJECT_SNAPSHOT.txt
+
+# Docs/binary noise
+*.pdf
+
+# Build/generated noise
+.gradle/
+build/
+app/build/
+**/build/
+**/.gradle/
+
+# IDE/cache noise
+.idea/
+.kotlin/
+.DS_Store
