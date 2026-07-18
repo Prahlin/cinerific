@@ -5,7 +5,6 @@ import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -13,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
@@ -83,7 +83,6 @@ private val NavFrameDestinations = setOf(
 
 private val NavEaseOut = CubicBezierEasing(0f, 0f, 0.2f, 1f)
 private val NavRotationEase = CubicBezierEasing(0.2f, 0f, 0.2f, 1f)
-private val NavRail = Color(0xFF1F1F1F)
 private val NavSelected = Color(0xFFE7E7E7)
 private val NavInactive = Color(0xFF9A9A9A)
 
@@ -139,8 +138,12 @@ internal fun CinerificRightSideNavBar(
                 .align(Alignment.TopEnd)
                 .width(railWidth)
                 .fillMaxHeight()
-                .background(NavRail.copy(alpha = 0.82f * openProgress))
         ) {
+            CinerificChromeBackground(
+                modifier = Modifier.fillMaxSize(),
+                alpha = openProgress
+            )
+
             NavToggleButton(
                 expanded = expanded,
                 top = toggleTop,

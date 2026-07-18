@@ -45,7 +45,6 @@ private const val DESTINATION_TOP_BAR_EXTRA_HEIGHT = 48f
 private const val DESTINATION_CARD_ASPECT = 350f / 263f
 private const val DESTINATION_CARD_SCALE = 0.8f
 
-private val DestinationChrome = Color(0xFF1F1F1F)
 private val DestinationTop = Color(0xFF080007)
 private val DestinationMid = Color(0xFF23001F)
 private val DestinationBottom = Color(0xFF060004)
@@ -289,8 +288,13 @@ private fun DestinationTopBar(height: Dp) {
         modifier = Modifier
             .fillMaxWidth()
             .height(height)
-            .background(DestinationChrome.copy(alpha = 0.82f))
-    )
+    ) {
+        CinerificChromeBackground(
+            modifier = Modifier.fillMaxSize(),
+            alpha = 1f,
+            backgroundResId = R.drawable.chrome_top_bgfill
+        )
+    }
 }
 
 @Composable
