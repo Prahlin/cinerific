@@ -3,7 +3,6 @@ package com.prahlin.cinerific.ui
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -25,6 +24,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -59,17 +63,22 @@ internal fun CinerificDestinationScreen(
     when (destination) {
         CinerificDestination.Movies -> CinerificCatalogScreen(
             title = "Movies",
+            description = "Explore a curated selection of exhilarating films",
             rows = MovieRows,
+            showViewportNav = true,
             modifier = modifier
         )
         CinerificDestination.Shows -> CinerificCatalogScreen(
             title = "Shows",
+            description = "Browse episodic picks, genre collections, and returning favorites",
             rows = ShowRows,
+            showViewportNav = true,
             modifier = modifier
         )
         CinerificDestination.Favorites -> CinerificCatalogScreen(
             title = "Favorites",
             rows = FavoriteRows,
+            showViewportNav = false,
             modifier = modifier
         )
         CinerificDestination.Settings -> CinerificSettingsScreen(modifier = modifier)
@@ -81,6 +90,8 @@ internal fun CinerificDestinationScreen(
 private fun CinerificCatalogScreen(
     title: String,
     rows: List<DestinationRowSpec>,
+    description: String = "",
+    showViewportNav: Boolean,
     modifier: Modifier = Modifier
 ) {
     BoxWithConstraints(
@@ -99,12 +110,29 @@ private fun CinerificCatalogScreen(
         val cardWidth = destinationDp(350f, scale) * DESTINATION_CARD_SCALE
         val cardHeight = cardWidth / DESTINATION_CARD_ASPECT
         val cardGap = destinationDp(50f, scale)
+        val contentColumnCount = (
+            (maxWidth.value - horizontalPadding.value - rightPadding.value + cardGap.value) /
+                (cardWidth.value + cardGap.value)
+            ).toInt().coerceAtLeast(1)
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
+        var selectedGenre by remember(title) { mutableStateOf(ViewportGenre.All) }
+        var selectedMode by remember(title) { mutableStateOf(ViewportMode.Collage) }
+        val scrollState = rememberScrollState()
+        val visibleRows = if (!showViewportNav || selectedGenre == ViewportGenre.All) {
+            rows
+        } else {
+            rows.filter { it.genre == selectedGenre }
+        }
+        val visiblePrograms = visibleRows.flatMap { it.programs }
+
+        LaunchedEffect(title, selectedGenre, selectedMode) {
+            scrollState.scrollTo(0)
+        }
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(scrollState)
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(DestinationTop, DestinationMid, DestinationBottom)
@@ -112,16 +140,57 @@ private fun CinerificCatalogScreen(
                 )
                 .padding(top = topBarHeight)
         ) {
-            rows.forEachIndexed { index, row ->
-                DestinationProgramRow(
-                    title = row.title,
-                    cardIds = row.cardIds,
+            if (showViewportNav) {
+                DestinationViewportHeader(
+                    description = description,
+                    selectedGenre = selectedGenre,
+                    selectedMode = selectedMode,
+                    onGenreSelected = { selectedGenre = it },
+                    onModeSelected = { selectedMode = it },
+                    scale = navScale,
+                    horizontalPadding = horizontalPadding,
+                    rightPadding = rightPadding
+                )
+            }
+
+            when (selectedMode) {
+                ViewportMode.Collage -> {
+                    visibleRows.forEachIndexed { index, row ->
+                        DestinationProgramRow(
+                            title = row.title,
+                            programs = row.programs,
+                            horizontalPadding = horizontalPadding,
+                            rightPadding = rightPadding,
+                            cardWidth = cardWidth,
+                            cardHeight = cardHeight,
+                            cardGap = cardGap,
+                            columnCount = contentColumnCount,
+                            topPadding = if (index == 0) {
+                                if (showViewportNav) 48.dp else 72.dp
+                            } else {
+                                80.dp
+                            }
+                        )
+                    }
+                }
+                ViewportMode.Grid -> DestinationProgramGrid(
+                    title = if (selectedGenre == ViewportGenre.All) "All $title" else "${selectedGenre.displayName} $title",
+                    programs = visiblePrograms,
                     horizontalPadding = horizontalPadding,
                     rightPadding = rightPadding,
                     cardWidth = cardWidth,
                     cardHeight = cardHeight,
                     cardGap = cardGap,
-                    topPadding = if (index == 0) 72.dp else 80.dp
+                    columnCount = contentColumnCount,
+                    topPadding = 48.dp
+                )
+                ViewportMode.List -> DestinationProgramList(
+                    title = if (selectedGenre == ViewportGenre.All) "All $title" else "${selectedGenre.displayName} $title",
+                    programs = visiblePrograms,
+                    horizontalPadding = horizontalPadding,
+                    rightPadding = rightPadding,
+                    scale = scale,
+                    topPadding = 48.dp
                 )
             }
 
@@ -139,14 +208,55 @@ private fun CinerificCatalogScreen(
 }
 
 @Composable
+private fun DestinationViewportHeader(
+    description: String,
+    selectedGenre: ViewportGenre,
+    selectedMode: ViewportMode,
+    onGenreSelected: (ViewportGenre) -> Unit,
+    onModeSelected: (ViewportMode) -> Unit,
+    scale: Float,
+    horizontalPadding: Dp,
+    rightPadding: Dp
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = horizontalPadding, end = rightPadding)
+            .padding(top = destinationDp(34f, scale)),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = description,
+            color = DestinationText.copy(alpha = 0.86f),
+            fontSize = 22.sp,
+            fontWeight = FontWeight.Normal,
+            lineHeight = 30.sp,
+            letterSpacing = 0.sp,
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = destinationDp(52f, scale))
+        )
+        CinerificViewportNavBar(
+            selectedGenre = selectedGenre,
+            selectedMode = selectedMode,
+            onGenreSelected = onGenreSelected,
+            onModeSelected = onModeSelected,
+            scale = scale,
+            modifier = Modifier.width(destinationDp(424f, scale))
+        )
+    }
+}
+
+@Composable
 private fun DestinationProgramRow(
     title: String,
-    @DrawableRes cardIds: List<Int>,
+    programs: List<DestinationProgramSpec>,
     horizontalPadding: Dp,
     rightPadding: Dp,
     cardWidth: Dp,
     cardHeight: Dp,
     cardGap: Dp,
+    columnCount: Int,
     topPadding: Dp
 ) {
     Column(
@@ -163,21 +273,168 @@ private fun DestinationProgramRow(
             modifier = Modifier.padding(start = horizontalPadding, end = rightPadding)
         )
 
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .horizontalScroll(rememberScrollState())
                 .padding(start = horizontalPadding, end = rightPadding)
                 .padding(top = 20.dp),
-            horizontalArrangement = Arrangement.spacedBy(cardGap)
+            verticalArrangement = Arrangement.spacedBy(cardGap)
         ) {
-            cardIds.forEach { cardId ->
-                DestinationProgramCard(
-                    drawableId = cardId,
-                    width = cardWidth,
-                    height = cardHeight
+            programs.chunked(columnCount).forEach { rowPrograms ->
+                Row(horizontalArrangement = Arrangement.spacedBy(cardGap)) {
+                    rowPrograms.forEach { program ->
+                        DestinationProgramCard(
+                            drawableId = program.drawableId,
+                            width = cardWidth,
+                            height = cardHeight
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun DestinationProgramGrid(
+    title: String,
+    programs: List<DestinationProgramSpec>,
+    horizontalPadding: Dp,
+    rightPadding: Dp,
+    cardWidth: Dp,
+    cardHeight: Dp,
+    cardGap: Dp,
+    columnCount: Int,
+    topPadding: Dp
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = topPadding)
+    ) {
+        Text(
+            text = title,
+            color = DestinationText,
+            fontSize = 36.sp,
+            fontWeight = FontWeight.Black,
+            letterSpacing = 0.sp,
+            modifier = Modifier.padding(start = horizontalPadding, end = rightPadding)
+        )
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = horizontalPadding, end = rightPadding)
+                .padding(top = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(cardGap)
+        ) {
+            programs.chunked(columnCount).forEach { rowPrograms ->
+                Row(horizontalArrangement = Arrangement.spacedBy(cardGap)) {
+                    rowPrograms.forEach { program ->
+                        DestinationProgramCard(
+                            drawableId = program.drawableId,
+                            width = cardWidth,
+                            height = cardHeight
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun DestinationProgramList(
+    title: String,
+    programs: List<DestinationProgramSpec>,
+    horizontalPadding: Dp,
+    rightPadding: Dp,
+    scale: Float,
+    topPadding: Dp
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = topPadding)
+    ) {
+        Text(
+            text = title,
+            color = DestinationText,
+            fontSize = 36.sp,
+            fontWeight = FontWeight.Black,
+            letterSpacing = 0.sp,
+            modifier = Modifier.padding(start = horizontalPadding, end = rightPadding)
+        )
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = horizontalPadding, end = rightPadding)
+                .padding(top = 22.dp),
+            verticalArrangement = Arrangement.spacedBy(18.dp)
+        ) {
+            programs.forEach { program ->
+                DestinationProgramListItem(
+                    program = program,
+                    scale = scale
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun DestinationProgramListItem(
+    program: DestinationProgramSpec,
+    scale: Float
+) {
+    val shape = RoundedCornerShape(8.dp)
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(destinationDp(116f, scale))
+            .clip(shape)
+            .background(Color.Black.copy(alpha = 0.2f))
+            .padding(destinationDp(12f, scale)),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .width(destinationDp(140f, scale))
+                .height(destinationDp(92f, scale))
+                .clip(RoundedCornerShape(8.dp))
+                .background(Color.Black)
+        ) {
+            Image(
+                painter = painterResource(program.drawableId),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.FillBounds
+            )
+        }
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(start = destinationDp(26f, scale))
+        ) {
+            Text(
+                text = program.title,
+                color = DestinationText,
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Black,
+                lineHeight = 32.sp,
+                letterSpacing = 0.sp,
+                maxLines = 1
+            )
+            Text(
+                text = program.genre.displayName,
+                color = DestinationSubtle,
+                fontSize = 18.sp,
+                lineHeight = 24.sp,
+                letterSpacing = 0.sp,
+                modifier = Modifier.padding(top = 8.dp)
+            )
         }
     }
 }
@@ -384,62 +641,189 @@ private fun destinationDp(px: Float, scale: Float): Dp = (px * scale).dp
 
 private data class DestinationRowSpec(
     val title: String,
-    @DrawableRes val cardIds: List<Int>
+    val genre: ViewportGenre,
+    val programs: List<DestinationProgramSpec>
+)
+
+private data class DestinationProgramSpec(
+    val title: String,
+    val genre: ViewportGenre,
+    @DrawableRes val drawableId: Int
 )
 
 private val MovieRows = listOf(
     DestinationRowSpec(
-        "All Movies",
-        listOf(
-            R.drawable.home_action_01,
-            R.drawable.home_crime_02,
-            R.drawable.home_comedy_01,
-            R.drawable.home_drama_03,
-            R.drawable.home_thriller_02
+        title = "Action Movies",
+        genre = ViewportGenre.Action,
+        programs = listOf(
+            movie("Eruption", ViewportGenre.Action, R.drawable.home_action_01),
+            movie("Skyline Rush", ViewportGenre.Action, R.drawable.home_action_02),
+            movie("Signal Run", ViewportGenre.Action, R.drawable.home_action_03),
+            movie("Impact Window", ViewportGenre.Action, R.drawable.home_action_04),
+            movie("Final Lift", ViewportGenre.Action, R.drawable.home_action_05)
         )
     ),
     DestinationRowSpec(
-        "Featured",
-        listOf(
-            R.drawable.home_action_04,
-            R.drawable.home_documentary_01,
-            R.drawable.home_horror_02,
-            R.drawable.home_comedy_04
+        title = "Comedy Movies",
+        genre = ViewportGenre.Comedy,
+        programs = listOf(
+            movie("Citric", ViewportGenre.Comedy, R.drawable.home_comedy_01),
+            movie("Sunny Side", ViewportGenre.Comedy, R.drawable.home_comedy_02),
+            movie("Odd Hours", ViewportGenre.Comedy, R.drawable.home_comedy_03),
+            movie("Triple Maker", ViewportGenre.Comedy, R.drawable.home_comedy_04),
+            movie("Fresh Laughs", ViewportGenre.Comedy, R.drawable.home_comedy_05)
+        )
+    ),
+    DestinationRowSpec(
+        title = "Crime Movies",
+        genre = ViewportGenre.Crime,
+        programs = listOf(
+            movie("Night Ledger", ViewportGenre.Crime, R.drawable.home_crime_01),
+            movie("Cold Case", ViewportGenre.Crime, R.drawable.home_crime_02),
+            movie("Quiet Witness", ViewportGenre.Crime, R.drawable.home_crime_03),
+            movie("City Trace", ViewportGenre.Crime, R.drawable.home_crime_04)
+        )
+    ),
+    DestinationRowSpec(
+        title = "Documentary Movies",
+        genre = ViewportGenre.Documentary,
+        programs = listOf(
+            movie("Sink or Swim", ViewportGenre.Documentary, R.drawable.home_documentary_01),
+            movie("Field Notes", ViewportGenre.Documentary, R.drawable.home_documentary_02),
+            movie("Open Road", ViewportGenre.Documentary, R.drawable.home_documentary_03),
+            movie("Still Moving", ViewportGenre.Documentary, R.drawable.home_documentary_04),
+            movie("The Long Frame", ViewportGenre.Documentary, R.drawable.home_documentary_05)
+        )
+    ),
+    DestinationRowSpec(
+        title = "Drama Movies",
+        genre = ViewportGenre.Drama,
+        programs = listOf(
+            movie("One Last Breath", ViewportGenre.Drama, R.drawable.home_drama_01),
+            movie("After the Rain", ViewportGenre.Drama, R.drawable.home_drama_02),
+            movie("The Quiet Room", ViewportGenre.Drama, R.drawable.home_drama_03),
+            movie("Paper Hearts", ViewportGenre.Drama, R.drawable.home_drama_04),
+            movie("Incan Descent", ViewportGenre.Drama, R.drawable.home_drama_05),
+            movie("Last Light", ViewportGenre.Drama, R.drawable.home_drama_06)
+        )
+    ),
+    DestinationRowSpec(
+        title = "Horror Movies",
+        genre = ViewportGenre.Horror,
+        programs = listOf(
+            movie("Hallway 9", ViewportGenre.Horror, R.drawable.home_horror_01),
+            movie("Static Bloom", ViewportGenre.Horror, R.drawable.home_horror_02),
+            movie("Open Door", ViewportGenre.Horror, R.drawable.home_horror_03),
+            movie("The Hollow", ViewportGenre.Horror, R.drawable.home_horror_04)
+        )
+    ),
+    DestinationRowSpec(
+        title = "Thriller Movies",
+        genre = ViewportGenre.Thriller,
+        programs = listOf(
+            movie("Red Angle", ViewportGenre.Thriller, R.drawable.home_thriller_01),
+            movie("Threshold", ViewportGenre.Thriller, R.drawable.home_thriller_02),
+            movie("Hidden Current", ViewportGenre.Thriller, R.drawable.home_thriller_03),
+            movie("Last Signal", ViewportGenre.Thriller, R.drawable.home_thriller_04)
         )
     )
 )
 
 private val ShowRows = listOf(
     DestinationRowSpec(
-        "All Shows",
-        listOf(
-            R.drawable.home_crime_01,
-            R.drawable.home_thriller_01,
-            R.drawable.home_drama_01,
-            R.drawable.home_documentary_02,
-            R.drawable.home_horror_01
+        title = "Action Shows",
+        genre = ViewportGenre.Action,
+        programs = listOf(
+            show("Run Point", ViewportGenre.Action, R.drawable.home_action_03),
+            show("Impact Window", ViewportGenre.Action, R.drawable.home_action_04),
+            show("Skyline Rush", ViewportGenre.Action, R.drawable.home_action_02),
+            show("Final Lift", ViewportGenre.Action, R.drawable.home_action_05)
         )
     ),
     DestinationRowSpec(
-        "Collections",
-        listOf(
-            R.drawable.home_comedy_03,
-            R.drawable.home_action_03,
-            R.drawable.home_drama_05,
-            R.drawable.home_thriller_04
+        title = "Comedy Shows",
+        genre = ViewportGenre.Comedy,
+        programs = listOf(
+            show("Odd Hours", ViewportGenre.Comedy, R.drawable.home_comedy_03),
+            show("Fresh Laughs", ViewportGenre.Comedy, R.drawable.home_comedy_05),
+            show("Sunny Side", ViewportGenre.Comedy, R.drawable.home_comedy_02),
+            show("Triple Maker", ViewportGenre.Comedy, R.drawable.home_comedy_04)
+        )
+    ),
+    DestinationRowSpec(
+        title = "Crime Shows",
+        genre = ViewportGenre.Crime,
+        programs = listOf(
+            show("Night Ledger", ViewportGenre.Crime, R.drawable.home_crime_01),
+            show("Quiet Witness", ViewportGenre.Crime, R.drawable.home_crime_03),
+            show("City Trace", ViewportGenre.Crime, R.drawable.home_crime_04),
+            show("Cold Case", ViewportGenre.Crime, R.drawable.home_crime_02)
+        )
+    ),
+    DestinationRowSpec(
+        title = "Documentary Shows",
+        genre = ViewportGenre.Documentary,
+        programs = listOf(
+            show("Field Notes", ViewportGenre.Documentary, R.drawable.home_documentary_02),
+            show("Still Moving", ViewportGenre.Documentary, R.drawable.home_documentary_04),
+            show("Sink or Swim", ViewportGenre.Documentary, R.drawable.home_documentary_01),
+            show("The Long Frame", ViewportGenre.Documentary, R.drawable.home_documentary_05)
+        )
+    ),
+    DestinationRowSpec(
+        title = "Drama Shows",
+        genre = ViewportGenre.Drama,
+        programs = listOf(
+            show("One Last Breath", ViewportGenre.Drama, R.drawable.home_drama_01),
+            show("Incan Descent", ViewportGenre.Drama, R.drawable.home_drama_05),
+            show("Paper Hearts", ViewportGenre.Drama, R.drawable.home_drama_04),
+            show("Last Light", ViewportGenre.Drama, R.drawable.home_drama_06)
+        )
+    ),
+    DestinationRowSpec(
+        title = "Horror Shows",
+        genre = ViewportGenre.Horror,
+        programs = listOf(
+            show("Hallway 9", ViewportGenre.Horror, R.drawable.home_horror_01),
+            show("Open Door", ViewportGenre.Horror, R.drawable.home_horror_03),
+            show("Static Bloom", ViewportGenre.Horror, R.drawable.home_horror_02),
+            show("The Hollow", ViewportGenre.Horror, R.drawable.home_horror_04)
+        )
+    ),
+    DestinationRowSpec(
+        title = "Thriller Shows",
+        genre = ViewportGenre.Thriller,
+        programs = listOf(
+            show("Red Angle", ViewportGenre.Thriller, R.drawable.home_thriller_01),
+            show("Last Signal", ViewportGenre.Thriller, R.drawable.home_thriller_04),
+            show("Hidden Current", ViewportGenre.Thriller, R.drawable.home_thriller_03),
+            show("Threshold", ViewportGenre.Thriller, R.drawable.home_thriller_02)
         )
     )
 )
 
 private val FavoriteRows = listOf(
     DestinationRowSpec(
-        "Favorites",
-        listOf(
-            R.drawable.home_crime_03,
-            R.drawable.home_comedy_02,
-            R.drawable.home_thriller_03,
-            R.drawable.home_action_05,
-            R.drawable.home_drama_06
+        title = "Favorites",
+        genre = ViewportGenre.All,
+        programs = listOf(
+            movie("Quiet Witness", ViewportGenre.Crime, R.drawable.home_crime_03),
+            movie("Sunny Side", ViewportGenre.Comedy, R.drawable.home_comedy_02),
+            movie("Hidden Current", ViewportGenre.Thriller, R.drawable.home_thriller_03),
+            movie("Final Lift", ViewportGenre.Action, R.drawable.home_action_05),
+            movie("Last Light", ViewportGenre.Drama, R.drawable.home_drama_06)
         )
     )
 )
+
+private fun movie(
+    title: String,
+    genre: ViewportGenre,
+    @DrawableRes drawableId: Int
+): DestinationProgramSpec = DestinationProgramSpec(title = title, genre = genre, drawableId = drawableId)
+
+private fun show(
+    title: String,
+    genre: ViewportGenre,
+    @DrawableRes drawableId: Int
+): DestinationProgramSpec = DestinationProgramSpec(title = title, genre = genre, drawableId = drawableId)
