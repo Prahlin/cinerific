@@ -1,0 +1,271 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [6 0 R 8 0 R 10 0 R 12 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Length 7539 >>
+stream
+BT /F2 15.00 Tf 1 0 0 1 54.00 744.00 Tm (Cinerific Android App Work Log - July 19, 2026) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 721.20 Tm (Compiled summary for Sunday, July 19, 2026 - focus: continuing the post-July 18 Cinerific prototype pass by) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 710.05 Tm (aligning Movies and Shows mode screens, preserving the empty Favorites prototype state, refining the) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 698.90 Tm (Settings language and toggle controls, adding rounded Settings section backgrounds, validating the final) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 687.75 Tm (states on the Cinerific tablet AVD, and generating the daily Cinerific worklog artifact.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 670.80 Tm (Generated in continuity with the established Cinerific worklog cadence from July 12, July 14, July 15 Part) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 659.65 Tm (1, July 15, July 16, and July 18: compact opening summary, source-material review, baseline state, goal) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 648.50 Tm (list, work-completed sections, validation, files touched, follow-up context, and output-artifact close. This) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 637.35 Tm (artifact records the July 19 source state now present on main and follows the prior root-level PDF naming,) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 626.20 Tm (four-page letter layout, footer, and plain-text-readable style.) Tj ET
+BT /F2 10.70 Tf 1 0 0 1 54.00 609.25 Tm (Source Materials Reviewed) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 595.95 Tm (- Reviewed every pre-existing Cinerific worklog PDF at the repository root: cinerific_worklog_july) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 584.80 Tm (  12.pdf, cinerific_worklog_july 14.pdf, cinerific_worklog_july 15 part 1.pdf, cinerific_worklog_july) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 573.65 Tm (  15.pdf, cinerific_worklog_july 16.pdf, and cinerific_worklog_july 18.pdf.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 562.50 Tm (- Used pdftotext output from the prior PDFs to preserve the established title pattern, opening-summary) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 551.35 Tm (  rhythm, source review, baseline/goals, themed work-completed sections, validation language,) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 540.20 Tm (  files-touched list, follow-up close, footer convention, and four-page daily-log shape.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 529.05 Tm (- Reviewed read_project.sh and cinerific_PROJECT_SNAPSHOT.txt for project structure, scanner) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 517.90 Tm (  conventions, naming expectations, generated snapshot behavior, and the historical Cinerific context) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 506.75 Tm (  used to onboard into the codebase.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 495.60 Tm (- Reviewed the current Git state on main tracking origin/main, including the post-July-18 PDF commit) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 484.45 Tm (  2398ee9 and the two July 19 commits: 2e89ca5 and b3a1c45.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 473.30 Tm (- Reviewed git show --stat and commit bodies for the July 19 work so the log describes committed source) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 462.15 Tm (  changes rather than only the conversation history.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 451.00 Tm (- Reviewed app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt after the final) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 439.85 Tm (  Settings pass, with attention to catalog mode headers, Favorites placeholders, Settings section) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 428.70 Tm (  panels, shared control constants, animated toggles, and the language dropdown.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 417.55 Tm (- Reviewed the Figma-driven visual references supplied during the day for Favorites, Movies/Shows) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 406.40 Tm (  mode-nav alignment, and Settings controls, including the language dropdown, toggle sizing,) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 395.25 Tm (  downward-only popup behavior, and rounded Settings section header boxes.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 384.10 Tm (- Used Gradle build output, adb install/launch checks, AVD screenshots, UI hierarchy inspection, Git) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 372.95 Tm (  status/log output, and PDF text extraction as validation material. No external PDF package was) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 361.80 Tm (  installed for this worklog.) Tj ET
+BT /F2 10.70 Tf 1 0 0 1 54.00 344.85 Tm (Baseline Status Before July 19 Work) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 331.55 Tm (- Cinerific entered July 19 with the July 18 Figma-style destination chrome, top rails, right-side nav) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 320.40 Tm (  behavior, interactive viewport nav, componentized genre/mode controls, Figma-like list mode, and) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 309.25 Tm (  small-collage center mode already committed and documented.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 298.10 Tm (- Movies and Shows could filter by genre and switch between CollageLarge, CollageSmall, and List, but) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 286.95 Tm (  the center and right mode screens still needed their section headers to match the left mode: genre) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 275.80 Tm (  label plus Movies or Shows above the title cards.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 264.65 Tm (- The vertical start position for catalog title cards and poster rows needed to be identical across all) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 253.50 Tm (  genre-by-mode combinations so the eighteen possible Movies/Shows screen states felt coordinated.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 242.35 Tm (- Favorites had briefly shown real Movies/Shows content, but the Figma prototype required empty) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 231.20 Tm (  placeholder cards until a future add/remove-favorite feature actively populates the screen.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 220.05 Tm (- Settings already existed as a reachable destination with the Figma black/purple chrome and a vertical) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 208.90 Tm (  list of rows, but the controls were still moving from placeholder pills toward the actionable Figma) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 197.75 Tm (  behavior.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 186.60 Tm (- The language control had to stop acting like a simple tap-to-cycle switch and instead become a) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 175.45 Tm (  button-sized dropdown that opens a menu, supports English, Spanish, and Mandarin, and closes after) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 164.30 Tm (  selecting an option.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 153.15 Tm (- The Settings toggles needed to match the closed language button size and shape while preserving the) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 142.00 Tm (  animated knob movement and visual feedback requested from the prototype.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 130.85 Tm (- The Settings page also lacked the rounded dark background boxes and header pills that delineate) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 119.70 Tm (  Accessibility, Playback, Billing & Payment, and Security in the Figma design.) Tj ET
+BT /F2 10.70 Tf 1 0 0 1 54.00 102.75 Tm (Main Goals for July 19) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 89.45 Tm (- Make Movies and Shows small-collage and list modes inherit the same genre-plus-screen section header) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 78.30 Tm (  treatment as the left-side large-collage mode.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 217.44 34.00 Tm (Cinerific Work Log - July 19, 2026 Page 1) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 7771 >>
+stream
+BT /F1 9.15 Tf 1 0 0 1 54.00 744.00 Tm (- Keep title cards and poster rows aligned to a shared vertical top position across all Movies/Shows) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 732.85 Tm (  genre and mode combinations.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 721.70 Tm (- Restore the Favorites screen to the prototype-accurate empty placeholder state until future) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 710.55 Tm (  user-driven favorite-add logic exists.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 699.40 Tm (- Replace the Settings language control with an actionable dropdown menu whose initial closed frame) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 688.25 Tm (  matches the other toggle-sized controls.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 677.10 Tm (- Support English, Spanish, and Mandarin in the language menu without clipping text or shifting rows) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 665.95 Tm (  below the language stack while the menu is open.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 654.80 Tm (- Tune the language popup to open only downward, animate faster and smoother, and keep breathing room) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 643.65 Tm (  between the open menu and the Simplify UI row consistent with toggle spacing.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 632.50 Tm (- Scale, center, and reshape all Settings toggles to match the language button original state while) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 621.35 Tm (  retaining the Figma-style animated switch motion.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 610.20 Tm (- Add rounded section background boxes and Figma-like header pills around Settings sections without) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 599.05 Tm (  breaking scrolling or the open language overlay.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 587.90 Tm (- Build, install, relaunch, screenshot-check, commit, and document the accepted July 19 source state.) Tj ET
+BT /F2 10.70 Tf 1 0 0 1 54.00 570.95 Tm (Work Completed - Catalog and Favorites Alignment) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 557.65 Tm (- Created commit 2e89ca5, Aligned viewport mode sections across catalog screens, as the first July 19) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 546.50 Tm (  source checkpoint after the July 18 worklog artifact.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 535.35 Tm (- Updated the Movies and Shows center mode so CollageSmall carries the same section title treatment as) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 524.20 Tm (  CollageLarge, including the selected genre label and destination name above the small title cards.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 513.05 Tm (- Updated the Movies and Shows List mode so the rich poster rows also sit under the same) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 501.90 Tm (  genre-plus-Movies or genre-plus-Shows header used by the collage modes.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 490.75 Tm (- Shared the same section top padding across large collage, small collage, and list views so switching) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 479.60 Tm (  the right-side mode-nav buttons does not vertically jump the first visible cards or rows.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 468.45 Tm (- Kept the title-card and poster starts consistent across the full catalog matrix: visible genre) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 457.30 Tm (  families multiplied by the three mode-nav buttons for Movies and Shows.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 446.15 Tm (- Changed Favorites away from populated catalog content and back to empty dark placeholder cards under) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 435.00 Tm (  Movies and Shows, matching the prototype expectation that favorites stay blank until a user actively) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 423.85 Tm (  adds saved items.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 412.70 Tm (- Kept Favorites summary headers in place below the empty sections so the screen still reflects the) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 401.55 Tm (  prototype structure without implying saved content exists.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 390.40 Tm (- Preserved the July 18 interactive viewport nav component split while tightening only the presentation) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 379.25 Tm (  and vertical alignment inside CinerificDestinationScreen.kt.) Tj ET
+BT /F2 10.70 Tf 1 0 0 1 54.00 362.30 Tm (Work Completed - Settings Language Menu) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 349.00 Tm (- Converted the language row from a tap-to-toggle control into a standalone dropdown-style component,) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 337.85 Tm (  SettingsLanguageDropdown, with local selected-language state and menu-open state.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 326.70 Tm (- Added the three requested language choices: English, Spanish, and Mandarin, stored in) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 315.55 Tm (  SettingsLanguageOptions and rendered as selectable menu rows.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 304.40 Tm (- Matched the closed language button to the toggle-sized Settings control frame, using shared width,) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 293.25 Tm (  height, radius, border, and shadow constants instead of a separate oversized Figma button shape.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 282.10 Tm (- Increased the language text and triangular arrow by 20 percent from the earlier pass, then adjusted) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 270.95 Tm (  horizontal padding so English, Spanish, and Mandarin fit cleanly inside the closed button frame.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 259.80 Tm (- Changed the language interaction so tapping the closed button opens the menu and tapping a menu row) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 248.65 Tm (  selects the language, collapses the menu, and leaves the chosen value visible in the closed state.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 237.50 Tm (- Reworked the menu animation around animateDpAsState, FastOutSlowInEasing, and a 120 ms timing constant) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 226.35 Tm (  so open and close run about twice as fast while staying smooth.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 215.20 Tm (- Kept menuVisible and menuExpanded separate so the dropdown can animate closed before it is removed,) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 204.05 Tm (  avoiding a snap disappearance after selecting a language.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 192.90 Tm (- Constrained the popup behavior to open downward only, then reserved additional row spacing after the) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 181.75 Tm (  Language stack so Simplify UI and the following controls do not move when the menu opens.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 170.60 Tm (- Adjusted the language menu row placement and radio-circle indicators so the open overlay reads as a) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 159.45 Tm (  compact menu rather than a second toggle state.) Tj ET
+BT /F2 10.70 Tf 1 0 0 1 54.00 142.50 Tm (Work Completed - Settings Toggle Controls) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 129.20 Tm (- Rebuilt the Settings toggle visuals around SettingsAnimatedToggle with rememberSaveable state per row) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 118.05 Tm (  label, making each toggle independently actionable in the current UI pass.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 106.90 Tm (- Preserved the Figma-style animated switch behavior with spring-driven knob offset and knob-size) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 95.75 Tm (  animation, plus animated knob color changes between unchecked and checked states.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 84.60 Tm (- Scaled the toggle sizing down through the requested refinements and ended with shared constants) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 73.45 Tm (  matching the language button closed-state frame: 150 by 75 Figma pixels, 50 px radius, 2 px border,) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 217.44 34.00 Tm (Cinerific Work Log - July 19, 2026 Page 2) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 7672 >>
+stream
+BT /F1 9.15 Tf 1 0 0 1 54.00 744.00 Tm (  and compact shadow.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 732.85 Tm (- Matched all toggle tracks to the language button original shape rather than keeping a separate pill) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 721.70 Tm (  size, improving consistency across Language, Simplify UI, Dark mode, Playback, Billing, and Security) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 710.55 Tm (  rows.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 699.40 Tm (- Kept the toggle controls vertically centered against each left-hand label/detail stack, so the) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 688.25 Tm (  interaction target aligns visually with the row text rather than drifting toward the section top or) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 677.10 Tm (  bottom.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 665.95 Tm (- Maintained no-ripple custom interaction behavior with a switch role, preserving touch action while) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 654.80 Tm (  keeping the prototype visual style clean.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 643.65 Tm (- Kept the dark track, black outline, radial-gradient knob, and subtle shadow treatment in a shared) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 632.50 Tm (  visual language with the language dropdown frame.) Tj ET
+BT /F2 10.70 Tf 1 0 0 1 54.00 615.55 Tm (Work Completed - Settings Section Panels) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 602.25 Tm (- Created commit b3a1c45 as the final July 19 source checkpoint, adding rounded background panels for) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 591.10 Tm (  each Settings section and preserving the refined language/toggle behavior inside that new layout.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 579.95 Tm (- Added reusable SettingsSection and SettingsSectionHeader composables so Accessibility, Playback,) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 568.80 Tm (  Billing & Payment, and Security share one section container pattern.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 557.65 Tm (- Inserted rounded, low-opacity dark section backgrounds with a subtle border to delineate each Settings) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 546.50 Tm (  group against the black/purple destination backdrop.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 535.35 Tm (- Added Figma-style rounded gray header pills for section titles, with black-weight typography and) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 524.20 Tm (  horizontal padding that lets shorter and longer headings read as designed labels.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 513.05 Tm (- Inset section body rows from the panel edge so labels, descriptions, language controls, and toggles) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 501.90 Tm (  sit cleanly inside the rounded containers instead of floating on the page background.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 490.75 Tm (- Kept the special extra top padding after the Language row based on the dropdown menu height minus the) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 479.60 Tm (  closed control height, giving the downward-only menu dedicated breathing room.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 468.45 Tm (- Preserved vertical scrolling and system navigation-bar padding for the lower Settings sections after) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 457.30 Tm (  the rounded panels were added.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 446.15 Tm (- Kept the destination top rail and right-rail chrome untouched during this pass so Settings polish did) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 435.00 Tm (  not regress the broader July 18 navigation work.) Tj ET
+BT /F2 10.70 Tf 1 0 0 1 54.00 418.05 Tm (Validation and Checks Performed) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 404.75 Tm (- Ran ./gradlew :app:assembleDebug during the July 19 implementation passes; the debug build completed) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 393.60 Tm (  successfully after the catalog/Favorites changes and after the Settings control/panel refinements.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 382.45 Tm (- Installed the generated debug APK on emulator-5554 with adb install -r and relaunched) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 371.30 Tm (  com.prahlin.cinerific/.MainActivity for visual verification on the Cinerific tablet AVD.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 360.15 Tm (- Navigated through the profile selection flow, opened the right-side rail, and verified Movies and) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 349.00 Tm (  Shows mode-nav states in the running app after the catalog header and vertical-alignment pass.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 337.85 Tm (- Captured and reviewed AVD screenshots for Movies and Shows mode screens to confirm section headers and) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 326.70 Tm (  first-card vertical positions matched across large collage, small collage, and list modes.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 315.55 Tm (- Checked Favorites on the AVD and confirmed the screen shows empty placeholder cards for Movies and) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 304.40 Tm (  Shows rather than real saved content before favorites functionality exists.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 293.25 Tm (- Used UI hierarchy inspection after a coordinate mismatch to recalibrate the Settings nav tap, then) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 282.10 Tm (  verified the final Settings closed state and the language-menu-open state on emulator screenshots.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 270.95 Tm (- Confirmed the language dropdown opens downward only, leaves rows below it stable, provides) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 259.80 Tm (  English/Spanish/Mandarin choices, and collapses after a row selection.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 248.65 Tm (- Confirmed rounded Settings section panels, header pills, shared control sizing, and centered toggle) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 237.50 Tm (  alignment were visible in the final AVD captures.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 226.35 Tm (- Ran git status --short --branch before this artifact pass and confirmed main was clean and aligned) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 215.20 Tm (  with origin/main at HEAD b3a1c45.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 204.05 Tm (- Ran git diff --stat 2398ee9..HEAD and confirmed the July 19 source delta is scoped to) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 192.90 Tm (  CinerificDestinationScreen.kt: 630 insertions and 95 deletions across the two source commits.) Tj ET
+BT /F2 10.70 Tf 1 0 0 1 54.00 175.95 Tm (Files Touched During July 19) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 162.65 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt: updated catalog section) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 151.50 Tm (  headers and mode alignment, restored Favorites placeholders, added Settings section containers,) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 140.35 Tm (  animated toggle behavior, language dropdown logic, language-menu placement, shared Settings control) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 129.20 Tm (  constants, and section header pills.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 118.05 Tm (- cinerific_worklog_july 19.pdf: this generated daily worklog artifact at the repository root.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 106.90 Tm (- No additional source, drawable, video, Gradle, or workspace files were changed as part of the July 19) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 95.75 Tm (  source delta after the July 18 worklog commit.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 84.60 Tm (- The Git branch was clean before this PDF was generated; the only new local artifact from this request) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 73.45 Tm (  is the daily worklog PDF itself, subject to the project ignore policy for generated worklogs.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 217.44 34.00 Tm (Cinerific Work Log - July 19, 2026 Page 3) Tj ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Length 3272 >>
+stream
+BT /F2 10.70 Tf 1 0 0 1 54.00 738.20 Tm (Follow-Up Context) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 724.90 Tm (- Favorites now intentionally shows empty placeholders, so the next functional pass can add real) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 713.75 Tm (  favorite add/remove state without fighting seeded placeholder content.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 702.60 Tm (- The Movies and Shows genre-by-mode matrix now has stable header and card starts, but future) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 691.45 Tm (  deep-linking may still require route/state models if each genre and mode combination becomes) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 680.30 Tm (  separately addressable.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 669.15 Tm (- Settings toggles are actionable locally and visually animated, but they are not yet connected to) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 658.00 Tm (  persisted app settings, playback behavior, billing preferences, or security flows.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 646.85 Tm (- The language selector now exposes English, Spanish, and Mandarin in the UI, but full localization) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 635.70 Tm (  strings and app-wide language switching remain future work.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 624.55 Tm (- The Settings section boxes approximate the Figma prototype and have been AVD-checked on the current) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 613.40 Tm (  tablet profile; additional tablet aspect ratios may need small spacing revisions later.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 602.25 Tm (- If the Settings page grows, the shared section/control constants added today should make future) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 591.10 Tm (  spacing and control-shape tuning less fragile.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 579.95 Tm (- The next worklog should continue from HEAD b3a1c45 unless new source commits are added before the next) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 568.80 Tm (  session.) Tj ET
+BT /F2 10.70 Tf 1 0 0 1 54.00 551.85 Tm (Output Artifact) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 538.55 Tm (- Filename: cinerific_worklog_july 19.pdf) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 527.40 Tm (- Created at the repository root in /Users/prahlin/gh/cinerific.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 516.25 Tm (- Follows the Cinerific filename convention established by cinerific_worklog_july 12.pdf and continued) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 505.10 Tm (  by the July 14, July 15, July 16, and July 18 artifacts, including the space before the day number.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 493.95 Tm (- Follows the established Alla Vostra/Prahlin/Cinerific daily worklog structure while keeping the body) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 482.80 Tm (  content specific to Cinerific work completed on Sunday, July 19, 2026.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 471.65 Tm (- No external PDF dependency was installed; this artifact was generated with a small standard-library) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 460.50 Tm (  PDF writer in the same plain-text-readable spirit as the prior Cinerific worklogs.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 449.35 Tm (- Created this daily worklog PDF: cinerific_worklog_july 19.pdf.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 217.44 34.00 Tm (Cinerific Work Log - July 19, 2026 Page 4) Tj ET
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 11 0 R >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000141 00000 n 
+0000000211 00000 n 
+0000000286 00000 n 
+0000007877 00000 n 
+0000008013 00000 n 
+0000015836 00000 n 
+0000015972 00000 n 
+0000023696 00000 n 
+0000023833 00000 n 
+0000027158 00000 n 
+trailer
+<< /Size 13 /Root 1 0 R >>
+startxref
+27296
+%%EOF
