@@ -84,12 +84,7 @@ internal fun CinerificDestinationScreen(
             showViewportNav = true,
             modifier = modifier
         )
-        CinerificDestination.Favorites -> CinerificCatalogScreen(
-            title = "Favorites",
-            rows = FavoriteRows,
-            showViewportNav = false,
-            modifier = modifier
-        )
+        CinerificDestination.Favorites -> CinerificFavoritesScreen(modifier = modifier)
         CinerificDestination.Settings -> CinerificSettingsScreen(modifier = modifier)
         CinerificDestination.Home -> CinerificHomeScreen(modifier = modifier)
     }
@@ -132,16 +127,6 @@ private fun CinerificCatalogScreen(
         } else {
             rows.filter { it.genre == selectedGenre }
         }
-        val visiblePrograms = visibleRows.flatMap { it.programs }
-        val visibleSmallPrograms = visiblePrograms
-            .withIndex()
-            .sortedWith(compareBy({ prototypeSmallPriority(title, it.value.title) }, { it.index }))
-            .map { it.value }
-        val visibleListPrograms = visiblePrograms
-            .withIndex()
-            .sortedWith(compareBy({ prototypeListPriority(it.value.title) }, { it.index }))
-            .map { it.value }
-
         LaunchedEffect(title, selectedGenre, selectedMode) {
             scrollState.scrollTo(0)
         }
@@ -182,28 +167,34 @@ private fun CinerificCatalogScreen(
                             cardHeight = cardHeight,
                             cardGap = cardGap,
                             columnCount = contentColumnCount,
-                            topPadding = if (index == 0) {
-                                if (showViewportNav) 48.dp else 72.dp
-                            } else {
-                                80.dp
-                            }
+                            topPadding = destinationSectionTopPadding(index = index, showViewportNav = showViewportNav)
                         )
                     }
                 }
-                ViewportMode.CollageSmall -> DestinationProgramSmallCollage(
-                    programs = visibleSmallPrograms,
-                    horizontalPadding = horizontalPadding,
-                    rightPadding = rightPadding,
-                    scale = scale,
-                    topPadding = 48.dp
-                )
-                ViewportMode.List -> DestinationProgramList(
-                    programs = visibleListPrograms,
-                    horizontalPadding = horizontalPadding,
-                    rightPadding = rightPadding,
-                    scale = scale,
-                    topPadding = 48.dp
-                )
+                ViewportMode.CollageSmall -> {
+                    visibleRows.forEachIndexed { index, row ->
+                        DestinationProgramSmallCollage(
+                            title = row.title,
+                            programs = smallCollagePrograms(destinationTitle = title, programs = row.programs),
+                            horizontalPadding = horizontalPadding,
+                            rightPadding = rightPadding,
+                            scale = scale,
+                            topPadding = destinationSectionTopPadding(index = index, showViewportNav = showViewportNav)
+                        )
+                    }
+                }
+                ViewportMode.List -> {
+                    visibleRows.forEachIndexed { index, row ->
+                        DestinationProgramList(
+                            title = row.title,
+                            programs = listPrograms(row.programs),
+                            horizontalPadding = horizontalPadding,
+                            rightPadding = rightPadding,
+                            scale = scale,
+                            topPadding = destinationSectionTopPadding(index = index, showViewportNav = showViewportNav)
+                        )
+                    }
+                }
             }
 
             Spacer(modifier = Modifier.height(80.dp + bottomSystemPadding))
@@ -276,13 +267,10 @@ private fun DestinationProgramRow(
             .fillMaxWidth()
             .padding(top = topPadding)
     ) {
-        Text(
-            text = title,
-            color = DestinationText,
-            fontSize = 36.sp,
-            fontWeight = FontWeight.Black,
-            letterSpacing = 0.sp,
-            modifier = Modifier.padding(start = horizontalPadding, end = rightPadding)
+        DestinationSectionHeader(
+            title = title,
+            horizontalPadding = horizontalPadding,
+            rightPadding = rightPadding
         )
 
         Column(
@@ -308,7 +296,24 @@ private fun DestinationProgramRow(
 }
 
 @Composable
+private fun DestinationSectionHeader(
+    title: String,
+    horizontalPadding: Dp,
+    rightPadding: Dp
+) {
+    Text(
+        text = title,
+        color = DestinationText,
+        fontSize = 36.sp,
+        fontWeight = FontWeight.Black,
+        letterSpacing = 0.sp,
+        modifier = Modifier.padding(start = horizontalPadding, end = rightPadding)
+    )
+}
+
+@Composable
 private fun DestinationProgramSmallCollage(
+    title: String,
     programs: List<DestinationProgramSpec>,
     horizontalPadding: Dp,
     rightPadding: Dp,
@@ -326,10 +331,17 @@ private fun DestinationProgramSmallCollage(
             .fillMaxWidth()
             .padding(top = topPadding)
     ) {
+        DestinationSectionHeader(
+            title = title,
+            horizontalPadding = horizontalPadding,
+            rightPadding = rightPadding
+        )
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = horizontalPadding, end = rightPadding),
+                .padding(start = horizontalPadding, end = rightPadding)
+                .padding(top = 20.dp),
             verticalArrangement = Arrangement.spacedBy(verticalCardGap)
         ) {
             programs.chunked(columnCount).forEach { rowPrograms ->
@@ -395,6 +407,7 @@ private fun DestinationSmallCollageCard(
 
 @Composable
 private fun DestinationProgramList(
+    title: String,
     programs: List<DestinationProgramSpec>,
     horizontalPadding: Dp,
     rightPadding: Dp,
@@ -406,10 +419,17 @@ private fun DestinationProgramList(
             .fillMaxWidth()
             .padding(top = topPadding)
     ) {
+        DestinationSectionHeader(
+            title = title,
+            horizontalPadding = horizontalPadding,
+            rightPadding = rightPadding
+        )
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = horizontalPadding, end = rightPadding),
+                .padding(start = horizontalPadding, end = rightPadding)
+                .padding(top = 20.dp),
             verticalArrangement = Arrangement.spacedBy(destinationDp(100f, scale))
         ) {
             programs.forEach { program ->
@@ -433,7 +453,7 @@ private fun DestinationProgramListItem(
         modifier = Modifier
             .fillMaxWidth()
             .height(destinationDp(237f, scale)),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.Top
     ) {
         Box(
             modifier = Modifier
@@ -666,6 +686,140 @@ private fun CinerificSettingsScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
+private fun CinerificFavoritesScreen(modifier: Modifier = Modifier) {
+    BoxWithConstraints(
+        modifier = modifier
+            .fillMaxSize()
+            .background(DestinationBottom)
+    ) {
+        val scale = maxWidth.value / DESTINATION_FRAME_WIDTH
+        val density = LocalDensity.current
+        val horizontalPadding = destinationDp(50f, scale)
+        val rightPadding = destinationDp(150f, scale)
+        val navScale = cinerificNavScale(maxWidth, maxHeight)
+        val titleBottomPadding = destinationDp(DESTINATION_TOP_BAR_TITLE_BOTTOM, navScale)
+        val statusBarTop = with(density) { WindowInsets.statusBars.getTop(this).toDp() }
+        val topBarHeight = cinerificTopRailHeight(maxWidth, maxHeight, statusBarTop)
+        val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(DestinationTop, DestinationMid, DestinationBottom)
+                    )
+                )
+                .padding(top = topBarHeight, bottom = 80.dp + bottomSystemPadding)
+        ) {
+            Spacer(modifier = Modifier.height(destinationDp(61f, scale)))
+            FavoritesPlaceholderSection(
+                title = "Movies",
+                horizontalPadding = horizontalPadding,
+                scale = scale
+            )
+            Spacer(modifier = Modifier.height(destinationDp(82f, scale)))
+            FavoritesPlaceholderSection(
+                title = "Shows",
+                horizontalPadding = horizontalPadding,
+                scale = scale
+            )
+            FavoritesSummaryHeaders(
+                horizontalPadding = horizontalPadding,
+                scale = scale
+            )
+        }
+
+        DestinationTopBar(
+            title = "Favorites",
+            height = topBarHeight,
+            horizontalPadding = horizontalPadding,
+            rightPadding = rightPadding,
+            titleBottomPadding = titleBottomPadding
+        )
+    }
+}
+
+@Composable
+private fun FavoritesPlaceholderSection(
+    title: String,
+    horizontalPadding: Dp,
+    scale: Float
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = horizontalPadding)
+    ) {
+        Text(
+            text = title,
+            color = DestinationText,
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            lineHeight = 49.sp,
+            letterSpacing = 0.sp
+        )
+        Spacer(modifier = Modifier.height(destinationDp(24f, scale)))
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(destinationDp(50f, scale))
+        ) {
+            repeat(5) {
+                FavoritePlaceholderCard(scale = scale)
+            }
+        }
+    }
+}
+
+@Composable
+private fun FavoritePlaceholderCard(scale: Float) {
+    val shape = RoundedCornerShape(destinationDp(6.619f, scale))
+
+    Box(
+        modifier = Modifier
+            .width(destinationDp(198.786f, scale))
+            .height(destinationDp(138.85f, scale))
+            .shadow(destinationDp(10.59f, scale), shape, clip = false)
+            .clip(shape)
+            .background(Color.Black.copy(alpha = 0.08f))
+            .border(destinationDp(3.971f, scale), Color.Black, shape)
+    )
+}
+
+@Composable
+private fun FavoritesSummaryHeaders(
+    horizontalPadding: Dp,
+    scale: Float
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = horizontalPadding)
+            .padding(top = destinationDp(105f, scale))
+    ) {
+        FavoritesSummaryHeader(text = "Most Frequently Viewed (7 times)")
+        Spacer(modifier = Modifier.height(destinationDp(96f, scale)))
+        FavoritesSummaryHeader(text = "Longest Playtime (32 hrs)")
+        Spacer(modifier = Modifier.height(destinationDp(134f, scale)))
+        FavoritesSummaryHeader(text = "Most Used Device")
+        Spacer(modifier = Modifier.height(destinationDp(51f, scale)))
+        FavoritesSummaryHeader(text = "Favorite Genre")
+    }
+}
+
+@Composable
+private fun FavoritesSummaryHeader(text: String) {
+    Text(
+        text = text,
+        color = DestinationText,
+        fontSize = 24.sp,
+        fontWeight = FontWeight.Bold,
+        lineHeight = 36.sp,
+        letterSpacing = 0.sp
+    )
+}
+
+@Composable
 private fun DestinationTopBar(
     title: String,
     height: Dp,
@@ -765,6 +919,14 @@ private fun TogglePill() {
 }
 
 private fun destinationDp(px: Float, scale: Float): Dp = (px * scale).dp
+
+private fun destinationSectionTopPadding(index: Int, showViewportNav: Boolean): Dp {
+    return if (index == 0) {
+        if (showViewportNav) 48.dp else 72.dp
+    } else {
+        80.dp
+    }
+}
 
 private data class DestinationRowSpec(
     val title: String,
@@ -1075,20 +1237,6 @@ private val ShowRows = listOf(
     )
 )
 
-private val FavoriteRows = listOf(
-    DestinationRowSpec(
-        title = "Favorites",
-        genre = ViewportGenre.All,
-        programs = listOf(
-            movie("Sink or Swim", ViewportGenre.Crime, R.drawable.home_crime_03),
-            movie("The Baller", ViewportGenre.Comedy, R.drawable.home_comedy_05),
-            movie("Deadbeat", ViewportGenre.Thriller, R.drawable.home_thriller_03),
-            movie("Joyriders", ViewportGenre.Action, R.drawable.home_action_05),
-            movie("Chasing Light", ViewportGenre.Drama, R.drawable.home_drama_06)
-        )
-    )
-)
-
 private fun movie(
     title: String,
     genre: ViewportGenre,
@@ -1208,6 +1356,13 @@ private fun prototypeListPriority(title: String): Int {
     return if (index == -1) Int.MAX_VALUE else index
 }
 
+private fun listPrograms(programs: List<DestinationProgramSpec>): List<DestinationProgramSpec> {
+    return programs
+        .withIndex()
+        .sortedWith(compareBy({ prototypeListPriority(it.value.title) }, { it.index }))
+        .map { it.value }
+}
+
 private fun prototypeSmallPriority(destinationTitle: String, programTitle: String): Int {
     val order = if (destinationTitle == "Shows") {
         PrototypeShowSmallTitleOrder
@@ -1216,4 +1371,14 @@ private fun prototypeSmallPriority(destinationTitle: String, programTitle: Strin
     }
     val index = order.indexOf(programTitle)
     return if (index == -1) Int.MAX_VALUE else index
+}
+
+private fun smallCollagePrograms(
+    destinationTitle: String,
+    programs: List<DestinationProgramSpec>
+): List<DestinationProgramSpec> {
+    return programs
+        .withIndex()
+        .sortedWith(compareBy({ prototypeSmallPriority(destinationTitle, it.value.title) }, { it.index }))
+        .map { it.value }
 }
