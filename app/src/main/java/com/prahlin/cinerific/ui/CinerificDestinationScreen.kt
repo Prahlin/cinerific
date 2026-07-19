@@ -22,6 +22,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,7 +41,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -124,6 +131,10 @@ private fun CinerificCatalogScreen(
             rows.filter { it.genre == selectedGenre }
         }
         val visiblePrograms = visibleRows.flatMap { it.programs }
+        val visibleListPrograms = visiblePrograms
+            .withIndex()
+            .sortedWith(compareBy({ prototypeListPriority(it.value.title) }, { it.index }))
+            .map { it.value }
 
         LaunchedEffect(title, selectedGenre, selectedMode) {
             scrollState.scrollTo(0)
@@ -185,8 +196,7 @@ private fun CinerificCatalogScreen(
                     topPadding = 48.dp
                 )
                 ViewportMode.List -> DestinationProgramList(
-                    title = if (selectedGenre == ViewportGenre.All) "All $title" else "${selectedGenre.displayName} $title",
-                    programs = visiblePrograms,
+                    programs = visibleListPrograms,
                     horizontalPadding = horizontalPadding,
                     rightPadding = rightPadding,
                     scale = scale,
@@ -242,7 +252,7 @@ private fun DestinationViewportHeader(
             onGenreSelected = onGenreSelected,
             onModeSelected = onModeSelected,
             scale = scale,
-            modifier = Modifier.width(destinationDp(424f, scale))
+            modifier = Modifier.width(destinationDp(401f, scale))
         )
     }
 }
@@ -345,7 +355,6 @@ private fun DestinationProgramGrid(
 
 @Composable
 private fun DestinationProgramList(
-    title: String,
     programs: List<DestinationProgramSpec>,
     horizontalPadding: Dp,
     rightPadding: Dp,
@@ -357,21 +366,11 @@ private fun DestinationProgramList(
             .fillMaxWidth()
             .padding(top = topPadding)
     ) {
-        Text(
-            text = title,
-            color = DestinationText,
-            fontSize = 36.sp,
-            fontWeight = FontWeight.Black,
-            letterSpacing = 0.sp,
-            modifier = Modifier.padding(start = horizontalPadding, end = rightPadding)
-        )
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = horizontalPadding, end = rightPadding)
-                .padding(top = 22.dp),
-            verticalArrangement = Arrangement.spacedBy(18.dp)
+                .padding(start = horizontalPadding, end = rightPadding),
+            verticalArrangement = Arrangement.spacedBy(destinationDp(100f, scale))
         ) {
             programs.forEach { program ->
                 DestinationProgramListItem(
@@ -388,26 +387,24 @@ private fun DestinationProgramListItem(
     program: DestinationProgramSpec,
     scale: Float
 ) {
-    val shape = RoundedCornerShape(8.dp)
+    val imageShape = RoundedCornerShape(destinationDp(15f, scale))
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(destinationDp(116f, scale))
-            .clip(shape)
-            .background(Color.Black.copy(alpha = 0.2f))
-            .padding(destinationDp(12f, scale)),
+            .height(destinationDp(237f, scale)),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier
-                .width(destinationDp(140f, scale))
-                .height(destinationDp(92f, scale))
-                .clip(RoundedCornerShape(8.dp))
+                .width(destinationDp(300f, scale))
+                .height(destinationDp(225f, scale))
+                .shadow(destinationDp(14f, scale), imageShape, clip = false)
+                .clip(imageShape)
                 .background(Color.Black)
         ) {
             Image(
-                painter = painterResource(program.drawableId),
+                painter = painterResource(program.listDrawableId),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.FillBounds
@@ -416,24 +413,114 @@ private fun DestinationProgramListItem(
         Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(start = destinationDp(26f, scale))
+                .height(destinationDp(222f, scale))
+                .padding(start = destinationDp(50f, scale)),
+            verticalArrangement = Arrangement.spacedBy(destinationDp(20f, scale))
         ) {
             Text(
-                text = program.title,
+                text = buildAnnotatedString {
+                    withStyle(SpanStyle(fontWeight = FontWeight.Black)) {
+                        append(program.title.uppercase())
+                    }
+                    append(" ")
+                    withStyle(SpanStyle(fontWeight = FontWeight.Normal)) {
+                        append("(${program.year})")
+                    }
+                },
                 color = DestinationText,
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Black,
-                lineHeight = 32.sp,
+                fontSize = 32.sp,
+                lineHeight = 49.sp,
                 letterSpacing = 0.sp,
-                maxLines = 1
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
-            Text(
-                text = program.genre.displayName,
-                color = DestinationSubtle,
-                fontSize = 18.sp,
-                lineHeight = 24.sp,
-                letterSpacing = 0.sp,
-                modifier = Modifier.padding(top = 8.dp)
+            Row(
+                modifier = Modifier.height(destinationDp(76f, scale)),
+                horizontalArrangement = Arrangement.spacedBy(destinationDp(37f, scale)),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = program.synopsis,
+                    color = DestinationText.copy(alpha = 0.9f),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Normal,
+                    lineHeight = 24.sp,
+                    letterSpacing = 0.sp,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.width(destinationDp(298f, scale))
+                )
+                DestinationListMetaColumn(
+                    top = program.runtime,
+                    bottom = program.metadataGenre,
+                    width = destinationDp(71f, scale),
+                    scale = scale
+                )
+                DestinationListMetaColumn(
+                    top = "Dir: ${program.director}",
+                    bottom = "Prod: ${program.producer}",
+                    width = destinationDp(156f, scale),
+                    scale = scale
+                )
+            }
+            DestinationRatingStars(
+                rating = program.rating,
+                scale = scale
+            )
+        }
+    }
+}
+
+@Composable
+private fun DestinationListMetaColumn(
+    top: String,
+    bottom: String,
+    width: Dp,
+    scale: Float
+) {
+    Column(
+        modifier = Modifier
+            .width(width)
+            .height(destinationDp(76f, scale)),
+        verticalArrangement = Arrangement.spacedBy(destinationDp(25f, scale))
+    ) {
+        DestinationListMetaText(text = top)
+        DestinationListMetaText(text = bottom)
+    }
+}
+
+@Composable
+private fun DestinationListMetaText(text: String) {
+    Text(
+        text = text,
+        color = DestinationText.copy(alpha = 0.9f),
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Bold,
+        lineHeight = 24.sp,
+        letterSpacing = 0.sp,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
+    )
+}
+
+@Composable
+private fun DestinationRatingStars(
+    rating: Int,
+    scale: Float
+) {
+    Row(
+        modifier = Modifier
+            .width(destinationDp(192f, scale))
+            .height(destinationDp(40f, scale)),
+        horizontalArrangement = Arrangement.spacedBy(destinationDp(8f, scale)),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        repeat(5) { index ->
+            Icon(
+                imageVector = Icons.Rounded.Star,
+                contentDescription = null,
+                tint = if (index < rating) Color(0xFFFFC91B) else Color(0xFFC9C4CC),
+                modifier = Modifier.size(destinationDp(26f, scale))
             )
         }
     }
@@ -648,7 +735,114 @@ private data class DestinationRowSpec(
 private data class DestinationProgramSpec(
     val title: String,
     val genre: ViewportGenre,
-    @DrawableRes val drawableId: Int
+    @DrawableRes val drawableId: Int,
+    @DrawableRes val listDrawableId: Int,
+    val year: String,
+    val runtime: String,
+    val director: String,
+    val producer: String,
+    val metadataGenre: String,
+    val synopsis: String,
+    val rating: Int
+)
+
+private data class ProgramDetails(
+    val year: String,
+    val runtime: String,
+    val director: String,
+    val producer: String,
+    val synopsis: String,
+    val rating: Int,
+    val genreLabel: String? = null
+)
+
+private val ProgramDetailsByTitle = mapOf(
+    "One Last Breath" to ProgramDetails(
+        year = "2013",
+        runtime = "2h 13m",
+        director = "J. Sarge",
+        producer = "M. Holt",
+        synopsis = "A curious woman sleuthing through unresolved family business uncovers more than she originally bargained for",
+        rating = 4,
+        genreLabel = "Crime"
+    ),
+    "Sink or Swim" to ProgramDetails(
+        year = "2015",
+        runtime = "1h 51m",
+        director = "B. Feinholt",
+        producer = "R. Anderson",
+        synopsis = "Swimming takes on a whole new meaning when an unphased man is confronted with the inevitable",
+        rating = 3,
+        genreLabel = "Crime"
+    ),
+    "The Baller" to ProgramDetails(
+        year = "2018",
+        runtime = "1h 38m",
+        director = "M. Marsh",
+        producer = "S. Sebilla",
+        synopsis = "Shooting hoops is all fun and games until life itself becomes the greatest challenge",
+        rating = 4
+    ),
+    "Troublemaker" to ProgramDetails(
+        year = "2009",
+        runtime = "2h 5m",
+        director = "A. Lockhart",
+        producer = "A. Lockhart",
+        synopsis = "No scolding in the world can discipline some children - at least not when it comes to little rascal Hunter Roddings",
+        rating = 3
+    ),
+    "Ignition" to ProgramDetails(
+        year = "2022",
+        runtime = "2h 14m",
+        director = "R. Fullstone",
+        producer = "T. Tanning",
+        synopsis = "Firey passion and noble truth are at odds when sheltered Mona encounters Steward, a man with a troubled past",
+        rating = 3
+    ),
+    "Eruption" to ProgramDetails(
+        year = "2024",
+        runtime = "1h 34m",
+        director = "M. Bennington",
+        producer = "C. Lukinski",
+        synopsis = "Not even a life of high-level combat training can prepare a seasoned navy seal when nature's fury breaks loose",
+        rating = 5
+    ),
+    "If I May" to ProgramDetails(
+        year = "2020",
+        runtime = "1h 28m",
+        director = "W. Wexler",
+        producer = "B. Riley",
+        synopsis = "A quiet confession changes the course of a family gathering before anyone is ready for the truth",
+        rating = 3
+    ),
+    "The Playmate" to ProgramDetails(
+        year = "2010",
+        runtime = "2h 28m",
+        director = "W. Stills",
+        producer = "U. Bannon",
+        synopsis = "A delectable but lethal young woman allures unsuspecting men into a game of never-ending hide-and-seek",
+        rating = 3
+    ),
+    "Help" to ProgramDetails(
+        year = "2025",
+        runtime = "2h 0m",
+        director = "K. Jewles",
+        producer = "I. Kavan",
+        synopsis = "Would you ignore a desperate call for aid if you were the only one around to lend a helping hand?",
+        rating = 2
+    )
+)
+
+private val PrototypeListTitleOrder = listOf(
+    "One Last Breath",
+    "Sink or Swim",
+    "The Baller",
+    "Troublemaker",
+    "Ignition",
+    "Eruption",
+    "If I May",
+    "The Playmate",
+    "Help"
 )
 
 private val MovieRows = listOf(
@@ -668,10 +862,10 @@ private val MovieRows = listOf(
         genre = ViewportGenre.Comedy,
         programs = listOf(
             movie("Citric", ViewportGenre.Comedy, R.drawable.home_comedy_01),
-            movie("Sunny Side", ViewportGenre.Comedy, R.drawable.home_comedy_02),
+            movie("The Baller", ViewportGenre.Comedy, R.drawable.home_comedy_05),
             movie("Odd Hours", ViewportGenre.Comedy, R.drawable.home_comedy_03),
-            movie("Triple Maker", ViewportGenre.Comedy, R.drawable.home_comedy_04),
-            movie("Fresh Laughs", ViewportGenre.Comedy, R.drawable.home_comedy_05)
+            movie("Troublemaker", ViewportGenre.Comedy, R.drawable.home_comedy_02),
+            movie("Lost Time", ViewportGenre.Comedy, R.drawable.home_comedy_04)
         )
     ),
     DestinationRowSpec(
@@ -702,7 +896,7 @@ private val MovieRows = listOf(
             movie("One Last Breath", ViewportGenre.Drama, R.drawable.home_drama_01),
             movie("After the Rain", ViewportGenre.Drama, R.drawable.home_drama_02),
             movie("The Quiet Room", ViewportGenre.Drama, R.drawable.home_drama_03),
-            movie("Paper Hearts", ViewportGenre.Drama, R.drawable.home_drama_04),
+            movie("If I May", ViewportGenre.Drama, R.drawable.home_drama_04),
             movie("Incan Descent", ViewportGenre.Drama, R.drawable.home_drama_05),
             movie("Last Light", ViewportGenre.Drama, R.drawable.home_drama_06)
         )
@@ -711,8 +905,8 @@ private val MovieRows = listOf(
         title = "Horror Movies",
         genre = ViewportGenre.Horror,
         programs = listOf(
-            movie("Hallway 9", ViewportGenre.Horror, R.drawable.home_horror_01),
-            movie("Static Bloom", ViewportGenre.Horror, R.drawable.home_horror_02),
+            movie("Help", ViewportGenre.Horror, R.drawable.home_horror_01),
+            movie("The Playmate", ViewportGenre.Horror, R.drawable.home_horror_02),
             movie("Open Door", ViewportGenre.Horror, R.drawable.home_horror_03),
             movie("The Hollow", ViewportGenre.Horror, R.drawable.home_horror_04)
         )
@@ -721,7 +915,7 @@ private val MovieRows = listOf(
         title = "Thriller Movies",
         genre = ViewportGenre.Thriller,
         programs = listOf(
-            movie("Red Angle", ViewportGenre.Thriller, R.drawable.home_thriller_01),
+            movie("Ignition", ViewportGenre.Thriller, R.drawable.home_thriller_01),
             movie("Threshold", ViewportGenre.Thriller, R.drawable.home_thriller_02),
             movie("Hidden Current", ViewportGenre.Thriller, R.drawable.home_thriller_03),
             movie("Last Signal", ViewportGenre.Thriller, R.drawable.home_thriller_04)
@@ -745,9 +939,9 @@ private val ShowRows = listOf(
         genre = ViewportGenre.Comedy,
         programs = listOf(
             show("Odd Hours", ViewportGenre.Comedy, R.drawable.home_comedy_03),
-            show("Fresh Laughs", ViewportGenre.Comedy, R.drawable.home_comedy_05),
-            show("Sunny Side", ViewportGenre.Comedy, R.drawable.home_comedy_02),
-            show("Triple Maker", ViewportGenre.Comedy, R.drawable.home_comedy_04)
+            show("The Baller", ViewportGenre.Comedy, R.drawable.home_comedy_05),
+            show("Troublemaker", ViewportGenre.Comedy, R.drawable.home_comedy_02),
+            show("Lost Time", ViewportGenre.Comedy, R.drawable.home_comedy_04)
         )
     ),
     DestinationRowSpec(
@@ -776,7 +970,7 @@ private val ShowRows = listOf(
         programs = listOf(
             show("One Last Breath", ViewportGenre.Drama, R.drawable.home_drama_01),
             show("Incan Descent", ViewportGenre.Drama, R.drawable.home_drama_05),
-            show("Paper Hearts", ViewportGenre.Drama, R.drawable.home_drama_04),
+            show("If I May", ViewportGenre.Drama, R.drawable.home_drama_04),
             show("Last Light", ViewportGenre.Drama, R.drawable.home_drama_06)
         )
     ),
@@ -784,9 +978,9 @@ private val ShowRows = listOf(
         title = "Horror Shows",
         genre = ViewportGenre.Horror,
         programs = listOf(
-            show("Hallway 9", ViewportGenre.Horror, R.drawable.home_horror_01),
+            show("Help", ViewportGenre.Horror, R.drawable.home_horror_01),
             show("Open Door", ViewportGenre.Horror, R.drawable.home_horror_03),
-            show("Static Bloom", ViewportGenre.Horror, R.drawable.home_horror_02),
+            show("The Playmate", ViewportGenre.Horror, R.drawable.home_horror_02),
             show("The Hollow", ViewportGenre.Horror, R.drawable.home_horror_04)
         )
     ),
@@ -794,7 +988,7 @@ private val ShowRows = listOf(
         title = "Thriller Shows",
         genre = ViewportGenre.Thriller,
         programs = listOf(
-            show("Red Angle", ViewportGenre.Thriller, R.drawable.home_thriller_01),
+            show("Ignition", ViewportGenre.Thriller, R.drawable.home_thriller_01),
             show("Last Signal", ViewportGenre.Thriller, R.drawable.home_thriller_04),
             show("Hidden Current", ViewportGenre.Thriller, R.drawable.home_thriller_03),
             show("Threshold", ViewportGenre.Thriller, R.drawable.home_thriller_02)
@@ -808,7 +1002,7 @@ private val FavoriteRows = listOf(
         genre = ViewportGenre.All,
         programs = listOf(
             movie("Quiet Witness", ViewportGenre.Crime, R.drawable.home_crime_03),
-            movie("Sunny Side", ViewportGenre.Comedy, R.drawable.home_comedy_02),
+            movie("The Baller", ViewportGenre.Comedy, R.drawable.home_comedy_05),
             movie("Hidden Current", ViewportGenre.Thriller, R.drawable.home_thriller_03),
             movie("Final Lift", ViewportGenre.Action, R.drawable.home_action_05),
             movie("Last Light", ViewportGenre.Drama, R.drawable.home_drama_06)
@@ -820,10 +1014,117 @@ private fun movie(
     title: String,
     genre: ViewportGenre,
     @DrawableRes drawableId: Int
-): DestinationProgramSpec = DestinationProgramSpec(title = title, genre = genre, drawableId = drawableId)
+): DestinationProgramSpec {
+    val details = programDetails(title = title, genre = genre, isShow = false)
+    return DestinationProgramSpec(
+        title = title,
+        genre = genre,
+        drawableId = drawableId,
+        listDrawableId = listPosterDrawableId(title) ?: drawableId,
+        year = details.year,
+        runtime = details.runtime,
+        director = details.director,
+        producer = details.producer,
+        metadataGenre = details.genreLabel ?: genre.displayName,
+        synopsis = details.synopsis,
+        rating = details.rating
+    )
+}
 
 private fun show(
     title: String,
     genre: ViewportGenre,
     @DrawableRes drawableId: Int
-): DestinationProgramSpec = DestinationProgramSpec(title = title, genre = genre, drawableId = drawableId)
+): DestinationProgramSpec {
+    val details = programDetails(title = title, genre = genre, isShow = true)
+    return DestinationProgramSpec(
+        title = title,
+        genre = genre,
+        drawableId = drawableId,
+        listDrawableId = listPosterDrawableId(title) ?: drawableId,
+        year = details.year,
+        runtime = details.runtime,
+        director = details.director,
+        producer = details.producer,
+        metadataGenre = details.genreLabel ?: genre.displayName,
+        synopsis = details.synopsis,
+        rating = details.rating
+    )
+}
+
+@DrawableRes
+private fun listPosterDrawableId(title: String): Int? = when (title) {
+    "One Last Breath" -> R.drawable.figma_card_one_last_breath
+    "Sink or Swim" -> R.drawable.figma_card_sink_or_swim
+    "The Baller" -> R.drawable.figma_card_the_baller
+    "Troublemaker" -> R.drawable.figma_card_troublemaker
+    "Ignition" -> R.drawable.figma_card_ignition
+    "Eruption" -> R.drawable.figma_card_eruption
+    "If I May" -> R.drawable.figma_card_if_i_may
+    "The Playmate" -> R.drawable.figma_card_the_playmate
+    "Help" -> R.drawable.figma_card_help
+    else -> null
+}
+
+private fun programDetails(
+    title: String,
+    genre: ViewportGenre,
+    isShow: Boolean
+): ProgramDetails {
+    ProgramDetailsByTitle[title]?.let { return it }
+
+    val seed = title.fold(genre.ordinal * 17) { acc, char -> acc + char.code }
+    val years = if (isShow) {
+        listOf("2017", "2019", "2020", "2021", "2024")
+    } else {
+        listOf("2009", "2012", "2016", "2019", "2022")
+    }
+    val runtimes = if (isShow) {
+        listOf("42m", "49m", "54m", "8 eps", "10 eps")
+    } else {
+        listOf("1h 28m", "1h 44m", "1h 57m", "2h 5m", "2h 18m")
+    }
+    val directors = listOf(
+        "J. Sarge",
+        "B. Feinholt",
+        "M. Marsh",
+        "A. Lockhart",
+        "R. Fullstone",
+        "M. Bennington",
+        "W. Wexler",
+        "K. Jewles"
+    )
+    val producers = listOf(
+        "M. Holt",
+        "R. Anderson",
+        "S. Sebilla",
+        "C. Lukinski",
+        "B. Riley",
+        "I. Kavan",
+        "T. Tanning",
+        "U. Bannon"
+    )
+
+    return ProgramDetails(
+        year = years[seed % years.size],
+        runtime = runtimes[seed % runtimes.size],
+        director = directors[seed % directors.size],
+        producer = producers[(seed / 3) % producers.size],
+        synopsis = generatedSynopsis(title = title, genre = genre, isShow = isShow),
+        rating = 2 + seed % 4
+    )
+}
+
+private fun generatedSynopsis(
+    title: String,
+    genre: ViewportGenre,
+    isShow: Boolean
+): String {
+    val format = if (isShow) "series" else "feature"
+    return "This ${genre.displayName.lowercase()} $format follows $title through an escalating chain of choices, secrets, and second chances"
+}
+
+private fun prototypeListPriority(title: String): Int {
+    val index = PrototypeListTitleOrder.indexOf(title)
+    return if (index == -1) Int.MAX_VALUE else index
+}
