@@ -1,0 +1,551 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 4 /Kids [ 5 0 R 7 0 R 9 0 R 11 0 R ] >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 5166 >>
+stream
+BT
+/F1 9.30 Tf
+54 746 Td
+11.20 TL
+(Cinerific Android App Work Log - July 18, 2026) Tj
+T*
+(Compiled summary for Saturday, July 18, 2026 - focus: refreshing the Cinerific project snapshot, replacing) Tj
+T*
+(flat destination chrome with Figma-style black/purple rail imagery, moving destination titles into the top) Tj
+T*
+(rails, correcting the right-side hamburger-to-home transition and rail alignment, embedding the viewport) Tj
+T*
+(nav inside Movies and Shows, turning genre and mode controls into interactive catalog filters, matching) Tj
+T*
+(the Figma list-mode rows, and splitting the nested viewport nav into clearer genre, mode, and shared) Tj
+T*
+(components while adding the final small-collage center mode.) Tj
+T*
+(Generated in continuity with the established Cinerific worklog cadence from July 12, July 14, July 15 Part) Tj
+T*
+(1, July 15, and July 16: compact opening summary, source-material review, baseline state, goal list,) Tj
+T*
+(work-completed sections, validation, files touched, follow-up context, and output-artifact close. This) Tj
+T*
+(artifact records the July 18 Cinerific work now present on main and follows the prior root-level PDF) Tj
+T*
+(naming, four-page letter layout, footer, and plain-text-readable style.) Tj
+T*
+() Tj
+T*
+(Source Materials Reviewed) Tj
+T*
+(- Reviewed every pre-existing Cinerific worklog PDF at the repository root: cinerific_worklog_july) Tj
+T*
+(  12.pdf, cinerific_worklog_july 14.pdf, cinerific_worklog_july 15 part 1.pdf, cinerific_worklog_july) Tj
+T*
+(  15.pdf, and cinerific_worklog_july 16.pdf.) Tj
+T*
+(- Used pdftotext and pdfinfo to study the established title pattern, compact opening summary,) Tj
+T*
+(  source-material section, baseline/goals sections, themed work-completed sections, validation language,) Tj
+T*
+(  files-touched list, follow-up close, page footer, letter-size page geometry, and four-page daily-log) Tj
+T*
+(  shape.) Tj
+T*
+(- Reviewed the current Cinerific Git state on main tracking origin/main, including the clean status at) Tj
+T*
+(  HEAD 62f05fe and the five July 18 commits: 02ef1dd, 3a69e2d, 2bab846, 2f3179d, and 62f05fe.) Tj
+T*
+(- Reviewed git show --stat and commit bodies for the July 18 work: snapshot refresh, destination chrome) Tj
+T*
+(  rail refinements, interactive viewport controls, Figma-style list mode, and Figma-style small-collage) Tj
+T*
+(  mode.) Tj
+T*
+(- Reviewed read_project.sh and cinerific_PROJECT_SNAPSHOT.txt to keep this artifact aligned with the) Tj
+T*
+(  Cinerific scanner convention and the project state refreshed earlier on July 18.) Tj
+T*
+(- Reviewed app/src/main/java/com/prahlin/cinerific/ui/CinerificChrome.kt, CinerificRightSideNavBar.kt,) Tj
+T*
+(  CinerificDestinationScreen.kt, CinerificViewportNavBar.kt, CinerificViewportGenreNav.kt,) Tj
+T*
+(  CinerificViewportModeNav.kt, and CinerificViewportNavShared.kt.) Tj
+T*
+(- Reviewed the Figma-driven visual references used during the day, including the black/purple chrome) Tj
+T*
+(  imagery, right-side nav prototype behavior, Movies/Shows viewport nav, Movies - ALL - List,) Tj
+T*
+(  Movies/Shows small-collage frames, and user-provided prototype screenshots from July 18.) Tj
+T*
+(- Used Gradle build output, adb install/launch commands, emulator screenshots, git log/status/diff) Tj
+T*
+(  output, file/resource inspection, and PDF text extraction as validation material. No external PDF) Tj
+T*
+(  package was installed for this worklog.) Tj
+T*
+() Tj
+T*
+(Baseline Status Before July 18 Work) Tj
+T*
+(- Cinerific already had the July 14 native intro, profile selection, July 15 Home & Default scaffold,) Tj
+T*
+(  July 16 four-clip Home hero reel, and a Figma-derived right-side navigation rail with Home, Movies,) Tj
+T*
+(  Shows, Favorites, and Settings destinations.) Tj
+T*
+(- Movies, Shows, Favorites, and Settings existed as reachable destination surfaces, but their chrome) Tj
+T*
+(  still needed to match the Figma prototype more closely, especially the black/purple top and right rail) Tj
+T*
+(  imagery.) Tj
+T*
+(- The right-side nav rail had Figma-derived destination icons, but the hamburger state did not yet) Tj
+T*
+(  transform into the Home icon/label the way the prototype showed.) Tj
+T*
+(- Destination titles were visually outside the top rail, so screens like Movies and Shows did not read) Tj
+T*
+(  as integrated Figma frames.) Tj
+T*
+(- The top rail height and bottom edge alignment were still being tuned by eye against the Home icon and) Tj
+T*
+(  the first destination icon below it.) Tj
+T*
+(- Movies and Shows did not yet have the embedded viewport nav behavior from the Figma file: genre) Tj
+T*
+(  filters on the left and collage/list view modes on the right.) Tj
+T*
+(- The early destination catalog rows were useful scaffolds, but they still overflowed horizontally in) Tj
+T*
+(  places and did not represent the Figma nested genre/mode screen matrix.) Tj
+T*
+(- List mode and small-collage mode still needed deeper Figma matching: list rows lacked full title) Tj
+T*
+(  metadata and rating detail, while the center mode needed four title cards per row with text under each) Tj
+T*
+(  poster.) Tj
+T*
+() Tj
+ET
+BT
+/F1 9.30 Tf
+219.9 32 Td
+(Cinerific Work Log - July 18, 2026 Page 1) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 4766 >>
+stream
+BT
+/F1 9.30 Tf
+54 746 Td
+11.20 TL
+(Main Goals for July 18) Tj
+T*
+(- Refresh the generated Cinerific project snapshot so later AI sessions can read the current project) Tj
+T*
+(  shape before editing.) Tj
+T*
+(- Apply the Figma black/purple bgfill imagery to the destination right rail and top rails instead of) Tj
+T*
+(  relying on flat color approximations.) Tj
+T*
+(- Move destination screen names into the top rail and align the rail bottom to the visual midpoint) Tj
+T*
+(  between the Home icon and the icon below it.) Tj
+T*
+(- Make the hamburger toggle morph to and from the Home icon/label when the rail opens and closes,) Tj
+T*
+(  matching the original Figma prototype intent.) Tj
+T*
+(- Embed the viewport nav inside Movies and Shows as an interactive catalog control rather than a static) Tj
+T*
+(  screenshot-like element.) Tj
+T*
+(- Wire genre filtering and mode switching so the catalog can represent the Figma matrix of genre) Tj
+T*
+(  destinations multiplied by three mode views.) Tj
+T*
+(- Replace horizontal overflow in Movies/Shows viewport content with wrapped rows while preserving) Tj
+T*
+(  Home/default carousel behavior.) Tj
+T*
+(- Refine genre chip sizing, list-mode row information, and center-mode small-collage presentation to) Tj
+T*
+(  approximate the Figma frames more closely.) Tj
+T*
+(- Build, install, relaunch, and screenshot-check the accepted states on the running Cinerific tablet) Tj
+T*
+(  AVD.) Tj
+T*
+() Tj
+T*
+(Work Completed - Snapshot and Chrome Foundation) Tj
+T*
+(- Created commit 02ef1dd to regenerate cinerific_PROJECT_SNAPSHOT.txt after the latest source and) Tj
+T*
+(  resource changes, preserving the project-scanner workflow established on July 15.) Tj
+T*
+(- Added CinerificChrome.kt as a reusable chrome background helper that layers a vertical black/purple) Tj
+T*
+(  gradient with Figma-derived bgfill imagery and a subtle black overlay.) Tj
+T*
+(- Added chrome_nav_bgfill.png and chrome_top_bgfill.png under drawable-nodpi as the visual source for) Tj
+T*
+(  the right rail and destination top rails.) Tj
+T*
+(- Adjusted VS Code settings as part of the snapshot/chrome pass so the local project tooling remained) Tj
+T*
+(  quieter while the generated snapshot reflected the newer source surface.) Tj
+T*
+(- Kept the chrome implementation reusable across rail and top-bar contexts by parameterizing the) Tj
+T*
+(  background resource and alpha rather than duplicating color/image logic.) Tj
+T*
+() Tj
+T*
+(Work Completed - Destination Rail and Top Bars) Tj
+T*
+(- Created commit 3a69e2d to refine the destination chrome rail and right nav behavior after direct) Tj
+T*
+(  visual comparison with the Figma prototype.) Tj
+T*
+(- Applied the Figma-style black/purple chrome imagery to the right-side rail and to the destination top) Tj
+T*
+(  rail so Movies, Shows, Favorites, and Settings share the same designed surface language.) Tj
+T*
+(- Moved Movies, Shows, Favorites, and Settings titles into DestinationTopBar, placing screen names) Tj
+T*
+(  inside the top rail instead of floating outside it.) Tj
+T*
+(- Updated the rail-height calculation so the top rail bottom aligns to the midpoint between the Home) Tj
+T*
+(  icon and the first destination icon, then added a small downward visual nudge after emulator review) Tj
+T*
+(  showed the midpoint still read too high.) Tj
+T*
+(- Updated the hamburger toggle so the closed menu icon transitions into the Home icon and HOME label) Tj
+T*
+(  when expanded, with the Home item no longer duplicated in the rail stack.) Tj
+T*
+(- Shifted Movies, Shows, and Favorites upward to better match the prototype spacing and kept Settings) Tj
+T*
+(  anchored with bottom breathing room.) Tj
+T*
+(- Added .copilotignore to keep noisy generated/build/context files out of GitHub Copilot suggestions) Tj
+T*
+(  while leaving the source changes focused on the Cinerific UI.) Tj
+T*
+() Tj
+T*
+(Work Completed - Interactive Viewport Nav) Tj
+T*
+(- Created commit 2bab846 to add the embedded viewport nav to Movies and Shows catalog screens.) Tj
+T*
+(- Added ViewportGenre and ViewportMode state so the nested nav can filter catalog content by genre and) Tj
+T*
+(  switch between the available view modes.) Tj
+T*
+(- Implemented a Figma-style viewport nav bar with genre chips on the left and mode buttons on the right,) Tj
+T*
+(  placed within the actual Movies/Shows content header rather than outside the screen composition.) Tj
+T*
+(- Wired Movies and Shows so selecting ACT, COM, CRI, DOC, DRA, HOR, THR, or ALL updates the visible) Tj
+T*
+(  program rows immediately.) Tj
+T*
+(- Changed viewport catalog content to wrap card rows within the available content area instead of) Tj
+T*
+(  horizontally scrolling or clipping off the right edge.) Tj
+ET
+BT
+/F1 9.30 Tf
+219.9 32 Td
+(Cinerific Work Log - July 18, 2026 Page 2) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 4649 >>
+stream
+BT
+/F1 9.30 Tf
+54 746 Td
+11.20 TL
+(- Preserved the Home/default screen carousel behavior so the wrap change only affected the nested) Tj
+T*
+(  viewport screens that needed it.) Tj
+T*
+(- Built and checked the new interactions on the AVD after the debug APK was installed, confirming the) Tj
+T*
+(  nav controls were tappable and the catalog state changed.) Tj
+T*
+() Tj
+T*
+(Work Completed - Figma List Mode) Tj
+T*
+(- Created commit 2f3179d to rebuild the right-hand List mode after the Figma Movies - ALL - List) Tj
+T*
+(  prototype.) Tj
+T*
+(- Added rich list rows with large poster imagery, rounded corners, shadow treatment, uppercase title) Tj
+T*
+(  text, year, synopsis, runtime, genre, director, producer, and five-star ratings.) Tj
+T*
+(- Added Figma-card poster resources for key list titles: One Last Breath, Sink or Swim, The Baller,) Tj
+T*
+(  Troublemaker, Ignition, Eruption, If I May, The Playmate, and Help.) Tj
+T*
+(- Mapped listPosterDrawableId so list mode can use the closer Figma poster assets where available while) Tj
+T*
+(  falling back to existing home card artwork for the rest of the catalog.) Tj
+T*
+(- Added ProgramDetails metadata for key prototype titles and deterministic fallback details for) Tj
+T*
+(  remaining movies and shows so list rows always contain useful information.) Tj
+T*
+(- Aligned list spacing, row proportions, image size, typography, and rating placement closer to the) Tj
+T*
+(  Figma reference while keeping collage modes available through the same viewport nav.) Tj
+T*
+() Tj
+T*
+(Work Completed - Component Split and Small Collage Mode) Tj
+T*
+(- Created commit 62f05fe to split the nested viewport nav into smaller components and implement the) Tj
+T*
+(  Figma-style center mode.) Tj
+T*
+(- Separated the viewport genre cluster into CinerificViewportGenreNav.kt, the mode cluster into) Tj
+T*
+(  CinerificViewportModeNav.kt, and shared constants/glyph helpers into CinerificViewportNavShared.kt.) Tj
+T*
+(- Kept CinerificViewportNavBar.kt as the coordinator that arranges the genre and mode components while) Tj
+T*
+(  preserving the shared ViewportGenre and ViewportMode enums.) Tj
+T*
+(- Renamed the modes to CollageLarge, CollageSmall, and List so the left, center, and right controls) Tj
+T*
+(  describe their real behavior instead of the earlier generic collage/grid/list wording.) Tj
+T*
+(- Mapped the center mode button to DestinationProgramSmallCollage and preserved the left mode button as) Tj
+T*
+(  the larger three-card collage view.) Tj
+T*
+(- Implemented the small-collage layout with four title cards per row, 200 by 150.4 Figma-scaled poster) Tj
+T*
+(  cards, rounded 30px corners, shadow treatment, and uppercase centered text beneath each card.) Tj
+T*
+(- Sorted Movies and Shows small-collage content against prototype title orders so the first rows match) Tj
+T*
+(  the visible Figma frames more closely.) Tj
+T*
+(- Updated placeholder catalog names to visible poster/prototype titles such as No Trespassing, Hungry) Tj
+T*
+(  Heart, Enlightenment, Deadbeat, Playing with Fire, Incan Descent, Skin and Bones, and The Appetizer.) Tj
+T*
+(- Verified the final Movies and Shows center-mode screens on emulator screenshots after building and) Tj
+T*
+(  reinstalling the debug APK.) Tj
+T*
+() Tj
+T*
+(Validation and Checks Performed) Tj
+T*
+(- Ran ./gradlew :app:assembleDebug during the July 18 implementation passes; the final small-collage) Tj
+T*
+(  build completed successfully.) Tj
+T*
+(- Installed the debug APK on emulator-5554 with adb install -r and launched) Tj
+T*
+(  com.prahlin.cinerific/.MainActivity for visual checks.) Tj
+T*
+(- Navigated through profile selection into Home, opened the right rail, and checked Movies and Shows) Tj
+T*
+(  destination behavior through the running tablet AVD.) Tj
+T*
+(- Captured and reviewed emulator screenshots for the destination chrome rail, top-bar placement,) Tj
+T*
+(  viewport nav placement, list mode, Movies small-collage mode, and Shows small-collage mode.) Tj
+T*
+(- Verified that the center mode button is selected when small collage is active and that four cards) Tj
+T*
+(  render per row with visible titles beneath the artwork.) Tj
+T*
+(- Used git log --date=local and git show --stat to confirm the five July 18 commits and their) Tj
+T*
+(  touched-file scope.) Tj
+T*
+(- Confirmed git status --short --branch is clean on main tracking origin/main before generating this) Tj
+T*
+(  PDF.) Tj
+T*
+(- Read all pre-existing Cinerific worklog PDFs before producing this artifact so the daily log follows) Tj
+T*
+(  the established naming, structure, length, and content type.) Tj
+T*
+() Tj
+ET
+BT
+/F1 9.30 Tf
+219.9 32 Td
+(Cinerific Work Log - July 18, 2026 Page 3) Tj
+ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Length 4263 >>
+stream
+BT
+/F1 9.30 Tf
+54 746 Td
+11.20 TL
+(Files Touched During July 18) Tj
+T*
+(- cinerific_PROJECT_SNAPSHOT.txt: regenerated snapshot file reflecting the latest Cinerific source,) Tj
+T*
+(  asset, and project layout state.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificChrome.kt: new reusable chrome background) Tj
+T*
+(  composable for Figma-style top and right rail imagery.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificRightSideNavBar.kt: hamburger-to-home transition,) Tj
+T*
+(  rail spacing, midpoint top-rail relationship, bgfill use, destination selection, and prototype-aligned) Tj
+T*
+(  icon stack behavior.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt: destination top rails,) Tj
+T*
+(  embedded viewport nav, genre filtering, wrapped collage layouts, rich list rows, small-collage rows,) Tj
+T*
+(  metadata, title ordering, and updated catalog titles.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificViewportNavBar.kt: simplified into a coordinator) Tj
+T*
+(  for separate genre and mode nav components.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificViewportGenreNav.kt: new standalone genre-chip) Tj
+T*
+(  component for ALL, ACT, COM, CRI, DOC, DRA, HOR, and THR controls.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificViewportModeNav.kt: new standalone CollageLarge,) Tj
+T*
+(  CollageSmall, and List mode-control component.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificViewportNavShared.kt: shared colors, dimensions,) Tj
+T*
+(  glyph-cell helper, and viewport scaling utility for nested nav controls.) Tj
+T*
+(- app/src/main/res/drawable-nodpi/chrome_nav_bgfill.png and chrome_top_bgfill.png: Figma-style) Tj
+T*
+(  black/purple rail and top-bar image assets.) Tj
+T*
+(- app/src/main/res/drawable-nodpi/figma_card_*.jpg: list-mode poster assets for the key Figma list) Tj
+T*
+(  titles.) Tj
+T*
+(- .vscode/settings.json and .copilotignore: project-context cleanup related to snapshot/tooling noise) Tj
+T*
+(  and Copilot suggestion scope.) Tj
+T*
+(- cinerific_worklog_july 18.pdf: this generated daily worklog artifact at the repository root.) Tj
+T*
+() Tj
+T*
+(Follow-Up Context) Tj
+T*
+(- The viewport nav is now interactive and componentized, but future work can still add explicit) Tj
+T*
+(  route/state models if each genre-by-mode combination needs deep-linkable navigation rather than local) Tj
+T*
+(  screen state.) Tj
+T*
+(- Movies and Shows have better Figma-aligned collage, small-collage, and list modes, but the project) Tj
+T*
+(  still uses local placeholder metadata for many non-key titles until final content data exists.) Tj
+T*
+(- List mode now shows useful movie/show information, but additional Figma poster exports could replace) Tj
+T*
+(  remaining fallback card artwork for a more complete prototype match.) Tj
+T*
+(- The right rail and top rails use Figma-style chrome imagery, but additional device-size checks remain) Tj
+T*
+(  useful if the app targets more tablet aspect ratios than the current Cinerific AVD.) Tj
+T*
+(- Accessibility labels, focus traversal, remote/keyboard navigation, card click behavior, and) Tj
+T*
+(  detail-screen routing can be layered after the visual viewport system is accepted.) Tj
+T*
+(- The next worklog should continue from HEAD 62f05fe unless the user adds new commits before the next) Tj
+T*
+(  session.) Tj
+T*
+() Tj
+T*
+(Output Artifact) Tj
+T*
+(- Filename: cinerific_worklog_july 18.pdf) Tj
+T*
+(- Created at the repository root in /Users/prahlin/gh/cinerific.) Tj
+T*
+(- Follows the Cinerific filename convention established by cinerific_worklog_july 12.pdf and continued) Tj
+T*
+(  by the July 14, July 15, and July 16 artifacts, including the space before the day number.) Tj
+T*
+(- Follows the established Alla Vostra/Prahlin/Cinerific daily worklog structure while keeping the body) Tj
+T*
+(  content specific to Cinerific work.) Tj
+T*
+(- No external PDF dependency was installed; this artifact was generated with a small standard-library) Tj
+T*
+(  PDF writer in the same plain-text-readable spirit as the prior Cinerific worklogs.) Tj
+T*
+(- Created this daily worklog PDF: cinerific_worklog_july 18.pdf.) Tj
+ET
+BT
+/F1 9.30 Tf
+219.9 32 Td
+(Cinerific Work Log - July 18, 2026 Page 4) Tj
+ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 10 0 R >>
+endobj
+xref
+0 12
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000136 00000 n 
+0000000206 00000 n 
+0000005424 00000 n 
+0000005550 00000 n 
+0000010368 00000 n 
+0000010494 00000 n 
+0000015195 00000 n 
+0000015321 00000 n 
+0000019637 00000 n 
+trailer
+<< /Size 12 /Root 1 0 R >>
+startxref
+19765
+%%EOF
