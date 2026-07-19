@@ -1,9 +1,18 @@
 package com.prahlin.cinerific.ui
 
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -15,12 +24,15 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -32,16 +44,20 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -52,17 +68,38 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.prahlin.cinerific.R
+import kotlinx.coroutines.delay
 
 private const val DESTINATION_FRAME_WIDTH = 1194f
 private const val DESTINATION_TOP_BAR_TITLE_BOTTOM = 18f
 private const val DESTINATION_CARD_ASPECT = 350f / 263f
 private const val DESTINATION_CARD_SCALE = 0.8f
+private const val SETTINGS_CONTROL_WIDTH = 150f
+private const val SETTINGS_CONTROL_HEIGHT = 75f
+private const val SETTINGS_CONTROL_RADIUS = 50f
+private const val SETTINGS_CONTROL_BORDER_WIDTH = 2f
+private const val SETTINGS_CONTROL_SHADOW = 2f
+private const val SETTINGS_SECTION_BACKGROUND_RADIUS = 22f
+private const val SETTINGS_SECTION_BOTTOM_PADDING = 42f
+private const val SETTINGS_SECTION_HEADER_HEIGHT = 58f
+private const val SETTINGS_SECTION_HEADER_RADIUS = 36f
+private const val SETTINGS_SECTION_HEADER_HORIZONTAL_PADDING = 54f
+private const val SETTINGS_SECTION_BODY_START_PADDING = 54f
+private const val SETTINGS_LANGUAGE_MENU_HEIGHT = 116f
+private const val SETTINGS_LANGUAGE_MENU_ROW_HEIGHT = 34f
+private const val SETTINGS_LANGUAGE_TEXT_SIZE = 21.6f
+private const val SETTINGS_LANGUAGE_LINE_HEIGHT = 32.784f
+private const val SETTINGS_LANGUAGE_BUTTON_PADDING = 18f
+private const val SETTINGS_LANGUAGE_ARROW_WIDTH = 23.4f
+private const val SETTINGS_LANGUAGE_ARROW_HEIGHT = 27.020f
+private const val SETTINGS_LANGUAGE_ANIMATION_MS = 120
 
 private val DestinationTop = Color(0xFF080007)
 private val DestinationMid = Color(0xFF23001F)
 private val DestinationBottom = Color(0xFF060004)
 private val DestinationText = Color(0xFFE7E7E7)
 private val DestinationSubtle = Color(0xFFBDBDBD)
+private val SettingsLanguageOptions = listOf("English", "Spanish", "Mandarin")
 
 @Composable
 internal fun CinerificDestinationScreen(
@@ -646,32 +683,52 @@ private fun CinerificSettingsScreen(modifier: Modifier = Modifier) {
             SettingsSection(
                 title = "Accessibility",
                 rows = listOf(
-                    "Language" to "Select your language of choice",
-                    "Simplify UI" to "Recommended for children",
-                    "Dark mode" to "App darkens during night time"
-                )
+                    SettingsRowSpec(
+                        label = "Language",
+                        detail = "Select your language of choice",
+                        control = SettingsControl.LanguageDropdown
+                    ),
+                    SettingsRowSpec(label = "Simplify UI", detail = "Recommended for children"),
+                    SettingsRowSpec(label = "Dark mode", detail = "App darkens during night time")
+                ),
+                scale = scale
             )
             SettingsSection(
                 title = "Playback",
                 rows = listOf(
-                    "Autoplay" to "Automatically play the next video",
-                    "Background play" to "Play Cinerific behind other apps",
-                    "Wifi downloads only" to "Some carriers will charge for data"
-                )
+                    SettingsRowSpec(label = "Autoplay", detail = "Automatically play the next video"),
+                    SettingsRowSpec(label = "Background play", detail = "Play Cinerific behind other apps"),
+                    SettingsRowSpec(label = "Wifi downloads only", detail = "Some carriers will charge for data")
+                ),
+                scale = scale
             )
             SettingsSection(
                 title = "Billing & Payment",
                 rows = listOf(
-                    "Bill automatically" to "Only applicable if billing information provided",
-                    "Notifications" to "Receive email notifications 7 days prior to your billing date"
-                )
+                    SettingsRowSpec(
+                        label = "Bill automatically",
+                        detail = "Only applicable if billing information provided"
+                    ),
+                    SettingsRowSpec(
+                        label = "Notifications",
+                        detail = "Receive email notifications 7 days prior to your billing date"
+                    )
+                ),
+                scale = scale
             )
             SettingsSection(
                 title = "Security",
                 rows = listOf(
-                    "Auto log out" to "Log out automatically following 10 minutes of inactivity",
-                    "Two-Factor Authentication" to "Provides an extra level of security"
-                )
+                    SettingsRowSpec(
+                        label = "Auto log out",
+                        detail = "Log out automatically following 10 minutes of inactivity"
+                    ),
+                    SettingsRowSpec(
+                        label = "Two-Factor Authentication",
+                        detail = "Provides an extra level of security"
+                    )
+                ),
+                scale = scale
             )
         }
 
@@ -857,34 +914,48 @@ private fun DestinationTopBar(
 @Composable
 private fun SettingsSection(
     title: String,
-    rows: List<Pair<String, String>>
+    rows: List<SettingsRowSpec>,
+    scale: Float
 ) {
-    Column(modifier = Modifier.padding(top = 72.dp)) {
-        Text(
-            text = title,
-            color = DestinationText,
-            fontSize = 32.sp,
-            fontWeight = FontWeight.Black,
-            letterSpacing = 0.sp
-        )
+    val sectionShape = RoundedCornerShape(destinationDp(SETTINGS_SECTION_BACKGROUND_RADIUS, scale))
 
-        rows.forEach { (label, detail) ->
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 72.dp)
+            .background(Color.Black.copy(alpha = 0.14f), sectionShape)
+            .border(destinationDp(1f, scale), Color.White.copy(alpha = 0.035f), sectionShape)
+            .padding(bottom = destinationDp(SETTINGS_SECTION_BOTTOM_PADDING, scale))
+    ) {
+        SettingsSectionHeader(title = title, scale = scale)
+
+        rows.forEachIndexed { index, row ->
+            val rowTopPadding = 34.dp +
+                if (rows.getOrNull(index - 1)?.control == SettingsControl.LanguageDropdown) {
+                    destinationDp(SETTINGS_LANGUAGE_MENU_HEIGHT - SETTINGS_CONTROL_HEIGHT, scale)
+                } else {
+                    0.dp
+                }
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 34.dp),
+                    .padding(
+                        start = destinationDp(SETTINGS_SECTION_BODY_START_PADDING, scale),
+                        top = rowTopPadding
+                    ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = label,
+                        text = row.label,
                         color = DestinationText,
                         fontSize = 28.sp,
                         fontWeight = FontWeight.SemiBold,
                         letterSpacing = 0.sp
                     )
                     Text(
-                        text = detail,
+                        text = row.detail,
                         color = DestinationSubtle,
                         fontSize = 20.sp,
                         lineHeight = 28.sp,
@@ -892,30 +963,329 @@ private fun SettingsSection(
                         modifier = Modifier.padding(top = 8.dp)
                     )
                 }
-                TogglePill()
+                when (row.control) {
+                    SettingsControl.Toggle -> SettingsAnimatedToggle(label = row.label, scale = scale)
+                    SettingsControl.LanguageDropdown -> SettingsLanguageDropdown(scale = scale)
+                }
             }
         }
     }
 }
 
 @Composable
-private fun TogglePill() {
+private fun SettingsSectionHeader(
+    title: String,
+    scale: Float
+) {
+    val shape = RoundedCornerShape(destinationDp(SETTINGS_SECTION_HEADER_RADIUS, scale))
+
     Box(
         modifier = Modifier
-            .width(92.dp)
-            .height(48.dp)
-            .clip(RoundedCornerShape(40.dp))
-            .background(Color(0xFF3A3338))
-            .padding(5.dp),
+            .height(destinationDp(SETTINGS_SECTION_HEADER_HEIGHT, scale))
+            .clip(shape)
+            .background(Color(0xFF303030).copy(alpha = 0.96f), shape)
+            .padding(horizontal = destinationDp(SETTINGS_SECTION_HEADER_HORIZONTAL_PADDING, scale)),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = title,
+            color = DestinationText,
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Black,
+            letterSpacing = 0.sp
+        )
+    }
+}
+
+@Composable
+private fun SettingsAnimatedToggle(
+    label: String,
+    scale: Float
+) {
+    var checked by rememberSaveable(label) { mutableStateOf(false) }
+    val shape = RoundedCornerShape(destinationDp(SETTINGS_CONTROL_RADIUS, scale))
+    val interactionSource = remember { MutableInteractionSource() }
+    val trackFill by animateColorAsState(
+        targetValue = Color(0xFF303030),
+        animationSpec = tween(durationMillis = 140),
+        label = "settings-toggle-track"
+    )
+    val knobInner by animateColorAsState(
+        targetValue = if (checked) Color(0xFFD9D9D9) else Color(0xFF858585),
+        animationSpec = tween(durationMillis = 170),
+        label = "settings-toggle-knob-inner"
+    )
+    val knobOuter by animateColorAsState(
+        targetValue = if (checked) Color(0xFF858585) else Color(0xFF303030),
+        animationSpec = tween(durationMillis = 170),
+        label = "settings-toggle-knob-outer"
+    )
+    val knobOffset by animateDpAsState(
+        targetValue = destinationDp(if (checked) 82f else 14f, scale),
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessMedium
+        ),
+        label = "settings-toggle-knob-x"
+    )
+    val knobSize by animateDpAsState(
+        targetValue = destinationDp(if (checked) 61f else 47f, scale),
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessMedium
+        ),
+        label = "settings-toggle-knob-size"
+    )
+
+    Box(
+        modifier = Modifier
+            .width(destinationDp(SETTINGS_CONTROL_WIDTH, scale))
+            .height(destinationDp(SETTINGS_CONTROL_HEIGHT, scale))
+            .shadow(destinationDp(SETTINGS_CONTROL_SHADOW, scale), shape, clip = false)
+            .clip(shape)
+            .background(trackFill)
+            .border(destinationDp(SETTINGS_CONTROL_BORDER_WIDTH, scale), Color.Black, shape)
+            .toggleable(
+                value = checked,
+                onValueChange = { checked = it },
+                role = Role.Switch,
+                interactionSource = interactionSource,
+                indication = null
+            ),
         contentAlignment = Alignment.CenterStart
     ) {
         Box(
             modifier = Modifier
-                .size(38.dp)
+                .offset(x = knobOffset)
+                .size(knobSize)
                 .clip(RoundedCornerShape(50))
-                .background(Color(0xFFD9D9D9))
+                .background(
+                    Brush.radialGradient(
+                        colors = listOf(knobInner, knobOuter)
+                    )
+                )
+                .border(destinationDp(1f, scale), Color(0xFF303030), RoundedCornerShape(50))
         )
     }
+}
+
+@Composable
+private fun SettingsLanguageDropdown(scale: Float) {
+    var selectedLanguageIndex by rememberSaveable { mutableStateOf(0) }
+    var menuVisible by rememberSaveable { mutableStateOf(false) }
+    var menuExpanded by remember { mutableStateOf(false) }
+    var menuClosePending by remember { mutableStateOf(false) }
+    val language = SettingsLanguageOptions[selectedLanguageIndex]
+    val interactionSource = remember { MutableInteractionSource() }
+    val menuAnimationSpec = tween<Dp>(
+        durationMillis = SETTINGS_LANGUAGE_ANIMATION_MS,
+        easing = FastOutSlowInEasing
+    )
+    val menuHeight by animateDpAsState(
+        targetValue = destinationDp(
+            if (menuExpanded) SETTINGS_LANGUAGE_MENU_HEIGHT else SETTINGS_CONTROL_HEIGHT,
+            scale
+        ),
+        animationSpec = menuAnimationSpec,
+        label = "settings-language-menu-height"
+    )
+    val toggleHeight = destinationDp(SETTINGS_CONTROL_HEIGHT, scale)
+    val menuOffsetY = (menuHeight - toggleHeight) / 2f
+    val cornerRadius by animateDpAsState(
+        targetValue = destinationDp(if (menuExpanded) 20f else SETTINGS_CONTROL_RADIUS, scale),
+        animationSpec = menuAnimationSpec,
+        label = "settings-language-corner-radius"
+    )
+    val shadowElevation by animateDpAsState(
+        targetValue = destinationDp(if (menuExpanded) 7.5f else SETTINGS_CONTROL_SHADOW, scale),
+        animationSpec = menuAnimationSpec,
+        label = "settings-language-shadow"
+    )
+    val shape = RoundedCornerShape(cornerRadius)
+
+    fun closeMenuAfterSelection(index: Int) {
+        selectedLanguageIndex = index
+        menuExpanded = false
+        menuClosePending = true
+    }
+
+    LaunchedEffect(menuVisible) {
+        if (menuVisible) {
+            menuExpanded = false
+            withFrameNanos { }
+            menuExpanded = true
+        } else {
+            menuExpanded = false
+        }
+    }
+
+    LaunchedEffect(menuClosePending) {
+        if (menuClosePending) {
+            delay(SETTINGS_LANGUAGE_ANIMATION_MS.toLong())
+            menuVisible = false
+            menuClosePending = false
+        }
+    }
+
+    Box(
+        modifier = Modifier
+            .width(destinationDp(SETTINGS_CONTROL_WIDTH, scale))
+            .height(toggleHeight),
+        contentAlignment = Alignment.TopStart
+    ) {
+        Box(
+            modifier = Modifier
+                .width(destinationDp(SETTINGS_CONTROL_WIDTH, scale))
+                .offset(y = menuOffsetY)
+                .requiredHeight(menuHeight)
+                .shadow(shadowElevation, shape, clip = false)
+                .clip(shape)
+                .background(Color(0xFFD9D9D9), shape)
+                .border(destinationDp(SETTINGS_CONTROL_BORDER_WIDTH, scale), Color.Black, shape)
+                .then(
+                    if (menuVisible) {
+                        Modifier
+                    } else {
+                        Modifier.clickable(
+                            interactionSource = interactionSource,
+                            indication = null
+                        ) {
+                            menuClosePending = false
+                            menuVisible = true
+                        }
+                    }
+                ),
+            contentAlignment = Alignment.TopStart
+        ) {
+            if (menuVisible) {
+                SettingsLanguageMenuRow(
+                    label = "English",
+                    selected = selectedLanguageIndex == 0,
+                    top = 9f,
+                    scale = scale
+                ) {
+                    closeMenuAfterSelection(0)
+                }
+                SettingsLanguageMenuRow(
+                    label = "Spanish",
+                    selected = selectedLanguageIndex == 1,
+                    top = 41f,
+                    scale = scale
+                ) {
+                    closeMenuAfterSelection(1)
+                }
+                SettingsLanguageMenuRow(
+                    label = "Mandarin",
+                    selected = selectedLanguageIndex == 2,
+                    top = 75f,
+                    scale = scale
+                ) {
+                    closeMenuAfterSelection(2)
+                }
+            } else {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Center)
+                        .padding(horizontal = destinationDp(SETTINGS_LANGUAGE_BUTTON_PADDING, scale)),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = language,
+                        color = Color(0xFF1F1F1F),
+                        fontSize = SETTINGS_LANGUAGE_TEXT_SIZE.sp,
+                        fontWeight = FontWeight.Bold,
+                        lineHeight = SETTINGS_LANGUAGE_LINE_HEIGHT.sp,
+                        letterSpacing = 0.sp,
+                        textAlign = TextAlign.Start,
+                        maxLines = 1,
+                        overflow = TextOverflow.Clip,
+                        modifier = Modifier.weight(1f)
+                    )
+                    Canvas(
+                        modifier = Modifier
+                            .width(destinationDp(SETTINGS_LANGUAGE_ARROW_WIDTH, scale))
+                            .height(destinationDp(SETTINGS_LANGUAGE_ARROW_HEIGHT, scale))
+                    ) {
+                        val path = Path().apply {
+                            moveTo(size.width, size.height / 2f)
+                            lineTo(size.width * 0.1026f, size.height * 0.0649f)
+                            lineTo(size.width * 0.1026f, size.height * 0.9351f)
+                            close()
+                        }
+                        drawPath(path, Color(0xFF1F1F1F))
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SettingsLanguageMenuRow(
+    label: String,
+    selected: Boolean,
+    top: Float,
+    scale: Float,
+    onClick: () -> Unit
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+
+    Row(
+        modifier = Modifier
+            .offset(x = destinationDp(2f, scale), y = destinationDp(top, scale))
+            .width(destinationDp(146f, scale))
+            .height(destinationDp(SETTINGS_LANGUAGE_MENU_ROW_HEIGHT, scale))
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = onClick
+            )
+            .padding(start = destinationDp(12f, scale), end = destinationDp(6f, scale)),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = label,
+            color = Color(0xFF1F1F1F),
+            fontSize = SETTINGS_LANGUAGE_TEXT_SIZE.sp,
+            fontWeight = FontWeight.Bold,
+            lineHeight = SETTINGS_LANGUAGE_LINE_HEIGHT.sp,
+            letterSpacing = 0.sp,
+            textAlign = TextAlign.Start,
+            maxLines = 1,
+            overflow = TextOverflow.Clip,
+            modifier = Modifier.weight(1f)
+        )
+        SettingsLanguageRadio(selected = selected, scale = scale)
+    }
+}
+
+@Composable
+private fun SettingsLanguageRadio(
+    selected: Boolean,
+    scale: Float
+) {
+    Canvas(
+        modifier = Modifier.size(destinationDp(23f, scale))
+    ) {
+        val outerRadius = size.minDimension / 2f
+        drawCircle(Color(0xFF303030), radius = outerRadius)
+        drawCircle(Color(0xFFD9D9D9), radius = outerRadius - destinationDp(3f, scale).toPx())
+        if (selected) {
+            drawCircle(Color(0xFF303030), radius = destinationDp(6.5f, scale).toPx())
+        }
+    }
+}
+
+private data class SettingsRowSpec(
+    val label: String,
+    val detail: String,
+    val control: SettingsControl = SettingsControl.Toggle
+)
+
+private enum class SettingsControl {
+    Toggle,
+    LanguageDropdown
 }
 
 private fun destinationDp(px: Float, scale: Float): Dp = (px * scale).dp
