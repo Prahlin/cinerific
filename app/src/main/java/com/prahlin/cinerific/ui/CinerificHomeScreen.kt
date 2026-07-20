@@ -52,7 +52,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.annotation.StringRes
 import com.prahlin.cinerific.R
+import androidx.compose.ui.res.stringResource
 import kotlin.math.max
 
 private const val HOME_FRAME_WIDTH = 1194f
@@ -99,7 +101,7 @@ internal fun CinerificHomeScreen(modifier: Modifier = Modifier) {
 
             HomeProgramRows.forEachIndexed { index, row ->
                 HomeProgramRow(
-                    title = row.title,
+                    title = stringResource(row.titleResId),
                     cardIds = row.cardIds,
                     horizontalPadding = horizontalPadding,
                     cardWidth = cardWidth,
@@ -367,13 +369,13 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context), Tex
 }
 
 private data class HomeProgramRowSpec(
-    val title: String,
+    @StringRes val titleResId: Int,
     @DrawableRes val cardIds: List<Int>
 )
 
 private val HomeProgramRows = listOf(
     HomeProgramRowSpec(
-        title = "Crime",
+        titleResId = R.string.home_row_crime,
         cardIds = listOf(
             R.drawable.home_crime_01,
             R.drawable.home_crime_02,
@@ -382,7 +384,7 @@ private val HomeProgramRows = listOf(
         )
     ),
     HomeProgramRowSpec(
-        title = "Thriller",
+        titleResId = R.string.home_row_thriller,
         cardIds = listOf(
             R.drawable.home_thriller_01,
             R.drawable.home_thriller_02,
@@ -391,7 +393,7 @@ private val HomeProgramRows = listOf(
         )
     ),
     HomeProgramRowSpec(
-        title = "Comedy",
+        titleResId = R.string.home_row_comedy,
         cardIds = listOf(
             R.drawable.home_comedy_01,
             R.drawable.home_comedy_02,
@@ -401,7 +403,7 @@ private val HomeProgramRows = listOf(
         )
     ),
     HomeProgramRowSpec(
-        title = "Action",
+        titleResId = R.string.home_row_action,
         cardIds = listOf(
             R.drawable.home_action_01,
             R.drawable.home_action_02,
@@ -411,7 +413,7 @@ private val HomeProgramRows = listOf(
         )
     ),
     HomeProgramRowSpec(
-        title = "Drama",
+        titleResId = R.string.home_row_drama,
         cardIds = listOf(
             R.drawable.home_drama_01,
             R.drawable.home_drama_02,
@@ -422,7 +424,7 @@ private val HomeProgramRows = listOf(
         )
     ),
     HomeProgramRowSpec(
-        title = "Documentary",
+        titleResId = R.string.home_row_documentary,
         cardIds = listOf(
             R.drawable.home_documentary_01,
             R.drawable.home_documentary_02,
@@ -432,7 +434,7 @@ private val HomeProgramRows = listOf(
         )
     ),
     HomeProgramRowSpec(
-        title = "Horror",
+        titleResId = R.string.home_row_horror,
         cardIds = listOf(
             R.drawable.home_horror_01,
             R.drawable.home_horror_02,

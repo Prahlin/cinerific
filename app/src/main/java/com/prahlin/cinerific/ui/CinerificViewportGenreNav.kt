@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
@@ -132,7 +133,7 @@ private fun GenreChip(
             AllGenreGlyph(color = ink, scale = scale)
         } else {
             Text(
-                text = genre.compactLabel,
+                text = stringResource(genre.compactLabelResId ?: genre.displayNameResId),
                 color = ink,
                 fontSize = 11.sp,
                 fontWeight = FontWeight.Black,

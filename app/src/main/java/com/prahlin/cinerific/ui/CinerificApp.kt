@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameMillis
 import androidx.compose.ui.geometry.Rect
@@ -77,15 +78,20 @@ private val ColorIntroGradientBottom = Color(0xFF100102)
 fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
     var showHome by remember(bootStartMillis) { mutableStateOf(false) }
     var signedInProfile by remember(bootStartMillis) { mutableStateOf(CinerificProfile.Guest) }
+    var selectedLanguage by rememberSaveable { mutableStateOf(CinerificLanguage.English) }
 
     if (showHome) {
-        CinerificMainExperience(
-            signedInProfile = signedInProfile,
-            onSignOut = {
-                signedInProfile = CinerificProfile.Guest
-                showHome = false
-            }
-        )
+        CinerificLocalizedResources(selectedLanguage) {
+            CinerificMainExperience(
+                signedInProfile = signedInProfile,
+                selectedLanguage = selectedLanguage,
+                onLanguageSelected = { selectedLanguage = it },
+                onSignOut = {
+                    signedInProfile = CinerificProfile.Guest
+                    showHome = false
+                }
+            )
+        }
     } else {
         AndroidView(
             modifier = Modifier.fillMaxSize(),
@@ -130,6 +136,8 @@ internal enum class CinerificProfile(
 @Composable
 private fun CinerificMainExperience(
     signedInProfile: CinerificProfile,
+    selectedLanguage: CinerificLanguage,
+    onLanguageSelected: (CinerificLanguage) -> Unit,
     onSignOut: () -> Unit
 ) {
     var destination by remember { mutableStateOf(CinerificDestination.Home) }
@@ -143,6 +151,8 @@ private fun CinerificMainExperience(
             CinerificDestination.Settings -> CinerificDestinationScreen(
                 destination = destination,
                 signedInProfile = signedInProfile,
+                selectedLanguage = selectedLanguage,
+                onLanguageSelected = onLanguageSelected,
                 onSignOut = onSignOut,
                 modifier = Modifier.fillMaxSize()
             )

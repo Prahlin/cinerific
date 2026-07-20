@@ -1,6 +1,7 @@
 package com.prahlin.cinerific.ui
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.Spring
@@ -60,6 +61,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -122,33 +124,43 @@ private val DestinationMid = Color(0xFF23001F)
 private val DestinationBottom = Color(0xFF060004)
 private val DestinationText = Color(0xFFE7E7E7)
 private val DestinationSubtle = Color(0xFFBDBDBD)
-private val SettingsLanguageOptions = listOf("English", "Spanish", "Mandarin")
+private val SettingsLanguageOptions = listOf(
+    CinerificLanguage.English to R.string.language_english,
+    CinerificLanguage.Spanish to R.string.language_spanish,
+    CinerificLanguage.Mandarin to R.string.language_mandarin
+)
 
 @Composable
 internal fun CinerificDestinationScreen(
     destination: CinerificDestination,
     signedInProfile: CinerificProfile = CinerificProfile.Guest,
+    selectedLanguage: CinerificLanguage = CinerificLanguage.English,
+    onLanguageSelected: (CinerificLanguage) -> Unit = {},
     onSignOut: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     when (destination) {
         CinerificDestination.Movies -> CinerificCatalogScreen(
-            title = "Movies",
-            description = "Explore a curated selection of exhilarating films",
+            titleResId = R.string.destination_movies,
+            descriptionResId = R.string.movies_description,
             rows = MovieRows,
             showViewportNav = true,
+            isShows = false,
             modifier = modifier
         )
         CinerificDestination.Shows -> CinerificCatalogScreen(
-            title = "Shows",
-            description = "Browse episodic picks, genre collections, and returning favorites",
+            titleResId = R.string.destination_shows,
+            descriptionResId = R.string.shows_description,
             rows = ShowRows,
             showViewportNav = true,
+            isShows = true,
             modifier = modifier
         )
         CinerificDestination.Favorites -> CinerificFavoritesScreen(modifier = modifier)
         CinerificDestination.Settings -> CinerificSettingsScreen(
             signedInProfile = signedInProfile,
+            selectedLanguage = selectedLanguage,
+            onLanguageSelected = onLanguageSelected,
             onSignOut = onSignOut,
             modifier = modifier
         )
@@ -158,10 +170,11 @@ internal fun CinerificDestinationScreen(
 
 @Composable
 private fun CinerificCatalogScreen(
-    title: String,
+    @StringRes titleResId: Int,
     rows: List<DestinationRowSpec>,
-    description: String = "",
+    @StringRes descriptionResId: Int,
     showViewportNav: Boolean,
+    isShows: Boolean,
     modifier: Modifier = Modifier
 ) {
     BoxWithConstraints(
@@ -185,9 +198,11 @@ private fun CinerificCatalogScreen(
                 (cardWidth.value + cardGap.value)
             ).toInt().coerceAtLeast(1)
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
-        var selectedGenre by remember(title) { mutableStateOf(ViewportGenre.All) }
-        var selectedMode by remember(title) { mutableStateOf(ViewportMode.CollageLarge) }
+        var selectedGenre by remember(titleResId) { mutableStateOf(ViewportGenre.All) }
+        var selectedMode by remember(titleResId) { mutableStateOf(ViewportMode.CollageLarge) }
         val scrollState = rememberScrollState()
+        val title = stringResource(titleResId)
+        val description = stringResource(descriptionResId)
         val visibleRows = if (!showViewportNav || selectedGenre == ViewportGenre.All) {
             rows
         } else {
@@ -225,7 +240,7 @@ private fun CinerificCatalogScreen(
                 ViewportMode.CollageLarge -> {
                     visibleRows.forEachIndexed { index, row ->
                         DestinationProgramRow(
-                            title = row.title,
+                            title = stringResource(row.titleResId),
                             programs = row.programs,
                             horizontalPadding = horizontalPadding,
                             rightPadding = rightPadding,
@@ -240,8 +255,8 @@ private fun CinerificCatalogScreen(
                 ViewportMode.CollageSmall -> {
                     visibleRows.forEachIndexed { index, row ->
                         DestinationProgramSmallCollage(
-                            title = row.title,
-                            programs = smallCollagePrograms(destinationTitle = title, programs = row.programs),
+                            title = stringResource(row.titleResId),
+                            programs = smallCollagePrograms(isShows = isShows, programs = row.programs),
                             horizontalPadding = horizontalPadding,
                             rightPadding = rightPadding,
                             scale = scale,
@@ -252,7 +267,7 @@ private fun CinerificCatalogScreen(
                 ViewportMode.List -> {
                     visibleRows.forEachIndexed { index, row ->
                         DestinationProgramList(
-                            title = row.title,
+                            title = stringResource(row.titleResId),
                             programs = listPrograms(row.programs),
                             horizontalPadding = horizontalPadding,
                             rightPadding = rightPadding,
@@ -434,6 +449,7 @@ private fun DestinationSmallCollageCard(
     scale: Float
 ) {
     val shape = RoundedCornerShape(destinationDp(30f, scale))
+    val title = stringResource(program.titleResId)
 
     Column(
         modifier = Modifier.width(width),
@@ -457,7 +473,7 @@ private fun DestinationSmallCollageCard(
             )
         }
         Text(
-            text = program.title.uppercase(),
+            text = title.uppercase(),
             color = DestinationText,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
@@ -514,6 +530,14 @@ private fun DestinationProgramListItem(
     scale: Float
 ) {
     val imageShape = RoundedCornerShape(destinationDp(15f, scale))
+    val title = stringResource(program.titleResId)
+    val genre = stringResource(program.metadataGenreResId)
+    val synopsis = program.synopsisResId?.let { stringResource(it) } ?: stringResource(
+        R.string.program_generated_synopsis,
+        stringResource(program.genre.displayNameResId).lowercase(),
+        stringResource(if (program.isShow) R.string.program_format_series else R.string.program_format_feature),
+        title
+    )
 
     Row(
         modifier = Modifier
@@ -546,7 +570,7 @@ private fun DestinationProgramListItem(
             Text(
                 text = buildAnnotatedString {
                     withStyle(SpanStyle(fontWeight = FontWeight.Black)) {
-                        append(program.title.uppercase())
+                        append(title.uppercase())
                     }
                     append(" ")
                     withStyle(SpanStyle(fontWeight = FontWeight.Normal)) {
@@ -566,7 +590,7 @@ private fun DestinationProgramListItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = program.synopsis,
+                    text = synopsis,
                     color = DestinationText.copy(alpha = 0.9f),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Normal,
@@ -578,13 +602,13 @@ private fun DestinationProgramListItem(
                 )
                 DestinationListMetaColumn(
                     top = program.runtime,
-                    bottom = program.metadataGenre,
+                    bottom = genre,
                     width = destinationDp(71f, scale),
                     scale = scale
                 )
                 DestinationListMetaColumn(
-                    top = "Dir: ${program.director}",
-                    bottom = "Prod: ${program.producer}",
+                    top = stringResource(R.string.program_meta_director, program.director),
+                    bottom = stringResource(R.string.program_meta_producer, program.producer),
                     width = destinationDp(156f, scale),
                     scale = scale
                 )
@@ -679,6 +703,8 @@ private fun DestinationProgramCard(
 @Composable
 private fun CinerificSettingsScreen(
     signedInProfile: CinerificProfile,
+    selectedLanguage: CinerificLanguage,
+    onLanguageSelected: (CinerificLanguage) -> Unit,
     onSignOut: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -747,54 +773,77 @@ private fun CinerificSettingsScreen(
                 )
         ) {
             SettingsSection(
-                title = "Accessibility",
+                titleResId = R.string.settings_accessibility,
                 rows = listOf(
                     SettingsRowSpec(
-                        label = "Language",
-                        detail = "Select your language of choice",
+                        labelResId = R.string.settings_language,
+                        detailResId = R.string.settings_language_detail,
                         control = SettingsControl.LanguageDropdown
                     ),
-                    SettingsRowSpec(label = "Simplify UI", detail = "Recommended for children"),
-                    SettingsRowSpec(label = "Dark mode", detail = "App darkens during night time")
-                ),
-                scale = scale
-            )
-            SettingsSection(
-                title = "Playback",
-                rows = listOf(
-                    SettingsRowSpec(label = "Autoplay", detail = "Automatically play the next video"),
-                    SettingsRowSpec(label = "Background play", detail = "Play Cinerific behind other apps"),
-                    SettingsRowSpec(label = "Wifi downloads only", detail = "Some carriers will charge for data")
-                ),
-                scale = scale
-            )
-            SettingsSection(
-                title = "Billing & Payment",
-                rows = listOf(
                     SettingsRowSpec(
-                        label = "Bill automatically",
-                        detail = "Only applicable if billing information provided"
+                        labelResId = R.string.settings_simplify_ui,
+                        detailResId = R.string.settings_simplify_ui_detail
                     ),
                     SettingsRowSpec(
-                        label = "Notifications",
-                        detail = "Receive email notifications 7 days prior to your billing date"
-                    )
-                ),
-                scale = scale
-            )
-            SettingsSection(
-                title = "Security",
-                rows = listOf(
-                    SettingsRowSpec(
-                        label = "Auto log out",
-                        detail = "Log out automatically following 10 minutes of inactivity"
-                    ),
-                    SettingsRowSpec(
-                        label = "Two-Factor Authentication",
-                        detail = "Provides an extra level of security"
+                        labelResId = R.string.settings_dark_mode,
+                        detailResId = R.string.settings_dark_mode_detail
                     )
                 ),
                 scale = scale,
+                selectedLanguage = selectedLanguage,
+                onLanguageSelected = onLanguageSelected
+            )
+            SettingsSection(
+                titleResId = R.string.settings_playback,
+                rows = listOf(
+                    SettingsRowSpec(
+                        labelResId = R.string.settings_autoplay,
+                        detailResId = R.string.settings_autoplay_detail
+                    ),
+                    SettingsRowSpec(
+                        labelResId = R.string.settings_background_play,
+                        detailResId = R.string.settings_background_play_detail
+                    ),
+                    SettingsRowSpec(
+                        labelResId = R.string.settings_wifi_downloads_only,
+                        detailResId = R.string.settings_wifi_downloads_only_detail
+                    )
+                ),
+                scale = scale,
+                selectedLanguage = selectedLanguage,
+                onLanguageSelected = onLanguageSelected
+            )
+            SettingsSection(
+                titleResId = R.string.settings_billing_payment,
+                rows = listOf(
+                    SettingsRowSpec(
+                        labelResId = R.string.settings_bill_automatically,
+                        detailResId = R.string.settings_bill_automatically_detail
+                    ),
+                    SettingsRowSpec(
+                        labelResId = R.string.settings_notifications,
+                        detailResId = R.string.settings_notifications_detail
+                    )
+                ),
+                scale = scale,
+                selectedLanguage = selectedLanguage,
+                onLanguageSelected = onLanguageSelected
+            )
+            SettingsSection(
+                titleResId = R.string.settings_security,
+                rows = listOf(
+                    SettingsRowSpec(
+                        labelResId = R.string.settings_auto_log_out,
+                        detailResId = R.string.settings_auto_log_out_detail
+                    ),
+                    SettingsRowSpec(
+                        labelResId = R.string.settings_two_factor_authentication,
+                        detailResId = R.string.settings_two_factor_authentication_detail
+                    )
+                ),
+                scale = scale,
+                selectedLanguage = selectedLanguage,
+                onLanguageSelected = onLanguageSelected,
                 onLastToggleCenterMeasured = { bottomToggleCenterY = it }
             )
             Spacer(modifier = Modifier.height(bottomAlignmentSpacer))
@@ -814,7 +863,7 @@ private fun CinerificSettingsScreen(
         )
 
         DestinationTopBar(
-            title = "Settings",
+            title = stringResource(R.string.destination_settings),
             height = topBarHeight,
             horizontalPadding = horizontalPadding,
             rightPadding = rightPadding,
@@ -853,13 +902,13 @@ private fun CinerificFavoritesScreen(modifier: Modifier = Modifier) {
         ) {
             Spacer(modifier = Modifier.height(destinationDp(61f, scale)))
             FavoritesPlaceholderSection(
-                title = "Movies",
+                title = stringResource(R.string.destination_movies),
                 horizontalPadding = horizontalPadding,
                 scale = scale
             )
             Spacer(modifier = Modifier.height(destinationDp(82f, scale)))
             FavoritesPlaceholderSection(
-                title = "Shows",
+                title = stringResource(R.string.destination_shows),
                 horizontalPadding = horizontalPadding,
                 scale = scale
             )
@@ -870,7 +919,7 @@ private fun CinerificFavoritesScreen(modifier: Modifier = Modifier) {
         }
 
         DestinationTopBar(
-            title = "Favorites",
+            title = stringResource(R.string.destination_favorites),
             height = topBarHeight,
             horizontalPadding = horizontalPadding,
             rightPadding = rightPadding,
@@ -935,13 +984,13 @@ private fun FavoritesSummaryHeaders(
             .padding(start = horizontalPadding)
             .padding(top = destinationDp(105f, scale))
     ) {
-        FavoritesSummaryHeader(text = "Most Frequently Viewed (7 times)")
+        FavoritesSummaryHeader(text = stringResource(R.string.favorites_most_frequently_viewed))
         Spacer(modifier = Modifier.height(destinationDp(96f, scale)))
-        FavoritesSummaryHeader(text = "Longest Playtime (32 hrs)")
+        FavoritesSummaryHeader(text = stringResource(R.string.favorites_longest_playtime))
         Spacer(modifier = Modifier.height(destinationDp(134f, scale)))
-        FavoritesSummaryHeader(text = "Most Used Device")
+        FavoritesSummaryHeader(text = stringResource(R.string.favorites_most_used_device))
         Spacer(modifier = Modifier.height(destinationDp(51f, scale)))
-        FavoritesSummaryHeader(text = "Favorite Genre")
+        FavoritesSummaryHeader(text = stringResource(R.string.favorites_favorite_genre))
     }
 }
 
@@ -994,9 +1043,11 @@ private fun DestinationTopBar(
 
 @Composable
 private fun SettingsSection(
-    title: String,
+    @StringRes titleResId: Int,
     rows: List<SettingsRowSpec>,
     scale: Float,
+    selectedLanguage: CinerificLanguage,
+    onLanguageSelected: (CinerificLanguage) -> Unit,
     onLastToggleCenterMeasured: ((Float) -> Unit)? = null
 ) {
     val sectionShape = RoundedCornerShape(destinationDp(SETTINGS_SECTION_BACKGROUND_RADIUS, scale))
@@ -1009,7 +1060,7 @@ private fun SettingsSection(
             .border(destinationDp(1f, scale), Color.White.copy(alpha = 0.035f), sectionShape)
             .padding(bottom = destinationDp(SETTINGS_SECTION_BOTTOM_PADDING, scale))
     ) {
-        SettingsSectionHeader(title = title, scale = scale)
+        SettingsSectionHeader(title = stringResource(titleResId), scale = scale)
 
         rows.forEachIndexed { index, row ->
             val rowTopPadding = 34.dp +
@@ -1030,14 +1081,14 @@ private fun SettingsSection(
             ) {
                 Column(modifier = Modifier.width(destinationDp(SETTINGS_ROW_TEXT_WIDTH, scale))) {
                     Text(
-                        text = row.label,
+                        text = stringResource(row.labelResId),
                         color = DestinationText,
                         fontSize = 28.sp,
                         fontWeight = FontWeight.SemiBold,
                         letterSpacing = 0.sp
                     )
                     Text(
-                        text = row.detail,
+                        text = stringResource(row.detailResId),
                         color = DestinationSubtle,
                         fontSize = 20.sp,
                         lineHeight = 28.sp,
@@ -1066,11 +1117,15 @@ private fun SettingsSection(
 
                     when (row.control) {
                         SettingsControl.Toggle -> SettingsAnimatedToggle(
-                            label = row.label,
+                            stateKey = row.labelResId,
                             scale = scale,
                             modifier = toggleModifier
                         )
-                        SettingsControl.LanguageDropdown -> SettingsLanguageDropdown(scale = scale)
+                        SettingsControl.LanguageDropdown -> SettingsLanguageDropdown(
+                            selectedLanguage = selectedLanguage,
+                            onLanguageSelected = onLanguageSelected,
+                            scale = scale
+                        )
                     }
                 }
                 Spacer(modifier = Modifier.weight(1f))
@@ -1096,6 +1151,8 @@ private fun SettingsSignedInColumn(
         avatarSize +
         SETTINGS_SIGNED_IN_NAME_GAP * SETTINGS_SIGNED_IN_PROFILE_SCALE
     val signOutTop = nameTop + nameHeight + SETTINGS_SIGNED_IN_SIGN_OUT_GAP * SETTINGS_SIGNED_IN_PROFILE_SCALE
+    val titleFontSize = if (LocalCinerificLanguage.current == CinerificLanguage.Spanish) 20.sp else 24.sp
+    val titleLineHeight = if (LocalCinerificLanguage.current == CinerificLanguage.Spanish) 28.sp else 36.sp
 
     Box(
         modifier = modifier
@@ -1103,16 +1160,17 @@ private fun SettingsSignedInColumn(
             .height(destinationDp(SETTINGS_SIGNED_IN_HEIGHT, scale))
     ) {
         Text(
-            text = "Signed in as",
+            text = stringResource(R.string.settings_signed_in_as),
             color = DestinationText,
-            fontSize = 24.sp,
+            fontSize = titleFontSize,
             fontWeight = FontWeight.Bold,
-            lineHeight = 36.sp,
+            lineHeight = titleLineHeight,
             letterSpacing = 0.sp,
             textAlign = TextAlign.Center,
+            maxLines = 1,
             modifier = Modifier
-                .offset(x = destinationDp(29f, scale), y = destinationDp(SETTINGS_SIGNED_IN_TITLE_TOP, scale))
-                .width(destinationDp(142f, scale))
+                .offset(x = 0.dp, y = destinationDp(SETTINGS_SIGNED_IN_TITLE_TOP, scale))
+                .width(destinationDp(SETTINGS_SIGNED_IN_WIDTH, scale))
                 .height(destinationDp(SETTINGS_SIGNED_IN_TITLE_HEIGHT, scale))
         )
         Image(
@@ -1166,7 +1224,7 @@ private fun SettingsSignOutButton(
             modifier = Modifier.fillMaxSize()
         )
         Text(
-            text = "Sign out",
+            text = stringResource(R.string.settings_sign_out),
             color = DestinationText,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
@@ -1210,11 +1268,11 @@ private fun SettingsSectionHeader(
 
 @Composable
 private fun SettingsAnimatedToggle(
-    label: String,
+    @StringRes stateKey: Int,
     scale: Float,
     modifier: Modifier = Modifier
 ) {
-    var checked by rememberSaveable(label) { mutableStateOf(false) }
+    var checked by rememberSaveable(stateKey) { mutableStateOf(false) }
     val shape = RoundedCornerShape(destinationDp(SETTINGS_CONTROL_RADIUS, scale))
     val interactionSource = remember { MutableInteractionSource() }
     val trackFill by animateColorAsState(
@@ -1282,12 +1340,17 @@ private fun SettingsAnimatedToggle(
 }
 
 @Composable
-private fun SettingsLanguageDropdown(scale: Float) {
-    var selectedLanguageIndex by rememberSaveable { mutableStateOf(0) }
+private fun SettingsLanguageDropdown(
+    selectedLanguage: CinerificLanguage,
+    onLanguageSelected: (CinerificLanguage) -> Unit,
+    scale: Float
+) {
     var menuVisible by rememberSaveable { mutableStateOf(false) }
     var menuExpanded by remember { mutableStateOf(false) }
     var menuClosePending by remember { mutableStateOf(false) }
-    val language = SettingsLanguageOptions[selectedLanguageIndex]
+    val selectedLabelResId = SettingsLanguageOptions.firstOrNull { it.first == selectedLanguage }?.second
+        ?: R.string.language_english
+    val language = stringResource(selectedLabelResId)
     val interactionSource = remember { MutableInteractionSource() }
     val menuAnimationSpec = tween<Dp>(
         durationMillis = SETTINGS_LANGUAGE_ANIMATION_MS,
@@ -1315,8 +1378,8 @@ private fun SettingsLanguageDropdown(scale: Float) {
     )
     val shape = RoundedCornerShape(cornerRadius)
 
-    fun closeMenuAfterSelection(index: Int) {
-        selectedLanguageIndex = index
+    fun closeMenuAfterSelection(language: CinerificLanguage) {
+        onLanguageSelected(language)
         menuExpanded = false
         menuClosePending = true
     }
@@ -1370,29 +1433,19 @@ private fun SettingsLanguageDropdown(scale: Float) {
             contentAlignment = Alignment.TopStart
         ) {
             if (menuVisible) {
-                SettingsLanguageMenuRow(
-                    label = "English",
-                    selected = selectedLanguageIndex == 0,
-                    top = 9f,
-                    scale = scale
-                ) {
-                    closeMenuAfterSelection(0)
-                }
-                SettingsLanguageMenuRow(
-                    label = "Spanish",
-                    selected = selectedLanguageIndex == 1,
-                    top = 41f,
-                    scale = scale
-                ) {
-                    closeMenuAfterSelection(1)
-                }
-                SettingsLanguageMenuRow(
-                    label = "Mandarin",
-                    selected = selectedLanguageIndex == 2,
-                    top = 75f,
-                    scale = scale
-                ) {
-                    closeMenuAfterSelection(2)
+                SettingsLanguageOptions.forEachIndexed { index, option ->
+                    SettingsLanguageMenuRow(
+                        label = stringResource(option.second),
+                        selected = selectedLanguage == option.first,
+                        top = when (index) {
+                            0 -> 9f
+                            1 -> 41f
+                            else -> 75f
+                        },
+                        scale = scale
+                    ) {
+                        closeMenuAfterSelection(option.first)
+                    }
                 }
             } else {
                 Row(
@@ -1490,8 +1543,8 @@ private fun SettingsLanguageRadio(
 }
 
 private data class SettingsRowSpec(
-    val label: String,
-    val detail: String,
+    @StringRes val labelResId: Int,
+    @StringRes val detailResId: Int,
     val control: SettingsControl = SettingsControl.Toggle
 )
 
@@ -1511,13 +1564,14 @@ private fun destinationSectionTopPadding(index: Int, showViewportNav: Boolean): 
 }
 
 private data class DestinationRowSpec(
-    val title: String,
+    @StringRes val titleResId: Int,
     val genre: ViewportGenre,
     val programs: List<DestinationProgramSpec>
 )
 
 private data class DestinationProgramSpec(
     val title: String,
+    @StringRes val titleResId: Int,
     val genre: ViewportGenre,
     @DrawableRes val drawableId: Int,
     @DrawableRes val listDrawableId: Int,
@@ -1525,8 +1579,9 @@ private data class DestinationProgramSpec(
     val runtime: String,
     val director: String,
     val producer: String,
-    val metadataGenre: String,
-    val synopsis: String,
+    @StringRes val metadataGenreResId: Int,
+    @StringRes val synopsisResId: Int?,
+    val isShow: Boolean,
     val rating: Int
 )
 
@@ -1535,9 +1590,9 @@ private data class ProgramDetails(
     val runtime: String,
     val director: String,
     val producer: String,
-    val synopsis: String,
+    @StringRes val synopsisResId: Int?,
     val rating: Int,
-    val genreLabel: String? = null
+    val genreLabel: ViewportGenre? = null
 )
 
 private val ProgramDetailsByTitle = mapOf(
@@ -1546,25 +1601,25 @@ private val ProgramDetailsByTitle = mapOf(
         runtime = "2h 13m",
         director = "J. Sarge",
         producer = "M. Holt",
-        synopsis = "A curious woman sleuthing through unresolved family business uncovers more than she originally bargained for",
+        synopsisResId = R.string.program_synopsis_one_last_breath,
         rating = 4,
-        genreLabel = "Crime"
+        genreLabel = ViewportGenre.Crime
     ),
     "Sink or Swim" to ProgramDetails(
         year = "2015",
         runtime = "1h 51m",
         director = "B. Feinholt",
         producer = "R. Anderson",
-        synopsis = "Swimming takes on a whole new meaning when an unphased man is confronted with the inevitable",
+        synopsisResId = R.string.program_synopsis_sink_or_swim,
         rating = 3,
-        genreLabel = "Crime"
+        genreLabel = ViewportGenre.Crime
     ),
     "The Baller" to ProgramDetails(
         year = "2018",
         runtime = "1h 38m",
         director = "M. Marsh",
         producer = "S. Sebilla",
-        synopsis = "Shooting hoops is all fun and games until life itself becomes the greatest challenge",
+        synopsisResId = R.string.program_synopsis_the_baller,
         rating = 4
     ),
     "Troublemaker" to ProgramDetails(
@@ -1572,7 +1627,7 @@ private val ProgramDetailsByTitle = mapOf(
         runtime = "2h 5m",
         director = "A. Lockhart",
         producer = "A. Lockhart",
-        synopsis = "No scolding in the world can discipline some children - at least not when it comes to little rascal Hunter Roddings",
+        synopsisResId = R.string.program_synopsis_troublemaker,
         rating = 3
     ),
     "Ignition" to ProgramDetails(
@@ -1580,7 +1635,7 @@ private val ProgramDetailsByTitle = mapOf(
         runtime = "2h 14m",
         director = "R. Fullstone",
         producer = "T. Tanning",
-        synopsis = "Firey passion and noble truth are at odds when sheltered Mona encounters Steward, a man with a troubled past",
+        synopsisResId = R.string.program_synopsis_ignition,
         rating = 3
     ),
     "Eruption" to ProgramDetails(
@@ -1588,7 +1643,7 @@ private val ProgramDetailsByTitle = mapOf(
         runtime = "1h 34m",
         director = "M. Bennington",
         producer = "C. Lukinski",
-        synopsis = "Not even a life of high-level combat training can prepare a seasoned navy seal when nature's fury breaks loose",
+        synopsisResId = R.string.program_synopsis_eruption,
         rating = 5
     ),
     "If I May" to ProgramDetails(
@@ -1596,7 +1651,7 @@ private val ProgramDetailsByTitle = mapOf(
         runtime = "1h 28m",
         director = "W. Wexler",
         producer = "B. Riley",
-        synopsis = "A quiet confession changes the course of a family gathering before anyone is ready for the truth",
+        synopsisResId = R.string.program_synopsis_if_i_may,
         rating = 3
     ),
     "The Playmate" to ProgramDetails(
@@ -1604,7 +1659,7 @@ private val ProgramDetailsByTitle = mapOf(
         runtime = "2h 28m",
         director = "W. Stills",
         producer = "U. Bannon",
-        synopsis = "A delectable but lethal young woman allures unsuspecting men into a game of never-ending hide-and-seek",
+        synopsisResId = R.string.program_synopsis_the_playmate,
         rating = 3
     ),
     "Help" to ProgramDetails(
@@ -1612,7 +1667,7 @@ private val ProgramDetailsByTitle = mapOf(
         runtime = "2h 0m",
         director = "K. Jewles",
         producer = "I. Kavan",
-        synopsis = "Would you ignore a desperate call for aid if you were the only one around to lend a helping hand?",
+        synopsisResId = R.string.program_synopsis_help,
         rating = 2
     )
 )
@@ -1670,7 +1725,7 @@ private val PrototypeShowSmallTitleOrder = listOf(
 
 private val MovieRows = listOf(
     DestinationRowSpec(
-        title = "Action Movies",
+        titleResId = R.string.row_action_movies,
         genre = ViewportGenre.Action,
         programs = listOf(
             movie("Eruption", ViewportGenre.Action, R.drawable.home_action_01),
@@ -1681,7 +1736,7 @@ private val MovieRows = listOf(
         )
     ),
     DestinationRowSpec(
-        title = "Comedy Movies",
+        titleResId = R.string.row_comedy_movies,
         genre = ViewportGenre.Comedy,
         programs = listOf(
             movie("Citric", ViewportGenre.Comedy, R.drawable.home_comedy_01),
@@ -1692,7 +1747,7 @@ private val MovieRows = listOf(
         )
     ),
     DestinationRowSpec(
-        title = "Crime Movies",
+        titleResId = R.string.row_crime_movies,
         genre = ViewportGenre.Crime,
         programs = listOf(
             movie("No Trespassing", ViewportGenre.Crime, R.drawable.home_crime_01),
@@ -1702,7 +1757,7 @@ private val MovieRows = listOf(
         )
     ),
     DestinationRowSpec(
-        title = "Documentary Movies",
+        titleResId = R.string.row_documentary_movies,
         genre = ViewportGenre.Documentary,
         programs = listOf(
             movie("Incan Descent", ViewportGenre.Documentary, R.drawable.home_documentary_01),
@@ -1713,7 +1768,7 @@ private val MovieRows = listOf(
         )
     ),
     DestinationRowSpec(
-        title = "Drama Movies",
+        titleResId = R.string.row_drama_movies,
         genre = ViewportGenre.Drama,
         programs = listOf(
             movie("Breathing", ViewportGenre.Drama, R.drawable.home_drama_01),
@@ -1725,7 +1780,7 @@ private val MovieRows = listOf(
         )
     ),
     DestinationRowSpec(
-        title = "Horror Movies",
+        titleResId = R.string.row_horror_movies,
         genre = ViewportGenre.Horror,
         programs = listOf(
             movie("The Playmate", ViewportGenre.Horror, R.drawable.home_horror_01),
@@ -1735,7 +1790,7 @@ private val MovieRows = listOf(
         )
     ),
     DestinationRowSpec(
-        title = "Thriller Movies",
+        titleResId = R.string.row_thriller_movies,
         genre = ViewportGenre.Thriller,
         programs = listOf(
             movie("Enlightenment", ViewportGenre.Thriller, R.drawable.home_thriller_01),
@@ -1748,7 +1803,7 @@ private val MovieRows = listOf(
 
 private val ShowRows = listOf(
     DestinationRowSpec(
-        title = "Action Shows",
+        titleResId = R.string.row_action_shows,
         genre = ViewportGenre.Action,
         programs = listOf(
             show("Operation Firefly", ViewportGenre.Action, R.drawable.home_action_03),
@@ -1758,7 +1813,7 @@ private val ShowRows = listOf(
         )
     ),
     DestinationRowSpec(
-        title = "Comedy Shows",
+        titleResId = R.string.row_comedy_shows,
         genre = ViewportGenre.Comedy,
         programs = listOf(
             show("Laughing Matters", ViewportGenre.Comedy, R.drawable.home_comedy_03),
@@ -1768,7 +1823,7 @@ private val ShowRows = listOf(
         )
     ),
     DestinationRowSpec(
-        title = "Crime Shows",
+        titleResId = R.string.row_crime_shows,
         genre = ViewportGenre.Crime,
         programs = listOf(
             show("No Trespassing", ViewportGenre.Crime, R.drawable.home_crime_01),
@@ -1778,7 +1833,7 @@ private val ShowRows = listOf(
         )
     ),
     DestinationRowSpec(
-        title = "Documentary Shows",
+        titleResId = R.string.row_documentary_shows,
         genre = ViewportGenre.Documentary,
         programs = listOf(
             show("Or Not To Be", ViewportGenre.Documentary, R.drawable.home_documentary_02),
@@ -1788,7 +1843,7 @@ private val ShowRows = listOf(
         )
     ),
     DestinationRowSpec(
-        title = "Drama Shows",
+        titleResId = R.string.row_drama_shows,
         genre = ViewportGenre.Drama,
         programs = listOf(
             show("Breathing", ViewportGenre.Drama, R.drawable.home_drama_01),
@@ -1798,7 +1853,7 @@ private val ShowRows = listOf(
         )
     ),
     DestinationRowSpec(
-        title = "Horror Shows",
+        titleResId = R.string.row_horror_shows,
         genre = ViewportGenre.Horror,
         programs = listOf(
             show("The Playmate", ViewportGenre.Horror, R.drawable.home_horror_01),
@@ -1808,7 +1863,7 @@ private val ShowRows = listOf(
         )
     ),
     DestinationRowSpec(
-        title = "Thriller Shows",
+        titleResId = R.string.row_thriller_shows,
         genre = ViewportGenre.Thriller,
         programs = listOf(
             show("Enlightenment", ViewportGenre.Thriller, R.drawable.home_thriller_01),
@@ -1827,6 +1882,7 @@ private fun movie(
     val details = programDetails(title = title, genre = genre, isShow = false)
     return DestinationProgramSpec(
         title = title,
+        titleResId = programTitleResId(title),
         genre = genre,
         drawableId = drawableId,
         listDrawableId = listPosterDrawableId(title) ?: drawableId,
@@ -1834,8 +1890,9 @@ private fun movie(
         runtime = details.runtime,
         director = details.director,
         producer = details.producer,
-        metadataGenre = details.genreLabel ?: genre.displayName,
-        synopsis = details.synopsis,
+        metadataGenreResId = (details.genreLabel ?: genre).displayNameResId,
+        synopsisResId = details.synopsisResId,
+        isShow = false,
         rating = details.rating
     )
 }
@@ -1848,6 +1905,7 @@ private fun show(
     val details = programDetails(title = title, genre = genre, isShow = true)
     return DestinationProgramSpec(
         title = title,
+        titleResId = programTitleResId(title),
         genre = genre,
         drawableId = drawableId,
         listDrawableId = listPosterDrawableId(title) ?: drawableId,
@@ -1855,10 +1913,49 @@ private fun show(
         runtime = details.runtime,
         director = details.director,
         producer = details.producer,
-        metadataGenre = details.genreLabel ?: genre.displayName,
-        synopsis = details.synopsis,
+        metadataGenreResId = (details.genreLabel ?: genre).displayNameResId,
+        synopsisResId = details.synopsisResId,
+        isShow = true,
         rating = details.rating
     )
+}
+
+@StringRes
+private fun programTitleResId(title: String): Int = when (title) {
+    "One Last Breath" -> R.string.program_one_last_breath
+    "Sink or Swim" -> R.string.program_sink_or_swim
+    "The Baller" -> R.string.program_the_baller
+    "Troublemaker" -> R.string.program_troublemaker
+    "Ignition" -> R.string.program_ignition
+    "Eruption" -> R.string.program_eruption
+    "If I May" -> R.string.program_if_i_may
+    "The Playmate" -> R.string.program_the_playmate
+    "Help" -> R.string.program_help
+    "Under Attack" -> R.string.program_under_attack
+    "No Trespassing" -> R.string.program_no_trespassing
+    "Hungry Heart" -> R.string.program_hungry_heart
+    "Enlightenment" -> R.string.program_enlightenment
+    "Deadbeat" -> R.string.program_deadbeat
+    "Playing with Fire" -> R.string.program_playing_with_fire
+    "Citric" -> R.string.program_citric
+    "Laughing Matters" -> R.string.program_laughing_matters
+    "Lost in Time" -> R.string.program_lost_in_time
+    "Operation Firefly" -> R.string.program_operation_firefly
+    "Smoke" -> R.string.program_smoke
+    "Joyriders" -> R.string.program_joyriders
+    "Moments" -> R.string.program_moments
+    "Chasing Light" -> R.string.program_chasing_light
+    "Breathing" -> R.string.program_breathing
+    "Falling Behind" -> R.string.program_falling_behind
+    "Still There" -> R.string.program_still_there
+    "Surfside" -> R.string.program_surfside
+    "Wheels" -> R.string.program_wheels
+    "Light as a Feather" -> R.string.program_light_as_a_feather
+    "Incan Descent" -> R.string.program_incan_descent
+    "Or Not To Be" -> R.string.program_or_not_to_be
+    "Skin and Bones" -> R.string.program_skin_and_bones
+    "The Appetizer" -> R.string.program_the_appetizer
+    else -> R.string.app_name
 }
 
 @DrawableRes
@@ -1919,18 +2016,9 @@ private fun programDetails(
         runtime = runtimes[seed % runtimes.size],
         director = directors[seed % directors.size],
         producer = producers[(seed / 3) % producers.size],
-        synopsis = generatedSynopsis(title = title, genre = genre, isShow = isShow),
+        synopsisResId = null,
         rating = 2 + seed % 4
     )
-}
-
-private fun generatedSynopsis(
-    title: String,
-    genre: ViewportGenre,
-    isShow: Boolean
-): String {
-    val format = if (isShow) "series" else "feature"
-    return "This ${genre.displayName.lowercase()} $format follows $title through an escalating chain of choices, secrets, and second chances"
 }
 
 private fun prototypeListPriority(title: String): Int {
@@ -1945,8 +2033,8 @@ private fun listPrograms(programs: List<DestinationProgramSpec>): List<Destinati
         .map { it.value }
 }
 
-private fun prototypeSmallPriority(destinationTitle: String, programTitle: String): Int {
-    val order = if (destinationTitle == "Shows") {
+private fun prototypeSmallPriority(isShows: Boolean, programTitle: String): Int {
+    val order = if (isShows) {
         PrototypeShowSmallTitleOrder
     } else {
         PrototypeMovieSmallTitleOrder
@@ -1956,11 +2044,11 @@ private fun prototypeSmallPriority(destinationTitle: String, programTitle: Strin
 }
 
 private fun smallCollagePrograms(
-    destinationTitle: String,
+    isShows: Boolean,
     programs: List<DestinationProgramSpec>
 ): List<DestinationProgramSpec> {
     return programs
         .withIndex()
-        .sortedWith(compareBy({ prototypeSmallPriority(destinationTitle, it.value.title) }, { it.index }))
+        .sortedWith(compareBy({ prototypeSmallPriority(isShows, it.value.title) }, { it.index }))
         .map { it.value }
 }
