@@ -1,5 +1,5 @@
 Cinerific Android PROJECT SNAPSHOT
-Generated: Sat Jul 18 10:39:22 EDT 2026
+Generated: Mon Jul 20 17:29:58 EDT 2026
 Project directory: /Users/prahlin/gh/cinerific
 
 IMPORTANT INSTRUCTIONS FOR CHATGPT & CODEX:
@@ -44,6 +44,7 @@ PROJECT FILE TREE
 ============================================================
 
 /Users/prahlin/gh/cinerific
+/Users/prahlin/gh/cinerific/.copilotignore
 /Users/prahlin/gh/cinerific/.github
 /Users/prahlin/gh/cinerific/.github/copilot-instructions.md
 /Users/prahlin/gh/cinerific/.gitignore
@@ -64,15 +65,31 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/MainActivity.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
+/Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificChrome.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificHomeScreen.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificRightSideNavBar.kt
+/Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificViewportGenreNav.kt
+/Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificViewportModeNav.kt
+/Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificViewportNavBar.kt
+/Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificViewportNavShared.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/theme
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/theme/Theme.kt
 /Users/prahlin/gh/cinerific/app/src/main/res
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/chrome_nav_bgfill.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/chrome_top_bgfill.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/figma_card_eruption.jpg
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/figma_card_help.jpg
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/figma_card_if_i_may.jpg
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/figma_card_ignition.jpg
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/figma_card_one_last_breath.jpg
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/figma_card_sink_or_swim.jpg
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/figma_card_the_baller.jpg
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/figma_card_the_playmate.jpg
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/figma_card_troublemaker.jpg
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/guest_avatar.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/guest_name.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_action_01.png
@@ -153,6 +170,8 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/cinerific_worklog_july 15 part 1.pdf
 /Users/prahlin/gh/cinerific/cinerific_worklog_july 15.pdf
 /Users/prahlin/gh/cinerific/cinerific_worklog_july 16.pdf
+/Users/prahlin/gh/cinerific/cinerific_worklog_july 18.pdf
+/Users/prahlin/gh/cinerific/cinerific_worklog_july 19.pdf
 /Users/prahlin/gh/cinerific/gradle
 /Users/prahlin/gh/cinerific/gradle.properties
 /Users/prahlin/gh/cinerific/gradle/wrapper
@@ -1972,6 +1991,17 @@ FILE: read_project.sh
 BINARY / IMAGE ASSET INVENTORY — DRAWABLE-NODPI
 ============================================================
 
+app/src/main/res/drawable-nodpi/chrome_nav_bgfill.png | 35034 bytes | modified 2026-07-18 14:36:38
+app/src/main/res/drawable-nodpi/chrome_top_bgfill.png | 32583 bytes | modified 2026-07-18 14:36:38
+app/src/main/res/drawable-nodpi/figma_card_eruption.jpg | 20824 bytes | modified 2026-07-18 19:51:26
+app/src/main/res/drawable-nodpi/figma_card_help.jpg | 42518 bytes | modified 2026-07-18 19:51:26
+app/src/main/res/drawable-nodpi/figma_card_if_i_may.jpg | 27040 bytes | modified 2026-07-18 19:51:26
+app/src/main/res/drawable-nodpi/figma_card_ignition.jpg | 33514 bytes | modified 2026-07-18 19:51:26
+app/src/main/res/drawable-nodpi/figma_card_one_last_breath.jpg | 40749 bytes | modified 2026-07-18 19:51:25
+app/src/main/res/drawable-nodpi/figma_card_sink_or_swim.jpg | 52168 bytes | modified 2026-07-18 19:51:25
+app/src/main/res/drawable-nodpi/figma_card_the_baller.jpg | 46843 bytes | modified 2026-07-18 19:51:25
+app/src/main/res/drawable-nodpi/figma_card_the_playmate.jpg | 40476 bytes | modified 2026-07-18 19:51:26
+app/src/main/res/drawable-nodpi/figma_card_troublemaker.jpg | 44848 bytes | modified 2026-07-18 19:51:25
 app/src/main/res/drawable-nodpi/guest_avatar.png | 16742 bytes | modified 2026-07-14 20:32:22
 app/src/main/res/drawable-nodpi/guest_name.png | 4474 bytes | modified 2026-07-14 20:49:08
 app/src/main/res/drawable-nodpi/home_action_01.png | 175865 bytes | modified 2026-07-15 14:40:17

@@ -36,11 +36,11 @@ private const val COLOR_GRADIENT_TOP = 0xFF050000.toInt()
 private const val COLOR_GRADIENT_CENTER = 0xFF62070D.toInt()
 private const val COLOR_GRADIENT_BOTTOM = 0xFF100102.toInt()
 
-private val FINAL_AVATAR_BOUNDS = listOf(
-    Bounds(130f, 428f, 220f, 220f),
-    Bounds(368f, 428f, 220f, 220f),
-    Bounds(606f, 432f, 220f, 220f),
-    Bounds(844f, 428f, 220f, 220f)
+private val FINAL_AVATAR_TARGETS = listOf(
+    AvatarTarget(CinerificProfile.Steve, Bounds(130f, 428f, 220f, 220f)),
+    AvatarTarget(CinerificProfile.Martin, Bounds(368f, 428f, 220f, 220f)),
+    AvatarTarget(CinerificProfile.Janny, Bounds(606f, 432f, 220f, 220f)),
+    AvatarTarget(CinerificProfile.Guest, Bounds(844f, 428f, 220f, 220f))
 )
 
 internal class CinerificIntroView(context: Context) : View(context) {
@@ -50,7 +50,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             field = value
             postInvalidateOnAnimation()
         }
-    var onAvatarSelected: (() -> Unit)? = null
+    var onAvatarSelected: ((CinerificProfile) -> Unit)? = null
 
     private val bitmapOptions = BitmapFactory.Options().apply {
         inScaled = false
@@ -71,7 +71,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private val imagePaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG or Paint.DITHER_FLAG)
     private val backgroundPaint = Paint()
     private val tempRect = RectF()
-    private var avatarPressStarted = false
+    private var pressedAvatarProfile: CinerificProfile? = null
+    private var clickAvatarProfile: CinerificProfile? = null
 
     init {
         isClickable = true
@@ -122,31 +123,36 @@ internal class CinerificIntroView(context: Context) : View(context) {
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
-                avatarPressStarted = isSettledAvatarHit(event.x, event.y)
-                avatarPressStarted
+                pressedAvatarProfile = settledAvatarHitProfile(event.x, event.y)
+                pressedAvatarProfile != null
             }
             MotionEvent.ACTION_UP -> {
-                val shouldNavigate = avatarPressStarted && isSettledAvatarHit(event.x, event.y)
-                avatarPressStarted = false
+                val releasedAvatarProfile = settledAvatarHitProfile(event.x, event.y)
+                val shouldNavigate = pressedAvatarProfile != null && pressedAvatarProfile == releasedAvatarProfile
+                clickAvatarProfile = pressedAvatarProfile
+                pressedAvatarProfile = null
                 if (shouldNavigate) {
                     performClick()
                     true
                 } else {
+                    clickAvatarProfile = null
                     false
                 }
             }
             MotionEvent.ACTION_CANCEL -> {
-                avatarPressStarted = false
+                pressedAvatarProfile = null
+                clickAvatarProfile = null
                 false
             }
-            else -> avatarPressStarted
+            else -> pressedAvatarProfile != null
         }
     }
 
     override fun performClick(): Boolean {
         super.performClick()
         if (!isFinalFrameSettled()) return false
-        onAvatarSelected?.invoke()
+        onAvatarSelected?.invoke(clickAvatarProfile ?: CinerificProfile.Guest)
+        clickAvatarProfile = null
         return true
     }
 
@@ -226,23 +232,29 @@ internal class CinerificIntroView(context: Context) : View(context) {
         return bootProgressAt(bootStartMillis) >= 1f
     }
 
-    private fun isSettledAvatarHit(x: Float, y: Float): Boolean {
-        if (!isFinalFrameSettled() || width <= 0 || height <= 0) return false
+    private fun settledAvatarHitProfile(x: Float, y: Float): CinerificProfile? {
+        if (!isFinalFrameSettled() || width <= 0 || height <= 0) return null
 
         val stageScale = min(width / FIGMA_FRAME_WIDTH, height / FIGMA_FRAME_HEIGHT)
         val stageLeft = (width - FIGMA_FRAME_WIDTH * stageScale) / 2f
         val stageTop = (height - FIGMA_FRAME_HEIGHT * stageScale) / 2f
 
-        return FINAL_AVATAR_BOUNDS.any { bounds ->
+        return FINAL_AVATAR_TARGETS.firstOrNull { target ->
+            val bounds = target.bounds
             val centerX = stageLeft + (bounds.x + bounds.w / 2f) * stageScale
             val centerY = stageTop + (bounds.y + bounds.h / 2f) * stageScale
             val radius = min(bounds.w, bounds.h) * stageScale / 2f
             val dx = x - centerX
             val dy = y - centerY
             dx * dx + dy * dy <= radius * radius
-        }
+        }?.profile
     }
 }
+
+private data class AvatarTarget(
+    val profile: CinerificProfile,
+    val bounds: Bounds
+)
 
 private data class Bounds(
     val x: Float,

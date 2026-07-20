@@ -33,6 +33,7 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -55,6 +56,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
@@ -69,6 +72,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.prahlin.cinerific.R
 import kotlinx.coroutines.delay
+import kotlin.math.abs
 
 private const val DESTINATION_FRAME_WIDTH = 1194f
 private const val DESTINATION_TOP_BAR_TITLE_BOTTOM = 18f
@@ -79,12 +83,16 @@ private const val SETTINGS_CONTROL_HEIGHT = 75f
 private const val SETTINGS_CONTROL_RADIUS = 50f
 private const val SETTINGS_CONTROL_BORDER_WIDTH = 2f
 private const val SETTINGS_CONTROL_SHADOW = 2f
+private const val SETTINGS_SCREEN_HORIZONTAL_PADDING = 64f
+private const val SETTINGS_ROW_TEXT_WIDTH = 350f
+private const val SETTINGS_CONTROL_COLUMN_GAP = 64.5f
 private const val SETTINGS_SECTION_BACKGROUND_RADIUS = 22f
 private const val SETTINGS_SECTION_BOTTOM_PADDING = 42f
 private const val SETTINGS_SECTION_HEADER_HEIGHT = 58f
 private const val SETTINGS_SECTION_HEADER_RADIUS = 36f
 private const val SETTINGS_SECTION_HEADER_HORIZONTAL_PADDING = 54f
-private const val SETTINGS_SECTION_BODY_START_PADDING = 54f
+private const val SETTINGS_SECTION_HEADER_LEFT_BLEED = 24f
+private const val SETTINGS_SECTION_BODY_START_PADDING = 0f
 private const val SETTINGS_LANGUAGE_MENU_HEIGHT = 116f
 private const val SETTINGS_LANGUAGE_MENU_ROW_HEIGHT = 34f
 private const val SETTINGS_LANGUAGE_TEXT_SIZE = 21.6f
@@ -93,6 +101,21 @@ private const val SETTINGS_LANGUAGE_BUTTON_PADDING = 18f
 private const val SETTINGS_LANGUAGE_ARROW_WIDTH = 23.4f
 private const val SETTINGS_LANGUAGE_ARROW_HEIGHT = 27.020f
 private const val SETTINGS_LANGUAGE_ANIMATION_MS = 120
+private const val SETTINGS_SIGNED_IN_LEFT = 754f
+private const val SETTINGS_SIGNED_IN_TOP_AFTER_BAR = 48f
+private const val SETTINGS_SIGNED_IN_WIDTH = 200f
+private const val SETTINGS_SIGNED_IN_HEIGHT = 481f
+private const val SETTINGS_SIGNED_IN_PROFILE_SCALE = 0.9f
+private const val SETTINGS_SIGNED_IN_TITLE_TOP = -3f
+private const val SETTINGS_SIGNED_IN_TITLE_HEIGHT = 45f
+private const val SETTINGS_SIGNED_IN_NAME_GAP = 21.8f
+private const val SETTINGS_SIGNED_IN_AVATAR_TOP = SETTINGS_SIGNED_IN_TITLE_TOP +
+    SETTINGS_SIGNED_IN_TITLE_HEIGHT +
+    SETTINGS_SIGNED_IN_NAME_GAP * SETTINGS_SIGNED_IN_PROFILE_SCALE
+private const val SETTINGS_SIGNED_IN_AVATAR_SIZE = 200.2f
+private const val SETTINGS_SIGNED_IN_NAME_WIDTH = 200f
+private const val SETTINGS_SIGNED_IN_NAME_HEIGHT = 40f
+private const val SETTINGS_SIGNED_IN_SIGN_OUT_GAP = 50f
 
 private val DestinationTop = Color(0xFF080007)
 private val DestinationMid = Color(0xFF23001F)
@@ -104,6 +127,8 @@ private val SettingsLanguageOptions = listOf("English", "Spanish", "Mandarin")
 @Composable
 internal fun CinerificDestinationScreen(
     destination: CinerificDestination,
+    signedInProfile: CinerificProfile = CinerificProfile.Guest,
+    onSignOut: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     when (destination) {
@@ -122,7 +147,11 @@ internal fun CinerificDestinationScreen(
             modifier = modifier
         )
         CinerificDestination.Favorites -> CinerificFavoritesScreen(modifier = modifier)
-        CinerificDestination.Settings -> CinerificSettingsScreen(modifier = modifier)
+        CinerificDestination.Settings -> CinerificSettingsScreen(
+            signedInProfile = signedInProfile,
+            onSignOut = onSignOut,
+            modifier = modifier
+        )
         CinerificDestination.Home -> CinerificHomeScreen(modifier = modifier)
     }
 }
@@ -648,7 +677,11 @@ private fun DestinationProgramCard(
 }
 
 @Composable
-private fun CinerificSettingsScreen(modifier: Modifier = Modifier) {
+private fun CinerificSettingsScreen(
+    signedInProfile: CinerificProfile,
+    onSignOut: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     BoxWithConstraints(
         modifier = modifier
             .fillMaxSize()
@@ -656,18 +689,51 @@ private fun CinerificSettingsScreen(modifier: Modifier = Modifier) {
     ) {
         val scale = maxWidth.value / DESTINATION_FRAME_WIDTH
         val density = LocalDensity.current
-        val horizontalPadding = destinationDp(64f, scale)
+        val horizontalPadding = destinationDp(SETTINGS_SCREEN_HORIZONTAL_PADDING, scale)
         val rightPadding = destinationDp(160f, scale)
         val navScale = cinerificNavScale(maxWidth, maxHeight)
         val titleBottomPadding = destinationDp(DESTINATION_TOP_BAR_TITLE_BOTTOM, navScale)
         val statusBarTop = with(density) { WindowInsets.statusBars.getTop(this).toDp() }
         val topBarHeight = cinerificTopRailHeight(maxWidth, maxHeight, statusBarTop)
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
+        val settingsScrollState = rememberScrollState()
+        var bottomToggleCenterY by remember { mutableStateOf<Float?>(null) }
+        var signOutCenterY by remember { mutableStateOf<Float?>(null) }
+        var bottomAlignmentSpacerPx by remember { mutableStateOf(0f) }
+        var keepSettingsBottomPinned by remember { mutableStateOf(false) }
+        val bottomAlignmentSpacer = with(density) { bottomAlignmentSpacerPx.toDp() }
+
+        LaunchedEffect(
+            bottomToggleCenterY,
+            signOutCenterY,
+            settingsScrollState.value,
+            settingsScrollState.maxValue,
+            bottomAlignmentSpacerPx
+        ) {
+            val toggleCenterY = bottomToggleCenterY ?: return@LaunchedEffect
+            val buttonCenterY = signOutCenterY ?: return@LaunchedEffect
+            val toggleContentCenterY = toggleCenterY + settingsScrollState.value
+            val targetMaxScroll = toggleContentCenterY - buttonCenterY
+            val spacerAdjustment = targetMaxScroll - settingsScrollState.maxValue
+            val nextSpacer = (bottomAlignmentSpacerPx + spacerAdjustment).coerceAtLeast(0f)
+
+            if (abs(nextSpacer - bottomAlignmentSpacerPx) > 1f) {
+                keepSettingsBottomPinned = settingsScrollState.value >= settingsScrollState.maxValue - 2
+                bottomAlignmentSpacerPx = nextSpacer
+            }
+        }
+
+        LaunchedEffect(bottomAlignmentSpacerPx) {
+            if (!keepSettingsBottomPinned) return@LaunchedEffect
+            withFrameNanos { }
+            settingsScrollState.scrollTo(settingsScrollState.maxValue)
+            keepSettingsBottomPinned = false
+        }
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(settingsScrollState)
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(DestinationTop, DestinationMid, DestinationBottom)
@@ -677,7 +743,7 @@ private fun CinerificSettingsScreen(modifier: Modifier = Modifier) {
                     start = horizontalPadding,
                     top = topBarHeight,
                     end = rightPadding,
-                    bottom = 80.dp + bottomSystemPadding
+                    bottom = bottomSystemPadding
                 )
         ) {
             SettingsSection(
@@ -728,9 +794,24 @@ private fun CinerificSettingsScreen(modifier: Modifier = Modifier) {
                         detail = "Provides an extra level of security"
                     )
                 ),
-                scale = scale
+                scale = scale,
+                onLastToggleCenterMeasured = { bottomToggleCenterY = it }
             )
+            Spacer(modifier = Modifier.height(bottomAlignmentSpacer))
         }
+
+        SettingsSignedInColumn(
+            profile = signedInProfile,
+            scale = scale,
+            onSignOut = onSignOut,
+            onSignOutCenterMeasured = { signOutCenterY = it },
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .offset(
+                    x = destinationDp(SETTINGS_SIGNED_IN_LEFT, scale),
+                    y = topBarHeight + destinationDp(SETTINGS_SIGNED_IN_TOP_AFTER_BAR, scale)
+                )
+        )
 
         DestinationTopBar(
             title = "Settings",
@@ -915,7 +996,8 @@ private fun DestinationTopBar(
 private fun SettingsSection(
     title: String,
     rows: List<SettingsRowSpec>,
-    scale: Float
+    scale: Float,
+    onLastToggleCenterMeasured: ((Float) -> Unit)? = null
 ) {
     val sectionShape = RoundedCornerShape(destinationDp(SETTINGS_SECTION_BACKGROUND_RADIUS, scale))
 
@@ -946,7 +1028,7 @@ private fun SettingsSection(
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(modifier = Modifier.weight(1f)) {
+                Column(modifier = Modifier.width(destinationDp(SETTINGS_ROW_TEXT_WIDTH, scale))) {
                     Text(
                         text = row.label,
                         color = DestinationText,
@@ -963,12 +1045,137 @@ private fun SettingsSection(
                         modifier = Modifier.padding(top = 8.dp)
                     )
                 }
-                when (row.control) {
-                    SettingsControl.Toggle -> SettingsAnimatedToggle(label = row.label, scale = scale)
-                    SettingsControl.LanguageDropdown -> SettingsLanguageDropdown(scale = scale)
+                Spacer(modifier = Modifier.width(destinationDp(SETTINGS_CONTROL_COLUMN_GAP, scale)))
+                Box(
+                    modifier = Modifier.width(destinationDp(SETTINGS_CONTROL_WIDTH, scale)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    val toggleModifier = if (
+                        onLastToggleCenterMeasured != null &&
+                        index == rows.lastIndex &&
+                        row.control == SettingsControl.Toggle
+                    ) {
+                        Modifier.onGloballyPositioned { coordinates ->
+                            onLastToggleCenterMeasured(
+                                coordinates.positionInRoot().y + coordinates.size.height / 2f
+                            )
+                        }
+                    } else {
+                        Modifier
+                    }
+
+                    when (row.control) {
+                        SettingsControl.Toggle -> SettingsAnimatedToggle(
+                            label = row.label,
+                            scale = scale,
+                            modifier = toggleModifier
+                        )
+                        SettingsControl.LanguageDropdown -> SettingsLanguageDropdown(scale = scale)
+                    }
                 }
+                Spacer(modifier = Modifier.weight(1f))
             }
         }
+    }
+}
+
+@Composable
+private fun SettingsSignedInColumn(
+    profile: CinerificProfile,
+    scale: Float,
+    onSignOut: () -> Unit,
+    onSignOutCenterMeasured: (Float) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val avatarSize = SETTINGS_SIGNED_IN_AVATAR_SIZE * SETTINGS_SIGNED_IN_PROFILE_SCALE
+    val avatarLeft = (SETTINGS_SIGNED_IN_WIDTH - avatarSize) / 2f
+    val nameWidth = SETTINGS_SIGNED_IN_NAME_WIDTH * SETTINGS_SIGNED_IN_PROFILE_SCALE
+    val nameHeight = SETTINGS_SIGNED_IN_NAME_HEIGHT * SETTINGS_SIGNED_IN_PROFILE_SCALE
+    val nameLeft = (SETTINGS_SIGNED_IN_WIDTH - nameWidth) / 2f
+    val nameTop = SETTINGS_SIGNED_IN_AVATAR_TOP +
+        avatarSize +
+        SETTINGS_SIGNED_IN_NAME_GAP * SETTINGS_SIGNED_IN_PROFILE_SCALE
+    val signOutTop = nameTop + nameHeight + SETTINGS_SIGNED_IN_SIGN_OUT_GAP * SETTINGS_SIGNED_IN_PROFILE_SCALE
+
+    Box(
+        modifier = modifier
+            .width(destinationDp(SETTINGS_SIGNED_IN_WIDTH, scale))
+            .height(destinationDp(SETTINGS_SIGNED_IN_HEIGHT, scale))
+    ) {
+        Text(
+            text = "Signed in as",
+            color = DestinationText,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            lineHeight = 36.sp,
+            letterSpacing = 0.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .offset(x = destinationDp(29f, scale), y = destinationDp(SETTINGS_SIGNED_IN_TITLE_TOP, scale))
+                .width(destinationDp(142f, scale))
+                .height(destinationDp(SETTINGS_SIGNED_IN_TITLE_HEIGHT, scale))
+        )
+        Image(
+            painter = painterResource(profile.avatarResId),
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier
+                .offset(x = destinationDp(avatarLeft, scale), y = destinationDp(SETTINGS_SIGNED_IN_AVATAR_TOP, scale))
+                .size(destinationDp(avatarSize, scale))
+                .clip(CircleShape)
+        )
+        Image(
+            painter = painterResource(profile.nameResId),
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier
+                .offset(x = destinationDp(nameLeft, scale), y = destinationDp(nameTop, scale))
+                .width(destinationDp(nameWidth, scale))
+                .height(destinationDp(nameHeight, scale))
+        )
+        SettingsSignOutButton(
+            scale = scale,
+            onSignOut = onSignOut,
+            onCenterMeasured = onSignOutCenterMeasured,
+            modifier = Modifier.offset(x = destinationDp(25f, scale), y = destinationDp(signOutTop, scale))
+        )
+    }
+}
+
+@Composable
+private fun SettingsSignOutButton(
+    scale: Float,
+    onSignOut: () -> Unit,
+    onCenterMeasured: (Float) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .width(destinationDp(150f, scale))
+            .height(destinationDp(75f, scale))
+            .onGloballyPositioned { coordinates ->
+                onCenterMeasured(coordinates.positionInRoot().y + coordinates.size.height / 2f)
+            }
+            .clickable { onSignOut() },
+        contentAlignment = Alignment.TopStart
+    ) {
+        Image(
+            painter = painterResource(R.drawable.settings_sign_out_base),
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier.fillMaxSize()
+        )
+        Text(
+            text = "Sign out",
+            color = DestinationText,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            lineHeight = 36.sp,
+            letterSpacing = 0.sp,
+            textAlign = TextAlign.Center,
+            maxLines = 1,
+            modifier = Modifier.align(Alignment.Center)
+        )
     }
 }
 
@@ -981,11 +1188,15 @@ private fun SettingsSectionHeader(
 
     Box(
         modifier = Modifier
+            .offset(x = destinationDp(-(SETTINGS_SCREEN_HORIZONTAL_PADDING + SETTINGS_SECTION_HEADER_LEFT_BLEED), scale))
             .height(destinationDp(SETTINGS_SECTION_HEADER_HEIGHT, scale))
             .clip(shape)
             .background(Color(0xFF303030).copy(alpha = 0.96f), shape)
-            .padding(horizontal = destinationDp(SETTINGS_SECTION_HEADER_HORIZONTAL_PADDING, scale)),
-        contentAlignment = Alignment.Center
+            .padding(
+                start = destinationDp(SETTINGS_SCREEN_HORIZONTAL_PADDING + SETTINGS_SECTION_HEADER_LEFT_BLEED, scale),
+                end = destinationDp(SETTINGS_SECTION_HEADER_HORIZONTAL_PADDING, scale)
+            ),
+        contentAlignment = Alignment.CenterStart
     ) {
         Text(
             text = title,
@@ -1000,7 +1211,8 @@ private fun SettingsSectionHeader(
 @Composable
 private fun SettingsAnimatedToggle(
     label: String,
-    scale: Float
+    scale: Float,
+    modifier: Modifier = Modifier
 ) {
     var checked by rememberSaveable(label) { mutableStateOf(false) }
     val shape = RoundedCornerShape(destinationDp(SETTINGS_CONTROL_RADIUS, scale))
@@ -1038,7 +1250,7 @@ private fun SettingsAnimatedToggle(
     )
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .width(destinationDp(SETTINGS_CONTROL_WIDTH, scale))
             .height(destinationDp(SETTINGS_CONTROL_HEIGHT, scale))
             .shadow(destinationDp(SETTINGS_CONTROL_SHADOW, scale), shape, clip = false)

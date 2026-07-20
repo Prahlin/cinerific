@@ -76,21 +76,34 @@ private val ColorIntroGradientBottom = Color(0xFF100102)
 @Composable
 fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
     var showHome by remember(bootStartMillis) { mutableStateOf(false) }
+    var signedInProfile by remember(bootStartMillis) { mutableStateOf(CinerificProfile.Guest) }
 
     if (showHome) {
-        CinerificMainExperience()
+        CinerificMainExperience(
+            signedInProfile = signedInProfile,
+            onSignOut = {
+                signedInProfile = CinerificProfile.Guest
+                showHome = false
+            }
+        )
     } else {
         AndroidView(
             modifier = Modifier.fillMaxSize(),
             factory = { context ->
                 CinerificIntroView(context).apply {
                     this.bootStartMillis = bootStartMillis
-                    onAvatarSelected = { showHome = true }
+                    onAvatarSelected = { profile ->
+                        signedInProfile = profile
+                        showHome = true
+                    }
                 }
             },
             update = { view ->
                 view.bootStartMillis = bootStartMillis
-                view.onAvatarSelected = { showHome = true }
+                view.onAvatarSelected = { profile ->
+                    signedInProfile = profile
+                    showHome = true
+                }
             }
         )
     }
@@ -104,8 +117,21 @@ internal enum class CinerificDestination {
     Settings
 }
 
+internal enum class CinerificProfile(
+    @DrawableRes val avatarResId: Int,
+    @DrawableRes val nameResId: Int
+) {
+    Steve(R.drawable.steve_avatar, R.drawable.steve_name),
+    Martin(R.drawable.martin_avatar, R.drawable.martin_name),
+    Janny(R.drawable.janny_avatar, R.drawable.janny_name),
+    Guest(R.drawable.guest_avatar, R.drawable.guest_name)
+}
+
 @Composable
-private fun CinerificMainExperience() {
+private fun CinerificMainExperience(
+    signedInProfile: CinerificProfile,
+    onSignOut: () -> Unit
+) {
     var destination by remember { mutableStateOf(CinerificDestination.Home) }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -116,6 +142,8 @@ private fun CinerificMainExperience() {
             CinerificDestination.Favorites,
             CinerificDestination.Settings -> CinerificDestinationScreen(
                 destination = destination,
+                signedInProfile = signedInProfile,
+                onSignOut = onSignOut,
                 modifier = Modifier.fillMaxSize()
             )
         }
