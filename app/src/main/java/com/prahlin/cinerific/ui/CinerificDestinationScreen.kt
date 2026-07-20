@@ -136,6 +136,8 @@ internal fun CinerificDestinationScreen(
     signedInProfile: CinerificProfile = CinerificProfile.Guest,
     selectedLanguage: CinerificLanguage = CinerificLanguage.English,
     onLanguageSelected: (CinerificLanguage) -> Unit = {},
+    autoLogoutEnabled: Boolean = false,
+    onAutoLogoutEnabledChange: (Boolean) -> Unit = {},
     onSignOut: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -161,6 +163,8 @@ internal fun CinerificDestinationScreen(
             signedInProfile = signedInProfile,
             selectedLanguage = selectedLanguage,
             onLanguageSelected = onLanguageSelected,
+            autoLogoutEnabled = autoLogoutEnabled,
+            onAutoLogoutEnabledChange = onAutoLogoutEnabledChange,
             onSignOut = onSignOut,
             modifier = modifier
         )
@@ -705,6 +709,8 @@ private fun CinerificSettingsScreen(
     signedInProfile: CinerificProfile,
     selectedLanguage: CinerificLanguage,
     onLanguageSelected: (CinerificLanguage) -> Unit,
+    autoLogoutEnabled: Boolean,
+    onAutoLogoutEnabledChange: (Boolean) -> Unit,
     onSignOut: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -834,7 +840,9 @@ private fun CinerificSettingsScreen(
                 rows = listOf(
                     SettingsRowSpec(
                         labelResId = R.string.settings_auto_log_out,
-                        detailResId = R.string.settings_auto_log_out_detail
+                        detailResId = R.string.settings_auto_log_out_detail,
+                        checked = autoLogoutEnabled,
+                        onCheckedChange = onAutoLogoutEnabledChange
                     ),
                     SettingsRowSpec(
                         labelResId = R.string.settings_two_factor_authentication,
@@ -1119,6 +1127,8 @@ private fun SettingsSection(
                         SettingsControl.Toggle -> SettingsAnimatedToggle(
                             stateKey = row.labelResId,
                             scale = scale,
+                            checked = row.checked,
+                            onCheckedChange = row.onCheckedChange,
                             modifier = toggleModifier
                         )
                         SettingsControl.LanguageDropdown -> SettingsLanguageDropdown(
@@ -1270,9 +1280,12 @@ private fun SettingsSectionHeader(
 private fun SettingsAnimatedToggle(
     @StringRes stateKey: Int,
     scale: Float,
+    checked: Boolean? = null,
+    onCheckedChange: ((Boolean) -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
-    var checked by rememberSaveable(stateKey) { mutableStateOf(false) }
+    var localChecked by rememberSaveable(stateKey) { mutableStateOf(false) }
+    val isChecked = checked ?: localChecked
     val shape = RoundedCornerShape(destinationDp(SETTINGS_CONTROL_RADIUS, scale))
     val interactionSource = remember { MutableInteractionSource() }
     val trackFill by animateColorAsState(
@@ -1281,17 +1294,17 @@ private fun SettingsAnimatedToggle(
         label = "settings-toggle-track"
     )
     val knobInner by animateColorAsState(
-        targetValue = if (checked) Color(0xFFD9D9D9) else Color(0xFF858585),
+        targetValue = if (isChecked) Color(0xFFD9D9D9) else Color(0xFF858585),
         animationSpec = tween(durationMillis = 170),
         label = "settings-toggle-knob-inner"
     )
     val knobOuter by animateColorAsState(
-        targetValue = if (checked) Color(0xFF858585) else Color(0xFF303030),
+        targetValue = if (isChecked) Color(0xFF858585) else Color(0xFF303030),
         animationSpec = tween(durationMillis = 170),
         label = "settings-toggle-knob-outer"
     )
     val knobOffset by animateDpAsState(
-        targetValue = destinationDp(if (checked) 82f else 14f, scale),
+        targetValue = destinationDp(if (isChecked) 82f else 14f, scale),
         animationSpec = spring(
             dampingRatio = Spring.DampingRatioMediumBouncy,
             stiffness = Spring.StiffnessMedium
@@ -1299,7 +1312,7 @@ private fun SettingsAnimatedToggle(
         label = "settings-toggle-knob-x"
     )
     val knobSize by animateDpAsState(
-        targetValue = destinationDp(if (checked) 61f else 47f, scale),
+        targetValue = destinationDp(if (isChecked) 61f else 47f, scale),
         animationSpec = spring(
             dampingRatio = Spring.DampingRatioMediumBouncy,
             stiffness = Spring.StiffnessMedium
@@ -1316,8 +1329,13 @@ private fun SettingsAnimatedToggle(
             .background(trackFill)
             .border(destinationDp(SETTINGS_CONTROL_BORDER_WIDTH, scale), Color.Black, shape)
             .toggleable(
-                value = checked,
-                onValueChange = { checked = it },
+                value = isChecked,
+                onValueChange = { nextChecked ->
+                    if (checked == null) {
+                        localChecked = nextChecked
+                    }
+                    onCheckedChange?.invoke(nextChecked)
+                },
                 role = Role.Switch,
                 interactionSource = interactionSource,
                 indication = null
@@ -1545,7 +1563,9 @@ private fun SettingsLanguageRadio(
 private data class SettingsRowSpec(
     @StringRes val labelResId: Int,
     @StringRes val detailResId: Int,
-    val control: SettingsControl = SettingsControl.Toggle
+    val control: SettingsControl = SettingsControl.Toggle,
+    val checked: Boolean? = null,
+    val onCheckedChange: ((Boolean) -> Unit)? = null
 )
 
 private enum class SettingsControl {

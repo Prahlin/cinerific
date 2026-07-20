@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -43,6 +44,8 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.lerp as lerpColor
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalContext
@@ -52,6 +55,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.viewinterop.AndroidView
 import com.prahlin.cinerific.R
+import kotlinx.coroutines.delay
 import kotlin.math.PI
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -65,6 +69,7 @@ private const val LOGO_ENTRY_END_MS = 1687
 private const val FINAL_SETTLE_START_MS = LOGO_ENTRY_END_MS
 private const val FINAL_SETTLE_END_MS = 4812
 private const val BOOT_ANIMATION_MS = FINAL_SETTLE_END_MS
+private const val AUTO_LOGOUT_TIMEOUT_MS = 10_000L
 
 private val ColorFrame1Background = Color(0xFF000000)
 private val ColorFrame2Background = Color(0xFF62070D)
@@ -141,28 +146,74 @@ private fun CinerificMainExperience(
     onSignOut: () -> Unit
 ) {
     var destination by remember { mutableStateOf(CinerificDestination.Home) }
+    var autoLogoutEnabled by rememberSaveable { mutableStateOf(false) }
+    var userInitiatedPlaybackActive by remember { mutableStateOf(false) }
+    var lastInteractionMillis by remember { mutableStateOf(SystemClock.uptimeMillis()) }
+    val playbackSessionController = remember(userInitiatedPlaybackActive) {
+        CinerificPlaybackSessionController(
+            isUserInitiatedPlaybackActive = userInitiatedPlaybackActive,
+            onUserInitiatedPlaybackStarted = {
+                userInitiatedPlaybackActive = true
+            },
+            finishUserInitiatedPlayback = {
+                userInitiatedPlaybackActive = false
+                lastInteractionMillis = SystemClock.uptimeMillis()
+            }
+        )
+    }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        when (destination) {
-            CinerificDestination.Home -> CinerificHomeScreen(modifier = Modifier.fillMaxSize())
-            CinerificDestination.Movies,
-            CinerificDestination.Shows,
-            CinerificDestination.Favorites,
-            CinerificDestination.Settings -> CinerificDestinationScreen(
-                destination = destination,
-                signedInProfile = signedInProfile,
-                selectedLanguage = selectedLanguage,
-                onLanguageSelected = onLanguageSelected,
-                onSignOut = onSignOut,
+    LaunchedEffect(autoLogoutEnabled, userInitiatedPlaybackActive, lastInteractionMillis) {
+        if (!autoLogoutEnabled || userInitiatedPlaybackActive) return@LaunchedEffect
+        delay(AUTO_LOGOUT_TIMEOUT_MS)
+        val inactiveForMillis = SystemClock.uptimeMillis() - lastInteractionMillis
+        if (
+            autoLogoutEnabled &&
+            !userInitiatedPlaybackActive &&
+            inactiveForMillis >= AUTO_LOGOUT_TIMEOUT_MS
+        ) {
+            onSignOut()
+        }
+    }
+
+    CompositionLocalProvider(LocalCinerificPlaybackSessionController provides playbackSessionController) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .pointerInput(Unit) {
+                    awaitPointerEventScope {
+                        while (true) {
+                            awaitPointerEvent(PointerEventPass.Initial)
+                            lastInteractionMillis = SystemClock.uptimeMillis()
+                        }
+                    }
+                }
+        ) {
+            when (destination) {
+                CinerificDestination.Home -> CinerificHomeScreen(modifier = Modifier.fillMaxSize())
+                CinerificDestination.Movies,
+                CinerificDestination.Shows,
+                CinerificDestination.Favorites,
+                CinerificDestination.Settings -> CinerificDestinationScreen(
+                    destination = destination,
+                    signedInProfile = signedInProfile,
+                    selectedLanguage = selectedLanguage,
+                    onLanguageSelected = onLanguageSelected,
+                    autoLogoutEnabled = autoLogoutEnabled,
+                    onAutoLogoutEnabledChange = { enabled ->
+                        autoLogoutEnabled = enabled
+                        lastInteractionMillis = SystemClock.uptimeMillis()
+                    },
+                    onSignOut = onSignOut,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+
+            CinerificRightSideNavBar(
+                currentDestination = destination,
+                onDestinationSelected = { destination = it },
                 modifier = Modifier.fillMaxSize()
             )
         }
-
-        CinerificRightSideNavBar(
-            currentDestination = destination,
-            onDestinationSelected = { destination = it },
-            modifier = Modifier.fillMaxSize()
-        )
     }
 }
 
