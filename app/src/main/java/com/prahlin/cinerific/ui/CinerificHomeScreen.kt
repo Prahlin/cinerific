@@ -70,7 +70,7 @@ private val HomeText = Color(0xFFE7E7E7)
 
 @Composable
 internal fun CinerificHomeScreen(
-    onSinkOrSwimSelected: () -> Unit = {},
+    onProgramSelected: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BoxWithConstraints(
@@ -107,7 +107,7 @@ internal fun CinerificHomeScreen(
                 HomeProgramRow(
                     title = stringResource(row.titleResId),
                     cardIds = row.cardIds,
-                    onSinkOrSwimSelected = onSinkOrSwimSelected,
+                    onProgramSelected = onProgramSelected,
                     horizontalPadding = horizontalPadding,
                     cardWidth = cardWidth,
                     cardHeight = cardHeight,
@@ -155,7 +155,7 @@ private fun HeroReelVideo(modifier: Modifier = Modifier) {
 private fun HomeProgramRow(
     title: String,
     @DrawableRes cardIds: List<Int>,
-    onSinkOrSwimSelected: () -> Unit,
+    onProgramSelected: (String) -> Unit,
     horizontalPadding: Dp,
     cardWidth: Dp,
     cardHeight: Dp,
@@ -198,14 +198,13 @@ private fun HomeProgramRow(
             horizontalArrangement = Arrangement.spacedBy(cardGap)
         ) {
             cardIds.forEach { cardId ->
+                val programTitle = homeProgramTitleForCard(cardId)
                 ProgramCard(
                     drawableId = cardId,
                     width = cardWidth,
                     height = cardHeight,
-                    onClick = if (cardId == R.drawable.home_crime_03) {
-                        onSinkOrSwimSelected
-                    } else {
-                        null
+                    onClick = programTitle?.let { title ->
+                        { onProgramSelected(title) }
                     }
                 )
             }
@@ -388,73 +387,110 @@ private data class HomeProgramRowSpec(
     @DrawableRes val cardIds: List<Int>
 )
 
+private fun homeProgramTitleForCard(@DrawableRes cardId: Int): String? = when (cardId) {
+    R.drawable.one_last_breath_card -> "One Last Breath"
+    R.drawable.sink_or_swim_card -> "Sink or Swim"
+    R.drawable.troublemaker_card -> "Troublemaker"
+    R.drawable.ignition_card -> "Ignition"
+    R.drawable.the_baller_card -> "The Baller"
+    R.drawable.eruption_card -> "Eruption"
+    R.drawable.under_attack_card -> "Under Attack"
+    R.drawable.if_i_may_card -> "If I May"
+    R.drawable.the_playmate_card -> "The Playmate"
+    R.drawable.help_card -> "Help"
+    R.drawable.no_trespassing_card -> "No Trespassing"
+    R.drawable.hungry_heart_card -> "Hungry Heart"
+    R.drawable.enlightenment_card -> "Enlightenment"
+    R.drawable.deadbeat_card -> "Deadbeat"
+    R.drawable.playing_with_fire_card -> "Playing with Fire"
+    R.drawable.citric_card -> "Citric"
+    R.drawable.laughing_matters_card -> "Laughing Matters"
+    R.drawable.lost_in_time_card -> "Lost in Time"
+    R.drawable.operation_firefly_card -> "Operation Firefly"
+    R.drawable.smoke_card -> "Smoke"
+    R.drawable.joyriders_card -> "Joyriders"
+    R.drawable.breathing_card -> "Breathing"
+    R.drawable.falling_behind_card -> "Falling Behind"
+    R.drawable.still_there_card -> "Still There"
+    R.drawable.moments_card -> "Moments"
+    R.drawable.chasing_light_card -> "Chasing Light"
+    R.drawable.incan_descent_card -> "Incan Descent"
+    R.drawable.or_not_to_be_card -> "Or Not To Be"
+    R.drawable.surfside_card -> "Surfside"
+    R.drawable.wheels_card -> "Wheels"
+    R.drawable.light_as_a_feather_card -> "Light as a Feather"
+    R.drawable.skin_and_bones_card -> "Skin and Bones"
+    R.drawable.the_appetizer_card -> "The Appetizer"
+    else -> null
+}
+
 private val HomeProgramRows = listOf(
     HomeProgramRowSpec(
         titleResId = R.string.home_row_crime,
         cardIds = listOf(
-            R.drawable.home_crime_01,
-            R.drawable.home_crime_02,
-            R.drawable.home_crime_03,
-            R.drawable.home_crime_04
+            R.drawable.no_trespassing_card,
+            R.drawable.one_last_breath_card,
+            R.drawable.sink_or_swim_card,
+            R.drawable.hungry_heart_card
         )
     ),
     HomeProgramRowSpec(
         titleResId = R.string.home_row_thriller,
         cardIds = listOf(
-            R.drawable.home_thriller_01,
-            R.drawable.home_thriller_02,
-            R.drawable.home_thriller_03,
-            R.drawable.home_thriller_04
+            R.drawable.enlightenment_card,
+            R.drawable.ignition_card,
+            R.drawable.deadbeat_card,
+            R.drawable.playing_with_fire_card
         )
     ),
     HomeProgramRowSpec(
         titleResId = R.string.home_row_comedy,
         cardIds = listOf(
-            R.drawable.home_comedy_01,
-            R.drawable.home_comedy_02,
-            R.drawable.home_comedy_03,
-            R.drawable.home_comedy_04,
-            R.drawable.home_comedy_05
+            R.drawable.citric_card,
+            R.drawable.troublemaker_card,
+            R.drawable.laughing_matters_card,
+            R.drawable.lost_in_time_card,
+            R.drawable.the_baller_card
         )
     ),
     HomeProgramRowSpec(
         titleResId = R.string.home_row_action,
         cardIds = listOf(
-            R.drawable.home_action_01,
-            R.drawable.home_action_02,
-            R.drawable.home_action_03,
-            R.drawable.home_action_04,
-            R.drawable.home_action_05
+            R.drawable.eruption_card,
+            R.drawable.under_attack_card,
+            R.drawable.operation_firefly_card,
+            R.drawable.smoke_card,
+            R.drawable.joyriders_card
         )
     ),
     HomeProgramRowSpec(
         titleResId = R.string.home_row_drama,
         cardIds = listOf(
-            R.drawable.home_drama_01,
-            R.drawable.home_drama_02,
-            R.drawable.home_drama_03,
-            R.drawable.home_drama_04,
-            R.drawable.home_drama_05,
-            R.drawable.home_drama_06
+            R.drawable.breathing_card,
+            R.drawable.falling_behind_card,
+            R.drawable.still_there_card,
+            R.drawable.if_i_may_card,
+            R.drawable.moments_card,
+            R.drawable.chasing_light_card
         )
     ),
     HomeProgramRowSpec(
         titleResId = R.string.home_row_documentary,
         cardIds = listOf(
-            R.drawable.home_documentary_01,
-            R.drawable.home_documentary_02,
-            R.drawable.home_documentary_03,
-            R.drawable.home_documentary_04,
-            R.drawable.home_documentary_05
+            R.drawable.incan_descent_card,
+            R.drawable.or_not_to_be_card,
+            R.drawable.surfside_card,
+            R.drawable.wheels_card,
+            R.drawable.light_as_a_feather_card
         )
     ),
     HomeProgramRowSpec(
         titleResId = R.string.home_row_horror,
         cardIds = listOf(
-            R.drawable.home_horror_01,
-            R.drawable.home_horror_02,
-            R.drawable.home_horror_03,
-            R.drawable.home_horror_04
+            R.drawable.the_playmate_card,
+            R.drawable.help_card,
+            R.drawable.skin_and_bones_card,
+            R.drawable.the_appetizer_card
         )
     )
 )

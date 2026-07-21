@@ -146,7 +146,7 @@ internal fun CinerificDestinationScreen(
     autoLogoutEnabled: Boolean = false,
     onAutoLogoutEnabledChange: (Boolean) -> Unit = {},
     onSignOut: () -> Unit = {},
-    onSinkOrSwimSelected: () -> Unit = {},
+    onProgramSelected: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     when (destination) {
@@ -156,7 +156,7 @@ internal fun CinerificDestinationScreen(
             rows = MovieRows,
             showViewportNav = true,
             isShows = false,
-            onSinkOrSwimSelected = onSinkOrSwimSelected,
+            onProgramSelected = onProgramSelected,
             modifier = modifier
         )
         CinerificDestination.Shows -> CinerificCatalogScreen(
@@ -165,7 +165,7 @@ internal fun CinerificDestinationScreen(
             rows = ShowRows,
             showViewportNav = true,
             isShows = true,
-            onSinkOrSwimSelected = onSinkOrSwimSelected,
+            onProgramSelected = onProgramSelected,
             modifier = modifier
         )
         CinerificDestination.Favorites -> CinerificFavoritesScreen(modifier = modifier)
@@ -179,10 +179,14 @@ internal fun CinerificDestinationScreen(
             modifier = modifier
         )
         CinerificDestination.Home -> CinerificHomeScreen(
-            onSinkOrSwimSelected = onSinkOrSwimSelected,
+            onProgramSelected = onProgramSelected,
             modifier = modifier
         )
-        CinerificDestination.SinkOrSwimDetails -> CinerificSinkOrSwimScreen(modifier = modifier)
+        CinerificDestination.ProgramDetails -> CinerificProgramDetailsScreen(
+            programTitle = SINK_OR_SWIM_TITLE,
+            onProgramSelected = onProgramSelected,
+            modifier = modifier
+        )
     }
 }
 
@@ -193,7 +197,7 @@ private fun CinerificCatalogScreen(
     @StringRes descriptionResId: Int,
     showViewportNav: Boolean,
     isShows: Boolean,
-    onSinkOrSwimSelected: () -> Unit,
+    onProgramSelected: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     BoxWithConstraints(
@@ -267,7 +271,7 @@ private fun CinerificCatalogScreen(
                             cardHeight = cardHeight,
                             cardGap = cardGap,
                             columnCount = contentColumnCount,
-                            onSinkOrSwimSelected = onSinkOrSwimSelected,
+                            onProgramSelected = onProgramSelected,
                             topPadding = destinationSectionTopPadding(index = index, showViewportNav = showViewportNav)
                         )
                     }
@@ -280,7 +284,7 @@ private fun CinerificCatalogScreen(
                             horizontalPadding = horizontalPadding,
                             rightPadding = rightPadding,
                             scale = scale,
-                            onSinkOrSwimSelected = onSinkOrSwimSelected,
+                            onProgramSelected = onProgramSelected,
                             topPadding = destinationSectionTopPadding(index = index, showViewportNav = showViewportNav)
                         )
                     }
@@ -293,7 +297,7 @@ private fun CinerificCatalogScreen(
                             horizontalPadding = horizontalPadding,
                             rightPadding = rightPadding,
                             scale = scale,
-                            onSinkOrSwimSelected = onSinkOrSwimSelected,
+                            onProgramSelected = onProgramSelected,
                             topPadding = destinationSectionTopPadding(index = index, showViewportNav = showViewportNav)
                         )
                     }
@@ -363,7 +367,7 @@ private fun DestinationProgramRow(
     cardHeight: Dp,
     cardGap: Dp,
     columnCount: Int,
-    onSinkOrSwimSelected: () -> Unit,
+    onProgramSelected: (String) -> Unit,
     topPadding: Dp
 ) {
     Column(
@@ -391,7 +395,7 @@ private fun DestinationProgramRow(
                             program = program,
                             width = cardWidth,
                             height = cardHeight,
-                            onSinkOrSwimSelected = onSinkOrSwimSelected
+                            onProgramSelected = onProgramSelected
                         )
                     }
                 }
@@ -423,7 +427,7 @@ private fun DestinationProgramSmallCollage(
     horizontalPadding: Dp,
     rightPadding: Dp,
     scale: Float,
-    onSinkOrSwimSelected: () -> Unit,
+    onProgramSelected: (String) -> Unit,
     topPadding: Dp
 ) {
     val itemWidth = destinationDp(200f, scale)
@@ -458,7 +462,7 @@ private fun DestinationProgramSmallCollage(
                             width = itemWidth,
                             cardHeight = cardHeight,
                             scale = scale,
-                            onSinkOrSwimSelected = onSinkOrSwimSelected
+                            onProgramSelected = onProgramSelected
                         )
                     }
                 }
@@ -473,7 +477,7 @@ private fun DestinationSmallCollageCard(
     width: Dp,
     cardHeight: Dp,
     scale: Float,
-    onSinkOrSwimSelected: () -> Unit
+    onProgramSelected: (String) -> Unit
 ) {
     val shape = RoundedCornerShape(destinationDp(30f, scale))
     val title = stringResource(program.titleResId)
@@ -489,8 +493,8 @@ private fun DestinationSmallCollageCard(
                 .height(cardHeight)
                 .shadow(destinationDp(14f, scale), shape, clip = false)
                 .clip(shape)
-                .clickable(enabled = program.isSinkOrSwim) {
-                    onSinkOrSwimSelected()
+                .clickable(enabled = program.hasDetailHero) {
+                    onProgramSelected(program.title)
                 }
                 .background(Color.Black)
                 .border(destinationDp(0.63f, scale), Color.Black, shape)
@@ -524,7 +528,7 @@ private fun DestinationProgramList(
     horizontalPadding: Dp,
     rightPadding: Dp,
     scale: Float,
-    onSinkOrSwimSelected: () -> Unit,
+    onProgramSelected: (String) -> Unit,
     topPadding: Dp
 ) {
     Column(
@@ -549,7 +553,7 @@ private fun DestinationProgramList(
                 DestinationProgramListItem(
                     program = program,
                     scale = scale,
-                    onSinkOrSwimSelected = onSinkOrSwimSelected
+                    onProgramSelected = onProgramSelected
                 )
             }
         }
@@ -560,7 +564,7 @@ private fun DestinationProgramList(
 private fun DestinationProgramListItem(
     program: DestinationProgramSpec,
     scale: Float,
-    onSinkOrSwimSelected: () -> Unit
+    onProgramSelected: (String) -> Unit
 ) {
     val imageShape = RoundedCornerShape(destinationDp(15f, scale))
     val title = stringResource(program.titleResId)
@@ -576,8 +580,8 @@ private fun DestinationProgramListItem(
         modifier = Modifier
             .fillMaxWidth()
             .height(destinationDp(237f, scale))
-            .clickable(enabled = program.isSinkOrSwim) {
-                onSinkOrSwimSelected()
+            .clickable(enabled = program.hasDetailHero) {
+                onProgramSelected(program.title)
             },
         verticalAlignment = Alignment.Top
     ) {
@@ -717,7 +721,7 @@ private fun DestinationProgramCard(
     program: DestinationProgramSpec,
     width: Dp,
     height: Dp,
-    onSinkOrSwimSelected: () -> Unit
+    onProgramSelected: (String) -> Unit
 ) {
     val shape = RoundedCornerShape(22.dp)
     Box(
@@ -726,8 +730,8 @@ private fun DestinationProgramCard(
             .height(height)
             .shadow(12.dp, shape, clip = false)
             .clip(shape)
-            .clickable(enabled = program.isSinkOrSwim) {
-                onSinkOrSwimSelected()
+            .clickable(enabled = program.hasDetailHero) {
+                onProgramSelected(program.title)
             }
             .background(Color.Black)
     ) {
@@ -741,7 +745,11 @@ private fun DestinationProgramCard(
 }
 
 @Composable
-internal fun CinerificSinkOrSwimScreen(modifier: Modifier = Modifier) {
+internal fun CinerificProgramDetailsScreen(
+    programTitle: String,
+    onProgramSelected: (String) -> Unit = {},
+    modifier: Modifier = Modifier
+) {
     BoxWithConstraints(
         modifier = modifier
             .fillMaxSize()
@@ -751,17 +759,19 @@ internal fun CinerificSinkOrSwimScreen(modifier: Modifier = Modifier) {
         val density = LocalDensity.current
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
         val heroHeight = maxHeight - bottomSystemPadding
-        val title = stringResource(R.string.program_sink_or_swim)
+        val program = detailProgramSpec(programTitle) ?: detailProgramSpec(SINK_OR_SWIM_TITLE)!!
+        val title = stringResource(program.titleResId)
         val details = programDetails(
-            title = SINK_OR_SWIM_TITLE,
-            genre = ViewportGenre.Crime,
-            isShow = false
+            title = program.title,
+            genre = program.genre,
+            isShow = program.isShow
         )
-        val genre = stringResource(ViewportGenre.Crime.displayNameResId)
+        val genre = stringResource((details.genreLabel ?: program.genre).displayNameResId)
         val synopsis = details.synopsisResId?.let { stringResource(it) }.orEmpty()
-        var revealCard by remember { mutableStateOf(false) }
+        val heroDrawableId = detailHeroDrawableId(program.title) ?: program.drawableId
+        var revealCard by remember(program.title) { mutableStateOf(false) }
 
-        LaunchedEffect(Unit) {
+        LaunchedEffect(program.title) {
             delay(DETAIL_CARD_REVEAL_DELAY_MS)
             revealCard = true
         }
@@ -772,7 +782,7 @@ internal fun CinerificSinkOrSwimScreen(modifier: Modifier = Modifier) {
                 durationMillis = DETAIL_CARD_REVEAL_ANIMATION_MS,
                 easing = FastOutSlowInEasing
             ),
-            label = "sink-or-swim-card-reveal"
+            label = "program-card-reveal"
         )
 
         Column(
@@ -781,9 +791,11 @@ internal fun CinerificSinkOrSwimScreen(modifier: Modifier = Modifier) {
                 .verticalScroll(rememberScrollState())
                 .background(DestinationBottom)
         ) {
-            SinkOrSwimRevealImage(
+            ProgramDetailRevealImage(
                 revealProgress = cardReveal,
-                height = heroHeight
+                height = heroHeight,
+                heroDrawableId = heroDrawableId,
+                contentDescription = title
             )
             SinkOrSwimInfoPanel(
                 title = title,
@@ -796,16 +808,21 @@ internal fun CinerificSinkOrSwimScreen(modifier: Modifier = Modifier) {
                 rating = details.rating,
                 scale = scale
             )
-            SinkOrSwimLibraryRows(scale = scale)
+            SinkOrSwimLibraryRows(
+                scale = scale,
+                onProgramSelected = onProgramSelected
+            )
             Spacer(modifier = Modifier.height(bottomSystemPadding + destinationDp(72f, scale)))
         }
     }
 }
 
 @Composable
-private fun SinkOrSwimRevealImage(
+private fun ProgramDetailRevealImage(
     revealProgress: Float,
-    height: Dp
+    height: Dp,
+    @DrawableRes heroDrawableId: Int,
+    contentDescription: String
 ) {
     Box(
         modifier = Modifier
@@ -814,8 +831,8 @@ private fun SinkOrSwimRevealImage(
             .background(Color.Black)
     ) {
         Image(
-            painter = painterResource(R.drawable.sink_or_swim_hero),
-            contentDescription = stringResource(R.string.program_sink_or_swim),
+            painter = painterResource(heroDrawableId),
+            contentDescription = contentDescription,
             modifier = Modifier
                 .fillMaxSize()
                 .graphicsLayer {
@@ -832,7 +849,10 @@ private fun SinkOrSwimRevealImage(
 }
 
 @Composable
-private fun SinkOrSwimLibraryRows(scale: Float) {
+private fun SinkOrSwimLibraryRows(
+    scale: Float,
+    onProgramSelected: (String) -> Unit
+) {
     val horizontalPadding = destinationDp(50f, scale)
     val cardWidth = destinationDp(350f, scale) * DESTINATION_CARD_SCALE
     val cardHeight = cardWidth / DESTINATION_CARD_ASPECT
@@ -886,7 +906,8 @@ private fun SinkOrSwimLibraryRows(scale: Float) {
                     SinkOrSwimLibraryCard(
                         program = program,
                         width = cardWidth,
-                        height = cardHeight
+                        height = cardHeight,
+                        onProgramSelected = onProgramSelected
                     )
                 }
             }
@@ -898,7 +919,8 @@ private fun SinkOrSwimLibraryRows(scale: Float) {
 private fun SinkOrSwimLibraryCard(
     program: DestinationProgramSpec,
     width: Dp,
-    height: Dp
+    height: Dp,
+    onProgramSelected: (String) -> Unit
 ) {
     val shape = RoundedCornerShape(22.dp)
     Box(
@@ -907,6 +929,9 @@ private fun SinkOrSwimLibraryCard(
             .height(height)
             .shadow(12.dp, shape, clip = false)
             .clip(shape)
+            .clickable(enabled = program.hasDetailHero) {
+                onProgramSelected(program.title)
+            }
             .background(Color.Black)
     ) {
         Image(
@@ -1968,8 +1993,8 @@ private data class DestinationProgramSpec(
     val rating: Int
 )
 
-private val DestinationProgramSpec.isSinkOrSwim: Boolean
-    get() = title == SINK_OR_SWIM_TITLE
+private val DestinationProgramSpec.hasDetailHero: Boolean
+    get() = detailHeroDrawableId(title) != null
 
 private data class ProgramDetails(
     val year: String,
@@ -2114,75 +2139,75 @@ private val MovieRows = listOf(
         titleResId = R.string.row_action_movies,
         genre = ViewportGenre.Action,
         programs = listOf(
-            movie("Eruption", ViewportGenre.Action, R.drawable.home_action_01),
-            movie("Under Attack", ViewportGenre.Action, R.drawable.home_action_02),
-            movie("Operation Firefly", ViewportGenre.Action, R.drawable.home_action_03),
-            movie("Smoke", ViewportGenre.Action, R.drawable.home_action_04),
-            movie("Joyriders", ViewportGenre.Action, R.drawable.home_action_05)
+            movie("Eruption", ViewportGenre.Action, R.drawable.eruption_card),
+            movie("Under Attack", ViewportGenre.Action, R.drawable.under_attack_card),
+            movie("Operation Firefly", ViewportGenre.Action, R.drawable.operation_firefly_card),
+            movie("Smoke", ViewportGenre.Action, R.drawable.smoke_card),
+            movie("Joyriders", ViewportGenre.Action, R.drawable.joyriders_card)
         )
     ),
     DestinationRowSpec(
         titleResId = R.string.row_comedy_movies,
         genre = ViewportGenre.Comedy,
         programs = listOf(
-            movie("Citric", ViewportGenre.Comedy, R.drawable.home_comedy_01),
-            movie("The Baller", ViewportGenre.Comedy, R.drawable.home_comedy_05),
-            movie("Laughing Matters", ViewportGenre.Comedy, R.drawable.home_comedy_03),
-            movie("Troublemaker", ViewportGenre.Comedy, R.drawable.home_comedy_02),
-            movie("Lost in Time", ViewportGenre.Comedy, R.drawable.home_comedy_04)
+            movie("Citric", ViewportGenre.Comedy, R.drawable.citric_card),
+            movie("The Baller", ViewportGenre.Comedy, R.drawable.the_baller_card),
+            movie("Laughing Matters", ViewportGenre.Comedy, R.drawable.laughing_matters_card),
+            movie("Troublemaker", ViewportGenre.Comedy, R.drawable.troublemaker_card),
+            movie("Lost in Time", ViewportGenre.Comedy, R.drawable.lost_in_time_card)
         )
     ),
     DestinationRowSpec(
         titleResId = R.string.row_crime_movies,
         genre = ViewportGenre.Crime,
         programs = listOf(
-            movie("No Trespassing", ViewportGenre.Crime, R.drawable.home_crime_01),
-            movie("One Last Breath", ViewportGenre.Crime, R.drawable.home_crime_02),
-            movie("Sink or Swim", ViewportGenre.Crime, R.drawable.home_crime_03),
-            movie("Hungry Heart", ViewportGenre.Crime, R.drawable.home_crime_04)
+            movie("No Trespassing", ViewportGenre.Crime, R.drawable.no_trespassing_card),
+            movie("One Last Breath", ViewportGenre.Crime, R.drawable.one_last_breath_card),
+            movie("Sink or Swim", ViewportGenre.Crime, R.drawable.sink_or_swim_card),
+            movie("Hungry Heart", ViewportGenre.Crime, R.drawable.hungry_heart_card)
         )
     ),
     DestinationRowSpec(
         titleResId = R.string.row_documentary_movies,
         genre = ViewportGenre.Documentary,
         programs = listOf(
-            movie("Incan Descent", ViewportGenre.Documentary, R.drawable.home_documentary_01),
-            movie("Or Not To Be", ViewportGenre.Documentary, R.drawable.home_documentary_02),
-            movie("Surfside", ViewportGenre.Documentary, R.drawable.home_documentary_03),
-            movie("Wheels", ViewportGenre.Documentary, R.drawable.home_documentary_04),
-            movie("Light as a Feather", ViewportGenre.Documentary, R.drawable.home_documentary_05)
+            movie("Incan Descent", ViewportGenre.Documentary, R.drawable.incan_descent_card),
+            movie("Or Not To Be", ViewportGenre.Documentary, R.drawable.or_not_to_be_card),
+            movie("Surfside", ViewportGenre.Documentary, R.drawable.surfside_card),
+            movie("Wheels", ViewportGenre.Documentary, R.drawable.wheels_card),
+            movie("Light as a Feather", ViewportGenre.Documentary, R.drawable.light_as_a_feather_card)
         )
     ),
     DestinationRowSpec(
         titleResId = R.string.row_drama_movies,
         genre = ViewportGenre.Drama,
         programs = listOf(
-            movie("Breathing", ViewportGenre.Drama, R.drawable.home_drama_01),
-            movie("Falling Behind", ViewportGenre.Drama, R.drawable.home_drama_02),
-            movie("Still There", ViewportGenre.Drama, R.drawable.home_drama_03),
-            movie("If I May", ViewportGenre.Drama, R.drawable.home_drama_04),
-            movie("Moments", ViewportGenre.Drama, R.drawable.home_drama_05),
-            movie("Chasing Light", ViewportGenre.Drama, R.drawable.home_drama_06)
+            movie("Breathing", ViewportGenre.Drama, R.drawable.breathing_card),
+            movie("Falling Behind", ViewportGenre.Drama, R.drawable.falling_behind_card),
+            movie("Still There", ViewportGenre.Drama, R.drawable.still_there_card),
+            movie("If I May", ViewportGenre.Drama, R.drawable.if_i_may_card),
+            movie("Moments", ViewportGenre.Drama, R.drawable.moments_card),
+            movie("Chasing Light", ViewportGenre.Drama, R.drawable.chasing_light_card)
         )
     ),
     DestinationRowSpec(
         titleResId = R.string.row_horror_movies,
         genre = ViewportGenre.Horror,
         programs = listOf(
-            movie("The Playmate", ViewportGenre.Horror, R.drawable.home_horror_01),
-            movie("Help", ViewportGenre.Horror, R.drawable.home_horror_02),
-            movie("Skin and Bones", ViewportGenre.Horror, R.drawable.home_horror_03),
-            movie("The Appetizer", ViewportGenre.Horror, R.drawable.home_horror_04)
+            movie("The Playmate", ViewportGenre.Horror, R.drawable.the_playmate_card),
+            movie("Help", ViewportGenre.Horror, R.drawable.help_card),
+            movie("Skin and Bones", ViewportGenre.Horror, R.drawable.skin_and_bones_card),
+            movie("The Appetizer", ViewportGenre.Horror, R.drawable.the_appetizer_card)
         )
     ),
     DestinationRowSpec(
         titleResId = R.string.row_thriller_movies,
         genre = ViewportGenre.Thriller,
         programs = listOf(
-            movie("Enlightenment", ViewportGenre.Thriller, R.drawable.home_thriller_01),
-            movie("Ignition", ViewportGenre.Thriller, R.drawable.home_thriller_02),
-            movie("Deadbeat", ViewportGenre.Thriller, R.drawable.home_thriller_03),
-            movie("Playing with Fire", ViewportGenre.Thriller, R.drawable.home_thriller_04)
+            movie("Enlightenment", ViewportGenre.Thriller, R.drawable.enlightenment_card),
+            movie("Ignition", ViewportGenre.Thriller, R.drawable.ignition_card),
+            movie("Deadbeat", ViewportGenre.Thriller, R.drawable.deadbeat_card),
+            movie("Playing with Fire", ViewportGenre.Thriller, R.drawable.playing_with_fire_card)
         )
     )
 )
@@ -2192,70 +2217,65 @@ private val ShowRows = listOf(
         titleResId = R.string.row_action_shows,
         genre = ViewportGenre.Action,
         programs = listOf(
-            show("Operation Firefly", ViewportGenre.Action, R.drawable.home_action_03),
-            show("Smoke", ViewportGenre.Action, R.drawable.home_action_04),
-            show("Under Attack", ViewportGenre.Action, R.drawable.home_action_02),
-            show("Joyriders", ViewportGenre.Action, R.drawable.home_action_05)
+            show("Operation Firefly", ViewportGenre.Action, R.drawable.operation_firefly_card),
+            show("Smoke", ViewportGenre.Action, R.drawable.smoke_card),
+            show("Joyriders", ViewportGenre.Action, R.drawable.joyriders_card)
         )
     ),
     DestinationRowSpec(
         titleResId = R.string.row_comedy_shows,
         genre = ViewportGenre.Comedy,
         programs = listOf(
-            show("Laughing Matters", ViewportGenre.Comedy, R.drawable.home_comedy_03),
-            show("The Baller", ViewportGenre.Comedy, R.drawable.home_comedy_05),
-            show("Troublemaker", ViewportGenre.Comedy, R.drawable.home_comedy_02),
-            show("Lost in Time", ViewportGenre.Comedy, R.drawable.home_comedy_04)
+            show("Citric", ViewportGenre.Comedy, R.drawable.citric_card),
+            show("Laughing Matters", ViewportGenre.Comedy, R.drawable.laughing_matters_card),
+            show("Lost in Time", ViewportGenre.Comedy, R.drawable.lost_in_time_card)
         )
     ),
     DestinationRowSpec(
         titleResId = R.string.row_crime_shows,
         genre = ViewportGenre.Crime,
         programs = listOf(
-            show("No Trespassing", ViewportGenre.Crime, R.drawable.home_crime_01),
-            show("Sink or Swim", ViewportGenre.Crime, R.drawable.home_crime_03),
-            show("Hungry Heart", ViewportGenre.Crime, R.drawable.home_crime_04),
-            show("One Last Breath", ViewportGenre.Crime, R.drawable.home_crime_02)
+            show("No Trespassing", ViewportGenre.Crime, R.drawable.no_trespassing_card),
+            show("Hungry Heart", ViewportGenre.Crime, R.drawable.hungry_heart_card)
         )
     ),
     DestinationRowSpec(
         titleResId = R.string.row_documentary_shows,
         genre = ViewportGenre.Documentary,
         programs = listOf(
-            show("Or Not To Be", ViewportGenre.Documentary, R.drawable.home_documentary_02),
-            show("Wheels", ViewportGenre.Documentary, R.drawable.home_documentary_04),
-            show("Incan Descent", ViewportGenre.Documentary, R.drawable.home_documentary_01),
-            show("Light as a Feather", ViewportGenre.Documentary, R.drawable.home_documentary_05)
+            show("Surfside", ViewportGenre.Documentary, R.drawable.surfside_card),
+            show("Wheels", ViewportGenre.Documentary, R.drawable.wheels_card),
+            show("Light as a Feather", ViewportGenre.Documentary, R.drawable.light_as_a_feather_card),
+            show("Incan Descent", ViewportGenre.Documentary, R.drawable.incan_descent_card),
+            show("Or Not To Be", ViewportGenre.Documentary, R.drawable.or_not_to_be_card)
         )
     ),
     DestinationRowSpec(
         titleResId = R.string.row_drama_shows,
         genre = ViewportGenre.Drama,
         programs = listOf(
-            show("Breathing", ViewportGenre.Drama, R.drawable.home_drama_01),
-            show("Moments", ViewportGenre.Drama, R.drawable.home_drama_05),
-            show("If I May", ViewportGenre.Drama, R.drawable.home_drama_04),
-            show("Chasing Light", ViewportGenre.Drama, R.drawable.home_drama_06)
+            show("Moments", ViewportGenre.Drama, R.drawable.moments_card),
+            show("Chasing Light", ViewportGenre.Drama, R.drawable.chasing_light_card),
+            show("Breathing", ViewportGenre.Drama, R.drawable.breathing_card),
+            show("Falling Behind", ViewportGenre.Drama, R.drawable.falling_behind_card),
+            show("Still There", ViewportGenre.Drama, R.drawable.still_there_card)
         )
     ),
     DestinationRowSpec(
         titleResId = R.string.row_horror_shows,
         genre = ViewportGenre.Horror,
         programs = listOf(
-            show("The Playmate", ViewportGenre.Horror, R.drawable.home_horror_01),
-            show("Skin and Bones", ViewportGenre.Horror, R.drawable.home_horror_03),
-            show("Help", ViewportGenre.Horror, R.drawable.home_horror_02),
-            show("The Appetizer", ViewportGenre.Horror, R.drawable.home_horror_04)
+            show("Skin and Bones", ViewportGenre.Horror, R.drawable.skin_and_bones_card),
+            show("The Appetizer", ViewportGenre.Horror, R.drawable.the_appetizer_card)
         )
     ),
     DestinationRowSpec(
         titleResId = R.string.row_thriller_shows,
         genre = ViewportGenre.Thriller,
         programs = listOf(
-            show("Enlightenment", ViewportGenre.Thriller, R.drawable.home_thriller_01),
-            show("Playing with Fire", ViewportGenre.Thriller, R.drawable.home_thriller_04),
-            show("Deadbeat", ViewportGenre.Thriller, R.drawable.home_thriller_03),
-            show("Ignition", ViewportGenre.Thriller, R.drawable.home_thriller_02)
+            show("Enlightenment", ViewportGenre.Thriller, R.drawable.enlightenment_card),
+            show("Deadbeat", ViewportGenre.Thriller, R.drawable.deadbeat_card),
+            show("Playing with Fire", ViewportGenre.Thriller, R.drawable.playing_with_fire_card)
         )
     )
 )
@@ -2378,16 +2398,91 @@ private fun programTitleResId(title: String): Int = when (title) {
 
 @DrawableRes
 private fun listPosterDrawableId(title: String): Int? = when (title) {
-    "One Last Breath" -> R.drawable.figma_card_one_last_breath
-    "Sink or Swim" -> R.drawable.figma_card_sink_or_swim
-    "The Baller" -> R.drawable.figma_card_the_baller
-    "Troublemaker" -> R.drawable.figma_card_troublemaker
-    "Ignition" -> R.drawable.figma_card_ignition
-    "Eruption" -> R.drawable.figma_card_eruption
-    "If I May" -> R.drawable.figma_card_if_i_may
-    "The Playmate" -> R.drawable.figma_card_the_playmate
-    "Help" -> R.drawable.figma_card_help
+    "One Last Breath" -> R.drawable.one_last_breath_card
+    "Sink or Swim" -> R.drawable.sink_or_swim_card
+    "The Baller" -> R.drawable.the_baller_card
+    "Troublemaker" -> R.drawable.troublemaker_card
+    "Ignition" -> R.drawable.ignition_card
+    "Eruption" -> R.drawable.eruption_card
+    "If I May" -> R.drawable.if_i_may_card
+    "The Playmate" -> R.drawable.the_playmate_card
+    "Help" -> R.drawable.help_card
+    "Under Attack" -> R.drawable.under_attack_card
+    "No Trespassing" -> R.drawable.no_trespassing_card
+    "Hungry Heart" -> R.drawable.hungry_heart_card
+    "Enlightenment" -> R.drawable.enlightenment_card
+    "Deadbeat" -> R.drawable.deadbeat_card
+    "Playing with Fire" -> R.drawable.playing_with_fire_card
+    "Citric" -> R.drawable.citric_card
+    "Laughing Matters" -> R.drawable.laughing_matters_card
+    "Lost in Time" -> R.drawable.lost_in_time_card
+    "Operation Firefly" -> R.drawable.operation_firefly_card
+    "Smoke" -> R.drawable.smoke_card
+    "Joyriders" -> R.drawable.joyriders_card
+    "Moments" -> R.drawable.moments_card
+    "Chasing Light" -> R.drawable.chasing_light_card
+    "Breathing" -> R.drawable.breathing_card
+    "Falling Behind" -> R.drawable.falling_behind_card
+    "Still There" -> R.drawable.still_there_card
+    "Surfside" -> R.drawable.surfside_card
+    "Wheels" -> R.drawable.wheels_card
+    "Light as a Feather" -> R.drawable.light_as_a_feather_card
+    "Incan Descent" -> R.drawable.incan_descent_card
+    "Or Not To Be" -> R.drawable.or_not_to_be_card
+    "Skin and Bones" -> R.drawable.skin_and_bones_card
+    "The Appetizer" -> R.drawable.the_appetizer_card
     else -> null
+}
+
+@DrawableRes
+private fun detailHeroDrawableId(title: String): Int? = when (title) {
+    "One Last Breath" -> R.drawable.one_last_breath_hero
+    "Sink or Swim" -> R.drawable.sink_or_swim_hero
+    "The Baller" -> R.drawable.the_baller_hero
+    "Troublemaker" -> R.drawable.troublemaker_hero
+    "Ignition" -> R.drawable.ignition_hero
+    "Eruption" -> R.drawable.eruption_hero
+    "If I May" -> R.drawable.if_i_may_hero
+    "The Playmate" -> R.drawable.the_playmate_hero
+    "Help" -> R.drawable.help_hero
+    "Under Attack" -> R.drawable.under_attack_hero
+    "No Trespassing" -> R.drawable.no_trespassing_hero
+    "Hungry Heart" -> R.drawable.hungry_heart_hero
+    "Enlightenment" -> R.drawable.enlightenment_hero
+    "Deadbeat" -> R.drawable.deadbeat_hero
+    "Playing with Fire" -> R.drawable.playing_with_fire_hero
+    "Citric" -> R.drawable.citric_hero
+    "Laughing Matters" -> R.drawable.laughing_matters_hero
+    "Lost in Time" -> R.drawable.lost_in_time_hero
+    "Operation Firefly" -> R.drawable.operation_firefly_hero
+    "Smoke" -> R.drawable.smoke_hero
+    "Joyriders" -> R.drawable.joyriders_hero
+    "Moments" -> R.drawable.moments_hero
+    "Chasing Light" -> R.drawable.chasing_light_hero
+    "Breathing" -> R.drawable.breathing_hero
+    "Falling Behind" -> R.drawable.falling_behind_hero
+    "Still There" -> R.drawable.still_there_hero
+    "Surfside" -> R.drawable.surfside_hero
+    "Wheels" -> R.drawable.wheels_hero
+    "Light as a Feather" -> R.drawable.light_as_a_feather_hero
+    "Incan Descent" -> R.drawable.incan_descent_hero
+    "Or Not To Be" -> R.drawable.or_not_to_be_hero
+    "Skin and Bones" -> R.drawable.skin_and_bones_hero
+    "The Appetizer" -> R.drawable.the_appetizer_hero
+    else -> null
+}
+
+private fun detailProgramSpec(title: String): DestinationProgramSpec? {
+    val rows = if (title in PrototypeShowSmallTitleOrder) {
+        ShowRows + MovieRows
+    } else {
+        MovieRows + ShowRows
+    }
+
+    return rows
+        .asSequence()
+        .flatMap { it.programs.asSequence() }
+        .firstOrNull { it.title == title }
 }
 
 private fun programDetails(

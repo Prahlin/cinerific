@@ -126,7 +126,7 @@ internal enum class CinerificDestination {
     Shows,
     Favorites,
     Settings,
-    SinkOrSwimDetails
+    ProgramDetails
 }
 
 internal enum class CinerificProfile(
@@ -147,6 +147,7 @@ private fun CinerificMainExperience(
     onSignOut: () -> Unit
 ) {
     var destination by remember { mutableStateOf(CinerificDestination.Home) }
+    var selectedProgramTitle by rememberSaveable { mutableStateOf("Sink or Swim") }
     var autoLogoutEnabled by rememberSaveable { mutableStateOf(false) }
     var userInitiatedPlaybackActive by remember { mutableStateOf(false) }
     var lastInteractionMillis by remember { mutableStateOf(SystemClock.uptimeMillis()) }
@@ -176,6 +177,11 @@ private fun CinerificMainExperience(
         }
     }
 
+    fun showProgramDetails(title: String) {
+        selectedProgramTitle = title
+        destination = CinerificDestination.ProgramDetails
+    }
+
     CompositionLocalProvider(LocalCinerificPlaybackSessionController provides playbackSessionController) {
         Box(
             modifier = Modifier
@@ -191,7 +197,7 @@ private fun CinerificMainExperience(
         ) {
             when (destination) {
                 CinerificDestination.Home -> CinerificHomeScreen(
-                    onSinkOrSwimSelected = { destination = CinerificDestination.SinkOrSwimDetails },
+                    onProgramSelected = ::showProgramDetails,
                     modifier = Modifier.fillMaxSize()
                 )
                 CinerificDestination.Movies,
@@ -208,10 +214,12 @@ private fun CinerificMainExperience(
                         lastInteractionMillis = SystemClock.uptimeMillis()
                     },
                     onSignOut = onSignOut,
-                    onSinkOrSwimSelected = { destination = CinerificDestination.SinkOrSwimDetails },
+                    onProgramSelected = ::showProgramDetails,
                     modifier = Modifier.fillMaxSize()
                 )
-                CinerificDestination.SinkOrSwimDetails -> CinerificSinkOrSwimScreen(
+                CinerificDestination.ProgramDetails -> CinerificProgramDetailsScreen(
+                    programTitle = selectedProgramTitle,
+                    onProgramSelected = ::showProgramDetails,
                     modifier = Modifier.fillMaxSize()
                 )
             }
