@@ -125,7 +125,8 @@ internal enum class CinerificDestination {
     Movies,
     Shows,
     Favorites,
-    Settings
+    Settings,
+    SinkOrSwimDetails
 }
 
 internal enum class CinerificProfile(
@@ -189,7 +190,10 @@ private fun CinerificMainExperience(
                 }
         ) {
             when (destination) {
-                CinerificDestination.Home -> CinerificHomeScreen(modifier = Modifier.fillMaxSize())
+                CinerificDestination.Home -> CinerificHomeScreen(
+                    onSinkOrSwimSelected = { destination = CinerificDestination.SinkOrSwimDetails },
+                    modifier = Modifier.fillMaxSize()
+                )
                 CinerificDestination.Movies,
                 CinerificDestination.Shows,
                 CinerificDestination.Favorites,
@@ -204,6 +208,10 @@ private fun CinerificMainExperience(
                         lastInteractionMillis = SystemClock.uptimeMillis()
                     },
                     onSignOut = onSignOut,
+                    onSinkOrSwimSelected = { destination = CinerificDestination.SinkOrSwimDetails },
+                    modifier = Modifier.fillMaxSize()
+                )
+                CinerificDestination.SinkOrSwimDetails -> CinerificSinkOrSwimScreen(
                     modifier = Modifier.fillMaxSize()
                 )
             }

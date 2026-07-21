@@ -3,6 +3,7 @@ package com.prahlin.cinerific.ui
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
@@ -13,6 +14,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,6 +40,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -56,6 +59,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
@@ -118,6 +122,9 @@ private const val SETTINGS_SIGNED_IN_AVATAR_SIZE = 200.2f
 private const val SETTINGS_SIGNED_IN_NAME_WIDTH = 200f
 private const val SETTINGS_SIGNED_IN_NAME_HEIGHT = 40f
 private const val SETTINGS_SIGNED_IN_SIGN_OUT_GAP = 50f
+private const val SINK_OR_SWIM_TITLE = "Sink or Swim"
+private const val DETAIL_CARD_REVEAL_DELAY_MS = 2400L
+private const val DETAIL_CARD_REVEAL_ANIMATION_MS = 900
 
 private val DestinationTop = Color(0xFF080007)
 private val DestinationMid = Color(0xFF23001F)
@@ -139,6 +146,7 @@ internal fun CinerificDestinationScreen(
     autoLogoutEnabled: Boolean = false,
     onAutoLogoutEnabledChange: (Boolean) -> Unit = {},
     onSignOut: () -> Unit = {},
+    onSinkOrSwimSelected: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     when (destination) {
@@ -148,6 +156,7 @@ internal fun CinerificDestinationScreen(
             rows = MovieRows,
             showViewportNav = true,
             isShows = false,
+            onSinkOrSwimSelected = onSinkOrSwimSelected,
             modifier = modifier
         )
         CinerificDestination.Shows -> CinerificCatalogScreen(
@@ -156,6 +165,7 @@ internal fun CinerificDestinationScreen(
             rows = ShowRows,
             showViewportNav = true,
             isShows = true,
+            onSinkOrSwimSelected = onSinkOrSwimSelected,
             modifier = modifier
         )
         CinerificDestination.Favorites -> CinerificFavoritesScreen(modifier = modifier)
@@ -168,7 +178,11 @@ internal fun CinerificDestinationScreen(
             onSignOut = onSignOut,
             modifier = modifier
         )
-        CinerificDestination.Home -> CinerificHomeScreen(modifier = modifier)
+        CinerificDestination.Home -> CinerificHomeScreen(
+            onSinkOrSwimSelected = onSinkOrSwimSelected,
+            modifier = modifier
+        )
+        CinerificDestination.SinkOrSwimDetails -> CinerificSinkOrSwimScreen(modifier = modifier)
     }
 }
 
@@ -179,6 +193,7 @@ private fun CinerificCatalogScreen(
     @StringRes descriptionResId: Int,
     showViewportNav: Boolean,
     isShows: Boolean,
+    onSinkOrSwimSelected: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     BoxWithConstraints(
@@ -252,6 +267,7 @@ private fun CinerificCatalogScreen(
                             cardHeight = cardHeight,
                             cardGap = cardGap,
                             columnCount = contentColumnCount,
+                            onSinkOrSwimSelected = onSinkOrSwimSelected,
                             topPadding = destinationSectionTopPadding(index = index, showViewportNav = showViewportNav)
                         )
                     }
@@ -264,6 +280,7 @@ private fun CinerificCatalogScreen(
                             horizontalPadding = horizontalPadding,
                             rightPadding = rightPadding,
                             scale = scale,
+                            onSinkOrSwimSelected = onSinkOrSwimSelected,
                             topPadding = destinationSectionTopPadding(index = index, showViewportNav = showViewportNav)
                         )
                     }
@@ -276,6 +293,7 @@ private fun CinerificCatalogScreen(
                             horizontalPadding = horizontalPadding,
                             rightPadding = rightPadding,
                             scale = scale,
+                            onSinkOrSwimSelected = onSinkOrSwimSelected,
                             topPadding = destinationSectionTopPadding(index = index, showViewportNav = showViewportNav)
                         )
                     }
@@ -345,6 +363,7 @@ private fun DestinationProgramRow(
     cardHeight: Dp,
     cardGap: Dp,
     columnCount: Int,
+    onSinkOrSwimSelected: () -> Unit,
     topPadding: Dp
 ) {
     Column(
@@ -369,9 +388,10 @@ private fun DestinationProgramRow(
                 Row(horizontalArrangement = Arrangement.spacedBy(cardGap)) {
                     rowPrograms.forEach { program ->
                         DestinationProgramCard(
-                            drawableId = program.drawableId,
+                            program = program,
                             width = cardWidth,
-                            height = cardHeight
+                            height = cardHeight,
+                            onSinkOrSwimSelected = onSinkOrSwimSelected
                         )
                     }
                 }
@@ -403,6 +423,7 @@ private fun DestinationProgramSmallCollage(
     horizontalPadding: Dp,
     rightPadding: Dp,
     scale: Float,
+    onSinkOrSwimSelected: () -> Unit,
     topPadding: Dp
 ) {
     val itemWidth = destinationDp(200f, scale)
@@ -436,7 +457,8 @@ private fun DestinationProgramSmallCollage(
                             program = program,
                             width = itemWidth,
                             cardHeight = cardHeight,
-                            scale = scale
+                            scale = scale,
+                            onSinkOrSwimSelected = onSinkOrSwimSelected
                         )
                     }
                 }
@@ -450,7 +472,8 @@ private fun DestinationSmallCollageCard(
     program: DestinationProgramSpec,
     width: Dp,
     cardHeight: Dp,
-    scale: Float
+    scale: Float,
+    onSinkOrSwimSelected: () -> Unit
 ) {
     val shape = RoundedCornerShape(destinationDp(30f, scale))
     val title = stringResource(program.titleResId)
@@ -466,6 +489,9 @@ private fun DestinationSmallCollageCard(
                 .height(cardHeight)
                 .shadow(destinationDp(14f, scale), shape, clip = false)
                 .clip(shape)
+                .clickable(enabled = program.isSinkOrSwim) {
+                    onSinkOrSwimSelected()
+                }
                 .background(Color.Black)
                 .border(destinationDp(0.63f, scale), Color.Black, shape)
         ) {
@@ -498,6 +524,7 @@ private fun DestinationProgramList(
     horizontalPadding: Dp,
     rightPadding: Dp,
     scale: Float,
+    onSinkOrSwimSelected: () -> Unit,
     topPadding: Dp
 ) {
     Column(
@@ -521,7 +548,8 @@ private fun DestinationProgramList(
             programs.forEach { program ->
                 DestinationProgramListItem(
                     program = program,
-                    scale = scale
+                    scale = scale,
+                    onSinkOrSwimSelected = onSinkOrSwimSelected
                 )
             }
         }
@@ -531,7 +559,8 @@ private fun DestinationProgramList(
 @Composable
 private fun DestinationProgramListItem(
     program: DestinationProgramSpec,
-    scale: Float
+    scale: Float,
+    onSinkOrSwimSelected: () -> Unit
 ) {
     val imageShape = RoundedCornerShape(destinationDp(15f, scale))
     val title = stringResource(program.titleResId)
@@ -546,7 +575,10 @@ private fun DestinationProgramListItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(destinationDp(237f, scale)),
+            .height(destinationDp(237f, scale))
+            .clickable(enabled = program.isSinkOrSwim) {
+                onSinkOrSwimSelected()
+            },
         verticalAlignment = Alignment.Top
     ) {
         Box(
@@ -682,7 +714,189 @@ private fun DestinationRatingStars(
 
 @Composable
 private fun DestinationProgramCard(
-    @DrawableRes drawableId: Int,
+    program: DestinationProgramSpec,
+    width: Dp,
+    height: Dp,
+    onSinkOrSwimSelected: () -> Unit
+) {
+    val shape = RoundedCornerShape(22.dp)
+    Box(
+        modifier = Modifier
+            .width(width)
+            .height(height)
+            .shadow(12.dp, shape, clip = false)
+            .clip(shape)
+            .clickable(enabled = program.isSinkOrSwim) {
+                onSinkOrSwimSelected()
+            }
+            .background(Color.Black)
+    ) {
+        Image(
+            painter = painterResource(program.drawableId),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.FillBounds
+        )
+    }
+}
+
+@Composable
+internal fun CinerificSinkOrSwimScreen(modifier: Modifier = Modifier) {
+    BoxWithConstraints(
+        modifier = modifier
+            .fillMaxSize()
+            .background(DestinationBottom)
+    ) {
+        val scale = maxWidth.value / DESTINATION_FRAME_WIDTH
+        val density = LocalDensity.current
+        val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
+        val heroHeight = maxHeight - bottomSystemPadding
+        val title = stringResource(R.string.program_sink_or_swim)
+        val details = programDetails(
+            title = SINK_OR_SWIM_TITLE,
+            genre = ViewportGenre.Crime,
+            isShow = false
+        )
+        val genre = stringResource(ViewportGenre.Crime.displayNameResId)
+        val synopsis = details.synopsisResId?.let { stringResource(it) }.orEmpty()
+        var revealCard by remember { mutableStateOf(false) }
+
+        LaunchedEffect(Unit) {
+            delay(DETAIL_CARD_REVEAL_DELAY_MS)
+            revealCard = true
+        }
+
+        val cardReveal by animateFloatAsState(
+            targetValue = if (revealCard) 1f else 0f,
+            animationSpec = tween(
+                durationMillis = DETAIL_CARD_REVEAL_ANIMATION_MS,
+                easing = FastOutSlowInEasing
+            ),
+            label = "sink-or-swim-card-reveal"
+        )
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .background(DestinationBottom)
+        ) {
+            SinkOrSwimRevealImage(
+                revealProgress = cardReveal,
+                height = heroHeight
+            )
+            SinkOrSwimInfoPanel(
+                title = title,
+                year = details.year,
+                runtime = details.runtime,
+                genre = genre,
+                synopsis = synopsis,
+                director = details.director,
+                producer = details.producer,
+                rating = details.rating,
+                scale = scale
+            )
+            SinkOrSwimLibraryRows(scale = scale)
+            Spacer(modifier = Modifier.height(bottomSystemPadding + destinationDp(72f, scale)))
+        }
+    }
+}
+
+@Composable
+private fun SinkOrSwimRevealImage(
+    revealProgress: Float,
+    height: Dp
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(height)
+            .background(Color.Black)
+    ) {
+        Image(
+            painter = painterResource(R.drawable.sink_or_swim_hero),
+            contentDescription = stringResource(R.string.program_sink_or_swim),
+            modifier = Modifier
+                .fillMaxSize()
+                .graphicsLayer {
+                    alpha = 0.46f + revealProgress * 0.54f
+                },
+            contentScale = ContentScale.FillBounds
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFF6D6D6D).copy(alpha = (1f - revealProgress) * 0.58f))
+        )
+    }
+}
+
+@Composable
+private fun SinkOrSwimLibraryRows(scale: Float) {
+    val horizontalPadding = destinationDp(50f, scale)
+    val cardWidth = destinationDp(350f, scale) * DESTINATION_CARD_SCALE
+    val cardHeight = cardWidth / DESTINATION_CARD_ASPECT
+    val cardGap = destinationDp(50f, scale)
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(DestinationMid, DestinationBottom)
+                )
+            )
+            .padding(top = destinationDp(86f, scale))
+    ) {
+        SinkOrSwimLibraryRowSpecs.forEachIndexed { index, row ->
+            if (index > 0) {
+                Spacer(modifier = Modifier.height(destinationDp(80f, scale)))
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = horizontalPadding),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(row.titleResId),
+                    color = DestinationText,
+                    fontSize = 36.sp,
+                    fontWeight = FontWeight.Black,
+                    letterSpacing = 0.sp,
+                    modifier = Modifier.weight(1f)
+                )
+                Icon(
+                    imageVector = Icons.Rounded.ChevronRight,
+                    contentDescription = null,
+                    tint = DestinationText,
+                    modifier = Modifier.size(48.dp)
+                )
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(rememberScrollState())
+                    .padding(start = horizontalPadding, end = horizontalPadding)
+                    .padding(top = 20.dp),
+                horizontalArrangement = Arrangement.spacedBy(cardGap)
+            ) {
+                row.programs.forEach { program ->
+                    SinkOrSwimLibraryCard(
+                        program = program,
+                        width = cardWidth,
+                        height = cardHeight
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SinkOrSwimLibraryCard(
+    program: DestinationProgramSpec,
     width: Dp,
     height: Dp
 ) {
@@ -696,10 +910,154 @@ private fun DestinationProgramCard(
             .background(Color.Black)
     ) {
         Image(
-            painter = painterResource(drawableId),
+            painter = painterResource(program.drawableId),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillBounds
+        )
+    }
+}
+
+@Composable
+private fun SinkOrSwimInfoPanel(
+    title: String,
+    year: String,
+    runtime: String,
+    genre: String,
+    synopsis: String,
+    director: String,
+    producer: String,
+    rating: Int,
+    scale: Float
+) {
+    val panelHorizontalPadding = destinationDp(165f, scale)
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color(0xFF444444))
+            .padding(
+                start = panelHorizontalPadding,
+                top = destinationDp(48f, scale),
+                end = panelHorizontalPadding,
+                bottom = destinationDp(56f, scale)
+            ),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = buildAnnotatedString {
+                withStyle(SpanStyle(fontWeight = FontWeight.Black)) {
+                    append(title.uppercase())
+                }
+                append(" ")
+                withStyle(SpanStyle(fontWeight = FontWeight.Normal)) {
+                    append("($year)")
+                }
+            },
+            color = DestinationText,
+            fontSize = 30.sp,
+            lineHeight = 38.sp,
+            letterSpacing = 0.sp,
+            textAlign = TextAlign.Center
+        )
+
+        Spacer(modifier = Modifier.height(destinationDp(28f, scale)))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Top
+        ) {
+            Text(
+                text = synopsis,
+                color = DestinationText.copy(alpha = 0.82f),
+                fontSize = 12.sp,
+                lineHeight = 16.sp,
+                letterSpacing = 0.sp,
+                modifier = Modifier.width(destinationDp(245f, scale))
+            )
+
+            Column(
+                modifier = Modifier.width(destinationDp(140f, scale)),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(destinationDp(18f, scale))
+            ) {
+                SinkOrSwimPanelText(text = runtime, textAlign = TextAlign.Center)
+                SinkOrSwimPanelText(text = genre, textAlign = TextAlign.Center)
+            }
+
+            Column(
+                modifier = Modifier.width(destinationDp(245f, scale)),
+                verticalArrangement = Arrangement.spacedBy(destinationDp(18f, scale))
+            ) {
+                SinkOrSwimPanelText(text = stringResource(R.string.program_meta_director, director))
+                SinkOrSwimPanelText(text = stringResource(R.string.program_meta_producer, producer))
+            }
+        }
+
+        Spacer(modifier = Modifier.height(destinationDp(22f, scale)))
+        SinkOrSwimRatingStars(rating = rating, scale = scale)
+    }
+}
+
+@Composable
+private fun SinkOrSwimPanelText(
+    text: String,
+    textAlign: TextAlign = TextAlign.Start
+) {
+    Text(
+        text = text,
+        color = DestinationText.copy(alpha = 0.9f),
+        fontSize = 11.sp,
+        fontWeight = FontWeight.Bold,
+        lineHeight = 14.sp,
+        letterSpacing = 0.sp,
+        textAlign = textAlign,
+        maxLines = 2,
+        overflow = TextOverflow.Ellipsis
+    )
+}
+
+@Composable
+private fun SinkOrSwimRatingStars(
+    rating: Int,
+    scale: Float
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(destinationDp(8f, scale)),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        repeat(5) { index ->
+            Icon(
+                imageVector = Icons.Rounded.Star,
+                contentDescription = null,
+                tint = if (index < rating) Color(0xFFFFC91B) else Color(0xFFC9C4CC),
+                modifier = Modifier.size(destinationDp(16f, scale))
+            )
+        }
+    }
+}
+
+@Composable
+private fun DestinationDetailMetaText(
+    top: String,
+    bottom: String
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(
+            text = top,
+            color = DestinationText.copy(alpha = 0.9f),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            lineHeight = 28.sp,
+            letterSpacing = 0.sp
+        )
+        Text(
+            text = bottom,
+            color = DestinationText.copy(alpha = 0.72f),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            lineHeight = 28.sp,
+            letterSpacing = 0.sp
         )
     }
 }
@@ -1589,6 +1947,11 @@ private data class DestinationRowSpec(
     val programs: List<DestinationProgramSpec>
 )
 
+private data class SinkOrSwimLibraryRowSpec(
+    @StringRes val titleResId: Int,
+    val programs: List<DestinationProgramSpec>
+)
+
 private data class DestinationProgramSpec(
     val title: String,
     @StringRes val titleResId: Int,
@@ -1604,6 +1967,9 @@ private data class DestinationProgramSpec(
     val isShow: Boolean,
     val rating: Int
 )
+
+private val DestinationProgramSpec.isSinkOrSwim: Boolean
+    get() = title == SINK_OR_SWIM_TITLE
 
 private data class ProgramDetails(
     val year: String,
@@ -1893,6 +2259,38 @@ private val ShowRows = listOf(
         )
     )
 )
+
+private val SinkOrSwimLibraryGenreOrder = listOf(
+    ViewportGenre.Crime,
+    ViewportGenre.Thriller,
+    ViewportGenre.Comedy,
+    ViewportGenre.Action,
+    ViewportGenre.Drama,
+    ViewportGenre.Documentary,
+    ViewportGenre.Horror
+)
+
+private val SinkOrSwimLibraryRowSpecs = SinkOrSwimLibraryGenreOrder.map { genre ->
+    SinkOrSwimLibraryRowSpec(
+        titleResId = sinkOrSwimLibraryTitleResId(genre),
+        programs = (MovieRows + ShowRows)
+            .filter { it.genre == genre }
+            .flatMap { it.programs }
+            .distinctBy { it.title }
+    )
+}
+
+@StringRes
+private fun sinkOrSwimLibraryTitleResId(genre: ViewportGenre): Int = when (genre) {
+    ViewportGenre.Crime -> R.string.home_row_crime
+    ViewportGenre.Thriller -> R.string.home_row_thriller
+    ViewportGenre.Comedy -> R.string.home_row_comedy
+    ViewportGenre.Action -> R.string.home_row_action
+    ViewportGenre.Drama -> R.string.home_row_drama
+    ViewportGenre.Documentary -> R.string.home_row_documentary
+    ViewportGenre.Horror -> R.string.home_row_horror
+    ViewportGenre.All -> R.string.app_name
+}
 
 private fun movie(
     title: String,

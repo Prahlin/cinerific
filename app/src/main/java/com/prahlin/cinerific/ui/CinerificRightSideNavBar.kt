@@ -118,8 +118,18 @@ internal fun CinerificRightSideNavBar(
         val settingsContentHeight = navDp(NAV_SETTINGS_ICON_SIZE, scale) +
             with(density) { NAV_LABEL_LINE_HEIGHT.sp.toDp() }
         val settingsTop = maxHeight - navigationBarBottom - navDp(NAV_EDGE_GAP, scale) - settingsContentHeight
-        var expanded by remember { mutableStateOf(currentDestination != CinerificDestination.Home) }
-        var visualDestination by remember { mutableStateOf(currentDestination) }
+        var expanded by remember {
+            mutableStateOf(currentDestination in NavFrameDestinations && currentDestination != CinerificDestination.Home)
+        }
+        var visualDestination by remember {
+            mutableStateOf(
+                if (currentDestination in NavFrameDestinations) {
+                    currentDestination
+                } else {
+                    CinerificDestination.Home
+                }
+            )
+        }
         val openProgress by animateFloatAsState(
             targetValue = if (expanded) 1f else 0f,
             animationSpec = tween(durationMillis = NAV_OPEN_MS, easing = NavEaseOut),
@@ -127,9 +137,15 @@ internal fun CinerificRightSideNavBar(
         )
 
         LaunchedEffect(currentDestination) {
-            visualDestination = currentDestination
-            if (currentDestination != CinerificDestination.Home) {
-                expanded = true
+            visualDestination = if (currentDestination in NavFrameDestinations) {
+                currentDestination
+            } else {
+                CinerificDestination.Home
+            }
+            expanded = when {
+                currentDestination == CinerificDestination.Home -> false
+                currentDestination in NavFrameDestinations -> true
+                else -> false
             }
         }
 

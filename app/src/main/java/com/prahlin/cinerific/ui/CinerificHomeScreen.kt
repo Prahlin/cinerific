@@ -13,6 +13,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -68,7 +69,10 @@ private val HomeBackgroundBottom = Color(0xFF060004)
 private val HomeText = Color(0xFFE7E7E7)
 
 @Composable
-internal fun CinerificHomeScreen(modifier: Modifier = Modifier) {
+internal fun CinerificHomeScreen(
+    onSinkOrSwimSelected: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
     BoxWithConstraints(
         modifier = modifier
             .fillMaxSize()
@@ -103,6 +107,7 @@ internal fun CinerificHomeScreen(modifier: Modifier = Modifier) {
                 HomeProgramRow(
                     title = stringResource(row.titleResId),
                     cardIds = row.cardIds,
+                    onSinkOrSwimSelected = onSinkOrSwimSelected,
                     horizontalPadding = horizontalPadding,
                     cardWidth = cardWidth,
                     cardHeight = cardHeight,
@@ -150,6 +155,7 @@ private fun HeroReelVideo(modifier: Modifier = Modifier) {
 private fun HomeProgramRow(
     title: String,
     @DrawableRes cardIds: List<Int>,
+    onSinkOrSwimSelected: () -> Unit,
     horizontalPadding: Dp,
     cardWidth: Dp,
     cardHeight: Dp,
@@ -195,7 +201,12 @@ private fun HomeProgramRow(
                 ProgramCard(
                     drawableId = cardId,
                     width = cardWidth,
-                    height = cardHeight
+                    height = cardHeight,
+                    onClick = if (cardId == R.drawable.home_crime_03) {
+                        onSinkOrSwimSelected
+                    } else {
+                        null
+                    }
                 )
             }
         }
@@ -206,7 +217,8 @@ private fun HomeProgramRow(
 private fun ProgramCard(
     @DrawableRes drawableId: Int,
     width: Dp,
-    height: Dp
+    height: Dp,
+    onClick: (() -> Unit)? = null
 ) {
     val shape = RoundedCornerShape(22.dp)
     Box(
@@ -219,6 +231,9 @@ private fun ProgramCard(
                 clip = false
             )
             .clip(shape)
+            .clickable(enabled = onClick != null) {
+                onClick?.invoke()
+            }
             .background(Color.Black)
     ) {
         Image(
