@@ -1,0 +1,337 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [ 6 0 R 8 0 R 10 0 R 12 0 R ] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Length 8479 >>
+stream
+BT /F2 13.10 Tf 1 0 0 1 54.00 748.00 Tm (Cinerific Android App Work Log - July 20, 2026) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 738.30 Tm (Compiled summary for Monday, July 20, 2026 - focus: continuing the post-July 19 Settings and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 728.60 Tm (catalog pass by aligning the Settings profile/sign-out layout to the Figma prototype, advising on) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 718.90 Tm (app-wide language-switch architecture, bundling local Spanish and Mandarin translations, wiring) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 709.20 Tm (real-time text switching, adding temporary idle auto logout with a future full-title playback) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 699.50 Tm (exception, and implementing the first dedicated Sink or Swim title detail screen.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 689.80 Tm (Generated in continuity with the established Cinerific worklog cadence from July 12, July 14, July) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 680.10 Tm (15 Part 1, July 15, July 16, July 18, and July 19: compact opening summary, source-material) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 670.40 Tm (review, baseline state, goal list, themed work-completed sections, validation, files touched,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 660.70 Tm (follow-up context, and output-artifact close. This artifact records the July 20 Cinerific work now) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 651.00 Tm (present on main and follows the prior root-level PDF naming, four-page letter layout, footer, and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 641.30 Tm (plain-text-readable style.) Tj ET
+BT /F2 9.60 Tf 1 0 0 1 54.00 621.90 Tm (Source Materials Reviewed) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 612.20 Tm (- Reviewed every pre-existing Cinerific worklog PDF at the repository root:) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 602.50 Tm (  cinerific_worklog_july 12.pdf, cinerific_worklog_july 14.pdf, cinerific_worklog_july 15 part) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 592.80 Tm (  1.pdf, cinerific_worklog_july 15.pdf, cinerific_worklog_july 16.pdf, cinerific_worklog_july) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 583.10 Tm (  18.pdf, and cinerific_worklog_july 19.pdf.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 573.40 Tm (- Used pdftotext and pdfinfo output from the prior PDFs to preserve the established title) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 563.70 Tm (  pattern, opening-summary cadence, source review, baseline/goals sections, themed) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 554.00 Tm (  work-completed sections, validation language, files-touched list, follow-up close, footer) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 544.30 Tm (  convention, letter-size page geometry, and four-page daily-log shape.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 534.60 Tm (- Reviewed read_project.sh and cinerific_PROJECT_SNAPSHOT.txt for the current scanner) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 524.90 Tm (  convention, generated/context-file handling, Android source layout, resource inventory) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 515.20 Tm (  expectations, and snapshot-based onboarding flow used by prior sessions.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 505.50 Tm (- Reviewed the current Git state on main tracking origin/main, including the clean status at) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 495.80 Tm (  HEAD 152ee04 and the July 20 commits e50671c, 9533ccc, bce86ab, and 152ee04.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 486.10 Tm (- Reviewed git show --stat and commit messages for the July 20 source work so this log describes) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 476.40 Tm (  the committed project state rather than only conversation memory.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 466.70 Tm (- Reviewed app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 457.00 Tm (  CinerificDestinationScreen.kt, CinerificHomeScreen.kt, CinerificRightSideNavBar.kt,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 447.30 Tm (  CinerificIntroView.kt, CinerificLanguage.kt, CinerificPlaybackSession.kt, the strings resource) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 437.60 Tm (  bundles, and the Sink or Swim drawable asset.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 427.90 Tm (- Reviewed user-provided Figma/prototype references for Settings alignment, signed-in profile) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 418.20 Tm (  assets, the Auto log out security row, the Sink or Swim component behavior, the desired Card) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 408.50 Tm (  36 sharpness, and node-specific Figma selection workflow.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 398.80 Tm (- Used Gradle build output, adb/emulator validation notes from the implementation session, git) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 389.10 Tm (  status/log/show output, image inspection, pdftotext/pdfinfo, and the current assembleDebug) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 379.40 Tm (  check as validation material. No external PDF package was installed for this worklog.) Tj ET
+BT /F2 9.60 Tf 1 0 0 1 54.00 360.00 Tm (Baseline Status Before July 20 Work) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 350.30 Tm (- Cinerific entered July 20 with the July 19 destination chrome, viewport catalog modes, empty) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 340.60 Tm (  Favorites prototype state, Settings language dropdown, shared toggle sizing, rounded Settings) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 330.90 Tm (  panels, and section header pills already committed and documented.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 321.20 Tm (- Settings still needed a deeper Figma alignment pass: label text, text sections, gray) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 311.50 Tm (  section/header boxes, toggle columns, signed-in assets, avatar/name sizing, and the Sign out) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 301.80 Tm (  action were not yet matching the referenced right-hand prototype column.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 292.10 Tm (- The language picker existed visually, but app-wide copy was still hardcoded in many Compose) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 282.40 Tm (  surfaces. Spanish and Mandarin choices were visible without bundled translations, so changing) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 272.70 Tm (  the setting could not yet update headers, paragraphs, row labels, or program copy) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 263.00 Tm (  consistently.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 253.30 Tm (- The project did not need a backend for current localization because the app copy was known,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 243.60 Tm (  small, and controlled locally. Runtime machine translation or database lookup would have added) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 233.90 Tm (  cost, permissions, caching, failure states, and network dependency before the product required) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 224.20 Tm (  it.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 214.50 Tm (- Security settings had visual toggles, but Auto log out was not yet connected to app-level) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 204.80 Tm (  inactivity behavior or to the sign-in return path requested by the prototype.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 195.10 Tm (- Future full-title video playback had not yet been incorporated. The auto logout logic) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 185.40 Tm (  therefore needed a small exception point for later actionable Play buttons while preserving) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 175.70 Tm (  idle logout for static screens, looping preview clips, and the Home/default auto-playing reel.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 166.00 Tm (- Movies and Shows had catalog cards and mode rows, but title cards still opened no dedicated) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 156.30 Tm (  component screen. Sink or Swim was chosen as the first title detail route to establish the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 146.60 Tm (  pattern before scaling the rest of the library.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 136.90 Tm (- The app had lower-resolution cropped title artwork for some cards. The user identified Figma) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 127.20 Tm (  Card 36 as the sharper Sink or Swim source, so the asset workflow needed to distinguish true) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 117.50 Tm (  Figma export quality from simple local upscaling.) Tj ET
+BT /F2 9.60 Tf 1 0 0 1 54.00 98.10 Tm (Main Goals for July 20) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 88.40 Tm (- Horizontally align Settings labels, section text, and gray label boxes against the Settings) Tj ET
+BT /F1 7.80 Tf 1 0 0 1 216.82 32.00 Tm (Cinerific Work Log - July 20, 2026 Page 1) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 8360 >>
+stream
+BT /F1 8.65 Tf 1 0 0 1 54.00 748.00 Tm (  top banner while preserving the intentional left-edge clipping of the gray label/header) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 738.30 Tm (  shapes.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 728.60 Tm (- Center all switch toggles in the Settings control column and incorporate the signed-in) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 718.90 Tm (  profile/avatar/name/sign-out assets from the right-hand Figma prototype column.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 709.20 Tm (- Scale the avatar and signed-in text down by roughly 10 percent, remove the duplicate shape) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 699.50 Tm (  behind Sign out, make Sign out actionable, and match the vertical gap above the avatar to the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 689.80 Tm (  gap below it and the adjacent text row.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 680.10 Tm (- Keep the bottommost Settings switch aligned with the Sign out button when the Settings content) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 670.40 Tm (  is scrolled to the bottom, with responsive positioning instead of a fixed one-device offset.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 660.70 Tm (- Recommend the localization architecture before implementation, including cost controls,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 651.00 Tm (  network dependency tradeoffs, database/backend need, and how to preserve the exact English) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 641.30 Tm (  Figma copy.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 631.60 Tm (- Bundle Spanish and Mandarin translations locally and make Settings language changes update app) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 621.90 Tm (  text in real time, while keeping the right-hand navigation labels unchanged for now.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 612.20 Tm (- Add testable Auto log out behavior under Security, using 10 seconds during validation but) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 602.50 Tm (  preserving the intended 10-minute production target.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 592.80 Tm (- Add an exception hook so future user-started full-title video playback can pause auto logout,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 583.10 Tm (  without exempting automatic Home reels or looping preview clips.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 573.40 Tm (- Implement the Sink or Swim detail screen to mirror the Figma component behavior: full-screen) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 563.70 Tm (  grayed image, delayed full-visibility image, scrollable text/metadata below, no spinner,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 554.00 Tm (  collapsed rail, and library rows farther down the page.) Tj ET
+BT /F2 9.60 Tf 1 0 0 1 54.00 534.60 Tm (Work Completed - Settings Alignment and Profile Layout) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 524.90 Tm (- Created commit e50671c, Polished responsive Settings profile layout, as the first July 20) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 515.20 Tm (  source checkpoint after the July 19 worklog artifact.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 505.50 Tm (- Aligned Settings label text and left-hand text sections to the Settings top banner, then) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 495.80 Tm (  aligned the gray section/header boxes to the same visual system while allowing the boxes to) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 486.10 Tm (  clip through the left edge as requested.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 476.40 Tm (- Horizontally centered the switch toggles in the right-hand control column and kept the toggle) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 466.70 Tm (  rows aligned against their corresponding label/detail stacks.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 457.00 Tm (- Incorporated the signed-in profile area from the right-hand Figma column, including the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 447.30 Tm (  avatar/name treatment and the Sign out control, instead of leaving Settings as only) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 437.60 Tm (  left-column rows.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 427.90 Tm (- Scaled the avatar image and signed-in text treatment down by about 10 percent, which raised) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 418.20 Tm (  the Sign out button and reduced the oversized profile-column feeling.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 408.50 Tm (- Removed the duplicate shape/picture that had appeared behind the Sign out button during the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 398.80 Tm (  profile-column import pass.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 389.10 Tm (- Made Sign out actionable by routing the user back to the sign-in/profile selection screen) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 379.40 Tm (  through the app-level signed-in state.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 369.70 Tm (- Matched the vertical gap above the avatar icon to the gap below it and the profile text row,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 360.00 Tm (  tightening the right-column visual rhythm.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 350.30 Tm (- Added responsive bottom alignment so the lowest Settings switch lines up exactly with Sign out) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 340.60 Tm (  when the Settings page reaches the bottom of its scroll range.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 330.90 Tm (- Refreshed cinerific_PROJECT_SNAPSHOT.txt as part of this pass so the generated project context) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 321.20 Tm (  reflected the new Settings/profile behavior.) Tj ET
+BT /F2 9.60 Tf 1 0 0 1 54.00 301.80 Tm (Work Completed - Localization Planning and Bundled Translations) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 292.10 Tm (- Recommended local bundled translations instead of live runtime translation for the current) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 282.40 Tm (  product stage because the copy is finite, app-owned, offline-friendly, and does not require) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 272.70 Tm (  database permissions or recurring API cost.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 263.00 Tm (- Explained that a backend/database becomes useful later only if copy needs to be managed) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 253.30 Tm (  remotely, personalized by tenant/user, edited by non-developers without app releases,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 243.60 Tm (  audited/versioned, or synchronized across multiple apps.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 233.90 Tm (- Documented the network-dependency tradeoff: remote translation requires online availability,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 224.20 Tm (  cache invalidation, loading/fallback states, privacy review for transmitted text, vendor) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 214.50 Tm (  lock-in decisions, and cost ceilings; bundled strings avoid those risks for the current UI.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 204.80 Tm (- Created commit 9533ccc, Bundled localized app translations, adding CinerificLanguage.kt with) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 195.10 Tm (  CinerificLanguage, LocalCinerificLanguage, and CinerificLocalizedResources for locale-specific) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 185.40 Tm (  Android resources.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 175.70 Tm (- Added app/src/main/res/values/strings.xml as the English source of truth, preserving the exact) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 166.00 Tm (  current Figma/prototype copy wherever English text had already been implemented.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 156.30 Tm (- Added app/src/main/res/values-es/strings.xml and app/src/main/res/values-zh-rCN/strings.xml) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 146.60 Tm (  for Spanish and Mandarin/Simplified Chinese translations across app-owned text.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 136.90 Tm (- Wired the Settings language picker to app-level language state so selecting English, Spanish,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 127.20 Tm (  or Mandarin updates headers, paragraphs, labels, catalog copy, Settings copy, Favorites text,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 117.50 Tm (  and program metadata in real time.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 107.80 Tm (- Kept the right-hand navigation labels unchanged for now, matching the user instruction to) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 98.10 Tm (  leave that rail alone during localization.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 88.40 Tm (- Preserved English for text baked directly into bitmap assets, such as poster artwork and) Tj ET
+BT /F1 7.80 Tf 1 0 0 1 216.82 32.00 Tm (Cinerific Work Log - July 20, 2026 Page 2) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 8139 >>
+stream
+BT /F1 8.65 Tf 1 0 0 1 54.00 748.00 Tm (  profile-name imagery, because those words are part of images rather than runtime text nodes.) Tj ET
+BT /F2 9.60 Tf 1 0 0 1 54.00 728.60 Tm (Work Completed - Auto Logout and Playback Exception) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 718.90 Tm (- Created commit bce86ab to add the Security Auto log out behavior with a temporary 10-second) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 709.20 Tm (  timeout for testing. The intended production value remains 10 minutes after validation is) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 699.50 Tm (  complete.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 689.80 Tm (- Promoted the Security Auto log out switch from local visual state to app-level state so) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 680.10 Tm (  toggling it controls actual inactivity behavior.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 670.40 Tm (- Added root touch tracking in the signed-in app surface using pointer input at the initial) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 660.70 Tm (  event pass, so taps, screen touches, and scroll interactions refresh the idle timer without) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 651.00 Tm (  consuming those events from child controls.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 641.30 Tm (- Implemented timeout-driven sign out so a user returns to the sign-in/profile selection screen) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 631.60 Tm (  after the configured idle interval when Auto log out is enabled.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 621.90 Tm (- Added CinerificPlaybackSession.kt with CinerificPlaybackSessionController and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 612.20 Tm (  LocalCinerificPlaybackSessionController as a future integration point for real movie playback) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 602.50 Tm (  components.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 592.80 Tm (- Defined the playback exception around user-started full-title playback: future actionable Play) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 583.10 Tm (  buttons should call onActionablePlayTapped before real playback begins and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 573.40 Tm (  onUserInitiatedPlaybackFinished when playback ends.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 563.70 Tm (- Kept automatic Home reels and looping preview clips idle-loggable, as requested, so only) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 554.00 Tm (  user-initiated full-title playback pauses the auto logout timer.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 544.30 Tm (- Validated the 10-second timeout behavior during the implementation session by enabling the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 534.60 Tm (  Security switch and confirming the app returned to sign-in after inactivity.) Tj ET
+BT /F2 9.60 Tf 1 0 0 1 54.00 515.20 Tm (Work Completed - Sink or Swim Component Screen) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 505.50 Tm (- Created commit 152ee04 to add the first dedicated title detail route for Sink or Swim and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 495.80 Tm (  connect title-card taps to it from the app catalog surface.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 486.10 Tm (- Added CinerificDestination.SinkOrSwimDetails and routed Sink or Swim taps from the Home Crime) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 476.40 Tm (  row and Movies/Shows catalog cards into the new destination.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 466.70 Tm (- Reworked the detail surface after prototype review so it mirrors the Figma component behavior) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 457.00 Tm (  more closely: a full-screen Sink or Swim image starts muted/gray, then becomes fully visible) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 447.30 Tm (  after a short delay.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 437.60 Tm (- Placed the title header, synopsis/snippet, runtime, genre, director, producer, and star) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 427.90 Tm (  metadata in a scrollable gray information portion directly below the image, matching the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 418.20 Tm (  component structure instead of using the earlier poster-detail layout.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 408.50 Tm (- Left the spinner animation asset and animation out of the implementation, per request.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 398.80 Tm (- Collapsed the right-side nav rail on title detail destinations so only the burger entry) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 389.10 Tm (  remains visible when a user opens the Sink or Swim screen.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 379.40 Tm (- Added Cinerific library rows below the Sink or Swim information portion so downward scrolling) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 369.70 Tm (  continues into the broader Movies/Shows-style catalog content, referencing the Home/default) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 360.00 Tm (  row look.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 350.30 Tm (- Added app/src/main/res/drawable-nodpi/sink_or_swim_hero.png as the current hero image resource) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 340.60 Tm (  and inspected it as a 2800 by 2104 PNG at roughly 4.7 MB.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 330.90 Tm (- Explained that the current image was not as crisp as the user-provided Figma Card 36 reference) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 321.20 Tm (  because it was produced from lower-resolution local source material; upscaling increased pixel) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 311.50 Tm (  dimensions but could not recover original detail.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 301.80 Tm (- Provided the workflow for getting a node-specific Figma link: select the exact Card 36 or Sink) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 292.10 Tm (  Or Swim Component node, then use Copy/Paste as -> Copy link to selection so the URL includes) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 282.40 Tm (  node-id for targeted export.) Tj ET
+BT /F2 9.60 Tf 1 0 0 1 54.00 263.00 Tm (Validation and Checks Performed) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 253.30 Tm (- Ran ./gradlew :app:assembleDebug after the current July 20 committed state; the debug build) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 243.60 Tm (  completed successfully with BUILD SUCCESSFUL in 9 seconds.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 233.90 Tm (- Reviewed git status --short --branch before this PDF generation and confirmed main is clean) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 224.20 Tm (  and tracking origin/main at HEAD 152ee04.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 214.50 Tm (- Reviewed git log --date=local to confirm the July 20 commit order: e50671c for Settings) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 204.80 Tm (  profile layout, 9533ccc for bundled translations, bce86ab for auto logout/playback exception,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 195.10 Tm (  and 152ee04 for Sink or Swim detail routing.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 185.40 Tm (- Reviewed git show --stat for e50671c..HEAD and b3a1c45..HEAD to confirm the touched) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 175.70 Tm (  source/resource scope across CinerificApp.kt, CinerificDestinationScreen.kt,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 166.00 Tm (  CinerificHomeScreen.kt, CinerificRightSideNavBar.kt, CinerificIntroView.kt,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 156.30 Tm (  CinerificLanguage.kt, CinerificPlaybackSession.kt, string bundles, and sink_or_swim_hero.png.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 146.60 Tm (- Inspected sink_or_swim_hero.png with file and sips; the current resource is a non-interlaced) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 136.90 Tm (  RGB PNG at 2800 by 2104 pixels.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 127.20 Tm (- Earlier July 20 implementation checks installed and exercised the app on the Cinerific tablet) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 117.50 Tm (  AVD, including Settings language behavior, Auto log out return to sign-in, Sign out) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 107.80 Tm (  navigation, Sink or Swim detail reveal, scrollable metadata, library rows, and collapsed) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 98.10 Tm (  title-detail rail behavior.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 88.40 Tm (- Read all pre-existing Cinerific worklog PDFs before producing this artifact so the new worklog) Tj ET
+BT /F1 7.80 Tf 1 0 0 1 216.82 32.00 Tm (Cinerific Work Log - July 20, 2026 Page 3) Tj ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Length 7766 >>
+stream
+BT /F1 8.65 Tf 1 0 0 1 54.00 748.00 Tm (  follows the established naming, structure, length, and content type.) Tj ET
+BT /F2 9.60 Tf 1 0 0 1 54.00 728.60 Tm (Files Touched During July 20) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 718.90 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt: profile/sign-in routing, language) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 709.20 Tm (  provider wiring, auto logout state/timer handling, playback-session provider, idle touch) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 699.50 Tm (  tracking, and Sink or Swim destination routing.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 689.80 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt: Settings) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 680.10 Tm (  alignment/profile/sign-out layout, localized text usage, controlled Auto log out switch, Sink) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 670.40 Tm (  or Swim detail screen, gray-to-visible hero reveal, metadata panel, and library rows below the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 660.70 Tm (  detail content.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 651.00 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificHomeScreen.kt: localized Home/catalog text) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 641.30 Tm (  and Sink or Swim card tap routing into the dedicated detail destination.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 631.60 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificRightSideNavBar.kt: title-detail behavior) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 621.90 Tm (  that collapses the right rail to the burger-only state outside the main navigation frame) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 612.20 Tm (  destinations.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 602.50 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt: sign-in/profile flow support) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 592.80 Tm (  used by the Settings Sign out return path.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 583.10 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificLanguage.kt: new language enum,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 573.40 Tm (  composition local, and localized resource helper for English, Spanish, and Mandarin resources.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 563.70 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificPlaybackSession.kt: new playback-session) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 554.00 Tm (  controller and CompositionLocal used to suspend idle logout during future user-started) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 544.30 Tm (  full-title playback.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 534.60 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificViewportGenreNav.kt and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 524.90 Tm (  CinerificViewportNavBar.kt: localized viewport-nav/copy integration from the language bundle) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 515.20 Tm (  pass.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 505.50 Tm (- app/src/main/res/values/strings.xml, values-es/strings.xml, and values-zh-rCN/strings.xml:) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 495.80 Tm (  English, Spanish, and Mandarin string bundles for app-owned text.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 486.10 Tm (- app/src/main/res/drawable/settings_sign_out_base.xml: Sign out button base shape resource used) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 476.40 Tm (  by the refined Settings profile layout.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 466.70 Tm (- app/src/main/res/drawable-nodpi/sink_or_swim_hero.png: current Sink or Swim hero image) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 457.00 Tm (  resource for the dedicated component screen.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 447.30 Tm (- cinerific_PROJECT_SNAPSHOT.txt: refreshed generated snapshot as part of the Settings profile) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 437.60 Tm (  layout checkpoint.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 427.90 Tm (- cinerific_worklog_july 20.pdf: this generated daily worklog artifact at the repository root.) Tj ET
+BT /F2 9.60 Tf 1 0 0 1 54.00 408.50 Tm (Follow-Up Context) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 398.80 Tm (- Change AUTO_LOGOUT_TIMEOUT_MS from the current 10-second test value back to 600,000 ms before) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 389.10 Tm (  production or any broader demo where a 10-second idle timeout would feel broken.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 379.40 Tm (- When real movie/show playback components are added, wire actionable Play buttons into) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 369.70 Tm (  CinerificPlaybackSessionController before playback starts and clear the flag when playback) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 360.00 Tm (  ends, exits, or errors.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 350.30 Tm (- Replace sink_or_swim_hero.png with a true Figma Card 36 or Sink Or Swim Component export once) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 340.60 Tm (  the user provides a node-specific link or the exact node is targeted through the Figma) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 330.90 Tm (  connector; the current upscaled local image is not a true source-quality export.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 321.20 Tm (- Continue importing title components one at a time, starting from exact Figma node links, so) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 311.50 Tm (  the growing Movies/Shows library avoids low-resolution crops and mismatched metadata layouts.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 301.80 Tm (- Decide whether runtime language preference should be persisted across app restarts. The) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 292.10 Tm (  current bundled translation system supports real-time switching, but persistence can be) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 282.40 Tm (  layered into DataStore when desired.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 272.70 Tm (- Add automated UI checks later for sign-out routing, idle timeout, language switching, and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 263.00 Tm (  title-detail navigation once the prototype surfaces stabilize enough to justify test) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 253.30 Tm (  maintenance.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 243.60 Tm (- Generated worklog PDFs are still subject to the project ignore policy unless explicitly) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 233.90 Tm (  force-added, while the July 20 source state itself is already committed and aligned with) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 224.20 Tm (  origin/main at HEAD 152ee04.) Tj ET
+BT /F2 9.60 Tf 1 0 0 1 54.00 204.80 Tm (Output Artifact) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 195.10 Tm (- Filename: cinerific_worklog_july 20.pdf) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 185.40 Tm (- Created at the repository root in /Users/prahlin/gh/cinerific.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 175.70 Tm (- Follows the Cinerific filename convention established by cinerific_worklog_july 12.pdf and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 166.00 Tm (  continued by the July 14, July 15, July 16, July 18, and July 19 artifacts, including the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 156.30 Tm (  space before the day number.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 146.60 Tm (- Follows the established Alla Vostra/Prahlin/Cinerific daily worklog structure while keeping) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 136.90 Tm (  the body content specific to Cinerific work completed on Monday, July 20, 2026.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 127.20 Tm (- No external PDF dependency was installed; this artifact was generated with a small) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 117.50 Tm (  standard-library PDF writer in the same plain-text-readable spirit as the prior Cinerific) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 107.80 Tm (  worklogs.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 98.10 Tm (- Created this daily worklog PDF: cinerific_worklog_july 20.pdf.) Tj ET
+BT /F1 7.80 Tf 1 0 0 1 216.82 32.00 Tm (Cinerific Work Log - July 20, 2026 Page 4) Tj ET
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 11 0 R >>
+endobj
+13 0 obj
+<< /Title (Cinerific Android App Work Log - July 20, 2026) /Subject (Cinerific Android app development worklog) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260720210000-04'00') /ModDate (D:20260720210000-04'00') >>
+endobj
+xref
+0 14
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000137 00000 n 
+0000000207 00000 n 
+0000000282 00000 n 
+0000008813 00000 n 
+0000008949 00000 n 
+0000017361 00000 n 
+0000017497 00000 n 
+0000025688 00000 n 
+0000025825 00000 n 
+0000033644 00000 n 
+0000033782 00000 n 
+trailer
+<< /Size 14 /Root 1 0 R /Info 13 0 R >>
+startxref
+34101
+%%EOF
