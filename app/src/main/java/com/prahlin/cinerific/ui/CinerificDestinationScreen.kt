@@ -14,6 +14,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -122,6 +123,15 @@ private const val SETTINGS_SIGNED_IN_AVATAR_SIZE = 200.2f
 private const val SETTINGS_SIGNED_IN_NAME_WIDTH = 200f
 private const val SETTINGS_SIGNED_IN_NAME_HEIGHT = 40f
 private const val SETTINGS_SIGNED_IN_SIGN_OUT_GAP = 50f
+private const val DETAIL_FAVORITE_X = 994f
+private const val DETAIL_FAVORITE_Y = 30f
+private const val DETAIL_FAVORITE_WIDTH = 61f
+private const val DETAIL_FAVORITE_HEIGHT = 59f
+private const val DETAIL_TRANSPORT_X = 423f
+private const val DETAIL_TRANSPORT_Y = 367f
+private const val DETAIL_TRANSPORT_GAP = 50f
+private const val DETAIL_SIDE_CONTROL_SIZE = 74f
+private const val DETAIL_PLAY_CONTROL_SIZE = 100f
 private const val SINK_OR_SWIM_TITLE = "Sink or Swim"
 private const val DETAIL_CARD_REVEAL_DELAY_MS = 2400L
 private const val DETAIL_CARD_REVEAL_ANIMATION_MS = 900
@@ -769,6 +779,14 @@ internal fun CinerificProgramDetailsScreen(
         val genre = stringResource((details.genreLabel ?: program.genre).displayNameResId)
         val synopsis = details.synopsisResId?.let { stringResource(it) }.orEmpty()
         val heroDrawableId = detailHeroDrawableId(program.title) ?: program.drawableId
+        val playbackSessionController = LocalCinerificPlaybackSessionController.current
+        val previousProgramTitle = remember(program.title) {
+            adjacentDetailProgramTitle(program.title, offset = -1)
+        }
+        val nextProgramTitle = remember(program.title) {
+            adjacentDetailProgramTitle(program.title, offset = 1)
+        }
+        var isFavorited by rememberSaveable(program.title) { mutableStateOf(false) }
         var revealCard by remember(program.title) { mutableStateOf(false) }
 
         LaunchedEffect(program.title) {
@@ -795,7 +813,19 @@ internal fun CinerificProgramDetailsScreen(
                 revealProgress = cardReveal,
                 height = heroHeight,
                 heroDrawableId = heroDrawableId,
-                contentDescription = title
+                contentDescription = title,
+                scale = scale,
+                isFavorited = isFavorited,
+                onFavoriteToggled = { isFavorited = !isFavorited },
+                onPrevious = { onProgramSelected(previousProgramTitle) },
+                onPlay = {
+                    if (playbackSessionController.isUserInitiatedPlaybackActive) {
+                        playbackSessionController.onUserInitiatedPlaybackFinished()
+                    } else {
+                        playbackSessionController.onActionablePlayTapped()
+                    }
+                },
+                onNext = { onProgramSelected(nextProgramTitle) }
             )
             SinkOrSwimInfoPanel(
                 title = title,
@@ -822,7 +852,13 @@ private fun ProgramDetailRevealImage(
     revealProgress: Float,
     height: Dp,
     @DrawableRes heroDrawableId: Int,
-    contentDescription: String
+    contentDescription: String,
+    scale: Float,
+    isFavorited: Boolean,
+    onFavoriteToggled: () -> Unit,
+    onPrevious: () -> Unit,
+    onPlay: () -> Unit,
+    onNext: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -845,7 +881,133 @@ private fun ProgramDetailRevealImage(
                 .fillMaxSize()
                 .background(Color(0xFF6D6D6D).copy(alpha = (1f - revealProgress) * 0.58f))
         )
+        HeroFavoriteToggleButton(
+            isFavorited = isFavorited,
+            onFavoriteToggled = onFavoriteToggled,
+            scale = scale
+        )
+        HeroTransportControls(
+            scale = scale,
+            onPrevious = onPrevious,
+            onPlay = onPlay,
+            onNext = onNext
+        )
     }
+}
+
+@Composable
+private fun HeroFavoriteToggleButton(
+    isFavorited: Boolean,
+    onFavoriteToggled: () -> Unit,
+    scale: Float,
+    modifier: Modifier = Modifier
+) {
+    HeroImageControlButton(
+        drawableId = if (isFavorited) {
+            R.drawable.hero_control_favorite_active
+        } else {
+            R.drawable.hero_control_favorite
+        },
+        contentDescription = if (isFavorited) "Remove from favorites" else "Add to favorites",
+        width = destinationDp(DETAIL_FAVORITE_WIDTH, scale),
+        height = destinationDp(DETAIL_FAVORITE_HEIGHT, scale),
+        role = Role.Checkbox,
+        onClick = onFavoriteToggled,
+        modifier = modifier.offset(
+            x = destinationDp(DETAIL_FAVORITE_X, scale),
+            y = destinationDp(DETAIL_FAVORITE_Y, scale)
+        )
+    )
+}
+
+@Composable
+private fun HeroTransportControls(
+    scale: Float,
+    onPrevious: () -> Unit,
+    onPlay: () -> Unit,
+    onNext: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .offset(
+                x = destinationDp(DETAIL_TRANSPORT_X, scale),
+                y = destinationDp(DETAIL_TRANSPORT_Y, scale)
+            )
+            .width(
+                destinationDp(
+                    DETAIL_SIDE_CONTROL_SIZE +
+                        DETAIL_TRANSPORT_GAP +
+                        DETAIL_PLAY_CONTROL_SIZE +
+                        DETAIL_TRANSPORT_GAP +
+                        DETAIL_SIDE_CONTROL_SIZE,
+                    scale
+                )
+            )
+            .height(destinationDp(DETAIL_PLAY_CONTROL_SIZE, scale)),
+        horizontalArrangement = Arrangement.spacedBy(destinationDp(DETAIL_TRANSPORT_GAP, scale)),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        HeroImageControlButton(
+            drawableId = R.drawable.hero_control_prev,
+            contentDescription = "Previous title",
+            width = destinationDp(DETAIL_SIDE_CONTROL_SIZE, scale),
+            height = destinationDp(DETAIL_SIDE_CONTROL_SIZE, scale),
+            onClick = onPrevious
+        )
+        HeroImageControlButton(
+            drawableId = R.drawable.hero_control_play,
+            contentDescription = "Play title",
+            width = destinationDp(DETAIL_PLAY_CONTROL_SIZE, scale),
+            height = destinationDp(DETAIL_PLAY_CONTROL_SIZE, scale),
+            onClick = onPlay
+        )
+        HeroImageControlButton(
+            drawableId = R.drawable.hero_control_next,
+            contentDescription = "Next title",
+            width = destinationDp(DETAIL_SIDE_CONTROL_SIZE, scale),
+            height = destinationDp(DETAIL_SIDE_CONTROL_SIZE, scale),
+            onClick = onNext
+        )
+    }
+}
+
+@Composable
+private fun HeroImageControlButton(
+    @DrawableRes drawableId: Int,
+    contentDescription: String,
+    width: Dp,
+    height: Dp,
+    role: Role = Role.Button,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val pressedScale by animateFloatAsState(
+        targetValue = if (isPressed) 0.92f else 1f,
+        animationSpec = tween(durationMillis = 120),
+        label = "hero-control-press-scale"
+    )
+
+    Image(
+        painter = painterResource(drawableId),
+        contentDescription = contentDescription,
+        contentScale = ContentScale.Fit,
+        modifier = modifier
+            .width(width)
+            .height(height)
+            .graphicsLayer {
+                scaleX = pressedScale
+                scaleY = pressedScale
+            }
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                role = role,
+                onClick = onClick
+            )
+    )
 }
 
 @Composable
@@ -2484,6 +2646,22 @@ private fun detailProgramSpec(title: String): DestinationProgramSpec? {
         .flatMap { it.programs.asSequence() }
         .firstOrNull { it.title == title }
 }
+
+private fun adjacentDetailProgramTitle(title: String, offset: Int): String {
+    val titles = SinkOrSwimLibraryRowSpecs
+        .flatMap { it.programs }
+        .map { it.title }
+        .distinct()
+    if (titles.isEmpty()) return title
+
+    val currentIndex = titles.indexOf(title)
+    if (currentIndex == -1) return title
+
+    val nextIndex = (currentIndex + offset).floorMod(titles.size)
+    return titles[nextIndex]
+}
+
+private fun Int.floorMod(modulus: Int): Int = ((this % modulus) + modulus) % modulus
 
 private fun programDetails(
     title: String,

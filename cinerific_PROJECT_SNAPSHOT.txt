@@ -1,5 +1,5 @@
 Cinerific Android PROJECT SNAPSHOT
-Generated: Tue Jul 21 18:56:13 EDT 2026
+Generated: Tue Jul 21 19:39:36 EDT 2026
 Project directory: /Users/prahlin/gh/cinerific
 
 IMPORTANT INSTRUCTIONS FOR CHATGPT & CODEX:
@@ -101,6 +101,11 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/guest_name.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/help_card.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/help_hero.webp
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/hero_control_favorite.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/hero_control_favorite_active.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/hero_control_next.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/hero_control_play.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/hero_control_prev.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/home_hero_header.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/hungry_heart_card.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/hungry_heart_hero.webp
@@ -2291,6 +2296,11 @@ app/src/main/res/drawable-nodpi/guest_avatar.png | 16742 bytes | modified 2026-0
 app/src/main/res/drawable-nodpi/guest_name.png | 4474 bytes | modified 2026-07-14 20:49:08
 app/src/main/res/drawable-nodpi/help_card.webp | 199678 bytes | modified 2026-07-21 18:23:37
 app/src/main/res/drawable-nodpi/help_hero.webp | 575796 bytes | modified 2026-07-21 18:23:37
+app/src/main/res/drawable-nodpi/hero_control_favorite.png | 3571 bytes | modified 2026-07-21 19:39:02
+app/src/main/res/drawable-nodpi/hero_control_favorite_active.png | 2164 bytes | modified 2026-07-21 19:18:35
+app/src/main/res/drawable-nodpi/hero_control_next.png | 2099 bytes | modified 2026-07-21 19:08:43
+app/src/main/res/drawable-nodpi/hero_control_play.png | 2856 bytes | modified 2026-07-21 19:08:43
+app/src/main/res/drawable-nodpi/hero_control_prev.png | 2112 bytes | modified 2026-07-21 19:08:43
 app/src/main/res/drawable-nodpi/home_hero_header.png | 1382704 bytes | modified 2026-07-15 14:40:50
 app/src/main/res/drawable-nodpi/hungry_heart_card.webp | 189986 bytes | modified 2026-07-21 18:46:09
 app/src/main/res/drawable-nodpi/hungry_heart_hero.webp | 460974 bytes | modified 2026-07-21 18:46:09
