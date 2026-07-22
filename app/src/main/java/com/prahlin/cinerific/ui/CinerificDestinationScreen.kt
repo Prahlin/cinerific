@@ -137,6 +137,15 @@ private const val DETAIL_LOADING_SPINNER_WIDTH = 190f
 private const val SINK_OR_SWIM_TITLE = "Sink or Swim"
 private const val DETAIL_CARD_REVEAL_DELAY_MS = 2400L
 private const val DETAIL_CARD_REVEAL_ANIMATION_MS = 900
+internal const val CINERIFIC_FAVORITES_CAPACITY = 5
+private const val FAVORITES_PLACEHOLDER_COUNT = CINERIFIC_FAVORITES_CAPACITY
+private const val FAVORITES_CARD_WIDTH = 198.786f
+private const val FAVORITES_CARD_HEIGHT = 138.85f
+private const val FAVORITES_CARD_RADIUS = 6.619f
+private const val FAVORITES_CARD_BORDER = 3.971f
+private const val FAVORITES_CARD_SHADOW = 10.59f
+private const val FAVORITES_REMOVE_BUTTON_SIZE = 33.131f
+private const val FAVORITES_REMOVE_BUTTON_MARGIN = 6.619f
 
 private val DestinationTop = Color(0xFF080007)
 private val DestinationMid = Color(0xFF23001F)
@@ -158,6 +167,8 @@ internal fun CinerificDestinationScreen(
     autoLogoutEnabled: Boolean = false,
     onAutoLogoutEnabledChange: (Boolean) -> Unit = {},
     onSignOut: () -> Unit = {},
+    favoriteProgramTitles: List<String> = emptyList(),
+    onFavoriteToggled: (String) -> Unit = {},
     onProgramSelected: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -180,7 +191,12 @@ internal fun CinerificDestinationScreen(
             onProgramSelected = onProgramSelected,
             modifier = modifier
         )
-        CinerificDestination.Favorites -> CinerificFavoritesScreen(modifier = modifier)
+        CinerificDestination.Favorites -> CinerificFavoritesScreen(
+            favoriteProgramTitles = favoriteProgramTitles,
+            onFavoriteToggled = onFavoriteToggled,
+            onProgramSelected = onProgramSelected,
+            modifier = modifier
+        )
         CinerificDestination.Settings -> CinerificSettingsScreen(
             signedInProfile = signedInProfile,
             selectedLanguage = selectedLanguage,
@@ -196,6 +212,8 @@ internal fun CinerificDestinationScreen(
         )
         CinerificDestination.ProgramDetails -> CinerificProgramDetailsScreen(
             programTitle = SINK_OR_SWIM_TITLE,
+            favoriteProgramTitles = favoriteProgramTitles,
+            onFavoriteToggled = onFavoriteToggled,
             onProgramSelected = onProgramSelected,
             modifier = modifier
         )
@@ -759,6 +777,8 @@ private fun DestinationProgramCard(
 @Composable
 internal fun CinerificProgramDetailsScreen(
     programTitle: String,
+    favoriteProgramTitles: List<String> = emptyList(),
+    onFavoriteToggled: (String) -> Unit = {},
     onProgramSelected: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -788,7 +808,7 @@ internal fun CinerificProgramDetailsScreen(
         val nextProgramTitle = remember(program.title) {
             adjacentDetailProgramTitle(program.title, offset = 1)
         }
-        var isFavorited by rememberSaveable(program.title) { mutableStateOf(false) }
+        val isFavorited = program.title in favoriteProgramTitles
         val cardReveal = remember(program.title) { Animatable(0f) }
 
         LaunchedEffect(program.title) {
@@ -816,7 +836,7 @@ internal fun CinerificProgramDetailsScreen(
                 contentDescription = title,
                 scale = scale,
                 isFavorited = isFavorited,
-                onFavoriteToggled = { isFavorited = !isFavorited },
+                onFavoriteToggled = { onFavoriteToggled(program.title) },
                 onPrevious = { onProgramSelected(previousProgramTitle) },
                 onPlay = {
                     if (playbackSessionController.isUserInitiatedPlaybackActive) {
@@ -1440,7 +1460,12 @@ private fun CinerificSettingsScreen(
 }
 
 @Composable
-private fun CinerificFavoritesScreen(modifier: Modifier = Modifier) {
+private fun CinerificFavoritesScreen(
+    favoriteProgramTitles: List<String>,
+    onFavoriteToggled: (String) -> Unit,
+    onProgramSelected: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     BoxWithConstraints(
         modifier = modifier
             .fillMaxSize()
@@ -1455,6 +1480,15 @@ private fun CinerificFavoritesScreen(modifier: Modifier = Modifier) {
         val statusBarTop = with(density) { WindowInsets.statusBars.getTop(this).toDp() }
         val topBarHeight = cinerificTopRailHeight(maxWidth, maxHeight, statusBarTop)
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
+        val favoritePrograms = remember(favoriteProgramTitles) {
+            favoriteProgramSpecs(favoriteProgramTitles)
+        }
+        val favoriteMovies = favoritePrograms
+            .filterNot { it.isShow }
+            .take(FAVORITES_PLACEHOLDER_COUNT)
+        val favoriteShows = favoritePrograms
+            .filter { it.isShow }
+            .take(FAVORITES_PLACEHOLDER_COUNT)
 
         Column(
             modifier = Modifier
@@ -1470,12 +1504,18 @@ private fun CinerificFavoritesScreen(modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(destinationDp(61f, scale)))
             FavoritesPlaceholderSection(
                 title = stringResource(R.string.destination_movies),
+                programs = favoriteMovies,
+                onFavoriteToggled = onFavoriteToggled,
+                onProgramSelected = onProgramSelected,
                 horizontalPadding = horizontalPadding,
                 scale = scale
             )
             Spacer(modifier = Modifier.height(destinationDp(82f, scale)))
             FavoritesPlaceholderSection(
                 title = stringResource(R.string.destination_shows),
+                programs = favoriteShows,
+                onFavoriteToggled = onFavoriteToggled,
+                onProgramSelected = onProgramSelected,
                 horizontalPadding = horizontalPadding,
                 scale = scale
             )
@@ -1498,6 +1538,9 @@ private fun CinerificFavoritesScreen(modifier: Modifier = Modifier) {
 @Composable
 private fun FavoritesPlaceholderSection(
     title: String,
+    programs: List<DestinationProgramSpec>,
+    onFavoriteToggled: (String) -> Unit,
+    onProgramSelected: (String) -> Unit,
     horizontalPadding: Dp,
     scale: Float
 ) {
@@ -1518,25 +1561,98 @@ private fun FavoritesPlaceholderSection(
         Row(
             horizontalArrangement = Arrangement.spacedBy(destinationDp(50f, scale))
         ) {
-            repeat(5) {
-                FavoritePlaceholderCard(scale = scale)
+            repeat(FAVORITES_PLACEHOLDER_COUNT) { index ->
+                FavoritePlaceholderCard(
+                    program = programs.getOrNull(index),
+                    scale = scale,
+                    onFavoriteToggled = onFavoriteToggled,
+                    onProgramSelected = onProgramSelected
+                )
             }
         }
     }
 }
 
 @Composable
-private fun FavoritePlaceholderCard(scale: Float) {
-    val shape = RoundedCornerShape(destinationDp(6.619f, scale))
+private fun FavoritePlaceholderCard(
+    program: DestinationProgramSpec?,
+    scale: Float,
+    onFavoriteToggled: (String) -> Unit,
+    onProgramSelected: (String) -> Unit
+) {
+    val shape = RoundedCornerShape(destinationDp(FAVORITES_CARD_RADIUS, scale))
+    val title = program?.let { stringResource(it.titleResId) }
+    val cardModifier = Modifier
+        .width(destinationDp(FAVORITES_CARD_WIDTH, scale))
+        .height(destinationDp(FAVORITES_CARD_HEIGHT, scale))
+        .shadow(destinationDp(FAVORITES_CARD_SHADOW, scale), shape, clip = false)
+        .clip(shape)
+        .background(Color.Black.copy(alpha = 0.08f))
+        .border(destinationDp(FAVORITES_CARD_BORDER, scale), Color.Black, shape)
+    val actionableModifier = if (program?.hasDetailHero == true) {
+        cardModifier.clickable {
+            onProgramSelected(program.title)
+        }
+    } else {
+        cardModifier
+    }
 
     Box(
-        modifier = Modifier
-            .width(destinationDp(198.786f, scale))
-            .height(destinationDp(138.85f, scale))
-            .shadow(destinationDp(10.59f, scale), shape, clip = false)
-            .clip(shape)
-            .background(Color.Black.copy(alpha = 0.08f))
-            .border(destinationDp(3.971f, scale), Color.Black, shape)
+        modifier = actionableModifier
+    ) {
+        if (program != null) {
+            Image(
+                painter = painterResource(program.drawableId),
+                contentDescription = title,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.FillBounds
+            )
+            FavoriteRemoveButton(
+                title = title.orEmpty(),
+                scale = scale,
+                onClick = { onFavoriteToggled(program.title) },
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .offset(
+                        x = -destinationDp(FAVORITES_REMOVE_BUTTON_MARGIN, scale),
+                        y = destinationDp(FAVORITES_REMOVE_BUTTON_MARGIN, scale)
+                    )
+            )
+        }
+    }
+}
+
+@Composable
+private fun FavoriteRemoveButton(
+    title: String,
+    scale: Float,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val pressedScale by animateFloatAsState(
+        targetValue = if (isPressed) 0.9f else 1f,
+        animationSpec = tween(durationMillis = 120),
+        label = "favorite-remove-press-scale"
+    )
+
+    Image(
+        painter = painterResource(R.drawable.favorite_remove_button),
+        contentDescription = "Remove $title from favorites",
+        contentScale = ContentScale.FillBounds,
+        modifier = modifier
+            .size(destinationDp(FAVORITES_REMOVE_BUTTON_SIZE, scale))
+            .graphicsLayer {
+                scaleX = pressedScale
+                scaleY = pressedScale
+            }
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                role = Role.Button,
+                onClick = onClick
+            )
     )
 }
 
@@ -2659,6 +2775,26 @@ private fun detailProgramSpec(title: String): DestinationProgramSpec? {
         .asSequence()
         .flatMap { it.programs.asSequence() }
         .firstOrNull { it.title == title }
+}
+
+internal fun cinerificProgramIsShow(title: String): Boolean {
+    return detailProgramSpec(title)?.isShow ?: (title in PrototypeShowSmallTitleOrder)
+}
+
+internal fun cinerificFilledFavoritePlaceholderCount(
+    titles: List<String>,
+    isShow: Boolean
+): Int {
+    return favoriteProgramSpecs(titles)
+        .filter { it.isShow == isShow }
+        .take(CINERIFIC_FAVORITES_CAPACITY)
+        .count()
+}
+
+private fun favoriteProgramSpecs(titles: List<String>): List<DestinationProgramSpec> {
+    return titles
+        .distinct()
+        .mapNotNull { detailProgramSpec(it) }
 }
 
 private fun adjacentDetailProgramTitle(title: String, offset: Int): String {

@@ -3,6 +3,7 @@ package com.prahlin.cinerific.ui
 import android.graphics.BitmapFactory
 import android.os.SystemClock
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -26,7 +28,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameMillis
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,6 +42,7 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.lerp as lerpColor
@@ -46,9 +52,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.prahlin.cinerific.R
 import kotlinx.coroutines.delay
@@ -66,6 +75,19 @@ private const val FINAL_SETTLE_START_MS = LOGO_ENTRY_END_MS
 private const val FINAL_SETTLE_END_MS = 4812
 private const val BOOT_ANIMATION_MS = FINAL_SETTLE_END_MS
 private const val AUTO_LOGOUT_TIMEOUT_MS = 10_000L
+private const val FAVORITES_FULL_PROMPT_X = 977f
+private const val FAVORITES_FULL_PROMPT_Y = 92f
+private const val FAVORITES_FULL_PROMPT_WIDTH = 95f
+private const val FAVORITES_FULL_PROMPT_HEIGHT = 139.25f
+private const val FAVORITES_FULL_PROMPT_BOX_TOP = 20f
+private const val FAVORITES_FULL_PROMPT_BOX_HEIGHT = 119f
+private const val FAVORITES_FULL_PROMPT_RADIUS = 20f
+private const val FAVORITES_FULL_PROMPT_STROKE = 3f
+private const val FAVORITES_FULL_PROMPT_TEXT_X = 13.5f
+private const val FAVORITES_FULL_PROMPT_TEXT_Y = 37f
+private const val FAVORITES_FULL_PROMPT_TEXT_WIDTH = 68f
+private const val FAVORITES_FULL_PROMPT_TEXT_HEIGHT = 84f
+private const val FAVORITES_FULL_PROMPT_VISIBLE_MS = 2200L
 
 private val ColorFrame1Background = Color(0xFF000000)
 private val ColorFrame2Background = Color(0xFF62070D)
@@ -74,6 +96,8 @@ private val ColorFrame4Background = Color(0xFF1F1F1F)
 private val ColorIntroGradientTop = Color(0xFF050000)
 private val ColorIntroGradientCenter = Color(0xFF62070D)
 private val ColorIntroGradientBottom = Color(0xFF100102)
+private val ColorFavoritesFullPromptFill = Color(0xFF303030)
+private val ColorFavoritesFullPromptAccent = Color(0xFF858585)
 
 @Composable
 fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
@@ -144,6 +168,8 @@ private fun CinerificMainExperience(
 ) {
     var destination by remember { mutableStateOf(CinerificDestination.Home) }
     var selectedProgramTitle by rememberSaveable { mutableStateOf("Sink or Swim") }
+    var favoriteProgramTitles by rememberSaveable { mutableStateOf(emptyList<String>()) }
+    var favoritesFullPromptRequestId by remember { mutableStateOf(0) }
     var autoLogoutEnabled by rememberSaveable { mutableStateOf(false) }
     var userInitiatedPlaybackActive by remember { mutableStateOf(false) }
     var lastInteractionMillis by remember { mutableStateOf(SystemClock.uptimeMillis()) }
@@ -178,6 +204,25 @@ private fun CinerificMainExperience(
         destination = CinerificDestination.ProgramDetails
     }
 
+    fun toggleFavoriteProgram(title: String) {
+        if (title in favoriteProgramTitles) {
+            favoriteProgramTitles = favoriteProgramTitles - title
+            return
+        }
+
+        val isShow = cinerificProgramIsShow(title)
+        val filledSlots = cinerificFilledFavoritePlaceholderCount(
+            titles = favoriteProgramTitles,
+            isShow = isShow
+        )
+        if (filledSlots >= CINERIFIC_FAVORITES_CAPACITY) {
+            favoritesFullPromptRequestId += 1
+            return
+        }
+
+        favoriteProgramTitles = favoriteProgramTitles + title
+    }
+
     CompositionLocalProvider(LocalCinerificPlaybackSessionController provides playbackSessionController) {
         Box(
             modifier = Modifier
@@ -210,11 +255,15 @@ private fun CinerificMainExperience(
                         lastInteractionMillis = SystemClock.uptimeMillis()
                     },
                     onSignOut = onSignOut,
+                    favoriteProgramTitles = favoriteProgramTitles,
+                    onFavoriteToggled = ::toggleFavoriteProgram,
                     onProgramSelected = ::showProgramDetails,
                     modifier = Modifier.fillMaxSize()
                 )
                 CinerificDestination.ProgramDetails -> CinerificProgramDetailsScreen(
                     programTitle = selectedProgramTitle,
+                    favoriteProgramTitles = favoriteProgramTitles,
+                    onFavoriteToggled = ::toggleFavoriteProgram,
                     onProgramSelected = ::showProgramDetails,
                     modifier = Modifier.fillMaxSize()
                 )
@@ -225,7 +274,129 @@ private fun CinerificMainExperience(
                 onDestinationSelected = { destination = it },
                 modifier = Modifier.fillMaxSize()
             )
+
+            FavoritesFullPromptOverlay(
+                requestId = favoritesFullPromptRequestId,
+                modifier = Modifier.fillMaxSize()
+            )
         }
+    }
+}
+
+@Composable
+private fun FavoritesFullPromptOverlay(
+    requestId: Int,
+    modifier: Modifier = Modifier
+) {
+    var visible by remember { mutableStateOf(false) }
+
+    LaunchedEffect(requestId) {
+        if (requestId == 0) return@LaunchedEffect
+        visible = true
+        delay(FAVORITES_FULL_PROMPT_VISIBLE_MS)
+        visible = false
+    }
+
+    val alpha by animateFloatAsState(
+        targetValue = if (visible) 1f else 0f,
+        animationSpec = tween(durationMillis = if (visible) 140 else 190),
+        label = "favorites-full-prompt-alpha"
+    )
+    val promptScale by animateFloatAsState(
+        targetValue = if (visible) 1f else 0.94f,
+        animationSpec = tween(durationMillis = if (visible) 140 else 190),
+        label = "favorites-full-prompt-scale"
+    )
+
+    if (requestId == 0 || (!visible && alpha <= 0.01f)) return
+
+    BoxWithConstraints(modifier = modifier) {
+        val stageScale = maxWidth.value / FIGMA_FRAME_WIDTH
+        FavoritesFullPromptBubble(
+            stageScale = stageScale,
+            modifier = Modifier
+                .absoluteOffset(
+                    x = (FAVORITES_FULL_PROMPT_X * stageScale).dp,
+                    y = (FAVORITES_FULL_PROMPT_Y * stageScale).dp
+                )
+                .graphicsLayer {
+                    this.alpha = alpha
+                    scaleX = promptScale
+                    scaleY = promptScale
+                    transformOrigin = TransformOrigin(0.5f, 0f)
+                }
+        )
+    }
+}
+
+@Composable
+private fun FavoritesFullPromptBubble(
+    stageScale: Float,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier.requiredSize(
+            width = (FAVORITES_FULL_PROMPT_WIDTH * stageScale).dp,
+            height = (FAVORITES_FULL_PROMPT_HEIGHT * stageScale).dp
+        )
+    ) {
+        Canvas(modifier = Modifier.fillMaxSize()) {
+            val xScale = size.width / FAVORITES_FULL_PROMPT_WIDTH
+            val yScale = size.height / FAVORITES_FULL_PROMPT_HEIGHT
+            val pointer = Path().apply {
+                moveTo(47.5f * xScale, 0f)
+                lineTo(63f * xScale, FAVORITES_FULL_PROMPT_BOX_TOP * yScale)
+                lineTo(32f * xScale, FAVORITES_FULL_PROMPT_BOX_TOP * yScale)
+                close()
+            }
+            drawPath(pointer, ColorFavoritesFullPromptAccent)
+            drawRoundRect(
+                color = ColorFavoritesFullPromptFill,
+                topLeft = Offset(0f, FAVORITES_FULL_PROMPT_BOX_TOP * yScale),
+                size = Size(
+                    width = FAVORITES_FULL_PROMPT_WIDTH * xScale,
+                    height = FAVORITES_FULL_PROMPT_BOX_HEIGHT * yScale
+                ),
+                cornerRadius = CornerRadius(
+                    x = FAVORITES_FULL_PROMPT_RADIUS * xScale,
+                    y = FAVORITES_FULL_PROMPT_RADIUS * yScale
+                )
+            )
+            drawRoundRect(
+                color = ColorFavoritesFullPromptAccent,
+                topLeft = Offset(
+                    x = FAVORITES_FULL_PROMPT_STROKE * xScale / 2f,
+                    y = FAVORITES_FULL_PROMPT_BOX_TOP * yScale +
+                        FAVORITES_FULL_PROMPT_STROKE * yScale / 2f
+                ),
+                size = Size(
+                    width = (FAVORITES_FULL_PROMPT_WIDTH - FAVORITES_FULL_PROMPT_STROKE) * xScale,
+                    height = (FAVORITES_FULL_PROMPT_BOX_HEIGHT - FAVORITES_FULL_PROMPT_STROKE) * yScale
+                ),
+                cornerRadius = CornerRadius(
+                    x = FAVORITES_FULL_PROMPT_RADIUS * xScale,
+                    y = FAVORITES_FULL_PROMPT_RADIUS * yScale
+                ),
+                style = Stroke(width = FAVORITES_FULL_PROMPT_STROKE * min(xScale, yScale))
+            )
+        }
+        Text(
+            text = "You've\nfilled\nup on\nfavorites!",
+            color = ColorFavoritesFullPromptAccent,
+            fontSize = (14f * stageScale).sp,
+            fontWeight = FontWeight.Black,
+            lineHeight = (21.252f * stageScale).sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .absoluteOffset(
+                    x = (FAVORITES_FULL_PROMPT_TEXT_X * stageScale).dp,
+                    y = (FAVORITES_FULL_PROMPT_TEXT_Y * stageScale).dp
+                )
+                .requiredSize(
+                    width = (FAVORITES_FULL_PROMPT_TEXT_WIDTH * stageScale).dp,
+                    height = (FAVORITES_FULL_PROMPT_TEXT_HEIGHT * stageScale).dp
+                )
+        )
     }
 }
 
