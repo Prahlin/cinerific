@@ -1,5 +1,5 @@
 Cinerific Android PROJECT SNAPSHOT
-Generated: Tue Jul 21 22:37:10 EDT 2026
+Generated: Tue Jul 21 23:18:53 EDT 2026
 Project directory: /Users/prahlin/gh/cinerific
 
 IMPORTANT INSTRUCTIONS FOR CHATGPT & CODEX:
@@ -77,6 +77,7 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificViewportModeNav.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificViewportNavBar.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificViewportNavShared.kt
+/Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/HeroPresentationTextAnimation.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/theme
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/theme/Theme.kt
 /Users/prahlin/gh/cinerific/app/src/main/res
@@ -118,6 +119,20 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/ignition_hero.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/incan_descent_card.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/incan_descent_hero.webp
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/infatuation_presentation_default.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/infatuation_presentation_variant_2.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/infatuation_presentation_variant_3.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/infatuation_presentation_variant_4.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/infatuation_presentation_variant_5.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/infatuation_presentation_variant_6.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/infatuation_presentation_variant_7.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/into_the_wild_presentation_default.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_2.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_3.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_4.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_5.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_6.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_7.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/janny_avatar.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/janny_name.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/joyriders_card.webp
@@ -126,6 +141,13 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/laughing_matters_hero.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/light_as_a_feather_card.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/light_as_a_feather_hero.webp
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/light_as_air_presentation_default.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_2.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_3.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_4.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_5.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_6.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_7.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_animation_default.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_animation_variant_2.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_animation_variant_3.png
@@ -171,6 +193,13 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/martin_name.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/moments_card.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/moments_hero.webp
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/morbid_temptations_presentation_default.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_2.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_3.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_4.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_5.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_6.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_7.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/nav_icon_favorites.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/nav_icon_home.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/nav_icon_movies.png
@@ -2487,6 +2516,20 @@ app/src/main/res/drawable-nodpi/ignition_card.webp | 81252 bytes | modified 2026
 app/src/main/res/drawable-nodpi/ignition_hero.webp | 176090 bytes | modified 2026-07-21 18:23:35
 app/src/main/res/drawable-nodpi/incan_descent_card.webp | 102166 bytes | modified 2026-07-21 18:46:42
 app/src/main/res/drawable-nodpi/incan_descent_hero.webp | 244820 bytes | modified 2026-07-21 18:46:41
+app/src/main/res/drawable-nodpi/infatuation_presentation_default.png | 3545 bytes | modified 2026-07-21 23:07:55
+app/src/main/res/drawable-nodpi/infatuation_presentation_variant_2.png | 27626 bytes | modified 2026-07-21 23:07:55
+app/src/main/res/drawable-nodpi/infatuation_presentation_variant_3.png | 39225 bytes | modified 2026-07-21 23:07:56
+app/src/main/res/drawable-nodpi/infatuation_presentation_variant_4.png | 44416 bytes | modified 2026-07-21 23:07:56
+app/src/main/res/drawable-nodpi/infatuation_presentation_variant_5.png | 39473 bytes | modified 2026-07-21 23:07:57
+app/src/main/res/drawable-nodpi/infatuation_presentation_variant_6.png | 27474 bytes | modified 2026-07-21 23:07:57
+app/src/main/res/drawable-nodpi/infatuation_presentation_variant_7.png | 3606 bytes | modified 2026-07-21 23:07:57
+app/src/main/res/drawable-nodpi/into_the_wild_presentation_default.png | 3649 bytes | modified 2026-07-21 23:09:03
+app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_2.png | 23691 bytes | modified 2026-07-21 23:09:03
+app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_3.png | 39574 bytes | modified 2026-07-21 23:09:04
+app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_4.png | 46204 bytes | modified 2026-07-21 23:09:04
+app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_5.png | 39574 bytes | modified 2026-07-21 23:09:04
+app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_6.png | 23691 bytes | modified 2026-07-21 23:09:05
+app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_7.png | 3640 bytes | modified 2026-07-21 23:09:05
 app/src/main/res/drawable-nodpi/janny_avatar.png | 19441 bytes | modified 2026-07-14 20:32:22
 app/src/main/res/drawable-nodpi/janny_name.png | 4014 bytes | modified 2026-07-14 20:49:07
 app/src/main/res/drawable-nodpi/joyriders_card.webp | 113382 bytes | modified 2026-07-21 18:46:27
@@ -2495,6 +2538,13 @@ app/src/main/res/drawable-nodpi/laughing_matters_card.webp | 141448 bytes | modi
 app/src/main/res/drawable-nodpi/laughing_matters_hero.webp | 331346 bytes | modified 2026-07-21 18:46:17
 app/src/main/res/drawable-nodpi/light_as_a_feather_card.webp | 53528 bytes | modified 2026-07-21 18:46:40
 app/src/main/res/drawable-nodpi/light_as_a_feather_hero.webp | 109092 bytes | modified 2026-07-21 18:46:40
+app/src/main/res/drawable-nodpi/light_as_air_presentation_default.png | 5927 bytes | modified 2026-07-21 23:06:38
+app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_2.png | 51156 bytes | modified 2026-07-21 23:06:39
+app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_3.png | 67752 bytes | modified 2026-07-21 23:06:39
+app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_4.png | 76085 bytes | modified 2026-07-21 23:06:40
+app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_5.png | 67752 bytes | modified 2026-07-21 23:06:40
+app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_6.png | 50287 bytes | modified 2026-07-21 23:06:41
+app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_7.png | 4828 bytes | modified 2026-07-21 23:06:41
 app/src/main/res/drawable-nodpi/loading_spinner_animation_default.png | 53041 bytes | modified 2026-07-21 20:01:15
 app/src/main/res/drawable-nodpi/loading_spinner_animation_variant_2.png | 57968 bytes | modified 2026-07-21 20:01:15
 app/src/main/res/drawable-nodpi/loading_spinner_animation_variant_3.png | 53458 bytes | modified 2026-07-21 20:01:15
@@ -2540,6 +2590,13 @@ app/src/main/res/drawable-nodpi/martin_avatar.png | 19773 bytes | modified 2026-
 app/src/main/res/drawable-nodpi/martin_name.png | 4583 bytes | modified 2026-07-14 20:49:07
 app/src/main/res/drawable-nodpi/moments_card.webp | 131752 bytes | modified 2026-07-21 18:46:23
 app/src/main/res/drawable-nodpi/moments_hero.webp | 352530 bytes | modified 2026-07-21 18:46:23
+app/src/main/res/drawable-nodpi/morbid_temptations_presentation_default.png | 4151 bytes | modified 2026-07-21 23:10:15
+app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_2.png | 24189 bytes | modified 2026-07-21 23:10:15
+app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_3.png | 39269 bytes | modified 2026-07-21 23:10:16
+app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_4.png | 46035 bytes | modified 2026-07-21 23:10:16
+app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_5.png | 39269 bytes | modified 2026-07-21 23:10:17
+app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_6.png | 24189 bytes | modified 2026-07-21 23:10:17
+app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_7.png | 4222 bytes | modified 2026-07-21 23:10:18
 app/src/main/res/drawable-nodpi/nav_icon_favorites.png | 483 bytes | modified 2026-07-16 20:04:02
 app/src/main/res/drawable-nodpi/nav_icon_home.png | 321 bytes | modified 2026-07-16 20:04:02
 app/src/main/res/drawable-nodpi/nav_icon_movies.png | 290 bytes | modified 2026-07-16 20:04:02

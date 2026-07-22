@@ -38,6 +38,11 @@ import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -123,12 +128,23 @@ internal fun CinerificHomeScreen(
 
 @Composable
 private fun HomeHeroHeader(scale: Float) {
+    var activeReelIndex by remember { mutableStateOf(0) }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(HERO_REEL_VIEWPORT_ASPECT)
     ) {
-        HeroReelVideo(modifier = Modifier.fillMaxSize())
+        HeroReelVideo(
+            onReelChanged = { activeReelIndex = it },
+            modifier = Modifier.fillMaxSize()
+        )
+
+        HeroPresentationTextAnimation(
+            presentation = HeroPresentation.forReelIndex(activeReelIndex),
+            playKey = activeReelIndex,
+            modifier = Modifier.fillMaxSize()
+        )
 
         Image(
             painter = painterResource(R.drawable.logo_simple_large),
@@ -143,11 +159,22 @@ private fun HomeHeroHeader(scale: Float) {
 }
 
 @Composable
-private fun HeroReelVideo(modifier: Modifier = Modifier) {
+private fun HeroReelVideo(
+    onReelChanged: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
     val context = LocalContext.current
+    val currentOnReelChanged by rememberUpdatedState(onReelChanged)
     AndroidView(
         modifier = modifier,
-        factory = { LoopingHeroVideoView(context) }
+        factory = {
+            LoopingHeroVideoView(context).apply {
+                reelChangedListener = { currentOnReelChanged(it) }
+            }
+        },
+        update = { view ->
+            view.reelChangedListener = { currentOnReelChanged(it) }
+        }
     )
 }
 
@@ -254,6 +281,7 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context), Tex
     private var currentVideoIndex = 0
     private var videoWidth = 0
     private var videoHeight = 0
+    var reelChangedListener: ((Int) -> Unit)? = null
 
     init {
         setBackgroundColor(android.graphics.Color.BLACK)
@@ -289,6 +317,7 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context), Tex
     private fun startVideo() {
         val surface = videoSurface ?: return
         releaseVideo()
+        reelChangedListener?.invoke(currentVideoIndex)
 
         val player = MediaPlayer()
         mediaPlayer = player
