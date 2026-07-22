@@ -3,6 +3,7 @@ package com.prahlin.cinerific.ui
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.Spring
@@ -132,6 +133,7 @@ private const val DETAIL_TRANSPORT_Y = 367f
 private const val DETAIL_TRANSPORT_GAP = 50f
 private const val DETAIL_SIDE_CONTROL_SIZE = 74f
 private const val DETAIL_PLAY_CONTROL_SIZE = 100f
+private const val DETAIL_LOADING_SPINNER_WIDTH = 190f
 private const val SINK_OR_SWIM_TITLE = "Sink or Swim"
 private const val DETAIL_CARD_REVEAL_DELAY_MS = 2400L
 private const val DETAIL_CARD_REVEAL_ANIMATION_MS = 900
@@ -787,21 +789,19 @@ internal fun CinerificProgramDetailsScreen(
             adjacentDetailProgramTitle(program.title, offset = 1)
         }
         var isFavorited by rememberSaveable(program.title) { mutableStateOf(false) }
-        var revealCard by remember(program.title) { mutableStateOf(false) }
+        val cardReveal = remember(program.title) { Animatable(0f) }
 
         LaunchedEffect(program.title) {
+            cardReveal.snapTo(0f)
             delay(DETAIL_CARD_REVEAL_DELAY_MS)
-            revealCard = true
+            cardReveal.animateTo(
+                targetValue = 1f,
+                animationSpec = tween(
+                    durationMillis = DETAIL_CARD_REVEAL_ANIMATION_MS,
+                    easing = FastOutSlowInEasing
+                )
+            )
         }
-
-        val cardReveal by animateFloatAsState(
-            targetValue = if (revealCard) 1f else 0f,
-            animationSpec = tween(
-                durationMillis = DETAIL_CARD_REVEAL_ANIMATION_MS,
-                easing = FastOutSlowInEasing
-            ),
-            label = "program-card-reveal"
-        )
 
         Column(
             modifier = Modifier
@@ -810,7 +810,7 @@ internal fun CinerificProgramDetailsScreen(
                 .background(DestinationBottom)
         ) {
             ProgramDetailRevealImage(
-                revealProgress = cardReveal,
+                revealProgress = cardReveal.value,
                 height = heroHeight,
                 heroDrawableId = heroDrawableId,
                 contentDescription = title,
@@ -860,6 +860,11 @@ private fun ProgramDetailRevealImage(
     onPlay: () -> Unit,
     onNext: () -> Unit
 ) {
+    val heroFullyVisible = revealProgress >= 0.999f
+    val spinnerHeight = DETAIL_LOADING_SPINNER_WIDTH *
+        CINERIFIC_LOADING_SPINNER_CANVAS_HEIGHT /
+        CINERIFIC_LOADING_SPINNER_CANVAS_WIDTH
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -881,17 +886,26 @@ private fun ProgramDetailRevealImage(
                 .fillMaxSize()
                 .background(Color(0xFF6D6D6D).copy(alpha = (1f - revealProgress) * 0.58f))
         )
-        HeroFavoriteToggleButton(
-            isFavorited = isFavorited,
-            onFavoriteToggled = onFavoriteToggled,
-            scale = scale
-        )
-        HeroTransportControls(
-            scale = scale,
-            onPrevious = onPrevious,
-            onPlay = onPlay,
-            onNext = onNext
-        )
+        if (heroFullyVisible) {
+            HeroFavoriteToggleButton(
+                isFavorited = isFavorited,
+                onFavoriteToggled = onFavoriteToggled,
+                scale = scale
+            )
+            HeroTransportControls(
+                scale = scale,
+                onPrevious = onPrevious,
+                onPlay = onPlay,
+                onNext = onNext
+            )
+        } else {
+            CinerificLoadingSpinner(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .width(destinationDp(DETAIL_LOADING_SPINNER_WIDTH, scale))
+                    .height(destinationDp(spinnerHeight, scale))
+            )
+        }
     }
 }
 

@@ -5,10 +5,6 @@ import android.os.SystemClock
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -347,16 +343,6 @@ private fun IntroFrame3FromFigma() {
 @Composable
 private fun SignInFrameFromFigma() {
     // Node 478:6975 + Star Overlay 482:7696.
-    val spinTransition = rememberInfiniteTransition(label = "spinner")
-    val spin by spinTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 360f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 1800, easing = LinearEasing)
-        ),
-        label = "spinner-rot"
-    )
-
     FigmaStage(background = solidBrush(ColorFrame4Background)) { scale ->
         PromoBackgroundLayer(
             scale = scale,
@@ -382,35 +368,17 @@ private fun SignInFrameFromFigma() {
                 )
         )
 
-        // Node 485:7113 loading spinner instance at x:447 y:267 size:300x300.
-        Box(
+        // Node 485:7113 loading spinner instance, rebuilt from centered standalone layers.
+        val spinnerHeight = 300f *
+            CINERIFIC_LOADING_SPINNER_CANVAS_HEIGHT /
+            CINERIFIC_LOADING_SPINNER_CANVAS_WIDTH
+        CinerificLoadingSpinner(
             modifier = Modifier
-                .absoluteOffset(x = figma(447f, scale), y = figma(267f, scale))
-                .requiredSize(figma(300f, scale), figma(300f, scale))
-                .graphicsLayer(rotationZ = spin)
-                .clip(CircleShape)
-                .background(
-                    Brush.sweepGradient(
-                        colors = listOf(
-                            Color(0x00FFFFFF),
-                            Color(0x66FFE08D),
-                            Color(0xCCFFB347),
-                            Color(0x00FFFFFF)
-                        )
-                    )
+                .absoluteOffset(
+                    x = figma(447f, scale),
+                    y = figma(267f - (spinnerHeight - 300f) / 2f, scale)
                 )
-        )
-
-        Box(
-            modifier = Modifier
-                .absoluteOffset(x = figma(501f, scale), y = figma(321f, scale))
-                .requiredSize(figma(189f, scale), figma(189f, scale))
-                .clip(CircleShape)
-                .background(
-                    Brush.radialGradient(
-                        colors = listOf(Color(0xFFFFD978), Color(0x99FFB347), Color.Transparent)
-                    )
-                )
+                .requiredSize(figma(300f, scale), figma(spinnerHeight, scale))
         )
     }
 }

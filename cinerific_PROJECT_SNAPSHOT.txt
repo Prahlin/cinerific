@@ -1,5 +1,5 @@
 Cinerific Android PROJECT SNAPSHOT
-Generated: Tue Jul 21 19:39:36 EDT 2026
+Generated: Tue Jul 21 21:26:52 EDT 2026
 Project directory: /Users/prahlin/gh/cinerific
 
 IMPORTANT INSTRUCTIONS FOR CHATGPT & CODEX:
@@ -70,6 +70,7 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificHomeScreen.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificLanguage.kt
+/Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificLoadingSpinner.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificPlaybackSession.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificRightSideNavBar.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificViewportGenreNav.kt
@@ -123,6 +124,39 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/laughing_matters_hero.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/light_as_a_feather_card.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/light_as_a_feather_hero.webp
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_animation_default.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_animation_variant_2.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_animation_variant_3.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_animation_variant_4.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_animation_variant_5.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_animation_variant_6.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_mini_star_centered.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_mini_star_default.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_mini_star_variant_2.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_mini_star_variant_3.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_mini_star_variant_4.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_mini_star_variant_5.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_mini_star_variant_6.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_recreated_default.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_recreated_variant_2.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_recreated_variant_3.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_recreated_variant_4.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_recreated_variant_5.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_recreated_variant_6.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_red_star_centered.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_red_star_default.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_red_star_variant_2.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_red_star_variant_3.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_red_star_variant_4.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_red_star_variant_5.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_red_star_variant_6.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_wheel_centered.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_wheel_default.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_wheel_variant_2.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_wheel_variant_3.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_wheel_variant_4.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_wheel_variant_5.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/loading_spinner_wheel_variant_6.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/logo_eyes_intro2.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/logo_eyes_large.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/logo_eyes_signin.png
@@ -302,816 +336,784 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
      5	import androidx.annotation.DrawableRes
      6	import androidx.compose.animation.core.Animatable
      7	import androidx.compose.animation.core.FastOutSlowInEasing
-     8	import androidx.compose.animation.core.LinearEasing
-     9	import androidx.compose.animation.core.animateFloat
-    10	import androidx.compose.animation.core.infiniteRepeatable
-    11	import androidx.compose.animation.core.rememberInfiniteTransition
-    12	import androidx.compose.animation.core.tween
-    13	import androidx.compose.foundation.Canvas
-    14	import androidx.compose.foundation.Image
-    15	import androidx.compose.foundation.background
-    16	import androidx.compose.foundation.layout.Box
-    17	import androidx.compose.foundation.layout.BoxWithConstraints
-    18	import androidx.compose.foundation.layout.BoxWithConstraintsScope
-    19	import androidx.compose.foundation.layout.absoluteOffset
-    20	import androidx.compose.foundation.layout.fillMaxSize
-    21	import androidx.compose.foundation.layout.requiredSize
-    22	import androidx.compose.foundation.shape.CircleShape
-    23	import androidx.compose.runtime.LaunchedEffect
-    24	import androidx.compose.runtime.Composable
-    25	import androidx.compose.runtime.CompositionLocalProvider
-    26	import androidx.compose.runtime.getValue
-    27	import androidx.compose.runtime.mutableFloatStateOf
-    28	import androidx.compose.runtime.mutableStateOf
-    29	import androidx.compose.runtime.remember
-    30	import androidx.compose.runtime.saveable.rememberSaveable
-    31	import androidx.compose.runtime.setValue
-    32	import androidx.compose.runtime.withFrameMillis
-    33	import androidx.compose.ui.geometry.Rect
-    34	import androidx.compose.ui.Alignment
-    35	import androidx.compose.ui.Modifier
-    36	import androidx.compose.ui.draw.clip
-    37	import androidx.compose.ui.graphics.Brush
-    38	import androidx.compose.ui.graphics.Color
-    39	import androidx.compose.ui.graphics.ImageBitmap
-    40	import androidx.compose.ui.graphics.Path
-    41	import androidx.compose.ui.graphics.TransformOrigin
-    42	import androidx.compose.ui.graphics.asImageBitmap
-    43	import androidx.compose.ui.graphics.drawscope.DrawScope
-    44	import androidx.compose.ui.graphics.drawscope.clipPath
-    45	import androidx.compose.ui.graphics.graphicsLayer
-    46	import androidx.compose.ui.graphics.lerp as lerpColor
-    47	import androidx.compose.ui.input.pointer.PointerEventPass
-    48	import androidx.compose.ui.input.pointer.pointerInput
-    49	import androidx.compose.ui.layout.ContentScale
-    50	import androidx.compose.ui.platform.LocalDensity
-    51	import androidx.compose.ui.platform.LocalContext
-    52	import androidx.compose.ui.res.painterResource
-    53	import androidx.compose.ui.unit.dp
-    54	import androidx.compose.ui.unit.IntOffset
-    55	import androidx.compose.ui.unit.IntSize
-    56	import androidx.compose.ui.viewinterop.AndroidView
-    57	import com.prahlin.cinerific.R
-    58	import kotlinx.coroutines.delay
-    59	import kotlin.math.PI
-    60	import kotlin.math.min
-    61	import kotlin.math.roundToInt
-    62	import kotlin.math.sin
-    63	
-    64	private const val FIGMA_FRAME_WIDTH = 1194f
-    65	private const val FIGMA_FRAME_HEIGHT = 834f
-    66	private const val SCREEN_RED_MS = 1000
-    67	private const val LOGO_ENTRY_START_MS = 250
-    68	private const val LOGO_ENTRY_END_MS = 1687
-    69	private const val FINAL_SETTLE_START_MS = LOGO_ENTRY_END_MS
-    70	private const val FINAL_SETTLE_END_MS = 4812
-    71	private const val BOOT_ANIMATION_MS = FINAL_SETTLE_END_MS
-    72	private const val AUTO_LOGOUT_TIMEOUT_MS = 10_000L
-    73	
-    74	private val ColorFrame1Background = Color(0xFF000000)
-    75	private val ColorFrame2Background = Color(0xFF62070D)
-    76	private val ColorFrame3Background = Color(0xFF1F1F1F)
-    77	private val ColorFrame4Background = Color(0xFF1F1F1F)
-    78	private val ColorIntroGradientTop = Color(0xFF050000)
-    79	private val ColorIntroGradientCenter = Color(0xFF62070D)
-    80	private val ColorIntroGradientBottom = Color(0xFF100102)
-    81	
-    82	@Composable
-    83	fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
-    84	    var showHome by remember(bootStartMillis) { mutableStateOf(false) }
-    85	    var signedInProfile by remember(bootStartMillis) { mutableStateOf(CinerificProfile.Guest) }
-    86	    var selectedLanguage by rememberSaveable { mutableStateOf(CinerificLanguage.English) }
-    87	
-    88	    if (showHome) {
-    89	        CinerificLocalizedResources(selectedLanguage) {
-    90	            CinerificMainExperience(
-    91	                signedInProfile = signedInProfile,
-    92	                selectedLanguage = selectedLanguage,
-    93	                onLanguageSelected = { selectedLanguage = it },
-    94	                onSignOut = {
-    95	                    signedInProfile = CinerificProfile.Guest
-    96	                    showHome = false
-    97	                }
-    98	            )
-    99	        }
-   100	    } else {
-   101	        AndroidView(
-   102	            modifier = Modifier.fillMaxSize(),
-   103	            factory = { context ->
-   104	                CinerificIntroView(context).apply {
-   105	                    this.bootStartMillis = bootStartMillis
-   106	                    onAvatarSelected = { profile ->
-   107	                        signedInProfile = profile
-   108	                        showHome = true
-   109	                    }
-   110	                }
-   111	            },
-   112	            update = { view ->
-   113	                view.bootStartMillis = bootStartMillis
-   114	                view.onAvatarSelected = { profile ->
-   115	                    signedInProfile = profile
-   116	                    showHome = true
-   117	                }
-   118	            }
-   119	        )
-   120	    }
-   121	}
-   122	
-   123	internal enum class CinerificDestination {
-   124	    Home,
-   125	    Movies,
-   126	    Shows,
-   127	    Favorites,
-   128	    Settings,
-   129	    ProgramDetails
-   130	}
-   131	
-   132	internal enum class CinerificProfile(
-   133	    @DrawableRes val avatarResId: Int,
-   134	    @DrawableRes val nameResId: Int
-   135	) {
-   136	    Steve(R.drawable.steve_avatar, R.drawable.steve_name),
-   137	    Martin(R.drawable.martin_avatar, R.drawable.martin_name),
-   138	    Janny(R.drawable.janny_avatar, R.drawable.janny_name),
-   139	    Guest(R.drawable.guest_avatar, R.drawable.guest_name)
-   140	}
-   141	
-   142	@Composable
-   143	private fun CinerificMainExperience(
-   144	    signedInProfile: CinerificProfile,
-   145	    selectedLanguage: CinerificLanguage,
-   146	    onLanguageSelected: (CinerificLanguage) -> Unit,
-   147	    onSignOut: () -> Unit
-   148	) {
-   149	    var destination by remember { mutableStateOf(CinerificDestination.Home) }
-   150	    var selectedProgramTitle by rememberSaveable { mutableStateOf("Sink or Swim") }
-   151	    var autoLogoutEnabled by rememberSaveable { mutableStateOf(false) }
-   152	    var userInitiatedPlaybackActive by remember { mutableStateOf(false) }
-   153	    var lastInteractionMillis by remember { mutableStateOf(SystemClock.uptimeMillis()) }
-   154	    val playbackSessionController = remember(userInitiatedPlaybackActive) {
-   155	        CinerificPlaybackSessionController(
-   156	            isUserInitiatedPlaybackActive = userInitiatedPlaybackActive,
-   157	            onUserInitiatedPlaybackStarted = {
-   158	                userInitiatedPlaybackActive = true
-   159	            },
-   160	            finishUserInitiatedPlayback = {
-   161	                userInitiatedPlaybackActive = false
-   162	                lastInteractionMillis = SystemClock.uptimeMillis()
-   163	            }
-   164	        )
-   165	    }
-   166	
-   167	    LaunchedEffect(autoLogoutEnabled, userInitiatedPlaybackActive, lastInteractionMillis) {
-   168	        if (!autoLogoutEnabled || userInitiatedPlaybackActive) return@LaunchedEffect
-   169	        delay(AUTO_LOGOUT_TIMEOUT_MS)
-   170	        val inactiveForMillis = SystemClock.uptimeMillis() - lastInteractionMillis
-   171	        if (
-   172	            autoLogoutEnabled &&
-   173	            !userInitiatedPlaybackActive &&
-   174	            inactiveForMillis >= AUTO_LOGOUT_TIMEOUT_MS
-   175	        ) {
-   176	            onSignOut()
-   177	        }
-   178	    }
-   179	
-   180	    fun showProgramDetails(title: String) {
-   181	        selectedProgramTitle = title
-   182	        destination = CinerificDestination.ProgramDetails
-   183	    }
-   184	
-   185	    CompositionLocalProvider(LocalCinerificPlaybackSessionController provides playbackSessionController) {
-   186	        Box(
-   187	            modifier = Modifier
-   188	                .fillMaxSize()
-   189	                .pointerInput(Unit) {
-   190	                    awaitPointerEventScope {
-   191	                        while (true) {
-   192	                            awaitPointerEvent(PointerEventPass.Initial)
-   193	                            lastInteractionMillis = SystemClock.uptimeMillis()
-   194	                        }
-   195	                    }
-   196	                }
-   197	        ) {
-   198	            when (destination) {
-   199	                CinerificDestination.Home -> CinerificHomeScreen(
-   200	                    onProgramSelected = ::showProgramDetails,
-   201	                    modifier = Modifier.fillMaxSize()
-   202	                )
-   203	                CinerificDestination.Movies,
-   204	                CinerificDestination.Shows,
-   205	                CinerificDestination.Favorites,
-   206	                CinerificDestination.Settings -> CinerificDestinationScreen(
-   207	                    destination = destination,
-   208	                    signedInProfile = signedInProfile,
-   209	                    selectedLanguage = selectedLanguage,
-   210	                    onLanguageSelected = onLanguageSelected,
-   211	                    autoLogoutEnabled = autoLogoutEnabled,
-   212	                    onAutoLogoutEnabledChange = { enabled ->
-   213	                        autoLogoutEnabled = enabled
-   214	                        lastInteractionMillis = SystemClock.uptimeMillis()
-   215	                    },
-   216	                    onSignOut = onSignOut,
-   217	                    onProgramSelected = ::showProgramDetails,
-   218	                    modifier = Modifier.fillMaxSize()
-   219	                )
-   220	                CinerificDestination.ProgramDetails -> CinerificProgramDetailsScreen(
-   221	                    programTitle = selectedProgramTitle,
-   222	                    onProgramSelected = ::showProgramDetails,
-   223	                    modifier = Modifier.fillMaxSize()
-   224	                )
-   225	            }
-   226	
-   227	            CinerificRightSideNavBar(
-   228	                currentDestination = destination,
-   229	                onDestinationSelected = { destination = it },
-   230	                modifier = Modifier.fillMaxSize()
-   231	            )
-   232	        }
-   233	    }
-   234	}
-   235	
-   236	@Composable
-   237	private fun BootIntroFromFigma(progress: Float) {
-   238	    val p = progress.coerceIn(0f, 1f)
-   239	    val images = rememberIntroImages()
-   240	    val blackToBurgundy = linearSegmentMs(p, 0, SCREEN_RED_MS)
-   241	    val burgundyToSettle = easedSegmentMs(p, 2500, 3900)
-   242	    val background = introBackgroundBrush(
-   243	        solidProgress = blackToBurgundy,
-   244	        gradientProgress = burgundyToSettle
-   245	    )
-   246	    val logoAlpha = linearSegmentMs(p, 90, LOGO_ENTRY_START_MS)
-   247	    val logoEntryProgress = bouncySegmentMs(p, LOGO_ENTRY_START_MS, LOGO_ENTRY_END_MS)
-   248	    val logoFinalProgress = easedSegmentMs(p, FINAL_SETTLE_START_MS, FINAL_SETTLE_END_MS)
-   249	    val avatarSettleAlpha = easedSegmentMs(p, 2300, FINAL_SETTLE_END_MS)
-   250	    val avatarYOffset = lerpFloat(56f, 0f, avatarSettleAlpha)
-   251	
-   252	    Canvas(modifier = Modifier.fillMaxSize()) {
-   253	        val stageScale = min(size.width / FIGMA_FRAME_WIDTH, size.height / FIGMA_FRAME_HEIGHT)
-   254	        val stageLeft = (size.width - FIGMA_FRAME_WIDTH * stageScale) / 2f
-   255	        val stageTop = (size.height - FIGMA_FRAME_HEIGHT * stageScale) / 2f
-   256	
-   257	        drawRect(brush = background, size = size)
-   258	
-   259	        if (logoAlpha > 0.01f) {
-   260	            val baseBounds = FigmaBounds(x = 222f, y = 150f, w = 750f, h = 535f)
-   261	            val simpleEntry = lerpBounds(
-   262	                start = FigmaBounds(x = 447f, y = -417f, w = 300f, h = 214f),
-   263	                end = baseBounds,
-   264	                amount = logoEntryProgress
-   265	            )
-   266	            val eyesEntry = lerpBounds(
-   267	                start = FigmaBounds(x = 453f, y = 1037f, w = 300f, h = 214f),
-   268	                end = baseBounds,
-   269	                amount = logoEntryProgress
-   270	            )
-   271	            val finalBounds = FigmaBounds(x = 297f, y = 11f, w = 600f, h = 428f)
-   272	
-   273	            drawFigmaImage(
-   274	                image = images.logoSimple,
-   275	                bounds = lerpBounds(simpleEntry, finalBounds, logoFinalProgress),
-   276	                stageLeft = stageLeft,
-   277	                stageTop = stageTop,
-   278	                stageScale = stageScale,
-   279	                alpha = logoAlpha
-   280	            )
-   281	            drawFigmaImage(
-   282	                image = images.logoEyes,
-   283	                bounds = lerpBounds(eyesEntry, finalBounds, logoFinalProgress),
-   284	                stageLeft = stageLeft,
-   285	                stageTop = stageTop,
-   286	                stageScale = stageScale,
-   287	                alpha = logoAlpha
-   288	            )
-   289	        }
-   290	
-   291	        if (avatarSettleAlpha > 0.01f) {
-   292	            val y = avatarYOffset
-   293	            drawFigmaImage(images.steveAvatar, FigmaBounds(130f, 428f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
-   294	            drawFigmaImage(images.martinAvatar, FigmaBounds(368f, 428f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
-   295	            drawFigmaImage(images.jannyAvatar, FigmaBounds(606f, 432f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
-   296	            drawFigmaImage(images.guestAvatar, FigmaBounds(844f, 428f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
-   297	
-   298	            drawFigmaImage(images.steveName, FigmaBounds(130f, 683f + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
-   299	            drawFigmaImage(images.martinName, FigmaBounds(368f, 683f + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
-   300	            drawFigmaImage(images.jannyName, FigmaBounds(606f, 683f + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
-   301	            drawFigmaImage(images.guestName, FigmaBounds(854f, 683f + y, 200f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
-   302	        }
-   303	    }
-   304	}
-   305	
-   306	@Composable
-   307	private fun IntroFrame1FromFigma() {
-   308	    // Node 474:7309 has only a pure black fill.
-   309	    FigmaStage(background = solidBrush(ColorFrame1Background)) { }
-   310	}
-   311	
-   312	@Composable
-   313	private fun IntroFrame2FromFigma() {
-   314	    // Node 474:7311 with Logo Slide 1 instance 478:6917.
-   315	    val slideYOffset = remember { Animatable(-417f) }
-   316	
-   317	    LaunchedEffect(Unit) {
-   318	        slideYOffset.snapTo(-417f)
-   319	        slideYOffset.animateTo(
-   320	            targetValue = 0f,
-   321	            animationSpec = tween(durationMillis = 1800, easing = FastOutSlowInEasing)
-   322	        )
+     8	import androidx.compose.animation.core.tween
+     9	import androidx.compose.foundation.Canvas
+    10	import androidx.compose.foundation.Image
+    11	import androidx.compose.foundation.background
+    12	import androidx.compose.foundation.layout.Box
+    13	import androidx.compose.foundation.layout.BoxWithConstraints
+    14	import androidx.compose.foundation.layout.BoxWithConstraintsScope
+    15	import androidx.compose.foundation.layout.absoluteOffset
+    16	import androidx.compose.foundation.layout.fillMaxSize
+    17	import androidx.compose.foundation.layout.requiredSize
+    18	import androidx.compose.foundation.shape.CircleShape
+    19	import androidx.compose.runtime.LaunchedEffect
+    20	import androidx.compose.runtime.Composable
+    21	import androidx.compose.runtime.CompositionLocalProvider
+    22	import androidx.compose.runtime.getValue
+    23	import androidx.compose.runtime.mutableFloatStateOf
+    24	import androidx.compose.runtime.mutableStateOf
+    25	import androidx.compose.runtime.remember
+    26	import androidx.compose.runtime.saveable.rememberSaveable
+    27	import androidx.compose.runtime.setValue
+    28	import androidx.compose.runtime.withFrameMillis
+    29	import androidx.compose.ui.geometry.Rect
+    30	import androidx.compose.ui.Alignment
+    31	import androidx.compose.ui.Modifier
+    32	import androidx.compose.ui.draw.clip
+    33	import androidx.compose.ui.graphics.Brush
+    34	import androidx.compose.ui.graphics.Color
+    35	import androidx.compose.ui.graphics.ImageBitmap
+    36	import androidx.compose.ui.graphics.Path
+    37	import androidx.compose.ui.graphics.TransformOrigin
+    38	import androidx.compose.ui.graphics.asImageBitmap
+    39	import androidx.compose.ui.graphics.drawscope.DrawScope
+    40	import androidx.compose.ui.graphics.drawscope.clipPath
+    41	import androidx.compose.ui.graphics.graphicsLayer
+    42	import androidx.compose.ui.graphics.lerp as lerpColor
+    43	import androidx.compose.ui.input.pointer.PointerEventPass
+    44	import androidx.compose.ui.input.pointer.pointerInput
+    45	import androidx.compose.ui.layout.ContentScale
+    46	import androidx.compose.ui.platform.LocalDensity
+    47	import androidx.compose.ui.platform.LocalContext
+    48	import androidx.compose.ui.res.painterResource
+    49	import androidx.compose.ui.unit.dp
+    50	import androidx.compose.ui.unit.IntOffset
+    51	import androidx.compose.ui.unit.IntSize
+    52	import androidx.compose.ui.viewinterop.AndroidView
+    53	import com.prahlin.cinerific.R
+    54	import kotlinx.coroutines.delay
+    55	import kotlin.math.PI
+    56	import kotlin.math.min
+    57	import kotlin.math.roundToInt
+    58	import kotlin.math.sin
+    59	
+    60	private const val FIGMA_FRAME_WIDTH = 1194f
+    61	private const val FIGMA_FRAME_HEIGHT = 834f
+    62	private const val SCREEN_RED_MS = 1000
+    63	private const val LOGO_ENTRY_START_MS = 250
+    64	private const val LOGO_ENTRY_END_MS = 1687
+    65	private const val FINAL_SETTLE_START_MS = LOGO_ENTRY_END_MS
+    66	private const val FINAL_SETTLE_END_MS = 4812
+    67	private const val BOOT_ANIMATION_MS = FINAL_SETTLE_END_MS
+    68	private const val AUTO_LOGOUT_TIMEOUT_MS = 10_000L
+    69	
+    70	private val ColorFrame1Background = Color(0xFF000000)
+    71	private val ColorFrame2Background = Color(0xFF62070D)
+    72	private val ColorFrame3Background = Color(0xFF1F1F1F)
+    73	private val ColorFrame4Background = Color(0xFF1F1F1F)
+    74	private val ColorIntroGradientTop = Color(0xFF050000)
+    75	private val ColorIntroGradientCenter = Color(0xFF62070D)
+    76	private val ColorIntroGradientBottom = Color(0xFF100102)
+    77	
+    78	@Composable
+    79	fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
+    80	    var showHome by remember(bootStartMillis) { mutableStateOf(false) }
+    81	    var signedInProfile by remember(bootStartMillis) { mutableStateOf(CinerificProfile.Guest) }
+    82	    var selectedLanguage by rememberSaveable { mutableStateOf(CinerificLanguage.English) }
+    83	
+    84	    if (showHome) {
+    85	        CinerificLocalizedResources(selectedLanguage) {
+    86	            CinerificMainExperience(
+    87	                signedInProfile = signedInProfile,
+    88	                selectedLanguage = selectedLanguage,
+    89	                onLanguageSelected = { selectedLanguage = it },
+    90	                onSignOut = {
+    91	                    signedInProfile = CinerificProfile.Guest
+    92	                    showHome = false
+    93	                }
+    94	            )
+    95	        }
+    96	    } else {
+    97	        AndroidView(
+    98	            modifier = Modifier.fillMaxSize(),
+    99	            factory = { context ->
+   100	                CinerificIntroView(context).apply {
+   101	                    this.bootStartMillis = bootStartMillis
+   102	                    onAvatarSelected = { profile ->
+   103	                        signedInProfile = profile
+   104	                        showHome = true
+   105	                    }
+   106	                }
+   107	            },
+   108	            update = { view ->
+   109	                view.bootStartMillis = bootStartMillis
+   110	                view.onAvatarSelected = { profile ->
+   111	                    signedInProfile = profile
+   112	                    showHome = true
+   113	                }
+   114	            }
+   115	        )
+   116	    }
+   117	}
+   118	
+   119	internal enum class CinerificDestination {
+   120	    Home,
+   121	    Movies,
+   122	    Shows,
+   123	    Favorites,
+   124	    Settings,
+   125	    ProgramDetails
+   126	}
+   127	
+   128	internal enum class CinerificProfile(
+   129	    @DrawableRes val avatarResId: Int,
+   130	    @DrawableRes val nameResId: Int
+   131	) {
+   132	    Steve(R.drawable.steve_avatar, R.drawable.steve_name),
+   133	    Martin(R.drawable.martin_avatar, R.drawable.martin_name),
+   134	    Janny(R.drawable.janny_avatar, R.drawable.janny_name),
+   135	    Guest(R.drawable.guest_avatar, R.drawable.guest_name)
+   136	}
+   137	
+   138	@Composable
+   139	private fun CinerificMainExperience(
+   140	    signedInProfile: CinerificProfile,
+   141	    selectedLanguage: CinerificLanguage,
+   142	    onLanguageSelected: (CinerificLanguage) -> Unit,
+   143	    onSignOut: () -> Unit
+   144	) {
+   145	    var destination by remember { mutableStateOf(CinerificDestination.Home) }
+   146	    var selectedProgramTitle by rememberSaveable { mutableStateOf("Sink or Swim") }
+   147	    var autoLogoutEnabled by rememberSaveable { mutableStateOf(false) }
+   148	    var userInitiatedPlaybackActive by remember { mutableStateOf(false) }
+   149	    var lastInteractionMillis by remember { mutableStateOf(SystemClock.uptimeMillis()) }
+   150	    val playbackSessionController = remember(userInitiatedPlaybackActive) {
+   151	        CinerificPlaybackSessionController(
+   152	            isUserInitiatedPlaybackActive = userInitiatedPlaybackActive,
+   153	            onUserInitiatedPlaybackStarted = {
+   154	                userInitiatedPlaybackActive = true
+   155	            },
+   156	            finishUserInitiatedPlayback = {
+   157	                userInitiatedPlaybackActive = false
+   158	                lastInteractionMillis = SystemClock.uptimeMillis()
+   159	            }
+   160	        )
+   161	    }
+   162	
+   163	    LaunchedEffect(autoLogoutEnabled, userInitiatedPlaybackActive, lastInteractionMillis) {
+   164	        if (!autoLogoutEnabled || userInitiatedPlaybackActive) return@LaunchedEffect
+   165	        delay(AUTO_LOGOUT_TIMEOUT_MS)
+   166	        val inactiveForMillis = SystemClock.uptimeMillis() - lastInteractionMillis
+   167	        if (
+   168	            autoLogoutEnabled &&
+   169	            !userInitiatedPlaybackActive &&
+   170	            inactiveForMillis >= AUTO_LOGOUT_TIMEOUT_MS
+   171	        ) {
+   172	            onSignOut()
+   173	        }
+   174	    }
+   175	
+   176	    fun showProgramDetails(title: String) {
+   177	        selectedProgramTitle = title
+   178	        destination = CinerificDestination.ProgramDetails
+   179	    }
+   180	
+   181	    CompositionLocalProvider(LocalCinerificPlaybackSessionController provides playbackSessionController) {
+   182	        Box(
+   183	            modifier = Modifier
+   184	                .fillMaxSize()
+   185	                .pointerInput(Unit) {
+   186	                    awaitPointerEventScope {
+   187	                        while (true) {
+   188	                            awaitPointerEvent(PointerEventPass.Initial)
+   189	                            lastInteractionMillis = SystemClock.uptimeMillis()
+   190	                        }
+   191	                    }
+   192	                }
+   193	        ) {
+   194	            when (destination) {
+   195	                CinerificDestination.Home -> CinerificHomeScreen(
+   196	                    onProgramSelected = ::showProgramDetails,
+   197	                    modifier = Modifier.fillMaxSize()
+   198	                )
+   199	                CinerificDestination.Movies,
+   200	                CinerificDestination.Shows,
+   201	                CinerificDestination.Favorites,
+   202	                CinerificDestination.Settings -> CinerificDestinationScreen(
+   203	                    destination = destination,
+   204	                    signedInProfile = signedInProfile,
+   205	                    selectedLanguage = selectedLanguage,
+   206	                    onLanguageSelected = onLanguageSelected,
+   207	                    autoLogoutEnabled = autoLogoutEnabled,
+   208	                    onAutoLogoutEnabledChange = { enabled ->
+   209	                        autoLogoutEnabled = enabled
+   210	                        lastInteractionMillis = SystemClock.uptimeMillis()
+   211	                    },
+   212	                    onSignOut = onSignOut,
+   213	                    onProgramSelected = ::showProgramDetails,
+   214	                    modifier = Modifier.fillMaxSize()
+   215	                )
+   216	                CinerificDestination.ProgramDetails -> CinerificProgramDetailsScreen(
+   217	                    programTitle = selectedProgramTitle,
+   218	                    onProgramSelected = ::showProgramDetails,
+   219	                    modifier = Modifier.fillMaxSize()
+   220	                )
+   221	            }
+   222	
+   223	            CinerificRightSideNavBar(
+   224	                currentDestination = destination,
+   225	                onDestinationSelected = { destination = it },
+   226	                modifier = Modifier.fillMaxSize()
+   227	            )
+   228	        }
+   229	    }
+   230	}
+   231	
+   232	@Composable
+   233	private fun BootIntroFromFigma(progress: Float) {
+   234	    val p = progress.coerceIn(0f, 1f)
+   235	    val images = rememberIntroImages()
+   236	    val blackToBurgundy = linearSegmentMs(p, 0, SCREEN_RED_MS)
+   237	    val burgundyToSettle = easedSegmentMs(p, 2500, 3900)
+   238	    val background = introBackgroundBrush(
+   239	        solidProgress = blackToBurgundy,
+   240	        gradientProgress = burgundyToSettle
+   241	    )
+   242	    val logoAlpha = linearSegmentMs(p, 90, LOGO_ENTRY_START_MS)
+   243	    val logoEntryProgress = bouncySegmentMs(p, LOGO_ENTRY_START_MS, LOGO_ENTRY_END_MS)
+   244	    val logoFinalProgress = easedSegmentMs(p, FINAL_SETTLE_START_MS, FINAL_SETTLE_END_MS)
+   245	    val avatarSettleAlpha = easedSegmentMs(p, 2300, FINAL_SETTLE_END_MS)
+   246	    val avatarYOffset = lerpFloat(56f, 0f, avatarSettleAlpha)
+   247	
+   248	    Canvas(modifier = Modifier.fillMaxSize()) {
+   249	        val stageScale = min(size.width / FIGMA_FRAME_WIDTH, size.height / FIGMA_FRAME_HEIGHT)
+   250	        val stageLeft = (size.width - FIGMA_FRAME_WIDTH * stageScale) / 2f
+   251	        val stageTop = (size.height - FIGMA_FRAME_HEIGHT * stageScale) / 2f
+   252	
+   253	        drawRect(brush = background, size = size)
+   254	
+   255	        if (logoAlpha > 0.01f) {
+   256	            val baseBounds = FigmaBounds(x = 222f, y = 150f, w = 750f, h = 535f)
+   257	            val simpleEntry = lerpBounds(
+   258	                start = FigmaBounds(x = 447f, y = -417f, w = 300f, h = 214f),
+   259	                end = baseBounds,
+   260	                amount = logoEntryProgress
+   261	            )
+   262	            val eyesEntry = lerpBounds(
+   263	                start = FigmaBounds(x = 453f, y = 1037f, w = 300f, h = 214f),
+   264	                end = baseBounds,
+   265	                amount = logoEntryProgress
+   266	            )
+   267	            val finalBounds = FigmaBounds(x = 297f, y = 11f, w = 600f, h = 428f)
+   268	
+   269	            drawFigmaImage(
+   270	                image = images.logoSimple,
+   271	                bounds = lerpBounds(simpleEntry, finalBounds, logoFinalProgress),
+   272	                stageLeft = stageLeft,
+   273	                stageTop = stageTop,
+   274	                stageScale = stageScale,
+   275	                alpha = logoAlpha
+   276	            )
+   277	            drawFigmaImage(
+   278	                image = images.logoEyes,
+   279	                bounds = lerpBounds(eyesEntry, finalBounds, logoFinalProgress),
+   280	                stageLeft = stageLeft,
+   281	                stageTop = stageTop,
+   282	                stageScale = stageScale,
+   283	                alpha = logoAlpha
+   284	            )
+   285	        }
+   286	
+   287	        if (avatarSettleAlpha > 0.01f) {
+   288	            val y = avatarYOffset
+   289	            drawFigmaImage(images.steveAvatar, FigmaBounds(130f, 428f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
+   290	            drawFigmaImage(images.martinAvatar, FigmaBounds(368f, 428f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
+   291	            drawFigmaImage(images.jannyAvatar, FigmaBounds(606f, 432f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
+   292	            drawFigmaImage(images.guestAvatar, FigmaBounds(844f, 428f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
+   293	
+   294	            drawFigmaImage(images.steveName, FigmaBounds(130f, 683f + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
+   295	            drawFigmaImage(images.martinName, FigmaBounds(368f, 683f + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
+   296	            drawFigmaImage(images.jannyName, FigmaBounds(606f, 683f + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
+   297	            drawFigmaImage(images.guestName, FigmaBounds(854f, 683f + y, 200f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
+   298	        }
+   299	    }
+   300	}
+   301	
+   302	@Composable
+   303	private fun IntroFrame1FromFigma() {
+   304	    // Node 474:7309 has only a pure black fill.
+   305	    FigmaStage(background = solidBrush(ColorFrame1Background)) { }
+   306	}
+   307	
+   308	@Composable
+   309	private fun IntroFrame2FromFigma() {
+   310	    // Node 474:7311 with Logo Slide 1 instance 478:6917.
+   311	    val slideYOffset = remember { Animatable(-417f) }
+   312	
+   313	    LaunchedEffect(Unit) {
+   314	        slideYOffset.snapTo(-417f)
+   315	        slideYOffset.animateTo(
+   316	            targetValue = 0f,
+   317	            animationSpec = tween(durationMillis = 1800, easing = FastOutSlowInEasing)
+   318	        )
+   319	    }
+   320	
+   321	    FigmaStage(background = solidBrush(ColorFrame2Background)) { scale ->
+   322	        LogoSlide1Layer(scale = scale, yOffset = slideYOffset.value)
    323	    }
-   324	
-   325	    FigmaStage(background = solidBrush(ColorFrame2Background)) { scale ->
-   326	        LogoSlide1Layer(scale = scale, yOffset = slideYOffset.value)
-   327	    }
-   328	}
-   329	
-   330	@Composable
-   331	private fun IntroFrame3FromFigma() {
-   332	    // Node 476:6937 with PROMO background1 2 (793:7049) and Logo Slide 2 (478:6970).
-   333	    FigmaStage(background = solidBrush(ColorFrame3Background)) { scale ->
-   334	        PromoBackgroundLayer(
-   335	            scale = scale,
-   336	            darkOverlay = 0f,
-   337	            backgroundResId = R.drawable.promo_background
-   338	        )
-   339	        LogoSlide2Layer(
-   340	            scale = scale,
-   341	            logoResId = R.drawable.logo_simple_large,
-   342	            eyesResId = R.drawable.logo_eyes_large
-   343	        )
-   344	    }
-   345	}
-   346	
-   347	@Composable
-   348	private fun SignInFrameFromFigma() {
-   349	    // Node 478:6975 + Star Overlay 482:7696.
-   350	    val spinTransition = rememberInfiniteTransition(label = "spinner")
-   351	    val spin by spinTransition.animateFloat(
-   352	        initialValue = 0f,
-   353	        targetValue = 360f,
-   354	        animationSpec = infiniteRepeatable(
-   355	            animation = tween(durationMillis = 1800, easing = LinearEasing)
-   356	        ),
-   357	        label = "spinner-rot"
-   358	    )
-   359	
-   360	    FigmaStage(background = solidBrush(ColorFrame4Background)) { scale ->
-   361	        PromoBackgroundLayer(
-   362	            scale = scale,
-   363	            darkOverlay = 0.5f,
-   364	            backgroundResId = R.drawable.promo_background_signin
-   365	        )
-   366	        LogoSlide2Layer(
-   367	            scale = scale,
-   368	            logoResId = R.drawable.logo_simple_signin,
-   369	            eyesResId = R.drawable.logo_eyes_signin
-   370	        )
-   371	
-   372	        // Node 480:7611 (Ellipse 43) x:894 y:266 size:200x200.
-   373	        Box(
-   374	            modifier = Modifier
-   375	                .absoluteOffset(x = figma(894f, scale), y = figma(266f, scale))
-   376	                .requiredSize(figma(200f, scale), figma(200f, scale))
-   377	                .clip(CircleShape)
-   378	                .background(
-   379	                    Brush.radialGradient(
-   380	                        colors = listOf(Color(0xFFE8E8E8), Color(0xFF8A8A8A), Color(0xFF1D1D1D))
-   381	                    )
-   382	                )
-   383	        )
-   384	
-   385	        // Node 485:7113 loading spinner instance at x:447 y:267 size:300x300.
-   386	        Box(
-   387	            modifier = Modifier
-   388	                .absoluteOffset(x = figma(447f, scale), y = figma(267f, scale))
-   389	                .requiredSize(figma(300f, scale), figma(300f, scale))
-   390	                .graphicsLayer(rotationZ = spin)
-   391	                .clip(CircleShape)
-   392	                .background(
-   393	                    Brush.sweepGradient(
-   394	                        colors = listOf(
-   395	                            Color(0x00FFFFFF),
-   396	                            Color(0x66FFE08D),
-   397	                            Color(0xCCFFB347),
-   398	                            Color(0x00FFFFFF)
-   399	                        )
-   400	                    )
-   401	                )
+   324	}
+   325	
+   326	@Composable
+   327	private fun IntroFrame3FromFigma() {
+   328	    // Node 476:6937 with PROMO background1 2 (793:7049) and Logo Slide 2 (478:6970).
+   329	    FigmaStage(background = solidBrush(ColorFrame3Background)) { scale ->
+   330	        PromoBackgroundLayer(
+   331	            scale = scale,
+   332	            darkOverlay = 0f,
+   333	            backgroundResId = R.drawable.promo_background
+   334	        )
+   335	        LogoSlide2Layer(
+   336	            scale = scale,
+   337	            logoResId = R.drawable.logo_simple_large,
+   338	            eyesResId = R.drawable.logo_eyes_large
+   339	        )
+   340	    }
+   341	}
+   342	
+   343	@Composable
+   344	private fun SignInFrameFromFigma() {
+   345	    // Node 478:6975 + Star Overlay 482:7696.
+   346	    FigmaStage(background = solidBrush(ColorFrame4Background)) { scale ->
+   347	        PromoBackgroundLayer(
+   348	            scale = scale,
+   349	            darkOverlay = 0.5f,
+   350	            backgroundResId = R.drawable.promo_background_signin
+   351	        )
+   352	        LogoSlide2Layer(
+   353	            scale = scale,
+   354	            logoResId = R.drawable.logo_simple_signin,
+   355	            eyesResId = R.drawable.logo_eyes_signin
+   356	        )
+   357	
+   358	        // Node 480:7611 (Ellipse 43) x:894 y:266 size:200x200.
+   359	        Box(
+   360	            modifier = Modifier
+   361	                .absoluteOffset(x = figma(894f, scale), y = figma(266f, scale))
+   362	                .requiredSize(figma(200f, scale), figma(200f, scale))
+   363	                .clip(CircleShape)
+   364	                .background(
+   365	                    Brush.radialGradient(
+   366	                        colors = listOf(Color(0xFFE8E8E8), Color(0xFF8A8A8A), Color(0xFF1D1D1D))
+   367	                    )
+   368	                )
+   369	        )
+   370	
+   371	        // Node 485:7113 loading spinner instance, rebuilt from centered standalone layers.
+   372	        val spinnerHeight = 300f *
+   373	            CINERIFIC_LOADING_SPINNER_CANVAS_HEIGHT /
+   374	            CINERIFIC_LOADING_SPINNER_CANVAS_WIDTH
+   375	        CinerificLoadingSpinner(
+   376	            modifier = Modifier
+   377	                .absoluteOffset(
+   378	                    x = figma(447f, scale),
+   379	                    y = figma(267f - (spinnerHeight - 300f) / 2f, scale)
+   380	                )
+   381	                .requiredSize(figma(300f, scale), figma(spinnerHeight, scale))
+   382	        )
+   383	    }
+   384	}
+   385	
+   386	@Composable
+   387	private fun LogoSlide1Layer(scale: Float, yOffset: Float, alpha: Float = 1f) {
+   388	    Box(
+   389	        modifier = Modifier
+   390	            .absoluteOffset(y = figma(yOffset, scale))
+   391	            .requiredSize(figma(1194f, scale), figma(1668f, scale))
+   392	            .graphicsLayer(alpha = alpha)
+   393	    ) {
+   394	        // Node I478:6917;478:6923 logo simple 1 at x:447 y:0 size:300x214.
+   395	        FigmaAssetImage(
+   396	            x = 447f,
+   397	            y = 0f,
+   398	            w = 300f,
+   399	            h = 214f,
+   400	            scale = scale,
+   401	            resId = R.drawable.logo_simple_intro2
    402	        )
    403	
-   404	        Box(
-   405	            modifier = Modifier
-   406	                .absoluteOffset(x = figma(501f, scale), y = figma(321f, scale))
-   407	                .requiredSize(figma(189f, scale), figma(189f, scale))
-   408	                .clip(CircleShape)
-   409	                .background(
-   410	                    Brush.radialGradient(
-   411	                        colors = listOf(Color(0xFFFFD978), Color(0x99FFB347), Color.Transparent)
-   412	                    )
-   413	                )
-   414	        )
-   415	    }
-   416	}
-   417	
-   418	@Composable
-   419	private fun LogoSlide1Layer(scale: Float, yOffset: Float, alpha: Float = 1f) {
-   420	    Box(
-   421	        modifier = Modifier
-   422	            .absoluteOffset(y = figma(yOffset, scale))
-   423	            .requiredSize(figma(1194f, scale), figma(1668f, scale))
-   424	            .graphicsLayer(alpha = alpha)
-   425	    ) {
-   426	        // Node I478:6917;478:6923 logo simple 1 at x:447 y:0 size:300x214.
-   427	        FigmaAssetImage(
-   428	            x = 447f,
-   429	            y = 0f,
-   430	            w = 300f,
-   431	            h = 214f,
-   432	            scale = scale,
-   433	            resId = R.drawable.logo_simple_intro2
-   434	        )
-   435	
-   436	        // Node I478:6917;478:6925 logo eyes only 2 at x:453 y:1454 size:300x214.
-   437	        FigmaAssetImage(
-   438	            x = 453f,
-   439	            y = 1454f,
-   440	            w = 300f,
-   441	            h = 214f,
-   442	            scale = scale,
-   443	            resId = R.drawable.logo_eyes_intro2
-   444	        )
-   445	    }
-   446	}
-   447	
-   448	@Composable
-   449	private fun LogoSlide2Layer(
-   450	    scale: Float,
-   451	    @DrawableRes logoResId: Int,
-   452	    @DrawableRes eyesResId: Int,
-   453	    alpha: Float = 1f
-   454	) {
-   455	    Box(
-   456	        modifier = Modifier
-   457	            .requiredSize(figma(1194f, scale), figma(834f, scale))
-   458	            .graphicsLayer(alpha = alpha)
-   459	    ) {
-   460	        LogoDot(x = 427f, y = 516f, scale = scale, active = false)
-   461	        LogoDot(x = 507f, y = 516f, scale = scale, active = false)
-   462	        LogoDot(x = 587f, y = 516f, scale = scale, active = false)
-   463	        LogoDot(x = 667f, y = 516f, scale = scale, active = true)
-   464	
-   465	        // Visible logo bounds from the Figma instance in the 1194x834 frame.
-   466	        FigmaAssetImage(
-   467	            x = 222f,
-   468	            y = 150f,
-   469	            w = 750f,
-   470	            h = 535f,
-   471	            scale = scale,
-   472	            resId = logoResId
-   473	        )
+   404	        // Node I478:6917;478:6925 logo eyes only 2 at x:453 y:1454 size:300x214.
+   405	        FigmaAssetImage(
+   406	            x = 453f,
+   407	            y = 1454f,
+   408	            w = 300f,
+   409	            h = 214f,
+   410	            scale = scale,
+   411	            resId = R.drawable.logo_eyes_intro2
+   412	        )
+   413	    }
+   414	}
+   415	
+   416	@Composable
+   417	private fun LogoSlide2Layer(
+   418	    scale: Float,
+   419	    @DrawableRes logoResId: Int,
+   420	    @DrawableRes eyesResId: Int,
+   421	    alpha: Float = 1f
+   422	) {
+   423	    Box(
+   424	        modifier = Modifier
+   425	            .requiredSize(figma(1194f, scale), figma(834f, scale))
+   426	            .graphicsLayer(alpha = alpha)
+   427	    ) {
+   428	        LogoDot(x = 427f, y = 516f, scale = scale, active = false)
+   429	        LogoDot(x = 507f, y = 516f, scale = scale, active = false)
+   430	        LogoDot(x = 587f, y = 516f, scale = scale, active = false)
+   431	        LogoDot(x = 667f, y = 516f, scale = scale, active = true)
+   432	
+   433	        // Visible logo bounds from the Figma instance in the 1194x834 frame.
+   434	        FigmaAssetImage(
+   435	            x = 222f,
+   436	            y = 150f,
+   437	            w = 750f,
+   438	            h = 535f,
+   439	            scale = scale,
+   440	            resId = logoResId
+   441	        )
+   442	
+   443	        // Eye layer sits on the same logo bounds.
+   444	        FigmaAssetImage(
+   445	            x = 222f,
+   446	            y = 150f,
+   447	            w = 750f,
+   448	            h = 535f,
+   449	            scale = scale,
+   450	            resId = eyesResId
+   451	        )
+   452	    }
+   453	}
+   454	
+   455	private data class FigmaBounds(
+   456	    val x: Float,
+   457	    val y: Float,
+   458	    val w: Float,
+   459	    val h: Float
+   460	)
+   461	
+   462	private data class IntroImages(
+   463	    val logoSimple: ImageBitmap,
+   464	    val logoEyes: ImageBitmap,
+   465	    val steveAvatar: ImageBitmap,
+   466	    val martinAvatar: ImageBitmap,
+   467	    val jannyAvatar: ImageBitmap,
+   468	    val guestAvatar: ImageBitmap,
+   469	    val steveName: ImageBitmap,
+   470	    val martinName: ImageBitmap,
+   471	    val jannyName: ImageBitmap,
+   472	    val guestName: ImageBitmap
+   473	)
    474	
-   475	        // Eye layer sits on the same logo bounds.
-   476	        FigmaAssetImage(
-   477	            x = 222f,
-   478	            y = 150f,
-   479	            w = 750f,
-   480	            h = 535f,
-   481	            scale = scale,
-   482	            resId = eyesResId
-   483	        )
-   484	    }
-   485	}
-   486	
-   487	private data class FigmaBounds(
-   488	    val x: Float,
-   489	    val y: Float,
-   490	    val w: Float,
-   491	    val h: Float
-   492	)
+   475	@Composable
+   476	private fun rememberIntroImages(): IntroImages {
+   477	    val resources = LocalContext.current.resources
+   478	    return remember(resources) {
+   479	        IntroImages(
+   480	            logoSimple = BitmapFactory.decodeResource(resources, R.drawable.logo_simple_large).asImageBitmap(),
+   481	            logoEyes = BitmapFactory.decodeResource(resources, R.drawable.logo_eyes_large).asImageBitmap(),
+   482	            steveAvatar = BitmapFactory.decodeResource(resources, R.drawable.steve_avatar).asImageBitmap(),
+   483	            martinAvatar = BitmapFactory.decodeResource(resources, R.drawable.martin_avatar).asImageBitmap(),
+   484	            jannyAvatar = BitmapFactory.decodeResource(resources, R.drawable.janny_avatar).asImageBitmap(),
+   485	            guestAvatar = BitmapFactory.decodeResource(resources, R.drawable.guest_avatar).asImageBitmap(),
+   486	            steveName = BitmapFactory.decodeResource(resources, R.drawable.steve_name).asImageBitmap(),
+   487	            martinName = BitmapFactory.decodeResource(resources, R.drawable.martin_name).asImageBitmap(),
+   488	            jannyName = BitmapFactory.decodeResource(resources, R.drawable.janny_name).asImageBitmap(),
+   489	            guestName = BitmapFactory.decodeResource(resources, R.drawable.guest_name).asImageBitmap()
+   490	        )
+   491	    }
+   492	}
    493	
-   494	private data class IntroImages(
-   495	    val logoSimple: ImageBitmap,
-   496	    val logoEyes: ImageBitmap,
-   497	    val steveAvatar: ImageBitmap,
-   498	    val martinAvatar: ImageBitmap,
-   499	    val jannyAvatar: ImageBitmap,
-   500	    val guestAvatar: ImageBitmap,
-   501	    val steveName: ImageBitmap,
-   502	    val martinName: ImageBitmap,
-   503	    val jannyName: ImageBitmap,
-   504	    val guestName: ImageBitmap
-   505	)
-   506	
-   507	@Composable
-   508	private fun rememberIntroImages(): IntroImages {
-   509	    val resources = LocalContext.current.resources
-   510	    return remember(resources) {
-   511	        IntroImages(
-   512	            logoSimple = BitmapFactory.decodeResource(resources, R.drawable.logo_simple_large).asImageBitmap(),
-   513	            logoEyes = BitmapFactory.decodeResource(resources, R.drawable.logo_eyes_large).asImageBitmap(),
-   514	            steveAvatar = BitmapFactory.decodeResource(resources, R.drawable.steve_avatar).asImageBitmap(),
-   515	            martinAvatar = BitmapFactory.decodeResource(resources, R.drawable.martin_avatar).asImageBitmap(),
-   516	            jannyAvatar = BitmapFactory.decodeResource(resources, R.drawable.janny_avatar).asImageBitmap(),
-   517	            guestAvatar = BitmapFactory.decodeResource(resources, R.drawable.guest_avatar).asImageBitmap(),
-   518	            steveName = BitmapFactory.decodeResource(resources, R.drawable.steve_name).asImageBitmap(),
-   519	            martinName = BitmapFactory.decodeResource(resources, R.drawable.martin_name).asImageBitmap(),
-   520	            jannyName = BitmapFactory.decodeResource(resources, R.drawable.janny_name).asImageBitmap(),
-   521	            guestName = BitmapFactory.decodeResource(resources, R.drawable.guest_name).asImageBitmap()
-   522	        )
-   523	    }
-   524	}
-   525	
-   526	private fun DrawScope.drawFigmaImage(
-   527	    image: ImageBitmap,
-   528	    bounds: FigmaBounds,
-   529	    stageLeft: Float,
-   530	    stageTop: Float,
-   531	    stageScale: Float,
-   532	    alpha: Float = 1f,
-   533	    clipCircle: Boolean = false
-   534	) {
-   535	    val left = stageLeft + bounds.x * stageScale
-   536	    val top = stageTop + bounds.y * stageScale
-   537	    val width = bounds.w * stageScale
-   538	    val height = bounds.h * stageScale
-   539	
-   540	    if (clipCircle) {
-   541	        val clip = Path().apply {
-   542	            addOval(Rect(left, top, left + width, top + height))
-   543	        }
-   544	        clipPath(clip) {
-   545	            drawImageBitmap(image, left, top, width, height, alpha)
-   546	        }
-   547	    } else {
-   548	        drawImageBitmap(image, left, top, width, height, alpha)
-   549	    }
-   550	}
-   551	
-   552	private fun DrawScope.drawImageBitmap(
-   553	    image: ImageBitmap,
-   554	    left: Float,
-   555	    top: Float,
-   556	    width: Float,
-   557	    height: Float,
-   558	    alpha: Float
-   559	) {
-   560	    drawImage(
-   561	        image = image,
-   562	        dstOffset = IntOffset(left.roundToInt(), top.roundToInt()),
-   563	        dstSize = IntSize(width.roundToInt(), height.roundToInt()),
-   564	        alpha = alpha.coerceIn(0f, 1f)
-   565	    )
-   566	}
-   567	
-   568	@Composable
-   569	private fun SettlingLogoLayer(
-   570	    scale: Float,
-   571	    entryProgress: Float,
-   572	    finalProgress: Float,
-   573	    alpha: Float
-   574	) {
-   575	    val baseBounds = FigmaBounds(x = 222f, y = 150f, w = 750f, h = 535f)
-   576	    val simpleEntry = lerpBounds(
-   577	        start = FigmaBounds(x = 447f, y = 1037f, w = 300f, h = 214f),
-   578	        end = baseBounds,
-   579	        amount = entryProgress
-   580	    )
-   581	    val eyesEntry = lerpBounds(
-   582	        start = FigmaBounds(x = 453f, y = -417f, w = 300f, h = 214f),
-   583	        end = baseBounds,
-   584	        amount = entryProgress
-   585	    )
-   586	    val finalBounds = FigmaBounds(x = 297f, y = 11f, w = 600f, h = 428f)
-   587	    val simpleBounds = lerpBounds(simpleEntry, finalBounds, finalProgress)
-   588	    val eyesBounds = lerpBounds(eyesEntry, finalBounds, finalProgress)
-   589	
-   590	    TransformedFigmaAssetImage(
-   591	        base = baseBounds,
-   592	        target = simpleBounds,
-   593	        scale = scale,
-   594	        resId = R.drawable.logo_simple_large,
-   595	        alpha = alpha
-   596	    )
-   597	    TransformedFigmaAssetImage(
-   598	        base = baseBounds,
-   599	        target = eyesBounds,
-   600	        scale = scale,
-   601	        resId = R.drawable.logo_eyes_large,
-   602	        alpha = alpha
-   603	    )
-   604	}
-   605	
-   606	@Composable
-   607	private fun AvatarSelectionLayer(scale: Float, alpha: Float, yOffset: Float) {
-   608	    val density = LocalDensity.current.density
-   609	    Box(
-   610	        modifier = Modifier
-   611	            .requiredSize(figma(1194f, scale), figma(834f, scale))
-   612	            .graphicsLayer {
-   613	                this.alpha = alpha
-   614	                translationY = yOffset * scale * density
-   615	            }
-   616	    ) {
-   617	        // Figma Logo Slide 2, Property 1=Variant2, constrained inside Sign-in Frame.
-   618	        FigmaAvatarImage(x = 130f, y = 428f, w = 220f, h = 220f, scale = scale, resId = R.drawable.steve_avatar)
-   619	        FigmaAvatarImage(x = 368f, y = 428f, w = 220f, h = 220f, scale = scale, resId = R.drawable.martin_avatar)
-   620	        FigmaAvatarImage(x = 606f, y = 432f, w = 220f, h = 220f, scale = scale, resId = R.drawable.janny_avatar)
-   621	        FigmaAvatarImage(x = 844f, y = 428f, w = 220f, h = 220f, scale = scale, resId = R.drawable.guest_avatar)
-   622	
-   623	        FigmaAssetImage(x = 130f, y = 683f, w = 220f, h = 72f, scale = scale, resId = R.drawable.steve_name)
-   624	        FigmaAssetImage(x = 368f, y = 683f, w = 220f, h = 72f, scale = scale, resId = R.drawable.martin_name)
-   625	        FigmaAssetImage(x = 606f, y = 683f, w = 220f, h = 72f, scale = scale, resId = R.drawable.janny_name)
-   626	        FigmaAssetImage(x = 854f, y = 683f, w = 200f, h = 72f, scale = scale, resId = R.drawable.guest_name)
-   627	    }
-   628	}
-   629	
-   630	@Composable
-   631	private fun FigmaAvatarImage(
-   632	    x: Float,
-   633	    y: Float,
-   634	    w: Float,
-   635	    h: Float,
-   636	    scale: Float,
-   637	    @DrawableRes resId: Int
-   638	) {
-   639	    Image(
-   640	        painter = painterResource(id = resId),
-   641	        contentDescription = null,
-   642	        contentScale = ContentScale.FillBounds,
-   643	        modifier = Modifier
-   644	            .absoluteOffset(x = figma(x, scale), y = figma(y, scale))
-   645	            .requiredSize(figma(w, scale), figma(h, scale))
-   646	            .clip(CircleShape)
-   647	    )
-   648	}
-   649	
-   650	@Composable
-   651	private fun LogoDot(x: Float, y: Float, scale: Float, active: Boolean) {
-   652	    Box(
-   653	        modifier = Modifier
-   654	            .absoluteOffset(x = figma(x, scale), y = figma(y, scale))
-   655	            .requiredSize(figma(50.4f, scale), figma(50.4f, scale))
-   656	            .clip(CircleShape)
-   657	            .background(if (active) Color(0xFFE7E7E7) else Color(0xFF050505))
-   658	    )
-   659	}
-   660	
-   661	@Composable
-   662	private fun PromoBackgroundLayer(
-   663	    scale: Float,
-   664	    darkOverlay: Float,
-   665	    @DrawableRes backgroundResId: Int,
-   666	    alpha: Float = 1f
-   667	) {
-   668	    // Nodes 793:7049 / 793:7050 at x:0 y:0 size:1584x1584.
-   669	    FigmaAssetImage(
-   670	        x = 0f,
-   671	        y = 0f,
-   672	        w = 1584f,
-   673	        h = 1584f,
-   674	        scale = scale,
-   675	        resId = backgroundResId,
-   676	        alpha = alpha
-   677	    )
-   678	
-   679	    if (darkOverlay > 0f) {
-   680	        Box(
-   681	            modifier = Modifier
-   682	                .absoluteOffset(x = figma(0f, scale), y = figma(0f, scale))
-   683	                .requiredSize(figma(1584f, scale), figma(1584f, scale))
-   684	                .graphicsLayer(alpha = alpha)
-   685	                .background(Color.Black.copy(alpha = darkOverlay))
-   686	        )
-   687	    }
-   688	}
-   689	
-   690	@Composable
-   691	private fun TransformedFigmaAssetImage(
-   692	    base: FigmaBounds,
-   693	    target: FigmaBounds,
-   694	    scale: Float,
-   695	    @DrawableRes resId: Int,
-   696	    alpha: Float = 1f
-   697	) {
-   698	    val density = LocalDensity.current.density
-   699	    Image(
-   700	        painter = painterResource(id = resId),
-   701	        contentDescription = null,
-   702	        contentScale = ContentScale.FillBounds,
-   703	        modifier = Modifier
-   704	            .absoluteOffset(x = figma(base.x, scale), y = figma(base.y, scale))
-   705	            .requiredSize(figma(base.w, scale), figma(base.h, scale))
-   706	            .graphicsLayer {
-   707	                this.alpha = alpha
-   708	                transformOrigin = TransformOrigin(0f, 0f)
-   709	                translationX = (target.x - base.x) * scale * density
-   710	                translationY = (target.y - base.y) * scale * density
-   711	                scaleX = target.w / base.w
-   712	                scaleY = target.h / base.h
-   713	            }
-   714	    )
-   715	}
-   716	
-   717	@Composable
-   718	private fun FigmaAssetImage(
-   719	    x: Float,
-   720	    y: Float,
-   721	    w: Float,
-   722	    h: Float,
-   723	    scale: Float,
-   724	    @DrawableRes resId: Int,
-   725	    alpha: Float = 1f
-   726	) {
-   727	    Image(
-   728	        painter = painterResource(id = resId),
-   729	        contentDescription = null,
-   730	        contentScale = ContentScale.FillBounds,
-   731	        modifier = Modifier
-   732	            .absoluteOffset(x = figma(x, scale), y = figma(y, scale))
-   733	            .requiredSize(figma(w, scale), figma(h, scale))
-   734	            .graphicsLayer(alpha = alpha)
-   735	    )
-   736	}
-   737	
-   738	@Composable
-   739	private fun FigmaStage(background: Brush, content: @Composable BoxWithConstraintsScope.(Float) -> Unit) {
-   740	    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-   741	        val outerMaxWidth = this.maxWidth
-   742	        val outerMaxHeight = this.maxHeight
-   743	        val scale = min(outerMaxWidth.value / FIGMA_FRAME_WIDTH, outerMaxHeight.value / FIGMA_FRAME_HEIGHT)
-   744	        val stageWidth = figma(FIGMA_FRAME_WIDTH, scale)
-   745	        val stageHeight = figma(FIGMA_FRAME_HEIGHT, scale)
-   746	
-   747	        Box(
-   748	            modifier = Modifier
-   749	                .fillMaxSize()
-   750	                .background(background)
-   751	        ) {
-   752	            BoxWithConstraints(
-   753	                modifier = Modifier
-   754	                    .align(Alignment.Center)
-   755	                    .requiredSize(stageWidth, stageHeight)
-   756	            ) {
-   757	                content(scale)
-   758	            }
-   759	        }
-   760	    }
+   494	private fun DrawScope.drawFigmaImage(
+   495	    image: ImageBitmap,
+   496	    bounds: FigmaBounds,
+   497	    stageLeft: Float,
+   498	    stageTop: Float,
+   499	    stageScale: Float,
+   500	    alpha: Float = 1f,
+   501	    clipCircle: Boolean = false
+   502	) {
+   503	    val left = stageLeft + bounds.x * stageScale
+   504	    val top = stageTop + bounds.y * stageScale
+   505	    val width = bounds.w * stageScale
+   506	    val height = bounds.h * stageScale
+   507	
+   508	    if (clipCircle) {
+   509	        val clip = Path().apply {
+   510	            addOval(Rect(left, top, left + width, top + height))
+   511	        }
+   512	        clipPath(clip) {
+   513	            drawImageBitmap(image, left, top, width, height, alpha)
+   514	        }
+   515	    } else {
+   516	        drawImageBitmap(image, left, top, width, height, alpha)
+   517	    }
+   518	}
+   519	
+   520	private fun DrawScope.drawImageBitmap(
+   521	    image: ImageBitmap,
+   522	    left: Float,
+   523	    top: Float,
+   524	    width: Float,
+   525	    height: Float,
+   526	    alpha: Float
+   527	) {
+   528	    drawImage(
+   529	        image = image,
+   530	        dstOffset = IntOffset(left.roundToInt(), top.roundToInt()),
+   531	        dstSize = IntSize(width.roundToInt(), height.roundToInt()),
+   532	        alpha = alpha.coerceIn(0f, 1f)
+   533	    )
+   534	}
+   535	
+   536	@Composable
+   537	private fun SettlingLogoLayer(
+   538	    scale: Float,
+   539	    entryProgress: Float,
+   540	    finalProgress: Float,
+   541	    alpha: Float
+   542	) {
+   543	    val baseBounds = FigmaBounds(x = 222f, y = 150f, w = 750f, h = 535f)
+   544	    val simpleEntry = lerpBounds(
+   545	        start = FigmaBounds(x = 447f, y = 1037f, w = 300f, h = 214f),
+   546	        end = baseBounds,
+   547	        amount = entryProgress
+   548	    )
+   549	    val eyesEntry = lerpBounds(
+   550	        start = FigmaBounds(x = 453f, y = -417f, w = 300f, h = 214f),
+   551	        end = baseBounds,
+   552	        amount = entryProgress
+   553	    )
+   554	    val finalBounds = FigmaBounds(x = 297f, y = 11f, w = 600f, h = 428f)
+   555	    val simpleBounds = lerpBounds(simpleEntry, finalBounds, finalProgress)
+   556	    val eyesBounds = lerpBounds(eyesEntry, finalBounds, finalProgress)
+   557	
+   558	    TransformedFigmaAssetImage(
+   559	        base = baseBounds,
+   560	        target = simpleBounds,
+   561	        scale = scale,
+   562	        resId = R.drawable.logo_simple_large,
+   563	        alpha = alpha
+   564	    )
+   565	    TransformedFigmaAssetImage(
+   566	        base = baseBounds,
+   567	        target = eyesBounds,
+   568	        scale = scale,
+   569	        resId = R.drawable.logo_eyes_large,
+   570	        alpha = alpha
+   571	    )
+   572	}
+   573	
+   574	@Composable
+   575	private fun AvatarSelectionLayer(scale: Float, alpha: Float, yOffset: Float) {
+   576	    val density = LocalDensity.current.density
+   577	    Box(
+   578	        modifier = Modifier
+   579	            .requiredSize(figma(1194f, scale), figma(834f, scale))
+   580	            .graphicsLayer {
+   581	                this.alpha = alpha
+   582	                translationY = yOffset * scale * density
+   583	            }
+   584	    ) {
+   585	        // Figma Logo Slide 2, Property 1=Variant2, constrained inside Sign-in Frame.
+   586	        FigmaAvatarImage(x = 130f, y = 428f, w = 220f, h = 220f, scale = scale, resId = R.drawable.steve_avatar)
+   587	        FigmaAvatarImage(x = 368f, y = 428f, w = 220f, h = 220f, scale = scale, resId = R.drawable.martin_avatar)
+   588	        FigmaAvatarImage(x = 606f, y = 432f, w = 220f, h = 220f, scale = scale, resId = R.drawable.janny_avatar)
+   589	        FigmaAvatarImage(x = 844f, y = 428f, w = 220f, h = 220f, scale = scale, resId = R.drawable.guest_avatar)
+   590	
+   591	        FigmaAssetImage(x = 130f, y = 683f, w = 220f, h = 72f, scale = scale, resId = R.drawable.steve_name)
+   592	        FigmaAssetImage(x = 368f, y = 683f, w = 220f, h = 72f, scale = scale, resId = R.drawable.martin_name)
+   593	        FigmaAssetImage(x = 606f, y = 683f, w = 220f, h = 72f, scale = scale, resId = R.drawable.janny_name)
+   594	        FigmaAssetImage(x = 854f, y = 683f, w = 200f, h = 72f, scale = scale, resId = R.drawable.guest_name)
+   595	    }
+   596	}
+   597	
+   598	@Composable
+   599	private fun FigmaAvatarImage(
+   600	    x: Float,
+   601	    y: Float,
+   602	    w: Float,
+   603	    h: Float,
+   604	    scale: Float,
+   605	    @DrawableRes resId: Int
+   606	) {
+   607	    Image(
+   608	        painter = painterResource(id = resId),
+   609	        contentDescription = null,
+   610	        contentScale = ContentScale.FillBounds,
+   611	        modifier = Modifier
+   612	            .absoluteOffset(x = figma(x, scale), y = figma(y, scale))
+   613	            .requiredSize(figma(w, scale), figma(h, scale))
+   614	            .clip(CircleShape)
+   615	    )
+   616	}
+   617	
+   618	@Composable
+   619	private fun LogoDot(x: Float, y: Float, scale: Float, active: Boolean) {
+   620	    Box(
+   621	        modifier = Modifier
+   622	            .absoluteOffset(x = figma(x, scale), y = figma(y, scale))
+   623	            .requiredSize(figma(50.4f, scale), figma(50.4f, scale))
+   624	            .clip(CircleShape)
+   625	            .background(if (active) Color(0xFFE7E7E7) else Color(0xFF050505))
+   626	    )
+   627	}
+   628	
+   629	@Composable
+   630	private fun PromoBackgroundLayer(
+   631	    scale: Float,
+   632	    darkOverlay: Float,
+   633	    @DrawableRes backgroundResId: Int,
+   634	    alpha: Float = 1f
+   635	) {
+   636	    // Nodes 793:7049 / 793:7050 at x:0 y:0 size:1584x1584.
+   637	    FigmaAssetImage(
+   638	        x = 0f,
+   639	        y = 0f,
+   640	        w = 1584f,
+   641	        h = 1584f,
+   642	        scale = scale,
+   643	        resId = backgroundResId,
+   644	        alpha = alpha
+   645	    )
+   646	
+   647	    if (darkOverlay > 0f) {
+   648	        Box(
+   649	            modifier = Modifier
+   650	                .absoluteOffset(x = figma(0f, scale), y = figma(0f, scale))
+   651	                .requiredSize(figma(1584f, scale), figma(1584f, scale))
+   652	                .graphicsLayer(alpha = alpha)
+   653	                .background(Color.Black.copy(alpha = darkOverlay))
+   654	        )
+   655	    }
+   656	}
+   657	
+   658	@Composable
+   659	private fun TransformedFigmaAssetImage(
+   660	    base: FigmaBounds,
+   661	    target: FigmaBounds,
+   662	    scale: Float,
+   663	    @DrawableRes resId: Int,
+   664	    alpha: Float = 1f
+   665	) {
+   666	    val density = LocalDensity.current.density
+   667	    Image(
+   668	        painter = painterResource(id = resId),
+   669	        contentDescription = null,
+   670	        contentScale = ContentScale.FillBounds,
+   671	        modifier = Modifier
+   672	            .absoluteOffset(x = figma(base.x, scale), y = figma(base.y, scale))
+   673	            .requiredSize(figma(base.w, scale), figma(base.h, scale))
+   674	            .graphicsLayer {
+   675	                this.alpha = alpha
+   676	                transformOrigin = TransformOrigin(0f, 0f)
+   677	                translationX = (target.x - base.x) * scale * density
+   678	                translationY = (target.y - base.y) * scale * density
+   679	                scaleX = target.w / base.w
+   680	                scaleY = target.h / base.h
+   681	            }
+   682	    )
+   683	}
+   684	
+   685	@Composable
+   686	private fun FigmaAssetImage(
+   687	    x: Float,
+   688	    y: Float,
+   689	    w: Float,
+   690	    h: Float,
+   691	    scale: Float,
+   692	    @DrawableRes resId: Int,
+   693	    alpha: Float = 1f
+   694	) {
+   695	    Image(
+   696	        painter = painterResource(id = resId),
+   697	        contentDescription = null,
+   698	        contentScale = ContentScale.FillBounds,
+   699	        modifier = Modifier
+   700	            .absoluteOffset(x = figma(x, scale), y = figma(y, scale))
+   701	            .requiredSize(figma(w, scale), figma(h, scale))
+   702	            .graphicsLayer(alpha = alpha)
+   703	    )
+   704	}
+   705	
+   706	@Composable
+   707	private fun FigmaStage(background: Brush, content: @Composable BoxWithConstraintsScope.(Float) -> Unit) {
+   708	    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+   709	        val outerMaxWidth = this.maxWidth
+   710	        val outerMaxHeight = this.maxHeight
+   711	        val scale = min(outerMaxWidth.value / FIGMA_FRAME_WIDTH, outerMaxHeight.value / FIGMA_FRAME_HEIGHT)
+   712	        val stageWidth = figma(FIGMA_FRAME_WIDTH, scale)
+   713	        val stageHeight = figma(FIGMA_FRAME_HEIGHT, scale)
+   714	
+   715	        Box(
+   716	            modifier = Modifier
+   717	                .fillMaxSize()
+   718	                .background(background)
+   719	        ) {
+   720	            BoxWithConstraints(
+   721	                modifier = Modifier
+   722	                    .align(Alignment.Center)
+   723	                    .requiredSize(stageWidth, stageHeight)
+   724	            ) {
+   725	                content(scale)
+   726	            }
+   727	        }
+   728	    }
+   729	}
+   730	
+   731	private fun figma(px: Float, scale: Float) = (px * scale).dp
+   732	
+   733	private fun introBackgroundBrush(solidProgress: Float, gradientProgress: Float): Brush {
+   734	    val solid = lerpColor(ColorFrame1Background, ColorFrame2Background, solidProgress)
+   735	    return Brush.verticalGradient(
+   736	        colors = listOf(
+   737	            lerpColor(solid, ColorIntroGradientTop, gradientProgress),
+   738	            lerpColor(solid, ColorIntroGradientCenter, gradientProgress),
+   739	            lerpColor(solid, ColorIntroGradientBottom, gradientProgress)
+   740	        )
+   741	    )
+   742	}
+   743	
+   744	private fun solidBrush(color: Color): Brush = Brush.verticalGradient(
+   745	    colors = listOf(color, color)
+   746	)
+   747	
+   748	private fun bootProgressAt(bootStartMillis: Long): Float {
+   749	    val elapsed = SystemClock.uptimeMillis() - bootStartMillis
+   750	    return (elapsed / BOOT_ANIMATION_MS.toFloat()).coerceIn(0f, 1f)
+   751	}
+   752	
+   753	private fun easedSegment(value: Float, start: Float, end: Float): Float {
+   754	    val progress = ((value - start) / (end - start)).coerceIn(0f, 1f)
+   755	    return FastOutSlowInEasing.transform(progress)
+   756	}
+   757	
+   758	private fun linearSegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
+   759	    val ms = progress.coerceIn(0f, 1f) * BOOT_ANIMATION_MS
+   760	    return ((ms - startMs) / (endMs - startMs).toFloat()).coerceIn(0f, 1f)
    761	}
    762	
-   763	private fun figma(px: Float, scale: Float) = (px * scale).dp
-   764	
-   765	private fun introBackgroundBrush(solidProgress: Float, gradientProgress: Float): Brush {
-   766	    val solid = lerpColor(ColorFrame1Background, ColorFrame2Background, solidProgress)
-   767	    return Brush.verticalGradient(
-   768	        colors = listOf(
-   769	            lerpColor(solid, ColorIntroGradientTop, gradientProgress),
-   770	            lerpColor(solid, ColorIntroGradientCenter, gradientProgress),
-   771	            lerpColor(solid, ColorIntroGradientBottom, gradientProgress)
-   772	        )
-   773	    )
-   774	}
-   775	
-   776	private fun solidBrush(color: Color): Brush = Brush.verticalGradient(
-   777	    colors = listOf(color, color)
-   778	)
+   763	private fun easedSegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
+   764	    return FastOutSlowInEasing.transform(linearSegmentMs(progress, startMs, endMs))
+   765	}
+   766	
+   767	private fun bouncySegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
+   768	    return bouncyEasing(linearSegmentMs(progress, startMs, endMs))
+   769	}
+   770	
+   771	private fun bouncyEasing(value: Float): Float {
+   772	    val t = value.coerceIn(0f, 1f)
+   773	    val base = FastOutSlowInEasing.transform(t)
+   774	    val bounce = sin(t * PI.toFloat() * 4.5f) * (1f - t) * 0.13f
+   775	    return base + bounce
+   776	}
+   777	
+   778	private fun lerpFloat(start: Float, end: Float, amount: Float) = start + (end - start) * amount
    779	
-   780	private fun bootProgressAt(bootStartMillis: Long): Float {
-   781	    val elapsed = SystemClock.uptimeMillis() - bootStartMillis
-   782	    return (elapsed / BOOT_ANIMATION_MS.toFloat()).coerceIn(0f, 1f)
-   783	}
-   784	
-   785	private fun easedSegment(value: Float, start: Float, end: Float): Float {
-   786	    val progress = ((value - start) / (end - start)).coerceIn(0f, 1f)
-   787	    return FastOutSlowInEasing.transform(progress)
-   788	}
-   789	
-   790	private fun linearSegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
-   791	    val ms = progress.coerceIn(0f, 1f) * BOOT_ANIMATION_MS
-   792	    return ((ms - startMs) / (endMs - startMs).toFloat()).coerceIn(0f, 1f)
-   793	}
-   794	
-   795	private fun easedSegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
-   796	    return FastOutSlowInEasing.transform(linearSegmentMs(progress, startMs, endMs))
-   797	}
-   798	
-   799	private fun bouncySegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
-   800	    return bouncyEasing(linearSegmentMs(progress, startMs, endMs))
-   801	}
-   802	
-   803	private fun bouncyEasing(value: Float): Float {
-   804	    val t = value.coerceIn(0f, 1f)
-   805	    val base = FastOutSlowInEasing.transform(t)
-   806	    val bounce = sin(t * PI.toFloat() * 4.5f) * (1f - t) * 0.13f
-   807	    return base + bounce
-   808	}
-   809	
-   810	private fun lerpFloat(start: Float, end: Float, amount: Float) = start + (end - start) * amount
-   811	
-   812	private fun lerpBounds(start: FigmaBounds, end: FigmaBounds, amount: Float) = FigmaBounds(
-   813	    x = lerpFloat(start.x, end.x, amount),
-   814	    y = lerpFloat(start.y, end.y, amount),
-   815	    w = lerpFloat(start.w, end.w, amount),
-   816	    h = lerpFloat(start.h, end.h, amount)
-   817	)
+   780	private fun lerpBounds(start: FigmaBounds, end: FigmaBounds, amount: Float) = FigmaBounds(
+   781	    x = lerpFloat(start.x, end.x, amount),
+   782	    y = lerpFloat(start.y, end.y, amount),
+   783	    w = lerpFloat(start.w, end.w, amount),
+   784	    h = lerpFloat(start.h, end.h, amount)
+   785	)
 
 
 ============================================================
@@ -2318,6 +2320,39 @@ app/src/main/res/drawable-nodpi/laughing_matters_card.webp | 141448 bytes | modi
 app/src/main/res/drawable-nodpi/laughing_matters_hero.webp | 331346 bytes | modified 2026-07-21 18:46:17
 app/src/main/res/drawable-nodpi/light_as_a_feather_card.webp | 53528 bytes | modified 2026-07-21 18:46:40
 app/src/main/res/drawable-nodpi/light_as_a_feather_hero.webp | 109092 bytes | modified 2026-07-21 18:46:40
+app/src/main/res/drawable-nodpi/loading_spinner_animation_default.png | 53041 bytes | modified 2026-07-21 20:01:15
+app/src/main/res/drawable-nodpi/loading_spinner_animation_variant_2.png | 57968 bytes | modified 2026-07-21 20:01:15
+app/src/main/res/drawable-nodpi/loading_spinner_animation_variant_3.png | 53458 bytes | modified 2026-07-21 20:01:15
+app/src/main/res/drawable-nodpi/loading_spinner_animation_variant_4.png | 58827 bytes | modified 2026-07-21 20:01:16
+app/src/main/res/drawable-nodpi/loading_spinner_animation_variant_5.png | 54201 bytes | modified 2026-07-21 20:01:16
+app/src/main/res/drawable-nodpi/loading_spinner_animation_variant_6.png | 53955 bytes | modified 2026-07-21 20:01:16
+app/src/main/res/drawable-nodpi/loading_spinner_mini_star_centered.png | 5617 bytes | modified 2026-07-21 20:59:39
+app/src/main/res/drawable-nodpi/loading_spinner_mini_star_default.png | 4156 bytes | modified 2026-07-21 20:50:41
+app/src/main/res/drawable-nodpi/loading_spinner_mini_star_variant_2.png | 5682 bytes | modified 2026-07-21 20:50:41
+app/src/main/res/drawable-nodpi/loading_spinner_mini_star_variant_3.png | 4156 bytes | modified 2026-07-21 20:50:41
+app/src/main/res/drawable-nodpi/loading_spinner_mini_star_variant_4.png | 5682 bytes | modified 2026-07-21 20:50:41
+app/src/main/res/drawable-nodpi/loading_spinner_mini_star_variant_5.png | 4156 bytes | modified 2026-07-21 20:50:41
+app/src/main/res/drawable-nodpi/loading_spinner_mini_star_variant_6.png | 4156 bytes | modified 2026-07-21 20:50:41
+app/src/main/res/drawable-nodpi/loading_spinner_recreated_default.png | 41303 bytes | modified 2026-07-21 20:58:14
+app/src/main/res/drawable-nodpi/loading_spinner_recreated_variant_2.png | 39995 bytes | modified 2026-07-21 20:58:14
+app/src/main/res/drawable-nodpi/loading_spinner_recreated_variant_3.png | 41787 bytes | modified 2026-07-21 20:58:15
+app/src/main/res/drawable-nodpi/loading_spinner_recreated_variant_4.png | 40125 bytes | modified 2026-07-21 20:58:15
+app/src/main/res/drawable-nodpi/loading_spinner_recreated_variant_5.png | 41956 bytes | modified 2026-07-21 20:58:15
+app/src/main/res/drawable-nodpi/loading_spinner_recreated_variant_6.png | 41990 bytes | modified 2026-07-21 20:58:15
+app/src/main/res/drawable-nodpi/loading_spinner_red_star_centered.png | 22386 bytes | modified 2026-07-21 20:59:39
+app/src/main/res/drawable-nodpi/loading_spinner_red_star_default.png | 20200 bytes | modified 2026-07-21 20:50:39
+app/src/main/res/drawable-nodpi/loading_spinner_red_star_variant_2.png | 20132 bytes | modified 2026-07-21 20:50:39
+app/src/main/res/drawable-nodpi/loading_spinner_red_star_variant_3.png | 20200 bytes | modified 2026-07-21 20:50:39
+app/src/main/res/drawable-nodpi/loading_spinner_red_star_variant_4.png | 20132 bytes | modified 2026-07-21 20:50:39
+app/src/main/res/drawable-nodpi/loading_spinner_red_star_variant_5.png | 20799 bytes | modified 2026-07-21 20:50:39
+app/src/main/res/drawable-nodpi/loading_spinner_red_star_variant_6.png | 20200 bytes | modified 2026-07-21 20:50:39
+app/src/main/res/drawable-nodpi/loading_spinner_wheel_centered.png | 23305 bytes | modified 2026-07-21 20:59:39
+app/src/main/res/drawable-nodpi/loading_spinner_wheel_default.png | 22375 bytes | modified 2026-07-21 20:50:40
+app/src/main/res/drawable-nodpi/loading_spinner_wheel_variant_2.png | 22565 bytes | modified 2026-07-21 20:50:40
+app/src/main/res/drawable-nodpi/loading_spinner_wheel_variant_3.png | 23009 bytes | modified 2026-07-21 20:50:40
+app/src/main/res/drawable-nodpi/loading_spinner_wheel_variant_4.png | 22945 bytes | modified 2026-07-21 20:50:40
+app/src/main/res/drawable-nodpi/loading_spinner_wheel_variant_5.png | 23325 bytes | modified 2026-07-21 20:50:40
+app/src/main/res/drawable-nodpi/loading_spinner_wheel_variant_6.png | 23305 bytes | modified 2026-07-21 20:50:41
 app/src/main/res/drawable-nodpi/logo_eyes_intro2.png | 44511 bytes | modified 2026-07-12 00:22:17
 app/src/main/res/drawable-nodpi/logo_eyes_large.png | 44511 bytes | modified 2026-07-12 00:22:18
 app/src/main/res/drawable-nodpi/logo_eyes_signin.png | 44511 bytes | modified 2026-07-12 00:22:59
