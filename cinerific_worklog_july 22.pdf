@@ -1,0 +1,342 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R 11 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 8675 >>
+stream
+BT /F1 11.60 Tf 1 0 0 1 54.00 738.00 Tm (Cinerific Android App Work Log - July 22, 2026) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 725.94 Tm (Compiled summary for Wednesday, July 22, 2026 - focus: documenting the post-July-20 Cinerific) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 716.29 Tm (title-art and motion pass: importing high-visibility movie/show card and hero artwork from) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 706.64 Tm (Figma, replacing lower-quality card sources with sharp WebP resources, wiring catalog and detail) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 696.99 Tm (actionability, creating reusable hero navigation controls, rebuilding the Figma loading spinner) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 687.34 Tm (behavior, implementing category-specific favorites population and removal, adding favorite-star) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 677.69 Tm (celebration motion, importing four presentation-title animation sets, syncing those animations) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 668.04 Tm (to the Home hero reels, and generating the latest Cinerific daily worklog artifact.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 653.08 Tm (Generated in continuity with the established Cinerific worklog cadence from July 12, July 14,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 643.43 Tm (July 15 Part 1, July 15, July 16, July 18, July 19, and July 20: compact opening summary,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 633.78 Tm (source-material review, baseline state, goal list, themed work-completed sections, validation,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 624.13 Tm (files touched, follow-up context, and output-artifact close. This artifact records the current) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 614.48 Tm (source state now present on main through HEAD 204353b and follows the prior root-level PDF) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 604.83 Tm (naming, four-page letter layout, footer convention, and plain-text-readable style.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 589.87 Tm (Source Materials Reviewed) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 580.22 Tm (- Reviewed every pre-existing Cinerific worklog PDF at the repository root:) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 570.57 Tm (  cinerific_worklog_july 12.pdf, cinerific_worklog_july 14.pdf, cinerific_worklog_july 15 part) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 560.92 Tm (  1.pdf, cinerific_worklog_july 15.pdf, cinerific_worklog_july 16.pdf, cinerific_worklog_july) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 551.27 Tm (  18.pdf, cinerific_worklog_july 19.pdf, and cinerific_worklog_july 20.pdf.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 541.62 Tm (- Used pdftotext and pdfinfo output from the prior PDFs to preserve the established title) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 531.97 Tm (  pattern, opening-summary cadence, source review, baseline/goals sections, themed work-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 522.32 Tm (  completed sections, validation language, files-touched list, follow-up close, letter-size page) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 512.67 Tm (  geometry, and four-page daily-log shape.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 503.02 Tm (- Reviewed read_project.sh and cinerific_PROJECT_SNAPSHOT.txt for the current scanner) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 493.37 Tm (  convention, Android source layout, binary resource inventory behavior, generated snapshot) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 483.72 Tm (  expectations, and prior-session onboarding pattern.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 474.07 Tm (- Reviewed the current Git state on main tracking origin/main. Before this PDF artifact was) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 464.42 Tm (  generated, git status was clean at HEAD 204353b.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 454.77 Tm (- Reviewed git log and git show --stat for the post-July-20 commits: e8cb0b8 for WebP title) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 445.12 Tm (  cards and detail navigation, a62b060 for reusable hero navigation controls, 9dd9c64 for Figma) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 435.47 Tm (  spinner motion, 78b194b for favorites-full prompt behavior, 801695b for favorite-star) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 425.82 Tm (  celebration animation, and 204353b for hero reel presentation title animations.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 416.17 Tm (- Reviewed app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 406.52 Tm (  CinerificDestinationScreen.kt, CinerificHomeScreen.kt, CinerificLoadingSpinner.kt,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 396.87 Tm (  HeroPresentationTextAnimation.kt, the current drawable-nodpi resource inventory, and the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 387.22 Tm (  refreshed project snapshot.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 377.57 Tm (- Reviewed the Figma-driven session work around file key qbpfngwBirp0WoOHSqw1TN, including Movie) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 367.92 Tm (  Title Cards, show title cards, Animations \(Original\), Loading Spinner Animation,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 358.27 Tm (  favorite/remove controls, the favorites-full prompt, and the four presentation component sets.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 348.62 Tm (- Used Gradle build output, adb install/launch checks, AVD screenshots, local image inspection,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 338.97 Tm (  Figma plugin/MCP inspection notes, Git status/log/show output, and PDF text extraction as) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 329.32 Tm (  validation material. No external PDF package was installed for this worklog.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 314.37 Tm (Baseline Status Before This Pass) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 304.72 Tm (- Cinerific entered this pass with the July 20 Settings, localization, Auto log out, playback-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 295.07 Tm (  session exception hook, and first Sink or Swim detail-screen route already committed and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 285.42 Tm (  documented.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 275.77 Tm (- The title-card pipeline still needed source-quality Figma exports. Earlier card images) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 266.12 Tm (  included lower-resolution or temporary crops, and Sink or Swim had just exposed the need to) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 256.47 Tm (  distinguish true Figma quality from simple upscaling.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 246.82 Tm (- Movie and show catalog cards existed across Home, Movies, and Shows, but many cards still) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 237.17 Tm (  lacked high-visibility card/hero pairs, stable naming, and detail navigation behavior.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 227.52 Tm (- Troublemaker and One Last Breath specifically needed actionability fixes after the broader) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 217.87 Tm (  title-card wiring pass exposed cards that rendered but did not open their corresponding) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 208.22 Tm (  hero/detail view.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 198.57 Tm (- The detail hero surface still lacked reusable Figma-derived Prev, Play, Next, and Favorite) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 188.92 Tm (  controls. Favorite state existed conceptually but was not yet expressed as a reusable) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 179.27 Tm (  hollow/yellow star component tied to app state.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 169.62 Tm (- The loading behavior requested by the prototype required a red spinner during the grayed/dim) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 159.97 Tm (  hero image phase, while hero controls needed to wait until the full-visibility hero variant) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 150.32 Tm (  appeared.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 140.67 Tm (- Favorites still needed functional population: tapping a yellow favorite star had to place the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 131.02 Tm (  correct movie or show card into the matching placeholder row, and a remove/minus button had to) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 121.37 Tm (  unmark that same title.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 111.72 Tm (- The favorites-full warning from Figma needed category-aware behavior so the prompt appears) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 102.07 Tm (  only when the relevant movie or show favorites row already has five filled placeholders.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 92.42 Tm (- The Home hero reel was already looping four raw video clips, but it did not yet show the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 82.77 Tm (  custom-font Figma presentation title animations tied to the corresponding reels.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 67.81 Tm (Main Goals for July 22 Artifact Scope) Tj ET
+BT /F1 8.25 Tf 1 0 0 1 205.00 34.00 Tm (Cinerific Work Log - July 22, 2026 Page 1) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 8613 >>
+stream
+BT /F1 8.65 Tf 1 0 0 1 54.00 738.00 Tm (- Identify the high-visibility movie and show title-card sources in Figma without requiring) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 728.35 Tm (  every component node to be manually linked by the user.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 718.70 Tm (- Export and keep sharp card and hero artwork as WebP resources using the established) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 709.05 Tm (  lower_snake_case naming convention: title_card.webp and title_hero.webp.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 699.40 Tm (- Wire card resources into Home, Movies, Shows, Favorites, and detail surfaces so tapping a) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 689.75 Tm (  visible card opens the expected grayed-to-visible hero route.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 680.10 Tm (- Create reusable hero control components for favorite and transport navigation, then bind them) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 670.45 Tm (  to stateful favorite, previous, play, and next behavior.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 660.80 Tm (- Recreate the Figma loading spinner from standalone red-star, white-wheel, and mini-star) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 651.15 Tm (  assets, preserving the different part directions/speeds while keeping the layered center) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 641.50 Tm (  stable.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 631.85 Tm (- Show the spinner only during the dim hero loading phase and keep Play/Favorite/Prev/Next) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 622.20 Tm (  controls hidden until the full-visibility hero is displayed.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 612.55 Tm (- Populate Favorites placeholders from successful favorite actions, support minus-button) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 602.90 Tm (  removal, and keep movie/show capacity checks separate.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 593.25 Tm (- Add a fast favorite-star bounce and yellow ray burst on successful favorite actions without) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 583.60 Tm (  playing the celebration when an already-favorited item is removed.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 573.95 Tm (- Import the Light As Air, Infatuation, Into The Wild, and Morbid Temptations presentation) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 564.30 Tm (  variants and mimic their Figma prototype timing over the Home hero reels.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 554.65 Tm (- Build, install, AVD-check, refresh snapshots during the implementation commits, and document) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 545.00 Tm (  the current source state in a latest daily worklog PDF.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 530.04 Tm (Work Completed - Title Card and Hero Artwork) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 520.39 Tm (- Located the requested Movie Title Cards - Coded for un-favorating and removal section and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 510.74 Tm (  verified numbered Card nodes under the Movie Previews frame before importing production) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 501.09 Tm (  assets.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 491.44 Tm (- Proved the Sink or Swim export path first, then corrected the import from the dark/greyed low-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 481.79 Tm (  visibility source to the normal high-visibility source inside the same Figma component.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 472.14 Tm (- Compared the full-screen hero image against the card version and established that the app) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 462.49 Tm (  should keep separate card and hero exports because the Home/Movies cards and the tapped detail) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 452.84 Tm (  hero use different dimensions/aspect presentations.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 443.19 Tm (- Standardized Sink or Swim to sink_or_swim_card.webp and sink_or_swim_hero.webp, then removed) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 433.54 Tm (  the earlier PNG hero resource as part of the WebP-only title-art direction.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 423.89 Tm (- Imported high-visibility card and hero WebP pairs for the broader movie/show library now) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 414.24 Tm (  represented in drawable-nodpi, replacing older figma_card_*.jpg and home_* PNG crops where the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 404.59 Tm (  new source-quality assets superseded them.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 394.94 Tm (- Preserved the agreed card/hero naming convention across titles such as One Last Breath,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 385.29 Tm (  Troublemaker, Ignition, The Baller, Help, No Trespassing, Hungry Heart, Breathing, Moments,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 375.64 Tm (  Wheels, and the other currently wired catalog entries.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 365.99 Tm (- Kept card assets scoped for Home/Movies/Shows/Favorites display while hero assets are used by) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 356.34 Tm (  the tapped detail experience, preserving visual sharpness and avoiding stretched single-source) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 346.69 Tm (  reuse.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 331.74 Tm (Work Completed - Catalog and Detail Actionability) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 322.09 Tm (- Created commit e8cb0b8, Wired WebP title cards into catalog/detail navigation, as the first) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 312.44 Tm (  post-July-20 source checkpoint after the July 20 worklog artifact.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 302.79 Tm (- Updated Home rows to use the new card resources and mapped card drawable IDs back to program) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 293.14 Tm (  titles so the Home screen can route real cards into detail views.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 283.49 Tm (- Expanded destination program specs so Movies and Shows cards can expose both card artwork and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 273.84 Tm (  detail hero artwork through shared data instead of one-off special cases.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 264.19 Tm (- Fixed non-actionable Troublemaker and One Last Breath cards so tapping those visible cards now) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 254.54 Tm (  opens their corresponding program hero/detail screen.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 244.89 Tm (- Preserved the detail reveal pattern established by Sink or Swim: a grayed hero image appears) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 235.24 Tm (  first, then transitions to the full-visibility hero after the loading phase.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 225.59 Tm (- Kept previous and next title lookup based on the current program title so detail navigation) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 215.94 Tm (  can move through the current catalog sequence without hardcoding each button target.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 200.98 Tm (Work Completed - Hero Navigation Controls) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 191.33 Tm (- Studied the One Last Breath component in the movie title-card section to locate the Prev,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 181.68 Tm (  Play, Next, and Favorite button artwork and its Figma prototype behavior before breaking) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 172.03 Tm (  controls into reusable app components.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 162.38 Tm (- Imported the inactive favorite, active yellow favorite, previous, play, and next PNG controls) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 152.73 Tm (  into drawable-nodpi with clear hero_control_* names.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 143.08 Tm (- Created commit a62b060, Added reusable hero navigation controls, with reusable favorite toggle) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 133.43 Tm (  and transport-control components inside CinerificDestinationScreen.kt.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 123.78 Tm (- Changed the inactive favorite control fill to plain white for improved visibility against dark) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 114.13 Tm (  and dimmed hero images while preserving the yellow active-star state.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 104.48 Tm (- Wired favorite state so tapping the hollow star marks the current movie/show as favorited, and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 94.83 Tm (  tapping the active yellow star removes that title from favorites.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 85.18 Tm (- Wired previous and next buttons to adjacent program detail routes and connected Play to the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 75.53 Tm (  existing playback-session controller hook so future user-started playback can suspend idle) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 65.88 Tm (  logout.) Tj ET
+BT /F1 8.25 Tf 1 0 0 1 205.00 34.00 Tm (Cinerific Work Log - July 22, 2026 Page 2) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 8275 >>
+stream
+BT /F1 9.15 Tf 1 0 0 1 54.00 732.69 Tm (Work Completed - Spinner Assets and Loading Motion) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 723.04 Tm (- Imported the Loading Spinner Animation variants from the Animations \(Original\) section and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 713.39 Tm (  confirmed their transparent-background treatment after removing the unwanted solid background.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 703.74 Tm (- Separated the red star, white circle/ellipse wheel, and yellow mini-star assets from the full) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 694.09 Tm (  spinner frames so the app can animate each part independently instead of relying on static PNG) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 684.44 Tm (  frames.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 674.79 Tm (- Created centered standalone spinner assets using animation_variant_6.png as the closest) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 665.14 Tm (  reference for the three parts being vertically and horizontally aligned.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 655.49 Tm (- Created CinerificLoadingSpinner.kt and commit 9dd9c64, Matched Figma Spinner Motion, to mimic) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 645.84 Tm (  the original variant-chain motion with different directions/speeds for the red star, white) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 636.19 Tm (  wheel, and mini-star.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 626.54 Tm (- Changed detail loading behavior so the red spinner appears and spins during the grayed hero) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 616.89 Tm (  phase, then disappears when the full-visibility hero image is available.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 607.24 Tm (- Corrected the earlier layering issue where Play and Favorite controls appeared during the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 597.59 Tm (  dimmed hero. Those controls now appear only with the fully visible hero state.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 582.64 Tm (Work Completed - Favorites Population and Removal) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 572.99 Tm (- Studied the Movie Favorites - Coded for un-favoriting & removal section and located the round) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 563.34 Tm (  minus/remove button used on favorited cards.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 553.69 Tm (- Imported favorite_remove_button.png with a transparent background so only the round minus) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 544.04 Tm (  button is visible, without black or gray pixels around it.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 534.39 Tm (- Created commit 78b194b, Implemented favorites-full prompt behavior, with category-specific) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 524.74 Tm (  favorite capacity checks and the Figma-inspired warning overlay.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 515.09 Tm (- Changed Favorites from empty-only placeholders into stateful movie and show placeholder rows) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 505.44 Tm (  populated by the titles currently marked as favorites.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 495.79 Tm (- Added a small minus/remove overlay to favorited cards on the Favorites screen. Tapping it) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 486.14 Tm (  removes that card from Favorites and unmarks the matching detail hero star back to hollow.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 476.49 Tm (- Kept movie and show favorite slots independent, so filling five movie placeholders does not) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 466.84 Tm (  block show favorites and filling five show placeholders does not block movie favorites.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 457.19 Tm (- Implemented the You have filled up on favorites prompt so it appears only when the relevant) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 447.54 Tm (  category already has five filled placeholders and the user tries to favorite another title in) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 437.89 Tm (  that same category.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 422.93 Tm (Work Completed - Favorite Celebration Motion) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 413.28 Tm (- Created commit 801695b, Added favorite star celebration animation, to make the favorite) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 403.63 Tm (  interaction feel closer to the prototype and less like a static state flip.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 393.98 Tm (- Added a fast two-pop bounce when a hollow favorite star successfully turns yellow, starting) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 384.33 Tm (  the animation immediately on tap and removing the extra final bounce after user review.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 374.68 Tm (- Drew yellow burst strokes from the active favorite star points, with paired rays shooting) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 365.03 Tm (  outward from each side and rapidly fading.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 355.38 Tm (- Limited the celebration to successful hollow-to-yellow favorite changes so removing a) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 345.73 Tm (  favorite, blocked capacity attempts, and already-active state cleanup do not replay the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 336.08 Tm (  celebratory burst.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 321.12 Tm (Work Completed - Home Presentation Title Animations) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 311.47 Tm (- Located the Light As Air Presentation, Infatuation Presentation, Into The Wild Presentation,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 301.82 Tm (  and Morbid Temptations Presentation components in the Animations \(Original\) section and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 292.17 Tm (  enumerated their seven variants before import.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 282.52 Tm (- Imported all twenty-eight presentation variant PNGs into drawable-nodpi using) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 272.87 Tm (  title_presentation_default.png and title_presentation_variant_N.png naming.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 263.22 Tm (- Studied the prototype behavior for each presentation set: Default to Variant2, Variant2 to) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 253.57 Tm (  Variant3, Variant3 to Variant4, Variant4 to Variant5, Variant5 to Variant6, and Variant6 to) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 243.92 Tm (  Variant7, all using Change To with Smart Animate and ease-in-out-back.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 234.27 Tm (- Matched the Figma timing profile in code: 0.8 second waits between most variants, a 1.2 second) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 224.62 Tm (  wait before Variant5, and 3 second transitions for each state change.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 214.97 Tm (- Created HeroPresentationTextAnimation.kt as one reusable component with per-title frame lists,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 205.32 Tm (  stable viewports, 2x export sizing, alpha/scale interpolation, and a custom Figma-style ease-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 195.67 Tm (  in-out-back easing curve.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 186.02 Tm (- Updated CinerificHomeScreen.kt so LoopingHeroVideoView reports the active raw-video index back) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 176.37 Tm (  to Compose, allowing the overlay to reset and switch presentation titles when each Home hero) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 166.72 Tm (  reel advances.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 157.07 Tm (- Mapped the four Home reels in the requested order: Light As Air, Infatuation, Into The Wild,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 147.42 Tm (  and Morbid Temptations.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 137.77 Tm (- Created commit 204353b, Added hero reel presentation title animations, after build and AVD) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 128.12 Tm (  visual verification showed the overlay rendering and advancing over the Home reel.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 113.16 Tm (Validation and Checks Performed) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 103.51 Tm (- Ran ./gradlew :app:assembleDebug after the hero presentation animation implementation; the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 93.86 Tm (  debug build completed successfully.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 84.21 Tm (- Ran ./gradlew :app:installDebug and installed the debug APK on emulator-5554, the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 74.56 Tm (  Cinerific_Standard_Tablet Android virtual device.) Tj ET
+BT /F1 8.25 Tf 1 0 0 1 205.00 34.00 Tm (Cinerific Work Log - July 22, 2026 Page 3) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Length 8450 >>
+stream
+BT /F1 8.65 Tf 1 0 0 1 54.00 738.00 Tm (- Launched com.prahlin.cinerific/.MainActivity through adb and used the profile selection flow) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 728.35 Tm (  to reach the Home screen in the running app.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 718.70 Tm (- Captured AVD screenshots confirming the presentation overlay rendered over the active hero) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 709.05 Tm (  reel and later advanced to another title/reel state.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 699.40 Tm (- Earlier implementation commits in this range were also built, installed, relaunched,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 689.75 Tm (  screenshot-checked, and snapshot-refreshed as recorded by their commit messages and project) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 680.10 Tm (  snapshot changes.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 670.45 Tm (- Confirmed git status --short --branch was clean at main...origin/main before creating this PDF) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 660.80 Tm (  artifact.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 651.15 Tm (- Ran git diff --stat 1673918..HEAD and git diff --name-status 1673918..HEAD to verify the post-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 641.50 Tm (  July-20 source/resource scope described by this worklog.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 631.85 Tm (- Read all pre-existing Cinerific worklog PDFs before producing this artifact so the new worklog) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 622.20 Tm (  follows the established naming, structure, length, and content type.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 607.24 Tm (Files Touched During This Artifact Scope) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 597.59 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt: app-level favorites state,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 587.94 Tm (  category-specific capacity prompt triggering, playback-session propagation, and favorites-full) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 578.29 Tm (  overlay behavior.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 568.64 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt: expanded program) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 558.99 Tm (  specs, card/detail artwork wiring, grayed-to-visible hero reveal, spinner/control layering,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 549.34 Tm (  hero controls, favorites placeholders, minus removal, and favorite celebration animation.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 539.69 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificHomeScreen.kt: Home row WebP card mapping,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 530.04 Tm (  program-title routing, hero reel index callback, and presentation overlay integration.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 520.39 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificLoadingSpinner.kt: new reusable loading) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 510.74 Tm (  spinner component built from the separated red-star, wheel, and mini-star assets.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 501.09 Tm (- app/src/main/java/com/prahlin/cinerific/ui/HeroPresentationTextAnimation.kt: new reusable Home) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 491.44 Tm (  hero presentation-title animation component.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 481.79 Tm (- app/src/main/res/drawable-nodpi/*_card.webp and *_hero.webp: high-visibility movie/show title-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 472.14 Tm (  card and hero artwork now used by catalog, Favorites, and detail surfaces.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 462.49 Tm (- app/src/main/res/drawable-nodpi/hero_control_*.png: imported favorite and transport navigation) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 452.84 Tm (  controls.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 443.19 Tm (- app/src/main/res/drawable-nodpi/loading_spinner_*.png: full spinner frames plus) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 433.54 Tm (  separated/recreated red-star, wheel, and mini-star component assets.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 423.89 Tm (- app/src/main/res/drawable-nodpi/favorite_remove_button.png and favorites_full_prompt.png:) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 414.24 Tm (  Figma-derived removal button and favorites-capacity prompt reference asset.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 404.59 Tm (- app/src/main/res/drawable-nodpi/*_presentation_*.png: twenty-eight presentation title) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 394.94 Tm (  animation variants for Light As Air, Infatuation, Into The Wild, and Morbid Temptations.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 385.29 Tm (- cinerific_PROJECT_SNAPSHOT.txt: refreshed by the implementation commits to reflect the current) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 375.64 Tm (  source/resource inventory.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 365.99 Tm (- cinerific_worklog_july 22.pdf: this generated daily worklog artifact at the repository root.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 351.04 Tm (Follow-Up Context) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 341.39 Tm (- The presentation animation implementation uses imported PNG variant states plus alpha/scale) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 331.74 Tm (  interpolation to approximate Figma Smart Animate. A deeper future pass could recreate) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 322.09 Tm (  individual text-layer motion if the exact font/layout vectors become available in code.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 312.44 Tm (- The Home hero presentation overlay is visually verified on the current tablet AVD, but exact) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 302.79 Tm (  placement can still be tuned against fresh Figma screenshots if the user wants tighter) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 293.14 Tm (  alignment for each reel.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 283.49 Tm (- The title-card/hero naming convention is now established. Future title imports should continue) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 273.84 Tm (  using title_card.webp and title_hero.webp and should avoid dark/greyed component states unless) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 264.19 Tm (  the asset is explicitly for loading.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 254.54 Tm (- Favorites are stateful for the active session. Persisting favorite selections across app) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 244.89 Tm (  restarts remains a future DataStore or local-storage task if the prototype graduates from) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 235.24 Tm (  transient demo state.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 225.59 Tm (- The current Auto log out timeout remains the July 20 validation value unless changed in a) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 215.94 Tm (  later pass. Before production, restore the intended longer timeout and connect real playback) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 206.29 Tm (  screens to the playback-session controller.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 196.64 Tm (- Generated worklog PDFs remain subject to the project ignore policy unless explicitly force-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 186.99 Tm (  added, while the source state documented here is already committed and aligned with) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 177.34 Tm (  origin/main at HEAD 204353b.) Tj ET
+BT /F1 9.15 Tf 1 0 0 1 54.00 162.38 Tm (Output Artifact) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 152.73 Tm (- Filename: cinerific_worklog_july 22.pdf) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 143.08 Tm (- Created at the repository root in /Users/prahlin/gh/cinerific.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 133.43 Tm (- Follows the Cinerific filename convention established by cinerific_worklog_july 12.pdf and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 123.78 Tm (  continued by the July 14, July 15, July 16, July 18, July 19, and July 20 artifacts, including) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 114.13 Tm (  the space before the day number.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 104.48 Tm (- Follows the established Alla Vostra/Prahlin/Cinerific daily worklog structure while keeping) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 94.83 Tm (  the body content specific to the current Cinerific work now present on main.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 85.18 Tm (- No external PDF dependency was installed; this artifact was generated with a small standard-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 75.53 Tm (  library PDF writer in the same plain-text-readable spirit as the prior Cinerific worklogs.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 54.00 65.88 Tm (- Created this daily worklog PDF: cinerific_worklog_july 22.pdf.) Tj ET
+BT /F1 8.25 Tf 1 0 0 1 205.00 34.00 Tm (Cinerific Work Log - July 22, 2026 Page 4) Tj ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 10 0 R >>
+endobj
+12 0 obj
+<< /Title (Cinerific Android App Work Log - July 22, 2026) /Subject (Cinerific Android app development worklog) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260722000000-04'00') /ModDate (D:20260722000000-04'00') >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000134 00000 n 
+0000000204 00000 n 
+0000008931 00000 n 
+0000009057 00000 n 
+0000017722 00000 n 
+0000017848 00000 n 
+0000026175 00000 n 
+0000026301 00000 n 
+0000034804 00000 n 
+0000034932 00000 n 
+trailer
+<< /Size 13 /Root 1 0 R /Info 12 0 R >>
+startxref
+35251
+%%EOF
