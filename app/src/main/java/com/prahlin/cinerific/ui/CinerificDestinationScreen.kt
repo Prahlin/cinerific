@@ -55,12 +55,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -80,7 +82,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.prahlin.cinerific.R
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.math.abs
+import kotlin.math.cos
+import kotlin.math.min
+import kotlin.math.sin
 
 private const val DESTINATION_FRAME_WIDTH = 1194f
 private const val DESTINATION_TOP_BAR_TITLE_BOTTOM = 18f
@@ -133,6 +139,9 @@ private const val DETAIL_TRANSPORT_Y = 367f
 private const val DETAIL_TRANSPORT_GAP = 50f
 private const val DETAIL_SIDE_CONTROL_SIZE = 74f
 private const val DETAIL_PLAY_CONTROL_SIZE = 100f
+private const val FAVORITE_BURST_PADDING = 22f
+private const val FAVORITE_BURST_STROKE = 2.4f
+private const val FAVORITE_BURST_DURATION_MS = 240
 private const val DETAIL_LOADING_SPINNER_WIDTH = 190f
 private const val SINK_OR_SWIM_TITLE = "Sink or Swim"
 private const val DETAIL_CARD_REVEAL_DELAY_MS = 2400L
@@ -152,6 +161,7 @@ private val DestinationMid = Color(0xFF23001F)
 private val DestinationBottom = Color(0xFF060004)
 private val DestinationText = Color(0xFFE7E7E7)
 private val DestinationSubtle = Color(0xFFBDBDBD)
+private val FavoriteBurstYellow = Color(0xFFFFD43B)
 private val SettingsLanguageOptions = listOf(
     CinerificLanguage.English to R.string.language_english,
     CinerificLanguage.Spanish to R.string.language_spanish,
@@ -936,22 +946,137 @@ private fun HeroFavoriteToggleButton(
     scale: Float,
     modifier: Modifier = Modifier
 ) {
-    HeroImageControlButton(
-        drawableId = if (isFavorited) {
-            R.drawable.hero_control_favorite_active
-        } else {
-            R.drawable.hero_control_favorite
-        },
-        contentDescription = if (isFavorited) "Remove from favorites" else "Add to favorites",
-        width = destinationDp(DETAIL_FAVORITE_WIDTH, scale),
-        height = destinationDp(DETAIL_FAVORITE_HEIGHT, scale),
-        role = Role.Checkbox,
-        onClick = onFavoriteToggled,
-        modifier = modifier.offset(
-            x = destinationDp(DETAIL_FAVORITE_X, scale),
-            y = destinationDp(DETAIL_FAVORITE_Y, scale)
+    val favoriteBounceScale = remember { Animatable(1f) }
+    val favoriteBurstProgress = remember { Animatable(1f) }
+    var previousIsFavorited by remember { mutableStateOf(isFavorited) }
+
+    LaunchedEffect(isFavorited) {
+        if (isFavorited && !previousIsFavorited) {
+            launch {
+                favoriteBurstProgress.snapTo(0f)
+                favoriteBurstProgress.animateTo(
+                    targetValue = 1f,
+                    animationSpec = tween(
+                        durationMillis = FAVORITE_BURST_DURATION_MS,
+                        easing = FastOutSlowInEasing
+                    )
+                )
+            }
+            favoriteBounceScale.snapTo(1.08f)
+            favoriteBounceScale.animateTo(
+                targetValue = 1.16f,
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessHigh
+                )
+            )
+            favoriteBounceScale.animateTo(
+                targetValue = 0.94f,
+                animationSpec = tween(durationMillis = 45)
+            )
+            favoriteBounceScale.animateTo(
+                targetValue = 1.26f,
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessHigh
+                )
+            )
+            favoriteBounceScale.animateTo(
+                targetValue = 1f,
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessMedium
+                )
+            )
+        } else if (!isFavorited) {
+            favoriteBounceScale.snapTo(1f)
+            favoriteBurstProgress.snapTo(1f)
+        }
+        previousIsFavorited = isFavorited
+    }
+
+    val controlWidth = destinationDp(DETAIL_FAVORITE_WIDTH, scale)
+    val controlHeight = destinationDp(DETAIL_FAVORITE_HEIGHT, scale)
+    val burstPadding = destinationDp(FAVORITE_BURST_PADDING, scale)
+
+    Box(
+        modifier = modifier
+            .offset(
+                x = destinationDp(DETAIL_FAVORITE_X - FAVORITE_BURST_PADDING, scale),
+                y = destinationDp(DETAIL_FAVORITE_Y - FAVORITE_BURST_PADDING, scale)
+            )
+            .width(controlWidth + burstPadding + burstPadding)
+            .height(controlHeight + burstPadding + burstPadding)
+            .graphicsLayer {
+                scaleX = favoriteBounceScale.value
+                scaleY = favoriteBounceScale.value
+            }
+    ) {
+        HeroImageControlButton(
+            drawableId = if (isFavorited) {
+                R.drawable.hero_control_favorite_active
+            } else {
+                R.drawable.hero_control_favorite
+            },
+            contentDescription = if (isFavorited) "Remove from favorites" else "Add to favorites",
+            width = controlWidth,
+            height = controlHeight,
+            role = Role.Checkbox,
+            onClick = onFavoriteToggled,
+            modifier = Modifier.offset(x = burstPadding, y = burstPadding)
         )
-    )
+        FavoriteStarBurstLines(
+            progress = favoriteBurstProgress.value,
+            modifier = Modifier.fillMaxSize()
+        )
+    }
+}
+
+@Composable
+private fun FavoriteStarBurstLines(
+    progress: Float,
+    modifier: Modifier = Modifier
+) {
+    val p = progress.coerceIn(0f, 1f)
+    if (p >= 0.999f) return
+
+    Canvas(modifier = modifier) {
+        val controlWidth = size.width *
+            DETAIL_FAVORITE_WIDTH /
+            (DETAIL_FAVORITE_WIDTH + FAVORITE_BURST_PADDING * 2f)
+        val controlHeight = size.height *
+            DETAIL_FAVORITE_HEIGHT /
+            (DETAIL_FAVORITE_HEIGHT + FAVORITE_BURST_PADDING * 2f)
+        val figmaUnit = min(controlWidth, controlHeight) /
+            min(DETAIL_FAVORITE_WIDTH, DETAIL_FAVORITE_HEIGHT)
+        val center = Offset(size.width / 2f, size.height / 2f)
+        val starPointRadius = min(controlWidth, controlHeight) * 0.38f
+        val startRadius = starPointRadius + (2f + p * 10f) * figmaUnit
+        val lineLength = (7f + p * 7f) * figmaUnit
+        val fade = (1f - p) * (1f - p)
+        val color = FavoriteBurstYellow.copy(alpha = fade.coerceIn(0f, 1f))
+        val strokeWidth = FAVORITE_BURST_STROKE * figmaUnit
+
+        repeat(5) { pointIndex ->
+            val pointAngle = -Math.PI / 2.0 + pointIndex * Math.PI * 2.0 / 5.0
+            listOf(-0.22, 0.22).forEach { sideOffset ->
+                val angle = pointAngle + sideOffset
+                val direction = Offset(
+                    x = cos(angle).toFloat(),
+                    y = sin(angle).toFloat()
+                )
+                val start = center + direction * startRadius
+                val end = center + direction * (startRadius + lineLength)
+                drawLine(
+                    color = color,
+                    start = start,
+                    end = end,
+                    strokeWidth = strokeWidth,
+                    cap = StrokeCap.Round
+                )
+            }
+        }
+    }
 }
 
 @Composable
