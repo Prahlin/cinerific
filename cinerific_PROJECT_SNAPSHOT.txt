@@ -1,5 +1,5 @@
 Cinerific Android PROJECT SNAPSHOT
-Generated: Tue Jul 21 23:18:53 EDT 2026
+Generated: Wed Jul 22 19:59:28 EDT 2026
 Project directory: /Users/prahlin/gh/cinerific
 
 IMPORTANT INSTRUCTIONS FOR CHATGPT & CODEX:
@@ -274,6 +274,7 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/cinerific_worklog_july 18.pdf
 /Users/prahlin/gh/cinerific/cinerific_worklog_july 19.pdf
 /Users/prahlin/gh/cinerific/cinerific_worklog_july 20.pdf
+/Users/prahlin/gh/cinerific/cinerific_worklog_july 22.pdf
 /Users/prahlin/gh/cinerific/gradle
 /Users/prahlin/gh/cinerific/gradle.properties
 /Users/prahlin/gh/cinerific/gradle/wrapper
@@ -283,6 +284,11 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/gradlew.bat
 /Users/prahlin/gh/cinerific/read_project.sh
 /Users/prahlin/gh/cinerific/screenshots
+/Users/prahlin/gh/cinerific/screenshots/home_presentation_overlay.png
+/Users/prahlin/gh/cinerific/screenshots/home_presentation_overlay_after_long_press.png
+/Users/prahlin/gh/cinerific/screenshots/home_presentation_overlay_home.png
+/Users/prahlin/gh/cinerific/screenshots/home_presentation_overlay_home_2.png
+/Users/prahlin/gh/cinerific/screenshots/home_presentation_overlay_later.png
 /Users/prahlin/gh/cinerific/screenshots/intro.jpg
 /Users/prahlin/gh/cinerific/screenshots/intro.png
 /Users/prahlin/gh/cinerific/settings.gradle.kts
@@ -2644,6 +2650,11 @@ app/src/main/res/drawable-nodpi/wheels_hero.webp | 267092 bytes | modified 2026-
 BINARY / SCREENSHOT INVENTORY
 ============================================================
 
+screenshots/home_presentation_overlay.png | 535019 bytes | modified 2026-07-21 23:19:25
+screenshots/home_presentation_overlay_after_long_press.png | 1906709 bytes | modified 2026-07-21 23:20:26
+screenshots/home_presentation_overlay_home.png | 535019 bytes | modified 2026-07-21 23:19:43
+screenshots/home_presentation_overlay_home_2.png | 535470 bytes | modified 2026-07-21 23:20:06
+screenshots/home_presentation_overlay_later.png | 1389970 bytes | modified 2026-07-21 23:20:51
 screenshots/intro.jpg | 422351 bytes | modified 2026-07-14 21:00:46
 screenshots/intro.png | 349162 bytes | modified 2026-07-14 21:00:29
 
