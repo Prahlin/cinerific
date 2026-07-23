@@ -1,5 +1,5 @@
 Cinerific Android PROJECT SNAPSHOT
-Generated: Wed Jul 22 19:59:28 EDT 2026
+Generated: Wed Jul 22 23:08:12 EDT 2026
 Project directory: /Users/prahlin/gh/cinerific
 
 IMPORTANT INSTRUCTIONS FOR CHATGPT & CODEX:
@@ -284,13 +284,92 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/gradlew.bat
 /Users/prahlin/gh/cinerific/read_project.sh
 /Users/prahlin/gh/cinerific/screenshots
+/Users/prahlin/gh/cinerific/screenshots/asset_inspect
+/Users/prahlin/gh/cinerific/screenshots/asset_inspect/infatuation_presentation_variant_4_black.png
+/Users/prahlin/gh/cinerific/screenshots/asset_inspect/into_the_wild_presentation_variant_4_black.png
+/Users/prahlin/gh/cinerific/screenshots/asset_inspect/light_as_air_presentation_variant_3.png
+/Users/prahlin/gh/cinerific/screenshots/asset_inspect/light_as_air_presentation_variant_4.png
+/Users/prahlin/gh/cinerific/screenshots/asset_inspect/light_as_air_presentation_variant_4_black.png
+/Users/prahlin/gh/cinerific/screenshots/asset_inspect/morbid_temptations_presentation_variant_4.png
+/Users/prahlin/gh/cinerific/screenshots/asset_inspect/morbid_temptations_presentation_variant_4_black.png
+/Users/prahlin/gh/cinerific/screenshots/clean_rebuild_sequence
+/Users/prahlin/gh/cinerific/screenshots/clean_rebuild_sequence/home_1s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_rebuild_sequence/home_2s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_rebuild_sequence/home_3s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_rebuild_sequence/home_4s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_rebuild_sequence/home_5s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_rebuild_sequence/home_6s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_rebuild_sequence/home_7s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_sequence
+/Users/prahlin/gh/cinerific/screenshots/clean_sequence/home_1s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_sequence/home_2s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_sequence/home_3s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_sequence/home_4s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_sequence/home_5s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_sequence/home_6s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_sequence/home_7s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_sequence_late
+/Users/prahlin/gh/cinerific/screenshots/clean_sequence_late/home_1s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_sequence_late/home_2s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_sequence_late/home_3s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_sequence_late/home_4s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_sequence_late/home_5s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_sequence_late/home_6s.png
+/Users/prahlin/gh/cinerific/screenshots/clean_sequence_late/home_7s.png
+/Users/prahlin/gh/cinerific/screenshots/home_active_3_5s.png
+/Users/prahlin/gh/cinerific/screenshots/home_active_5s.png
+/Users/prahlin/gh/cinerific/screenshots/home_after_guest_4s.png
+/Users/prahlin/gh/cinerific/screenshots/home_after_transparent_overlay.png
+/Users/prahlin/gh/cinerific/screenshots/home_clean_4_2s.png
+/Users/prahlin/gh/cinerific/screenshots/home_clean_6_2s.png
+/Users/prahlin/gh/cinerific/screenshots/home_compose_lower_text_2_2s.png
+/Users/prahlin/gh/cinerific/screenshots/home_direct_timeline_2_2s.png
+/Users/prahlin/gh/cinerific/screenshots/home_guest_actual_4s.png
+/Users/prahlin/gh/cinerific/screenshots/home_persistent_layers_all_lines.png
+/Users/prahlin/gh/cinerific/screenshots/home_persistent_layers_genres.png
+/Users/prahlin/gh/cinerific/screenshots/home_presentation_half_padding.png
 /Users/prahlin/gh/cinerific/screenshots/home_presentation_overlay.png
 /Users/prahlin/gh/cinerific/screenshots/home_presentation_overlay_after_long_press.png
 /Users/prahlin/gh/cinerific/screenshots/home_presentation_overlay_home.png
 /Users/prahlin/gh/cinerific/screenshots/home_presentation_overlay_home_2.png
 /Users/prahlin/gh/cinerific/screenshots/home_presentation_overlay_later.png
+/Users/prahlin/gh/cinerific/screenshots/home_presentation_sequence_1.png
+/Users/prahlin/gh/cinerific/screenshots/home_presentation_sequence_2.png
+/Users/prahlin/gh/cinerific/screenshots/home_presentation_sequence_3.png
+/Users/prahlin/gh/cinerific/screenshots/home_presentation_sequence_4.png
+/Users/prahlin/gh/cinerific/screenshots/home_presentation_sequence_5.png
+/Users/prahlin/gh/cinerific/screenshots/home_presentation_sequence_6.png
+/Users/prahlin/gh/cinerific/screenshots/home_presentation_stack_bottom_triple.png
+/Users/prahlin/gh/cinerific/screenshots/home_presentation_stack_bottom_triple_next.png
+/Users/prahlin/gh/cinerific/screenshots/home_presentation_stack_padding.png
+/Users/prahlin/gh/cinerific/screenshots/home_presentation_stack_padding_inset.png
+/Users/prahlin/gh/cinerific/screenshots/home_presentation_stack_padding_late.png
+/Users/prahlin/gh/cinerific/screenshots/home_presentation_stack_padding_safe_drawing.png
+/Users/prahlin/gh/cinerific/screenshots/home_shadow_layers_2_2s.png
+/Users/prahlin/gh/cinerific/screenshots/home_smooth_presentation.png
+/Users/prahlin/gh/cinerific/screenshots/home_title_canvas_top_aligned.png
+/Users/prahlin/gh/cinerific/screenshots/home_title_unsquished_1_2s.png
+/Users/prahlin/gh/cinerific/screenshots/home_title_unsquished_all_lines.png
 /Users/prahlin/gh/cinerific/screenshots/intro.jpg
 /Users/prahlin/gh/cinerific/screenshots/intro.png
+/Users/prahlin/gh/cinerific/screenshots/post_fix_sequence
+/Users/prahlin/gh/cinerific/screenshots/post_fix_sequence/home_1s.png
+/Users/prahlin/gh/cinerific/screenshots/post_fix_sequence/home_2s.png
+/Users/prahlin/gh/cinerific/screenshots/post_fix_sequence/home_3s.png
+/Users/prahlin/gh/cinerific/screenshots/post_fix_sequence/home_4s.png
+/Users/prahlin/gh/cinerific/screenshots/post_fix_sequence/home_5s.png
+/Users/prahlin/gh/cinerific/screenshots/post_fix_sequence/home_6s.png
+/Users/prahlin/gh/cinerific/screenshots/post_fix_sequence/home_7s.png
+/Users/prahlin/gh/cinerific/screenshots/post_fix_sequence/home_8s.png
+/Users/prahlin/gh/cinerific/screenshots/sequence
+/Users/prahlin/gh/cinerific/screenshots/sequence/home_1s.png
+/Users/prahlin/gh/cinerific/screenshots/sequence/home_2s.png
+/Users/prahlin/gh/cinerific/screenshots/sequence/home_3s.png
+/Users/prahlin/gh/cinerific/screenshots/sequence/home_4s.png
+/Users/prahlin/gh/cinerific/screenshots/sequence/home_5s.png
+/Users/prahlin/gh/cinerific/screenshots/sequence/home_6s.png
+/Users/prahlin/gh/cinerific/screenshots/sequence/home_7s.png
+/Users/prahlin/gh/cinerific/screenshots/tap_1965_1032.png
 /Users/prahlin/gh/cinerific/settings.gradle.kts
 
 
@@ -2522,20 +2601,20 @@ app/src/main/res/drawable-nodpi/ignition_card.webp | 81252 bytes | modified 2026
 app/src/main/res/drawable-nodpi/ignition_hero.webp | 176090 bytes | modified 2026-07-21 18:23:35
 app/src/main/res/drawable-nodpi/incan_descent_card.webp | 102166 bytes | modified 2026-07-21 18:46:42
 app/src/main/res/drawable-nodpi/incan_descent_hero.webp | 244820 bytes | modified 2026-07-21 18:46:41
-app/src/main/res/drawable-nodpi/infatuation_presentation_default.png | 3545 bytes | modified 2026-07-21 23:07:55
-app/src/main/res/drawable-nodpi/infatuation_presentation_variant_2.png | 27626 bytes | modified 2026-07-21 23:07:55
-app/src/main/res/drawable-nodpi/infatuation_presentation_variant_3.png | 39225 bytes | modified 2026-07-21 23:07:56
-app/src/main/res/drawable-nodpi/infatuation_presentation_variant_4.png | 44416 bytes | modified 2026-07-21 23:07:56
-app/src/main/res/drawable-nodpi/infatuation_presentation_variant_5.png | 39473 bytes | modified 2026-07-21 23:07:57
-app/src/main/res/drawable-nodpi/infatuation_presentation_variant_6.png | 27474 bytes | modified 2026-07-21 23:07:57
-app/src/main/res/drawable-nodpi/infatuation_presentation_variant_7.png | 3606 bytes | modified 2026-07-21 23:07:57
-app/src/main/res/drawable-nodpi/into_the_wild_presentation_default.png | 3649 bytes | modified 2026-07-21 23:09:03
-app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_2.png | 23691 bytes | modified 2026-07-21 23:09:03
-app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_3.png | 39574 bytes | modified 2026-07-21 23:09:04
-app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_4.png | 46204 bytes | modified 2026-07-21 23:09:04
-app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_5.png | 39574 bytes | modified 2026-07-21 23:09:04
-app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_6.png | 23691 bytes | modified 2026-07-21 23:09:05
-app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_7.png | 3640 bytes | modified 2026-07-21 23:09:05
+app/src/main/res/drawable-nodpi/infatuation_presentation_default.png | 2465 bytes | modified 2026-07-22 20:05:03
+app/src/main/res/drawable-nodpi/infatuation_presentation_variant_2.png | 20189 bytes | modified 2026-07-22 20:05:04
+app/src/main/res/drawable-nodpi/infatuation_presentation_variant_3.png | 29467 bytes | modified 2026-07-22 20:05:04
+app/src/main/res/drawable-nodpi/infatuation_presentation_variant_4.png | 33585 bytes | modified 2026-07-22 20:05:05
+app/src/main/res/drawable-nodpi/infatuation_presentation_variant_5.png | 29657 bytes | modified 2026-07-22 20:05:06
+app/src/main/res/drawable-nodpi/infatuation_presentation_variant_6.png | 20048 bytes | modified 2026-07-22 20:05:07
+app/src/main/res/drawable-nodpi/infatuation_presentation_variant_7.png | 2508 bytes | modified 2026-07-22 20:05:07
+app/src/main/res/drawable-nodpi/into_the_wild_presentation_default.png | 2824 bytes | modified 2026-07-22 20:05:08
+app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_2.png | 20066 bytes | modified 2026-07-22 20:05:09
+app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_3.png | 33114 bytes | modified 2026-07-22 20:05:10
+app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_4.png | 38268 bytes | modified 2026-07-22 20:05:10
+app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_5.png | 33114 bytes | modified 2026-07-22 20:05:12
+app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_6.png | 20066 bytes | modified 2026-07-22 20:05:12
+app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_7.png | 2817 bytes | modified 2026-07-22 20:05:13
 app/src/main/res/drawable-nodpi/janny_avatar.png | 19441 bytes | modified 2026-07-14 20:32:22
 app/src/main/res/drawable-nodpi/janny_name.png | 4014 bytes | modified 2026-07-14 20:49:07
 app/src/main/res/drawable-nodpi/joyriders_card.webp | 113382 bytes | modified 2026-07-21 18:46:27
@@ -2544,13 +2623,13 @@ app/src/main/res/drawable-nodpi/laughing_matters_card.webp | 141448 bytes | modi
 app/src/main/res/drawable-nodpi/laughing_matters_hero.webp | 331346 bytes | modified 2026-07-21 18:46:17
 app/src/main/res/drawable-nodpi/light_as_a_feather_card.webp | 53528 bytes | modified 2026-07-21 18:46:40
 app/src/main/res/drawable-nodpi/light_as_a_feather_hero.webp | 109092 bytes | modified 2026-07-21 18:46:40
-app/src/main/res/drawable-nodpi/light_as_air_presentation_default.png | 5927 bytes | modified 2026-07-21 23:06:38
-app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_2.png | 51156 bytes | modified 2026-07-21 23:06:39
-app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_3.png | 67752 bytes | modified 2026-07-21 23:06:39
-app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_4.png | 76085 bytes | modified 2026-07-21 23:06:40
-app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_5.png | 67752 bytes | modified 2026-07-21 23:06:40
-app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_6.png | 50287 bytes | modified 2026-07-21 23:06:41
-app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_7.png | 4828 bytes | modified 2026-07-21 23:06:41
+app/src/main/res/drawable-nodpi/light_as_air_presentation_default.png | 4304 bytes | modified 2026-07-22 20:05:14
+app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_2.png | 37939 bytes | modified 2026-07-22 20:05:15
+app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_3.png | 51061 bytes | modified 2026-07-22 20:05:17
+app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_4.png | 57425 bytes | modified 2026-07-22 20:05:18
+app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_5.png | 51061 bytes | modified 2026-07-22 20:05:20
+app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_6.png | 37250 bytes | modified 2026-07-22 20:05:22
+app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_7.png | 3556 bytes | modified 2026-07-22 20:05:23
 app/src/main/res/drawable-nodpi/loading_spinner_animation_default.png | 53041 bytes | modified 2026-07-21 20:01:15
 app/src/main/res/drawable-nodpi/loading_spinner_animation_variant_2.png | 57968 bytes | modified 2026-07-21 20:01:15
 app/src/main/res/drawable-nodpi/loading_spinner_animation_variant_3.png | 53458 bytes | modified 2026-07-21 20:01:15
@@ -2596,13 +2675,13 @@ app/src/main/res/drawable-nodpi/martin_avatar.png | 19773 bytes | modified 2026-
 app/src/main/res/drawable-nodpi/martin_name.png | 4583 bytes | modified 2026-07-14 20:49:07
 app/src/main/res/drawable-nodpi/moments_card.webp | 131752 bytes | modified 2026-07-21 18:46:23
 app/src/main/res/drawable-nodpi/moments_hero.webp | 352530 bytes | modified 2026-07-21 18:46:23
-app/src/main/res/drawable-nodpi/morbid_temptations_presentation_default.png | 4151 bytes | modified 2026-07-21 23:10:15
-app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_2.png | 24189 bytes | modified 2026-07-21 23:10:15
-app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_3.png | 39269 bytes | modified 2026-07-21 23:10:16
-app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_4.png | 46035 bytes | modified 2026-07-21 23:10:16
-app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_5.png | 39269 bytes | modified 2026-07-21 23:10:17
-app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_6.png | 24189 bytes | modified 2026-07-21 23:10:17
-app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_7.png | 4222 bytes | modified 2026-07-21 23:10:18
+app/src/main/res/drawable-nodpi/morbid_temptations_presentation_default.png | 3054 bytes | modified 2026-07-22 20:05:24
+app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_2.png | 20908 bytes | modified 2026-07-22 20:05:25
+app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_3.png | 32685 bytes | modified 2026-07-22 20:05:26
+app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_4.png | 37721 bytes | modified 2026-07-22 20:05:27
+app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_5.png | 32685 bytes | modified 2026-07-22 20:05:28
+app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_6.png | 20908 bytes | modified 2026-07-22 20:05:30
+app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_7.png | 3077 bytes | modified 2026-07-22 20:05:30
 app/src/main/res/drawable-nodpi/nav_icon_favorites.png | 483 bytes | modified 2026-07-16 20:04:02
 app/src/main/res/drawable-nodpi/nav_icon_home.png | 321 bytes | modified 2026-07-16 20:04:02
 app/src/main/res/drawable-nodpi/nav_icon_movies.png | 290 bytes | modified 2026-07-16 20:04:02
@@ -2650,13 +2729,86 @@ app/src/main/res/drawable-nodpi/wheels_hero.webp | 267092 bytes | modified 2026-
 BINARY / SCREENSHOT INVENTORY
 ============================================================
 
+screenshots/asset_inspect/infatuation_presentation_variant_4_black.png | 33618 bytes | modified 2026-07-22 20:36:44
+screenshots/asset_inspect/into_the_wild_presentation_variant_4_black.png | 37475 bytes | modified 2026-07-22 20:36:45
+screenshots/asset_inspect/light_as_air_presentation_variant_3.png | 51041 bytes | modified 2026-07-22 20:27:53
+screenshots/asset_inspect/light_as_air_presentation_variant_4.png | 57226 bytes | modified 2026-07-22 20:27:54
+screenshots/asset_inspect/light_as_air_presentation_variant_4_black.png | 57226 bytes | modified 2026-07-22 20:36:43
+screenshots/asset_inspect/morbid_temptations_presentation_variant_4.png | 37586 bytes | modified 2026-07-22 20:27:55
+screenshots/asset_inspect/morbid_temptations_presentation_variant_4_black.png | 37586 bytes | modified 2026-07-22 20:36:46
+screenshots/clean_rebuild_sequence/home_1s.png | 1651810 bytes | modified 2026-07-22 20:32:10
+screenshots/clean_rebuild_sequence/home_2s.png | 1817483 bytes | modified 2026-07-22 20:32:12
+screenshots/clean_rebuild_sequence/home_3s.png | 1585696 bytes | modified 2026-07-22 20:32:16
+screenshots/clean_rebuild_sequence/home_4s.png | 1979681 bytes | modified 2026-07-22 20:32:19
+screenshots/clean_rebuild_sequence/home_5s.png | 2140913 bytes | modified 2026-07-22 20:32:23
+screenshots/clean_rebuild_sequence/home_6s.png | 3354484 bytes | modified 2026-07-22 20:32:28
+screenshots/clean_rebuild_sequence/home_7s.png | 3341484 bytes | modified 2026-07-22 20:32:35
+screenshots/clean_sequence/home_1s.png | 535461 bytes | modified 2026-07-22 20:28:39
+screenshots/clean_sequence/home_2s.png | 535461 bytes | modified 2026-07-22 20:28:41
+screenshots/clean_sequence/home_3s.png | 535461 bytes | modified 2026-07-22 20:28:42
+screenshots/clean_sequence/home_4s.png | 535461 bytes | modified 2026-07-22 20:28:43
+screenshots/clean_sequence/home_5s.png | 535461 bytes | modified 2026-07-22 20:28:44
+screenshots/clean_sequence/home_6s.png | 535461 bytes | modified 2026-07-22 20:28:46
+screenshots/clean_sequence/home_7s.png | 535461 bytes | modified 2026-07-22 20:28:47
+screenshots/clean_sequence_late/home_1s.png | 1654605 bytes | modified 2026-07-22 20:29:15
+screenshots/clean_sequence_late/home_2s.png | 1798591 bytes | modified 2026-07-22 20:29:18
+screenshots/clean_sequence_late/home_3s.png | 1810976 bytes | modified 2026-07-22 20:29:20
+screenshots/clean_sequence_late/home_4s.png | 1484177 bytes | modified 2026-07-22 20:29:22
+screenshots/clean_sequence_late/home_5s.png | 1983767 bytes | modified 2026-07-22 20:29:25
+screenshots/clean_sequence_late/home_6s.png | 2040255 bytes | modified 2026-07-22 20:29:27
+screenshots/clean_sequence_late/home_7s.png | 2021792 bytes | modified 2026-07-22 20:29:30
+screenshots/home_active_3_5s.png | 1686156 bytes | modified 2026-07-22 20:26:37
+screenshots/home_active_5s.png | 1609421 bytes | modified 2026-07-22 20:26:41
+screenshots/home_after_guest_4s.png | 535898 bytes | modified 2026-07-22 20:25:05
+screenshots/home_after_transparent_overlay.png | 1613514 bytes | modified 2026-07-22 20:07:45
+screenshots/home_clean_4_2s.png | 1761937 bytes | modified 2026-07-22 20:27:16
+screenshots/home_clean_6_2s.png | 1630531 bytes | modified 2026-07-22 20:28:13
+screenshots/home_compose_lower_text_2_2s.png | 1875285 bytes | modified 2026-07-22 20:38:54
+screenshots/home_direct_timeline_2_2s.png | 1809329 bytes | modified 2026-07-22 20:34:17
+screenshots/home_guest_actual_4s.png | 535898 bytes | modified 2026-07-22 20:25:41
+screenshots/home_persistent_layers_all_lines.png | 1761970 bytes | modified 2026-07-22 20:24:00
+screenshots/home_persistent_layers_genres.png | 2127096 bytes | modified 2026-07-22 20:22:13
+screenshots/home_presentation_half_padding.png | 1784196 bytes | modified 2026-07-22 21:56:04
 screenshots/home_presentation_overlay.png | 535019 bytes | modified 2026-07-21 23:19:25
 screenshots/home_presentation_overlay_after_long_press.png | 1906709 bytes | modified 2026-07-21 23:20:26
 screenshots/home_presentation_overlay_home.png | 535019 bytes | modified 2026-07-21 23:19:43
 screenshots/home_presentation_overlay_home_2.png | 535470 bytes | modified 2026-07-21 23:20:06
 screenshots/home_presentation_overlay_later.png | 1389970 bytes | modified 2026-07-21 23:20:51
+screenshots/home_presentation_sequence_1.png | 2357351 bytes | modified 2026-07-22 22:39:44
+screenshots/home_presentation_sequence_2.png | 1977224 bytes | modified 2026-07-22 22:39:47
+screenshots/home_presentation_sequence_3.png | 3335380 bytes | modified 2026-07-22 22:39:50
+screenshots/home_presentation_sequence_4.png | 3241945 bytes | modified 2026-07-22 22:39:52
+screenshots/home_presentation_sequence_5.png | 3346347 bytes | modified 2026-07-22 22:39:56
+screenshots/home_presentation_sequence_6.png | 1868970 bytes | modified 2026-07-22 22:39:58
+screenshots/home_presentation_stack_bottom_triple.png | 1873907 bytes | modified 2026-07-22 22:43:32
+screenshots/home_presentation_stack_bottom_triple_next.png | 1537497 bytes | modified 2026-07-22 22:45:07
+screenshots/home_presentation_stack_padding.png | 1547703 bytes | modified 2026-07-22 22:30:25
+screenshots/home_presentation_stack_padding_inset.png | 1560219 bytes | modified 2026-07-22 22:33:22
+screenshots/home_presentation_stack_padding_late.png | 2078871 bytes | modified 2026-07-22 22:31:07
+screenshots/home_presentation_stack_padding_safe_drawing.png | 1888964 bytes | modified 2026-07-22 22:37:20
+screenshots/home_shadow_layers_2_2s.png | 1786993 bytes | modified 2026-07-22 20:35:38
+screenshots/home_smooth_presentation.png | 1699085 bytes | modified 2026-07-22 20:14:49
+screenshots/home_title_canvas_top_aligned.png | 1805091 bytes | modified 2026-07-22 21:17:29
+screenshots/home_title_unsquished_1_2s.png | 1797879 bytes | modified 2026-07-22 20:59:36
+screenshots/home_title_unsquished_all_lines.png | 1907533 bytes | modified 2026-07-22 20:59:39
 screenshots/intro.jpg | 422351 bytes | modified 2026-07-14 21:00:46
 screenshots/intro.png | 349162 bytes | modified 2026-07-14 21:00:29
+screenshots/post_fix_sequence/home_1s.png | 1932087 bytes | modified 2026-07-22 20:39:30
+screenshots/post_fix_sequence/home_2s.png | 1653197 bytes | modified 2026-07-22 20:39:32
+screenshots/post_fix_sequence/home_3s.png | 2069040 bytes | modified 2026-07-22 20:39:35
+screenshots/post_fix_sequence/home_4s.png | 2211237 bytes | modified 2026-07-22 20:39:37
+screenshots/post_fix_sequence/home_5s.png | 2304416 bytes | modified 2026-07-22 20:39:40
+screenshots/post_fix_sequence/home_6s.png | 3438165 bytes | modified 2026-07-22 20:39:44
+screenshots/post_fix_sequence/home_7s.png | 3442244 bytes | modified 2026-07-22 20:39:47
+screenshots/post_fix_sequence/home_8s.png | 3477653 bytes | modified 2026-07-22 20:39:51
+screenshots/sequence/home_1s.png | 633781 bytes | modified 2026-07-22 20:24:39
+screenshots/sequence/home_2s.png | 535696 bytes | modified 2026-07-22 20:24:40
+screenshots/sequence/home_3s.png | 535696 bytes | modified 2026-07-22 20:24:41
+screenshots/sequence/home_4s.png | 535696 bytes | modified 2026-07-22 20:24:43
+screenshots/sequence/home_5s.png | 535696 bytes | modified 2026-07-22 20:24:44
+screenshots/sequence/home_6s.png | 535696 bytes | modified 2026-07-22 20:24:45
+screenshots/sequence/home_7s.png | 535696 bytes | modified 2026-07-22 20:24:46
+screenshots/tap_1965_1032.png | 1651773 bytes | modified 2026-07-22 20:26:10
 
 
 ============================================================
