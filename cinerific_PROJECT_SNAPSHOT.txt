@@ -1,5 +1,5 @@
 Cinerific Android PROJECT SNAPSHOT
-Generated: Wed Jul 22 23:08:12 EDT 2026
+Generated: Thu Jul 23 23:35:20 EDT 2026
 Project directory: /Users/prahlin/gh/cinerific
 
 IMPORTANT INSTRUCTIONS FOR CHATGPT & CODEX:
@@ -88,6 +88,9 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/chasing_light_card.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/chasing_light_hero.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/chrome_nav_bgfill.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/chrome_nav_bgfill_figma_variant5.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/chrome_nav_bgfill_variant_lift.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/chrome_nav_bgfill_variant_nocturne.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/chrome_top_bgfill.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/citric_card.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/citric_hero.webp
@@ -119,6 +122,8 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/ignition_hero.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/incan_descent_card.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/incan_descent_hero.webp
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/infatuation_card.webp
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/infatuation_hero.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/infatuation_presentation_default.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/infatuation_presentation_variant_2.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/infatuation_presentation_variant_3.png
@@ -126,6 +131,8 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/infatuation_presentation_variant_5.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/infatuation_presentation_variant_6.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/infatuation_presentation_variant_7.png
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/into_the_wild_card.webp
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/into_the_wild_hero.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/into_the_wild_presentation_default.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_2.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_3.png
@@ -141,6 +148,8 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/laughing_matters_hero.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/light_as_a_feather_card.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/light_as_a_feather_hero.webp
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/light_as_air_card.webp
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/light_as_air_hero.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/light_as_air_presentation_default.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_2.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_3.png
@@ -193,6 +202,8 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/martin_name.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/moments_card.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/moments_hero.webp
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/morbid_temptations_card.webp
+/Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/morbid_temptations_hero.webp
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/morbid_temptations_presentation_default.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_2.png
 /Users/prahlin/gh/cinerific/app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_3.png
@@ -316,6 +327,15 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/screenshots/clean_sequence_late/home_5s.png
 /Users/prahlin/gh/cinerific/screenshots/clean_sequence_late/home_6s.png
 /Users/prahlin/gh/cinerific/screenshots/clean_sequence_late/home_7s.png
+/Users/prahlin/gh/cinerific/screenshots/hero_reel_first_frames
+/Users/prahlin/gh/cinerific/screenshots/hero_reel_first_frames/home_hero_reel_01_light_as_air_card_start.png
+/Users/prahlin/gh/cinerific/screenshots/hero_reel_first_frames/home_hero_reel_01_light_as_air_hero_start.png
+/Users/prahlin/gh/cinerific/screenshots/hero_reel_first_frames/home_hero_reel_02_infatuation_card_start.png
+/Users/prahlin/gh/cinerific/screenshots/hero_reel_first_frames/home_hero_reel_02_infatuation_hero_start.png
+/Users/prahlin/gh/cinerific/screenshots/hero_reel_first_frames/home_hero_reel_03_into_the_wild_card_start.png
+/Users/prahlin/gh/cinerific/screenshots/hero_reel_first_frames/home_hero_reel_03_into_the_wild_hero_start.png
+/Users/prahlin/gh/cinerific/screenshots/hero_reel_first_frames/home_hero_reel_04_morbid_temptations_card_start.png
+/Users/prahlin/gh/cinerific/screenshots/hero_reel_first_frames/home_hero_reel_04_morbid_temptations_hero_start.png
 /Users/prahlin/gh/cinerific/screenshots/home_active_3_5s.png
 /Users/prahlin/gh/cinerific/screenshots/home_active_5s.png
 /Users/prahlin/gh/cinerific/screenshots/home_after_guest_4s.png
@@ -414,31 +434,48 @@ FILE: app/src/main/java/com/prahlin/cinerific/MainActivity.kt
 
      1	package com.prahlin.cinerific
      2	
-     3	import android.graphics.Color
-     4	import android.os.Bundle
-     5	import android.os.SystemClock
-     6	import androidx.activity.ComponentActivity
-     7	import androidx.activity.SystemBarStyle
-     8	import androidx.activity.compose.setContent
-     9	import androidx.activity.enableEdgeToEdge
-    10	import com.prahlin.cinerific.ui.CinerificApp
-    11	import com.prahlin.cinerific.ui.theme.CinerificTheme
-    12	
-    13	class MainActivity : ComponentActivity() {
-    14	    override fun onCreate(savedInstanceState: Bundle?) {
-    15	        val bootStartMillis = SystemClock.uptimeMillis()
-    16	        enableEdgeToEdge(
-    17	            statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
-    18	            navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
-    19	        )
-    20	        super.onCreate(savedInstanceState)
-    21	        setContent {
-    22	            CinerificTheme {
-    23	                CinerificApp(bootStartMillis = bootStartMillis)
-    24	            }
-    25	        }
-    26	    }
-    27	}
+     3	import android.app.UiModeManager
+     4	import android.graphics.Color
+     5	import android.os.Build
+     6	import android.os.Bundle
+     7	import android.os.SystemClock
+     8	import androidx.activity.ComponentActivity
+     9	import androidx.activity.SystemBarStyle
+    10	import androidx.activity.compose.setContent
+    11	import androidx.activity.enableEdgeToEdge
+    12	import androidx.core.view.WindowCompat
+    13	import com.prahlin.cinerific.ui.CinerificApp
+    14	import com.prahlin.cinerific.ui.theme.CinerificTheme
+    15	
+    16	class MainActivity : ComponentActivity() {
+    17	    override fun onCreate(savedInstanceState: Bundle?) {
+    18	        val bootStartMillis = SystemClock.uptimeMillis()
+    19	        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+    20	            getSystemService(UiModeManager::class.java).setApplicationNightMode(
+    21	                UiModeManager.MODE_NIGHT_YES
+    22	            )
+    23	        }
+    24	        enableEdgeToEdge(
+    25	            statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
+    26	            navigationBarStyle = SystemBarStyle.dark(Color.BLACK),
+    27	        )
+    28	        super.onCreate(savedInstanceState)
+    29	        window.statusBarColor = Color.TRANSPARENT
+    30	        window.navigationBarColor = Color.BLACK
+    31	        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+    32	            window.navigationBarDividerColor = Color.BLACK
+    33	        }
+    34	        WindowCompat.getInsetsController(window, window.decorView).apply {
+    35	            isAppearanceLightStatusBars = false
+    36	            isAppearanceLightNavigationBars = false
+    37	        }
+    38	        setContent {
+    39	            CinerificTheme {
+    40	                CinerificApp(bootStartMillis = bootStartMillis)
+    41	            }
+    42	        }
+    43	    }
+    44	}
 
 
 ============================================================
@@ -1751,52 +1788,34 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/theme/Theme.kt
      2	
      3	import androidx.compose.material3.MaterialTheme
      4	import androidx.compose.material3.darkColorScheme
-     5	import androidx.compose.material3.lightColorScheme
-     6	import androidx.compose.runtime.Composable
-     7	import androidx.compose.ui.graphics.Color
-     8	
-     9	private val LightColors = lightColorScheme(
-    10	    primary = Color(0xFF1E3A8A),
-    11	    onPrimary = Color.White,
-    12	    primaryContainer = Color(0xFFDDE7FF),
-    13	    onPrimaryContainer = Color(0xFF10285F),
-    14	    secondary = Color(0xFF7C3AED),
-    15	    onSecondary = Color.White,
-    16	    secondaryContainer = Color(0xFFE8DDFF),
-    17	    onSecondaryContainer = Color(0xFF30105D),
-    18	    background = Color(0xFFF7F8FC),
-    19	    onBackground = Color(0xFF111827),
-    20	    surface = Color(0xFFFFFFFF),
-    21	    onSurface = Color(0xFF111827),
-    22	    surfaceVariant = Color(0xFFE5E7EB),
-    23	    onSurfaceVariant = Color(0xFF4B5563),
-    24	)
-    25	
-    26	private val DarkColors = darkColorScheme(
-    27	    primary = Color(0xFFB7C8FF),
-    28	    onPrimary = Color(0xFF10285F),
-    29	    primaryContainer = Color(0xFF1E3A8A),
-    30	    onPrimaryContainer = Color(0xFFDDE7FF),
-    31	    secondary = Color(0xFFD8B4FE),
-    32	    onSecondary = Color(0xFF30105D),
-    33	    secondaryContainer = Color(0xFF4C1D95),
-    34	    onSecondaryContainer = Color(0xFFE8DDFF),
-    35	    background = Color(0xFF0F172A),
-    36	    onBackground = Color(0xFFE5E7EB),
-    37	    surface = Color(0xFF111827),
-    38	    onSurface = Color(0xFFE5E7EB),
-    39	    surfaceVariant = Color(0xFF1F2937),
-    40	    onSurfaceVariant = Color(0xFFCBD5E1),
-    41	)
-    42	
-    43	@Composable
-    44	fun CinerificTheme(content: @Composable () -> Unit) {
-    45	    MaterialTheme(
-    46	        colorScheme = LightColors,
-    47	        typography = androidx.compose.material3.Typography(),
-    48	        content = content,
-    49	    )
-    50	}
+     5	import androidx.compose.runtime.Composable
+     6	import androidx.compose.ui.graphics.Color
+     7	
+     8	private val DarkColors = darkColorScheme(
+     9	    primary = Color(0xFFB7C8FF),
+    10	    onPrimary = Color(0xFF10285F),
+    11	    primaryContainer = Color(0xFF1E3A8A),
+    12	    onPrimaryContainer = Color(0xFFDDE7FF),
+    13	    secondary = Color(0xFFD8B4FE),
+    14	    onSecondary = Color(0xFF30105D),
+    15	    secondaryContainer = Color(0xFF4C1D95),
+    16	    onSecondaryContainer = Color(0xFFE8DDFF),
+    17	    background = Color(0xFF0F172A),
+    18	    onBackground = Color(0xFFE5E7EB),
+    19	    surface = Color(0xFF111827),
+    20	    onSurface = Color(0xFFE5E7EB),
+    21	    surfaceVariant = Color(0xFF1F2937),
+    22	    onSurfaceVariant = Color(0xFFCBD5E1),
+    23	)
+    24	
+    25	@Composable
+    26	fun CinerificTheme(content: @Composable () -> Unit) {
+    27	    MaterialTheme(
+    28	        colorScheme = DarkColors,
+    29	        typography = androidx.compose.material3.Typography(),
+    30	        content = content,
+    31	    )
+    32	}
 
 
 ============================================================
@@ -1921,22 +1940,30 @@ FILE: app/src/main/res/values/strings.xml
    116	    <string name="program_or_not_to_be">Or Not To Be</string>
    117	    <string name="program_skin_and_bones">Skin and Bones</string>
    118	    <string name="program_the_appetizer">The Appetizer</string>
-   119	
-   120	    <string name="program_synopsis_one_last_breath">A curious woman sleuthing through unresolved family business uncovers more than she originally bargained for</string>
-   121	    <string name="program_synopsis_sink_or_swim">Swimming takes on a whole new meaning when an unphased man is confronted with the inevitable</string>
-   122	    <string name="program_synopsis_the_baller">Shooting hoops is all fun and games until life itself becomes the greatest challenge</string>
-   123	    <string name="program_synopsis_troublemaker">No scolding in the world can discipline some children - at least not when it comes to little rascal Hunter Roddings</string>
-   124	    <string name="program_synopsis_ignition">Firey passion and noble truth are at odds when sheltered Mona encounters Steward, a man with a troubled past</string>
-   125	    <string name="program_synopsis_eruption">Not even a life of high-level combat training can prepare a seasoned navy seal when nature\'s fury breaks loose</string>
-   126	    <string name="program_synopsis_if_i_may">A quiet confession changes the course of a family gathering before anyone is ready for the truth</string>
-   127	    <string name="program_synopsis_the_playmate">A delectable but lethal young woman allures unsuspecting men into a game of never-ending hide-and-seek</string>
-   128	    <string name="program_synopsis_help">Would you ignore a desperate call for aid if you were the only one around to lend a helping hand?</string>
-   129	    <string name="program_generated_synopsis">This %1$s %2$s follows %3$s through an escalating chain of choices, secrets, and second chances</string>
-   130	    <string name="program_format_series">series</string>
-   131	    <string name="program_format_feature">feature</string>
-   132	    <string name="program_meta_director">Dir: %1$s</string>
-   133	    <string name="program_meta_producer">Prod: %1$s</string>
-   134	</resources>
+   119	    <string name="program_light_as_air">Light As Air</string>
+   120	    <string name="program_infatuation">Infatuation</string>
+   121	    <string name="program_into_the_wild">Into The Wild</string>
+   122	    <string name="program_morbid_temptations">Morbid Temptations</string>
+   123	
+   124	    <string name="program_synopsis_one_last_breath">A curious woman sleuthing through unresolved family business uncovers more than she originally bargained for</string>
+   125	    <string name="program_synopsis_sink_or_swim">Swimming takes on a whole new meaning when an unphased man is confronted with the inevitable</string>
+   126	    <string name="program_synopsis_the_baller">Shooting hoops is all fun and games until life itself becomes the greatest challenge</string>
+   127	    <string name="program_synopsis_troublemaker">No scolding in the world can discipline some children - at least not when it comes to little rascal Hunter Roddings</string>
+   128	    <string name="program_synopsis_ignition">Firey passion and noble truth are at odds when sheltered Mona encounters Steward, a man with a troubled past</string>
+   129	    <string name="program_synopsis_eruption">Not even a life of high-level combat training can prepare a seasoned navy seal when nature\'s fury breaks loose</string>
+   130	    <string name="program_synopsis_if_i_may">A quiet confession changes the course of a family gathering before anyone is ready for the truth</string>
+   131	    <string name="program_synopsis_the_playmate">A delectable but lethal young woman allures unsuspecting men into a game of never-ending hide-and-seek</string>
+   132	    <string name="program_synopsis_help">Would you ignore a desperate call for aid if you were the only one around to lend a helping hand?</string>
+   133	    <string name="program_synopsis_light_as_air">Take to the skies in a riveting new documentary about man\'s unbounded will to soar</string>
+   134	    <string name="program_synopsis_infatuation">Young love confronts old traditions in small-town Victorian England</string>
+   135	    <string name="program_synopsis_into_the_wild">Discover the incredible wonders - and blood-curdling dangers - of North America\'s wildlife</string>
+   136	    <string name="program_synopsis_morbid_temptations">An extramarital affair unravels a web of lies with lethal consequences</string>
+   137	    <string name="program_generated_synopsis">This %1$s %2$s follows %3$s through an escalating chain of choices, secrets, and second chances</string>
+   138	    <string name="program_format_series">series</string>
+   139	    <string name="program_format_feature">feature</string>
+   140	    <string name="program_meta_director">Dir: %1$s</string>
+   141	    <string name="program_meta_producer">Prod: %1$s</string>
+   142	</resources>
 
 
 ============================================================
@@ -1947,11 +1974,17 @@ FILE: app/src/main/res/values/themes.xml
      2	<resources>
      3	    <style name="Theme.Cinerific" parent="Theme.Material3.DayNight.NoActionBar">
      4	        <item name="android:windowBackground">@android:color/black</item>
-     5	        <item name="android:windowNoTitle">true</item>
-     6	        <item name="android:windowActionBar">false</item>
-     7	        <item name="android:forceDarkAllowed">false</item>
-     8	    </style>
-     9	</resources>
+     5	        <item name="android:statusBarColor">@android:color/transparent</item>
+     6	        <item name="android:navigationBarColor">@android:color/black</item>
+     7	        <item name="android:windowLightStatusBar">false</item>
+     8	        <item name="android:windowLightNavigationBar">false</item>
+     9	        <item name="android:navigationBarDividerColor">@android:color/black</item>
+    10	        <item name="android:enforceNavigationBarContrast">false</item>
+    11	        <item name="android:windowNoTitle">true</item>
+    12	        <item name="android:windowActionBar">false</item>
+    13	        <item name="android:forceDarkAllowed">false</item>
+    14	    </style>
+    15	</resources>
 
 
 ============================================================
@@ -1962,11 +1995,17 @@ FILE: app/src/main/res/values-night/themes.xml
      2	<resources>
      3	    <style name="Theme.Cinerific" parent="Theme.Material3.DayNight.NoActionBar">
      4	        <item name="android:windowBackground">@android:color/black</item>
-     5	        <item name="android:windowNoTitle">true</item>
-     6	        <item name="android:windowActionBar">false</item>
-     7	        <item name="android:forceDarkAllowed">false</item>
-     8	    </style>
-     9	</resources>
+     5	        <item name="android:statusBarColor">@android:color/transparent</item>
+     6	        <item name="android:navigationBarColor">@android:color/black</item>
+     7	        <item name="android:windowLightStatusBar">false</item>
+     8	        <item name="android:windowLightNavigationBar">false</item>
+     9	        <item name="android:navigationBarDividerColor">@android:color/black</item>
+    10	        <item name="android:enforceNavigationBarContrast">false</item>
+    11	        <item name="android:windowNoTitle">true</item>
+    12	        <item name="android:windowActionBar">false</item>
+    13	        <item name="android:forceDarkAllowed">false</item>
+    14	    </style>
+    15	</resources>
 
 
 ============================================================
@@ -1977,14 +2016,20 @@ FILE: app/src/main/res/values-v31/themes.xml
      2	<resources>
      3	    <style name="Theme.Cinerific" parent="Theme.Material3.DayNight.NoActionBar">
      4	        <item name="android:windowBackground">@android:color/black</item>
-     5	        <item name="android:windowNoTitle">true</item>
-     6	        <item name="android:windowActionBar">false</item>
-     7	        <item name="android:forceDarkAllowed">false</item>
-     8	        <item name="android:windowSplashScreenBackground">@android:color/black</item>
-     9	        <item name="android:windowSplashScreenAnimatedIcon">@drawable/splash_transparent</item>
-    10	        <item name="android:windowSplashScreenIconBackgroundColor">@android:color/transparent</item>
-    11	    </style>
-    12	</resources>
+     5	        <item name="android:statusBarColor">@android:color/transparent</item>
+     6	        <item name="android:navigationBarColor">@android:color/black</item>
+     7	        <item name="android:windowLightStatusBar">false</item>
+     8	        <item name="android:windowLightNavigationBar">false</item>
+     9	        <item name="android:navigationBarDividerColor">@android:color/black</item>
+    10	        <item name="android:enforceNavigationBarContrast">false</item>
+    11	        <item name="android:windowNoTitle">true</item>
+    12	        <item name="android:windowActionBar">false</item>
+    13	        <item name="android:forceDarkAllowed">false</item>
+    14	        <item name="android:windowSplashScreenBackground">@android:color/black</item>
+    15	        <item name="android:windowSplashScreenAnimatedIcon">@drawable/splash_transparent</item>
+    16	        <item name="android:windowSplashScreenIconBackgroundColor">@android:color/transparent</item>
+    17	    </style>
+    18	</resources>
 
 
 ============================================================
@@ -2570,6 +2615,9 @@ app/src/main/res/drawable-nodpi/breathing_hero.webp | 186594 bytes | modified 20
 app/src/main/res/drawable-nodpi/chasing_light_card.webp | 90964 bytes | modified 2026-07-21 18:46:32
 app/src/main/res/drawable-nodpi/chasing_light_hero.webp | 208822 bytes | modified 2026-07-21 18:46:31
 app/src/main/res/drawable-nodpi/chrome_nav_bgfill.png | 35034 bytes | modified 2026-07-18 14:36:38
+app/src/main/res/drawable-nodpi/chrome_nav_bgfill_figma_variant5.png | 27213 bytes | modified 2026-07-23 22:56:59
+app/src/main/res/drawable-nodpi/chrome_nav_bgfill_variant_lift.png | 41473 bytes | modified 2026-07-23 22:56:59
+app/src/main/res/drawable-nodpi/chrome_nav_bgfill_variant_nocturne.png | 37414 bytes | modified 2026-07-23 22:56:59
 app/src/main/res/drawable-nodpi/chrome_top_bgfill.png | 32583 bytes | modified 2026-07-18 14:36:38
 app/src/main/res/drawable-nodpi/citric_card.webp | 97246 bytes | modified 2026-07-21 18:46:13
 app/src/main/res/drawable-nodpi/citric_hero.webp | 238078 bytes | modified 2026-07-21 18:46:13
@@ -2601,6 +2649,8 @@ app/src/main/res/drawable-nodpi/ignition_card.webp | 81252 bytes | modified 2026
 app/src/main/res/drawable-nodpi/ignition_hero.webp | 176090 bytes | modified 2026-07-21 18:23:35
 app/src/main/res/drawable-nodpi/incan_descent_card.webp | 102166 bytes | modified 2026-07-21 18:46:42
 app/src/main/res/drawable-nodpi/incan_descent_hero.webp | 244820 bytes | modified 2026-07-21 18:46:41
+app/src/main/res/drawable-nodpi/infatuation_card.webp | 35340 bytes | modified 2026-07-23 19:29:29
+app/src/main/res/drawable-nodpi/infatuation_hero.webp | 61832 bytes | modified 2026-07-23 19:29:29
 app/src/main/res/drawable-nodpi/infatuation_presentation_default.png | 2465 bytes | modified 2026-07-22 20:05:03
 app/src/main/res/drawable-nodpi/infatuation_presentation_variant_2.png | 20189 bytes | modified 2026-07-22 20:05:04
 app/src/main/res/drawable-nodpi/infatuation_presentation_variant_3.png | 29467 bytes | modified 2026-07-22 20:05:04
@@ -2608,6 +2658,8 @@ app/src/main/res/drawable-nodpi/infatuation_presentation_variant_4.png | 33585 b
 app/src/main/res/drawable-nodpi/infatuation_presentation_variant_5.png | 29657 bytes | modified 2026-07-22 20:05:06
 app/src/main/res/drawable-nodpi/infatuation_presentation_variant_6.png | 20048 bytes | modified 2026-07-22 20:05:07
 app/src/main/res/drawable-nodpi/infatuation_presentation_variant_7.png | 2508 bytes | modified 2026-07-22 20:05:07
+app/src/main/res/drawable-nodpi/into_the_wild_card.webp | 57638 bytes | modified 2026-07-23 19:29:29
+app/src/main/res/drawable-nodpi/into_the_wild_hero.webp | 105952 bytes | modified 2026-07-23 19:29:30
 app/src/main/res/drawable-nodpi/into_the_wild_presentation_default.png | 2824 bytes | modified 2026-07-22 20:05:08
 app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_2.png | 20066 bytes | modified 2026-07-22 20:05:09
 app/src/main/res/drawable-nodpi/into_the_wild_presentation_variant_3.png | 33114 bytes | modified 2026-07-22 20:05:10
@@ -2623,6 +2675,8 @@ app/src/main/res/drawable-nodpi/laughing_matters_card.webp | 141448 bytes | modi
 app/src/main/res/drawable-nodpi/laughing_matters_hero.webp | 331346 bytes | modified 2026-07-21 18:46:17
 app/src/main/res/drawable-nodpi/light_as_a_feather_card.webp | 53528 bytes | modified 2026-07-21 18:46:40
 app/src/main/res/drawable-nodpi/light_as_a_feather_hero.webp | 109092 bytes | modified 2026-07-21 18:46:40
+app/src/main/res/drawable-nodpi/light_as_air_card.webp | 24030 bytes | modified 2026-07-23 19:29:29
+app/src/main/res/drawable-nodpi/light_as_air_hero.webp | 43738 bytes | modified 2026-07-23 19:29:29
 app/src/main/res/drawable-nodpi/light_as_air_presentation_default.png | 4304 bytes | modified 2026-07-22 20:05:14
 app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_2.png | 37939 bytes | modified 2026-07-22 20:05:15
 app/src/main/res/drawable-nodpi/light_as_air_presentation_variant_3.png | 51061 bytes | modified 2026-07-22 20:05:17
@@ -2675,6 +2729,8 @@ app/src/main/res/drawable-nodpi/martin_avatar.png | 19773 bytes | modified 2026-
 app/src/main/res/drawable-nodpi/martin_name.png | 4583 bytes | modified 2026-07-14 20:49:07
 app/src/main/res/drawable-nodpi/moments_card.webp | 131752 bytes | modified 2026-07-21 18:46:23
 app/src/main/res/drawable-nodpi/moments_hero.webp | 352530 bytes | modified 2026-07-21 18:46:23
+app/src/main/res/drawable-nodpi/morbid_temptations_card.webp | 20996 bytes | modified 2026-07-23 19:29:30
+app/src/main/res/drawable-nodpi/morbid_temptations_hero.webp | 36896 bytes | modified 2026-07-23 19:29:30
 app/src/main/res/drawable-nodpi/morbid_temptations_presentation_default.png | 3054 bytes | modified 2026-07-22 20:05:24
 app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_2.png | 20908 bytes | modified 2026-07-22 20:05:25
 app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_3.png | 32685 bytes | modified 2026-07-22 20:05:26
@@ -2757,6 +2813,14 @@ screenshots/clean_sequence_late/home_4s.png | 1484177 bytes | modified 2026-07-2
 screenshots/clean_sequence_late/home_5s.png | 1983767 bytes | modified 2026-07-22 20:29:25
 screenshots/clean_sequence_late/home_6s.png | 2040255 bytes | modified 2026-07-22 20:29:27
 screenshots/clean_sequence_late/home_7s.png | 2021792 bytes | modified 2026-07-22 20:29:30
+screenshots/hero_reel_first_frames/home_hero_reel_01_light_as_air_card_start.png | 287486 bytes | modified 2026-07-23 19:25:41
+screenshots/hero_reel_first_frames/home_hero_reel_01_light_as_air_hero_start.png | 606446 bytes | modified 2026-07-23 19:25:41
+screenshots/hero_reel_first_frames/home_hero_reel_02_infatuation_card_start.png | 345261 bytes | modified 2026-07-23 19:25:41
+screenshots/hero_reel_first_frames/home_hero_reel_02_infatuation_hero_start.png | 744114 bytes | modified 2026-07-23 19:25:41
+screenshots/hero_reel_first_frames/home_hero_reel_03_into_the_wild_card_start.png | 596207 bytes | modified 2026-07-23 19:25:43
+screenshots/hero_reel_first_frames/home_hero_reel_03_into_the_wild_hero_start.png | 1383432 bytes | modified 2026-07-23 19:25:43
+screenshots/hero_reel_first_frames/home_hero_reel_04_morbid_temptations_card_start.png | 310714 bytes | modified 2026-07-23 19:25:43
+screenshots/hero_reel_first_frames/home_hero_reel_04_morbid_temptations_hero_start.png | 671432 bytes | modified 2026-07-23 19:25:43
 screenshots/home_active_3_5s.png | 1686156 bytes | modified 2026-07-22 20:26:37
 screenshots/home_active_5s.png | 1609421 bytes | modified 2026-07-22 20:26:41
 screenshots/home_after_guest_4s.png | 535898 bytes | modified 2026-07-22 20:25:05

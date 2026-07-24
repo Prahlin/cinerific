@@ -1,0 +1,863 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [6 0 R 8 0 R 10 0 R 12 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Length 7421 >>
+stream
+BT
+/F2 12.80 Tf
+1 0 0 1 54.00 738.00 Tm
+(Cinerific Android App Work Log - July 23, 2026) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 724.00 Tm
+() Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 713.80 Tm
+(Compiled summary for Thursday, July 23, 2026 - focus: continuing the post-July-22 Cinerific) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 703.60 Tm
+(Home, catalog, Android chrome, and right-nav polish pass: darkening Android system UI defaults,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 693.40 Tm
+(refining the Home hero reel with a right-to-left clip slide and blended incoming edge,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 683.20 Tm
+(extracting exact first-frame card and hero stills for the four Home reel titles, inserting) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 673.00 Tm
+(Light As Air, Infatuation, Into The Wild, and Morbid Temptations into Home/default, Movies,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 662.80 Tm
+(Shows, and detail surfaces with the requested genre logic, studying the Figma Animations) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 652.60 Tm
+(\(Original\) Right Nav Bar - Default component, importing Variant 5 as the shared right-side rail) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 642.40 Tm
+(background, creating two extra black/purple mockup variations, validating the result on the) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 632.20 Tm
+(Cinerific tablet AVD, and generating the latest Cinerific daily worklog artifact.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 622.00 Tm
+() Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 611.80 Tm
+(Generated in continuity with the established Cinerific worklog cadence from July 12, July 14,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 601.60 Tm
+(July 15 Part 1, July 15, July 16, July 18, July 19, July 20, and July 22: compact opening) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 591.40 Tm
+(summary, source-material review, baseline state, goal list, themed work-completed sections,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 581.20 Tm
+(validation, files touched, follow-up context, and output-artifact close. This artifact records) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 571.00 Tm
+(the current source state on main through HEAD 7062c98, plus the refreshed snapshot from this) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 560.80 Tm
+(worklog pass, and follows the prior root-level naming, four-page letter layout, footer) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 550.60 Tm
+(convention, and plain-text-readable PDF style.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 540.40 Tm
+() Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 530.20 Tm
+() Tj
+/F2 9.70 Tf
+1 0 0 1 54.00 520.00 Tm
+(Source Materials Reviewed) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 509.80 Tm
+(- Reviewed every pre-existing Cinerific worklog PDF at the repository root: July 12, July 14,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 499.60 Tm
+(  July 15 Part 1, July 15, July 16, July 18, July 19, July 20, and July 22.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 489.40 Tm
+(- Used pdftotext and pdfinfo output from the prior PDFs to preserve the established title) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 479.20 Tm
+(  pattern, summary cadence, section order, validation language, file-list style, letter-size) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 469.00 Tm
+(  geometry, metadata, footer, and four-page shape.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 458.80 Tm
+(- Ran ./read_project.sh and reviewed the refreshed cinerific_PROJECT_SNAPSHOT.txt for the) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 448.60 Tm
+(  current Android source layout, drawable inventory, right-nav assets, hero reel resources,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 438.40 Tm
+(  screenshot awareness, and scanner convention.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 428.20 Tm
+(- Reviewed git status, git log, git show --stat, and focused diffs for July 23 commits f1ddd09) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 418.00 Tm
+(  and 7062c98, with context from the July 21 and July 22 hero, title-card, spinner, favorites,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 407.80 Tm
+(  and presentation-overlay work.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 397.60 Tm
+(- Reviewed MainActivity.kt, Theme.kt, CinerificHomeScreen.kt, CinerificDestinationScreen.kt,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 387.40 Tm
+(  CinerificChrome.kt, localized strings, and the drawable-nodpi assets added for system chrome,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 377.20 Tm
+(  hero cards, hero images, and right-nav backgrounds.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 367.00 Tm
+(- Reviewed the Figma Animations \(Original\) context for Right Nav Bar - Default, focusing on) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 356.80 Tm
+(  Variant 5 as the accepted black/purple visual source for the right-side navigation rail.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 346.60 Tm
+(- Reviewed asset metadata for the new PNG rail backgrounds and WebP title assets. The rail) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 336.40 Tm
+(  backgrounds are 116 by 834 PNGs; the title cards are 700 by 526 WebPs; the title heroes are) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 326.20 Tm
+(  1194 by 834 WebPs.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 316.00 Tm
+(- Reviewed Android runtime evidence from emulator-5554: Gradle assemble/install output, adb) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 305.80 Tm
+(  launch of com.prahlin.cinerific/.MainActivity, Guest profile entry, and the final) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 295.60 Tm
+(  Home/default screenshot state.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 285.40 Tm
+() Tj
+/F2 9.70 Tf
+1 0 0 1 54.00 275.20 Tm
+(Baseline Status Before July 23 Work) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 265.00 Tm
+(- Cinerific entered July 23 with the July 22 Home hero presentation overlay accepted:) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 254.80 Tm
+(  transparent, staggered, bottom-left anchored, and visible above the tablet safe-bottom area.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 244.60 Tm
+(- The Android tablet navigation/taskbar area still read brighter than the rest of the app. The) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 234.40 Tm
+(  user asked whether users must see it and then asked for a code-side dark treatment that) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 224.20 Tm
+(  better matched Cinerific.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 214.00 Tm
+(- The Home hero reel rotated through four clips, but clip changes were still abrupt. The user) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 203.80 Tm
+(  wanted the next clip to slide in from the right and blend into the outgoing footage.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 193.60 Tm
+(- The four hero-reel titles had presentation overlays, but their exact starting video frames) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 183.40 Tm
+(  had not yet become reusable catalog card and hero artwork.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 173.20 Tm
+(- Home/default, Movies, Shows, and detail surfaces did not yet treat Light As Air, Infatuation,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 163.00 Tm
+(  Into The Wild, and Morbid Temptations as normal catalog entries with card art, hero art,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 152.80 Tm
+(  metadata, strings, and genre placement.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 142.60 Tm
+(- The right-side navigation rail was functional but visually plain. The user wanted the Figma) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 132.40 Tm
+(  Variant 5 black/purple rail image implemented instead of a flat dark column.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 122.20 Tm
+() Tj
+/F2 9.70 Tf
+1 0 0 1 54.00 112.00 Tm
+(Main Goals for July 23) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 101.80 Tm
+(- Darken Android system UI defaults so the tablet navigation bar, divider, and app theme better) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 91.60 Tm
+(  match Cinerific.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 81.40 Tm
+(- Keep the Cinerific_Standard_Tablet AVD usable in landscape and return the installed app to) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 71.20 Tm
+(  Home/default for live validation.) Tj
+/F1 8.5 Tf
+1 0 0 1 391.95 28.00 Tm
+(Cinerific Work Log - July 23, 2026 Page 1) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 7228 >>
+stream
+BT
+/F1 8.70 Tf
+1 0 0 1 54.00 738.00 Tm
+(- Replace hard Home reel cuts with a smooth right-to-left incoming clip slide near the end of) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 727.80 Tm
+(  each hero video.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 717.60 Tm
+(- Blend the incoming clip left edge against the outgoing clip to soften strong color and) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 707.40 Tm
+(  lighting differences.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 697.20 Tm
+(- Extract the exact first frames from the four repo video clips outside the app UI, without) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 687.00 Tm
+(  presentation overlays, system bars, logo, or rail chrome.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 676.80 Tm
+(- Create card-ratio and hero-ratio still assets for Light As Air, Infatuation, Into The Wild,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 666.60 Tm
+(  and Morbid Temptations using the same dimensions as the existing Cinerific catalog artwork.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 656.40 Tm
+(- Place the four titles according to the requested logic: Light As Air as a documentary show,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 646.20 Tm
+(  Infatuation as a drama show, Into The Wild as a documentary show, and Morbid Temptations as a) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 636.00 Tm
+(  thriller movie.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 625.80 Tm
+(- Import Figma Variant 5 into the repo, create two additional black/purple variations, and make) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 615.60 Tm
+(  Variant 5 the shared right-rail background for expanded Home plus Movies, Shows, Favorites,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 605.40 Tm
+(  and Settings.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 595.20 Tm
+() Tj
+/F2 9.70 Tf
+1 0 0 1 54.00 585.00 Tm
+(Work Completed - Android System UI and AVD Runtime) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 574.80 Tm
+(- Explained that real Android tablet users may see gesture, taskbar, or navigation UI depending) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 564.60 Tm
+(  on device, Android version, launcher mode, and user settings, while the app can request) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 554.40 Tm
+(  darker system-bar styling.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 544.20 Tm
+(- Updated MainActivity.kt so Android 12+ requests MODE_NIGHT_YES through UiModeManager during) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 534.00 Tm
+(  startup and applies dark edge-to-edge status/navigation bar styles.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 523.80 Tm
+(- Changed the app navigation bar to black, set the navigation divider to black on supported) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 513.60 Tm
+(  Android versions, and forced WindowCompat light-status/light-navigation appearances off.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 503.40 Tm
+(- Changed CinerificTheme from the old light Material color scheme to the dark Material color) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 493.20 Tm
+(  scheme.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 483.00 Tm
+(- Added dark system-bar fallbacks to values/themes.xml, values-night/themes.xml, and) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 472.80 Tm
+(  values-v31/themes.xml, including black navigationBarColor, transparent statusBarColor, false) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 462.60 Tm
+(  light-system-bar flags, black divider color, and disabled navigation-bar contrast) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 452.40 Tm
+(  enforcement.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 442.20 Tm
+(- Booted the Cinerific_Standard_Tablet AVD in landscape, confirmed emulator-5554 was attached,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 432.00 Tm
+(  installed the debug APK, launched MainActivity, tapped Guest, and landed on the Home/default) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 421.80 Tm
+(  hero screen.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 411.60 Tm
+() Tj
+/F2 9.70 Tf
+1 0 0 1 54.00 401.40 Tm
+(Work Completed - Hero Reel Clip Transitions) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 391.20 Tm
+(- Refactored LoopingHeroVideoView in CinerificHomeScreen.kt from a single TextureView/player) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 381.00 Tm
+(  path into active and incoming video slots so the next clip can be prepared before the visible) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 370.80 Tm
+(  transition.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 360.60 Tm
+(- Added scheduling logic that starts the incoming transition near the end of the active clip) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 350.40 Tm
+(  using the player duration and current position.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 340.20 Tm
+(- Implemented a right-to-left ValueAnimator slide with a 700 ms duration and) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 330.00 Tm
+(  DecelerateInterpolator, moving the incoming video layer from the right edge into the) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 319.80 Tm
+(  full-frame position.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 309.60 Tm
+(- Added queued-transition handling so the next clip waits for preparation instead of) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 299.40 Tm
+(  interrupting through an unprepared surface.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 289.20 Tm
+(- Added BlendedVideoLayer around each TextureView and used a destination-in LinearGradient edge) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 279.00 Tm
+(  mask to fade the incoming leading edge against the outgoing clip.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 268.80 Tm
+(- Set the incoming edge blend to 16 percent of the hero reel width, preserving content while) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 258.60 Tm
+(  softening bright-to-dark or dark-to-bright boundaries.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 248.40 Tm
+(- Preserved center-crop transforms, active reel index reporting for the presentation overlay,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 238.20 Tm
+(  and MediaPlayer/surface cleanup on detachment.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 228.00 Tm
+() Tj
+/F2 9.70 Tf
+1 0 0 1 54.00 217.80 Tm
+(Work Completed - Reel Frame Assets and Catalog Placement) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 207.60 Tm
+(- Captured the first visual frame from each of the four Home hero reel clips as repo-side) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 197.40 Tm
+(  source imagery rather than app screenshots, avoiding overlay text, the Cinerific logo, native) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 187.20 Tm
+(  bars, and right-side rail chrome.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 177.00 Tm
+(- Created reference screenshots under screenshots/hero_reel_first_frames for card and hero) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 166.80 Tm
+(  starts of home_hero_reel_01 Light As Air, home_hero_reel_02 Infatuation, home_hero_reel_03) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 156.60 Tm
+(  Into The Wild, and home_hero_reel_04 Morbid Temptations.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 146.40 Tm
+(- Generated drawable-nodpi WebP card assets at 700 by 526: light_as_air_card.webp,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 136.20 Tm
+(  infatuation_card.webp, into_the_wild_card.webp, and morbid_temptations_card.webp.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 126.00 Tm
+(- Generated drawable-nodpi WebP hero assets at 1194 by 834: light_as_air_hero.webp,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 115.80 Tm
+(  infatuation_hero.webp, into_the_wild_hero.webp, and morbid_temptations_hero.webp.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 105.60 Tm
+(- Kept cards in the existing rounded-card rendering path while detail screens use the larger) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 95.40 Tm
+(  hero artwork when a title opens.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 85.20 Tm
+(- Added Home card title mappings so the four new card resources resolve to the correct program) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 75.00 Tm
+(  titles.) Tj
+/F1 8.5 Tf
+1 0 0 1 391.95 28.00 Tm
+(Cinerific Work Log - July 23, 2026 Page 2) Tj
+ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 7241 >>
+stream
+BT
+/F1 8.70 Tf
+1 0 0 1 54.00 738.00 Tm
+(- Inserted Morbid Temptations into the Home Thriller row and Movies Thriller row as a movie,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 727.80 Tm
+(  matching the requested movie/thriller classification.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 717.60 Tm
+(- Inserted Light As Air and Into The Wild into the Home Documentary row and Shows Documentary) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 707.40 Tm
+(  row as documentary shows.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 697.20 Tm
+(- Inserted Infatuation into the Home Drama row and Shows Drama row as a drama show.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 687.00 Tm
+(- Added the new titles to prototype list and small-collage ordering so Movies and Shows mode) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 676.80 Tm
+(  views can surface them consistently with the existing nested viewport navigation states.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 666.60 Tm
+() Tj
+/F2 9.70 Tf
+1 0 0 1 54.00 656.40 Tm
+(Work Completed - Program Details and Localization) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 646.20 Tm
+(- Added ProgramDetails entries for the four titles, including year/runtime metadata, directors,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 636.00 Tm
+(  producers, ratings, synopsis resource IDs, and genre labels.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 625.80 Tm
+(- Added list-poster and detail-hero drawable resolution paths so title-detail screens can use) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 615.60 Tm
+(  the new cards and heroes through the same generic detail surface as the existing catalog.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 605.40 Tm
+(- Added English, Spanish, and Mandarin string resources for the four program names and synopses) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 595.20 Tm
+(  so the new entries participate in the bundled localization path.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 585.00 Tm
+(- Preserved the existing actionability pattern for title cards: catalog cards remain rounded) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 574.80 Tm
+(  when shown as cards, then use the matching hero asset inside the full-screen title) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 564.60 Tm
+(  experience.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 554.40 Tm
+() Tj
+/F2 9.70 Tf
+1 0 0 1 54.00 544.20 Tm
+(Work Completed - Figma Variant 5 Right Nav Rail) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 534.00 Tm
+(- Studied the Figma Animations \(Original\) section and the Right Nav Bar - Default component for) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 523.80 Tm
+(  the rail visual reference, focusing on Variant 5.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 513.60 Tm
+(- Imported the Figma-derived Variant 5 rail background into drawable-nodpi as) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 503.40 Tm
+(  chrome_nav_bgfill_figma_variant5.png at 116 by 834.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 493.20 Tm
+(- Created two additional black/purple variation mockups, chrome_nav_bgfill_variant_lift.png and) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 483.00 Tm
+(  chrome_nav_bgfill_variant_nocturne.png, preserving the same dimensions while changing) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 472.80 Tm
+(  lighting and structure.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 462.60 Tm
+(- Changed the shared CinerificChromeBackground default backgroundResId to) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 452.40 Tm
+(  chrome_nav_bgfill_figma_variant5 so the right rail automatically uses Variant 5 wherever the) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 442.20 Tm
+(  shared chrome background is used.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 432.00 Tm
+(- Preserved separate top-bar chrome by continuing to pass chrome_top_bgfill explicitly from) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 421.80 Tm
+(  DestinationTopBar.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 411.60 Tm
+(- Kept native rail icons and labels separate from the background image so Home, Movies, Shows,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 401.40 Tm
+(  Favorites, and Settings continue to render interactive navigation on top of the black/purple) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 391.20 Tm
+(  rail texture.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 381.00 Tm
+() Tj
+/F2 9.70 Tf
+1 0 0 1 54.00 370.80 Tm
+(Work Completed - Commits and Handoff) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 360.60 Tm
+(- Created commit f1ddd09, Darkened Android System UI Defaults, covering the dark navigation) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 350.40 Tm
+(  bar, dark theme, system-bar appearance flags, and theme-resource fallbacks.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 340.20 Tm
+(- Created commit 7062c98, Implemented Figma Variant 5 Nav Rail Styling, covering Variant 5 rail) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 330.00 Tm
+(  styling, alternate mockups, hero reel transition work, four new title card/hero pairs,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 319.80 Tm
+(  catalog/detail integration, and localized strings.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 309.60 Tm
+(- Recommended past-tense commit-message wording when asked, keeping the header and dashed) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 299.40 Tm
+(  change lines aligned with the user-preferred format.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 289.20 Tm
+(- Installed and launched the accepted debug build on the Cinerific AVD after Variant 5 was) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 279.00 Tm
+(  wired in, then moved through Guest profile selection so the user could see Home/default live.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 268.80 Tm
+() Tj
+/F2 9.70 Tf
+1 0 0 1 54.00 258.60 Tm
+(Validation and Checks Performed) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 248.40 Tm
+(- Ran ./read_project.sh before this artifact pass, producing a refreshed) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 238.20 Tm
+(  cinerific_PROJECT_SNAPSHOT.txt with the current file tree, drawable assets, and source) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 228.00 Tm
+(  context.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 217.80 Tm
+(- Ran ./gradlew :app:assembleDebug after reviewing the current source state; the debug build) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 207.60 Tm
+(  completed successfully with BUILD SUCCESSFUL in 7 seconds.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 197.40 Tm
+(- Confirmed adb devices reports emulator-5554 attached as a device, matching the) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 187.20 Tm
+(  Cinerific_Standard_Tablet runtime used for implementation and user validation.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 177.00 Tm
+(- Installed and launched the debug APK during the Variant 5 handoff. Android reported) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 166.80 Tm
+(  com.prahlin.cinerific/.MainActivity as the focused foreground window after Guest was) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 156.60 Tm
+(  selected.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 146.40 Tm
+(- Captured and inspected the live emulator screenshot after Guest selection; the app showed the) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 136.20 Tm
+(  Cinerific Home/default hero screen rather than Android launcher or an empty emulator.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 126.00 Tm
+(- Ran git show --stat and focused diffs for f1ddd09 and 7062c98 to confirm the July 23 source) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 115.80 Tm
+(  scope.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 105.60 Tm
+(- Ran file checks on the new PNG and WebP resources to confirm the rail, card, and hero) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 95.40 Tm
+(  dimensions match the intended app surfaces.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 85.20 Tm
+(- Ran git status --short --branch before generating this artifact. The branch was main tracking) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 75.00 Tm
+(  origin/main, with only cinerific_PROJECT_SNAPSHOT.txt modified by the fresh read_project.sh) Tj
+/F1 8.5 Tf
+1 0 0 1 391.95 28.00 Tm
+(Cinerific Work Log - July 23, 2026 Page 3) Tj
+ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Length 6545 >>
+stream
+BT
+/F1 8.70 Tf
+1 0 0 1 54.00 738.00 Tm
+(  run before this new PDF was written.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 727.80 Tm
+(- Read all pre-existing Cinerific worklog PDFs before producing this artifact so the new July) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 717.60 Tm
+(  23 worklog follows the established naming, structure, length, and content type.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 707.40 Tm
+() Tj
+/F2 9.70 Tf
+1 0 0 1 54.00 697.20 Tm
+(Files Touched During July 23) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 687.00 Tm
+(- app/src/main/java/com/prahlin/cinerific/MainActivity.kt: requested app night mode, applied) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 676.80 Tm
+(  black navigation/divider colors, transparent status bar, and dark system-bar appearance) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 666.60 Tm
+(  flags.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 656.40 Tm
+(- app/src/main/java/com/prahlin/cinerific/ui/theme/Theme.kt: switched the app from the previous) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 646.20 Tm
+(  light Material color scheme to the dark color scheme.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 636.00 Tm
+(- app/src/main/res/values/themes.xml, values-night/themes.xml, and values-v31/themes.xml: added) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 625.80 Tm
+(  dark system-bar and contrast fallback attributes.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 615.60 Tm
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificHomeScreen.kt: added dual video slots,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 605.40 Tm
+(  preloading, right-to-left slide transitions, leading-edge blending, Home card mapping, and) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 595.20 Tm
+(  new row placement.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 585.00 Tm
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt: added program) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 574.80 Tm
+(  details, prototype ordering, Movies/Shows rows, list poster resolution, detail hero) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 564.60 Tm
+(  resolution, and title resource mapping for the four new titles.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 554.40 Tm
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificChrome.kt: changed the shared right-rail) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 544.20 Tm
+(  chrome background default to chrome_nav_bgfill_figma_variant5.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 534.00 Tm
+(- app/src/main/res/drawable-nodpi/chrome_nav_bgfill_figma_variant5.png,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 523.80 Tm
+(  chrome_nav_bgfill_variant_lift.png, and chrome_nav_bgfill_variant_nocturne.png: added the) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 513.60 Tm
+(  accepted rail background and two alternate black/purple mockups.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 503.40 Tm
+(- app/src/main/res/drawable-nodpi/light_as_air_card.webp, light_as_air_hero.webp,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 493.20 Tm
+(  infatuation_card.webp, infatuation_hero.webp, into_the_wild_card.webp,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 483.00 Tm
+(  into_the_wild_hero.webp, morbid_temptations_card.webp, and morbid_temptations_hero.webp:) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 472.80 Tm
+(  added first-frame title stills.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 462.60 Tm
+(- app/src/main/res/values/strings.xml, values-es/strings.xml, and values-zh-rCN/strings.xml:) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 452.40 Tm
+(  added localized names and synopses for the four new titles.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 442.20 Tm
+(- cinerific_PROJECT_SNAPSHOT.txt: refreshed generated project snapshot during this worklog) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 432.00 Tm
+(  pass.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 421.80 Tm
+(- cinerific_worklog_july 23.pdf: this generated daily worklog artifact at the repository root.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 411.60 Tm
+() Tj
+/F2 9.70 Tf
+1 0 0 1 54.00 401.40 Tm
+(Follow-Up Context) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 391.20 Tm
+(- The right-side rail now uses the Figma-derived Variant 5 background by default. The two) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 381.00 Tm
+(  alternate rail mockups are available for later comparison but are inactive unless the shared) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 370.80 Tm
+(  background resource changes.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 360.60 Tm
+(- The Home hero reel transition now depends on a native TextureView/player slot swap and) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 350.40 Tm
+(  edge-mask draw path. Future tuning should use actual device or emulator frame data.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 340.20 Tm
+(- The four reel-derived titles now behave like normal catalog entries. Future additions should) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 330.00 Tm
+(  follow the same card/hero dimensions, string-resource mapping, row placement, and detail-hero) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 319.80 Tm
+(  resolution pattern.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 309.60 Tm
+(- The Android tablet taskbar/navigation area can be darkened by the app, but whether it appears) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 299.40 Tm
+(  remains partly controlled by the Android device, launcher, gesture mode, and user settings.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 289.20 Tm
+(- Generated screenshots, PDFs, and snapshots remain project-management artifacts unless) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 279.00 Tm
+(  explicitly committed. The accepted July 23 source state is already on main through HEAD) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 268.80 Tm
+(  7062c98.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 258.60 Tm
+() Tj
+/F2 9.70 Tf
+1 0 0 1 54.00 248.40 Tm
+(Output Artifact) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 238.20 Tm
+(- Filename: cinerific_worklog_july 23.pdf) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 228.00 Tm
+(- Created at the repository root in /Users/prahlin/gh/cinerific.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 217.80 Tm
+(- Follows the Cinerific filename convention established by cinerific_worklog_july 12.pdf and) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 207.60 Tm
+(  continued by the July 14, July 15, July 16, July 18, July 19, July 20, and July 22 artifacts,) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 197.40 Tm
+(  including the space before the day number.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 187.20 Tm
+(- Follows the established Alla Vostra/Prahlin/Cinerific daily worklog structure while keeping) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 177.00 Tm
+(  the body content specific to Cinerific work completed on Thursday, July 23, 2026.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 166.80 Tm
+(- No external PDF dependency was installed; this artifact was generated with a small) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 156.60 Tm
+(  standard-library PDF writer in the same plain-text-readable spirit as the prior Cinerific) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 146.40 Tm
+(  worklogs.) Tj
+/F1 8.70 Tf
+1 0 0 1 54.00 136.20 Tm
+(- Created this daily worklog PDF: cinerific_worklog_july 23.pdf.) Tj
+/F1 8.5 Tf
+1 0 0 1 391.95 28.00 Tm
+(Cinerific Work Log - July 23, 2026 Page 4) Tj
+ET
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 11 0 R >>
+endobj
+13 0 obj
+<< /Title (Cinerific Android App Work Log - July 23, 2026) /Subject (Cinerific Android app development worklog) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260723000000-04'00') /ModDate (D:20260723000000-04'00') >>
+endobj
+xref
+0 14
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000135 00000 n 
+0000000205 00000 n 
+0000000280 00000 n 
+0000007753 00000 n 
+0000007889 00000 n 
+0000015169 00000 n 
+0000015305 00000 n 
+0000022598 00000 n 
+0000022735 00000 n 
+0000029333 00000 n 
+0000029471 00000 n 
+trailer
+<< /Size 14 /Root 1 0 R /Info 13 0 R >>
+startxref
+29790
+%%EOF
