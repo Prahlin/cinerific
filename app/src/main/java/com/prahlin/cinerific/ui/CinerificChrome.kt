@@ -22,7 +22,7 @@ private val ChromeBottom = Color(0xFF050003)
 internal fun CinerificChromeBackground(
     modifier: Modifier = Modifier,
     alpha: Float = 1f,
-    @DrawableRes backgroundResId: Int = R.drawable.chrome_nav_bgfill
+    @DrawableRes backgroundResId: Int = R.drawable.chrome_nav_bgfill_figma_variant5
 ) {
     val visibleAlpha = alpha.coerceIn(0f, 1f)
 

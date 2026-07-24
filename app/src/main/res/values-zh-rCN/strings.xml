@@ -116,6 +116,10 @@
     <string name="program_or_not_to_be">或者不成为</string>
     <string name="program_skin_and_bones">皮包骨</string>
     <string name="program_the_appetizer">开胃菜</string>
+    <string name="program_light_as_air">轻如空气</string>
+    <string name="program_infatuation">痴迷</string>
+    <string name="program_into_the_wild">走进荒野</string>
+    <string name="program_morbid_temptations">病态诱惑</string>
 
     <string name="program_synopsis_one_last_breath">一名好奇的女子调查未解的家族往事，却发现事情远超她最初的预料</string>
     <string name="program_synopsis_sink_or_swim">当一名处变不惊的男人面对不可避免的命运时，游泳有了全新的意义</string>
@@ -126,6 +130,10 @@
     <string name="program_synopsis_if_i_may">一个轻声吐露的秘密，在所有人准备好面对真相之前改变了一场家庭聚会的走向</string>
     <string name="program_synopsis_the_playmate">一名迷人却致命的年轻女子诱使毫无戒心的男人进入一场永无止境的捉迷藏</string>
     <string name="program_synopsis_help">如果你是附近唯一能伸出援手的人，你会无视一声绝望的求助吗？</string>
+    <string name="program_synopsis_light_as_air">跟随一部扣人心弦的新纪录片飞上天空，见证人类对翱翔的无限向往</string>
+    <string name="program_synopsis_infatuation">年轻的爱情在维多利亚时代英格兰小镇中直面古老传统</string>
+    <string name="program_synopsis_into_the_wild">探索北美野生世界令人惊叹的奇观和令人胆寒的危险</string>
+    <string name="program_synopsis_morbid_temptations">一段婚外情揭开谎言之网，并引发致命后果</string>
     <string name="program_generated_synopsis">这部%1$s%2$s讲述了%3$s在一连串不断升级的选择、秘密和第二次机会中的经历</string>
     <string name="program_format_series">剧集</string>
     <string name="program_format_feature">电影</string>

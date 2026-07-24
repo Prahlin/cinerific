@@ -116,6 +116,10 @@
     <string name="program_or_not_to_be">Or Not To Be</string>
     <string name="program_skin_and_bones">Skin and Bones</string>
     <string name="program_the_appetizer">The Appetizer</string>
+    <string name="program_light_as_air">Light As Air</string>
+    <string name="program_infatuation">Infatuation</string>
+    <string name="program_into_the_wild">Into The Wild</string>
+    <string name="program_morbid_temptations">Morbid Temptations</string>
 
     <string name="program_synopsis_one_last_breath">A curious woman sleuthing through unresolved family business uncovers more than she originally bargained for</string>
     <string name="program_synopsis_sink_or_swim">Swimming takes on a whole new meaning when an unphased man is confronted with the inevitable</string>
@@ -126,6 +130,10 @@
     <string name="program_synopsis_if_i_may">A quiet confession changes the course of a family gathering before anyone is ready for the truth</string>
     <string name="program_synopsis_the_playmate">A delectable but lethal young woman allures unsuspecting men into a game of never-ending hide-and-seek</string>
     <string name="program_synopsis_help">Would you ignore a desperate call for aid if you were the only one around to lend a helping hand?</string>
+    <string name="program_synopsis_light_as_air">Take to the skies in a riveting new documentary about man\'s unbounded will to soar</string>
+    <string name="program_synopsis_infatuation">Young love confronts old traditions in small-town Victorian England</string>
+    <string name="program_synopsis_into_the_wild">Discover the incredible wonders - and blood-curdling dangers - of North America\'s wildlife</string>
+    <string name="program_synopsis_morbid_temptations">An extramarital affair unravels a web of lies with lethal consequences</string>
     <string name="program_generated_synopsis">This %1$s %2$s follows %3$s through an escalating chain of choices, secrets, and second chances</string>
     <string name="program_format_series">series</string>
     <string name="program_format_feature">feature</string>

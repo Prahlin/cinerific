@@ -116,6 +116,10 @@
     <string name="program_or_not_to_be">O no ser</string>
     <string name="program_skin_and_bones">Piel y huesos</string>
     <string name="program_the_appetizer">El aperitivo</string>
+    <string name="program_light_as_air">Ligero como el aire</string>
+    <string name="program_infatuation">Infatuación</string>
+    <string name="program_into_the_wild">En lo salvaje</string>
+    <string name="program_morbid_temptations">Tentaciones mórbidas</string>
 
     <string name="program_synopsis_one_last_breath">Una mujer curiosa que investiga asuntos familiares sin resolver descubre más de lo que esperaba al principio</string>
     <string name="program_synopsis_sink_or_swim">Nadar adquiere un significado completamente nuevo cuando un hombre impasible se enfrenta a lo inevitable</string>
@@ -126,6 +130,10 @@
     <string name="program_synopsis_if_i_may">Una confesión silenciosa cambia el rumbo de una reunión familiar antes de que nadie esté listo para la verdad</string>
     <string name="program_synopsis_the_playmate">Una joven encantadora pero letal atrae a hombres desprevenidos a un juego interminable de escondite</string>
     <string name="program_synopsis_help">¿Ignorarías una llamada desesperada de auxilio si fueras la única persona cerca para echar una mano?</string>
+    <string name="program_synopsis_light_as_air">Surca los cielos en un nuevo documental apasionante sobre la voluntad ilimitada del ser humano de volar</string>
+    <string name="program_synopsis_infatuation">El amor joven se enfrenta a viejas tradiciones en un pequeño pueblo de la Inglaterra victoriana</string>
+    <string name="program_synopsis_into_the_wild">Descubre las maravillas increíbles y los peligros escalofriantes de la vida silvestre de Norteamérica</string>
+    <string name="program_synopsis_morbid_temptations">Una aventura extramatrimonial desata una red de mentiras con consecuencias letales</string>
     <string name="program_generated_synopsis">Esta %2$s de %1$s sigue a %3$s a través de una cadena creciente de decisiones, secretos y segundas oportunidades</string>
     <string name="program_format_series">serie</string>
     <string name="program_format_feature">película</string>

@@ -2497,10 +2497,50 @@ private val ProgramDetailsByTitle = mapOf(
         producer = "I. Kavan",
         synopsisResId = R.string.program_synopsis_help,
         rating = 2
+    ),
+    "Light As Air" to ProgramDetails(
+        year = "2024",
+        runtime = "8 eps",
+        director = "M. Marsh",
+        producer = "R. Anderson",
+        synopsisResId = R.string.program_synopsis_light_as_air,
+        rating = 4,
+        genreLabel = ViewportGenre.Documentary
+    ),
+    "Infatuation" to ProgramDetails(
+        year = "2021",
+        runtime = "8 eps",
+        director = "A. Lockhart",
+        producer = "S. Sebilla",
+        synopsisResId = R.string.program_synopsis_infatuation,
+        rating = 4,
+        genreLabel = ViewportGenre.Drama
+    ),
+    "Into The Wild" to ProgramDetails(
+        year = "2023",
+        runtime = "10 eps",
+        director = "B. Feinholt",
+        producer = "M. Holt",
+        synopsisResId = R.string.program_synopsis_into_the_wild,
+        rating = 5,
+        genreLabel = ViewportGenre.Documentary
+    ),
+    "Morbid Temptations" to ProgramDetails(
+        year = "2022",
+        runtime = "1h 57m",
+        director = "W. Wexler",
+        producer = "T. Tanning",
+        synopsisResId = R.string.program_synopsis_morbid_temptations,
+        rating = 4,
+        genreLabel = ViewportGenre.Thriller
     )
 )
 
 private val PrototypeListTitleOrder = listOf(
+    "Light As Air",
+    "Into The Wild",
+    "Infatuation",
+    "Morbid Temptations",
     "One Last Breath",
     "Sink or Swim",
     "The Baller",
@@ -2513,6 +2553,7 @@ private val PrototypeListTitleOrder = listOf(
 )
 
 private val PrototypeMovieSmallTitleOrder = listOf(
+    "Morbid Temptations",
     "One Last Breath",
     "Sink or Swim",
     "Troublemaker",
@@ -2526,6 +2567,9 @@ private val PrototypeMovieSmallTitleOrder = listOf(
 )
 
 private val PrototypeShowSmallTitleOrder = listOf(
+    "Light As Air",
+    "Into The Wild",
+    "Infatuation",
     "No Trespassing",
     "Hungry Heart",
     "Enlightenment",
@@ -2621,6 +2665,7 @@ private val MovieRows = listOf(
         titleResId = R.string.row_thriller_movies,
         genre = ViewportGenre.Thriller,
         programs = listOf(
+            movie("Morbid Temptations", ViewportGenre.Thriller, R.drawable.morbid_temptations_card),
             movie("Enlightenment", ViewportGenre.Thriller, R.drawable.enlightenment_card),
             movie("Ignition", ViewportGenre.Thriller, R.drawable.ignition_card),
             movie("Deadbeat", ViewportGenre.Thriller, R.drawable.deadbeat_card),
@@ -2660,6 +2705,8 @@ private val ShowRows = listOf(
         titleResId = R.string.row_documentary_shows,
         genre = ViewportGenre.Documentary,
         programs = listOf(
+            show("Light As Air", ViewportGenre.Documentary, R.drawable.light_as_air_card),
+            show("Into The Wild", ViewportGenre.Documentary, R.drawable.into_the_wild_card),
             show("Surfside", ViewportGenre.Documentary, R.drawable.surfside_card),
             show("Wheels", ViewportGenre.Documentary, R.drawable.wheels_card),
             show("Light as a Feather", ViewportGenre.Documentary, R.drawable.light_as_a_feather_card),
@@ -2671,6 +2718,7 @@ private val ShowRows = listOf(
         titleResId = R.string.row_drama_shows,
         genre = ViewportGenre.Drama,
         programs = listOf(
+            show("Infatuation", ViewportGenre.Drama, R.drawable.infatuation_card),
             show("Moments", ViewportGenre.Drama, R.drawable.moments_card),
             show("Chasing Light", ViewportGenre.Drama, R.drawable.chasing_light_card),
             show("Breathing", ViewportGenre.Drama, R.drawable.breathing_card),
@@ -2810,6 +2858,10 @@ private fun programTitleResId(title: String): Int = when (title) {
     "Or Not To Be" -> R.string.program_or_not_to_be
     "Skin and Bones" -> R.string.program_skin_and_bones
     "The Appetizer" -> R.string.program_the_appetizer
+    "Light As Air" -> R.string.program_light_as_air
+    "Infatuation" -> R.string.program_infatuation
+    "Into The Wild" -> R.string.program_into_the_wild
+    "Morbid Temptations" -> R.string.program_morbid_temptations
     else -> R.string.app_name
 }
 
@@ -2848,6 +2900,10 @@ private fun listPosterDrawableId(title: String): Int? = when (title) {
     "Or Not To Be" -> R.drawable.or_not_to_be_card
     "Skin and Bones" -> R.drawable.skin_and_bones_card
     "The Appetizer" -> R.drawable.the_appetizer_card
+    "Light As Air" -> R.drawable.light_as_air_card
+    "Infatuation" -> R.drawable.infatuation_card
+    "Into The Wild" -> R.drawable.into_the_wild_card
+    "Morbid Temptations" -> R.drawable.morbid_temptations_card
     else -> null
 }
 
@@ -2886,6 +2942,10 @@ private fun detailHeroDrawableId(title: String): Int? = when (title) {
     "Or Not To Be" -> R.drawable.or_not_to_be_hero
     "Skin and Bones" -> R.drawable.skin_and_bones_hero
     "The Appetizer" -> R.drawable.the_appetizer_hero
+    "Light As Air" -> R.drawable.light_as_air_hero
+    "Infatuation" -> R.drawable.infatuation_hero
+    "Into The Wild" -> R.drawable.into_the_wild_hero
+    "Morbid Temptations" -> R.drawable.morbid_temptations_hero
     else -> null
 }
 

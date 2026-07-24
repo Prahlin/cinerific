@@ -1,13 +1,25 @@
 package com.prahlin.cinerific.ui
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ValueAnimator
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.LinearGradient
 import android.graphics.Matrix
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.Shader
 import android.graphics.SurfaceTexture
 import android.media.MediaPlayer
+import android.os.Handler
+import android.os.Looper
 import android.view.Gravity
 import android.view.Surface
 import android.view.TextureView
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
@@ -273,22 +285,68 @@ private fun ProgramCard(
 
 private fun figmaDp(px: Float, scale: Float): Dp = (px * scale).dp
 
-private class LoopingHeroVideoView(context: Context) : FrameLayout(context), TextureView.SurfaceTextureListener {
-    private val textureView = TextureView(context)
-    private val centerCropMatrix = Matrix()
-    private var videoSurface: Surface? = null
-    private var mediaPlayer: MediaPlayer? = null
+private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
+    private var activeSlot = VideoSlot(context)
+    private var incomingSlot = VideoSlot(context)
+    private val handler = Handler(Looper.getMainLooper())
+    private var transitionAnimator: ValueAnimator? = null
     private var currentVideoIndex = 0
-    private var videoWidth = 0
-    private var videoHeight = 0
+    private var initialPlaybackStarted = false
+    private var transitionInProgress = false
+    private var queuedTransitionIndex: Int? = null
     var reelChangedListener: ((Int) -> Unit)? = null
 
     init {
         setBackgroundColor(android.graphics.Color.BLACK)
         clipChildren = true
-        textureView.surfaceTextureListener = this
+        addVideoSlot(activeSlot, initiallyOffscreen = false)
+        addVideoSlot(incomingSlot, initiallyOffscreen = true)
+    }
+
+    override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
+        super.onSizeChanged(width, height, oldWidth, oldHeight)
+        activeSlot.applyCenterCropTransform(width, height)
+        incomingSlot.applyCenterCropTransform(width, height)
+        if (!transitionInProgress) {
+            incomingSlot.layer.translationX = width.toFloat()
+        }
+    }
+
+    private fun addVideoSlot(slot: VideoSlot, initiallyOffscreen: Boolean) {
+        slot.textureView.surfaceTextureListener = object : TextureView.SurfaceTextureListener {
+            override fun onSurfaceTextureAvailable(
+                surfaceTexture: SurfaceTexture,
+                width: Int,
+                height: Int
+            ) {
+                slot.surface = Surface(surfaceTexture)
+                if (slot === activeSlot && !initialPlaybackStarted) {
+                    startInitialVideo()
+                } else if (slot === incomingSlot) {
+                    preloadNextVideo()
+                }
+            }
+
+            override fun onSurfaceTextureSizeChanged(
+                surfaceTexture: SurfaceTexture,
+                width: Int,
+                height: Int
+            ) {
+                slot.applyCenterCropTransform(this@LoopingHeroVideoView.width, this@LoopingHeroVideoView.height)
+            }
+
+            override fun onSurfaceTextureDestroyed(surfaceTexture: SurfaceTexture): Boolean {
+                releaseSlot(slot, releaseSurface = true)
+                return true
+            }
+
+            override fun onSurfaceTextureUpdated(surfaceTexture: SurfaceTexture) = Unit
+        }
+        if (initiallyOffscreen) {
+            slot.layer.translationX = width.toFloat()
+        }
         addView(
-            textureView,
+            slot.layer,
             LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -297,57 +355,63 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context), Tex
         )
     }
 
-    override fun onSurfaceTextureAvailable(surfaceTexture: SurfaceTexture, width: Int, height: Int) {
-        videoSurface = Surface(surfaceTexture)
-        startVideo()
+    private fun startInitialVideo() {
+        initialPlaybackStarted = true
+        prepareSlot(
+            slot = activeSlot,
+            videoIndex = currentVideoIndex,
+            autoStart = true
+        ) { player ->
+            reelChangedListener?.invoke(currentVideoIndex)
+            preloadNextVideo()
+            scheduleSlideTransition(player)
+        }
     }
 
-    override fun onSurfaceTextureSizeChanged(surfaceTexture: SurfaceTexture, width: Int, height: Int) {
-        applyCenterCropTransform()
-    }
-
-    override fun onSurfaceTextureDestroyed(surfaceTexture: SurfaceTexture): Boolean {
-        releaseVideo()
-        releaseSurface()
-        return true
-    }
-
-    override fun onSurfaceTextureUpdated(surfaceTexture: SurfaceTexture) = Unit
-
-    private fun startVideo() {
-        val surface = videoSurface ?: return
-        releaseVideo()
-        reelChangedListener?.invoke(currentVideoIndex)
+    private fun prepareSlot(
+        slot: VideoSlot,
+        videoIndex: Int,
+        autoStart: Boolean,
+        onPrepared: (MediaPlayer) -> Unit = {}
+    ) {
+        val surface = slot.surface ?: return
+        releaseSlot(slot, releaseSurface = false)
+        slot.videoIndex = videoIndex
 
         val player = MediaPlayer()
-        mediaPlayer = player
+        slot.mediaPlayer = player
 
         player.apply {
-            resources.openRawResourceFd(HeroReelVideos[currentVideoIndex]).use { descriptor ->
+            resources.openRawResourceFd(HeroReelVideos[videoIndex]).use { descriptor ->
                 setDataSource(descriptor.fileDescriptor, descriptor.startOffset, descriptor.length)
             }
             setSurface(surface)
             isLooping = false
             setVolume(0f, 0f)
             setOnVideoSizeChangedListener { _, videoWidth, videoHeight ->
-                this@LoopingHeroVideoView.videoWidth = videoWidth
-                this@LoopingHeroVideoView.videoHeight = videoHeight
-                applyCenterCropTransform()
+                slot.videoWidth = videoWidth
+                slot.videoHeight = videoHeight
+                slot.applyCenterCropTransform(this@LoopingHeroVideoView.width, this@LoopingHeroVideoView.height)
             }
             setOnPreparedListener { player ->
-                if (mediaPlayer !== player) return@setOnPreparedListener
-                applyCenterCropTransform()
-                player.start()
+                if (slot.mediaPlayer !== player) return@setOnPreparedListener
+                slot.isPrepared = true
+                slot.applyCenterCropTransform(this@LoopingHeroVideoView.width, this@LoopingHeroVideoView.height)
+                if (autoStart) {
+                    player.start()
+                } else {
+                    player.seekTo(0)
+                }
+                onPrepared(player)
             }
             setOnCompletionListener { completedPlayer ->
-                if (mediaPlayer !== completedPlayer) return@setOnCompletionListener
-                currentVideoIndex = (currentVideoIndex + 1) % HeroReelVideos.size
-                startVideo()
+                if (slot.mediaPlayer === completedPlayer && slot === activeSlot && !transitionInProgress) {
+                    beginSlideTransition()
+                }
             }
             setOnErrorListener { player, _, _ ->
-                if (mediaPlayer === player) {
-                    currentVideoIndex = (currentVideoIndex + 1) % HeroReelVideos.size
-                    startVideo()
+                if (slot.mediaPlayer === player && slot === activeSlot) {
+                    beginSlideTransition()
                 }
                 true
             }
@@ -355,52 +419,241 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context), Tex
         }
     }
 
+    private fun preloadNextVideo() {
+        if (incomingSlot.surface == null || transitionInProgress) return
+        val nextIndex = nextVideoIndex()
+        if (incomingSlot.mediaPlayer != null && incomingSlot.videoIndex == nextIndex) return
+
+        incomingSlot.layer.leadingEdgeBlendWidthPx = 0f
+        incomingSlot.layer.translationX = width.toFloat()
+        prepareSlot(
+            slot = incomingSlot,
+            videoIndex = nextIndex,
+            autoStart = false
+        ) {
+            val queuedIndex = queuedTransitionIndex
+            if (queuedIndex == nextIndex) {
+                queuedTransitionIndex = null
+                animateIncomingVideo(nextIndex)
+            }
+        }
+    }
+
+    private fun scheduleSlideTransition(player: MediaPlayer) {
+        handler.removeCallbacksAndMessages(null)
+        val remainingMs = player.duration - player.currentPosition - HERO_REEL_SLIDE_DURATION_MS
+        handler.postDelayed(
+            { beginSlideTransition() },
+            remainingMs.coerceAtLeast(0).toLong()
+        )
+    }
+
+    private fun beginSlideTransition() {
+        if (transitionInProgress || width == 0) return
+        val nextIndex = nextVideoIndex()
+        if (incomingSlot.mediaPlayer == null || incomingSlot.videoIndex != nextIndex || !incomingSlot.isPrepared) {
+            queuedTransitionIndex = nextIndex
+            preloadNextVideo()
+            return
+        }
+
+        animateIncomingVideo(nextIndex)
+    }
+
+    private fun animateIncomingVideo(nextIndex: Int) {
+        if (transitionInProgress || width == 0) return
+        transitionInProgress = true
+        handler.removeCallbacksAndMessages(null)
+
+        incomingSlot.layer.apply {
+            leadingEdgeBlendWidthPx = width * HERO_REEL_EDGE_BLEND_WIDTH_FRACTION
+            translationX = width.toFloat()
+            bringToFront()
+        }
+        incomingSlot.mediaPlayer?.apply {
+            seekTo(0)
+            start()
+        }
+
+        transitionAnimator?.cancel()
+        transitionAnimator = ValueAnimator.ofFloat(width.toFloat(), 0f).apply {
+            var canceled = false
+            duration = HERO_REEL_SLIDE_DURATION_MS.toLong()
+            interpolator = DecelerateInterpolator(1.35f)
+            addUpdateListener { animator ->
+                incomingSlot.layer.translationX = animator.animatedValue as Float
+            }
+            addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationCancel(animation: Animator) {
+                    canceled = true
+                }
+
+                override fun onAnimationEnd(animation: Animator) {
+                    if (!canceled) {
+                        finishSlideTransition(nextIndex)
+                    }
+                }
+            })
+            start()
+        }
+    }
+
+    private fun finishSlideTransition(nextIndex: Int) {
+        if (!transitionInProgress) return
+
+        transitionAnimator = null
+        incomingSlot.layer.translationX = 0f
+        incomingSlot.layer.leadingEdgeBlendWidthPx = 0f
+
+        val oldActiveSlot = activeSlot
+        activeSlot = incomingSlot
+        incomingSlot = oldActiveSlot
+        releaseSlot(incomingSlot, releaseSurface = false)
+        incomingSlot.layer.leadingEdgeBlendWidthPx = 0f
+        incomingSlot.layer.translationX = width.toFloat()
+
+        currentVideoIndex = nextIndex
+        transitionInProgress = false
+        reelChangedListener?.invoke(currentVideoIndex)
+        preloadNextVideo()
+        activeSlot.mediaPlayer?.let { scheduleSlideTransition(it) }
+    }
+
     override fun onDetachedFromWindow() {
-        releaseVideo()
-        releaseSurface()
+        handler.removeCallbacksAndMessages(null)
+        transitionAnimator?.cancel()
+        releaseSlot(activeSlot, releaseSurface = true)
+        releaseSlot(incomingSlot, releaseSurface = true)
         super.onDetachedFromWindow()
     }
 
-    private fun applyCenterCropTransform() {
-        if (width == 0 || height == 0 || videoWidth == 0 || videoHeight == 0) return
-
-        val viewWidth = width.toFloat()
-        val viewHeight = height.toFloat()
-        val scaleX = viewWidth / videoWidth.toFloat()
-        val scaleY = viewHeight / videoHeight.toFloat()
-        val scale = max(scaleX, scaleY)
-        val scaledWidth = videoWidth * scale
-        val scaledHeight = videoHeight * scale
-
-        centerCropMatrix.reset()
-        centerCropMatrix.setScale(
-            scaledWidth / viewWidth,
-            scaledHeight / viewHeight,
-            viewWidth / 2f,
-            viewHeight / 2f
-        )
-        textureView.setTransform(centerCropMatrix)
-    }
-
-    private fun releaseVideo() {
-        mediaPlayer?.apply {
+    private fun releaseSlot(slot: VideoSlot, releaseSurface: Boolean) {
+        slot.mediaPlayer?.apply {
             setOnPreparedListener(null)
             setOnVideoSizeChangedListener(null)
             setOnCompletionListener(null)
             setOnErrorListener(null)
             release()
         }
-        mediaPlayer = null
-        videoWidth = 0
-        videoHeight = 0
+        slot.mediaPlayer = null
+        slot.isPrepared = false
+        slot.videoIndex = -1
+        slot.videoWidth = 0
+        slot.videoHeight = 0
+        if (releaseSurface) {
+            slot.surface?.release()
+            slot.surface = null
+        }
     }
 
-    private fun releaseSurface() {
-        videoSurface?.release()
-        videoSurface = null
+    private fun nextVideoIndex(): Int = (currentVideoIndex + 1) % HeroReelVideos.size
+
+    private class VideoSlot(context: Context) {
+        val layer = BlendedVideoLayer(context)
+        val textureView: TextureView = layer.textureView
+        val centerCropMatrix = Matrix()
+        var surface: Surface? = null
+        var mediaPlayer: MediaPlayer? = null
+        var videoIndex = -1
+        var videoWidth = 0
+        var videoHeight = 0
+        var isPrepared = false
+
+        fun applyCenterCropTransform(viewWidthPx: Int, viewHeightPx: Int) {
+            if (viewWidthPx == 0 || viewHeightPx == 0 || videoWidth == 0 || videoHeight == 0) {
+                return
+            }
+
+            val viewWidth = viewWidthPx.toFloat()
+            val viewHeight = viewHeightPx.toFloat()
+            val scaleX = viewWidth / videoWidth.toFloat()
+            val scaleY = viewHeight / videoHeight.toFloat()
+            val scale = max(scaleX, scaleY)
+            val scaledWidth = videoWidth * scale
+            val scaledHeight = videoHeight * scale
+
+            centerCropMatrix.reset()
+            centerCropMatrix.setScale(
+                scaledWidth / viewWidth,
+                scaledHeight / viewHeight,
+                viewWidth / 2f,
+                viewHeight / 2f
+            )
+            textureView.setTransform(centerCropMatrix)
+        }
+    }
+
+    private class BlendedVideoLayer(context: Context) : FrameLayout(context) {
+        val textureView = TextureView(context)
+        private val edgeMaskPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            isDither = true
+            xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_IN)
+        }
+        private var edgeMaskShader: LinearGradient? = null
+        private var edgeMaskShaderWidth = -1f
+
+        var leadingEdgeBlendWidthPx = 0f
+            set(value) {
+                field = value.coerceAtLeast(0f)
+                invalidate()
+            }
+
+        init {
+            setWillNotDraw(false)
+            addView(
+                textureView,
+                LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    Gravity.CENTER
+                )
+            )
+        }
+
+        override fun dispatchDraw(canvas: Canvas) {
+            val edgeWidth = leadingEdgeBlendWidthPx.coerceIn(0f, width.toFloat())
+            if (edgeWidth <= 0f || width == 0 || height == 0) {
+                super.dispatchDraw(canvas)
+                return
+            }
+
+            val layerBounds = canvas.saveLayer(0f, 0f, width.toFloat(), height.toFloat(), null)
+            super.dispatchDraw(canvas)
+            edgeMaskPaint.shader = edgeMaskShaderFor(edgeWidth)
+            canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), edgeMaskPaint)
+            edgeMaskPaint.shader = null
+            canvas.restoreToCount(layerBounds)
+        }
+
+        private fun edgeMaskShaderFor(edgeWidth: Float): LinearGradient {
+            val existingShader = edgeMaskShader
+            if (existingShader != null && edgeMaskShaderWidth == edgeWidth) {
+                return existingShader
+            }
+
+            return LinearGradient(
+                0f,
+                0f,
+                edgeWidth,
+                0f,
+                intArrayOf(
+                    android.graphics.Color.TRANSPARENT,
+                    android.graphics.Color.argb(110, 0, 0, 0),
+                    android.graphics.Color.BLACK
+                ),
+                floatArrayOf(0f, 0.42f, 1f),
+                Shader.TileMode.CLAMP
+            ).also {
+                edgeMaskShader = it
+                edgeMaskShaderWidth = edgeWidth
+            }
+        }
     }
 
     companion object {
+        private const val HERO_REEL_SLIDE_DURATION_MS = 700
+        private const val HERO_REEL_EDGE_BLEND_WIDTH_FRACTION = 0.16f
+
         @RawRes
         private val HeroReelVideos = intArrayOf(
             R.raw.home_hero_reel_01,
@@ -432,6 +685,7 @@ private fun homeProgramTitleForCard(@DrawableRes cardId: Int): String? = when (c
     R.drawable.enlightenment_card -> "Enlightenment"
     R.drawable.deadbeat_card -> "Deadbeat"
     R.drawable.playing_with_fire_card -> "Playing with Fire"
+    R.drawable.morbid_temptations_card -> "Morbid Temptations"
     R.drawable.citric_card -> "Citric"
     R.drawable.laughing_matters_card -> "Laughing Matters"
     R.drawable.lost_in_time_card -> "Lost in Time"
@@ -439,10 +693,13 @@ private fun homeProgramTitleForCard(@DrawableRes cardId: Int): String? = when (c
     R.drawable.smoke_card -> "Smoke"
     R.drawable.joyriders_card -> "Joyriders"
     R.drawable.breathing_card -> "Breathing"
+    R.drawable.infatuation_card -> "Infatuation"
     R.drawable.falling_behind_card -> "Falling Behind"
     R.drawable.still_there_card -> "Still There"
     R.drawable.moments_card -> "Moments"
     R.drawable.chasing_light_card -> "Chasing Light"
+    R.drawable.light_as_air_card -> "Light As Air"
+    R.drawable.into_the_wild_card -> "Into The Wild"
     R.drawable.incan_descent_card -> "Incan Descent"
     R.drawable.or_not_to_be_card -> "Or Not To Be"
     R.drawable.surfside_card -> "Surfside"
@@ -466,6 +723,7 @@ private val HomeProgramRows = listOf(
     HomeProgramRowSpec(
         titleResId = R.string.home_row_thriller,
         cardIds = listOf(
+            R.drawable.morbid_temptations_card,
             R.drawable.enlightenment_card,
             R.drawable.ignition_card,
             R.drawable.deadbeat_card,
@@ -495,6 +753,7 @@ private val HomeProgramRows = listOf(
     HomeProgramRowSpec(
         titleResId = R.string.home_row_drama,
         cardIds = listOf(
+            R.drawable.infatuation_card,
             R.drawable.breathing_card,
             R.drawable.falling_behind_card,
             R.drawable.still_there_card,
@@ -506,6 +765,8 @@ private val HomeProgramRows = listOf(
     HomeProgramRowSpec(
         titleResId = R.string.home_row_documentary,
         cardIds = listOf(
+            R.drawable.light_as_air_card,
+            R.drawable.into_the_wild_card,
             R.drawable.incan_descent_card,
             R.drawable.or_not_to_be_card,
             R.drawable.surfside_card,
