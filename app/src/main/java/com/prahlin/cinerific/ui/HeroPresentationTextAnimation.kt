@@ -6,10 +6,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +26,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -162,26 +159,18 @@ internal fun HeroPresentationTextAnimation(
 
     BoxWithConstraints(
         modifier = modifier,
-        contentAlignment = Alignment.BottomStart
+        contentAlignment = Alignment.TopStart
     ) {
         val scale = maxWidth.value / PRESENTATION_HOME_FRAME_WIDTH
-        val density = LocalDensity.current
-        val safeBottomPadding = with(density) {
-            WindowInsets.safeDrawing.getBottom(this).toDp()
-        }
+        val stackTop = maxHeight -
+            ((presentation.contentBottomPx + PRESENTATION_REEL_EDGE_PADDING_PX) * scale).dp
         val elapsed = elapsedMs
 
         Box(
             modifier = Modifier
                 .offset(
-                    x = (PRESENTATION_REEL_LEFT_PADDING_PX * scale).dp,
-                    y = (
-                        (
-                            presentation.viewportHeightPx -
-                                presentation.contentBottomPx -
-                                PRESENTATION_REEL_BOTTOM_PADDING_PX
-                        ) * scale
-                    ).dp - safeBottomPadding
+                    x = (PRESENTATION_REEL_EDGE_PADDING_PX * scale).dp,
+                    y = stackTop
                 )
                 .width((presentation.viewportWidthPx * scale).dp)
                 .height((presentation.viewportHeightPx * scale).dp),
@@ -393,8 +382,7 @@ private enum class HeroPresentationTextLayer(
 
 private const val PRESENTATION_EXPORT_SCALE = 2f
 private const val PRESENTATION_HOME_FRAME_WIDTH = 1194f
-private const val PRESENTATION_REEL_LEFT_PADDING_PX = 25f
-private const val PRESENTATION_REEL_BOTTOM_PADDING_PX = 112.5f
+private const val PRESENTATION_REEL_EDGE_PADDING_PX = 25f
 private const val PRESENTATION_GENRE_SLIDE_PX = 22f
 private const val PRESENTATION_BODY_TEXT_SIZE_PX = 20f
 private const val PRESENTATION_BODY_TEXT_LINE_HEIGHT_PX = 30.5f

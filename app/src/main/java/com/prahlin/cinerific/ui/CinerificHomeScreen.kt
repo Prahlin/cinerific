@@ -34,7 +34,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -58,6 +57,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -103,6 +103,9 @@ internal fun CinerificHomeScreen(
         val cardGap = figmaDp(50f, scale)
         val interStackGap = 80.dp
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
+        val naturalHeroHeight = (maxWidth.value / HERO_REEL_VIEWPORT_ASPECT).dp
+        val visibleHeroHeight = (maxHeight - bottomSystemPadding).coerceAtLeast(0.dp)
+        val heroHeight = minOf(naturalHeroHeight, visibleHeroHeight)
 
         Column(
             modifier = Modifier
@@ -118,7 +121,10 @@ internal fun CinerificHomeScreen(
                     )
                 )
         ) {
-            HomeHeroHeader(scale = scale)
+            HomeHeroHeader(
+                scale = scale,
+                height = heroHeight
+            )
 
             HomeProgramRows.forEachIndexed { index, row ->
                 HomeProgramRow(
@@ -139,13 +145,17 @@ internal fun CinerificHomeScreen(
 }
 
 @Composable
-private fun HomeHeroHeader(scale: Float) {
+private fun HomeHeroHeader(
+    scale: Float,
+    height: Dp
+) {
     var activeReelIndex by remember { mutableStateOf(0) }
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(HERO_REEL_VIEWPORT_ASPECT)
+            .height(height)
+            .clipToBounds()
     ) {
         HeroReelVideo(
             onReelChanged = { activeReelIndex = it },
