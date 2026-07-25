@@ -50,6 +50,7 @@ import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -107,11 +108,31 @@ internal fun CinerificHomeScreen(
         val naturalHeroHeight = (maxWidth.value / HERO_REEL_VIEWPORT_ASPECT).dp
         val visibleHeroHeight = (maxHeight - bottomSystemPadding).coerceAtLeast(0.dp)
         val heroHeight = minOf(naturalHeroHeight, visibleHeroHeight)
+        val scrollState = rememberScrollState()
+        var activeReelIndex by remember { mutableStateOf(0) }
+        var heroPlayKey by remember { mutableStateOf(0) }
+        var scrollToTopRequestId by remember { mutableStateOf(0) }
+        val handleHomeProgramSelected: (String) -> Unit = { title ->
+            val targetReelIndex = homeHeroReelIndexForProgramTitle(title)
+            if (targetReelIndex != null) {
+                activeReelIndex = targetReelIndex
+                heroPlayKey += 1
+                scrollToTopRequestId += 1
+            } else {
+                onProgramSelected(title)
+            }
+        }
+
+        LaunchedEffect(scrollToTopRequestId) {
+            if (scrollToTopRequestId > 0) {
+                scrollState.animateScrollTo(0)
+            }
+        }
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(scrollState)
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
@@ -125,6 +146,9 @@ internal fun CinerificHomeScreen(
             HomeHeroHeader(
                 scale = scale,
                 height = heroHeight,
+                activeReelIndex = activeReelIndex,
+                heroPlayKey = heroPlayKey,
+                onReelChanged = { activeReelIndex = it },
                 onProgramSelected = onProgramSelected
             )
 
@@ -132,7 +156,7 @@ internal fun CinerificHomeScreen(
                 HomeProgramRow(
                     title = stringResource(row.titleResId),
                     cardIds = row.cardIds,
-                    onProgramSelected = onProgramSelected,
+                    onProgramSelected = handleHomeProgramSelected,
                     horizontalPadding = horizontalPadding,
                     cardWidth = cardWidth,
                     cardHeight = cardHeight,
@@ -150,9 +174,11 @@ internal fun CinerificHomeScreen(
 private fun HomeHeroHeader(
     scale: Float,
     height: Dp,
+    activeReelIndex: Int,
+    heroPlayKey: Int,
+    onReelChanged: (Int) -> Unit,
     onProgramSelected: (String) -> Unit
 ) {
-    var activeReelIndex by remember { mutableStateOf(0) }
     val activePresentation = HeroPresentation.forReelIndex(activeReelIndex)
 
     Box(
@@ -168,13 +194,14 @@ private fun HomeHeroHeader(
             }
     ) {
         HeroReelVideo(
-            onReelChanged = { activeReelIndex = it },
+            targetReelIndex = activeReelIndex,
+            onReelChanged = onReelChanged,
             modifier = Modifier.fillMaxSize()
         )
 
         HeroPresentationTextAnimation(
             presentation = activePresentation,
-            playKey = activeReelIndex,
+            playKey = activeReelIndex to heroPlayKey,
             modifier = Modifier.fillMaxSize()
         )
 
@@ -192,6 +219,7 @@ private fun HomeHeroHeader(
 
 @Composable
 private fun HeroReelVideo(
+    targetReelIndex: Int,
     onReelChanged: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -206,6 +234,7 @@ private fun HeroReelVideo(
         },
         update = { view ->
             view.reelChangedListener = { currentOnReelChanged(it) }
+            view.showReel(targetReelIndex)
         }
     )
 }
@@ -306,6 +335,12 @@ private fun ProgramCard(
 
 private fun figmaDp(px: Float, scale: Float): Dp = (px * scale).dp
 
+private fun homeHeroReelIndexForProgramTitle(title: String): Int? {
+    return HeroPresentation.values()
+        .indexOfFirst { it.programTitle == title }
+        .takeIf { it >= 0 }
+}
+
 private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
     private var activeSlot = VideoSlot(context)
     private var incomingSlot = VideoSlot(context)
@@ -330,7 +365,22 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
         incomingSlot.applyCenterCropTransform(width, height)
         if (!transitionInProgress) {
             incomingSlot.layer.translationX = width.toFloat()
+            queuedTransitionIndex?.let { requestTransitionToVideo(it) }
         }
+    }
+
+    fun showReel(videoIndex: Int) {
+        val targetIndex = normalizeVideoIndex(videoIndex)
+        if (!initialPlaybackStarted) {
+            currentVideoIndex = targetIndex
+            return
+        }
+        if (targetIndex == currentVideoIndex && !transitionInProgress) {
+            queuedTransitionIndex = null
+            return
+        }
+
+        requestTransitionToVideo(targetIndex)
     }
 
     private fun addVideoSlot(slot: VideoSlot, initiallyOffscreen: Boolean) {
@@ -441,23 +491,55 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
     }
 
     private fun preloadNextVideo() {
+        preloadVideo(nextVideoIndex())
+    }
+
+    private fun preloadVideo(videoIndex: Int) {
         if (incomingSlot.surface == null || transitionInProgress) return
-        val nextIndex = nextVideoIndex()
-        if (incomingSlot.mediaPlayer != null && incomingSlot.videoIndex == nextIndex) return
+        if (incomingSlot.mediaPlayer != null && incomingSlot.videoIndex == videoIndex) {
+            if (incomingSlot.isPrepared && queuedTransitionIndex == videoIndex) {
+                queuedTransitionIndex = null
+                animateIncomingVideo(videoIndex)
+            }
+            return
+        }
 
         incomingSlot.layer.leadingEdgeBlendWidthPx = 0f
         incomingSlot.layer.translationX = width.toFloat()
         prepareSlot(
             slot = incomingSlot,
-            videoIndex = nextIndex,
+            videoIndex = videoIndex,
             autoStart = false
         ) {
             val queuedIndex = queuedTransitionIndex
-            if (queuedIndex == nextIndex) {
+            if (queuedIndex == videoIndex) {
                 queuedTransitionIndex = null
-                animateIncomingVideo(nextIndex)
+                animateIncomingVideo(videoIndex)
             }
         }
+    }
+
+    private fun requestTransitionToVideo(videoIndex: Int) {
+        if (width == 0) {
+            queuedTransitionIndex = videoIndex
+            return
+        }
+        if (transitionInProgress) {
+            queuedTransitionIndex = videoIndex
+            return
+        }
+        if (incomingSlot.mediaPlayer != null && incomingSlot.videoIndex == videoIndex && incomingSlot.isPrepared) {
+            queuedTransitionIndex = null
+            animateIncomingVideo(videoIndex)
+            return
+        }
+        if (queuedTransitionIndex == videoIndex && incomingSlot.mediaPlayer != null && incomingSlot.videoIndex == videoIndex) {
+            return
+        }
+
+        handler.removeCallbacksAndMessages(null)
+        queuedTransitionIndex = videoIndex
+        preloadVideo(videoIndex)
     }
 
     private fun scheduleSlideTransition(player: MediaPlayer) {
@@ -471,13 +553,14 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
 
     private fun beginSlideTransition() {
         if (transitionInProgress || width == 0) return
-        val nextIndex = nextVideoIndex()
+        val nextIndex = queuedTransitionIndex ?: nextVideoIndex()
         if (incomingSlot.mediaPlayer == null || incomingSlot.videoIndex != nextIndex || !incomingSlot.isPrepared) {
             queuedTransitionIndex = nextIndex
-            preloadNextVideo()
+            preloadVideo(nextIndex)
             return
         }
 
+        queuedTransitionIndex = null
         animateIncomingVideo(nextIndex)
     }
 
@@ -536,8 +619,15 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
         currentVideoIndex = nextIndex
         transitionInProgress = false
         reelChangedListener?.invoke(currentVideoIndex)
-        preloadNextVideo()
-        activeSlot.mediaPlayer?.let { scheduleSlideTransition(it) }
+
+        val queuedIndex = queuedTransitionIndex
+        if (queuedIndex != null && queuedIndex != currentVideoIndex) {
+            requestTransitionToVideo(queuedIndex)
+        } else {
+            queuedTransitionIndex = null
+            preloadNextVideo()
+            activeSlot.mediaPlayer?.let { scheduleSlideTransition(it) }
+        }
     }
 
     override fun onDetachedFromWindow() {
@@ -568,6 +658,10 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
     }
 
     private fun nextVideoIndex(): Int = (currentVideoIndex + 1) % HeroReelVideos.size
+
+    private fun normalizeVideoIndex(videoIndex: Int): Int {
+        return ((videoIndex % HeroReelVideos.size) + HeroReelVideos.size) % HeroReelVideos.size
+    }
 
     private class VideoSlot(context: Context) {
         val layer = BlendedVideoLayer(context)

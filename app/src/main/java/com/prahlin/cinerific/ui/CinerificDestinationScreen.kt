@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
@@ -79,6 +80,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.prahlin.cinerific.R
@@ -87,6 +89,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.min
+import kotlin.math.roundToInt
 import kotlin.math.sin
 
 private const val DESTINATION_FRAME_WIDTH = 1194f
@@ -147,26 +150,35 @@ private const val DETAIL_LOADING_SCRIM_MAX_ALPHA = 0.68f
 private const val DETAIL_HERO_LOGO_WIDTH = 300f
 private const val DETAIL_HERO_LOGO_HEIGHT = 214f
 private const val DETAIL_INFO_PANEL_BOTTOM_PADDING = 56f
+private const val DETAIL_INFO_PANEL_MIN_HEIGHT = 465f
 private const val DETAIL_INFO_PANEL_BACKGROUND_ALPHA = 0.25f
 private const val DETAIL_INFO_PANEL_BACKGROUND_FADE_START = 0.5f
 private const val DETAIL_LIBRARY_HORIZONTAL_PADDING = 50f
 private const val DETAIL_INFO_PANEL_TITLE_FONT_SIZE = 72f
 private const val DETAIL_INFO_PANEL_TITLE_LINE_HEIGHT = DETAIL_INFO_PANEL_TITLE_FONT_SIZE * 1.2f
 private const val DETAIL_INFO_PANEL_SECONDARY_CONTENT_SCALE = 2f
-private const val DETAIL_INFO_PANEL_SYNOPSIS_FONT_SIZE =
-    12f * DETAIL_INFO_PANEL_SECONDARY_CONTENT_SCALE
-private const val DETAIL_INFO_PANEL_SYNOPSIS_LINE_HEIGHT =
-    16f * DETAIL_INFO_PANEL_SECONDARY_CONTENT_SCALE
 private const val DETAIL_INFO_PANEL_META_CONTENT_SCALE =
     DETAIL_INFO_PANEL_SECONDARY_CONTENT_SCALE * 1.6f
 private const val DETAIL_INFO_PANEL_META_FONT_SIZE =
     11f * DETAIL_INFO_PANEL_META_CONTENT_SCALE
 private const val DETAIL_INFO_PANEL_META_LINE_HEIGHT =
     14f * DETAIL_INFO_PANEL_META_CONTENT_SCALE
+private const val DETAIL_INFO_PANEL_SYNOPSIS_FONT_SIZE = DETAIL_INFO_PANEL_META_FONT_SIZE - 2f
+private const val DETAIL_INFO_PANEL_SYNOPSIS_LINE_HEIGHT = DETAIL_INFO_PANEL_META_LINE_HEIGHT
+private const val DETAIL_INFO_PANEL_DESCRIPTION_COLUMN_WEIGHT = 0.5f
+private const val DETAIL_INFO_PANEL_RUNTIME_GENRE_COLUMN_WEIGHT = 0.2f
+private const val DETAIL_INFO_PANEL_CREW_COLUMN_WEIGHT = 0.3f
+private const val DETAIL_INFO_PANEL_ASSET_ROW_TOTAL_STACK_GUTTER_WEIGHT = 0.2f
+private const val DETAIL_INFO_PANEL_DESCRIPTION_TO_META_GUTTER_WEIGHT =
+    DETAIL_INFO_PANEL_ASSET_ROW_TOTAL_STACK_GUTTER_WEIGHT * 2f / 3f
+private const val DETAIL_INFO_PANEL_META_TO_CREW_GUTTER_WEIGHT =
+    DETAIL_INFO_PANEL_DESCRIPTION_TO_META_GUTTER_WEIGHT * 0.5f
+private const val DETAIL_INFO_PANEL_RATING_STACK_SCALE =
+    DETAIL_INFO_PANEL_SECONDARY_CONTENT_SCALE * 1.5f
 private const val DETAIL_INFO_PANEL_RATING_STAR_SIZE =
-    16f * DETAIL_INFO_PANEL_SECONDARY_CONTENT_SCALE
+    16f * DETAIL_INFO_PANEL_RATING_STACK_SCALE
 private const val DETAIL_INFO_PANEL_RATING_STAR_GAP =
-    8f * DETAIL_INFO_PANEL_SECONDARY_CONTENT_SCALE
+    8f * DETAIL_INFO_PANEL_RATING_STACK_SCALE
 private const val SINK_OR_SWIM_TITLE = "Sink or Swim"
 private const val DETAIL_CARD_REVEAL_DELAY_MS = 2400L
 private const val DETAIL_CARD_REVEAL_ANIMATION_MS = 900
@@ -860,6 +872,7 @@ internal fun CinerificProgramDetailsScreen(
         val isFavorited = program.title in favoriteProgramTitles
         val cardReveal = remember(program.title) { Animatable(0f) }
         var playLoading by remember(program.title) { mutableStateOf(false) }
+        val detailScrollState = rememberScrollState()
 
         LaunchedEffect(program.title) {
             cardReveal.snapTo(0f)
@@ -873,10 +886,14 @@ internal fun CinerificProgramDetailsScreen(
             )
         }
 
+        LaunchedEffect(program.title, detailScrollState) {
+            detailScrollState.animateScrollTo(0)
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(detailScrollState)
                 .background(DestinationBottom)
         ) {
             ProgramDetailRevealImage(
@@ -1359,9 +1376,28 @@ private fun SinkOrSwimInfoPanel(
 ) {
     val panelHorizontalPadding = destinationDp(DETAIL_LIBRARY_HORIZONTAL_PADDING, scale)
     val panelBottomPadding = destinationDp(DETAIL_INFO_PANEL_BOTTOM_PADDING, scale)
+    var metaGroupStartX by remember { mutableStateOf(0f) }
+    var runtimeTextStartX by remember(runtime, genre) { mutableStateOf<Float?>(null) }
+    var directorTextEndX by remember(director) { mutableStateOf<Float?>(null) }
+    var producerTextEndX by remember(producer) { mutableStateOf<Float?>(null) }
+    var ratingRowWidthPx by remember { mutableStateOf(0) }
+    var ratingStarsWidthPx by remember { mutableStateOf(0) }
+    val crewTextEndX = listOfNotNull(directorTextEndX, producerTextEndX).maxOrNull()
+    val ratingCenterInMetaGroupPx = if (runtimeTextStartX != null && crewTextEndX != null) {
+        ((runtimeTextStartX!! + crewTextEndX) / 2f) - metaGroupStartX
+    } else {
+        ratingRowWidthPx / 2f
+    }
+    val ratingStartOffsetPx = (
+        ratingCenterInMetaGroupPx - ratingStarsWidthPx / 2f
+        ).coerceIn(
+            0f,
+            (ratingRowWidthPx - ratingStarsWidthPx).coerceAtLeast(0).toFloat()
+        )
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .heightIn(min = destinationDp(DETAIL_INFO_PANEL_MIN_HEIGHT, scale))
             .drawBehind {
                 drawRect(
                     brush = Brush.verticalGradient(
@@ -1405,7 +1441,6 @@ private fun SinkOrSwimInfoPanel(
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Top
         ) {
             Text(
@@ -1415,57 +1450,118 @@ private fun SinkOrSwimInfoPanel(
                 fontSize = DETAIL_INFO_PANEL_SYNOPSIS_FONT_SIZE.sp,
                 lineHeight = DETAIL_INFO_PANEL_SYNOPSIS_LINE_HEIGHT.sp,
                 letterSpacing = 0.sp,
-                modifier = Modifier.width(destinationDp(245f, scale))
+                modifier = Modifier.weight(DETAIL_INFO_PANEL_DESCRIPTION_COLUMN_WEIGHT)
             )
 
-            Column(
-                modifier = Modifier.width(destinationDp(140f, scale)),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(destinationDp(18f, scale))
-            ) {
-                SinkOrSwimPanelText(text = runtime, textAlign = TextAlign.Center)
-                SinkOrSwimPanelText(text = genre, textAlign = TextAlign.Center)
-            }
+            Spacer(modifier = Modifier.weight(DETAIL_INFO_PANEL_DESCRIPTION_TO_META_GUTTER_WEIGHT))
 
             Column(
-                modifier = Modifier.width(destinationDp(245f, scale)),
-                verticalArrangement = Arrangement.spacedBy(destinationDp(18f, scale))
+                modifier = Modifier.weight(
+                    DETAIL_INFO_PANEL_RUNTIME_GENRE_COLUMN_WEIGHT +
+                        DETAIL_INFO_PANEL_META_TO_CREW_GUTTER_WEIGHT +
+                        DETAIL_INFO_PANEL_CREW_COLUMN_WEIGHT
+                ).onGloballyPositioned { coordinates ->
+                    metaGroupStartX = coordinates.positionInRoot().x
+                },
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                SinkOrSwimPanelText(text = stringResource(R.string.program_meta_director, director))
-                SinkOrSwimPanelText(text = stringResource(R.string.program_meta_producer, producer))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.Top
+                ) {
+                    Column(
+                        modifier = Modifier.weight(DETAIL_INFO_PANEL_RUNTIME_GENRE_COLUMN_WEIGHT),
+                        horizontalAlignment = Alignment.Start,
+                        verticalArrangement = Arrangement.spacedBy(destinationDp(18f, scale))
+                    ) {
+                        SinkOrSwimPanelText(
+                            text = runtime,
+                            modifier = Modifier.onGloballyPositioned { coordinates ->
+                                runtimeTextStartX = coordinates.positionInRoot().x
+                            }
+                        )
+                        SinkOrSwimPanelText(text = genre)
+                    }
+
+                    Spacer(modifier = Modifier.weight(DETAIL_INFO_PANEL_META_TO_CREW_GUTTER_WEIGHT))
+
+                    Column(
+                        modifier = Modifier.weight(DETAIL_INFO_PANEL_CREW_COLUMN_WEIGHT),
+                        horizontalAlignment = Alignment.Start,
+                        verticalArrangement = Arrangement.spacedBy(destinationDp(18f, scale))
+                    ) {
+                        SinkOrSwimPanelText(
+                            text = stringResource(R.string.program_meta_director, director),
+                            modifier = Modifier.onGloballyPositioned { coordinates ->
+                                directorTextEndX =
+                                    coordinates.positionInRoot().x + coordinates.size.width
+                            }
+                        )
+                        SinkOrSwimPanelText(
+                            text = stringResource(R.string.program_meta_producer, producer),
+                            modifier = Modifier.onGloballyPositioned { coordinates ->
+                                producerTextEndX =
+                                    coordinates.positionInRoot().x + coordinates.size.width
+                            }
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(destinationDp(22f, scale)))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(destinationDp(DETAIL_INFO_PANEL_RATING_STAR_SIZE, scale))
+                        .onGloballyPositioned { coordinates ->
+                            ratingRowWidthPx = coordinates.size.width
+                        }
+                ) {
+                    SinkOrSwimRatingStars(
+                        rating = rating,
+                        scale = scale,
+                        modifier = Modifier
+                            .offset {
+                                IntOffset(ratingStartOffsetPx.roundToInt(), 0)
+                            }
+                            .onGloballyPositioned { coordinates ->
+                                ratingStarsWidthPx = coordinates.size.width
+                            }
+                    )
+                }
             }
         }
-
-        Spacer(modifier = Modifier.height(destinationDp(22f, scale)))
-        SinkOrSwimRatingStars(rating = rating, scale = scale)
     }
 }
 
 @Composable
 private fun SinkOrSwimPanelText(
     text: String,
-    textAlign: TextAlign = TextAlign.Start
+    textAlign: TextAlign = TextAlign.Start,
+    modifier: Modifier = Modifier
 ) {
     Text(
         text = text,
         color = DestinationText.copy(alpha = 0.9f),
         fontFamily = CinerificAppTextFontFamily,
         fontSize = DETAIL_INFO_PANEL_META_FONT_SIZE.sp,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.Black,
         lineHeight = DETAIL_INFO_PANEL_META_LINE_HEIGHT.sp,
         letterSpacing = 0.sp,
         textAlign = textAlign,
         maxLines = 2,
-        overflow = TextOverflow.Ellipsis
+        overflow = TextOverflow.Ellipsis,
+        modifier = modifier
     )
 }
 
 @Composable
 private fun SinkOrSwimRatingStars(
     rating: Int,
-    scale: Float
+    scale: Float,
+    modifier: Modifier = Modifier
 ) {
     Row(
+        modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(
             destinationDp(DETAIL_INFO_PANEL_RATING_STAR_GAP, scale)
         ),
