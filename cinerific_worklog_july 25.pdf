@@ -1,0 +1,626 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [4 0 R 6 0 R 8 0 R 10 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 5 0 R >>
+endobj
+5 0 obj
+<< /Length 5396 >>
+stream
+BT
+/F1 9.20 Tf
+10.15 TL
+54 738 Td
+(Cinerific Android App Work Log - July 25, 2026) Tj
+T*
+(Compiled summary for Saturday, July 25, 2026 - focus: extending Cinerific tablet coverage) Tj
+T*
+(with small/wide and large/narrow AVD targets, clipping the Home/default hero reel) Tj
+T*
+(responsively across tablet aspect ratios, stabilizing the detail hero spinner animation with) Tj
+T*
+(a normalized red-star asset, suppressing favorite prompts during loading states, carrying) Tj
+T*
+(Cinerific logo behavior into every detail hero, adopting Manrope across app content text,) Tj
+T*
+(refining the 25% detail info panel with anchored margins and a black-to-transparent) Tj
+T*
+(gradient, wiring Home card taps to scroll back to the active hero and load the matching hero) Tj
+T*
+(reel, validating current source through Gradle and AVD installs, refreshing the project) Tj
+T*
+(snapshot, and generating the latest Cinerific daily worklog artifact.) Tj
+T*
+(Generated in continuity with the established Cinerific worklog cadence from July 12, July) Tj
+T*
+(14, July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, and July) Tj
+T*
+(24: compact opening summary, source-material review, baseline state, goal list, themed) Tj
+T*
+(work-completed sections, validation, files touched, follow-up context, and output-artifact) Tj
+T*
+(close. This artifact records the current source state on main through HEAD 9403ce5, plus the) Tj
+T*
+(refreshed snapshot from this worklog pass, and follows the prior root-level naming,) Tj
+T*
+(four-page letter layout, footer convention, metadata, and plain-text-readable PDF style.) Tj
+T*
+() Tj
+T*
+(Source Materials Reviewed) Tj
+T*
+(- Reviewed every pre-existing Cinerific worklog PDF at the repository root: July 12, July) Tj
+T*
+(  14, July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, and) Tj
+T*
+(  July 24.) Tj
+T*
+(- Used pdfinfo and pdftotext output from the prior PDFs to preserve the established title) Tj
+T*
+(  pattern, summary cadence, section order, validation language, file-list style, letter-size) Tj
+T*
+(  geometry, four-page shape, metadata, footer, and text-extractable layout.) Tj
+T*
+(- Ran ./read_project.sh and reviewed the refreshed cinerific_PROJECT_SNAPSHOT.txt for the) Tj
+T*
+(  current Android source layout, resource inventory, worklog inventory, AVD-aware screenshot) Tj
+T*
+(  folders, generated-file policy, and scanner convention.) Tj
+T*
+(- Reviewed git status, git log, git show --stat, and the July 25 commit sequence: 8c22f39,) Tj
+T*
+(  0221525, 9284f91, and 9403ce5, with context from the July 24 worklog commit 4c08fb5 and) Tj
+T*
+(  source commit 6848ccb.) Tj
+T*
+(- Reviewed CinerificHomeScreen.kt, CinerificDestinationScreen.kt,) Tj
+T*
+(  CinerificLoadingSpinner.kt, CinerificApp.kt, HeroPresentationTextAnimation.kt,) Tj
+T*
+(  CinerificTextFonts.kt, requirements-dev.txt, .gitignore, and the new font, raw preview,) Tj
+T*
+(  and spinner drawable assets.) Tj
+T*
+(- Reviewed local AVD inventory and config.ini values for Cinerific_Standard_Tablet,) Tj
+T*
+(  Cinerific_Small_Wide_Tab_A9, and Cinerific_Large_Narrow_OnePlus_Pad_3 to record the) Tj
+T*
+(  responsive-testing device profile work from this pass.) Tj
+T*
+(- Reviewed Gradle assemble/install output and adb/emulator evidence from the accepted debug) Tj
+T*
+(  APK runs used while testing Home hero behavior, detail hero loading, and 25% info-panel) Tj
+T*
+(  layout changes.) Tj
+T*
+(- Reviewed user feedback from the July 25 appearance/responsivity pass, including requests) Tj
+T*
+(  about tablet aspect-ratio coverage, hero clipping, spinner wobble/stutter, favorite prompt) Tj
+T*
+(  suppression, Manrope typography, detail panel opacity, star-stack placement, and Home card) Tj
+T*
+(  autoscroll behavior.) Tj
+T*
+() Tj
+T*
+(Baseline Status Before July 25 Work) Tj
+T*
+(- Cinerific entered July 25 with the July 24 destination top-banner chrome accepted, the) Tj
+T*
+(  right-side rail using the Figma Variant 5 treatment, and detail hero imagery set to) Tj
+T*
+(  proportional crop behavior rather than stretching.) Tj
+T*
+(- The primary Cinerific tablet AVD was still the Pixel Tablet-style) Tj
+T*
+(  Cinerific_Standard_Tablet at 2560 by 1600, approximately 16:10, but the real-world tablet) Tj
+T*
+(  pool needed smaller/wider and larger/squarer coverage for appearance testing.) Tj
+T*
+(- The Home/default hero reel presentation stack was accepted in broad placement terms, but) Tj
+T*
+(  large/narrow and small/wide tablet shapes exposed vertical gap and bottom-padding) Tj
+T*
+(  differences that needed responsive clipping.) Tj
+T*
+(- The detail hero loading path had the correct concept - darkened screen plus Cinerific) Tj
+T*
+(  spinner - but the red star variants made the spinner wobble or stutter when individual) Tj
+T*
+(  parts rotated inconsistently.) Tj
+T*
+(- Favorite-star prompt UI could still appear during the loading spinner state, which) Tj
+T*
+(  conflicted with the intended darkened playback-loading mode.) Tj
+T*
+(- The detail hero info area was still evolving from a gray or mismatched box toward a more) Tj
+T*
+(  cinematic 25% black treatment with proper transparency, gradient fade, anchored margins,) Tj
+T*
+(  and tablet-readable typography.) Tj
+T*
+(- Home hero reels could navigate to detail, but Home/default card taps did not yet provide) Tj
+T*
+ET
+BT
+/F1 8.50 Tf
+390.72 32 Td
+(Cinerific Work Log - July 25, 2026 Page 1) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 7 0 R >>
+endobj
+7 0 obj
+<< /Length 4915 >>
+stream
+BT
+/F1 9.20 Tf
+10.15 TL
+54 738 Td
+(  the requested scroll-back-to-top and matching-hero-loading behavior for hero-backed) Tj
+T*
+(  titles.) Tj
+T*
+() Tj
+T*
+(Main Goals for July 25) Tj
+T*
+(- Establish a practical three-AVD tablet test set that approximates small/wide, standard,) Tj
+T*
+(  and large/narrow Android tablet shapes.) Tj
+T*
+(- Make Home/default hero reel clipping and presentation-stack bottom-left padding respond) Tj
+T*
+(  consistently across all three tablet targets.) Tj
+T*
+(- Repair the loading spinner so one centered normalized red-star asset rotates smoothly) Tj
+T*
+(  while the white wheel rotates in place, avoiding wobble, stutter, or point-distance drift.) Tj
+T*
+(- Ensure the darkened spinner loading state hides favorite prompt UI and transport controls,) Tj
+T*
+(  while keeping the Cinerific logo visible where requested.) Tj
+T*
+(- Apply Manrope to content text across the app without changing active navigation, nav) Tj
+T*
+(  rails, icons, logos, or chrome-specific assets.) Tj
+T*
+(- Refine the detail hero 25% info box: black fill, midpoint fade to transparent, anchored) Tj
+T*
+(  left/right margins, larger title/meta text, balanced columns, star stack placement, and) Tj
+T*
+(  responsive minimum height.) Tj
+T*
+(- Make Home/default card taps scroll vertically to the top and load the matching hero reel,) Tj
+T*
+(  including the correct video clip and title/copy animation.) Tj
+T*
+() Tj
+T*
+(Work Completed - Tablet AVD Coverage and Hero Responsivity) Tj
+T*
+(- Identified the existing Cinerific_Standard_Tablet as a Google Pixel Tablet-style target) Tj
+T*
+(  with 2560 by 1600 pixels, 16:10 aspect ratio, and an approximately 10.95 inch tablet-class) Tj
+T*
+(  screen.) Tj
+T*
+(- Researched the useful Android tablet market range for the app and recommended a small/wide) Tj
+T*
+(  Samsung Tab A9-style target and a large/narrow-ish OnePlus Pad 3-style target to) Tj
+T*
+(  complement the existing Pixel Tablet-style AVD.) Tj
+T*
+(- Added Cinerific_Small_Wide_Tab_A9 as an 8.7 inch, 1340 by 800, approximately 1.675:1) Tj
+T*
+(  small/wide test target for cramped tablet layouts.) Tj
+T*
+(- Added Cinerific_Large_Narrow_OnePlus_Pad_3 as a 13.2 inch, 3392 by 2400, approximately) Tj
+T*
+(  1.413:1 large/squarer tablet target for excess vertical space and narrow-ish landscape) Tj
+T*
+(  composition checks.) Tj
+T*
+(- Compared the three AVD profiles during the appearance/responsivity pass so Cinerific could) Tj
+T*
+(  test small/wide, standard, and large/narrow hero and detail layouts rather than assuming) Tj
+T*
+(  one Pixel Tablet shape represented the user pool.) Tj
+T*
+(- Implemented responsive Home hero clipping so the reel height is capped to the visible) Tj
+T*
+(  tablet viewport and excess video content is clipped instead of leaving awkward lower gaps) Tj
+T*
+(  after scroll.) Tj
+T*
+(- Anchored the Home presentation presets to the clipped hero bottom-left edge and preserved) Tj
+T*
+(  equal scaled left/bottom padding across the three AVD shapes.) Tj
+T*
+(- Verified the accepted responsive hero clipping in commit 8c22f39 with a passing debug) Tj
+T*
+(  build.) Tj
+T*
+() Tj
+T*
+(Work Completed - Detail Spinner and Loading Flow) Tj
+T*
+(- Installed Pillow-oriented development tooling for local asset analysis, added) Tj
+T*
+(  requirements-dev.txt, and ignored local Python/cache artifacts in .gitignore.) Tj
+T*
+(- Studied the loading spinner red-star variants and diagnosed the wobble/stutter source as) Tj
+T*
+(  variant-dependent point geometry and asset repositioning rather than the intended centered) Tj
+T*
+(  rotation.) Tj
+T*
+(- Created loading_spinner_red_star_normalized.png as one corrected centered red-star asset) Tj
+T*
+(  with the five outer points normalized to a stable radius.) Tj
+T*
+(- Reworked CinerificLoadingSpinner.kt so the normalized red-star asset rotates continuously) Tj
+T*
+(  as one centered layer, while the white wheel rotates in place instead of repositioning.) Tj
+T*
+(- Connected center play taps on detail heroes to the darkened spinner loading state and) Tj
+T*
+(  removed the visible prev/play/next transport stack during that loading interval.) Tj
+T*
+(- Kept idle detail transport controls vertically centered over the underlying hero across) Tj
+T*
+(  aspect ratios and dimensions.) Tj
+T*
+(- Darkened the screen during user-initiated play loading in the same visual language as the) Tj
+T*
+(  initial detail hero reveal.) Tj
+T*
+(- Suppressed any visible tap-star-to-favorite or tap-star-to-unfavorite prompt and hid the) Tj
+T*
+(  hero favorite star itself while the darkened loading/spinner state is active.) Tj
+T*
+() Tj
+T*
+(Work Completed - Detail Hero, Typography, and 25% Info Box) Tj
+T*
+(- Applied the Cinerific logo to every movie/show detail hero and kept it visible above the) Tj
+T*
+(  darkened spinner scrim so playback loading does not obscure the brand mark.) Tj
+T*
+ET
+BT
+/F1 8.50 Tf
+390.72 32 Td
+(Cinerific Work Log - July 25, 2026 Page 2) Tj
+ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 9 0 R >>
+endobj
+9 0 obj
+<< /Length 5282 >>
+stream
+BT
+/F1 9.20 Tf
+10.15 TL
+54 738 Td
+(- Routed taps on Home hero reels to their matching detail titles, preserving the darkened) Tj
+T*
+(  reveal, spinner, and transport-control timing that detail heroes already use.) Tj
+T*
+(- Replaced mismatched gray background areas under detail hero images with transparent and) Tj
+T*
+(  then controlled black treatments, settling on a 25% black info-panel fill that fades) Tj
+T*
+(  downward to transparent.) Tj
+T*
+(- Tuned the fade several times, ending with the opacity drop starting at the vertical) Tj
+T*
+(  midpoint of the 25% box and a responsive minimum height so the gradient remains visible) Tj
+T*
+(  after the layout changed.) Tj
+T*
+(- Anchored the detail hero info-panel left and right margins to the same horizontal values) Tj
+T*
+(  used by the carousel genre header and right-facing chevron below.) Tj
+T*
+(- Made the 25% box title twice the size of the section headers below, then scaled the) Tj
+T*
+(  synopsis, runtime, genre, director, producer, and rating stars for stronger tablet) Tj
+T*
+(  readability.) Tj
+T*
+(- Installed Manrope as app content typography through CinerificTextFonts.kt and applied it) Tj
+T*
+(  across Home, destination, detail, favorites, settings, and prompt text while preserving) Tj
+T*
+(  nav bars, rails, icons, logos, and active navigation surfaces.) Tj
+T*
+(- Added a raw Manrope/Sora/Inter Sink or Swim paragraph preview asset after the user) Tj
+T*
+(  requested a visual font comparison inside the project.) Tj
+T*
+(- Rebalanced the 25% box asset row through the requested 50/20/30 distribution,) Tj
+T*
+(  left-aligning each column's text within its permitted horizontal space and boldening the) Tj
+T*
+(  center/right text stacks.) Tj
+T*
+(- Moved the five-star rating stack into the info box as the third row across columns 2 and) Tj
+T*
+(  3, then centered it from the visible column-2 text start edge to the furthest visible) Tj
+T*
+(  column-3 text end edge rather than the invisible weighted columns.) Tj
+T*
+() Tj
+T*
+(Work Completed - Home Hero Routing and Scroll Behavior) Tj
+T*
+(- Changed Home/default card taps so hero-backed titles request the matching top hero reel) Tj
+T*
+(  instead of leaving the old movie/show hero visible after the screen scrolls upward.) Tj
+T*
+(- Lifted active Home reel state into CinerificHomeScreen.kt so card taps, the custom video) Tj
+T*
+(  view, the presentation overlay, and the hero tap-through target can stay synchronized.) Tj
+T*
+(- Added a Home title-to-hero mapping based on HeroPresentation.programTitle for Light As) Tj
+T*
+(  Air, Infatuation, Into The Wild, and Morbid Temptations.) Tj
+T*
+(- Extended LoopingHeroVideoView with a targeted showReel path so it can preload and slide in) Tj
+T*
+(  a requested reel, not only the next reel chosen by the automatic timer.) Tj
+T*
+(- Preserved the existing right-to-left slide and edge-blend visual when a card requests a) Tj
+T*
+(  specific reel, while restarting the title/copy presentation animation with a fresh play) Tj
+T*
+(  key.) Tj
+T*
+(- Prioritized tap-requested transitions over the old auto-advance timer so the user's) Tj
+T*
+(  selected hero wins even if the current clip is near completion.) Tj
+T*
+(- Repaired the Home autoscroll regression by moving scroll-to-top into a post-recomposition) Tj
+T*
+(  LaunchedEffect request, so the hero swap no longer cancels the vertical scroll animation.) Tj
+T*
+(- Added a detail-screen scroll reset when selecting a different program from detail carousel) Tj
+T*
+(  cards, preventing an updated hero from appearing while the viewport remains scrolled down) Tj
+T*
+(  in the library rows.) Tj
+T*
+() Tj
+T*
+(Validation and Checks Performed) Tj
+T*
+(- Ran ./read_project.sh before producing this artifact; it refreshed) Tj
+T*
+(  cinerific_PROJECT_SNAPSHOT.txt at the repository root with the current file tree and) Tj
+T*
+(  generated-worklog inventory.) Tj
+T*
+(- Ran pdfinfo and pdftotext against every pre-existing Cinerific worklog PDF to verify the) Tj
+T*
+(  prior four-page cadence, title metadata, footer convention, and extractable text style.) Tj
+T*
+(- Ran git status --short --branch, git log --oneline --decorate, git log --since 2026-07-25,) Tj
+T*
+(  git show --stat HEAD, git diff --stat 4c08fb5..HEAD, and git diff --name-status) Tj
+T*
+(  4c08fb5..HEAD to verify the July 25 source scope.) Tj
+T*
+(- Ran ./gradlew :app:assembleDebug repeatedly during implementation and once more during) Tj
+T*
+(  this artifact pass; the current debug build completed successfully with BUILD SUCCESSFUL) Tj
+T*
+(  in 22 seconds.) Tj
+T*
+(- Installed accepted debug builds onto the connected Cinerific_Standard_Tablet AVD with) Tj
+T*
+(  ./gradlew :app:installDebug during the layout and routing passes.) Tj
+T*
+(- Relaunched com.prahlin.cinerific through adb force-stop and monkey after installs so the) Tj
+T*
+(  visible emulator used the freshly installed APK rather than a stale process.) Tj
+T*
+(- Used adb devices -l to confirm emulator-5554 was connected during this pass.) Tj
+T*
+(- Read local AVD config.ini values for Cinerific_Standard_Tablet,) Tj
+T*
+(  Cinerific_Small_Wide_Tab_A9, and Cinerific_Large_Narrow_OnePlus_Pad_3 to document the) Tj
+T*
+(  exact dimensions used for responsive testing.) Tj
+T*
+ET
+BT
+/F1 8.50 Tf
+390.72 32 Td
+(Cinerific Work Log - July 25, 2026 Page 3) Tj
+ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 11 0 R >>
+endobj
+11 0 obj
+<< /Length 4933 >>
+stream
+BT
+/F1 9.20 Tf
+10.15 TL
+54 738 Td
+(- Reviewed live user feedback after AVD reboots, installs, and visual checks, then adjusted) Tj
+T*
+(  the implementation until the user confirmed the Home autoscroll, matching hero selection,) Tj
+T*
+(  and 25% info-panel visual behavior were acceptable.) Tj
+T*
+() Tj
+T*
+(Files Touched During July 25) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificHomeScreen.kt: responsive hero) Tj
+T*
+(  clipping, shared scroll state, card-to-hero mapping, targeted reel selection,) Tj
+T*
+(  post-recomposition scroll-to-top requests, and custom video-view reel) Tj
+T*
+(  preloading/transition logic.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/HeroPresentationTextAnimation.kt: presentation) Tj
+T*
+(  program-title mapping support and adjusted stack behavior tied to the clipped Home hero) Tj
+T*
+(  boundary.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificLoadingSpinner.kt: normalized star) Tj
+T*
+(  drawing/rotation behavior and smoother centered spinner animation.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt: detail hero) Tj
+T*
+(  loading suppression, spinner/transport behavior, logo persistence, detail scroll reset,) Tj
+T*
+(  25% info-panel gradient, typography scale, anchored margins, column distribution, star) Tj
+T*
+(  placement, and synopsis sizing.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt: favorites-full prompt) Tj
+T*
+(  suppression during user-initiated playback loading.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificTextFonts.kt and) Tj
+T*
+(  app/src/main/res/font/manrope.ttf: Manrope content text family added and wired into the) Tj
+T*
+(  app's non-navigation text surfaces.) Tj
+T*
+(- app/src/main/res/drawable-nodpi/loading_spinner_red_star_normalized.png: added the) Tj
+T*
+(  corrected centered red-star spinner asset.) Tj
+T*
+(- app/src/main/res/raw/sink_or_swim_paragraph_fonts.png: added the requested paragraph font) Tj
+T*
+(  comparison preview asset.) Tj
+T*
+(- .gitignore and requirements-dev.txt: added local Python/Pillow development support while) Tj
+T*
+(  keeping cache artifacts out of source control.) Tj
+T*
+(- cinerific_PROJECT_SNAPSHOT.txt and cinerific_worklog_july 25.pdf: refreshed/generated) Tj
+T*
+(  project-management artifacts during this worklog pass.) Tj
+T*
+() Tj
+T*
+(Follow-Up Context) Tj
+T*
+(- The current three-tablet AVD set gives Cinerific a practical responsive-testing triangle,) Tj
+T*
+(  but the local avdmanager output still reports odd system-image labels for some profiles.) Tj
+T*
+(  If an AVD fails to boot later, inspect system image installation before changing app) Tj
+T*
+(  layout code.) Tj
+T*
+(- The Home hero targeted-reel path now depends on the custom dual-slot TextureView) Tj
+T*
+(  implementation. Future reel additions should update HeroPresentation order, HeroReelVideos) Tj
+T*
+(  order, and Home card title mapping together.) Tj
+T*
+(- The spinner now relies on one normalized red-star asset. Future spinner styling should) Tj
+T*
+(  preserve centered rotation and avoid variant-specific repositioning unless the geometry is) Tj
+T*
+(  re-normalized first.) Tj
+T*
+(- The 25% info panel has become an important detail-screen design contract: keep) Tj
+T*
+(  carousel-aligned margins, the midpoint fade, responsive minimum height, and measured star) Tj
+T*
+(  centering when adding new metadata rows.) Tj
+T*
+(- Manrope is now the content text family. Navigation rails, icons, logos, and active) Tj
+T*
+(  navigation controls were intentionally left outside that typography sweep and should) Tj
+T*
+(  remain separate unless explicitly requested.) Tj
+T*
+(- Generated screenshots, PDFs, and snapshots remain project-management artifacts unless) Tj
+T*
+(  explicitly committed. The accepted July 25 source state is on main through HEAD 9403ce5,) Tj
+T*
+(  while this PDF records the daily worklog state after the latest snapshot refresh.) Tj
+T*
+() Tj
+T*
+(Output Artifact) Tj
+T*
+(- Filename: cinerific_worklog_july 25.pdf) Tj
+T*
+(- Created at the repository root in /Users/prahlin/gh/cinerific.) Tj
+T*
+(- Follows the Cinerific filename convention established by cinerific_worklog_july 12.pdf and) Tj
+T*
+(  continued by the July 14, July 15, July 16, July 18, July 19, July 20, July 22, July 23,) Tj
+T*
+(  and July 24 artifacts, including the space before the day number.) Tj
+T*
+(- Follows the established Alla Vostra/Prahlin/Cinerific daily worklog structure while) Tj
+T*
+(  keeping the body content specific to Cinerific work completed on Saturday, July 25, 2026.) Tj
+T*
+(- No external PDF dependency was installed; this artifact was generated with a small) Tj
+T*
+(  standard-library PDF writer in the same plain-text-readable spirit as the prior Cinerific) Tj
+T*
+(  worklogs.) Tj
+T*
+(- Created this daily worklog PDF: cinerific_worklog_july 25.pdf.) Tj
+T*
+ET
+BT
+/F1 8.50 Tf
+390.72 32 Td
+(Cinerific Work Log - July 25, 2026 Page 4) Tj
+ET
+endstream
+endobj
+12 0 obj
+<< /Title (Cinerific Android App Work Log - July 25, 2026) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260725192705-04'00') /ModDate (D:20260725192705-04'00') >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000140 00000 n 
+0000000210 00000 n 
+0000000336 00000 n 
+0000005784 00000 n 
+0000005910 00000 n 
+0000010877 00000 n 
+0000011003 00000 n 
+0000016337 00000 n 
+0000016465 00000 n 
+0000021451 00000 n 
+trailer
+<< /Size 13 /Root 1 0 R /Info 12 0 R >>
+startxref
+21717
+%%EOF
