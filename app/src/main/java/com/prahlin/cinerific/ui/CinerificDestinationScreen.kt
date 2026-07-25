@@ -58,6 +58,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -143,6 +144,29 @@ private const val FAVORITE_BURST_STROKE = 2.4f
 private const val FAVORITE_BURST_DURATION_MS = 240
 private const val DETAIL_LOADING_SPINNER_WIDTH = 190f
 private const val DETAIL_LOADING_SCRIM_MAX_ALPHA = 0.68f
+private const val DETAIL_HERO_LOGO_WIDTH = 300f
+private const val DETAIL_HERO_LOGO_HEIGHT = 214f
+private const val DETAIL_INFO_PANEL_BOTTOM_PADDING = 56f
+private const val DETAIL_INFO_PANEL_BACKGROUND_ALPHA = 0.25f
+private const val DETAIL_INFO_PANEL_BACKGROUND_FADE_START = 0.5f
+private const val DETAIL_LIBRARY_HORIZONTAL_PADDING = 50f
+private const val DETAIL_INFO_PANEL_TITLE_FONT_SIZE = 72f
+private const val DETAIL_INFO_PANEL_TITLE_LINE_HEIGHT = DETAIL_INFO_PANEL_TITLE_FONT_SIZE * 1.2f
+private const val DETAIL_INFO_PANEL_SECONDARY_CONTENT_SCALE = 2f
+private const val DETAIL_INFO_PANEL_SYNOPSIS_FONT_SIZE =
+    12f * DETAIL_INFO_PANEL_SECONDARY_CONTENT_SCALE
+private const val DETAIL_INFO_PANEL_SYNOPSIS_LINE_HEIGHT =
+    16f * DETAIL_INFO_PANEL_SECONDARY_CONTENT_SCALE
+private const val DETAIL_INFO_PANEL_META_CONTENT_SCALE =
+    DETAIL_INFO_PANEL_SECONDARY_CONTENT_SCALE * 1.6f
+private const val DETAIL_INFO_PANEL_META_FONT_SIZE =
+    11f * DETAIL_INFO_PANEL_META_CONTENT_SCALE
+private const val DETAIL_INFO_PANEL_META_LINE_HEIGHT =
+    14f * DETAIL_INFO_PANEL_META_CONTENT_SCALE
+private const val DETAIL_INFO_PANEL_RATING_STAR_SIZE =
+    16f * DETAIL_INFO_PANEL_SECONDARY_CONTENT_SCALE
+private const val DETAIL_INFO_PANEL_RATING_STAR_GAP =
+    8f * DETAIL_INFO_PANEL_SECONDARY_CONTENT_SCALE
 private const val SINK_OR_SWIM_TITLE = "Sink or Swim"
 private const val DETAIL_CARD_REVEAL_DELAY_MS = 2400L
 private const val DETAIL_CARD_REVEAL_ANIMATION_MS = 900
@@ -162,6 +186,9 @@ private val DestinationBottom = Color(0xFF060004)
 private val DestinationText = Color(0xFFE7E7E7)
 private val DestinationSubtle = Color(0xFFBDBDBD)
 private val FavoriteBurstYellow = Color(0xFFFFD43B)
+private val DetailInfoPanelBackgroundFill =
+    Color.Black.copy(alpha = DETAIL_INFO_PANEL_BACKGROUND_ALPHA)
+private val DetailInfoPanelBackgroundTransparent = Color.Black.copy(alpha = 0f)
 private val SettingsLanguageOptions = listOf(
     CinerificLanguage.English to R.string.language_english,
     CinerificLanguage.Spanish to R.string.language_spanish,
@@ -378,6 +405,7 @@ private fun DestinationViewportHeader(
         Text(
             text = description,
             color = DestinationText.copy(alpha = 0.86f),
+            fontFamily = CinerificAppTextFontFamily,
             fontSize = 22.sp,
             fontWeight = FontWeight.Normal,
             lineHeight = 30.sp,
@@ -453,6 +481,7 @@ private fun DestinationSectionHeader(
     Text(
         text = title,
         color = DestinationText,
+        fontFamily = CinerificAppTextFontFamily,
         fontSize = 36.sp,
         fontWeight = FontWeight.Black,
         letterSpacing = 0.sp,
@@ -549,6 +578,7 @@ private fun DestinationSmallCollageCard(
         Text(
             text = title.uppercase(),
             color = DestinationText,
+            fontFamily = CinerificAppTextFontFamily,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             lineHeight = 30.sp,
@@ -658,6 +688,7 @@ private fun DestinationProgramListItem(
                     }
                 },
                 color = DestinationText,
+                fontFamily = CinerificAppTextFontFamily,
                 fontSize = 32.sp,
                 lineHeight = 49.sp,
                 letterSpacing = 0.sp,
@@ -672,6 +703,7 @@ private fun DestinationProgramListItem(
                 Text(
                     text = synopsis,
                     color = DestinationText.copy(alpha = 0.9f),
+                    fontFamily = CinerificAppTextFontFamily,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Normal,
                     lineHeight = 24.sp,
@@ -724,6 +756,7 @@ private fun DestinationListMetaText(text: String) {
     Text(
         text = text,
         color = DestinationText.copy(alpha = 0.9f),
+        fontFamily = CinerificAppTextFontFamily,
         fontSize = 16.sp,
         fontWeight = FontWeight.Bold,
         lineHeight = 24.sp,
@@ -808,8 +841,14 @@ internal fun CinerificProgramDetailsScreen(
             genre = program.genre,
             isShow = program.isShow
         )
-        val genre = stringResource((details.genreLabel ?: program.genre).displayNameResId)
-        val synopsis = details.synopsisResId?.let { stringResource(it) }.orEmpty()
+        val detailGenre = details.genreLabel ?: program.genre
+        val genre = stringResource(detailGenre.displayNameResId)
+        val synopsis = details.synopsisResId?.let { stringResource(it) } ?: stringResource(
+            R.string.program_generated_synopsis,
+            genre.lowercase(),
+            stringResource(if (program.isShow) R.string.program_format_series else R.string.program_format_feature),
+            title
+        )
         val heroDrawableId = detailHeroDrawableId(program.title) ?: program.drawableId
         val playbackSessionController = LocalCinerificPlaybackSessionController.current
         val previousProgramTitle = remember(program.title) {
@@ -858,21 +897,31 @@ internal fun CinerificProgramDetailsScreen(
                 },
                 onNext = { onProgramSelected(nextProgramTitle) }
             )
-            SinkOrSwimInfoPanel(
-                title = title,
-                year = details.year,
-                runtime = details.runtime,
-                genre = genre,
-                synopsis = synopsis,
-                director = details.director,
-                producer = details.producer,
-                rating = details.rating,
-                scale = scale
-            )
-            SinkOrSwimLibraryRows(
-                scale = scale,
-                onProgramSelected = onProgramSelected
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(DestinationMid, DestinationBottom)
+                        )
+                    )
+            ) {
+                SinkOrSwimInfoPanel(
+                    title = title,
+                    year = details.year,
+                    runtime = details.runtime,
+                    genre = genre,
+                    synopsis = synopsis,
+                    director = details.director,
+                    producer = details.producer,
+                    rating = details.rating,
+                    scale = scale
+                )
+                SinkOrSwimLibraryRows(
+                    scale = scale,
+                    onProgramSelected = onProgramSelected
+                )
+            }
             Spacer(modifier = Modifier.height(bottomSystemPadding + destinationDp(72f, scale)))
         }
     }
@@ -916,11 +965,6 @@ private fun ProgramDetailRevealImage(
             contentScale = ContentScale.Crop
         )
         if (heroFullyVisible) {
-            HeroFavoriteToggleButton(
-                isFavorited = isFavorited,
-                onFavoriteToggled = onFavoriteToggled,
-                scale = scale
-            )
             if (playLoading) {
                 Box(
                     modifier = Modifier
@@ -934,6 +978,11 @@ private fun ProgramDetailRevealImage(
                         .height(destinationDp(spinnerHeight, scale))
                 )
             } else {
+                HeroFavoriteToggleButton(
+                    isFavorited = isFavorited,
+                    onFavoriteToggled = onFavoriteToggled,
+                    scale = scale
+                )
                 HeroTransportControls(
                     scale = scale,
                     onPrevious = onPrevious,
@@ -957,7 +1006,26 @@ private fun ProgramDetailRevealImage(
                     .height(destinationDp(spinnerHeight, scale))
             )
         }
+        DetailHeroLogo(
+            scale = scale,
+            modifier = Modifier.align(Alignment.TopStart)
+        )
     }
+}
+
+@Composable
+private fun DetailHeroLogo(
+    scale: Float,
+    modifier: Modifier = Modifier
+) {
+    Image(
+        painter = painterResource(R.drawable.logo_simple_large),
+        contentDescription = null,
+        modifier = modifier
+            .width(destinationDp(DETAIL_HERO_LOGO_WIDTH, scale))
+            .height(destinationDp(DETAIL_HERO_LOGO_HEIGHT, scale)),
+        contentScale = ContentScale.FillBounds
+    )
 }
 
 @Composable
@@ -1191,7 +1259,7 @@ private fun SinkOrSwimLibraryRows(
     scale: Float,
     onProgramSelected: (String) -> Unit
 ) {
-    val horizontalPadding = destinationDp(50f, scale)
+    val horizontalPadding = destinationDp(DETAIL_LIBRARY_HORIZONTAL_PADDING, scale)
     val cardWidth = destinationDp(350f, scale) * DESTINATION_CARD_SCALE
     val cardHeight = cardWidth / DESTINATION_CARD_ASPECT
     val cardGap = destinationDp(50f, scale)
@@ -1199,11 +1267,6 @@ private fun SinkOrSwimLibraryRows(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(
-                Brush.verticalGradient(
-                    colors = listOf(DestinationMid, DestinationBottom)
-                )
-            )
             .padding(top = destinationDp(86f, scale))
     ) {
         SinkOrSwimLibraryRowSpecs.forEachIndexed { index, row ->
@@ -1219,6 +1282,7 @@ private fun SinkOrSwimLibraryRows(
                 Text(
                     text = stringResource(row.titleResId),
                     color = DestinationText,
+                    fontFamily = CinerificAppTextFontFamily,
                     fontSize = 36.sp,
                     fontWeight = FontWeight.Black,
                     letterSpacing = 0.sp,
@@ -1293,16 +1357,29 @@ private fun SinkOrSwimInfoPanel(
     rating: Int,
     scale: Float
 ) {
-    val panelHorizontalPadding = destinationDp(165f, scale)
+    val panelHorizontalPadding = destinationDp(DETAIL_LIBRARY_HORIZONTAL_PADDING, scale)
+    val panelBottomPadding = destinationDp(DETAIL_INFO_PANEL_BOTTOM_PADDING, scale)
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color(0xFF444444))
+            .drawBehind {
+                drawRect(
+                    brush = Brush.verticalGradient(
+                        colorStops = arrayOf(
+                            0f to DetailInfoPanelBackgroundFill,
+                            DETAIL_INFO_PANEL_BACKGROUND_FADE_START to DetailInfoPanelBackgroundFill,
+                            1f to DetailInfoPanelBackgroundTransparent
+                        ),
+                        startY = 0f,
+                        endY = size.height
+                    )
+                )
+            }
             .padding(
                 start = panelHorizontalPadding,
                 top = destinationDp(48f, scale),
                 end = panelHorizontalPadding,
-                bottom = destinationDp(56f, scale)
+                bottom = panelBottomPadding
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -1317,8 +1394,9 @@ private fun SinkOrSwimInfoPanel(
                 }
             },
             color = DestinationText,
-            fontSize = 30.sp,
-            lineHeight = 38.sp,
+            fontFamily = CinerificAppTextFontFamily,
+            fontSize = DETAIL_INFO_PANEL_TITLE_FONT_SIZE.sp,
+            lineHeight = DETAIL_INFO_PANEL_TITLE_LINE_HEIGHT.sp,
             letterSpacing = 0.sp,
             textAlign = TextAlign.Center
         )
@@ -1333,8 +1411,9 @@ private fun SinkOrSwimInfoPanel(
             Text(
                 text = synopsis,
                 color = DestinationText.copy(alpha = 0.82f),
-                fontSize = 12.sp,
-                lineHeight = 16.sp,
+                fontFamily = CinerificAppTextFontFamily,
+                fontSize = DETAIL_INFO_PANEL_SYNOPSIS_FONT_SIZE.sp,
+                lineHeight = DETAIL_INFO_PANEL_SYNOPSIS_LINE_HEIGHT.sp,
                 letterSpacing = 0.sp,
                 modifier = Modifier.width(destinationDp(245f, scale))
             )
@@ -1370,9 +1449,10 @@ private fun SinkOrSwimPanelText(
     Text(
         text = text,
         color = DestinationText.copy(alpha = 0.9f),
-        fontSize = 11.sp,
+        fontFamily = CinerificAppTextFontFamily,
+        fontSize = DETAIL_INFO_PANEL_META_FONT_SIZE.sp,
         fontWeight = FontWeight.Bold,
-        lineHeight = 14.sp,
+        lineHeight = DETAIL_INFO_PANEL_META_LINE_HEIGHT.sp,
         letterSpacing = 0.sp,
         textAlign = textAlign,
         maxLines = 2,
@@ -1386,7 +1466,9 @@ private fun SinkOrSwimRatingStars(
     scale: Float
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(destinationDp(8f, scale)),
+        horizontalArrangement = Arrangement.spacedBy(
+            destinationDp(DETAIL_INFO_PANEL_RATING_STAR_GAP, scale)
+        ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         repeat(5) { index ->
@@ -1394,7 +1476,7 @@ private fun SinkOrSwimRatingStars(
                 imageVector = Icons.Rounded.Star,
                 contentDescription = null,
                 tint = if (index < rating) Color(0xFFFFC91B) else Color(0xFFC9C4CC),
-                modifier = Modifier.size(destinationDp(16f, scale))
+                modifier = Modifier.size(destinationDp(DETAIL_INFO_PANEL_RATING_STAR_SIZE, scale))
             )
         }
     }
@@ -1409,6 +1491,7 @@ private fun DestinationDetailMetaText(
         Text(
             text = top,
             color = DestinationText.copy(alpha = 0.9f),
+            fontFamily = CinerificAppTextFontFamily,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             lineHeight = 28.sp,
@@ -1417,6 +1500,7 @@ private fun DestinationDetailMetaText(
         Text(
             text = bottom,
             color = DestinationText.copy(alpha = 0.72f),
+            fontFamily = CinerificAppTextFontFamily,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             lineHeight = 28.sp,
@@ -1694,6 +1778,7 @@ private fun FavoritesPlaceholderSection(
         Text(
             text = title,
             color = DestinationText,
+            fontFamily = CinerificAppTextFontFamily,
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             lineHeight = 49.sp,
@@ -1824,6 +1909,7 @@ private fun FavoritesSummaryHeader(text: String) {
     Text(
         text = text,
         color = DestinationText,
+        fontFamily = CinerificAppTextFontFamily,
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
         lineHeight = 36.sp,
@@ -1853,6 +1939,7 @@ private fun DestinationTopBar(
         Text(
             text = title,
             color = DestinationText,
+            fontFamily = CinerificAppTextFontFamily,
             fontSize = 58.sp,
             fontWeight = FontWeight.Black,
             letterSpacing = 0.sp,
@@ -1909,6 +1996,7 @@ private fun SettingsSection(
                     Text(
                         text = stringResource(row.labelResId),
                         color = DestinationText,
+                        fontFamily = CinerificAppTextFontFamily,
                         fontSize = 28.sp,
                         fontWeight = FontWeight.SemiBold,
                         letterSpacing = 0.sp
@@ -1916,6 +2004,7 @@ private fun SettingsSection(
                     Text(
                         text = stringResource(row.detailResId),
                         color = DestinationSubtle,
+                        fontFamily = CinerificAppTextFontFamily,
                         fontSize = 20.sp,
                         lineHeight = 28.sp,
                         letterSpacing = 0.sp,
@@ -1990,6 +2079,7 @@ private fun SettingsSignedInColumn(
         Text(
             text = stringResource(R.string.settings_signed_in_as),
             color = DestinationText,
+            fontFamily = CinerificAppTextFontFamily,
             fontSize = titleFontSize,
             fontWeight = FontWeight.Bold,
             lineHeight = titleLineHeight,
@@ -2054,6 +2144,7 @@ private fun SettingsSignOutButton(
         Text(
             text = stringResource(R.string.settings_sign_out),
             color = DestinationText,
+            fontFamily = CinerificAppTextFontFamily,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             lineHeight = 36.sp,
@@ -2087,6 +2178,7 @@ private fun SettingsSectionHeader(
         Text(
             text = title,
             color = DestinationText,
+            fontFamily = CinerificAppTextFontFamily,
             fontSize = 32.sp,
             fontWeight = FontWeight.Black,
             letterSpacing = 0.sp
@@ -2294,6 +2386,7 @@ private fun SettingsLanguageDropdown(
                     Text(
                         text = language,
                         color = Color(0xFF1F1F1F),
+                        fontFamily = CinerificAppTextFontFamily,
                         fontSize = SETTINGS_LANGUAGE_TEXT_SIZE.sp,
                         fontWeight = FontWeight.Bold,
                         lineHeight = SETTINGS_LANGUAGE_LINE_HEIGHT.sp,
@@ -2348,6 +2441,7 @@ private fun SettingsLanguageMenuRow(
         Text(
             text = label,
             color = Color(0xFF1F1F1F),
+            fontFamily = CinerificAppTextFontFamily,
             fontSize = SETTINGS_LANGUAGE_TEXT_SIZE.sp,
             fontWeight = FontWeight.Bold,
             lineHeight = SETTINGS_LANGUAGE_LINE_HEIGHT.sp,

@@ -28,17 +28,18 @@ import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.prahlin.cinerific.R
 
 internal enum class HeroPresentation(
+    val programTitle: String,
     val frames: List<HeroPresentationFrame>,
     val textBands: HeroPresentationTextBands,
     val copy: HeroPresentationCopy
 ) {
     LightAsAir(
+        programTitle = "Light As Air",
         frames = listOf(
             HeroPresentationFrame(R.drawable.light_as_air_presentation_default, 1490f, 616f),
             HeroPresentationFrame(R.drawable.light_as_air_presentation_variant_2, 1490f, 602f),
@@ -57,6 +58,7 @@ internal enum class HeroPresentation(
         )
     ),
     Infatuation(
+        programTitle = "Infatuation",
         frames = listOf(
             HeroPresentationFrame(R.drawable.infatuation_presentation_default, 1392f, 413f),
             HeroPresentationFrame(R.drawable.infatuation_presentation_variant_2, 1392f, 413f),
@@ -75,6 +77,7 @@ internal enum class HeroPresentation(
         )
     ),
     IntoTheWild(
+        programTitle = "Into The Wild",
         frames = listOf(
             HeroPresentationFrame(R.drawable.into_the_wild_presentation_default, 1878f, 376f),
             HeroPresentationFrame(R.drawable.into_the_wild_presentation_variant_2, 1878f, 376f),
@@ -93,6 +96,7 @@ internal enum class HeroPresentation(
         )
     ),
     MorbidTemptations(
+        programTitle = "Morbid Temptations",
         frames = listOf(
             HeroPresentationFrame(R.drawable.morbid_temptations_presentation_default, 1608f, 473f),
             HeroPresentationFrame(R.drawable.morbid_temptations_presentation_variant_2, 1608f, 473f),
@@ -260,7 +264,7 @@ private fun HeroPresentationDescriptionText(
         text = text,
         maxLines = 1,
         color = Color.White,
-        fontFamily = FontFamily.SansSerif,
+        fontFamily = CinerificAppTextFontFamily,
         fontSize = (PRESENTATION_BODY_TEXT_SIZE_PX * scale).sp,
         lineHeight = (PRESENTATION_BODY_TEXT_LINE_HEIGHT_PX * scale).sp,
         letterSpacing = 0.sp,
@@ -296,7 +300,7 @@ private fun HeroPresentationGenresText(
                 text = genre,
                 maxLines = 1,
                 color = Color.White,
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = CinerificAppTextFontFamily,
                 fontSize = (PRESENTATION_BODY_TEXT_SIZE_PX * scale).sp,
                 lineHeight = (PRESENTATION_BODY_TEXT_LINE_HEIGHT_PX * scale).sp,
                 letterSpacing = 0.sp,

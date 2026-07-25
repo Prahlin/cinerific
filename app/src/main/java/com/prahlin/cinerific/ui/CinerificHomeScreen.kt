@@ -27,6 +27,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -123,7 +124,8 @@ internal fun CinerificHomeScreen(
         ) {
             HomeHeroHeader(
                 scale = scale,
-                height = heroHeight
+                height = heroHeight,
+                onProgramSelected = onProgramSelected
             )
 
             HomeProgramRows.forEachIndexed { index, row ->
@@ -147,15 +149,23 @@ internal fun CinerificHomeScreen(
 @Composable
 private fun HomeHeroHeader(
     scale: Float,
-    height: Dp
+    height: Dp,
+    onProgramSelected: (String) -> Unit
 ) {
     var activeReelIndex by remember { mutableStateOf(0) }
+    val activePresentation = HeroPresentation.forReelIndex(activeReelIndex)
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(height)
             .clipToBounds()
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null
+            ) {
+                onProgramSelected(activePresentation.programTitle)
+            }
     ) {
         HeroReelVideo(
             onReelChanged = { activeReelIndex = it },
@@ -163,7 +173,7 @@ private fun HomeHeroHeader(
         )
 
         HeroPresentationTextAnimation(
-            presentation = HeroPresentation.forReelIndex(activeReelIndex),
+            presentation = activePresentation,
             playKey = activeReelIndex,
             modifier = Modifier.fillMaxSize()
         )
@@ -225,6 +235,7 @@ private fun HomeProgramRow(
             Text(
                 text = title,
                 color = HomeText,
+                fontFamily = CinerificAppTextFontFamily,
                 fontSize = 36.sp,
                 fontWeight = FontWeight.Black,
                 letterSpacing = 0.sp,

@@ -277,6 +277,7 @@ private fun CinerificMainExperience(
 
             FavoritesFullPromptOverlay(
                 requestId = favoritesFullPromptRequestId,
+                suppressed = userInitiatedPlaybackActive,
                 modifier = Modifier.fillMaxSize()
             )
         }
@@ -286,12 +287,20 @@ private fun CinerificMainExperience(
 @Composable
 private fun FavoritesFullPromptOverlay(
     requestId: Int,
+    suppressed: Boolean,
     modifier: Modifier = Modifier
 ) {
     var visible by remember { mutableStateOf(false) }
 
-    LaunchedEffect(requestId) {
-        if (requestId == 0) return@LaunchedEffect
+    LaunchedEffect(requestId, suppressed) {
+        if (suppressed) {
+            visible = false
+            return@LaunchedEffect
+        }
+        if (requestId == 0) {
+            visible = false
+            return@LaunchedEffect
+        }
         visible = true
         delay(FAVORITES_FULL_PROMPT_VISIBLE_MS)
         visible = false
@@ -308,7 +317,7 @@ private fun FavoritesFullPromptOverlay(
         label = "favorites-full-prompt-scale"
     )
 
-    if (requestId == 0 || (!visible && alpha <= 0.01f)) return
+    if (suppressed || requestId == 0 || (!visible && alpha <= 0.01f)) return
 
     BoxWithConstraints(modifier = modifier) {
         val stageScale = maxWidth.value / FIGMA_FRAME_WIDTH
@@ -383,6 +392,7 @@ private fun FavoritesFullPromptBubble(
         Text(
             text = "You've\nfilled\nup on\nfavorites!",
             color = ColorFavoritesFullPromptAccent,
+            fontFamily = CinerificAppTextFontFamily,
             fontSize = (14f * stageScale).sp,
             fontWeight = FontWeight.Black,
             lineHeight = (21.252f * stageScale).sp,
