@@ -22,7 +22,8 @@ private val ChromeBottom = Color(0xFF050003)
 internal fun CinerificChromeBackground(
     modifier: Modifier = Modifier,
     alpha: Float = 1f,
-    @DrawableRes backgroundResId: Int = R.drawable.chrome_nav_bgfill_figma_variant5
+    @DrawableRes backgroundResId: Int = R.drawable.chrome_nav_bgfill_figma_variant5,
+    contentScale: ContentScale = ContentScale.FillBounds
 ) {
     val visibleAlpha = alpha.coerceIn(0f, 1f)
 
@@ -40,7 +41,7 @@ internal fun CinerificChromeBackground(
         Image(
             painter = painterResource(id = backgroundResId),
             contentDescription = null,
-            contentScale = ContentScale.FillBounds,
+            contentScale = contentScale,
             modifier = Modifier
                 .fillMaxSize()
                 .graphicsLayer { this.alpha = visibleAlpha }

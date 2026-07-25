@@ -143,6 +143,7 @@ private const val FAVORITE_BURST_PADDING = 22f
 private const val FAVORITE_BURST_STROKE = 2.4f
 private const val FAVORITE_BURST_DURATION_MS = 240
 private const val DETAIL_LOADING_SPINNER_WIDTH = 190f
+private const val DETAIL_LOADING_SCRIM_MAX_ALPHA = 0.68f
 private const val SINK_OR_SWIM_TITLE = "Sink or Swim"
 private const val DETAIL_CARD_REVEAL_DELAY_MS = 2400L
 private const val DETAIL_CARD_REVEAL_ANIMATION_MS = 900
@@ -891,6 +892,7 @@ private fun ProgramDetailRevealImage(
     onNext: () -> Unit
 ) {
     val heroFullyVisible = revealProgress >= 0.999f
+    val loadingScrimAlpha = (1f - revealProgress) * DETAIL_LOADING_SCRIM_MAX_ALPHA
     val spinnerHeight = DETAIL_LOADING_SPINNER_WIDTH *
         CINERIFIC_LOADING_SPINNER_CANVAS_HEIGHT /
         CINERIFIC_LOADING_SPINNER_CANVAS_WIDTH
@@ -909,12 +911,8 @@ private fun ProgramDetailRevealImage(
                 .graphicsLayer {
                     alpha = 0.46f + revealProgress * 0.54f
                 },
-            contentScale = ContentScale.FillBounds
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color(0xFF6D6D6D).copy(alpha = (1f - revealProgress) * 0.58f))
+            alignment = Alignment.TopStart,
+            contentScale = ContentScale.Crop
         )
         if (heroFullyVisible) {
             HeroFavoriteToggleButton(
@@ -929,6 +927,11 @@ private fun ProgramDetailRevealImage(
                 onNext = onNext
             )
         } else {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = loadingScrimAlpha))
+            )
             CinerificLoadingSpinner(
                 modifier = Modifier
                     .align(Alignment.Center)
@@ -1830,7 +1833,8 @@ private fun DestinationTopBar(
         CinerificChromeBackground(
             modifier = Modifier.fillMaxSize(),
             alpha = 1f,
-            backgroundResId = R.drawable.chrome_top_bgfill
+            backgroundResId = R.drawable.chrome_nav_bgfill_figma_variant5_landscape,
+            contentScale = ContentScale.Crop
         )
         Text(
             text = title,
