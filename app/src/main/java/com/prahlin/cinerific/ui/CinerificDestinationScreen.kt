@@ -135,7 +135,6 @@ private const val DETAIL_FAVORITE_Y = 30f
 private const val DETAIL_FAVORITE_WIDTH = 61f
 private const val DETAIL_FAVORITE_HEIGHT = 59f
 private const val DETAIL_TRANSPORT_X = 423f
-private const val DETAIL_TRANSPORT_Y = 367f
 private const val DETAIL_TRANSPORT_GAP = 50f
 private const val DETAIL_SIDE_CONTROL_SIZE = 74f
 private const val DETAIL_PLAY_CONTROL_SIZE = 100f
@@ -821,6 +820,7 @@ internal fun CinerificProgramDetailsScreen(
         }
         val isFavorited = program.title in favoriteProgramTitles
         val cardReveal = remember(program.title) { Animatable(0f) }
+        var playLoading by remember(program.title) { mutableStateOf(false) }
 
         LaunchedEffect(program.title) {
             cardReveal.snapTo(0f)
@@ -847,12 +847,12 @@ internal fun CinerificProgramDetailsScreen(
                 contentDescription = title,
                 scale = scale,
                 isFavorited = isFavorited,
+                playLoading = playLoading,
                 onFavoriteToggled = { onFavoriteToggled(program.title) },
                 onPrevious = { onProgramSelected(previousProgramTitle) },
                 onPlay = {
-                    if (playbackSessionController.isUserInitiatedPlaybackActive) {
-                        playbackSessionController.onUserInitiatedPlaybackFinished()
-                    } else {
+                    playLoading = true
+                    if (!playbackSessionController.isUserInitiatedPlaybackActive) {
                         playbackSessionController.onActionablePlayTapped()
                     }
                 },
@@ -886,6 +886,7 @@ private fun ProgramDetailRevealImage(
     contentDescription: String,
     scale: Float,
     isFavorited: Boolean,
+    playLoading: Boolean,
     onFavoriteToggled: () -> Unit,
     onPrevious: () -> Unit,
     onPlay: () -> Unit,
@@ -920,12 +921,29 @@ private fun ProgramDetailRevealImage(
                 onFavoriteToggled = onFavoriteToggled,
                 scale = scale
             )
-            HeroTransportControls(
-                scale = scale,
-                onPrevious = onPrevious,
-                onPlay = onPlay,
-                onNext = onNext
-            )
+            if (playLoading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = DETAIL_LOADING_SCRIM_MAX_ALPHA))
+                )
+                CinerificLoadingSpinner(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .width(destinationDp(DETAIL_LOADING_SPINNER_WIDTH, scale))
+                        .height(destinationDp(spinnerHeight, scale))
+                )
+            } else {
+                HeroTransportControls(
+                    scale = scale,
+                    onPrevious = onPrevious,
+                    onPlay = onPlay,
+                    onNext = onNext,
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .offset(x = destinationDp(DETAIL_TRANSPORT_X, scale))
+                )
+            }
         } else {
             Box(
                 modifier = Modifier
@@ -1092,10 +1110,6 @@ private fun HeroTransportControls(
 ) {
     Row(
         modifier = modifier
-            .offset(
-                x = destinationDp(DETAIL_TRANSPORT_X, scale),
-                y = destinationDp(DETAIL_TRANSPORT_Y, scale)
-            )
             .width(
                 destinationDp(
                     DETAIL_SIDE_CONTROL_SIZE +

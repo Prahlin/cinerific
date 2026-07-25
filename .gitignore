@@ -6,3 +6,6 @@ app/build/
 local.properties
 cinerific_PROJECT_SNAPSHOT.txt
 screenshots/
+.venv/
+__pycache__/
+.pytest_cache/
