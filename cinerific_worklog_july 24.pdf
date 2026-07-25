@@ -1,0 +1,282 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [ 6 0 R 8 0 R 10 0 R 12 0 R ] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Length 7703 >>
+stream
+BT /F2 15.50 Tf 1 0 0 1 54.00 736.00 Tm (Cinerific Android App Work Log - July 24, 2026) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 717.20 Tm (Compiled summary for Friday, July 24, 2026 - focus: recovering the Cinerific tablet AVD after) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 706.65 Tm (a hidden VS Code docked-emulator launch path kept the device headless, continuing destination) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 696.10 Tm (and detail-screen polish, replacing the gray detail-hero loading placeholder with a black) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 685.55 Tm (loading scrim, changing detail hero imagery to proportional crop behavior for landscape) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 675.00 Tm (tablets, iterating the Movies, Shows, Favorites, and Settings top-banner chrome, adopting the) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 664.45 Tm (new chrome_nav_bgfill_figma_variant5_landscape asset with crop scaling instead of stretching,) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 653.90 Tm (preserving the accepted right-side rail treatment, validating Kotlin compilation, refreshing) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 643.35 Tm (the project snapshot, and generating the latest Cinerific daily worklog artifact.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 630.40 Tm (Generated in continuity with the established Cinerific worklog cadence from July 12, July 14,) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 619.85 Tm (July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, and July 23: compact) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 609.30 Tm (opening summary, source-material review, baseline state, goal list, themed work-completed) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 598.75 Tm (sections, validation, files touched, follow-up context, and output-artifact close. This) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 588.20 Tm (artifact records the current source state on main through HEAD 6848ccb, plus the refreshed) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 577.65 Tm (snapshot from this worklog pass, and follows the prior root-level naming, four-page letter) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 567.10 Tm (layout, footer convention, metadata, and plain-text-readable PDF style.) Tj ET
+BT /F2 11.30 Tf 1 0 0 1 54.00 548.95 Tm (Source Materials Reviewed) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 536.55 Tm (- Reviewed every pre-existing Cinerific worklog PDF at the repository root: July 12, July 14,) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 526.00 Tm (  July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, and July 23.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 514.95 Tm (- Used pdfinfo and pdftotext output from the prior PDFs to preserve the established title) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 504.40 Tm (  pattern, summary cadence, section order, validation language, file-list style, letter-size) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 493.85 Tm (  geometry, four-page shape, metadata, footer, and plain-text-readable layout.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 482.80 Tm (- Ran ./read_project.sh and reviewed the refreshed cinerific_PROJECT_SNAPSHOT.txt for the) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 472.25 Tm (  current Android source layout, drawable inventory, app/navigation surfaces, screenshot) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 461.70 Tm (  awareness, and scanner convention.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 450.65 Tm (- Reviewed git status, git log, git show --stat, and the final July 24 commit 6848ccb, with) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 440.10 Tm (  context from the July 23 right-rail Variant 5 commit and earlier presentation-overlay work.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 429.05 Tm (- Reviewed CinerificDestinationScreen.kt, CinerificChrome.kt, CinerificRightSideNavBar.kt,) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 418.50 Tm (  HeroPresentationTextAnimation.kt, MainActivity.kt, theme resources, and the drawable-nodpi) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 407.95 Tm (  chrome, card, and hero assets involved in the July 24 pass.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 396.90 Tm (- Reviewed chrome_nav_bgfill_figma_variant5.png, the accepted right-side nav rail resource,) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 386.35 Tm (  and chrome_nav_bgfill_figma_variant5_landscape.png, the user-supplied rotated landscape) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 375.80 Tm (  companion asset.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 364.75 Tm (- Reviewed screenshots and user feedback showing the top-banner center artifact, the overly) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 354.20 Tm (  dark fallback top image, the requested right-rail visual source, and the need to crop rather) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 343.65 Tm (  than stretch the landscape asset.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 332.60 Tm (- Reviewed Android runtime evidence from adb, emulator, launchctl, lsof, AVD files, and) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 322.05 Tm (  Android Studio / VS Code state to diagnose why the Cinerific_Standard_Tablet AVD was) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 311.50 Tm (  difficult to boot and locate during the day.) Tj ET
+BT /F2 11.30 Tf 1 0 0 1 54.00 295.25 Tm (Baseline Status Before July 24 Work) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 282.85 Tm (- Cinerific entered July 24 with the Home/default hero presentation overlay accepted, the four) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 272.30 Tm (  July 23 reel-derived titles present in Home, Movies, Shows, and detail surfaces, and the) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 261.75 Tm (  right-side navigation rail using the Figma Variant 5 black/purple background.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 250.70 Tm (- The Android system UI had already been darkened from the July 23 pass, but the tablet AVD) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 240.15 Tm (  was being difficult to run in a predictable standalone or editor-visible state.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 229.10 Tm (- The detail hero loading path still exposed an unattractive dark-gray placeholder panel) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 218.55 Tm (  beneath the hero image while the spinner animation was active.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 207.50 Tm (- Detail hero images still needed better cross-tablet behavior: presentation text should stay) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 196.95 Tm (  in the same bottom-left relative area while the hero image itself could crop at the sides or) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 186.40 Tm (  top when a tablet aspect ratio required it.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 175.35 Tm (- Movies, Shows, Favorites, and Settings top banners still did not visually match the accepted) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 164.80 Tm (  right-side rail. The first attempt to transpose the portrait rail image into a landscape) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 154.25 Tm (  banner produced an obvious artifact near the horizontal center.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 143.20 Tm (- The top-banner asset path needed the exact Variant 5 visual language without stretching the) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 132.65 Tm (  image and without reintroducing the older, darker top-bgfill treatment.) Tj ET
+BT /F2 11.30 Tf 1 0 0 1 54.00 116.40 Tm (Main Goals for July 24) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 104.00 Tm (- Stop any running emulator instances completely when requested, then help the user launch the) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 93.45 Tm (  Cinerific AVD in a normal standalone or editor-visible state.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 82.40 Tm (- Diagnose why Cinerific_Standard_Tablet was much harder to boot and inspect than the previous) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 71.85 Tm (  day, and separate tooling conflict from MacBook processing-power concerns.) Tj ET
+BT /F1 8.40 Tf 1 0 0 1 378.91 31.00 Tm (Cinerific Work Log - July 24, 2026 Page 1) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 7471 >>
+stream
+BT /F1 9.00 Tf 1 0 0 1 54.00 736.00 Tm (- Replace the gray detail-hero loading placeholder with a blackish overlay while the spinner) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 725.45 Tm (  animation is active.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 714.40 Tm (- Make detail hero imagery crop proportionally instead of stretching, preserving the relative) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 703.85 Tm (  bottom-left presentation-text area across landscape tablet aspect ratios.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 692.80 Tm (- Bring the accepted right-rail Variant 5 styling into the destination top banners using a) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 682.25 Tm (  proper landscape asset, crop scaling, and no runtime distortion.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 671.20 Tm (- Preserve the accepted right-side rail behavior while changing only the top-banner rendering) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 660.65 Tm (  path.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 649.60 Tm (- Validate the Kotlin build, refresh the project snapshot, and produce the July 24 PDF worklog) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 639.05 Tm (  in the same style as the prior artifacts.) Tj ET
+BT /F2 11.30 Tf 1 0 0 1 54.00 622.80 Tm (Work Completed - AVD Diagnosis and Runtime Recovery) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 610.40 Tm (- Stopped the active emulator path when the user asked to stop it from running anywhere, then) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 599.85 Tm (  checked adb devices, emulator processes, emulator locks, and port ownership rather than) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 589.30 Tm (  assuming Android Studio itself was the problem.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 578.25 Tm (- Identified a hidden launchd job named com.prahlin.cinerific.vscode-emulator that was) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 567.70 Tm (  starting Cinerific_Standard_Tablet in a docked/headless-oriented path with -no-window,) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 557.15 Tm (  -no-snapshot-load, -no-snapshot-save, -grpc 8554, and verbose emulator flags.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 546.10 Tm (- Explained that this job could reserve emulator ports, leave the AVD looking absent from) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 535.55 Tm (  Android Studio, and conflict with later attempts to open the same device as a standalone) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 525.00 Tm (  visible emulator.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 513.95 Tm (- Unloaded and stopped the launchd job, then confirmed that adb devices was empty and that the) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 503.40 Tm (  expected emulator process was no longer occupying the device connection path.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 492.35 Tm (- Checked that the issue did not point to MacBook processing power: the observed failure mode) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 481.80 Tm (  was tool ownership and headless launch state rather than CPU/GPU incapacity.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 470.75 Tm (- Recommended avoiding simultaneous docked-emulator and standalone-emulator owners for the) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 460.20 Tm (  same AVD, and called out that scripts or README notes would help prevent the same lock/port) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 449.65 Tm (  confusion later.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 438.60 Tm (- Guided the user toward Android Studio / VS Code ways of opening the AVD, while preserving) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 428.05 Tm (  the option to run the tablet emulator as a standalone visible window outside editor tabs.) Tj ET
+BT /F2 11.30 Tf 1 0 0 1 54.00 411.80 Tm (Work Completed - Detail Hero Loading and Scaling) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 399.40 Tm (- Replaced the unattractive gray placeholder visible under detail hero imagery while the) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 388.85 Tm (  spinner animation was active with a black loading scrim that reads as intentional Cinerific) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 378.30 Tm (  darkness rather than a mismatched gray card.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 367.25 Tm (- Kept the loading overlay scoped to the hero-loading interval so the black scrim appears) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 356.70 Tm (  while the spinner is animating and then gives way to the resolved hero artwork.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 345.65 Tm (- Introduced a detail loading scrim maximum alpha value of 0.68, giving the loading state a) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 335.10 Tm (  blackish cover without turning the hero area into a flat solid block.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 324.05 Tm (- Changed detail hero rendering away from FillBounds stretching and toward proportional Crop) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 313.50 Tm (  behavior with top-start alignment, letting the image crop where needed instead of distorting) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 302.95 Tm (  across landscape tablet aspect ratios.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 291.90 Tm (- Preserved the presentation text as the visual priority: the text remains in the same) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 281.35 Tm (  bottom-left relative area while right, left, and top image edges are allowed to clip if a) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 270.80 Tm (  tablet shape demands it.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 259.75 Tm (- Used repeated AVD navigation to the same card/detail route so the user could inspect the) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 249.20 Tm (  hero load, miss it, repeat it, and confirm the black loading treatment when it appeared) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 238.65 Tm (  clearly.) Tj ET
+BT /F2 11.30 Tf 1 0 0 1 54.00 222.40 Tm (Work Completed - Destination Top-Banner Chrome) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 210.00 Tm (- Attempted to carry the accepted right-side rail visual language into Movies, Shows,) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 199.45 Tm (  Favorites, and Settings top banners, as requested, while accounting for the top banner being) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 188.90 Tm (  landscape and the rail being portrait.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 177.85 Tm (- The first rotated/flipped portrait-asset attempt exposed an obvious center artifact. The) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 167.30 Tm (  cause was the portrait rail asset itself: its internal vertical luminance and purple) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 156.75 Tm (  structure became a horizontal-banner midline/center feature when mapped into a different) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 146.20 Tm (  orientation.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 135.15 Tm (- Explained that the artifact was not a random renderer glitch; it came from reusing a) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 124.60 Tm (  portrait composition whose visual weight was designed for a tall narrow rail, then forcing) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 114.05 Tm (  that content into a wide top-banner role.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 103.00 Tm (- Rejected the darker fallback top image after the user pointed out that it looked like the) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 92.45 Tm (  old asset and was too dark compared with the accepted right-rail Variant 5 appearance.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 81.40 Tm (- Adopted chrome_nav_bgfill_figma_variant5_landscape.png, which the user added as the rotated) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 70.85 Tm (  landscape companion to the right-side Variant 5 asset.) Tj ET
+BT /F1 8.40 Tf 1 0 0 1 378.91 31.00 Tm (Cinerific Work Log - July 24, 2026 Page 2) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 7064 >>
+stream
+BT /F1 9.00 Tf 1 0 0 1 54.00 736.00 Tm (- Updated destination top bars to reference chrome_nav_bgfill_figma_variant5_landscape) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 725.45 Tm (  directly instead of rotating or flipping at runtime.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 714.40 Tm (- Rendered the top-banner chrome with ContentScale.Crop so the asset scales proportionally and) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 703.85 Tm (  crops excess edges instead of stretching to fill the destination top-bar bounds.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 692.80 Tm (- Kept the right-side nav rail on its existing accepted background path so the rail could) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 682.25 Tm (  continue using its portrait-oriented Variant 5 resource while only the top bars switched to) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 671.70 Tm (  the landscape companion.) Tj ET
+BT /F2 11.30 Tf 1 0 0 1 54.00 655.45 Tm (Work Completed - Commit and Handoff) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 643.05 Tm (- Recommended a concise past-tense commit message with a one-line header and bullets matching) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 632.50 Tm (  the actual final source scope.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 621.45 Tm (- Committed the final implementation as 6848ccb on main with the header Fixed destination) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 610.90 Tm (  top-banner chrome rendering.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 599.85 Tm (- Recorded in the commit body that the top bars used the new) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 589.30 Tm (  chrome_nav_bgfill_figma_variant5_landscape asset, crop-scaled rather than stretched, removed) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 578.75 Tm (  runtime rotate/flip behavior, preserved the right rail, and kept the hero loading) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 568.20 Tm (  scrim/detail crop improvements.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 557.15 Tm (- Refreshed cinerific_PROJECT_SNAPSHOT.txt after the source and asset work so the project) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 546.60 Tm (  scanner view matched the current tree for this July 24 worklog pass.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 535.55 Tm (- Generated this July 24 PDF after reading all prior worklogs and matching the existing) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 525.00 Tm (  naming, section order, density, and four-page daily-log format.) Tj ET
+BT /F2 11.30 Tf 1 0 0 1 54.00 508.75 Tm (Validation and Checks Performed) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 496.35 Tm (- Ran ./gradlew :app:compileDebugKotlin during the July 24 changes; the Kotlin debug) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 485.80 Tm (  compilation passed after the detail and chrome rendering updates.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 474.75 Tm (- Ran ./read_project.sh before producing this PDF; it regenerated) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 464.20 Tm (  cinerific_PROJECT_SNAPSHOT.txt at the repository root.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 453.15 Tm (- Used git status --short, git log --oneline --decorate, and git show --stat to verify the) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 442.60 Tm (  source scope now represented by HEAD 6848ccb.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 431.55 Tm (- Confirmed that the final source changes were concentrated in CinerificChrome.kt,) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 421.00 Tm (  CinerificDestinationScreen.kt, the Variant 5 chrome assets, and the refreshed project) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 410.45 Tm (  snapshot.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 399.40 Tm (- Checked the top-banner asset path and final commit details to verify the landscape asset was) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 388.85 Tm (  used directly rather than through runtime rotation or horizontal stretching.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 377.80 Tm (- Used adb, emulator process checks, port checks, and launchctl inspection while diagnosing) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 367.25 Tm (  the AVD visibility/boot issue, including the hidden com.prahlin.cinerific.vscode-emulator) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 356.70 Tm (  launchd job.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 345.65 Tm (- Used repeated live emulator navigation and screenshot-based feedback to iterate the detail) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 335.10 Tm (  hero loading treatment and destination top-banner visuals before committing.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 324.05 Tm (- Used pdfinfo and pdftotext on the existing worklogs before producing this artifact, then) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 313.50 Tm (  generated the July 24 PDF with the same letter-size, metadata, footer, and text-extractable) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 302.95 Tm (  style.) Tj ET
+BT /F2 11.30 Tf 1 0 0 1 54.00 286.70 Tm (Files Touched During July 24) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 274.30 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificChrome.kt: added a contentScale) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 263.75 Tm (  parameter to the shared chrome background helper so top banners can crop proportionally) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 253.20 Tm (  while existing callers keep their default behavior.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 242.15 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt: changed detail) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 231.60 Tm (  hero loading to use a black scrim, changed detail hero images to proportional crop/top-start) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 221.05 Tm (  behavior, and wired destination top bars to the landscape Variant 5 chrome asset with crop) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 210.50 Tm (  scaling.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 199.45 Tm (- app/src/main/res/drawable-nodpi/chrome_nav_bgfill_figma_variant5.png: remained the accepted) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 188.90 Tm (  right-side nav rail visual source and was preserved for the portrait rail path.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 177.85 Tm (- app/src/main/res/drawable-nodpi/chrome_nav_bgfill_figma_variant5_landscape.png: added the) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 167.30 Tm (  user-prepared landscape companion asset for Movies, Shows, Favorites, and Settings) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 156.75 Tm (  top-banner chrome.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 145.70 Tm (- cinerific_PROJECT_SNAPSHOT.txt: refreshed by ./read_project.sh during the July 24) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 135.15 Tm (  project-review and worklog pass.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 124.10 Tm (- cinerific_worklog_july 24.pdf: this generated daily worklog artifact at the repository root.) Tj ET
+BT /F2 11.30 Tf 1 0 0 1 54.00 107.85 Tm (Follow-Up Context) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 95.45 Tm (- The AVD trouble should be treated as an ownership problem until proven otherwise: do not let) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 84.90 Tm (  a background launchd / VS Code docked path and a visible standalone Android Studio path) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 74.35 Tm (  compete for Cinerific_Standard_Tablet.) Tj ET
+BT /F1 8.40 Tf 1 0 0 1 378.91 31.00 Tm (Cinerific Work Log - July 24, 2026 Page 3) Tj ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Length 3277 >>
+stream
+BT /F1 9.00 Tf 1 0 0 1 54.00 736.00 Tm (- A future helper script should expose clear stop, diagnose, and standalone-start commands for) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 725.45 Tm (  the Cinerific AVD, including adb disconnect/kill-server checks, emulator lock/port checks,) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 714.90 Tm (  and launchd-job status.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 703.85 Tm (- A short README note should warn that the docked Android emulator extension can reserve the) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 693.30 Tm (  same AVD invisibly through gRPC/headless flags, making the visible emulator look missing or) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 682.75 Tm (  stuck at waiting for connection.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 671.70 Tm (- The destination top-banner chrome now uses the landscape asset with crop behavior. Final) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 661.15 Tm (  visual tuning, if needed, should adjust alignment or asset crop only after inspecting the) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 650.60 Tm (  AVD on the target tablet shape.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 639.55 Tm (- The detail hero presentation text is now protected from image distortion by letting hero) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 629.00 Tm (  imagery crop instead of stretch. Additional tablet aspect-ratio checks should verify the) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 618.45 Tm (  bottom-left text area on each supported landscape size.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 607.40 Tm (- Generated snapshots, PDFs, and screenshots remain project-management artifacts unless) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 596.85 Tm (  explicitly committed. The accepted July 24 source state is on main through HEAD 6848ccb,) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 586.30 Tm (  while this PDF records the daily worklog state.) Tj ET
+BT /F2 11.30 Tf 1 0 0 1 54.00 570.05 Tm (Output Artifact) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 557.65 Tm (- Filename: cinerific_worklog_july 24.pdf) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 546.60 Tm (- Created at the repository root in /Users/prahlin/gh/cinerific.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 535.55 Tm (- Follows the Cinerific filename convention established by cinerific_worklog_july 12.pdf and) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 525.00 Tm (  continued by the July 14, July 15, July 16, July 18, July 19, July 20, July 22, and July 23) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 514.45 Tm (  artifacts, including the space before the day number.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 503.40 Tm (- Follows the established Alla Vostra/Prahlin/Cinerific daily worklog structure while keeping) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 492.85 Tm (  the body content specific to Cinerific work completed on Friday, July 24, 2026.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 481.80 Tm (- No external PDF dependency was installed; this artifact was generated with a small) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 471.25 Tm (  standard-library PDF writer in the same plain-text-readable spirit as the prior Cinerific) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 460.70 Tm (  worklogs.) Tj ET
+BT /F1 9.00 Tf 1 0 0 1 54.00 449.65 Tm (- Created this daily worklog PDF: cinerific_worklog_july 24.pdf.) Tj ET
+BT /F1 8.40 Tf 1 0 0 1 378.91 31.00 Tm (Cinerific Work Log - July 24, 2026 Page 4) Tj ET
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 11 0 R >>
+endobj
+13 0 obj
+<< /Title (Cinerific Android App Work Log - July 24, 2026) /Subject (Cinerific Android app development worklog) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260724000000-04'00') /ModDate (D:20260724000000-04'00') >>
+endobj
+xref
+0 14
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000143 00000 n 
+0000000240 00000 n 
+0000000342 00000 n 
+0000008096 00000 n 
+0000008232 00000 n 
+0000015754 00000 n 
+0000015890 00000 n 
+0000023005 00000 n 
+0000023142 00000 n 
+0000026471 00000 n 
+0000026609 00000 n 
+trailer
+<< /Size 14 /Root 1 0 R /Info 13 0 R >>
+startxref
+26928
+%%EOF
