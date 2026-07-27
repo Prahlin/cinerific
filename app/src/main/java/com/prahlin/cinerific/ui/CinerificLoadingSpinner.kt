@@ -21,8 +21,11 @@ internal const val CINERIFIC_LOADING_SPINNER_CANVAS_WIDTH = 416f
 internal const val CINERIFIC_LOADING_SPINNER_CANVAS_HEIGHT = 422f
 
 private const val SPINNER_LOOP_MS = 2_800
+private const val RED_STAR_LOOP_MS = SPINNER_LOOP_MS
+private const val WHEEL_LOOP_MS = 4_179
+private const val MINI_STAR_LOOP_MS = 4_242
 private const val RED_STAR_ROTATION_DEGREES = 720f
-private const val WHEEL_ROTATION_DEGREES = -1_080f
+private const val WHEEL_ROTATION_DEGREES = 720f
 private const val MINI_STAR_ROTATION_DEGREES = 360f
 
 @Composable
@@ -36,7 +39,7 @@ internal fun CinerificLoadingSpinner(
         targetValue = RED_STAR_ROTATION_DEGREES,
         animationSpec = infiniteRepeatable(
             animation = tween(
-                durationMillis = SPINNER_LOOP_MS,
+                durationMillis = RED_STAR_LOOP_MS,
                 easing = LinearEasing
             )
         ),
@@ -47,7 +50,7 @@ internal fun CinerificLoadingSpinner(
         targetValue = WHEEL_ROTATION_DEGREES,
         animationSpec = infiniteRepeatable(
             animation = tween(
-                durationMillis = SPINNER_LOOP_MS,
+                durationMillis = WHEEL_LOOP_MS,
                 easing = LinearEasing
             )
         ),
@@ -58,7 +61,7 @@ internal fun CinerificLoadingSpinner(
         targetValue = MINI_STAR_ROTATION_DEGREES,
         animationSpec = infiniteRepeatable(
             animation = tween(
-                durationMillis = SPINNER_LOOP_MS,
+                durationMillis = MINI_STAR_LOOP_MS,
                 easing = LinearEasing
             )
         ),
