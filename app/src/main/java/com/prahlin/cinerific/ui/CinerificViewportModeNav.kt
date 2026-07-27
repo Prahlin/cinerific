@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 
+private const val SELECTED_COMPACT_MODE_GLYPH_SCALE = 0.9f
+
 @Composable
 internal fun CinerificViewportModeNav(
     selectedMode: ViewportMode,
@@ -90,20 +92,26 @@ private fun ViewportModeButton(
                     )
             )
         }
-        ViewportModeGlyph(mode = mode, color = color, scale = scale)
+        ViewportModeGlyph(mode = mode, selected = selected, color = color, scale = scale)
     }
 }
 
 @Composable
 private fun ViewportModeGlyph(
     mode: ViewportMode,
+    selected: Boolean,
     color: Color,
     scale: Float
 ) {
+    val glyphScale = when {
+        selected && mode != ViewportMode.CollageLarge -> scale * SELECTED_COMPACT_MODE_GLYPH_SCALE
+        else -> scale
+    }
+
     when (mode) {
-        ViewportMode.CollageLarge -> CollageLargeGlyph(color = color, scale = scale)
-        ViewportMode.CollageSmall -> CollageSmallGlyph(color = color, scale = scale)
-        ViewportMode.List -> ListGlyph(color = color, scale = scale)
+        ViewportMode.CollageLarge -> CollageLargeGlyph(color = color, scale = glyphScale)
+        ViewportMode.CollageSmall -> CollageSmallGlyph(color = color, scale = glyphScale)
+        ViewportMode.List -> ListGlyph(selected = selected, color = color, scale = glyphScale)
     }
 }
 
@@ -135,7 +143,13 @@ private fun CollageSmallGlyph(color: Color, scale: Float) {
 }
 
 @Composable
-private fun ListGlyph(color: Color, scale: Float) {
+private fun ListGlyph(
+    selected: Boolean,
+    color: Color,
+    scale: Float
+) {
+    val rectangleWidth = if (selected) 18f else 24f
+
     Column(verticalArrangement = Arrangement.spacedBy(viewportDp(7f, scale))) {
         repeat(3) {
             Row(
@@ -143,7 +157,7 @@ private fun ListGlyph(color: Color, scale: Float) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 ViewportGlyphCell(viewportDp(6f, scale), viewportDp(6f, scale), color)
-                ViewportGlyphCell(viewportDp(24f, scale), viewportDp(4f, scale), color)
+                ViewportGlyphCell(viewportDp(rectangleWidth, scale), viewportDp(4f, scale), color)
             }
         }
     }
