@@ -61,10 +61,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -73,6 +77,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -91,6 +97,7 @@ import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlin.math.sin
+import kotlin.math.sqrt
 
 private const val DESTINATION_FRAME_WIDTH = 1194f
 private const val DESTINATION_TOP_BAR_TITLE_BOTTOM = 18f
@@ -175,10 +182,19 @@ private const val DETAIL_INFO_PANEL_META_TO_CREW_GUTTER_WEIGHT =
     DETAIL_INFO_PANEL_DESCRIPTION_TO_META_GUTTER_WEIGHT * 0.5f
 private const val DETAIL_INFO_PANEL_RATING_STACK_SCALE =
     DETAIL_INFO_PANEL_SECONDARY_CONTENT_SCALE * 1.5f
+private const val DETAIL_INFO_PANEL_RATING_STACK_SIZE_MULTIPLIER = 0.9f
 private const val DETAIL_INFO_PANEL_RATING_STAR_SIZE =
-    16f * DETAIL_INFO_PANEL_RATING_STACK_SCALE
+    16f * DETAIL_INFO_PANEL_RATING_STACK_SCALE * DETAIL_INFO_PANEL_RATING_STACK_SIZE_MULTIPLIER
 private const val DETAIL_INFO_PANEL_RATING_STAR_GAP =
-    8f * DETAIL_INFO_PANEL_RATING_STACK_SCALE
+    8f * DETAIL_INFO_PANEL_RATING_STACK_SCALE * DETAIL_INFO_PANEL_RATING_STACK_SIZE_MULTIPLIER
+private const val DETAIL_INFO_PANEL_RATING_STACK_ALPHA = 0.2f
+private const val DETAIL_INFO_PANEL_RATING_STAR_CLEAR_STROKE =
+    5f * DETAIL_INFO_PANEL_RATING_STACK_SIZE_MULTIPLIER
+private const val DETAIL_INFO_PANEL_RATING_STAR_GRAY_STROKE =
+    3f * DETAIL_INFO_PANEL_RATING_STACK_SIZE_MULTIPLIER
+private const val DETAIL_INFO_PANEL_RATING_STAR_CANVAS_SIZE =
+    DETAIL_INFO_PANEL_RATING_STAR_SIZE +
+        (DETAIL_INFO_PANEL_RATING_STAR_CLEAR_STROKE + DETAIL_INFO_PANEL_RATING_STAR_GRAY_STROKE) * 2f
 private const val SINK_OR_SWIM_TITLE = "Sink or Swim"
 private const val DETAIL_CARD_REVEAL_DELAY_MS = 2400L
 private const val DETAIL_CARD_REVEAL_ANIMATION_MS = 900
@@ -218,7 +234,10 @@ internal fun CinerificDestinationScreen(
     onSignOut: () -> Unit = {},
     favoriteProgramTitles: List<String> = emptyList(),
     onFavoriteToggled: (String) -> Unit = {},
+    userProgramRatings: Map<String, Int> = emptyMap(),
+    onProgramRated: (String, Int) -> Unit = { _, _ -> },
     onProgramSelected: (String) -> Unit = {},
+    catalogRoute: CinerificCatalogRoute? = null,
     modifier: Modifier = Modifier
 ) {
     when (destination) {
@@ -229,6 +248,8 @@ internal fun CinerificDestinationScreen(
             showViewportNav = true,
             isShows = false,
             onProgramSelected = onProgramSelected,
+            initialGenre = catalogRoute?.genre ?: ViewportGenre.All,
+            initialMode = catalogRoute?.mode ?: ViewportMode.CollageLarge,
             modifier = modifier
         )
         CinerificDestination.Shows -> CinerificCatalogScreen(
@@ -238,6 +259,8 @@ internal fun CinerificDestinationScreen(
             showViewportNav = true,
             isShows = true,
             onProgramSelected = onProgramSelected,
+            initialGenre = catalogRoute?.genre ?: ViewportGenre.All,
+            initialMode = catalogRoute?.mode ?: ViewportMode.CollageLarge,
             modifier = modifier
         )
         CinerificDestination.Favorites -> CinerificFavoritesScreen(
@@ -263,6 +286,8 @@ internal fun CinerificDestinationScreen(
             programTitle = SINK_OR_SWIM_TITLE,
             favoriteProgramTitles = favoriteProgramTitles,
             onFavoriteToggled = onFavoriteToggled,
+            userProgramRatings = userProgramRatings,
+            onProgramRated = onProgramRated,
             onProgramSelected = onProgramSelected,
             modifier = modifier
         )
@@ -277,6 +302,8 @@ private fun CinerificCatalogScreen(
     showViewportNav: Boolean,
     isShows: Boolean,
     onProgramSelected: (String) -> Unit,
+    initialGenre: ViewportGenre = ViewportGenre.All,
+    initialMode: ViewportMode = ViewportMode.CollageLarge,
     modifier: Modifier = Modifier
 ) {
     BoxWithConstraints(
@@ -300,8 +327,8 @@ private fun CinerificCatalogScreen(
                 (cardWidth.value + cardGap.value)
             ).toInt().coerceAtLeast(1)
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
-        var selectedGenre by remember(titleResId) { mutableStateOf(ViewportGenre.All) }
-        var selectedMode by remember(titleResId) { mutableStateOf(ViewportMode.CollageLarge) }
+        var selectedGenre by remember(titleResId, initialGenre) { mutableStateOf(initialGenre) }
+        var selectedMode by remember(titleResId, initialMode) { mutableStateOf(initialMode) }
         val scrollState = rememberScrollState()
         val title = stringResource(titleResId)
         val description = stringResource(descriptionResId)
@@ -834,6 +861,8 @@ internal fun CinerificProgramDetailsScreen(
     programTitle: String,
     favoriteProgramTitles: List<String> = emptyList(),
     onFavoriteToggled: (String) -> Unit = {},
+    userProgramRatings: Map<String, Int> = emptyMap(),
+    onProgramRated: (String, Int) -> Unit = { _, _ -> },
     onProgramSelected: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -872,6 +901,9 @@ internal fun CinerificProgramDetailsScreen(
         val isFavorited = program.title in favoriteProgramTitles
         val cardReveal = remember(program.title) { Animatable(0f) }
         var playLoading by remember(program.title) { mutableStateOf(false) }
+        val userRating = userProgramRatings[program.title]
+        val selectedRating = userRating ?: details.rating
+        val userHasRated = userRating != null
         val detailScrollState = rememberScrollState()
 
         LaunchedEffect(program.title) {
@@ -931,7 +963,11 @@ internal fun CinerificProgramDetailsScreen(
                     synopsis = synopsis,
                     director = details.director,
                     producer = details.producer,
-                    rating = details.rating,
+                    rating = selectedRating,
+                    userHasRated = userHasRated,
+                    onRatingSelected = {
+                        onProgramRated(program.title, it)
+                    },
                     scale = scale
                 )
                 SinkOrSwimLibraryRows(
@@ -1372,6 +1408,8 @@ private fun SinkOrSwimInfoPanel(
     director: String,
     producer: String,
     rating: Int,
+    userHasRated: Boolean,
+    onRatingSelected: (Int) -> Unit,
     scale: Float
 ) {
     val panelHorizontalPadding = destinationDp(DETAIL_LIBRARY_HORIZONTAL_PADDING, scale)
@@ -1511,7 +1549,7 @@ private fun SinkOrSwimInfoPanel(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(destinationDp(DETAIL_INFO_PANEL_RATING_STAR_SIZE, scale))
+                        .height(destinationDp(DETAIL_INFO_PANEL_RATING_STAR_CANVAS_SIZE, scale))
                         .onGloballyPositioned { coordinates ->
                             ratingRowWidthPx = coordinates.size.width
                         }
@@ -1519,6 +1557,8 @@ private fun SinkOrSwimInfoPanel(
                     SinkOrSwimRatingStars(
                         rating = rating,
                         scale = scale,
+                        userHasRated = userHasRated,
+                        onRatingSelected = onRatingSelected,
                         modifier = Modifier
                             .offset {
                                 IntOffset(ratingStartOffsetPx.roundToInt(), 0)
@@ -1558,24 +1598,144 @@ private fun SinkOrSwimPanelText(
 private fun SinkOrSwimRatingStars(
     rating: Int,
     scale: Float,
+    userHasRated: Boolean,
+    onRatingSelected: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier.graphicsLayer {
+            alpha = if (userHasRated) 1f else DETAIL_INFO_PANEL_RATING_STACK_ALPHA
+        },
         horizontalArrangement = Arrangement.spacedBy(
             destinationDp(DETAIL_INFO_PANEL_RATING_STAR_GAP, scale)
         ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         repeat(5) { index ->
-            Icon(
-                imageVector = Icons.Rounded.Star,
-                contentDescription = null,
-                tint = if (index < rating) Color(0xFFFFC91B) else Color(0xFFC9C4CC),
-                modifier = Modifier.size(destinationDp(DETAIL_INFO_PANEL_RATING_STAR_SIZE, scale))
+            val starRating = index + 1
+            val interactionSource = remember { MutableInteractionSource() }
+            SinkOrSwimRatingStar(
+                filled = index < rating,
+                scale = scale,
+                outlined = !userHasRated,
+                modifier = Modifier
+                    .semantics { contentDescription = "Set rating to $starRating stars" }
+                    .clickable(
+                        interactionSource = interactionSource,
+                        indication = null,
+                        role = Role.Button
+                    ) {
+                        onRatingSelected(starRating)
+                    }
             )
         }
     }
+}
+
+@Composable
+private fun SinkOrSwimRatingStar(
+    filled: Boolean,
+    scale: Float,
+    outlined: Boolean,
+    modifier: Modifier = Modifier
+) {
+    val fillColor = if (filled) Color(0xFFFFC91B) else Color(0xFFC9C4CC)
+    val strokeColor = Color(0xFFC9C4CC)
+
+    Canvas(
+        modifier = modifier
+            .size(destinationDp(DETAIL_INFO_PANEL_RATING_STAR_CANVAS_SIZE, scale))
+            .graphicsLayer {
+                compositingStrategy = CompositingStrategy.Offscreen
+            }
+    ) {
+        val starRadius = destinationDp(DETAIL_INFO_PANEL_RATING_STAR_SIZE / 2f, scale).toPx()
+        val clearStroke = destinationDp(DETAIL_INFO_PANEL_RATING_STAR_CLEAR_STROKE, scale).toPx()
+        val grayStroke = destinationDp(DETAIL_INFO_PANEL_RATING_STAR_GRAY_STROKE, scale).toPx()
+        val center = Offset(size.width / 2f, size.height / 2f)
+        val starPath = cinerificRatingStarPath(center = center, outerRadius = starRadius)
+
+        if (outlined) {
+            drawPath(
+                path = starPath,
+                color = strokeColor,
+                style = Stroke(
+                    width = (clearStroke + grayStroke) * 2f,
+                    join = StrokeJoin.Round
+                )
+            )
+            drawPath(
+                path = starPath,
+                color = Color.Transparent,
+                style = Stroke(
+                    width = clearStroke * 2f,
+                    join = StrokeJoin.Round
+                ),
+                blendMode = BlendMode.Clear
+            )
+        }
+        drawPath(
+            path = starPath,
+            color = fillColor
+        )
+    }
+}
+
+private fun cinerificRatingStarPath(
+    center: Offset,
+    outerRadius: Float
+): Path {
+    val innerRadius = outerRadius * 0.48f
+    val cornerRadius = outerRadius * 0.2f
+    val vertices = List(10) { index ->
+        val radius = if (index % 2 == 0) outerRadius else innerRadius
+        val angle = -Math.PI / 2.0 + index * Math.PI / 5.0
+        Offset(
+            x = center.x + cos(angle).toFloat() * radius,
+            y = center.y + sin(angle).toFloat() * radius
+        )
+    }
+
+    return roundedPolygonPath(vertices, cornerRadius)
+}
+
+private fun roundedPolygonPath(
+    vertices: List<Offset>,
+    cornerRadius: Float
+): Path {
+    if (vertices.isEmpty()) return Path()
+
+    return Path().apply {
+        vertices.forEachIndexed { index, vertex ->
+            val previous = vertices[(index - 1).floorMod(vertices.size)]
+            val next = vertices[(index + 1).floorMod(vertices.size)]
+            val start = vertex.pointToward(previous, cornerRadius)
+            val end = vertex.pointToward(next, cornerRadius)
+
+            if (index == 0) {
+                moveTo(start.x, start.y)
+            } else {
+                lineTo(start.x, start.y)
+            }
+            quadraticBezierTo(vertex.x, vertex.y, end.x, end.y)
+        }
+        close()
+    }
+}
+
+private fun Offset.pointToward(
+    target: Offset,
+    distance: Float
+): Offset {
+    val dx = target.x - x
+    val dy = target.y - y
+    val length = sqrt(dx * dx + dy * dy).coerceAtLeast(0.001f)
+    val clampedDistance = distance.coerceAtMost(length * 0.45f)
+
+    return Offset(
+        x = x + dx / length * clampedDistance,
+        y = y + dy / length * clampedDistance
+    )
 }
 
 @Composable
@@ -2591,6 +2751,12 @@ private fun destinationSectionTopPadding(index: Int, showViewportNav: Boolean): 
     }
 }
 
+internal data class CinerificCatalogRoute(
+    val destination: CinerificDestination,
+    val genre: ViewportGenre,
+    val mode: ViewportMode
+)
+
 private data class DestinationRowSpec(
     @StringRes val titleResId: Int,
     val genre: ViewportGenre,
@@ -2809,54 +2975,30 @@ private val MovieRows = listOf(
         genre = ViewportGenre.Action,
         programs = listOf(
             movie("Eruption", ViewportGenre.Action, R.drawable.eruption_card),
-            movie("Under Attack", ViewportGenre.Action, R.drawable.under_attack_card),
-            movie("Operation Firefly", ViewportGenre.Action, R.drawable.operation_firefly_card),
-            movie("Smoke", ViewportGenre.Action, R.drawable.smoke_card),
-            movie("Joyriders", ViewportGenre.Action, R.drawable.joyriders_card)
+            movie("Under Attack", ViewportGenre.Action, R.drawable.under_attack_card)
         )
     ),
     DestinationRowSpec(
         titleResId = R.string.row_comedy_movies,
         genre = ViewportGenre.Comedy,
         programs = listOf(
-            movie("Citric", ViewportGenre.Comedy, R.drawable.citric_card),
             movie("The Baller", ViewportGenre.Comedy, R.drawable.the_baller_card),
-            movie("Laughing Matters", ViewportGenre.Comedy, R.drawable.laughing_matters_card),
-            movie("Troublemaker", ViewportGenre.Comedy, R.drawable.troublemaker_card),
-            movie("Lost in Time", ViewportGenre.Comedy, R.drawable.lost_in_time_card)
+            movie("Troublemaker", ViewportGenre.Comedy, R.drawable.troublemaker_card)
         )
     ),
     DestinationRowSpec(
         titleResId = R.string.row_crime_movies,
         genre = ViewportGenre.Crime,
         programs = listOf(
-            movie("No Trespassing", ViewportGenre.Crime, R.drawable.no_trespassing_card),
             movie("One Last Breath", ViewportGenre.Crime, R.drawable.one_last_breath_card),
-            movie("Sink or Swim", ViewportGenre.Crime, R.drawable.sink_or_swim_card),
-            movie("Hungry Heart", ViewportGenre.Crime, R.drawable.hungry_heart_card)
-        )
-    ),
-    DestinationRowSpec(
-        titleResId = R.string.row_documentary_movies,
-        genre = ViewportGenre.Documentary,
-        programs = listOf(
-            movie("Incan Descent", ViewportGenre.Documentary, R.drawable.incan_descent_card),
-            movie("Or Not To Be", ViewportGenre.Documentary, R.drawable.or_not_to_be_card),
-            movie("Surfside", ViewportGenre.Documentary, R.drawable.surfside_card),
-            movie("Wheels", ViewportGenre.Documentary, R.drawable.wheels_card),
-            movie("Light as a Feather", ViewportGenre.Documentary, R.drawable.light_as_a_feather_card)
+            movie("Sink or Swim", ViewportGenre.Crime, R.drawable.sink_or_swim_card)
         )
     ),
     DestinationRowSpec(
         titleResId = R.string.row_drama_movies,
         genre = ViewportGenre.Drama,
         programs = listOf(
-            movie("Breathing", ViewportGenre.Drama, R.drawable.breathing_card),
-            movie("Falling Behind", ViewportGenre.Drama, R.drawable.falling_behind_card),
-            movie("Still There", ViewportGenre.Drama, R.drawable.still_there_card),
-            movie("If I May", ViewportGenre.Drama, R.drawable.if_i_may_card),
-            movie("Moments", ViewportGenre.Drama, R.drawable.moments_card),
-            movie("Chasing Light", ViewportGenre.Drama, R.drawable.chasing_light_card)
+            movie("If I May", ViewportGenre.Drama, R.drawable.if_i_may_card)
         )
     ),
     DestinationRowSpec(
@@ -2864,9 +3006,7 @@ private val MovieRows = listOf(
         genre = ViewportGenre.Horror,
         programs = listOf(
             movie("The Playmate", ViewportGenre.Horror, R.drawable.the_playmate_card),
-            movie("Help", ViewportGenre.Horror, R.drawable.help_card),
-            movie("Skin and Bones", ViewportGenre.Horror, R.drawable.skin_and_bones_card),
-            movie("The Appetizer", ViewportGenre.Horror, R.drawable.the_appetizer_card)
+            movie("Help", ViewportGenre.Horror, R.drawable.help_card)
         )
     ),
     DestinationRowSpec(
@@ -2874,10 +3014,7 @@ private val MovieRows = listOf(
         genre = ViewportGenre.Thriller,
         programs = listOf(
             movie("Morbid Temptations", ViewportGenre.Thriller, R.drawable.morbid_temptations_card),
-            movie("Enlightenment", ViewportGenre.Thriller, R.drawable.enlightenment_card),
-            movie("Ignition", ViewportGenre.Thriller, R.drawable.ignition_card),
-            movie("Deadbeat", ViewportGenre.Thriller, R.drawable.deadbeat_card),
-            movie("Playing with Fire", ViewportGenre.Thriller, R.drawable.playing_with_fire_card)
+            movie("Ignition", ViewportGenre.Thriller, R.drawable.ignition_card)
         )
     )
 )
@@ -3172,6 +3309,51 @@ private fun detailProgramSpec(title: String): DestinationProgramSpec? {
 
 internal fun cinerificProgramIsShow(title: String): Boolean {
     return detailProgramSpec(title)?.isShow ?: (title in PrototypeShowSmallTitleOrder)
+}
+
+internal fun cinerificHomeCatalogRoute(
+    genre: ViewportGenre,
+    titles: List<String>
+): CinerificCatalogRoute {
+    val movieTitles = MovieRows.titlesForGenre(genre)
+    val showTitles = ShowRows.titlesForGenre(genre)
+    val movieCount = titles.count { it in movieTitles }
+    val showCount = titles.count { it in showTitles }
+    val destination = when {
+        movieCount > showCount -> CinerificDestination.Movies
+        showCount > movieCount -> CinerificDestination.Shows
+        else -> cinerificCatalogTieBreakDestination(titles, movieTitles, showTitles)
+    }
+
+    return CinerificCatalogRoute(
+        destination = destination,
+        genre = genre,
+        mode = ViewportMode.CollageSmall
+    )
+}
+
+private fun List<DestinationRowSpec>.titlesForGenre(genre: ViewportGenre): Set<String> {
+    return asSequence()
+        .filter { it.genre == genre }
+        .flatMap { it.programs.asSequence() }
+        .map { it.title }
+        .toSet()
+}
+
+private fun cinerificCatalogTieBreakDestination(
+    titles: List<String>,
+    movieTitles: Set<String>,
+    showTitles: Set<String>
+): CinerificDestination {
+    titles.forEach { title ->
+        val isMovie = title in movieTitles
+        val isShow = title in showTitles
+        when {
+            isMovie && !isShow -> return CinerificDestination.Movies
+            isShow && !isMovie -> return CinerificDestination.Shows
+        }
+    }
+    return CinerificDestination.Movies
 }
 
 internal fun cinerificFilledFavoritePlaceholderCount(

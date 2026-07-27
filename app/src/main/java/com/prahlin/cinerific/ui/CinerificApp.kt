@@ -169,6 +169,8 @@ private fun CinerificMainExperience(
     var destination by remember { mutableStateOf(CinerificDestination.Home) }
     var selectedProgramTitle by rememberSaveable { mutableStateOf("Sink or Swim") }
     var favoriteProgramTitles by rememberSaveable { mutableStateOf(emptyList<String>()) }
+    var userProgramRatings by rememberSaveable { mutableStateOf(emptyMap<String, Int>()) }
+    var catalogRoute by remember { mutableStateOf<CinerificCatalogRoute?>(null) }
     var favoritesFullPromptRequestId by remember { mutableStateOf(0) }
     var autoLogoutEnabled by rememberSaveable { mutableStateOf(false) }
     var userInitiatedPlaybackActive by remember { mutableStateOf(false) }
@@ -200,8 +202,18 @@ private fun CinerificMainExperience(
     }
 
     fun showProgramDetails(title: String) {
+        catalogRoute = null
         selectedProgramTitle = title
         destination = CinerificDestination.ProgramDetails
+    }
+
+    fun showCatalog(route: CinerificCatalogRoute) {
+        catalogRoute = route
+        destination = route.destination
+    }
+
+    fun rateProgram(title: String, rating: Int) {
+        userProgramRatings = userProgramRatings + (title to rating.coerceIn(1, 5))
     }
 
     fun toggleFavoriteProgram(title: String) {
@@ -239,6 +251,7 @@ private fun CinerificMainExperience(
             when (destination) {
                 CinerificDestination.Home -> CinerificHomeScreen(
                     onProgramSelected = ::showProgramDetails,
+                    onCatalogSelected = ::showCatalog,
                     modifier = Modifier.fillMaxSize()
                 )
                 CinerificDestination.Movies,
@@ -257,13 +270,18 @@ private fun CinerificMainExperience(
                     onSignOut = onSignOut,
                     favoriteProgramTitles = favoriteProgramTitles,
                     onFavoriteToggled = ::toggleFavoriteProgram,
+                    userProgramRatings = userProgramRatings,
+                    onProgramRated = ::rateProgram,
                     onProgramSelected = ::showProgramDetails,
+                    catalogRoute = catalogRoute?.takeIf { it.destination == destination },
                     modifier = Modifier.fillMaxSize()
                 )
                 CinerificDestination.ProgramDetails -> CinerificProgramDetailsScreen(
                     programTitle = selectedProgramTitle,
                     favoriteProgramTitles = favoriteProgramTitles,
                     onFavoriteToggled = ::toggleFavoriteProgram,
+                    userProgramRatings = userProgramRatings,
+                    onProgramRated = ::rateProgram,
                     onProgramSelected = ::showProgramDetails,
                     modifier = Modifier.fillMaxSize()
                 )
@@ -271,7 +289,10 @@ private fun CinerificMainExperience(
 
             CinerificRightSideNavBar(
                 currentDestination = destination,
-                onDestinationSelected = { destination = it },
+                onDestinationSelected = {
+                    catalogRoute = null
+                    destination = it
+                },
                 modifier = Modifier.fillMaxSize()
             )
 

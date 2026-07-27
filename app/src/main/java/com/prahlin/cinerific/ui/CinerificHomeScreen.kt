@@ -90,6 +90,7 @@ private val HomeText = Color(0xFFE7E7E7)
 @Composable
 internal fun CinerificHomeScreen(
     onProgramSelected: (String) -> Unit = {},
+    onCatalogSelected: (CinerificCatalogRoute) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BoxWithConstraints(
@@ -153,10 +154,15 @@ internal fun CinerificHomeScreen(
             )
 
             HomeProgramRows.forEachIndexed { index, row ->
+                val catalogRoute = cinerificHomeCatalogRoute(
+                    genre = row.genre,
+                    titles = row.cardIds.mapNotNull(::homeProgramTitleForCard)
+                )
                 HomeProgramRow(
                     title = stringResource(row.titleResId),
                     cardIds = row.cardIds,
                     onProgramSelected = handleHomeProgramSelected,
+                    onCatalogSelected = { onCatalogSelected(catalogRoute) },
                     horizontalPadding = horizontalPadding,
                     cardWidth = cardWidth,
                     cardHeight = cardHeight,
@@ -244,6 +250,7 @@ private fun HomeProgramRow(
     title: String,
     @DrawableRes cardIds: List<Int>,
     onProgramSelected: (String) -> Unit,
+    onCatalogSelected: () -> Unit,
     horizontalPadding: Dp,
     cardWidth: Dp,
     cardHeight: Dp,
@@ -268,13 +275,26 @@ private fun HomeProgramRow(
                 fontSize = 36.sp,
                 fontWeight = FontWeight.Black,
                 letterSpacing = 0.sp,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null
+                ) {
+                    onCatalogSelected()
+                }
             )
+            Spacer(modifier = Modifier.weight(1f))
             Icon(
                 imageVector = Icons.Rounded.ChevronRight,
                 contentDescription = "$title row",
                 tint = HomeText,
-                modifier = Modifier.size(48.dp)
+                modifier = Modifier
+                    .size(48.dp)
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null
+                    ) {
+                        onCatalogSelected()
+                    }
             )
         }
 
@@ -781,6 +801,7 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
 
 private data class HomeProgramRowSpec(
     @StringRes val titleResId: Int,
+    val genre: ViewportGenre,
     @DrawableRes val cardIds: List<Int>
 )
 
@@ -828,6 +849,7 @@ private fun homeProgramTitleForCard(@DrawableRes cardId: Int): String? = when (c
 private val HomeProgramRows = listOf(
     HomeProgramRowSpec(
         titleResId = R.string.home_row_crime,
+        genre = ViewportGenre.Crime,
         cardIds = listOf(
             R.drawable.no_trespassing_card,
             R.drawable.one_last_breath_card,
@@ -837,6 +859,7 @@ private val HomeProgramRows = listOf(
     ),
     HomeProgramRowSpec(
         titleResId = R.string.home_row_thriller,
+        genre = ViewportGenre.Thriller,
         cardIds = listOf(
             R.drawable.morbid_temptations_card,
             R.drawable.enlightenment_card,
@@ -847,6 +870,7 @@ private val HomeProgramRows = listOf(
     ),
     HomeProgramRowSpec(
         titleResId = R.string.home_row_comedy,
+        genre = ViewportGenre.Comedy,
         cardIds = listOf(
             R.drawable.citric_card,
             R.drawable.troublemaker_card,
@@ -857,6 +881,7 @@ private val HomeProgramRows = listOf(
     ),
     HomeProgramRowSpec(
         titleResId = R.string.home_row_action,
+        genre = ViewportGenre.Action,
         cardIds = listOf(
             R.drawable.eruption_card,
             R.drawable.under_attack_card,
@@ -867,6 +892,7 @@ private val HomeProgramRows = listOf(
     ),
     HomeProgramRowSpec(
         titleResId = R.string.home_row_drama,
+        genre = ViewportGenre.Drama,
         cardIds = listOf(
             R.drawable.infatuation_card,
             R.drawable.breathing_card,
@@ -879,6 +905,7 @@ private val HomeProgramRows = listOf(
     ),
     HomeProgramRowSpec(
         titleResId = R.string.home_row_documentary,
+        genre = ViewportGenre.Documentary,
         cardIds = listOf(
             R.drawable.light_as_air_card,
             R.drawable.into_the_wild_card,
@@ -891,6 +918,7 @@ private val HomeProgramRows = listOf(
     ),
     HomeProgramRowSpec(
         titleResId = R.string.home_row_horror,
+        genre = ViewportGenre.Horror,
         cardIds = listOf(
             R.drawable.the_playmate_card,
             R.drawable.help_card,
