@@ -51,6 +51,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -89,6 +90,24 @@ private const val FAVORITES_FULL_PROMPT_TEXT_Y = 37f
 private const val FAVORITES_FULL_PROMPT_TEXT_WIDTH = 68f
 private const val FAVORITES_FULL_PROMPT_TEXT_HEIGHT = 84f
 private const val FAVORITES_FULL_PROMPT_VISIBLE_MS = 2200L
+private const val SIGN_IN_AVATAR_SIZE = 176f
+private const val SIGN_IN_PORTRAIT_STACK_SHIFT_Y = -51f
+private const val SIGN_IN_LANDSCAPE_STACK_SHIFT_Y = -61f
+private const val SIGN_IN_NAME_TOP = 655f
+private const val SIGN_IN_LANDSCAPE_ACCOUNT_PROMPT_EXTRA_SHIFT_Y = -36f
+private const val ACCOUNT_PROMPT_CREATE_TEXT = "Create Account"
+private const val ACCOUNT_PROMPT_SIGN_IN_TEXT = "Sign In"
+private const val ACCOUNT_PROMPT_FORGOT_TEXT = "Forgot Password"
+private const val ACCOUNT_PROMPT_LEFT_ANCHOR_X = 152f
+private const val ACCOUNT_PROMPT_SIGN_IN_CENTER_X = 597f
+private const val ACCOUNT_PROMPT_RIGHT_ANCHOR_X = 1042f
+private const val ACCOUNT_PROMPT_WIDTH = 300f
+private const val ACCOUNT_PROMPT_TOP = 770f
+private const val ACCOUNT_PROMPT_HEIGHT = 45f
+private const val ACCOUNT_PROMPT_TEXT_SIZE = 30f
+private const val ACCOUNT_PROMPT_LANDSCAPE_TEXT_SIZE = 24.3f
+private const val ACCOUNT_PROMPT_SECONDARY_TEXT_SCALE = 0.8f
+private const val ACCOUNT_PROMPT_LINE_HEIGHT = 38f
 
 private val ColorFrame1Background = Color(0xFF000000)
 private val ColorFrame2Background = Color(0xFF600878)
@@ -321,6 +340,7 @@ private fun CinerificMainExperience(
 
             FavoritesFullPromptOverlay(
                 requestId = favoritesFullPromptRequestId,
+                currentDestination = destination,
                 suppressed = userInitiatedPlaybackActive,
                 modifier = Modifier.fillMaxSize()
             )
@@ -349,6 +369,7 @@ private fun cinerificSavedCatalogRoute(
 @Composable
 private fun FavoritesFullPromptOverlay(
     requestId: Int,
+    currentDestination: CinerificDestination,
     suppressed: Boolean,
     modifier: Modifier = Modifier
 ) {
@@ -383,12 +404,19 @@ private fun FavoritesFullPromptOverlay(
 
     BoxWithConstraints(modifier = modifier) {
         val stageScale = maxWidth.value / FIGMA_FRAME_WIDTH
+        val isPortraitDetail = currentDestination == CinerificDestination.ProgramDetails &&
+            maxHeight > maxWidth
+        val promptY = if (isPortraitDetail) {
+            DETAIL_HERO_LOGO_CENTER_Y - FAVORITES_FULL_PROMPT_HEIGHT / 2f
+        } else {
+            FAVORITES_FULL_PROMPT_Y
+        }
         FavoritesFullPromptBubble(
             stageScale = stageScale,
             modifier = Modifier
                 .absoluteOffset(
                     x = (FAVORITES_FULL_PROMPT_X * stageScale).dp,
-                    y = (FAVORITES_FULL_PROMPT_Y * stageScale).dp
+                    y = (promptY * stageScale).dp
                 )
                 .graphicsLayer {
                     this.alpha = alpha
@@ -496,6 +524,7 @@ private fun BootIntroFromFigma(progress: Float) {
         val stageScale = min(size.width / FIGMA_FRAME_WIDTH, size.height / FIGMA_FRAME_HEIGHT)
         val stageLeft = (size.width - FIGMA_FRAME_WIDTH * stageScale) / 2f
         val stageTop = (size.height - FIGMA_FRAME_HEIGHT * stageScale) / 2f
+        val stackShiftY = signInStackShiftY(size.width > size.height)
 
         drawRect(brush = background, size = size)
 
@@ -533,15 +562,15 @@ private fun BootIntroFromFigma(progress: Float) {
 
         if (avatarSettleAlpha > 0.01f) {
             val y = avatarYOffset
-            drawFigmaImage(images.steveAvatar, FigmaBounds(130f, 428f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
-            drawFigmaImage(images.martinAvatar, FigmaBounds(368f, 428f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
-            drawFigmaImage(images.jannyAvatar, FigmaBounds(606f, 432f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
-            drawFigmaImage(images.guestAvatar, FigmaBounds(844f, 428f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
+            drawFigmaImage(images.steveAvatar, FigmaBounds(152f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
+            drawFigmaImage(images.martinAvatar, FigmaBounds(390f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
+            drawFigmaImage(images.jannyAvatar, FigmaBounds(628f, 454f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
+            drawFigmaImage(images.guestAvatar, FigmaBounds(866f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
 
-            drawFigmaImage(images.steveName, FigmaBounds(130f, 683f + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
-            drawFigmaImage(images.martinName, FigmaBounds(368f, 683f + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
-            drawFigmaImage(images.jannyName, FigmaBounds(606f, 683f + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
-            drawFigmaImage(images.guestName, FigmaBounds(854f, 683f + y, 200f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
+            drawFigmaImage(images.steveName, FigmaBounds(130f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
+            drawFigmaImage(images.martinName, FigmaBounds(368f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
+            drawFigmaImage(images.jannyName, FigmaBounds(606f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
+            drawFigmaImage(images.guestName, FigmaBounds(854f, SIGN_IN_NAME_TOP + stackShiftY + y, 200f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
         }
     }
 }
@@ -821,6 +850,12 @@ private fun SettlingLogoLayer(
 @Composable
 private fun AvatarSelectionLayer(scale: Float, alpha: Float, yOffset: Float) {
     val density = LocalDensity.current.density
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.screenWidthDp > configuration.screenHeightDp
+    val stackShiftY = signInStackShiftY(isLandscape)
+    val accountPromptExtraShiftY = signInAccountPromptExtraShiftY(isLandscape)
+    val accountPromptTextSize = signInAccountPromptTextSize(isLandscape)
+    val accountPromptSecondaryTextSize = accountPromptTextSize * ACCOUNT_PROMPT_SECONDARY_TEXT_SCALE
     Box(
         modifier = Modifier
             .requiredSize(figma(1194f, scale), figma(834f, scale))
@@ -830,15 +865,80 @@ private fun AvatarSelectionLayer(scale: Float, alpha: Float, yOffset: Float) {
             }
     ) {
         // Figma Logo Slide 2, Property 1=Variant2, constrained inside Sign-in Frame.
-        FigmaAvatarImage(x = 130f, y = 428f, w = 220f, h = 220f, scale = scale, resId = R.drawable.steve_avatar_bubble_edge50_body0_test)
-        FigmaAvatarImage(x = 368f, y = 428f, w = 220f, h = 220f, scale = scale, resId = R.drawable.martin_avatar_bubble_edge50_body0_test)
-        FigmaAvatarImage(x = 606f, y = 432f, w = 220f, h = 220f, scale = scale, resId = R.drawable.janny_avatar_bubble_edge50_body0_test)
-        FigmaAvatarImage(x = 844f, y = 428f, w = 220f, h = 220f, scale = scale, resId = R.drawable.guest_avatar_bubble_edge50_body0_test)
+        FigmaAvatarImage(x = 152f, y = 450f + stackShiftY, w = SIGN_IN_AVATAR_SIZE, h = SIGN_IN_AVATAR_SIZE, scale = scale, resId = R.drawable.steve_avatar_bubble_edge50_body0_test)
+        FigmaAvatarImage(x = 390f, y = 450f + stackShiftY, w = SIGN_IN_AVATAR_SIZE, h = SIGN_IN_AVATAR_SIZE, scale = scale, resId = R.drawable.martin_avatar_bubble_edge50_body0_test)
+        FigmaAvatarImage(x = 628f, y = 454f + stackShiftY, w = SIGN_IN_AVATAR_SIZE, h = SIGN_IN_AVATAR_SIZE, scale = scale, resId = R.drawable.janny_avatar_bubble_edge50_body0_test)
+        FigmaAvatarImage(x = 866f, y = 450f + stackShiftY, w = SIGN_IN_AVATAR_SIZE, h = SIGN_IN_AVATAR_SIZE, scale = scale, resId = R.drawable.guest_avatar_bubble_edge50_body0_test)
 
-        FigmaAssetImage(x = 130f, y = 683f, w = 220f, h = 72f, scale = scale, resId = R.drawable.steve_name)
-        FigmaAssetImage(x = 368f, y = 683f, w = 220f, h = 72f, scale = scale, resId = R.drawable.martin_name)
-        FigmaAssetImage(x = 606f, y = 683f, w = 220f, h = 72f, scale = scale, resId = R.drawable.janny_name)
-        FigmaAssetImage(x = 854f, y = 683f, w = 200f, h = 72f, scale = scale, resId = R.drawable.guest_name)
+        FigmaAssetImage(x = 130f, y = SIGN_IN_NAME_TOP + stackShiftY, w = 220f, h = 72f, scale = scale, resId = R.drawable.steve_name)
+        FigmaAssetImage(x = 368f, y = SIGN_IN_NAME_TOP + stackShiftY, w = 220f, h = 72f, scale = scale, resId = R.drawable.martin_name)
+        FigmaAssetImage(x = 606f, y = SIGN_IN_NAME_TOP + stackShiftY, w = 220f, h = 72f, scale = scale, resId = R.drawable.janny_name)
+        FigmaAssetImage(x = 854f, y = SIGN_IN_NAME_TOP + stackShiftY, w = 200f, h = 72f, scale = scale, resId = R.drawable.guest_name)
+        SignInPromptText(
+            text = ACCOUNT_PROMPT_CREATE_TEXT,
+            x = ACCOUNT_PROMPT_LEFT_ANCHOR_X,
+            y = ACCOUNT_PROMPT_TOP + stackShiftY + accountPromptExtraShiftY,
+            textSize = accountPromptSecondaryTextSize,
+            textAlign = TextAlign.Left,
+            scale = scale
+        )
+        SignInPromptText(
+            text = ACCOUNT_PROMPT_SIGN_IN_TEXT,
+            x = ACCOUNT_PROMPT_SIGN_IN_CENTER_X - ACCOUNT_PROMPT_WIDTH / 2f,
+            y = ACCOUNT_PROMPT_TOP + stackShiftY + accountPromptExtraShiftY,
+            textSize = accountPromptTextSize,
+            fontWeight = FontWeight.Black,
+            scale = scale
+        )
+        SignInPromptText(
+            text = ACCOUNT_PROMPT_FORGOT_TEXT,
+            x = ACCOUNT_PROMPT_RIGHT_ANCHOR_X - ACCOUNT_PROMPT_WIDTH,
+            y = ACCOUNT_PROMPT_TOP + stackShiftY + accountPromptExtraShiftY,
+            textSize = accountPromptSecondaryTextSize,
+            textAlign = TextAlign.Right,
+            scale = scale
+        )
+    }
+}
+
+@Composable
+private fun SignInPromptText(
+    text: String,
+    x: Float,
+    y: Float,
+    textSize: Float,
+    fontWeight: FontWeight = FontWeight.SemiBold,
+    textAlign: TextAlign = TextAlign.Center,
+    scale: Float
+) {
+    val contentAlignment = when (textAlign) {
+        TextAlign.Left -> Alignment.CenterStart
+        TextAlign.Right -> Alignment.CenterEnd
+        else -> Alignment.Center
+    }
+    Box(
+        modifier = Modifier
+            .absoluteOffset(
+                x = figma(x, scale),
+                y = figma(y, scale)
+            )
+            .requiredSize(
+                width = figma(ACCOUNT_PROMPT_WIDTH, scale),
+                height = figma(ACCOUNT_PROMPT_HEIGHT, scale)
+            ),
+        contentAlignment = contentAlignment
+    ) {
+        Text(
+            text = text,
+            color = Color.White,
+            fontFamily = CinerificAppTextFontFamily,
+            fontSize = (textSize * scale).sp,
+            fontWeight = fontWeight,
+            lineHeight = (ACCOUNT_PROMPT_LINE_HEIGHT * textSize / ACCOUNT_PROMPT_TEXT_SIZE * scale).sp,
+            maxLines = 1,
+            softWrap = false,
+            textAlign = textAlign
+        )
     }
 }
 
@@ -976,6 +1076,22 @@ private fun FigmaStage(background: Brush, content: @Composable BoxWithConstraint
 }
 
 private fun figma(px: Float, scale: Float) = (px * scale).dp
+
+private fun signInStackShiftY(isLandscape: Boolean): Float {
+    return if (isLandscape) {
+        SIGN_IN_LANDSCAPE_STACK_SHIFT_Y
+    } else {
+        SIGN_IN_PORTRAIT_STACK_SHIFT_Y
+    }
+}
+
+private fun signInAccountPromptExtraShiftY(isLandscape: Boolean): Float {
+    return if (isLandscape) SIGN_IN_LANDSCAPE_ACCOUNT_PROMPT_EXTRA_SHIFT_Y else 0f
+}
+
+private fun signInAccountPromptTextSize(isLandscape: Boolean): Float {
+    return if (isLandscape) ACCOUNT_PROMPT_LANDSCAPE_TEXT_SIZE else ACCOUNT_PROMPT_TEXT_SIZE
+}
 
 private fun introBackgroundBrush(solidProgress: Float, gradientProgress: Float): Brush {
     val solid = lerpColor(ColorFrame1Background, ColorFrame2Background, solidProgress)

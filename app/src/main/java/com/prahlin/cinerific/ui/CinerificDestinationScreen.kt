@@ -199,6 +199,9 @@ private const val DETAIL_LOADING_SPINNER_WIDTH = 190f
 private const val DETAIL_LOADING_SCRIM_MAX_ALPHA = 0.68f
 private const val DETAIL_HERO_LOGO_WIDTH = 300f
 private const val DETAIL_HERO_LOGO_HEIGHT = 214f
+internal const val DETAIL_HERO_LOGO_CENTER_Y = DETAIL_HERO_LOGO_HEIGHT / 2f
+private const val DETAIL_FAVORITE_LOGO_CENTERED_Y =
+    DETAIL_HERO_LOGO_CENTER_Y - DETAIL_FAVORITE_HEIGHT / 2f
 private const val DETAIL_INFO_PANEL_BOTTOM_PADDING = 56f
 private const val DETAIL_INFO_PANEL_MIN_HEIGHT = 465f
 private const val DETAIL_INFO_PANEL_BACKGROUND_ALPHA = 0.25f
@@ -1056,6 +1059,7 @@ internal fun CinerificProgramDetailsScreen(
         val visibleHeroHeight = (maxHeight - bottomSystemPadding).coerceAtLeast(0.dp)
         val heroHeight = minOf(naturalHeroHeight, visibleHeroHeight)
         val infoPanelScale = (heroHeight.value / DETAIL_HERO_DESIGN_HEIGHT).coerceAtLeast(0.01f)
+        val isPortrait = maxHeight > maxWidth
         val program = detailProgramSpec(programTitle) ?: detailProgramSpec(SINK_OR_SWIM_TITLE)!!
         val title = stringResource(program.titleResId)
         val details = programDetails(
@@ -1115,6 +1119,7 @@ internal fun CinerificProgramDetailsScreen(
                 heroDrawableId = heroDrawableId,
                 contentDescription = title,
                 scale = scale,
+                isPortrait = isPortrait,
                 isFavorited = isFavorited,
                 playLoading = playLoading,
                 onFavoriteToggled = { onFavoriteToggled(program.title) },
@@ -1169,6 +1174,7 @@ private fun ProgramDetailRevealImage(
     @DrawableRes heroDrawableId: Int,
     contentDescription: String,
     scale: Float,
+    isPortrait: Boolean,
     isFavorited: Boolean,
     playLoading: Boolean,
     onFavoriteToggled: () -> Unit,
@@ -1181,6 +1187,11 @@ private fun ProgramDetailRevealImage(
     val spinnerHeight = DETAIL_LOADING_SPINNER_WIDTH *
         CINERIFIC_LOADING_SPINNER_CANVAS_HEIGHT /
         CINERIFIC_LOADING_SPINNER_CANVAS_WIDTH
+    val heroContentScale = if (isPortrait) {
+        ContentScale.Fit
+    } else {
+        ContentScale.Crop
+    }
 
     Box(
         modifier = Modifier
@@ -1197,7 +1208,7 @@ private fun ProgramDetailRevealImage(
                     alpha = 0.46f + revealProgress * 0.54f
                 },
             alignment = Alignment.TopStart,
-            contentScale = ContentScale.Fit
+            contentScale = heroContentScale
         )
         if (heroFullyVisible) {
             if (playLoading) {
@@ -1216,7 +1227,8 @@ private fun ProgramDetailRevealImage(
                 HeroFavoriteToggleButton(
                     isFavorited = isFavorited,
                     onFavoriteToggled = onFavoriteToggled,
-                    scale = scale
+                    scale = scale,
+                    centerVerticallyOnLogo = isPortrait
                 )
                 HeroTransportControls(
                     scale = scale,
@@ -1268,6 +1280,7 @@ private fun HeroFavoriteToggleButton(
     isFavorited: Boolean,
     onFavoriteToggled: () -> Unit,
     scale: Float,
+    centerVerticallyOnLogo: Boolean,
     modifier: Modifier = Modifier
 ) {
     val favoriteBounceScale = remember { Animatable(1f) }
@@ -1322,12 +1335,17 @@ private fun HeroFavoriteToggleButton(
     val controlWidth = destinationDp(DETAIL_FAVORITE_WIDTH, scale)
     val controlHeight = destinationDp(DETAIL_FAVORITE_HEIGHT, scale)
     val burstPadding = destinationDp(FAVORITE_BURST_PADDING, scale)
+    val favoriteY = if (centerVerticallyOnLogo) {
+        DETAIL_FAVORITE_LOGO_CENTERED_Y
+    } else {
+        DETAIL_FAVORITE_Y
+    }
 
     Box(
         modifier = modifier
             .offset(
                 x = destinationDp(DETAIL_FAVORITE_X - FAVORITE_BURST_PADDING, scale),
-                y = destinationDp(DETAIL_FAVORITE_Y - FAVORITE_BURST_PADDING, scale)
+                y = destinationDp(favoriteY - FAVORITE_BURST_PADDING, scale)
             )
             .width(controlWidth + burstPadding + burstPadding)
             .height(controlHeight + burstPadding + burstPadding)
