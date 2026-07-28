@@ -84,6 +84,13 @@ internal class CinerificIntroView(context: Context) : View(context) {
         postInvalidateOnAnimation()
     }
 
+    override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
+        super.onSizeChanged(width, height, oldWidth, oldHeight)
+        pressedAvatarProfile = null
+        clickAvatarProfile = null
+        postInvalidateOnAnimation()
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
@@ -92,27 +99,25 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val burgundyToSettle = easedSegmentMs(progress, 2500, 3900)
         drawIntroBackground(canvas, blackToBurgundy, burgundyToSettle)
 
-        val stageScale = min(width / FIGMA_FRAME_WIDTH, height / FIGMA_FRAME_HEIGHT)
-        val stageLeft = (width - FIGMA_FRAME_WIDTH * stageScale) / 2f
-        val stageTop = (height - FIGMA_FRAME_HEIGHT * stageScale) / 2f
+        val stage = currentStageMetrics() ?: return
 
         val logoAlpha = linearSegmentMs(progress, 90, LOGO_ENTRY_START_MS)
         if (logoAlpha > 0.01f) {
-            drawSettlingLogo(canvas, stageLeft, stageTop, stageScale, progress, logoAlpha)
+            drawSettlingLogo(canvas, stage.left, stage.top, stage.scale, progress, logoAlpha)
         }
 
         val avatarAlpha = easedSegmentMs(progress, 2300, FINAL_SETTLE_END_MS)
         if (avatarAlpha > 0.01f) {
             val y = lerpFloat(56f, 0f, avatarAlpha)
-            drawFigmaBitmap(canvas, steveAvatar, Bounds(130f, 428f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarAlpha)
-            drawFigmaBitmap(canvas, martinAvatar, Bounds(368f, 428f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarAlpha)
-            drawFigmaBitmap(canvas, jannyAvatar, Bounds(606f, 432f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarAlpha)
-            drawFigmaBitmap(canvas, guestAvatar, Bounds(844f, 428f + y, 220f, 220f), stageLeft, stageTop, stageScale, avatarAlpha)
+            drawFigmaBitmap(canvas, steveAvatar, Bounds(130f, 428f + y, 220f, 220f), stage.left, stage.top, stage.scale, avatarAlpha)
+            drawFigmaBitmap(canvas, martinAvatar, Bounds(368f, 428f + y, 220f, 220f), stage.left, stage.top, stage.scale, avatarAlpha)
+            drawFigmaBitmap(canvas, jannyAvatar, Bounds(606f, 432f + y, 220f, 220f), stage.left, stage.top, stage.scale, avatarAlpha)
+            drawFigmaBitmap(canvas, guestAvatar, Bounds(844f, 428f + y, 220f, 220f), stage.left, stage.top, stage.scale, avatarAlpha)
 
-            drawFigmaBitmap(canvas, steveName, Bounds(130f, 683f + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarAlpha)
-            drawFigmaBitmap(canvas, martinName, Bounds(368f, 683f + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarAlpha)
-            drawFigmaBitmap(canvas, jannyName, Bounds(606f, 683f + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarAlpha)
-            drawFigmaBitmap(canvas, guestName, Bounds(854f, 683f + y, 200f, 72f), stageLeft, stageTop, stageScale, avatarAlpha)
+            drawFigmaBitmap(canvas, steveName, Bounds(130f, 683f + y, 220f, 72f), stage.left, stage.top, stage.scale, avatarAlpha)
+            drawFigmaBitmap(canvas, martinName, Bounds(368f, 683f + y, 220f, 72f), stage.left, stage.top, stage.scale, avatarAlpha)
+            drawFigmaBitmap(canvas, jannyName, Bounds(606f, 683f + y, 220f, 72f), stage.left, stage.top, stage.scale, avatarAlpha)
+            drawFigmaBitmap(canvas, guestName, Bounds(854f, 683f + y, 200f, 72f), stage.left, stage.top, stage.scale, avatarAlpha)
         }
 
         if (progress < 1f) {
@@ -233,27 +238,42 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun settledAvatarHitProfile(x: Float, y: Float): CinerificProfile? {
-        if (!isFinalFrameSettled() || width <= 0 || height <= 0) return null
+        if (!isFinalFrameSettled()) return null
 
-        val stageScale = min(width / FIGMA_FRAME_WIDTH, height / FIGMA_FRAME_HEIGHT)
-        val stageLeft = (width - FIGMA_FRAME_WIDTH * stageScale) / 2f
-        val stageTop = (height - FIGMA_FRAME_HEIGHT * stageScale) / 2f
+        val stage = currentStageMetrics() ?: return null
 
         return FINAL_AVATAR_TARGETS.firstOrNull { target ->
             val bounds = target.bounds
-            val centerX = stageLeft + (bounds.x + bounds.w / 2f) * stageScale
-            val centerY = stageTop + (bounds.y + bounds.h / 2f) * stageScale
-            val radius = min(bounds.w, bounds.h) * stageScale / 2f
+            val centerX = stage.left + (bounds.x + bounds.w / 2f) * stage.scale
+            val centerY = stage.top + (bounds.y + bounds.h / 2f) * stage.scale
+            val radius = min(bounds.w, bounds.h) * stage.scale / 2f
             val dx = x - centerX
             val dy = y - centerY
             dx * dx + dy * dy <= radius * radius
         }?.profile
+    }
+
+    private fun currentStageMetrics(): StageMetrics? {
+        if (width <= 0 || height <= 0) return null
+
+        val stageScale = min(width / FIGMA_FRAME_WIDTH, height / FIGMA_FRAME_HEIGHT)
+        return StageMetrics(
+            left = (width - FIGMA_FRAME_WIDTH * stageScale) / 2f,
+            top = (height - FIGMA_FRAME_HEIGHT * stageScale) / 2f,
+            scale = stageScale
+        )
     }
 }
 
 private data class AvatarTarget(
     val profile: CinerificProfile,
     val bounds: Bounds
+)
+
+private data class StageMetrics(
+    val left: Float,
+    val top: Float,
+    val scale: Float
 )
 
 private data class Bounds(

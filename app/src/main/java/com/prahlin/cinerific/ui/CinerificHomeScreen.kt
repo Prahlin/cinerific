@@ -81,6 +81,9 @@ private const val HOME_FRAME_WIDTH = 1194f
 private const val HERO_REEL_VIEWPORT_ASPECT = 1194f / 834f
 private const val CARD_ASPECT = 350f / 263f
 private const val CARD_SCALE = 0.8f
+private const val PORTRAIT_HERO_HEIGHT_FRACTION = 0.48f
+private const val PORTRAIT_CARD_VISIBLE_COUNT = 2.75f
+private const val PORTRAIT_BOTTOM_NAV_CLEARANCE = 118f
 
 private val HomeBackgroundTop = Color(0xFF080007)
 private val HomeBackgroundMid = Color(0xFF23001F)
@@ -100,15 +103,32 @@ internal fun CinerificHomeScreen(
     ) {
         val scale = maxWidth.value / HOME_FRAME_WIDTH
         val density = LocalDensity.current
+        val isPortrait = maxHeight > maxWidth
         val horizontalPadding = figmaDp(50f, scale)
-        val cardWidth = figmaDp(350f, scale) * CARD_SCALE
+        val endPadding = horizontalPadding
+        val cardGap = figmaDp(if (isPortrait) 42f else 50f, scale)
+        val cardWidth = if (isPortrait) {
+            val availableWidth = (
+                maxWidth.value -
+                    horizontalPadding.value -
+                    endPadding.value -
+                    cardGap.value * (PORTRAIT_CARD_VISIBLE_COUNT - 1f)
+                ).coerceAtLeast(0f)
+            (availableWidth / PORTRAIT_CARD_VISIBLE_COUNT).dp
+        } else {
+            figmaDp(350f, scale) * CARD_SCALE
+        }
         val cardHeight = cardWidth / CARD_ASPECT
-        val cardGap = figmaDp(50f, scale)
-        val interStackGap = 80.dp
+        val interStackGap = if (isPortrait) 58.dp else 80.dp
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
         val naturalHeroHeight = (maxWidth.value / HERO_REEL_VIEWPORT_ASPECT).dp
         val visibleHeroHeight = (maxHeight - bottomSystemPadding).coerceAtLeast(0.dp)
-        val heroHeight = minOf(naturalHeroHeight, visibleHeroHeight)
+        val portraitHeroHeight = visibleHeroHeight * PORTRAIT_HERO_HEIGHT_FRACTION
+        val heroHeight = if (isPortrait) {
+            minOf(maxOf(naturalHeroHeight, portraitHeroHeight), visibleHeroHeight)
+        } else {
+            minOf(naturalHeroHeight, visibleHeroHeight)
+        }
         val scrollState = rememberScrollState()
         var activeReelIndex by remember { mutableStateOf(0) }
         var heroPlayKey by remember { mutableStateOf(0) }
@@ -164,14 +184,25 @@ internal fun CinerificHomeScreen(
                     onProgramSelected = handleHomeProgramSelected,
                     onCatalogSelected = { onCatalogSelected(catalogRoute) },
                     horizontalPadding = horizontalPadding,
+                    endPadding = endPadding,
                     cardWidth = cardWidth,
                     cardHeight = cardHeight,
                     cardGap = cardGap,
-                    topPadding = if (index == 0) 52.dp else interStackGap
+                    topPadding = if (index == 0) {
+                        if (isPortrait) 38.dp else 52.dp
+                    } else {
+                        interStackGap
+                    }
                 )
             }
 
-            Spacer(modifier = Modifier.height(interStackGap + bottomSystemPadding))
+            Spacer(
+                modifier = Modifier.height(
+                    interStackGap +
+                        bottomSystemPadding +
+                        if (isPortrait) figmaDp(PORTRAIT_BOTTOM_NAV_CLEARANCE, scale) else 0.dp
+                )
+            )
         }
     }
 }
@@ -252,6 +283,7 @@ private fun HomeProgramRow(
     onProgramSelected: (String) -> Unit,
     onCatalogSelected: () -> Unit,
     horizontalPadding: Dp,
+    endPadding: Dp,
     cardWidth: Dp,
     cardHeight: Dp,
     cardGap: Dp,
@@ -265,7 +297,7 @@ private fun HomeProgramRow(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = horizontalPadding),
+                .padding(start = horizontalPadding, end = endPadding),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -302,7 +334,7 @@ private fun HomeProgramRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .horizontalScroll(rememberScrollState())
-                .padding(start = horizontalPadding, end = horizontalPadding)
+                .padding(start = horizontalPadding, end = endPadding)
                 .padding(top = 20.dp),
             horizontalArrangement = Arrangement.spacedBy(cardGap)
         ) {

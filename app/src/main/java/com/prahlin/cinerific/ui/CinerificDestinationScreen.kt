@@ -103,6 +103,9 @@ private const val DESTINATION_FRAME_WIDTH = 1194f
 private const val DESTINATION_TOP_BAR_TITLE_BOTTOM = 18f
 private const val DESTINATION_CARD_ASPECT = 350f / 263f
 private const val DESTINATION_CARD_SCALE = 0.8f
+private const val DETAIL_HERO_DESIGN_WIDTH = 1194f
+private const val DETAIL_HERO_DESIGN_HEIGHT = 834f
+private const val DETAIL_HERO_ASPECT = DETAIL_HERO_DESIGN_WIDTH / DETAIL_HERO_DESIGN_HEIGHT
 private const val SETTINGS_CONTROL_WIDTH = 150f
 private const val SETTINGS_CONTROL_HEIGHT = 75f
 private const val SETTINGS_CONTROL_RADIUS = 50f
@@ -874,7 +877,10 @@ internal fun CinerificProgramDetailsScreen(
         val scale = maxWidth.value / DESTINATION_FRAME_WIDTH
         val density = LocalDensity.current
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
-        val heroHeight = maxHeight - bottomSystemPadding
+        val naturalHeroHeight = (maxWidth.value / DETAIL_HERO_ASPECT).dp
+        val visibleHeroHeight = (maxHeight - bottomSystemPadding).coerceAtLeast(0.dp)
+        val heroHeight = minOf(naturalHeroHeight, visibleHeroHeight)
+        val infoPanelScale = (heroHeight.value / DETAIL_HERO_DESIGN_HEIGHT).coerceAtLeast(0.01f)
         val program = detailProgramSpec(programTitle) ?: detailProgramSpec(SINK_OR_SWIM_TITLE)!!
         val title = stringResource(program.titleResId)
         val details = programDetails(
@@ -968,7 +974,8 @@ internal fun CinerificProgramDetailsScreen(
                     onRatingSelected = {
                         onProgramRated(program.title, it)
                     },
-                    scale = scale
+                    scale = scale,
+                    infoScale = infoPanelScale
                 )
                 SinkOrSwimLibraryRows(
                     scale = scale,
@@ -1015,7 +1022,7 @@ private fun ProgramDetailRevealImage(
                     alpha = 0.46f + revealProgress * 0.54f
                 },
             alignment = Alignment.TopStart,
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Fit
         )
         if (heroFullyVisible) {
             if (playLoading) {
@@ -1410,10 +1417,11 @@ private fun SinkOrSwimInfoPanel(
     rating: Int,
     userHasRated: Boolean,
     onRatingSelected: (Int) -> Unit,
-    scale: Float
+    scale: Float,
+    infoScale: Float
 ) {
     val panelHorizontalPadding = destinationDp(DETAIL_LIBRARY_HORIZONTAL_PADDING, scale)
-    val panelBottomPadding = destinationDp(DETAIL_INFO_PANEL_BOTTOM_PADDING, scale)
+    val panelBottomPadding = destinationDp(DETAIL_INFO_PANEL_BOTTOM_PADDING, infoScale)
     var metaGroupStartX by remember { mutableStateOf(0f) }
     var runtimeTextStartX by remember(runtime, genre) { mutableStateOf<Float?>(null) }
     var directorTextEndX by remember(director) { mutableStateOf<Float?>(null) }
@@ -1435,7 +1443,7 @@ private fun SinkOrSwimInfoPanel(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = destinationDp(DETAIL_INFO_PANEL_MIN_HEIGHT, scale))
+            .heightIn(min = destinationDp(DETAIL_INFO_PANEL_MIN_HEIGHT, infoScale))
             .drawBehind {
                 drawRect(
                     brush = Brush.verticalGradient(
@@ -1451,7 +1459,7 @@ private fun SinkOrSwimInfoPanel(
             }
             .padding(
                 start = panelHorizontalPadding,
-                top = destinationDp(48f, scale),
+                top = destinationDp(48f, infoScale),
                 end = panelHorizontalPadding,
                 bottom = panelBottomPadding
             ),
@@ -1469,13 +1477,13 @@ private fun SinkOrSwimInfoPanel(
             },
             color = DestinationText,
             fontFamily = CinerificAppTextFontFamily,
-            fontSize = DETAIL_INFO_PANEL_TITLE_FONT_SIZE.sp,
-            lineHeight = DETAIL_INFO_PANEL_TITLE_LINE_HEIGHT.sp,
+            fontSize = destinationSp(DETAIL_INFO_PANEL_TITLE_FONT_SIZE, infoScale),
+            lineHeight = destinationSp(DETAIL_INFO_PANEL_TITLE_LINE_HEIGHT, infoScale),
             letterSpacing = 0.sp,
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(destinationDp(28f, scale)))
+        Spacer(modifier = Modifier.height(destinationDp(28f, infoScale)))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -1485,8 +1493,8 @@ private fun SinkOrSwimInfoPanel(
                 text = synopsis,
                 color = DestinationText.copy(alpha = 0.82f),
                 fontFamily = CinerificAppTextFontFamily,
-                fontSize = DETAIL_INFO_PANEL_SYNOPSIS_FONT_SIZE.sp,
-                lineHeight = DETAIL_INFO_PANEL_SYNOPSIS_LINE_HEIGHT.sp,
+                fontSize = destinationSp(DETAIL_INFO_PANEL_SYNOPSIS_FONT_SIZE, infoScale),
+                lineHeight = destinationSp(DETAIL_INFO_PANEL_SYNOPSIS_LINE_HEIGHT, infoScale),
                 letterSpacing = 0.sp,
                 modifier = Modifier.weight(DETAIL_INFO_PANEL_DESCRIPTION_COLUMN_WEIGHT)
             )
@@ -1510,15 +1518,16 @@ private fun SinkOrSwimInfoPanel(
                     Column(
                         modifier = Modifier.weight(DETAIL_INFO_PANEL_RUNTIME_GENRE_COLUMN_WEIGHT),
                         horizontalAlignment = Alignment.Start,
-                        verticalArrangement = Arrangement.spacedBy(destinationDp(18f, scale))
+                        verticalArrangement = Arrangement.spacedBy(destinationDp(18f, infoScale))
                     ) {
                         SinkOrSwimPanelText(
                             text = runtime,
+                            scale = infoScale,
                             modifier = Modifier.onGloballyPositioned { coordinates ->
                                 runtimeTextStartX = coordinates.positionInRoot().x
                             }
                         )
-                        SinkOrSwimPanelText(text = genre)
+                        SinkOrSwimPanelText(text = genre, scale = infoScale)
                     }
 
                     Spacer(modifier = Modifier.weight(DETAIL_INFO_PANEL_META_TO_CREW_GUTTER_WEIGHT))
@@ -1526,10 +1535,11 @@ private fun SinkOrSwimInfoPanel(
                     Column(
                         modifier = Modifier.weight(DETAIL_INFO_PANEL_CREW_COLUMN_WEIGHT),
                         horizontalAlignment = Alignment.Start,
-                        verticalArrangement = Arrangement.spacedBy(destinationDp(18f, scale))
+                        verticalArrangement = Arrangement.spacedBy(destinationDp(18f, infoScale))
                     ) {
                         SinkOrSwimPanelText(
                             text = stringResource(R.string.program_meta_director, director),
+                            scale = infoScale,
                             modifier = Modifier.onGloballyPositioned { coordinates ->
                                 directorTextEndX =
                                     coordinates.positionInRoot().x + coordinates.size.width
@@ -1537,6 +1547,7 @@ private fun SinkOrSwimInfoPanel(
                         )
                         SinkOrSwimPanelText(
                             text = stringResource(R.string.program_meta_producer, producer),
+                            scale = infoScale,
                             modifier = Modifier.onGloballyPositioned { coordinates ->
                                 producerTextEndX =
                                     coordinates.positionInRoot().x + coordinates.size.width
@@ -1545,18 +1556,18 @@ private fun SinkOrSwimInfoPanel(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(destinationDp(22f, scale)))
+                Spacer(modifier = Modifier.height(destinationDp(22f, infoScale)))
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(destinationDp(DETAIL_INFO_PANEL_RATING_STAR_CANVAS_SIZE, scale))
+                        .height(destinationDp(DETAIL_INFO_PANEL_RATING_STAR_CANVAS_SIZE, infoScale))
                         .onGloballyPositioned { coordinates ->
                             ratingRowWidthPx = coordinates.size.width
                         }
                 ) {
                     SinkOrSwimRatingStars(
                         rating = rating,
-                        scale = scale,
+                        scale = infoScale,
                         userHasRated = userHasRated,
                         onRatingSelected = onRatingSelected,
                         modifier = Modifier
@@ -1576,6 +1587,7 @@ private fun SinkOrSwimInfoPanel(
 @Composable
 private fun SinkOrSwimPanelText(
     text: String,
+    scale: Float,
     textAlign: TextAlign = TextAlign.Start,
     modifier: Modifier = Modifier
 ) {
@@ -1583,9 +1595,9 @@ private fun SinkOrSwimPanelText(
         text = text,
         color = DestinationText.copy(alpha = 0.9f),
         fontFamily = CinerificAppTextFontFamily,
-        fontSize = DETAIL_INFO_PANEL_META_FONT_SIZE.sp,
+        fontSize = destinationSp(DETAIL_INFO_PANEL_META_FONT_SIZE, scale),
         fontWeight = FontWeight.Black,
-        lineHeight = DETAIL_INFO_PANEL_META_LINE_HEIGHT.sp,
+        lineHeight = destinationSp(DETAIL_INFO_PANEL_META_LINE_HEIGHT, scale),
         letterSpacing = 0.sp,
         textAlign = textAlign,
         maxLines = 2,
@@ -2742,6 +2754,8 @@ private enum class SettingsControl {
 }
 
 private fun destinationDp(px: Float, scale: Float): Dp = (px * scale).dp
+
+private fun destinationSp(px: Float, scale: Float) = (px * scale).sp
 
 private fun destinationSectionTopPadding(index: Int, showViewportNav: Boolean): Dp {
     return if (index == 0) {

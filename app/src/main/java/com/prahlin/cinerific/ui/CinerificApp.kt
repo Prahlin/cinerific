@@ -101,6 +101,7 @@ private val ColorFavoritesFullPromptAccent = Color(0xFF858585)
 
 @Composable
 fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
+    val introBootStartMillis by rememberSaveable { mutableStateOf(bootStartMillis) }
     var showHome by remember(bootStartMillis) { mutableStateOf(false) }
     var signedInProfile by remember(bootStartMillis) { mutableStateOf(CinerificProfile.Guest) }
     var selectedLanguage by rememberSaveable { mutableStateOf(CinerificLanguage.English) }
@@ -122,7 +123,7 @@ fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
             modifier = Modifier.fillMaxSize(),
             factory = { context ->
                 CinerificIntroView(context).apply {
-                    this.bootStartMillis = bootStartMillis
+                    this.bootStartMillis = introBootStartMillis
                     onAvatarSelected = { profile ->
                         signedInProfile = profile
                         showHome = true
@@ -130,7 +131,7 @@ fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
                 }
             },
             update = { view ->
-                view.bootStartMillis = bootStartMillis
+                view.bootStartMillis = introBootStartMillis
                 view.onAvatarSelected = { profile ->
                     signedInProfile = profile
                     showHome = true

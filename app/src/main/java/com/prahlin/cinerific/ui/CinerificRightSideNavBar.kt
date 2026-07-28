@@ -6,9 +6,11 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -80,6 +82,8 @@ private const val NAV_EDGE_GAP = NAV_ICON_CENTER_GAP - (NAV_TOGGLE_ICON_SIZE + N
 private const val NAV_TOP_RAIL_VISUAL_NUDGE = 14f
 private const val NAV_OPEN_MS = 150
 private const val HOME_AUTO_COLLAPSE_MS = 5000L
+private const val PORTRAIT_NAV_BAR_HEIGHT = 92f
+private const val PORTRAIT_NAV_ITEM_HEIGHT = 72f
 
 private val NavFrameDestinations = setOf(
     CinerificDestination.Home,
@@ -108,8 +112,26 @@ internal fun CinerificRightSideNavBar(
     BoxWithConstraints(modifier = modifier) {
         val scale = cinerificNavScale(maxWidth, maxHeight)
         val density = LocalDensity.current
-        val statusBarTop = with(density) { WindowInsets.statusBars.getTop(this).toDp() }
+        val isPortrait = maxHeight > maxWidth
+        val visualDestination = if (currentDestination in NavFrameDestinations) {
+            currentDestination
+        } else {
+            CinerificDestination.Home
+        }
         val navigationBarBottom = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
+
+        if (isPortrait) {
+            CinerificBottomNavBar(
+                visualDestination = visualDestination,
+                navigationBarBottom = navigationBarBottom,
+                scale = scale,
+                onDestinationSelected = onDestinationSelected,
+                modifier = Modifier.align(Alignment.BottomCenter)
+            )
+            return@BoxWithConstraints
+        }
+
+        val statusBarTop = with(density) { WindowInsets.statusBars.getTop(this).toDp() }
         val railWidth = navDp(NAV_RAIL_WIDTH, scale)
         val toggleTop = statusBarTop + navDp(
             NAV_EDGE_GAP - (NAV_TOGGLE_HEIGHT - NAV_TOGGLE_ICON_SIZE) / 2f,
@@ -121,7 +143,7 @@ internal fun CinerificRightSideNavBar(
         var expanded by remember {
             mutableStateOf(currentDestination in NavFrameDestinations && currentDestination != CinerificDestination.Home)
         }
-        var visualDestination by remember {
+        var railVisualDestination by remember {
             mutableStateOf(
                 if (currentDestination in NavFrameDestinations) {
                     currentDestination
@@ -137,7 +159,7 @@ internal fun CinerificRightSideNavBar(
         )
 
         LaunchedEffect(currentDestination) {
-            visualDestination = if (currentDestination in NavFrameDestinations) {
+            railVisualDestination = if (currentDestination in NavFrameDestinations) {
                 currentDestination
             } else {
                 CinerificDestination.Home
@@ -169,18 +191,18 @@ internal fun CinerificRightSideNavBar(
 
             NavToggleButton(
                 openProgress = openProgress,
-                selected = visualDestination == CinerificDestination.Home,
+                selected = railVisualDestination == CinerificDestination.Home,
                 top = toggleTop,
                 scale = scale,
                 onClick = {
                     if (expanded) {
-                        visualDestination = CinerificDestination.Home
+                        railVisualDestination = CinerificDestination.Home
                         onDestinationSelected(CinerificDestination.Home)
                         expanded = false
                     } else {
-                        visualDestination = currentDestination
-                        if (visualDestination !in NavFrameDestinations) {
-                            visualDestination = CinerificDestination.Home
+                        railVisualDestination = currentDestination
+                        if (railVisualDestination !in NavFrameDestinations) {
+                            railVisualDestination = CinerificDestination.Home
                         }
                         expanded = true
                     }
@@ -199,10 +221,10 @@ internal fun CinerificRightSideNavBar(
                 iconSize = NAV_MOVIES_ICON_SIZE,
                 scale = scale,
                 openProgress = openProgress,
-                selected = visualDestination == CinerificDestination.Movies,
+                selected = railVisualDestination == CinerificDestination.Movies,
                 enabled = expanded,
                 onClick = {
-                    visualDestination = CinerificDestination.Movies
+                    railVisualDestination = CinerificDestination.Movies
                     expanded = true
                     onDestinationSelected(CinerificDestination.Movies)
                 }
@@ -219,10 +241,10 @@ internal fun CinerificRightSideNavBar(
                 iconSize = NAV_SHOWS_ICON_SIZE,
                 scale = scale,
                 openProgress = openProgress,
-                selected = visualDestination == CinerificDestination.Shows,
+                selected = railVisualDestination == CinerificDestination.Shows,
                 enabled = expanded,
                 onClick = {
-                    visualDestination = CinerificDestination.Shows
+                    railVisualDestination = CinerificDestination.Shows
                     expanded = true
                     onDestinationSelected(CinerificDestination.Shows)
                 }
@@ -239,10 +261,10 @@ internal fun CinerificRightSideNavBar(
                 iconSize = NAV_FAVORITES_ICON_SIZE,
                 scale = scale,
                 openProgress = openProgress,
-                selected = visualDestination == CinerificDestination.Favorites,
+                selected = railVisualDestination == CinerificDestination.Favorites,
                 enabled = expanded,
                 onClick = {
-                    visualDestination = CinerificDestination.Favorites
+                    railVisualDestination = CinerificDestination.Favorites
                     expanded = true
                     onDestinationSelected(CinerificDestination.Favorites)
                 }
@@ -259,13 +281,158 @@ internal fun CinerificRightSideNavBar(
                 iconSize = NAV_SETTINGS_ICON_SIZE,
                 scale = scale,
                 openProgress = openProgress,
-                selected = visualDestination == CinerificDestination.Settings,
+                selected = railVisualDestination == CinerificDestination.Settings,
                 enabled = expanded,
                 onClick = {
-                    visualDestination = CinerificDestination.Settings
+                    railVisualDestination = CinerificDestination.Settings
                     expanded = true
                     onDestinationSelected(CinerificDestination.Settings)
                 }
+            )
+        }
+    }
+}
+
+@Composable
+private fun CinerificBottomNavBar(
+    visualDestination: CinerificDestination,
+    navigationBarBottom: Dp,
+    scale: Float,
+    onDestinationSelected: (CinerificDestination) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val contentHeight = navDp(PORTRAIT_NAV_BAR_HEIGHT, scale)
+
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(contentHeight + navigationBarBottom)
+    ) {
+        CinerificChromeBackground(
+            modifier = Modifier.fillMaxSize(),
+            alpha = 1f
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(contentHeight),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            BottomNavItemButton(
+                destination = CinerificDestination.Home,
+                label = "HOME",
+                icon = NavIconAsset(
+                    resId = R.drawable.nav_icon_home,
+                    width = NAV_HOME_ICON_WIDTH,
+                    height = NAV_HOME_ICON_HEIGHT
+                ),
+                iconSize = NAV_HOME_ICON_SIZE,
+                scale = scale,
+                selected = visualDestination == CinerificDestination.Home,
+                onClick = onDestinationSelected
+            )
+            BottomNavItemButton(
+                destination = CinerificDestination.Movies,
+                label = "MOVIES",
+                icon = NavIconAsset(
+                    resId = R.drawable.nav_icon_movies,
+                    width = NAV_MOVIES_ICON_WIDTH,
+                    height = NAV_MOVIES_ICON_HEIGHT
+                ),
+                iconSize = NAV_MOVIES_ICON_SIZE,
+                scale = scale,
+                selected = visualDestination == CinerificDestination.Movies,
+                onClick = onDestinationSelected
+            )
+            BottomNavItemButton(
+                destination = CinerificDestination.Shows,
+                label = "SHOWS",
+                icon = NavIconAsset(
+                    resId = R.drawable.nav_icon_shows,
+                    width = NAV_SHOWS_ICON_WIDTH,
+                    height = NAV_SHOWS_ICON_HEIGHT
+                ),
+                iconSize = NAV_SHOWS_ICON_SIZE,
+                scale = scale,
+                selected = visualDestination == CinerificDestination.Shows,
+                onClick = onDestinationSelected
+            )
+            BottomNavItemButton(
+                destination = CinerificDestination.Favorites,
+                label = "FAVORITES",
+                icon = NavIconAsset(
+                    resId = R.drawable.nav_icon_favorites,
+                    width = NAV_FAVORITES_ICON_WIDTH,
+                    height = NAV_FAVORITES_ICON_HEIGHT
+                ),
+                iconSize = NAV_FAVORITES_ICON_SIZE,
+                scale = scale,
+                selected = visualDestination == CinerificDestination.Favorites,
+                onClick = onDestinationSelected
+            )
+            BottomNavItemButton(
+                destination = CinerificDestination.Settings,
+                label = "SETTINGS",
+                icon = NavIconAsset(
+                    resId = R.drawable.nav_icon_settings,
+                    width = NAV_SETTINGS_ICON_WIDTH,
+                    height = NAV_SETTINGS_ICON_HEIGHT
+                ),
+                iconSize = NAV_SETTINGS_ICON_SIZE,
+                scale = scale,
+                selected = visualDestination == CinerificDestination.Settings,
+                onClick = onDestinationSelected
+            )
+        }
+    }
+}
+
+@Composable
+private fun BottomNavItemButton(
+    destination: CinerificDestination,
+    label: String,
+    icon: NavIconAsset,
+    iconSize: Float,
+    scale: Float,
+    selected: Boolean,
+    onClick: (CinerificDestination) -> Unit
+) {
+    val color = if (selected) NavSelected else NavInactive
+    val itemAlpha = if (selected) 1f else 0.58f
+
+    Box(
+        modifier = Modifier
+            .width(navDp(86f, scale))
+            .height(navDp(PORTRAIT_NAV_ITEM_HEIGHT, scale))
+            .graphicsLayer { alpha = itemAlpha }
+            .clickable { onClick(destination) },
+        contentAlignment = Alignment.Center
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Box(
+                modifier = Modifier.size(navDp(iconSize, scale)),
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(id = icon.resId),
+                    contentDescription = label.lowercase().replaceFirstChar { it.uppercase() },
+                    contentScale = ContentScale.Fit,
+                    colorFilter = ColorFilter.tint(color),
+                    modifier = Modifier
+                        .width(navDp(icon.width, scale))
+                        .height(navDp(icon.height, scale))
+                )
+            }
+            Text(
+                text = label,
+                color = color,
+                fontSize = 10.sp,
+                fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal,
+                lineHeight = 15.sp,
+                letterSpacing = 0.sp,
+                textAlign = TextAlign.Center,
+                maxLines = 1
             )
         }
     }
