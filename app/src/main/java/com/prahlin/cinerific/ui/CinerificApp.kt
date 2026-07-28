@@ -102,8 +102,8 @@ private val ColorFavoritesFullPromptAccent = Color(0xFF858585)
 @Composable
 fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
     val introBootStartMillis by rememberSaveable { mutableStateOf(bootStartMillis) }
-    var showHome by remember(bootStartMillis) { mutableStateOf(false) }
-    var signedInProfile by remember(bootStartMillis) { mutableStateOf(CinerificProfile.Guest) }
+    var showHome by rememberSaveable { mutableStateOf(false) }
+    var signedInProfile by rememberSaveable { mutableStateOf(CinerificProfile.Guest) }
     var selectedLanguage by rememberSaveable { mutableStateOf(CinerificLanguage.English) }
 
     if (showHome) {
@@ -167,11 +167,13 @@ private fun CinerificMainExperience(
     onLanguageSelected: (CinerificLanguage) -> Unit,
     onSignOut: () -> Unit
 ) {
-    var destination by remember { mutableStateOf(CinerificDestination.Home) }
+    var destination by rememberSaveable { mutableStateOf(CinerificDestination.Home) }
     var selectedProgramTitle by rememberSaveable { mutableStateOf("Sink or Swim") }
     var favoriteProgramTitles by rememberSaveable { mutableStateOf(emptyList<String>()) }
     var userProgramRatings by rememberSaveable { mutableStateOf(emptyMap<String, Int>()) }
-    var catalogRoute by remember { mutableStateOf<CinerificCatalogRoute?>(null) }
+    var catalogRouteDestinationName by rememberSaveable { mutableStateOf("") }
+    var catalogRouteGenreName by rememberSaveable { mutableStateOf("") }
+    var catalogRouteModeName by rememberSaveable { mutableStateOf("") }
     var favoritesFullPromptRequestId by remember { mutableStateOf(0) }
     var autoLogoutEnabled by rememberSaveable { mutableStateOf(false) }
     var userInitiatedPlaybackActive by remember { mutableStateOf(false) }
@@ -188,6 +190,23 @@ private fun CinerificMainExperience(
             }
         )
     }
+    val catalogRoute = remember(
+        catalogRouteDestinationName,
+        catalogRouteGenreName,
+        catalogRouteModeName
+    ) {
+        cinerificSavedCatalogRoute(
+            destinationName = catalogRouteDestinationName,
+            genreName = catalogRouteGenreName,
+            modeName = catalogRouteModeName
+        )
+    }
+
+    fun clearCatalogRoute() {
+        catalogRouteDestinationName = ""
+        catalogRouteGenreName = ""
+        catalogRouteModeName = ""
+    }
 
     LaunchedEffect(autoLogoutEnabled, userInitiatedPlaybackActive, lastInteractionMillis) {
         if (!autoLogoutEnabled || userInitiatedPlaybackActive) return@LaunchedEffect
@@ -203,13 +222,15 @@ private fun CinerificMainExperience(
     }
 
     fun showProgramDetails(title: String) {
-        catalogRoute = null
+        clearCatalogRoute()
         selectedProgramTitle = title
         destination = CinerificDestination.ProgramDetails
     }
 
     fun showCatalog(route: CinerificCatalogRoute) {
-        catalogRoute = route
+        catalogRouteDestinationName = route.destination.name
+        catalogRouteGenreName = route.genre.name
+        catalogRouteModeName = route.mode.name
         destination = route.destination
     }
 
@@ -291,7 +312,7 @@ private fun CinerificMainExperience(
             CinerificRightSideNavBar(
                 currentDestination = destination,
                 onDestinationSelected = {
-                    catalogRoute = null
+                    clearCatalogRoute()
                     destination = it
                 },
                 modifier = Modifier.fillMaxSize()
@@ -304,6 +325,24 @@ private fun CinerificMainExperience(
             )
         }
     }
+}
+
+private fun cinerificSavedCatalogRoute(
+    destinationName: String,
+    genreName: String,
+    modeName: String
+): CinerificCatalogRoute? {
+    if (destinationName.isBlank() || genreName.isBlank() || modeName.isBlank()) return null
+
+    val destination = CinerificDestination.values().firstOrNull { it.name == destinationName } ?: return null
+    val genre = ViewportGenre.values().firstOrNull { it.name == genreName } ?: return null
+    val mode = ViewportMode.values().firstOrNull { it.name == modeName } ?: return null
+
+    return CinerificCatalogRoute(
+        destination = destination,
+        genre = genre,
+        mode = mode
+    )
 }
 
 @Composable

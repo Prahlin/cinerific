@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,8 +41,10 @@ internal fun CinerificViewportNavBar(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.Top
+        modifier = modifier
+            .fillMaxWidth()
+            .height(viewportDp(GENRE_GROUP_HEIGHT, scale)),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         CinerificViewportGenreNav(
             selectedGenre = selectedGenre,

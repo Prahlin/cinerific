@@ -79,12 +79,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -101,8 +106,35 @@ import kotlin.math.sqrt
 
 private const val DESTINATION_FRAME_WIDTH = 1194f
 private const val DESTINATION_TOP_BAR_TITLE_BOTTOM = 18f
+private const val DESTINATION_PORTRAIT_TOP_BAR_HEIGHT_MULTIPLIER = 1.2f
 private const val DESTINATION_CARD_ASPECT = 350f / 263f
 private const val DESTINATION_CARD_SCALE = 0.8f
+private const val DESTINATION_LIST_IMAGE_WIDTH = 300f
+private const val DESTINATION_LIST_IMAGE_HEIGHT = 225f
+private const val DESTINATION_LIST_TEXT_START_PADDING = 50f
+private const val DESTINATION_LIST_TEXT_COLUMN_HEIGHT = 222f
+private const val DESTINATION_LIST_META_ROW_HEIGHT = 76f
+private const val DESTINATION_LIST_RATING_ROW_HEIGHT = 40f
+private const val DESTINATION_LIST_TEXT_VERTICAL_GAP = 20f
+private const val DESTINATION_LIST_TITLE_FONT_SIZE = 32f
+private const val DESTINATION_LIST_TITLE_LINE_HEIGHT = 49f
+private const val DESTINATION_LIST_TITLE_MIN_FONT_SIZE = 8f
+private const val DESTINATION_LIST_TITLE_AVAILABLE_HEIGHT =
+    DESTINATION_LIST_TEXT_COLUMN_HEIGHT -
+        DESTINATION_LIST_META_ROW_HEIGHT -
+        DESTINATION_LIST_RATING_ROW_HEIGHT -
+        DESTINATION_LIST_TEXT_VERTICAL_GAP * 2f
+private const val DESTINATION_LIST_SYNOPSIS_WIDTH = 298f
+private const val DESTINATION_LIST_SYNOPSIS_FONT_SIZE = 16f
+private const val DESTINATION_LIST_SYNOPSIS_LINE_HEIGHT = 24f
+private const val DESTINATION_LIST_SYNOPSIS_MIN_FONT_SIZE = 7.5f
+private const val DESTINATION_LIST_META_RUNTIME_WIDTH = 71f
+private const val DESTINATION_LIST_META_CREW_WIDTH = 156f
+private const val DESTINATION_LIST_META_COLUMN_GAP = 37f
+private const val DESTINATION_LIST_META_COLUMN_VERTICAL_GAP = 25f
+private const val DESTINATION_LIST_META_FONT_SIZE = 16f
+private const val DESTINATION_LIST_META_LINE_HEIGHT = 24f
+private const val DESTINATION_LIST_META_MIN_FONT_SIZE = 6.5f
 private const val DETAIL_HERO_DESIGN_WIDTH = 1194f
 private const val DETAIL_HERO_DESIGN_HEIGHT = 834f
 private const val DETAIL_HERO_ASPECT = DETAIL_HERO_DESIGN_WIDTH / DETAIL_HERO_DESIGN_HEIGHT
@@ -111,6 +143,7 @@ private const val SETTINGS_CONTROL_HEIGHT = 75f
 private const val SETTINGS_CONTROL_RADIUS = 50f
 private const val SETTINGS_CONTROL_BORDER_WIDTH = 2f
 private const val SETTINGS_CONTROL_SHADOW = 2f
+private const val SETTINGS_SECTION_VERTICAL_GAP = 72f
 private const val SETTINGS_SCREEN_HORIZONTAL_PADDING = 64f
 private const val SETTINGS_ROW_TEXT_WIDTH = 350f
 private const val SETTINGS_CONTROL_COLUMN_GAP = 64.5f
@@ -121,21 +154,23 @@ private const val SETTINGS_SECTION_HEADER_RADIUS = 36f
 private const val SETTINGS_SECTION_HEADER_HORIZONTAL_PADDING = 54f
 private const val SETTINGS_SECTION_HEADER_LEFT_BLEED = 24f
 private const val SETTINGS_SECTION_BODY_START_PADDING = 0f
-private const val SETTINGS_LANGUAGE_MENU_HEIGHT = 116f
-private const val SETTINGS_LANGUAGE_MENU_ROW_HEIGHT = 34f
-private const val SETTINGS_LANGUAGE_TEXT_SIZE = 21.6f
-private const val SETTINGS_LANGUAGE_LINE_HEIGHT = 32.784f
+private const val SETTINGS_LANGUAGE_MENU_HEIGHT = 174f
+private const val SETTINGS_LANGUAGE_MENU_ROW_HEIGHT = 51f
+private const val SETTINGS_LANGUAGE_TEXT_SIZE = 14.5f
+private const val SETTINGS_LANGUAGE_LINE_HEIGHT = 22f
 private const val SETTINGS_LANGUAGE_BUTTON_PADDING = 18f
 private const val SETTINGS_LANGUAGE_ARROW_WIDTH = 23.4f
 private const val SETTINGS_LANGUAGE_ARROW_HEIGHT = 27.020f
 private const val SETTINGS_LANGUAGE_ANIMATION_MS = 120
 private const val SETTINGS_SIGNED_IN_LEFT = 754f
-private const val SETTINGS_SIGNED_IN_TOP_AFTER_BAR = 48f
+private const val SETTINGS_SIGNED_IN_PORTRAIT_SCALE_MULTIPLIER = 1.2f
 private const val SETTINGS_SIGNED_IN_WIDTH = 200f
 private const val SETTINGS_SIGNED_IN_HEIGHT = 481f
 private const val SETTINGS_SIGNED_IN_PROFILE_SCALE = 0.9f
 private const val SETTINGS_SIGNED_IN_TITLE_TOP = -3f
 private const val SETTINGS_SIGNED_IN_TITLE_HEIGHT = 45f
+private const val SETTINGS_SIGNED_IN_TITLE_CENTER =
+    SETTINGS_SIGNED_IN_TITLE_TOP + SETTINGS_SIGNED_IN_TITLE_HEIGHT / 2f
 private const val SETTINGS_SIGNED_IN_NAME_GAP = 21.8f
 private const val SETTINGS_SIGNED_IN_AVATAR_TOP = SETTINGS_SIGNED_IN_TITLE_TOP +
     SETTINGS_SIGNED_IN_TITLE_HEIGHT +
@@ -144,6 +179,11 @@ private const val SETTINGS_SIGNED_IN_AVATAR_SIZE = 200.2f
 private const val SETTINGS_SIGNED_IN_NAME_WIDTH = 200f
 private const val SETTINGS_SIGNED_IN_NAME_HEIGHT = 40f
 private const val SETTINGS_SIGNED_IN_SIGN_OUT_GAP = 50f
+private const val SETTINGS_SIGN_OUT_BUTTON_WIDTH = 150f
+private const val SETTINGS_SIGN_OUT_BUTTON_HEIGHT = 75f
+private const val SETTINGS_SIGN_OUT_TEXT_SIZE = 24f
+private const val SETTINGS_SIGN_OUT_LINE_HEIGHT = 36f
+private const val SETTINGS_SIGN_OUT_MIN_TEXT_SIZE = 12f
 private const val DETAIL_FAVORITE_X = 994f
 private const val DETAIL_FAVORITE_Y = 30f
 private const val DETAIL_FAVORITE_WIDTH = 61f
@@ -321,7 +361,7 @@ private fun CinerificCatalogScreen(
         val navScale = cinerificNavScale(maxWidth, maxHeight)
         val titleBottomPadding = destinationDp(DESTINATION_TOP_BAR_TITLE_BOTTOM, navScale)
         val statusBarTop = with(density) { WindowInsets.statusBars.getTop(this).toDp() }
-        val topBarHeight = cinerificTopRailHeight(maxWidth, maxHeight, statusBarTop)
+        val topBarHeight = destinationTopBarHeight(maxWidth, maxHeight, statusBarTop)
         val cardWidth = destinationDp(350f, scale) * DESTINATION_CARD_SCALE
         val cardHeight = cardWidth / DESTINATION_CARD_ASPECT
         val cardGap = destinationDp(50f, scale)
@@ -330,8 +370,8 @@ private fun CinerificCatalogScreen(
                 (cardWidth.value + cardGap.value)
             ).toInt().coerceAtLeast(1)
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
-        var selectedGenre by remember(titleResId, initialGenre) { mutableStateOf(initialGenre) }
-        var selectedMode by remember(titleResId, initialMode) { mutableStateOf(initialMode) }
+        var selectedGenre by rememberSaveable(titleResId, initialGenre) { mutableStateOf(initialGenre) }
+        var selectedMode by rememberSaveable(titleResId, initialMode) { mutableStateOf(initialMode) }
         val scrollState = rememberScrollState()
         val title = stringResource(titleResId)
         val description = stringResource(descriptionResId)
@@ -691,16 +731,15 @@ private fun DestinationProgramListItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(destinationDp(237f, scale))
             .clickable(enabled = program.hasDetailHero) {
                 onProgramSelected(program.title)
             },
-        verticalAlignment = Alignment.Top
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier
-                .width(destinationDp(300f, scale))
-                .height(destinationDp(225f, scale))
+                .width(destinationDp(DESTINATION_LIST_IMAGE_WIDTH, scale))
+                .height(destinationDp(DESTINATION_LIST_IMAGE_HEIGHT, scale))
                 .shadow(destinationDp(14f, scale), imageShape, clip = false)
                 .clip(imageShape)
                 .background(Color.Black)
@@ -715,55 +754,36 @@ private fun DestinationProgramListItem(
         Column(
             modifier = Modifier
                 .weight(1f)
-                .height(destinationDp(222f, scale))
-                .padding(start = destinationDp(50f, scale)),
-            verticalArrangement = Arrangement.spacedBy(destinationDp(20f, scale))
+                .heightIn(min = destinationDp(DESTINATION_LIST_TEXT_COLUMN_HEIGHT, scale))
+                .padding(start = destinationDp(DESTINATION_LIST_TEXT_START_PADDING, scale)),
+            verticalArrangement = Arrangement.spacedBy(destinationDp(DESTINATION_LIST_TEXT_VERTICAL_GAP, scale))
         ) {
-            Text(
-                text = buildAnnotatedString {
-                    withStyle(SpanStyle(fontWeight = FontWeight.Black)) {
-                        append(title.uppercase())
-                    }
-                    append(" ")
-                    withStyle(SpanStyle(fontWeight = FontWeight.Normal)) {
-                        append("(${program.year})")
-                    }
-                },
-                color = DestinationText,
-                fontFamily = CinerificAppTextFontFamily,
-                fontSize = 32.sp,
-                lineHeight = 49.sp,
-                letterSpacing = 0.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+            DestinationListTitleText(
+                title = title,
+                year = program.year,
+                scale = scale,
+                modifier = Modifier.fillMaxWidth()
             )
             Row(
-                modifier = Modifier.height(destinationDp(76f, scale)),
-                horizontalArrangement = Arrangement.spacedBy(destinationDp(37f, scale)),
+                modifier = Modifier.heightIn(min = destinationDp(DESTINATION_LIST_META_ROW_HEIGHT, scale)),
+                horizontalArrangement = Arrangement.spacedBy(destinationDp(DESTINATION_LIST_META_COLUMN_GAP, scale)),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
+                DestinationListSynopsisText(
                     text = synopsis,
-                    color = DestinationText.copy(alpha = 0.9f),
-                    fontFamily = CinerificAppTextFontFamily,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Normal,
-                    lineHeight = 24.sp,
-                    letterSpacing = 0.sp,
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.width(destinationDp(298f, scale))
+                    scale = scale,
+                    modifier = Modifier.width(destinationDp(DESTINATION_LIST_SYNOPSIS_WIDTH, scale))
                 )
                 DestinationListMetaColumn(
                     top = program.runtime,
                     bottom = genre,
-                    width = destinationDp(71f, scale),
+                    width = destinationDp(DESTINATION_LIST_META_RUNTIME_WIDTH, scale),
                     scale = scale
                 )
                 DestinationListMetaColumn(
                     top = stringResource(R.string.program_meta_director, program.director),
                     bottom = stringResource(R.string.program_meta_producer, program.producer),
-                    width = destinationDp(156f, scale),
+                    width = destinationDp(DESTINATION_LIST_META_CREW_WIDTH, scale),
                     scale = scale
                 )
             }
@@ -772,6 +792,122 @@ private fun DestinationProgramListItem(
                 scale = scale
             )
         }
+    }
+}
+
+@Composable
+private fun DestinationListTitleText(
+    title: String,
+    year: String,
+    scale: Float,
+    modifier: Modifier = Modifier
+) {
+    val titleText = buildAnnotatedString {
+        withStyle(SpanStyle(fontWeight = FontWeight.Black)) {
+            append(title.uppercase())
+        }
+        append(" ")
+        withStyle(SpanStyle(fontWeight = FontWeight.Normal)) {
+            append("($year)")
+        }
+    }
+    val textMeasurer = rememberTextMeasurer()
+    val maxFontSize = DESTINATION_LIST_TITLE_FONT_SIZE * scale
+    val minFontSize = min(DESTINATION_LIST_TITLE_MIN_FONT_SIZE, maxFontSize)
+
+    BoxWithConstraints(modifier = modifier) {
+        val density = LocalDensity.current
+        val maxWidthPx = with(density) { maxWidth.toPx() }.roundToInt().coerceAtLeast(0)
+        val maxHeightPx = with(density) {
+            destinationDp(DESTINATION_LIST_TITLE_AVAILABLE_HEIGHT, scale).toPx()
+        }.roundToInt().coerceAtLeast(0)
+        val fittedFontSize = remember(
+            titleText,
+            maxWidthPx,
+            maxHeightPx,
+            maxFontSize,
+            minFontSize,
+            textMeasurer
+        ) {
+            destinationListFittedFontSize(
+                textMeasurer = textMeasurer,
+                text = titleText,
+                maxWidthPx = maxWidthPx,
+                maxHeightPx = maxHeightPx,
+                maxFontSize = maxFontSize,
+                minFontSize = minFontSize,
+                maxLines = 1,
+                softWrap = false,
+                lineHeightForFont = ::destinationListTitleLineHeight
+            )
+        }
+
+        Text(
+            text = titleText,
+            color = DestinationText,
+            fontFamily = CinerificAppTextFontFamily,
+            fontSize = fittedFontSize.sp,
+            lineHeight = destinationListTitleLineHeight(fittedFontSize).sp,
+            letterSpacing = 0.sp,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            softWrap = false
+        )
+    }
+}
+
+@Composable
+private fun DestinationListSynopsisText(
+    text: String,
+    scale: Float,
+    modifier: Modifier = Modifier
+) {
+    val textMeasurer = rememberTextMeasurer()
+    val annotatedText = remember(text) { AnnotatedString(text) }
+    val maxFontSize = DESTINATION_LIST_SYNOPSIS_FONT_SIZE * scale
+    val minFontSize = min(DESTINATION_LIST_SYNOPSIS_MIN_FONT_SIZE, maxFontSize)
+
+    BoxWithConstraints(
+        modifier = modifier.heightIn(min = destinationDp(DESTINATION_LIST_META_ROW_HEIGHT, scale))
+    ) {
+        val density = LocalDensity.current
+        val maxWidthPx = with(density) { maxWidth.toPx() }.roundToInt().coerceAtLeast(0)
+        val baseHeightPx = with(density) {
+            destinationDp(DESTINATION_LIST_META_ROW_HEIGHT, scale).toPx()
+        }.roundToInt().coerceAtLeast(0)
+        val fittedFontSize = remember(
+            annotatedText,
+            maxWidthPx,
+            baseHeightPx,
+            maxFontSize,
+            minFontSize,
+            textMeasurer
+        ) {
+            destinationListFittedFontSize(
+                textMeasurer = textMeasurer,
+                text = annotatedText,
+                maxWidthPx = maxWidthPx,
+                maxHeightPx = baseHeightPx,
+                maxFontSize = maxFontSize,
+                minFontSize = minFontSize,
+                maxLines = Int.MAX_VALUE,
+                softWrap = true,
+                lineHeightForFont = ::destinationListSynopsisLineHeight
+            )
+        }
+
+        Text(
+            text = text,
+            color = DestinationText.copy(alpha = 0.9f),
+            fontFamily = CinerificAppTextFontFamily,
+            fontSize = fittedFontSize.sp,
+            fontWeight = FontWeight.Normal,
+            lineHeight = destinationListSynopsisLineHeight(fittedFontSize).sp,
+            letterSpacing = 0.sp,
+            overflow = TextOverflow.Clip,
+            softWrap = true,
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }
 
@@ -785,27 +921,66 @@ private fun DestinationListMetaColumn(
     Column(
         modifier = Modifier
             .width(width)
-            .height(destinationDp(76f, scale)),
-        verticalArrangement = Arrangement.spacedBy(destinationDp(25f, scale))
+            .heightIn(min = destinationDp(DESTINATION_LIST_META_ROW_HEIGHT, scale)),
+        verticalArrangement = Arrangement.spacedBy(destinationDp(DESTINATION_LIST_META_COLUMN_VERTICAL_GAP, scale))
     ) {
-        DestinationListMetaText(text = top)
-        DestinationListMetaText(text = bottom)
+        DestinationListMetaText(text = top, scale = scale)
+        DestinationListMetaText(text = bottom, scale = scale)
     }
 }
 
 @Composable
-private fun DestinationListMetaText(text: String) {
-    Text(
-        text = text,
-        color = DestinationText.copy(alpha = 0.9f),
-        fontFamily = CinerificAppTextFontFamily,
-        fontSize = 16.sp,
-        fontWeight = FontWeight.Bold,
-        lineHeight = 24.sp,
-        letterSpacing = 0.sp,
-        maxLines = 1,
-        overflow = TextOverflow.Ellipsis
-    )
+private fun DestinationListMetaText(
+    text: String,
+    scale: Float,
+    modifier: Modifier = Modifier
+) {
+    val textMeasurer = rememberTextMeasurer()
+    val annotatedText = remember(text) { AnnotatedString(text) }
+    val maxFontSize = DESTINATION_LIST_META_FONT_SIZE * scale
+    val minFontSize = min(DESTINATION_LIST_META_MIN_FONT_SIZE, maxFontSize)
+
+    BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
+        val density = LocalDensity.current
+        val maxWidthPx = with(density) { maxWidth.toPx() }.roundToInt().coerceAtLeast(0)
+        val maxHeightPx = with(density) {
+            destinationDp(DESTINATION_LIST_META_LINE_HEIGHT, scale).toPx()
+        }.roundToInt().coerceAtLeast(0)
+        val fittedFontSize = remember(
+            annotatedText,
+            maxWidthPx,
+            maxHeightPx,
+            maxFontSize,
+            minFontSize,
+            textMeasurer
+        ) {
+            destinationListFittedFontSize(
+                textMeasurer = textMeasurer,
+                text = annotatedText,
+                maxWidthPx = maxWidthPx,
+                maxHeightPx = maxHeightPx,
+                maxFontSize = maxFontSize,
+                minFontSize = minFontSize,
+                maxLines = 1,
+                softWrap = false,
+                fontWeight = FontWeight.Bold,
+                lineHeightForFont = ::destinationListMetaLineHeight
+            )
+        }
+
+        Text(
+            text = text,
+            color = DestinationText.copy(alpha = 0.9f),
+            fontFamily = CinerificAppTextFontFamily,
+            fontSize = fittedFontSize.sp,
+            fontWeight = FontWeight.Bold,
+            lineHeight = destinationListMetaLineHeight(fittedFontSize).sp,
+            letterSpacing = 0.sp,
+            maxLines = 1,
+            overflow = TextOverflow.Clip,
+            softWrap = false
+        )
+    }
 }
 
 @Composable
@@ -1794,12 +1969,13 @@ private fun CinerificSettingsScreen(
     ) {
         val scale = maxWidth.value / DESTINATION_FRAME_WIDTH
         val density = LocalDensity.current
+        val isPortrait = maxHeight > maxWidth
         val horizontalPadding = destinationDp(SETTINGS_SCREEN_HORIZONTAL_PADDING, scale)
         val rightPadding = destinationDp(160f, scale)
         val navScale = cinerificNavScale(maxWidth, maxHeight)
         val titleBottomPadding = destinationDp(DESTINATION_TOP_BAR_TITLE_BOTTOM, navScale)
         val statusBarTop = with(density) { WindowInsets.statusBars.getTop(this).toDp() }
-        val topBarHeight = cinerificTopRailHeight(maxWidth, maxHeight, statusBarTop)
+        val topBarHeight = destinationTopBarHeight(maxWidth, maxHeight, statusBarTop)
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
         val settingsScrollState = rememberScrollState()
         var bottomToggleCenterY by remember { mutableStateOf<Float?>(null) }
@@ -1807,14 +1983,36 @@ private fun CinerificSettingsScreen(
         var bottomAlignmentSpacerPx by remember { mutableStateOf(0f) }
         var keepSettingsBottomPinned by remember { mutableStateOf(false) }
         val bottomAlignmentSpacer = with(density) { bottomAlignmentSpacerPx.toDp() }
+        val signedInScale = scale * if (isPortrait) {
+            SETTINGS_SIGNED_IN_PORTRAIT_SCALE_MULTIPLIER
+        } else {
+            1f
+        }
+        val accessibilityHeaderCenterY = topBarHeight +
+            SETTINGS_SECTION_VERTICAL_GAP.dp +
+            destinationDp(SETTINGS_SECTION_HEADER_HEIGHT / 2f, scale)
+        val signedInStackTop = accessibilityHeaderCenterY -
+            destinationDp(SETTINGS_SIGNED_IN_TITLE_CENTER, signedInScale)
+        val settingsBottomSpacer = if (isPortrait) {
+            SETTINGS_SECTION_VERTICAL_GAP.dp +
+                cinerificPortraitBottomNavContentHeight(maxWidth, maxHeight)
+        } else {
+            bottomAlignmentSpacer
+        }
 
         LaunchedEffect(
+            isPortrait,
             bottomToggleCenterY,
             signOutCenterY,
             settingsScrollState.value,
             settingsScrollState.maxValue,
             bottomAlignmentSpacerPx
         ) {
+            if (isPortrait) {
+                bottomAlignmentSpacerPx = 0f
+                keepSettingsBottomPinned = false
+                return@LaunchedEffect
+            }
             val toggleCenterY = bottomToggleCenterY ?: return@LaunchedEffect
             val buttonCenterY = signOutCenterY ?: return@LaunchedEffect
             val toggleContentCenterY = toggleCenterY + settingsScrollState.value
@@ -1828,8 +2026,8 @@ private fun CinerificSettingsScreen(
             }
         }
 
-        LaunchedEffect(bottomAlignmentSpacerPx) {
-            if (!keepSettingsBottomPinned) return@LaunchedEffect
+        LaunchedEffect(isPortrait, bottomAlignmentSpacerPx) {
+            if (isPortrait || !keepSettingsBottomPinned) return@LaunchedEffect
             withFrameNanos { }
             settingsScrollState.scrollTo(settingsScrollState.maxValue)
             keepSettingsBottomPinned = false
@@ -1925,21 +2123,25 @@ private fun CinerificSettingsScreen(
                 scale = scale,
                 selectedLanguage = selectedLanguage,
                 onLanguageSelected = onLanguageSelected,
-                onLastToggleCenterMeasured = { bottomToggleCenterY = it }
+                onLastToggleCenterMeasured = if (isPortrait) {
+                    null
+                } else {
+                    { bottomToggleCenterY = it }
+                }
             )
-            Spacer(modifier = Modifier.height(bottomAlignmentSpacer))
+            Spacer(modifier = Modifier.height(settingsBottomSpacer))
         }
 
         SettingsSignedInColumn(
             profile = signedInProfile,
-            scale = scale,
+            scale = signedInScale,
             onSignOut = onSignOut,
             onSignOutCenterMeasured = { signOutCenterY = it },
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(
                     x = destinationDp(SETTINGS_SIGNED_IN_LEFT, scale),
-                    y = topBarHeight + destinationDp(SETTINGS_SIGNED_IN_TOP_AFTER_BAR, scale)
+                    y = signedInStackTop
                 )
         )
 
@@ -1972,7 +2174,7 @@ private fun CinerificFavoritesScreen(
         val navScale = cinerificNavScale(maxWidth, maxHeight)
         val titleBottomPadding = destinationDp(DESTINATION_TOP_BAR_TITLE_BOTTOM, navScale)
         val statusBarTop = with(density) { WindowInsets.statusBars.getTop(this).toDp() }
-        val topBarHeight = cinerificTopRailHeight(maxWidth, maxHeight, statusBarTop)
+        val topBarHeight = destinationTopBarHeight(maxWidth, maxHeight, statusBarTop)
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
         val favoritePrograms = remember(favoriteProgramTitles) {
             favoriteProgramSpecs(favoriteProgramTitles)
@@ -2236,7 +2438,7 @@ private fun SettingsSection(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 72.dp)
+            .padding(top = SETTINGS_SECTION_VERTICAL_GAP.dp)
             .background(Color.Black.copy(alpha = 0.14f), sectionShape)
             .border(destinationDp(1f, scale), Color.White.copy(alpha = 0.035f), sectionShape)
             .padding(bottom = destinationDp(SETTINGS_SECTION_BOTTOM_PADDING, scale))
@@ -2260,7 +2462,9 @@ private fun SettingsSection(
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(modifier = Modifier.width(destinationDp(SETTINGS_ROW_TEXT_WIDTH, scale))) {
+                Column(
+                    modifier = Modifier.width(destinationDp(SETTINGS_ROW_TEXT_WIDTH, scale))
+                ) {
                     Text(
                         text = stringResource(row.labelResId),
                         color = DestinationText,
@@ -2344,21 +2548,27 @@ private fun SettingsSignedInColumn(
             .width(destinationDp(SETTINGS_SIGNED_IN_WIDTH, scale))
             .height(destinationDp(SETTINGS_SIGNED_IN_HEIGHT, scale))
     ) {
-        Text(
-            text = stringResource(R.string.settings_signed_in_as),
-            color = DestinationText,
-            fontFamily = CinerificAppTextFontFamily,
-            fontSize = titleFontSize,
-            fontWeight = FontWeight.Bold,
-            lineHeight = titleLineHeight,
-            letterSpacing = 0.sp,
-            textAlign = TextAlign.Center,
-            maxLines = 1,
+        Box(
             modifier = Modifier
                 .offset(x = 0.dp, y = destinationDp(SETTINGS_SIGNED_IN_TITLE_TOP, scale))
                 .width(destinationDp(SETTINGS_SIGNED_IN_WIDTH, scale))
-                .height(destinationDp(SETTINGS_SIGNED_IN_TITLE_HEIGHT, scale))
-        )
+                .height(destinationDp(SETTINGS_SIGNED_IN_TITLE_HEIGHT, scale)),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = stringResource(R.string.settings_signed_in_as),
+                color = DestinationText,
+                fontFamily = CinerificAppTextFontFamily,
+                fontSize = titleFontSize,
+                fontWeight = FontWeight.Bold,
+                lineHeight = titleLineHeight,
+                letterSpacing = 0.sp,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Clip,
+                softWrap = false
+            )
+        }
         Image(
             painter = painterResource(profile.avatarResId),
             contentDescription = null,
@@ -2393,13 +2603,13 @@ private fun SettingsSignOutButton(
     onCenterMeasured: (Float) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Box(
-        modifier = modifier
-            .width(destinationDp(150f, scale))
-            .height(destinationDp(75f, scale))
-            .onGloballyPositioned { coordinates ->
-                onCenterMeasured(coordinates.positionInRoot().y + coordinates.size.height / 2f)
-            }
+        Box(
+            modifier = modifier
+                .width(destinationDp(SETTINGS_SIGN_OUT_BUTTON_WIDTH, scale))
+                .height(destinationDp(SETTINGS_SIGN_OUT_BUTTON_HEIGHT, scale))
+                .onGloballyPositioned { coordinates ->
+                    onCenterMeasured(coordinates.positionInRoot().y + coordinates.size.height / 2f)
+                }
             .clickable { onSignOut() },
         contentAlignment = Alignment.TopStart
     ) {
@@ -2409,17 +2619,72 @@ private fun SettingsSignOutButton(
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.fillMaxSize()
         )
-        Text(
+        SettingsSignOutLabelText(
             text = stringResource(R.string.settings_sign_out),
+            modifier = Modifier
+                .align(Alignment.Center)
+                .fillMaxWidth()
+                .padding(horizontal = destinationDp(SETTINGS_LANGUAGE_BUTTON_PADDING, scale))
+        )
+    }
+}
+
+@Composable
+private fun SettingsSignOutLabelText(
+    text: String,
+    modifier: Modifier = Modifier
+) {
+    val textMeasurer = rememberTextMeasurer()
+
+    BoxWithConstraints(modifier = modifier) {
+        val density = LocalDensity.current
+        val maxWidthPx = with(density) { maxWidth.toPx() }.roundToInt().coerceAtLeast(0)
+        val fittedFontSize = remember(text, maxWidthPx, textMeasurer) {
+            if (maxWidthPx <= 0) {
+                SETTINGS_SIGN_OUT_TEXT_SIZE
+            } else {
+                var low = SETTINGS_SIGN_OUT_MIN_TEXT_SIZE
+                var high = SETTINGS_SIGN_OUT_TEXT_SIZE
+                repeat(10) {
+                    val candidate = (low + high) / 2f
+                    val result = textMeasurer.measure(
+                        text = text,
+                        style = TextStyle(
+                            fontFamily = CinerificAppTextFontFamily,
+                            fontSize = candidate.sp,
+                            fontWeight = FontWeight.Bold,
+                            lineHeight = settingsSignOutLineHeight(candidate).sp,
+                            letterSpacing = 0.sp,
+                            textAlign = TextAlign.Center
+                        ),
+                        overflow = TextOverflow.Clip,
+                        softWrap = false,
+                        maxLines = 1,
+                        constraints = Constraints(maxWidth = maxWidthPx)
+                    )
+                    if (result.didOverflowWidth) {
+                        high = candidate
+                    } else {
+                        low = candidate
+                    }
+                }
+                low
+            }
+        }
+
+        Text(
+            text = text,
             color = DestinationText,
             fontFamily = CinerificAppTextFontFamily,
-            fontSize = 24.sp,
+            fontSize = fittedFontSize.sp,
             fontWeight = FontWeight.Bold,
-            lineHeight = 36.sp,
+            lineHeight = settingsSignOutLineHeight(fittedFontSize).sp,
             letterSpacing = 0.sp,
             textAlign = TextAlign.Center,
             maxLines = 1,
-            modifier = Modifier.align(Alignment.Center)
+            overflow = TextOverflow.Clip,
+            softWrap = false,
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -2449,7 +2714,10 @@ private fun SettingsSectionHeader(
             fontFamily = CinerificAppTextFontFamily,
             fontSize = 32.sp,
             fontWeight = FontWeight.Black,
-            letterSpacing = 0.sp
+            lineHeight = destinationSp(SETTINGS_SECTION_HEADER_HEIGHT, scale),
+            letterSpacing = 0.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.height(destinationDp(SETTINGS_SECTION_HEADER_HEIGHT, scale))
         )
     }
 }
@@ -2634,9 +2902,9 @@ private fun SettingsLanguageDropdown(
                         label = stringResource(option.second),
                         selected = selectedLanguage == option.first,
                         top = when (index) {
-                            0 -> 9f
-                            1 -> 41f
-                            else -> 75f
+                            0 -> 10f
+                            1 -> 62f
+                            else -> 114f
                         },
                         scale = scale
                     ) {
@@ -2651,17 +2919,8 @@ private fun SettingsLanguageDropdown(
                         .padding(horizontal = destinationDp(SETTINGS_LANGUAGE_BUTTON_PADDING, scale)),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
+                    SettingsLanguageLabelText(
                         text = language,
-                        color = Color(0xFF1F1F1F),
-                        fontFamily = CinerificAppTextFontFamily,
-                        fontSize = SETTINGS_LANGUAGE_TEXT_SIZE.sp,
-                        fontWeight = FontWeight.Bold,
-                        lineHeight = SETTINGS_LANGUAGE_LINE_HEIGHT.sp,
-                        letterSpacing = 0.sp,
-                        textAlign = TextAlign.Start,
-                        maxLines = 1,
-                        overflow = TextOverflow.Clip,
                         modifier = Modifier.weight(1f)
                     )
                     Canvas(
@@ -2706,21 +2965,33 @@ private fun SettingsLanguageMenuRow(
             .padding(start = destinationDp(12f, scale), end = destinationDp(6f, scale)),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
+        SettingsLanguageLabelText(
             text = label,
-            color = Color(0xFF1F1F1F),
-            fontFamily = CinerificAppTextFontFamily,
-            fontSize = SETTINGS_LANGUAGE_TEXT_SIZE.sp,
-            fontWeight = FontWeight.Bold,
-            lineHeight = SETTINGS_LANGUAGE_LINE_HEIGHT.sp,
-            letterSpacing = 0.sp,
-            textAlign = TextAlign.Start,
-            maxLines = 1,
-            overflow = TextOverflow.Clip,
             modifier = Modifier.weight(1f)
         )
         SettingsLanguageRadio(selected = selected, scale = scale)
     }
+}
+
+@Composable
+private fun SettingsLanguageLabelText(
+    text: String,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = text,
+        color = Color(0xFF1F1F1F),
+        fontFamily = CinerificAppTextFontFamily,
+        fontSize = SETTINGS_LANGUAGE_TEXT_SIZE.sp,
+        fontWeight = FontWeight.Bold,
+        lineHeight = SETTINGS_LANGUAGE_LINE_HEIGHT.sp,
+        letterSpacing = 0.sp,
+        textAlign = TextAlign.Start,
+        maxLines = 1,
+        overflow = TextOverflow.Clip,
+        softWrap = false,
+        modifier = modifier
+    )
 }
 
 @Composable
@@ -2756,6 +3027,84 @@ private enum class SettingsControl {
 private fun destinationDp(px: Float, scale: Float): Dp = (px * scale).dp
 
 private fun destinationSp(px: Float, scale: Float) = (px * scale).sp
+
+private fun destinationListFittedFontSize(
+    textMeasurer: TextMeasurer,
+    text: AnnotatedString,
+    maxWidthPx: Int,
+    maxHeightPx: Int,
+    maxFontSize: Float,
+    minFontSize: Float,
+    maxLines: Int,
+    softWrap: Boolean,
+    fontWeight: FontWeight? = null,
+    lineHeightForFont: (Float) -> Float
+): Float {
+    val safeMaxFontSize = maxFontSize.coerceAtLeast(0.1f)
+    val safeMinFontSize = minFontSize.coerceIn(0.1f, safeMaxFontSize)
+
+    if (maxWidthPx <= 0 || maxHeightPx <= 0 || safeMinFontSize >= safeMaxFontSize) {
+        return safeMaxFontSize
+    }
+
+    var low = safeMinFontSize
+    var high = safeMaxFontSize
+    repeat(12) {
+        val candidate = (low + high) / 2f
+        val result = textMeasurer.measure(
+            text = text,
+            style = TextStyle(
+                fontFamily = CinerificAppTextFontFamily,
+                fontSize = candidate.sp,
+                fontWeight = fontWeight,
+                lineHeight = lineHeightForFont(candidate).sp,
+                letterSpacing = 0.sp
+            ),
+            overflow = TextOverflow.Clip,
+            softWrap = softWrap,
+            maxLines = maxLines,
+            constraints = Constraints(
+                maxWidth = maxWidthPx,
+                maxHeight = maxHeightPx
+            )
+        )
+        if (result.didOverflowWidth || result.didOverflowHeight) {
+            high = candidate
+        } else {
+            low = candidate
+        }
+    }
+    return low
+}
+
+private fun destinationListTitleLineHeight(fontSize: Float): Float {
+    return fontSize * DESTINATION_LIST_TITLE_LINE_HEIGHT / DESTINATION_LIST_TITLE_FONT_SIZE
+}
+
+private fun destinationListSynopsisLineHeight(fontSize: Float): Float {
+    return fontSize * DESTINATION_LIST_SYNOPSIS_LINE_HEIGHT / DESTINATION_LIST_SYNOPSIS_FONT_SIZE
+}
+
+private fun destinationListMetaLineHeight(fontSize: Float): Float {
+    return fontSize * DESTINATION_LIST_META_LINE_HEIGHT / DESTINATION_LIST_META_FONT_SIZE
+}
+
+private fun settingsSignOutLineHeight(fontSize: Float): Float {
+    return fontSize * SETTINGS_SIGN_OUT_LINE_HEIGHT / SETTINGS_SIGN_OUT_TEXT_SIZE
+}
+
+private fun destinationTopBarHeight(
+    viewportWidth: Dp,
+    viewportHeight: Dp,
+    statusBarTop: Dp
+): Dp {
+    val baseHeight = cinerificTopRailHeight(viewportWidth, viewportHeight, statusBarTop)
+    return if (viewportHeight > viewportWidth) {
+        baseHeight * DESTINATION_PORTRAIT_TOP_BAR_HEIGHT_MULTIPLIER
+    } else {
+        baseHeight
+    }
+}
 
 private fun destinationSectionTopPadding(index: Int, showViewportNav: Boolean): Dp {
     return if (index == 0) {

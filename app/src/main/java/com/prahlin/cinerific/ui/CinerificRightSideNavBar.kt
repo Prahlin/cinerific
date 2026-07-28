@@ -589,4 +589,11 @@ internal fun cinerificTopRailHeight(
     return statusBarTop + navDp(topRailBottom, scale)
 }
 
+internal fun cinerificPortraitBottomNavContentHeight(
+    viewportWidth: Dp,
+    viewportHeight: Dp
+): Dp {
+    return navDp(PORTRAIT_NAV_BAR_HEIGHT, cinerificNavScale(viewportWidth, viewportHeight))
+}
+
 private fun navDp(px: Float, scale: Float): Dp = (px * scale).dp
