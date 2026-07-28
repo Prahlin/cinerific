@@ -68,7 +68,8 @@ import kotlin.math.sin
 
 private const val FIGMA_FRAME_WIDTH = 1194f
 private const val FIGMA_FRAME_HEIGHT = 834f
-private const val SCREEN_RED_MS = 1000
+private const val SCREEN_BLACK_HOLD_MS = 1000
+private const val SCREEN_PINK_MS = 1000
 private const val LOGO_ENTRY_START_MS = 250
 private const val LOGO_ENTRY_END_MS = 1687
 private const val FINAL_SETTLE_START_MS = LOGO_ENTRY_END_MS
@@ -90,12 +91,12 @@ private const val FAVORITES_FULL_PROMPT_TEXT_HEIGHT = 84f
 private const val FAVORITES_FULL_PROMPT_VISIBLE_MS = 2200L
 
 private val ColorFrame1Background = Color(0xFF000000)
-private val ColorFrame2Background = Color(0xFF62070D)
+private val ColorFrame2Background = Color(0xFF600878)
 private val ColorFrame3Background = Color(0xFF1F1F1F)
 private val ColorFrame4Background = Color(0xFF1F1F1F)
-private val ColorIntroGradientTop = Color(0xFF050000)
-private val ColorIntroGradientCenter = Color(0xFF62070D)
-private val ColorIntroGradientBottom = Color(0xFF100102)
+private val ColorIntroGradientTop = Color(0xFF050006)
+private val ColorIntroGradientCenter = Color(0xFF600878)
+private val ColorIntroGradientBottom = Color(0xFF100114)
 private val ColorFavoritesFullPromptFill = Color(0xFF303030)
 private val ColorFavoritesFullPromptAccent = Color(0xFF858585)
 
@@ -154,10 +155,10 @@ internal enum class CinerificProfile(
     @DrawableRes val avatarResId: Int,
     @DrawableRes val nameResId: Int
 ) {
-    Steve(R.drawable.steve_avatar, R.drawable.steve_name),
-    Martin(R.drawable.martin_avatar, R.drawable.martin_name),
-    Janny(R.drawable.janny_avatar, R.drawable.janny_name),
-    Guest(R.drawable.guest_avatar, R.drawable.guest_name)
+    Steve(R.drawable.steve_avatar_bubble_edge50_body0_test, R.drawable.steve_name),
+    Martin(R.drawable.martin_avatar_bubble_edge50_body0_test, R.drawable.martin_name),
+    Janny(R.drawable.janny_avatar_bubble_edge50_body0_test, R.drawable.janny_name),
+    Guest(R.drawable.guest_avatar_bubble_edge50_body0_test, R.drawable.guest_name)
 }
 
 @Composable
@@ -475,11 +476,15 @@ private fun FavoritesFullPromptBubble(
 private fun BootIntroFromFigma(progress: Float) {
     val p = progress.coerceIn(0f, 1f)
     val images = rememberIntroImages()
-    val blackToBurgundy = linearSegmentMs(p, 0, SCREEN_RED_MS)
-    val burgundyToSettle = easedSegmentMs(p, 2500, 3900)
+    val blackToPurple = linearSegmentMs(
+        p,
+        SCREEN_BLACK_HOLD_MS,
+        SCREEN_BLACK_HOLD_MS + SCREEN_PINK_MS
+    )
+    val purpleToSettle = easedSegmentMs(p, 2500, 3900)
     val background = introBackgroundBrush(
-        solidProgress = blackToBurgundy,
-        gradientProgress = burgundyToSettle
+        solidProgress = blackToPurple,
+        gradientProgress = purpleToSettle
     )
     val logoAlpha = linearSegmentMs(p, 90, LOGO_ENTRY_START_MS)
     val logoEntryProgress = bouncySegmentMs(p, LOGO_ENTRY_START_MS, LOGO_ENTRY_END_MS)
@@ -721,10 +726,10 @@ private fun rememberIntroImages(): IntroImages {
         IntroImages(
             logoSimple = BitmapFactory.decodeResource(resources, R.drawable.logo_simple_large).asImageBitmap(),
             logoEyes = BitmapFactory.decodeResource(resources, R.drawable.logo_eyes_large).asImageBitmap(),
-            steveAvatar = BitmapFactory.decodeResource(resources, R.drawable.steve_avatar).asImageBitmap(),
-            martinAvatar = BitmapFactory.decodeResource(resources, R.drawable.martin_avatar).asImageBitmap(),
-            jannyAvatar = BitmapFactory.decodeResource(resources, R.drawable.janny_avatar).asImageBitmap(),
-            guestAvatar = BitmapFactory.decodeResource(resources, R.drawable.guest_avatar).asImageBitmap(),
+            steveAvatar = BitmapFactory.decodeResource(resources, R.drawable.steve_avatar_bubble_edge50_body0_test).asImageBitmap(),
+            martinAvatar = BitmapFactory.decodeResource(resources, R.drawable.martin_avatar_bubble_edge50_body0_test).asImageBitmap(),
+            jannyAvatar = BitmapFactory.decodeResource(resources, R.drawable.janny_avatar_bubble_edge50_body0_test).asImageBitmap(),
+            guestAvatar = BitmapFactory.decodeResource(resources, R.drawable.guest_avatar_bubble_edge50_body0_test).asImageBitmap(),
             steveName = BitmapFactory.decodeResource(resources, R.drawable.steve_name).asImageBitmap(),
             martinName = BitmapFactory.decodeResource(resources, R.drawable.martin_name).asImageBitmap(),
             jannyName = BitmapFactory.decodeResource(resources, R.drawable.janny_name).asImageBitmap(),
@@ -825,10 +830,10 @@ private fun AvatarSelectionLayer(scale: Float, alpha: Float, yOffset: Float) {
             }
     ) {
         // Figma Logo Slide 2, Property 1=Variant2, constrained inside Sign-in Frame.
-        FigmaAvatarImage(x = 130f, y = 428f, w = 220f, h = 220f, scale = scale, resId = R.drawable.steve_avatar)
-        FigmaAvatarImage(x = 368f, y = 428f, w = 220f, h = 220f, scale = scale, resId = R.drawable.martin_avatar)
-        FigmaAvatarImage(x = 606f, y = 432f, w = 220f, h = 220f, scale = scale, resId = R.drawable.janny_avatar)
-        FigmaAvatarImage(x = 844f, y = 428f, w = 220f, h = 220f, scale = scale, resId = R.drawable.guest_avatar)
+        FigmaAvatarImage(x = 130f, y = 428f, w = 220f, h = 220f, scale = scale, resId = R.drawable.steve_avatar_bubble_edge50_body0_test)
+        FigmaAvatarImage(x = 368f, y = 428f, w = 220f, h = 220f, scale = scale, resId = R.drawable.martin_avatar_bubble_edge50_body0_test)
+        FigmaAvatarImage(x = 606f, y = 432f, w = 220f, h = 220f, scale = scale, resId = R.drawable.janny_avatar_bubble_edge50_body0_test)
+        FigmaAvatarImage(x = 844f, y = 428f, w = 220f, h = 220f, scale = scale, resId = R.drawable.guest_avatar_bubble_edge50_body0_test)
 
         FigmaAssetImage(x = 130f, y = 683f, w = 220f, h = 72f, scale = scale, resId = R.drawable.steve_name)
         FigmaAssetImage(x = 368f, y = 683f, w = 220f, h = 72f, scale = scale, resId = R.drawable.martin_name)

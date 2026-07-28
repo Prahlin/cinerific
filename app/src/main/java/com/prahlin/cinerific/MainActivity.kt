@@ -1,6 +1,7 @@
 package com.prahlin.cinerific
 
 import android.app.UiModeManager
+import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -16,6 +17,7 @@ import com.prahlin.cinerific.ui.theme.CinerificTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val bootStartMillis = SystemClock.uptimeMillis()
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             getSystemService(UiModeManager::class.java).setApplicationNightMode(
                 UiModeManager.MODE_NIGHT_YES

@@ -17,13 +17,15 @@ import android.view.View
 import androidx.compose.animation.core.FastOutSlowInEasing
 import com.prahlin.cinerific.R
 import kotlin.math.PI
+import kotlin.math.abs
 import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlin.math.sin
 
 private const val FIGMA_FRAME_WIDTH = 1194f
 private const val FIGMA_FRAME_HEIGHT = 834f
-private const val SCREEN_RED_MS = 1000
+private const val SCREEN_BLACK_HOLD_MS = 1000
+private const val SCREEN_PINK_MS = 1000
 private const val LOGO_ENTRY_START_MS = 250
 private const val LOGO_ENTRY_END_MS = 1687
 private const val FINAL_SETTLE_START_MS = LOGO_ENTRY_END_MS
@@ -31,10 +33,14 @@ private const val FINAL_SETTLE_END_MS = 4812
 private const val BOOT_ANIMATION_MS = FINAL_SETTLE_END_MS
 
 private const val COLOR_FRAME_1 = 0xFF000000.toInt()
-private const val COLOR_FRAME_2 = 0xFF62070D.toInt()
-private const val COLOR_GRADIENT_TOP = 0xFF050000.toInt()
-private const val COLOR_GRADIENT_CENTER = 0xFF62070D.toInt()
-private const val COLOR_GRADIENT_BOTTOM = 0xFF100102.toInt()
+private const val COLOR_FRAME_2 = 0xFF600878.toInt()
+private const val COLOR_GRADIENT_TOP = 0xFF050006.toInt()
+private const val COLOR_GRADIENT_CENTER = 0xFF600878.toInt()
+private const val COLOR_GRADIENT_BOTTOM = 0xFF100114.toInt()
+private const val STANDARD_TABLET_LONG_EDGE = 2560
+private const val STANDARD_TABLET_SHORT_EDGE = 1600
+private const val STANDARD_TABLET_SIZE_TOLERANCE = 8
+private const val STANDARD_BACKGROUND_SETTLED_ALPHA = 0.5f
 
 private val FINAL_AVATAR_TARGETS = listOf(
     AvatarTarget(CinerificProfile.Steve, Bounds(130f, 428f, 220f, 220f)),
@@ -59,14 +65,16 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private val logoSimple = decode(R.drawable.logo_simple_large)
     private val logoEyes = decode(R.drawable.logo_eyes_large)
     private val logoCombined = combineBitmaps(logoSimple, logoEyes)
-    private val steveAvatar = circularBitmap(decode(R.drawable.steve_avatar))
-    private val martinAvatar = circularBitmap(decode(R.drawable.martin_avatar))
-    private val jannyAvatar = circularBitmap(decode(R.drawable.janny_avatar))
-    private val guestAvatar = circularBitmap(decode(R.drawable.guest_avatar))
+    private val steveAvatar = decode(R.drawable.steve_avatar_bubble_edge50_body0_test)
+    private val martinAvatar = decode(R.drawable.martin_avatar_bubble_edge50_body0_test)
+    private val jannyAvatar = decode(R.drawable.janny_avatar_bubble_edge50_body0_test)
+    private val guestAvatar = decode(R.drawable.guest_avatar_bubble_edge50_body0_test)
     private val steveName = decode(R.drawable.steve_name)
     private val martinName = decode(R.drawable.martin_name)
     private val jannyName = decode(R.drawable.janny_name)
     private val guestName = decode(R.drawable.guest_name)
+    private val standardLandscapeBackground = decode(R.drawable.signin_background_standard_landscape)
+    private val standardPortraitBackground = decode(R.drawable.signin_background_standard_portrait)
 
     private val imagePaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG or Paint.DITHER_FLAG)
     private val backgroundPaint = Paint()
@@ -95,9 +103,13 @@ internal class CinerificIntroView(context: Context) : View(context) {
         super.onDraw(canvas)
 
         val progress = bootProgressAt(bootStartMillis)
-        val blackToBurgundy = linearSegmentMs(progress, 0, SCREEN_RED_MS)
-        val burgundyToSettle = easedSegmentMs(progress, 2500, 3900)
-        drawIntroBackground(canvas, blackToBurgundy, burgundyToSettle)
+        val blackToPurple = linearSegmentMs(
+            progress,
+            SCREEN_BLACK_HOLD_MS,
+            SCREEN_BLACK_HOLD_MS + SCREEN_PINK_MS
+        )
+        val purpleToSettle = easedSegmentMs(progress, 2500, 3900)
+        drawIntroBackground(canvas, blackToPurple, purpleToSettle)
 
         val stage = currentStageMetrics() ?: return
 
@@ -186,6 +198,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun drawIntroBackground(canvas: Canvas, solidProgress: Float, gradientProgress: Float) {
+        val standardSignInBackground = standardSignInBackgroundForSize()
         if (gradientProgress <= 0.001f) {
             canvas.drawColor(lerpColor(COLOR_FRAME_1, COLOR_FRAME_2, solidProgress))
             return
@@ -207,6 +220,25 @@ internal class CinerificIntroView(context: Context) : View(context) {
         )
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), backgroundPaint)
         backgroundPaint.shader = null
+
+        if (standardSignInBackground != null) {
+            drawStandardSignInBlackMatte(canvas, gradientProgress)
+            drawStandardSignInBackground(canvas, standardSignInBackground, gradientProgress)
+        }
+    }
+
+    private fun drawStandardSignInBlackMatte(canvas: Canvas, alpha: Float) {
+        backgroundPaint.color = COLOR_FRAME_1
+        backgroundPaint.alpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
+        canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), backgroundPaint)
+        backgroundPaint.alpha = 255
+    }
+
+    private fun drawStandardSignInBackground(canvas: Canvas, bitmap: Bitmap, alpha: Float) {
+        tempRect.set(0f, 0f, width.toFloat(), height.toFloat())
+        imagePaint.alpha = (alpha.coerceIn(0f, 1f) * STANDARD_BACKGROUND_SETTLED_ALPHA * 255f).roundToInt()
+        canvas.drawBitmap(bitmap, null, tempRect, imagePaint)
+        imagePaint.alpha = 255
     }
 
     private fun drawFigmaBitmap(
@@ -231,6 +263,20 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun decode(resId: Int): Bitmap {
         return BitmapFactory.decodeResource(resources, resId, bitmapOptions)
+    }
+
+    private fun standardSignInBackgroundForSize(): Bitmap? {
+        return when {
+            isSizeCloseTo(width, STANDARD_TABLET_LONG_EDGE) &&
+                isSizeCloseTo(height, STANDARD_TABLET_SHORT_EDGE) -> standardLandscapeBackground
+            isSizeCloseTo(width, STANDARD_TABLET_SHORT_EDGE) &&
+                isSizeCloseTo(height, STANDARD_TABLET_LONG_EDGE) -> standardPortraitBackground
+            else -> null
+        }
+    }
+
+    private fun isSizeCloseTo(actual: Int, expected: Int): Boolean {
+        return abs(actual - expected) <= STANDARD_TABLET_SIZE_TOLERANCE
     }
 
     private fun isFinalFrameSettled(): Boolean {
