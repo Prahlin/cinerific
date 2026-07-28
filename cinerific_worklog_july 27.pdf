@@ -1,0 +1,656 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R 11 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 6248 >>
+stream
+BT
+/F1 8.65 Tf
+9.60 TL
+1 0 0 1 54.00 736.00 Tm
+(Cinerific Android App Work Log - July 27, 2026) Tj
+T*
+(Compiled summary for Monday, July 27, 2026 - focus: making the detail hero rating stacks interactive) Tj
+T*
+(and stateful, routing Home/default carousel genre labels and chevrons into the correct Movies or Shows) Tj
+T*
+(catalog view, removing movie/show and genre duplicate conflicts, tuning the loading spinner into three) Tj
+T*
+(clockwise speed layers, refining selected nested mode-navigation glyph spacing, adapting Home, detail,) Tj
+T*
+(catalog, Favorites, and Settings layouts for tablet portrait rotation, moving portrait navigation to an) Tj
+T*
+(always-visible bottom bar, preserving app state across rotation, restoring full four-way rotation on) Tj
+T*
+(the sign-in screen, replacing the old red intro color with a black-to-purple sign-in transition,) Tj
+T*
+(implementing standard-tablet portrait and landscape sign-in backgrounds, layering the settled) Tj
+T*
+(background at 50 percent over pure black, experimenting with transparent avatar-bubble treatments,) Tj
+T*
+(applying hollow 50-to-0 percent gradient bubble fills to all four sign-in avatars, validating the debug) Tj
+T*
+(build and runtime AVD behavior, refreshing the project snapshot, and generating the latest Cinerific) Tj
+T*
+(daily worklog artifact.) Tj
+T*
+() Tj
+T*
+(Generated in continuity with the established Cinerific worklog cadence from July 12, July 14, July 15) Tj
+T*
+(Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, and July 25: compact) Tj
+T*
+(opening summary, source-material review, baseline state, goal list, themed work-completed sections,) Tj
+T*
+(validation, files touched, follow-up context, and output-artifact close. This artifact records the) Tj
+T*
+(current source state on main through HEAD 0dedffc, plus the refreshed snapshot from this worklog pass,) Tj
+T*
+(and follows the prior root-level naming, letter layout, footer convention, metadata, and) Tj
+T*
+(plain-text-readable PDF style.) Tj
+T*
+() Tj
+T*
+(Source Materials Reviewed) Tj
+T*
+(- Reviewed every pre-existing Cinerific worklog PDF at the repository root: July 12, July 14, July 15) Tj
+T*
+(  Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, and July 25.) Tj
+T*
+(- Used pdftotext and pdfinfo output from the prior PDFs to preserve the established title pattern,) Tj
+T*
+(  summary cadence, section order, validation language, file-list style, letter-size geometry, metadata,) Tj
+T*
+(  footer, and plain-text-readable layout.) Tj
+T*
+(- Ran ./read_project.sh and reviewed the refreshed cinerific_PROJECT_SNAPSHOT.txt for the current) Tj
+T*
+(  Android source layout, drawable inventory, generated avatar/background resources, worklog inventory,) Tj
+T*
+(  screenshot folders, and scanner convention.) Tj
+T*
+(- Reviewed git status, git log, git show --stat, git diff --stat, and git diff --name-status for the) Tj
+T*
+(  July 27 commit sequence: 693b90b, 14695a6, 5a1f351, 86cee20, d581531, and 0dedffc, with context from) Tj
+T*
+(  the July 25 worklog commit 6041bca.) Tj
+T*
+(- Reviewed CinerificApp.kt, CinerificDestinationScreen.kt, CinerificHomeScreen.kt,) Tj
+T*
+(  CinerificIntroView.kt, CinerificLoadingSpinner.kt, CinerificRightSideNavBar.kt,) Tj
+T*
+(  CinerificViewportModeNav.kt, CinerificViewportNavBar.kt, MainActivity.kt, AndroidManifest.xml, and) Tj
+T*
+(  the drawable-nodpi avatar/sign-in resources touched during the July 27 pass.) Tj
+T*
+(- Reviewed generated mockup and runtime screenshot folders for sign-in backgrounds, orientation) Tj
+T*
+(  debugging, and avatar transparency experiments, including the final all-avatar sign-in screenshot) Tj
+T*
+(  used to verify the gradient-bubble treatment.) Tj
+T*
+(- Reviewed emulator and adb evidence from the rotation work: display rotation settings,) Tj
+T*
+(  ignoreOrientationRequest state, fullSensor runtime orientation, forced rotation screenshots, and) Tj
+T*
+(  toolbar-equivalent adb emu rotate checks.) Tj
+T*
+(- Reviewed user feedback from the July 27 design pass, including star-stack visibility/stroke/rounding) Tj
+T*
+(  requests, Home genre navigation behavior, portrait-mode appearance screenshots, Settings-screen) Tj
+T*
+(  typography/alignment requests, sign-in background cleanup, intro timing, and avatar bubble opacity) Tj
+T*
+(  experiments.) Tj
+T*
+() Tj
+T*
+(Baseline Status Before July 27 Work) Tj
+T*
+(- Cinerific entered July 27 with the July 25 Home hero routing, detail 25 percent info-panel layout,) Tj
+T*
+(  spinner normalization, Manrope content typography, and responsive tablet test profile work accepted.) Tj
+T*
+(- Detail hero rating stars were visually present, but the user still needed direct tap-to-rate) Tj
+T*
+(  behavior, lower unrated visibility, state persistence across title navigation, and rounded/stroked) Tj
+T*
+(  custom-star rendering that did not clip.) Tj
+T*
+(- Home/default carousels showed genre names and right-side chevrons, but those elements did not yet) Tj
+T*
+(  route into the matching nested catalog genre view on Movies or Shows.) Tj
+T*
+(- Movies and Shows still allowed duplicate title/category conflicts in some edge cases, including) Tj
+T*
+(  Hungry Heart appearing as both a movie and a show.) Tj
+T*
+(- The layered Cinerific loading spinner concept was accepted, but the user wanted separate clockwise) Tj
+T*
+(  rotation speeds for the red star, white wheel, and yellow inner star.) Tj
+T*
+(- Portrait rotation work had started on the intro screen only; Home, destination, catalog, Favorites,) Tj
+T*
+(  Settings, nested navs, list cards, title banners, bottom clearance, and sign-in state still needed) Tj
+T*
+(  broader rotation-safe behavior.) Tj
+T*
+(- The sign-in screen used the original intro color/background treatment and original opaque avatar) Tj
+T*
+(  bubble art, before the later purple-black background, full-sensor rotation, and transparent/gradient) Tj
+T*
+(  avatar experiments.) Tj
+T*
+(- The Cinerific_Standard_Tablet AVD could display forced rotations, but the emulator itself had) Tj
+T*
+(  rotation-lock and ignore-orientation-request settings that could make app-side rotation fixes appear) Tj
+T*
+(  ineffective.) Tj
+ET
+BT
+/F1 8.00 Tf
+1 0 0 1 394.00 38.00 Tm
+(Cinerific Work Log - July 27, 2026 Page 1) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 6029 >>
+stream
+BT
+/F1 8.65 Tf
+9.60 TL
+1 0 0 1 54.00 736.00 Tm
+() Tj
+T*
+(Main Goals for July 27) Tj
+T*
+(- Make the five-star rating stacks tappable, visibly fill to the selected rating, persist per title,) Tj
+T*
+(  and remain visually restrained before user rating.) Tj
+T*
+(- Route Home/default carousel genre labels and right-side chevrons into CollageSmall mode on the) Tj
+T*
+(  correct Movies or Shows screen, using the carousel majority to pick destination type.) Tj
+T*
+(- Remove movie/show and genre-related duplicate conflicts so a title appears in only one category path) Tj
+T*
+(  when data overlaps.) Tj
+T*
+(- Tune nested viewport-mode buttons, spinner layer speeds, and selected glyph spacing so active) Tj
+T*
+(  controls read cleanly in compact mode navs.) Tj
+T*
+(- Preserve every screen's look and state across tablet rotation, especially portrait Home/default,) Tj
+T*
+(  detail heroes, bottom nav, catalog nested navs, list mode, Favorites, and Settings.) Tj
+T*
+(- Expand and align portrait destination title banners, nested navs, settings label stacks, language) Tj
+T*
+(  dropdowns, sign-out controls, and list-view text/card stacks to avoid clipping and dead zones.) Tj
+T*
+(- Replace the sign-in intro's red/burgundy background motion with black-to-purple timing, add the) Tj
+T*
+(  standard-tablet sign-in background assets, and make the final settled image read over true black.) Tj
+T*
+(- Restore general sign-in rotation by enabling full-sensor orientation and fixing emulator rotation) Tj
+T*
+(  policy, then validate portrait/landscape/reverse rotation behavior.) Tj
+T*
+(- Prototype and implement a unified avatar bubble treatment: circular gray outline retained, interior) Tj
+T*
+(  fill hollowed into a 50-to-0 percent opacity gradient behind each character.) Tj
+T*
+() Tj
+T*
+(Work Completed - Ratings, Catalog Routing, and Dedupe) Tj
+T*
+(- Made detail-screen five-star stacks tappable so a tap on the second star fills two yellow stars and) Tj
+T*
+(  leaves the remaining stars gray, with the same direct mapping for each star quantity.) Tj
+T*
+(- Restored rated-star opacity to full visibility after active user selection while keeping unrated) Tj
+T*
+(  stacks low-visibility.) Tj
+T*
+(- Iterated the unrated star opacity from 0.5 to 0.33 to 0.2, then split stroke and fill visibility so) Tj
+T*
+(  low-visibility stars could stay subtle without disappearing unevenly.) Tj
+T*
+(- Added rounded custom-star drawing and made the transparent and gray outer strokes follow the rounded) Tj
+T*
+(  star shape rather than the old sharp-point outline.) Tj
+T*
+(- Reduced the outer gray stroke from 5 px to 3 px, reduced star-stack size by 10 percent, and expanded) Tj
+T*
+(  bounds so stroked stars no longer clipped through invisible bottom edges.) Tj
+T*
+(- Persisted user ratings by program title so selections survive moving between movies/shows and) Tj
+T*
+(  navigating to other app areas.) Tj
+T*
+(- Wired Home carousel genre names and right-side chevrons to open the matching nested genre in) Tj
+T*
+(  CollageSmall view on Movies or Shows, choosing the destination by whether that carousel contains more) Tj
+T*
+(  movies or shows.) Tj
+T*
+(- Added catalog route state and initial genre/mode support so Movies and Shows can open directly into a) Tj
+T*
+(  requested genre and mode.) Tj
+T*
+(- Removed movie/show and genre duplicates by constraining conflicting titles to one category path,) Tj
+T*
+(  preventing entries such as Hungry Heart from appearing as both a movie and a show.) Tj
+T*
+() Tj
+T*
+(Work Completed - Spinner and Nested Mode Controls) Tj
+T*
+(- Split the loading spinner into independent rotation speeds for its three visible layers rather than) Tj
+T*
+(  one shared timing value.) Tj
+T*
+(- Preserved clockwise motion for every layer and settled the final requested speed distribution at red) Tj
+T*
+(  star 100 percent, white wheel 67 percent, and yellow inner star 33 percent.) Tj
+T*
+(- Rechecked the white wheel direction after it appeared to move counterclockwise, then kept all layer) Tj
+T*
+(  math in clockwise rotation while reducing speed ratios.) Tj
+T*
+(- Refined selected nested viewport-mode buttons after the active white state made glyphs look cramped.) Tj
+T*
+(- Scaled the selected CollageSmall nine-square glyph stack down by 10 percent inside its active border.) Tj
+T*
+(- Compressed the selected List glyph horizontally while preserving its vertical size so left padding) Tj
+T*
+(  beside the square stack and right padding beside the rectangle stack matched the top/bottom padding.) Tj
+T*
+(- Left inactive mode glyphs and large-collage sizing unchanged, keeping the fix scoped to active nested) Tj
+T*
+(  mode button appearance.) Tj
+T*
+() Tj
+T*
+(Work Completed - Portrait Rotation, Navigation, Detail, and Settings) Tj
+T*
+(- Started rotation work on the intro animation screen so the user could manually rotate the AVD and) Tj
+T*
+(  inspect behavior before broadening the scope.) Tj
+T*
+(- Reworked Home/default portrait layout after screenshot review: adjusted hero sizing, carousel sizing,) Tj
+T*
+(  stack spacing, bottom clearance, and visible content density for tablet portrait mode.) Tj
+T*
+(- Moved the right-side nav rail to a bottom navigation bar in portrait, kept it open at all times, and) Tj
+T*
+(  removed burger/toggle dependence for portrait navigation visibility.) Tj
+T*
+(- Matched opened movie/show detail hero aspect ratios to the Home/default hero ratio so detail hero) Tj
+T*
+(  images no longer clipped key content when opened from cards.) Tj
+T*
+(- Scaled detail title text, metadata text, and five-star assets with the rendered hero size to preserve) Tj
+T*
+(  Home-to-detail proportionality.) Tj
+T*
+(- Expanded Movies, Shows, Favorites, and Settings top title banners by 20 percent in portrait to) Tj
+T*
+(  compensate for native tablet toolbar/status icons overlapping the top banner area.) Tj
+T*
+(- Vertically centered nested mode navs in relation to nested genre navs on Movies and Shows screens.) Tj
+ET
+BT
+/F1 8.00 Tf
+1 0 0 1 394.00 38.00 Tm
+(Cinerific Work Log - July 27, 2026 Page 2) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 5941 >>
+stream
+BT
+/F1 8.65 Tf
+9.60 TL
+1 0 0 1 54.00 736.00 Tm
+(- Preserved home, destination, catalog route, selected genre, mode, signed-in profile, and other) Tj
+T*
+(  navigation state across rotation so the user is not kicked back to sign-in.) Tj
+T*
+(- Auto-fit nested list-mode title, synopsis, runtime, genre, director, and producer strings so) Tj
+T*
+(  right-hand info boxes no longer clipped text, while vertically centering image cards against taller) Tj
+T*
+(  info stacks.) Tj
+T*
+(- Removed the Settings portrait bottom dead zone during downward scrolling, centered label names inside) Tj
+T*
+(  gray label boxes, resized/expanded language dropdown options, aligned the language/dropdown/avatar) Tj
+T*
+(  row, and scaled/reanchored the signed-in-as/avatar/sign-out stack against the Accessibility label) Tj
+T*
+(  box.) Tj
+T*
+() Tj
+T*
+(Work Completed - Sign-In Background, Intro Timing, and Rotation) Tj
+T*
+(- Studied the Frame 251 project thumbnail and determined a background-only extraction was realistic) Tj
+T*
+(  enough through image reconstruction rather than PSD layer access.) Tj
+T*
+(- Generated sign-in background mockups for the tested tablet aspect ratios, cleaned up experimental) Tj
+T*
+(  text boxes/crosses/circle artifacts, and removed an overly light pink anomaly from the purple-black) Tj
+T*
+(  background.) Tj
+T*
+(- Implemented standard-tablet-only sign-in background resources for portrait and landscape, centered) Tj
+T*
+(  behind the Cinerific logo placement for the Cinerific_Standard_Tablet dimensions.) Tj
+T*
+(- Replaced the intro animation's old red/burgundy background color with a sampled pink-purple value) Tj
+T*
+(  from the sign-in background, using black-to-purple naming and colors in both the native intro view) Tj
+T*
+(  and legacy Compose preview path.) Tj
+T*
+(- Tuned the intro timing so the screen holds pure black for 1000 ms, then fades black-to-purple over) Tj
+T*
+(  another 1000 ms.) Tj
+T*
+(- Dimmed the settled sign-in background image to 50 percent opacity and layered it over a true 100) Tj
+T*
+(  percent black matte so the final static frame is black-backed rather than sitting over the purple) Tj
+T*
+(  gradient.) Tj
+T*
+(- Enabled full-sensor rotation in AndroidManifest.xml and MainActivity.kt, then corrected AVD-side) Tj
+T*
+(  rotation blockers by turning off ignoreOrientationRequest, enabling accelerometer_rotation, and) Tj
+T*
+(  putting user rotation into free mode.) Tj
+T*
+(- Verified emulator rotation across landscape, portrait, reverse landscape, and reverse portrait using) Tj
+T*
+(  forced rotation screenshots and adb emu rotate dimension checks.) Tj
+T*
+() Tj
+T*
+(Work Completed - Avatar Bubble Transparency Experiments) Tj
+T*
+(- Created a transparent Steve avatar experiment by removing the gray badge/background to alpha 0, then) Tj
+T*
+(  compared strict and outline-preserving masks on checkerboard previews.) Tj
+T*
+(- Revised the approach after user feedback so the circular bubble, rings, strokes, and drop shadows) Tj
+T*
+(  were preserved while only the square outside background was transparent.) Tj
+T*
+(- Hollowed the space between Steve's character outline and the circular bubble so only the circular) Tj
+T*
+(  gray outline remained, then generated thin, medium, and full gray ring variants for comparison.) Tj
+T*
+(- Implemented the selected full-ring transparent Steve test asset in the app and confirmed it on the) Tj
+T*
+(  sign-in screen.) Tj
+T*
+(- Restored the gray bubble fill as a 50 percent opacity test, then replaced the flat fill with a smooth) Tj
+T*
+(  gradient that stays 50 percent near the circular outline and fades toward 0 percent behind the avatar) Tj
+T*
+(  body.) Tj
+T*
+(- Reproduced the same hollow circular-bubble gradient treatment for Martin, Janny, and Guest, tuning) Tj
+T*
+(  Guest's silhouette detection separately because the character is gray-white rather than colorful.) Tj
+T*
+(- Added test drawable resources for Steve, Martin, Janny, and Guest using the 50-to-0 percent hollow) Tj
+T*
+(  bubble gradient, and wired CinerificIntroView.kt, CinerificApp.kt, profile avatar references, and) Tj
+T*
+(  legacy Compose intro helpers to the new resource set.) Tj
+T*
+(- Preserved the original avatar PNGs in the repo while leaving exploratory Steve test assets available) Tj
+T*
+(  for comparison during this design pass.) Tj
+T*
+() Tj
+T*
+(Validation and Checks Performed) Tj
+T*
+(- Ran ./read_project.sh before producing this artifact; it refreshed cinerific_PROJECT_SNAPSHOT.txt at) Tj
+T*
+(  the repository root with the current file tree, drawable resources, generated artifacts, and worklog) Tj
+T*
+(  inventory.) Tj
+T*
+(- Ran pdftotext and pdfinfo against every pre-existing Cinerific worklog PDF to verify prior title) Tj
+T*
+(  metadata, extractable text, footer convention, section order, letter-size geometry, and four-page) Tj
+T*
+(  daily-log cadence.) Tj
+T*
+(- Ran git status --short --branch, git log --oneline --decorate, git show --stat, git diff --stat, and) Tj
+T*
+(  git diff --name-status to verify the July 27 source scope from the July 25 worklog state through HEAD) Tj
+T*
+(  0dedffc.) Tj
+T*
+(- Ran ./gradlew :app:assembleDebug during the final worklog pass; the current debug build completed) Tj
+T*
+(  successfully with BUILD SUCCESSFUL in 9 seconds.) Tj
+T*
+(- Installed debug APKs onto the connected emulator during the sign-in background, rotation, and) Tj
+T*
+(  avatar-bubble testing passes with adb install -r app/build/outputs/apk/debug/app-debug.apk.) Tj
+T*
+(- Relaunched com.prahlin.cinerific/.MainActivity through adb force-stop and am start after installs so) Tj
+T*
+(  runtime screenshots reflected the freshly installed APK.) Tj
+T*
+(- Captured runtime screenshots for standard sign-in background behavior, forced portrait orientation,) Tj
+T*
+(  full-sensor rotation, Steve avatar transparency variants, 50 percent bubble fill, gradient bubble) Tj
+ET
+BT
+/F1 8.00 Tf
+1 0 0 1 394.00 38.00 Tm
+(Cinerific Work Log - July 27, 2026 Page 3) Tj
+ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Length 5785 >>
+stream
+BT
+/F1 8.65 Tf
+9.60 TL
+1 0 0 1 54.00 736.00 Tm
+(  fill, and the final all-avatar gradient-bubble sign-in state.) Tj
+T*
+(- Checked emulator rotation settings with adb shell settings, dumpsys window, cmd window) Tj
+T*
+(  get-ignore-orientation-request, and adb emu rotate while diagnosing why manual portrait/landscape) Tj
+T*
+(  rotation appeared stuck.) Tj
+T*
+(- Used local Pillow-based image scripts to generate, inspect, and compare avatar alpha masks and) Tj
+T*
+(  sign-in background assets without installing a new external PDF dependency.) Tj
+T*
+() Tj
+T*
+(Files Touched During July 27) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt: rating interaction,) Tj
+T*
+(  stateful star display, rounded/star-stroke drawing, duplicate filtering, catalog initial genre/mode) Tj
+T*
+(  support, detail hero scaling, portrait title-banner sizing, list-mode text fitting, nested nav) Tj
+T*
+(  alignment, and Settings layout refinements.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificHomeScreen.kt: Home genre label and chevron) Tj
+T*
+(  routing, carousel-majority Movies/Shows destination choice, portrait Home sizing, and detail/home) Tj
+T*
+(  hero proportion support.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt: signed-in/navigation state preservation) Tj
+T*
+(  across rotation, profile avatar resource references, intro timing/color preview path, catalog route) Tj
+T*
+(  state, and settings/profile layout state support.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt: purple intro timing,) Tj
+T*
+(  standard-tablet background selection, black matte/50 percent settled background layering,) Tj
+T*
+(  rotation-safe sizing, and direct use of the new gradient-bubble avatar assets.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificLoadingSpinner.kt: independent clockwise) Tj
+T*
+(  spinner-layer speed ratios for red star, white wheel, and yellow inner star.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificViewportModeNav.kt and) Tj
+T*
+(  CinerificViewportNavBar.kt: selected compact/list glyph spacing, horizontal compression, and nested) Tj
+T*
+(  mode navigation alignment.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificRightSideNavBar.kt: portrait always-visible) Tj
+T*
+(  bottom navigation behavior and state-safe nav presentation.) Tj
+T*
+(- app/src/main/AndroidManifest.xml and app/src/main/java/com/prahlin/cinerific/MainActivity.kt:) Tj
+T*
+(  full-sensor orientation support for all four app rotations.) Tj
+T*
+(- app/src/main/res/drawable-nodpi/signin_background_standard_landscape.png and) Tj
+T*
+(  signin_background_standard_portrait.png: standard tablet sign-in background resources.) Tj
+T*
+(- app/src/main/res/drawable-nodpi/*_avatar_bubble_edge50_body0_test.png plus Steve bubble comparison) Tj
+T*
+(  assets: generated avatar resources used for the hollow gradient bubble treatment.) Tj
+T*
+(- cinerific_PROJECT_SNAPSHOT.txt and cinerific_worklog_july 27.pdf: refreshed/generated) Tj
+T*
+(  project-management artifacts during this worklog pass.) Tj
+T*
+() Tj
+T*
+(Follow-Up Context) Tj
+T*
+(- The active avatar resources still carry _test suffixes, matching the experimental nature of the) Tj
+T*
+(  user-approved visual pass. A future cleanup should either promote the accepted files to final names) Tj
+T*
+(  or remove unused intermediary Steve test assets.) Tj
+T*
+(- The AVD rotation blocker was partly emulator policy, not only app code: ignoreOrientationRequest must) Tj
+T*
+(  remain false and user rotation should remain free when visually testing rotation from the toolbar.) Tj
+T*
+(- The standard sign-in backgrounds are currently scoped to the 2560 by 1600 / 1600 by 2560 standard) Tj
+T*
+(  tablet dimensions. Small/wide and large/narrow variants remain a future asset-expansion step if the) Tj
+T*
+(  sign-in screen needs exact-background support there too.) Tj
+T*
+(- The 50-to-0 percent avatar bubble gradient is rasterized into generated PNG resources. If the avatar) Tj
+T*
+(  style changes again, regenerating the masks from the original avatars is safer than manually editing) Tj
+T*
+(  the current derived PNGs.) Tj
+T*
+(- Portrait bottom navigation and rotation-state preservation are now important app contracts. Future) Tj
+T*
+(  navigation changes should preserve signed-in state, current destination, catalog route, selected) Tj
+T*
+(  genre, selected mode, active hero/detail, and Settings control state across configuration changes.) Tj
+T*
+(- Generated screenshots, PDFs, and snapshots remain project-management artifacts unless explicitly) Tj
+T*
+(  committed. The accepted July 27 source state is on main through HEAD 0dedffc, while this PDF records) Tj
+T*
+(  the daily worklog state after the latest snapshot refresh.) Tj
+T*
+() Tj
+T*
+(Output Artifact) Tj
+T*
+(- Filename: cinerific_worklog_july 27.pdf) Tj
+T*
+(- Created at the repository root in /Users/prahlin/gh/cinerific.) Tj
+T*
+(- Follows the Cinerific filename convention established by cinerific_worklog_july 12.pdf and continued) Tj
+T*
+(  by the July 14, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, and July 25) Tj
+T*
+(  artifacts, including the space before the day number.) Tj
+T*
+(- Follows the established Alla Vostra/Prahlin/Cinerific daily worklog structure while keeping the body) Tj
+T*
+(  content specific to Cinerific work completed on Monday, July 27, 2026.) Tj
+T*
+(- No external PDF dependency was installed; this artifact was generated with a small standard-library) Tj
+T*
+(  PDF writer in the same plain-text-readable spirit as the prior Cinerific worklogs.) Tj
+T*
+(- Created this daily worklog PDF: cinerific_worklog_july 27.pdf.) Tj
+ET
+BT
+/F1 8.00 Tf
+1 0 0 1 394.00 38.00 Tm
+(Cinerific Work Log - July 27, 2026 Page 4) Tj
+ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 10 0 R >>
+endobj
+12 0 obj
+<< /Title (Cinerific Android App Work Log - July 27, 2026) /Subject (Cinerific Android app development worklog) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260727233000-04'00') /ModDate (D:20260727233000-04'00') >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000140 00000 n 
+0000000210 00000 n 
+0000006510 00000 n 
+0000006636 00000 n 
+0000012717 00000 n 
+0000012843 00000 n 
+0000018836 00000 n 
+0000018962 00000 n 
+0000024800 00000 n 
+0000024928 00000 n 
+trailer
+<< /Size 13 /Root 1 0 R /Info 12 0 R >>
+startxref
+25247
+%%EOF
