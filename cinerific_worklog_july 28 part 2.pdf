@@ -1,0 +1,390 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [ 4 0 R 6 0 R 8 0 R 10 0 R ] /Count 4 >>
+endobj
+3 0 obj
+<< /Length 7019 >>
+stream
+BT
+/F1 7.8 Tf
+1 0 0 1 54 746.00 Tm (Cinerific Android App Work Log - July 28, 2026 Part 2 \(U.S. EST\)) Tj
+1 0 0 1 54 737.50 Tm () Tj
+1 0 0 1 54 729.00 Tm (Compiled summary for Tuesday, July 28, 2026 - Part 2 \(U.S. EST\) - focus: continuing the July 28 sign-in) Tj
+1 0 0 1 54 720.50 Tm (prototype into a fuller account-entry pass, tuning the Sign In floating labels down to the final 70) Tj
+1 0 0 1 54 712.00 Tm (percent shrink, removing form-label punctuation, adding Remember me, adding animated chevron and) Tj
+1 0 0 1 54 703.50 Tm (drag-up return behavior, turning Create Account into its own three-column mock screen, replacing) Tj
+1 0 0 1 54 695.00 Tm (subscription and birth date text entry with dropdown controls, adding dimmed focus states, fixing) Tj
+1 0 0 1 54 686.50 Tm (landscape keyboard overlap by lifting form assets while moving the Cinerific logo offscreen, adding a) Tj
+1 0 0 1 54 678.00 Tm (Steve/Martin/Janny Create Account avatar carousel, separating moving avatar characters from a static) Tj
+1 0 0 1 54 669.50 Tm (bubble shell, removing reported bubble artifacts, refreshing the project snapshot, validating Kotlin) Tj
+1 0 0 1 54 661.00 Tm (compilation, committing the work as d2b16c1, and generating this latest Part 2 worklog artifact.) Tj
+1 0 0 1 54 652.50 Tm () Tj
+1 0 0 1 54 644.00 Tm (Generated in continuity with the established Cinerific worklog cadence from July 12, July 14, July 15) Tj
+1 0 0 1 54 635.50 Tm (Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, July 25, July 27, and) Tj
+1 0 0 1 54 627.00 Tm (July 28 Part 1: compact opening summary, source-material review, baseline state, goal list, themed) Tj
+1 0 0 1 54 618.50 Tm (work-completed sections, validation, files touched, follow-up context, and output-artifact close. This) Tj
+1 0 0 1 54 610.00 Tm (artifact records the current source state on main through HEAD d2b16c1, plus the refreshed snapshot and) Tj
+1 0 0 1 54 601.50 Tm (generated worklog artifact from this July 28 Part 2 pass, and follows the prior root-level naming,) Tj
+1 0 0 1 54 593.00 Tm (letter layout, footer convention, metadata, and plain-text-readable PDF style.) Tj
+1 0 0 1 54 584.50 Tm () Tj
+1 0 0 1 54 576.00 Tm (Source Materials Reviewed) Tj
+1 0 0 1 54 567.50 Tm () Tj
+1 0 0 1 54 559.00 Tm (- Reviewed every pre-existing Cinerific worklog PDF at the repository root: July 12, July 14, July 15) Tj
+1 0 0 1 54 550.50 Tm (  Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, July 25, July 27, and) Tj
+1 0 0 1 54 542.00 Tm (  July 28 Part 1.) Tj
+1 0 0 1 54 533.50 Tm () Tj
+1 0 0 1 54 525.00 Tm (- Used pdftotext output from all prior PDFs to preserve the established title pattern, source review) Tj
+1 0 0 1 54 516.50 Tm (  style, baseline/goals sections, themed work-completed sections, validation language, files-touched) Tj
+1 0 0 1 54 508.00 Tm (  list, follow-up close, output-artifact phrasing, footer convention, and daily-log length band.) Tj
+1 0 0 1 54 499.50 Tm () Tj
+1 0 0 1 54 491.00 Tm (- Used pdfinfo on the prior PDFs, especially July 28 Part 1, to confirm title metadata,) Tj
+1 0 0 1 54 482.50 Tm (  author/creator/producer fields, letter page geometry, PDF generator naming, and the Part 1 U.S. EST) Tj
+1 0 0 1 54 474.00 Tm (  title precedent.) Tj
+1 0 0 1 54 465.50 Tm () Tj
+1 0 0 1 54 457.00 Tm (- Ran ./read_project.sh and reviewed the refreshed cinerific_PROJECT_SNAPSHOT.txt for the current) Tj
+1 0 0 1 54 448.50 Tm (  Android source layout, drawable inventory, root-level worklog inventory, generated-file policy, and) Tj
+1 0 0 1 54 440.00 Tm (  snapshot convention.) Tj
+1 0 0 1 54 431.50 Tm () Tj
+1 0 0 1 54 423.00 Tm (- Reviewed git status, git log, and git show --stat around HEAD d2b16c1, the July 28 Part 2 commit) Tj
+1 0 0 1 54 414.50 Tm (  titled Updated sign-in and create account interaction flows.) Tj
+1 0 0 1 54 406.00 Tm () Tj
+1 0 0 1 54 397.50 Tm (- Reviewed CinerificIntroView.kt around native intro drawing, custom View input handling, form state,) Tj
+1 0 0 1 54 389.00 Tm (  dropdown state, dimming, IME/landscape lift handling, drag gestures, avatar carousel state, character) Tj
+1 0 0 1 54 380.50 Tm (  extraction, and final bubble-shell rendering.) Tj
+1 0 0 1 54 372.00 Tm () Tj
+1 0 0 1 54 363.50 Tm (- Reviewed user-provided emulator screenshots from the avatar-carousel polish loop to track the center) Tj
+1 0 0 1 54 355.00 Tm (  icon artifact, residual silhouette, dark rectangle, and heavy gray interior fill that were removed) Tj
+1 0 0 1 54 346.50 Tm (  during the final shell pass.) Tj
+1 0 0 1 54 338.00 Tm () Tj
+1 0 0 1 54 329.50 Tm (Baseline Status Before July 28 Part 2) Tj
+1 0 0 1 54 321.00 Tm () Tj
+1 0 0 1 54 312.50 Tm (- Cinerific entered Part 2 with the July 28 Part 1 sign-in form prototype already logged and committed,) Tj
+1 0 0 1 54 304.00 Tm (  including the centered username/password fields, live canvas text input, password masking, caret) Tj
+1 0 0 1 54 295.50 Tm (  drawing, IME bridge, and focus motion against the Cinerific logo centerline.) Tj
+1 0 0 1 54 287.00 Tm () Tj
+1 0 0 1 54 278.50 Tm (- The floating labels still reflected the earlier 85 percent shrink request, and the user wanted them) Tj
+1 0 0 1 54 270.00 Tm (  iterated through 80 percent and 75 percent before settling at 70 percent shrink.) Tj
+1 0 0 1 54 261.50 Tm () Tj
+1 0 0 1 54 253.00 Tm (- The Sign In labels still needed punctuation cleanup, the Sign In action text still needed to become) Tj
+1 0 0 1 54 244.50 Tm (  an animated form title, and the form screen did not yet include Remember me or a return chevron.) Tj
+1 0 0 1 54 236.00 Tm () Tj
+1 0 0 1 54 227.50 Tm (- Create Account was still only an action-row prompt, without its own form screen, account creation) Tj
+1 0 0 1 54 219.00 Tm (  field stack, subscription/date controls, or avatar-selection surface.) Tj
+1 0 0 1 54 210.50 Tm () Tj
+1 0 0 1 54 202.00 Tm (- Landscape mode still allowed the software keyboard to obscure Sign In and Create Account fields until) Tj
+1 0 0 1 54 193.50 Tm (  a different keyboard-aware lift method moved form assets into the top band.) Tj
+1 0 0 1 54 185.00 Tm () Tj
+1 0 0 1 54 176.50 Tm (- The Create Account avatar area had not yet grown into a three-avatar carousel, and the later) Tj
+1 0 0 1 54 168.00 Tm (  static-bubble treatment still needed to match the login avatar appearance without introducing visual) Tj
+1 0 0 1 54 159.50 Tm (  artifacts.) Tj
+1 0 0 1 54 151.00 Tm () Tj
+1 0 0 1 54 142.50 Tm (Main Goals for July 28 Part 2) Tj
+1 0 0 1 54 134.00 Tm () Tj
+1 0 0 1 54 125.50 Tm (- Tune Sign In floating labels to a final 70 percent shrink and remove punctuation from form field) Tj
+1 0 0 1 54 117.00 Tm () Tj
+1 0 0 1 54 108.50 Tm (labels.) Tj
+1 0 0 1 54 100.00 Tm () Tj
+1 0 0 1 54 91.50 Tm (- Add Remember me, an animated return chevron, and whole-screen drag-up-to-return behavior from form) Tj
+1 0 0 1 54 83.00 Tm (  screens.) Tj
+1 0 0 1 54 74.50 Tm () Tj
+/F1 8 Tf
+1 0 0 1 313.15 28 Tm (Cinerific Work Log - July 28, 2026 Part 2 \(U.S. EST\) Page 1) Tj
+ET
+endstream
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 11 0 R >> >> /Contents 3 0 R >>
+endobj
+5 0 obj
+<< /Length 6599 >>
+stream
+BT
+/F1 7.8 Tf
+1 0 0 1 54 746.00 Tm (- Make Sign In animate with the form fields, become the form title, reduce its size, remove bold) Tj
+1 0 0 1 54 737.50 Tm (  styling, and center it horizontally across the form field width.) Tj
+1 0 0 1 54 729.00 Tm () Tj
+1 0 0 1 54 720.50 Tm (- Build a Create Account form with stable top anchors, three columns, third-row fields, and controls) Tj
+1 0 0 1 54 712.00 Tm (  for username, password, confirm password, email, subscription tier, birth date, and avatar choice.) Tj
+1 0 0 1 54 703.50 Tm () Tj
+1 0 0 1 54 695.00 Tm (- Replace subscription and birth date text entry with dropdown controls, opaque popups, date) Tj
+1 0 0 1 54 686.50 Tm (  scrollbars, five visible date values, Day 1-31, and Year 1900-2026.) Tj
+1 0 0 1 54 678.00 Tm () Tj
+1 0 0 1 54 669.50 Tm (- Dim non-active screen content while any field or dropdown listens for input, then undim smoothly) Tj
+1 0 0 1 54 661.00 Tm (  after text entry or selection.) Tj
+1 0 0 1 54 652.50 Tm () Tj
+1 0 0 1 54 644.00 Tm (- Fix landscape keyboard obstruction for both Sign In and Create Account without changing portrait) Tj
+1 0 0 1 54 635.50 Tm (  behavior.) Tj
+1 0 0 1 54 627.00 Tm () Tj
+1 0 0 1 54 618.50 Tm (- Add a Steve/Martin/Janny avatar carousel whose character art moves through a static circular bubble) Tj
+1 0 0 1 54 610.00 Tm (  shell on chevron taps and drag gestures.) Tj
+1 0 0 1 54 601.50 Tm () Tj
+1 0 0 1 54 593.00 Tm (Work Completed - Sign-In Labels, Header, Remember Me, and Return) Tj
+1 0 0 1 54 584.50 Tm () Tj
+1 0 0 1 54 576.00 Tm (- Changed the floating-label scale from the prior 85 percent shrink through the requested follow-up) Tj
+1 0 0 1 54 567.50 Tm (  sizes and settled at a 70 percent shrink, leaving labels at 30 percent of their original size when) Tj
+1 0 0 1 54 559.00 Tm (  focused or populated.) Tj
+1 0 0 1 54 550.50 Tm () Tj
+1 0 0 1 54 542.00 Tm (- Removed punctuation from Username and Password labels while preserving the custom canvas text input,) Tj
+1 0 0 1 54 533.50 Tm (  caret rendering, password masking, and focus-hit math from the Part 1 form.) Tj
+1 0 0 1 54 525.00 Tm () Tj
+1 0 0 1 54 516.50 Tm (- Added Remember me below the password field with custom checkbox drawing, local checked state, hit) Tj
+1 0 0 1 54 508.00 Tm (  testing, and draw coordinates tied to the moving form stack.) Tj
+1 0 0 1 54 499.50 Tm () Tj
+1 0 0 1 54 491.00 Tm (- Made Sign In slide in with the form screen, moved it from left alignment to centered alignment across) Tj
+1 0 0 1 54 482.50 Tm (  the fields, reduced it by one point, removed bold styling, and kept it visually continuous with the) Tj
+1 0 0 1 54 474.00 Tm (  original Sign In prompt.) Tj
+1 0 0 1 54 465.50 Tm () Tj
+1 0 0 1 54 457.00 Tm (- Added a large short downward-facing chevron below Remember me, reduced its stroke thickness through) Tj
+1 0 0 1 54 448.50 Tm (  follow-up tuning, and connected it to the form close animation.) Tj
+1 0 0 1 54 440.00 Tm () Tj
+1 0 0 1 54 431.50 Tm (- Implemented full-screen drag-up-to-return so the user can leave Sign In or Create Account by dragging) Tj
+1 0 0 1 54 423.00 Tm (  upward anywhere on the form surface, not only by tapping the chevron.) Tj
+1 0 0 1 54 414.50 Tm () Tj
+1 0 0 1 54 406.00 Tm (Work Completed - Create Account Form and Dropdown System) Tj
+1 0 0 1 54 397.50 Tm () Tj
+1 0 0 1 54 389.00 Tm (- Added a Create Account mock flow using the same native intro transition system as Sign In, with the) Tj
+1 0 0 1 54 380.50 Tm (  title and form top anchors preserved after the user requested no vertical anchor drift.) Tj
+1 0 0 1 54 372.00 Tm () Tj
+1 0 0 1 54 363.50 Tm (- Built the three-column account creation layout: Username, Password, and Confirm Password in the left) Tj
+1 0 0 1 54 355.00 Tm (  column; Email Address, Subscription Tier, and Month/Day/Year birth date controls in the middle) Tj
+1 0 0 1 54 346.50 Tm (  column; Avatar controls in the right column.) Tj
+1 0 0 1 54 338.00 Tm () Tj
+1 0 0 1 54 329.50 Tm (- Placed third-row fields below the existing two-row layout rather than moving the accepted first-row) Tj
+1 0 0 1 54 321.00 Tm (  and second-row anchors.) Tj
+1 0 0 1 54 312.50 Tm () Tj
+1 0 0 1 54 304.00 Tm (- Replaced Membership Tier with a Subscription Tier dropdown offering Option 1, Option 2, and Option 3,) Tj
+1 0 0 1 54 295.50 Tm (  with chevron affordance, selected-value display, and opaque open-state rendering.) Tj
+1 0 0 1 54 287.00 Tm () Tj
+1 0 0 1 54 278.50 Tm (- Replaced Birth Date with separate Month, Day, and Year dropdown controls, equalized Month/Day widths,) Tj
+1 0 0 1 54 270.00 Tm (  and increased date control fonts as much as possible without clipping.) Tj
+1 0 0 1 54 261.50 Tm () Tj
+1 0 0 1 54 253.00 Tm (- Made date dropdowns open upward, set their top edge to the Email Address field top anchor, set their) Tj
+1 0 0 1 54 244.50 Tm (  bottom edge to the top of each date box, showed five values initially, added nested scrollbars,) Tj
+1 0 0 1 54 236.00 Tm (  supplied Day 1-31, and supplied every Year from 1900 through 2026.) Tj
+1 0 0 1 54 227.50 Tm () Tj
+1 0 0 1 54 219.00 Tm (- Added dropdown hit testing, option selection, scroll offset state, drag scrolling, selected-value) Tj
+1 0 0 1 54 210.50 Tm (  updates, and focus/dim cleanup after a selection is made.) Tj
+1 0 0 1 54 202.00 Tm () Tj
+1 0 0 1 54 193.50 Tm (Work Completed - Focus Dimming and Landscape Keyboard Lift) Tj
+1 0 0 1 54 185.00 Tm () Tj
+1 0 0 1 54 176.50 Tm (- Added a quick smooth dim layer when any text field or dropdown begins listening for input, while) Tj
+1 0 0 1 54 168.00 Tm (  keeping the active field or popup readable above the dimmed rest of the screen.) Tj
+1 0 0 1 54 159.50 Tm () Tj
+1 0 0 1 54 151.00 Tm (- Cleared the dim state after typed input or dropdown selection so the screen returns to normal) Tj
+1 0 0 1 54 142.50 Tm (  brightness without an extra tap.) Tj
+1 0 0 1 54 134.00 Tm () Tj
+1 0 0 1 54 125.50 Tm (- Added landscape-only keyboard lift progress so Sign In and Create Account assets move to the top of) Tj
+1 0 0 1 54 117.00 Tm (  the screen when keyboard or dropdown focus would otherwise obscure the form.) Tj
+1 0 0 1 54 108.50 Tm () Tj
+1 0 0 1 54 100.00 Tm (- Moved the Cinerific logo fully upward and offscreen in landscape during input focus, solving the) Tj
+1 0 0 1 54 91.50 Tm (  earlier unchanged attempts where the logo and form assets did not visibly move.) Tj
+1 0 0 1 54 83.00 Tm () Tj
+1 0 0 1 54 74.50 Tm (- Preserved portrait behavior by making the landscape lift target zero in portrait and by keeping the) Tj
+/F1 8 Tf
+1 0 0 1 313.15 28 Tm (Cinerific Work Log - July 28, 2026 Part 2 \(U.S. EST\) Page 2) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 11 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 6337 >>
+stream
+BT
+/F1 7.8 Tf
+1 0 0 1 54 746.00 Tm (  existing portrait form-focus motion path intact.) Tj
+1 0 0 1 54 737.50 Tm () Tj
+1 0 0 1 54 729.00 Tm (- Used window-inset and visible-display-frame checks to detect IME visibility, then threaded the lift) Tj
+1 0 0 1 54 720.50 Tm (  through stage metrics so drawing and hit testing stayed aligned.) Tj
+1 0 0 1 54 712.00 Tm () Tj
+1 0 0 1 54 703.50 Tm (Work Completed - Create Account Avatar Carousel) Tj
+1 0 0 1 54 695.00 Tm () Tj
+1 0 0 1 54 686.50 Tm (- Increased the Create Account avatar header/image stack by 25 percent and added left and right) Tj
+1 0 0 1 54 678.00 Tm (  chevrons beside the avatar bubble.) Tj
+1 0 0 1 54 669.50 Tm () Tj
+1 0 0 1 54 661.00 Tm (- Added a two-way carousel ordered Steve, Martin, and Janny, with wrapping previous/next navigation) Tj
+1 0 0 1 54 652.50 Tm (  from chevron taps.) Tj
+1 0 0 1 54 644.00 Tm () Tj
+1 0 0 1 54 635.50 Tm (- Expanded the avatar area into a square drag zone that includes the header, bubble image, and) Tj
+1 0 0 1 54 627.00 Tm (  chevrons, allowing left drag for the next avatar and right drag for the previous avatar.) Tj
+1 0 0 1 54 618.50 Tm () Tj
+1 0 0 1 54 610.00 Tm (- Tracked drag direction, drag progress, commit threshold, carousel start progress, and transition) Tj
+1 0 0 1 54 601.50 Tm (  timing so taps and partial drags animate into the same sliding carousel behavior.) Tj
+1 0 0 1 54 593.00 Tm () Tj
+1 0 0 1 54 584.50 Tm (- Separated each avatar into a moving character bitmap and a static bubble shell so tap and drag) Tj
+1 0 0 1 54 576.00 Tm (  transitions move only the avatar character inside the circular frame.) Tj
+1 0 0 1 54 567.50 Tm () Tj
+1 0 0 1 54 559.00 Tm (- Generated character-only bitmaps at runtime from the accepted avatar bubble PNGs by keeping colorful) Tj
+1 0 0 1 54 550.50 Tm (  body pixels and nearby dark outline pixels while making unrelated pixels transparent.) Tj
+1 0 0 1 54 542.00 Tm () Tj
+1 0 0 1 54 533.50 Tm (Work Completed - Static Bubble Shell and Artifact Cleanup) Tj
+1 0 0 1 54 525.00 Tm () Tj
+1 0 0 1 54 516.50 Tm (- Studied the login avatar bubble assets and confirmed their original edge/shadow appearance comes from) Tj
+1 0 0 1 54 508.00 Tm (  per-pixel alpha variation, not just a flat-opacity radial color gradient.) Tj
+1 0 0 1 54 499.50 Tm () Tj
+1 0 0 1 54 491.00 Tm (- Removed the fake Canvas radial-gradient bubble approximation and began drawing the Create Account) Tj
+1 0 0 1 54 482.50 Tm (  carousel against a bitmap-derived static shell.) Tj
+1 0 0 1 54 474.00 Tm () Tj
+1 0 0 1 54 465.50 Tm (- Removed the generated center icon artifact that appeared when the first shell-fill approach) Tj
+1 0 0 1 54 457.00 Tm (  synthesized pixels at the bubble center.) Tj
+1 0 0 1 54 448.50 Tm () Tj
+1 0 0 1 54 440.00 Tm (- Removed the residual Steve-shaped silhouette/contour left behind by the first transparent) Tj
+1 0 0 1 54 431.50 Tm (  character-mask approach.) Tj
+1 0 0 1 54 423.00 Tm () Tj
+1 0 0 1 54 414.50 Tm (- Removed the later dark landscape-oriented rectangle and thick gray interior mass caused by an) Tj
+1 0 0 1 54 406.00 Tm (  overfilled inpaint/smoothing reconstruction pass.) Tj
+1 0 0 1 54 397.50 Tm () Tj
+1 0 0 1 54 389.00 Tm (- Settled the final shell strategy as outer-ring-only: original pixels outside the inner circular) Tj
+1 0 0 1 54 380.50 Tm (  avatar window are preserved, the entire inner window is transparent, and the moving avatar character) Tj
+1 0 0 1 54 372.00 Tm (  remains clipped inside that circular interior.) Tj
+1 0 0 1 54 363.50 Tm () Tj
+1 0 0 1 54 355.00 Tm (Work Completed - Validation, Snapshot, and Commit State) Tj
+1 0 0 1 54 346.50 Tm () Tj
+1 0 0 1 54 338.00 Tm (- Compiled the app repeatedly during the Part 2 interaction pass with ./gradlew) Tj
+1 0 0 1 54 329.50 Tm (  :app:compileDebugKotlin, including validation after the avatar-shell rendering changes.) Tj
+1 0 0 1 54 321.00 Tm () Tj
+1 0 0 1 54 312.50 Tm (- Used the user-provided Android Studio/emulator screenshots as visual evidence for each avatar) Tj
+1 0 0 1 54 304.00 Tm (  artifact correction rather than relying only on code inspection.) Tj
+1 0 0 1 54 295.50 Tm () Tj
+1 0 0 1 54 287.00 Tm (- Committed the July 28 Part 2 source and refreshed snapshot work on main as HEAD d2b16c1 with the) Tj
+1 0 0 1 54 278.50 Tm (  message Updated sign-in and create account interaction flows.) Tj
+1 0 0 1 54 270.00 Tm () Tj
+1 0 0 1 54 261.50 Tm (- Ran ./read_project.sh during this artifact pass so cinerific_PROJECT_SNAPSHOT.txt reflected the) Tj
+1 0 0 1 54 253.00 Tm (  latest source tree, drawable inventory, generated-file policy, and worklog inventory.) Tj
+1 0 0 1 54 244.50 Tm () Tj
+1 0 0 1 54 236.00 Tm (- Ran ./gradlew :app:compileDebugKotlin during this worklog artifact pass; the build completed) Tj
+1 0 0 1 54 227.50 Tm (  successfully with BUILD SUCCESSFUL.) Tj
+1 0 0 1 54 219.00 Tm () Tj
+1 0 0 1 54 210.50 Tm (Validation and Checks Performed) Tj
+1 0 0 1 54 202.00 Tm () Tj
+1 0 0 1 54 193.50 Tm (- Converted all pre-existing Cinerific worklog PDFs to text with pdftotext and inspected line/word) Tj
+1 0 0 1 54 185.00 Tm (  counts to preserve the established length band and section cadence.) Tj
+1 0 0 1 54 176.50 Tm () Tj
+1 0 0 1 54 168.00 Tm (- Inspected section headings across July 12 through July 28 Part 1 to preserve the Source Materials) Tj
+1 0 0 1 54 159.50 Tm (  Reviewed, Baseline Status, Main Goals, Work Completed, Validation, Files Touched, Follow-Up Context,) Tj
+1 0 0 1 54 151.00 Tm (  and Output Artifact structure.) Tj
+1 0 0 1 54 142.50 Tm () Tj
+1 0 0 1 54 134.00 Tm (- Inspected July 28 Part 1 as the nearest template for Part 2 naming, U.S. EST title wording,) Tj
+1 0 0 1 54 125.50 Tm (  root-level lowercase filename convention, footer wording, and output-artifact phrasing.) Tj
+1 0 0 1 54 117.00 Tm () Tj
+1 0 0 1 54 108.50 Tm (- Ran pdfinfo across prior PDFs to confirm metadata conventions, letter-size geometry, and Codex) Tj
+1 0 0 1 54 100.00 Tm (  standard-library PDF generator naming.) Tj
+1 0 0 1 54 91.50 Tm () Tj
+1 0 0 1 54 83.00 Tm (- Ran git log --oneline --decorate -12, git show --stat --format=fuller HEAD, git status --short) Tj
+1 0 0 1 54 74.50 Tm (  --branch, and git diff --stat to confirm the Part 2 source scope and current working-tree state.) Tj
+/F1 8 Tf
+1 0 0 1 313.15 28 Tm (Cinerific Work Log - July 28, 2026 Part 2 \(U.S. EST\) Page 3) Tj
+ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 11 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 4973 >>
+stream
+BT
+/F1 7.8 Tf
+1 0 0 1 54 746.00 Tm () Tj
+1 0 0 1 54 737.50 Tm (- Ran rg and source reads against CinerificIntroView.kt to verify current Sign In, Create Account,) Tj
+1 0 0 1 54 729.00 Tm (  dropdown, dimming, landscape lift, carousel, character extraction, and shell implementations before) Tj
+1 0 0 1 54 720.50 Tm (  writing this artifact.) Tj
+1 0 0 1 54 712.00 Tm () Tj
+1 0 0 1 54 703.50 Tm (- Generated this PDF with a small standard-library PDF writer so the output remains text-extractable) Tj
+1 0 0 1 54 695.00 Tm (  and consistent with prior Cinerific worklogs.) Tj
+1 0 0 1 54 686.50 Tm () Tj
+1 0 0 1 54 678.00 Tm (Files Touched During July 28 Part 2) Tj
+1 0 0 1 54 669.50 Tm () Tj
+1 0 0 1 54 661.00 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt: Sign In label sizing and) Tj
+1 0 0 1 54 652.50 Tm (  punctuation cleanup, Remember me row, animated Sign In title, chevron/drag return, Create Account) Tj
+1 0 0 1 54 644.00 Tm (  flow, three-column layout, dropdown controls, date scrolling, dimming, landscape keyboard lift,) Tj
+1 0 0 1 54 635.50 Tm (  avatar carousel, drag navigation, character-only avatar extraction, and outer-ring-only bubble shell) Tj
+1 0 0 1 54 627.00 Tm (  rendering.) Tj
+1 0 0 1 54 618.50 Tm () Tj
+1 0 0 1 54 610.00 Tm (- cinerific_PROJECT_SNAPSHOT.txt: refreshed generated project snapshot reflecting the current July 28) Tj
+1 0 0 1 54 601.50 Tm (  Part 2 source state, root file tree, drawable inventory, and worklog inventory.) Tj
+1 0 0 1 54 593.00 Tm () Tj
+1 0 0 1 54 584.50 Tm (- cinerific_worklog_july 28 part 2.pdf: this Part 2 \(U.S. EST\) worklog artifact generated at the) Tj
+1 0 0 1 54 576.00 Tm (  repository root.) Tj
+1 0 0 1 54 567.50 Tm () Tj
+1 0 0 1 54 559.00 Tm (Follow-Up Context) Tj
+1 0 0 1 54 550.50 Tm () Tj
+1 0 0 1 54 542.00 Tm (- The Sign In and Create Account screens remain mock account-entry surfaces; they do not yet) Tj
+1 0 0 1 54 533.50 Tm (  authenticate, validate, persist credentials, create accounts, recover passwords, or route into a real) Tj
+1 0 0 1 54 525.00 Tm (  account backend.) Tj
+1 0 0 1 54 516.50 Tm () Tj
+1 0 0 1 54 508.00 Tm (- Subscription Tier options are placeholder labels, date dropdowns provide local mock selection only,) Tj
+1 0 0 1 54 499.50 Tm (  and Remember me stores only local mock checked state inside the intro view.) Tj
+1 0 0 1 54 491.00 Tm () Tj
+1 0 0 1 54 482.50 Tm (- The Create Account avatar carousel currently exposes Steve, Martin, and Janny as requested; Guest) Tj
+1 0 0 1 54 474.00 Tm (  remains part of the settled sign-in avatar row but is not part of this carousel order.) Tj
+1 0 0 1 54 465.50 Tm () Tj
+1 0 0 1 54 457.00 Tm (- The avatar rendering still depends on accepted _bubble_edge50_body0_test resources. Future asset) Tj
+1 0 0 1 54 448.50 Tm (  cleanup can promote those accepted test-named files to final names after the sign-in/create-account) Tj
+1 0 0 1 54 440.00 Tm (  visual system fully settles.) Tj
+1 0 0 1 54 431.50 Tm () Tj
+1 0 0 1 54 423.00 Tm (- The final avatar bubble shell intentionally keeps the interior transparent to avoid body-shaped) Tj
+1 0 0 1 54 414.50 Tm (  artifacts. Any future filled-glass interior should come from a clean designer asset rather than) Tj
+1 0 0 1 54 406.00 Tm (  reconstruction from an avatar-bearing PNG.) Tj
+1 0 0 1 54 397.50 Tm () Tj
+1 0 0 1 54 389.00 Tm (- Generated PDFs and snapshots remain project-management artifacts unless explicitly committed after) Tj
+1 0 0 1 54 380.50 Tm (  review.) Tj
+1 0 0 1 54 372.00 Tm () Tj
+1 0 0 1 54 363.50 Tm (Output Artifact) Tj
+1 0 0 1 54 355.00 Tm () Tj
+1 0 0 1 54 346.50 Tm (- Filename: cinerific_worklog_july 28 part 2.pdf) Tj
+1 0 0 1 54 338.00 Tm () Tj
+1 0 0 1 54 329.50 Tm (- Created at the repository root in /Users/prahlin/gh/cinerific.) Tj
+1 0 0 1 54 321.00 Tm () Tj
+1 0 0 1 54 312.50 Tm (- Covers Tuesday, July 28, 2026 Part 2 \(U.S. EST\) Cinerific work and uses the lowercase part naming) Tj
+1 0 0 1 54 304.00 Tm (  precedent established by cinerific_worklog_july 15 part 1.pdf and continued by cinerific_worklog_july) Tj
+1 0 0 1 54 295.50 Tm (  28 part 1.pdf.) Tj
+1 0 0 1 54 287.00 Tm () Tj
+1 0 0 1 54 278.50 Tm (- Follows the Cinerific filename convention established by cinerific_worklog_july 12.pdf and continued) Tj
+1 0 0 1 54 270.00 Tm () Tj
+1 0 0 1 54 261.50 Tm (by the July 14, July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July) Tj
+1 0 0 1 54 253.00 Tm (24, July 25, July 27, and July 28 Part 1 artifacts.) Tj
+1 0 0 1 54 244.50 Tm () Tj
+1 0 0 1 54 236.00 Tm (- No external PDF dependency was installed; this artifact was generated with a small standard-library) Tj
+1 0 0 1 54 227.50 Tm (  PDF writer in the same plain-text-readable spirit as the prior Cinerific worklogs.) Tj
+1 0 0 1 54 219.00 Tm () Tj
+1 0 0 1 54 210.50 Tm (- Created this daily worklog PDF: cinerific_worklog_july 28 part 2.pdf.) Tj
+/F1 8 Tf
+1 0 0 1 313.15 28 Tm (Cinerific Work Log - July 28, 2026 Part 2 \(U.S. EST\) Page 4) Tj
+ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 11 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+12 0 obj
+<< /Title (Cinerific Android App Work Log - July 28, 2026 Part 2 \(U.S. EST\)) /Subject (Cinerific Android app development worklog) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260728234500-04'00') /ModDate (D:20260728234500-04'00') >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000142 00000 n 
+0000007212 00000 n 
+0000007339 00000 n 
+0000013989 00000 n 
+0000014116 00000 n 
+0000020504 00000 n 
+0000020631 00000 n 
+0000025655 00000 n 
+0000025783 00000 n 
+0000025854 00000 n 
+trailer
+<< /Size 13 /Root 1 0 R /Info 12 0 R >>
+startxref
+26193
+%%EOF
