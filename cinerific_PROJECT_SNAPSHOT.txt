@@ -1,5 +1,5 @@
 Cinerific Android PROJECT SNAPSHOT
-Generated: Tue Jul 28 09:17:53 EDT 2026
+Generated: Tue Jul 28 20:31:56 EDT 2026
 Project directory: /Users/prahlin/gh/cinerific
 
 IMPORTANT INSTRUCTIONS FOR CHATGPT & CODEX:
@@ -1752,7 +1752,7 @@ FILE: app/src/main/AndroidManifest.xml
 
      1	<?xml version="1.0" encoding="utf-8"?>
      2	<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-     3
+     3	
      4	    <application
      5	        android:allowBackup="true"
      6	        android:icon="@mipmap/ic_launcher"
@@ -1767,12 +1767,12 @@ FILE: app/src/main/AndroidManifest.xml
     15	            android:theme="@style/Theme.Cinerific">
     16	            <intent-filter>
     17	                <action android:name="android.intent.action.MAIN" />
-    18
+    18	
     19	                <category android:name="android.intent.category.LAUNCHER" />
     20	            </intent-filter>
     21	        </activity>
     22	    </application>
-    23
+    23	
     24	</manifest>
 
 
@@ -1781,7 +1781,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/MainActivity.kt
 ============================================================
 
      1	package com.prahlin.cinerific
-     2
+     2	
      3	import android.app.UiModeManager
      4	import android.content.pm.ActivityInfo
      5	import android.graphics.Color
@@ -1795,7 +1795,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/MainActivity.kt
     13	import androidx.core.view.WindowCompat
     14	import com.prahlin.cinerific.ui.CinerificApp
     15	import com.prahlin.cinerific.ui.theme.CinerificTheme
-    16
+    16	
     17	class MainActivity : ComponentActivity() {
     18	    override fun onCreate(savedInstanceState: Bundle?) {
     19	        val bootStartMillis = SystemClock.uptimeMillis()
@@ -1833,7 +1833,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
 ============================================================
 
      1	package com.prahlin.cinerific.ui
-     2
+     2	
      3	import android.graphics.BitmapFactory
      4	import android.os.SystemClock
      5	import androidx.annotation.DrawableRes
@@ -1900,7 +1900,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
     66	import kotlin.math.min
     67	import kotlin.math.roundToInt
     68	import kotlin.math.sin
-    69
+    69	
     70	private const val FIGMA_FRAME_WIDTH = 1194f
     71	private const val FIGMA_FRAME_HEIGHT = 834f
     72	private const val SCREEN_BLACK_HOLD_MS = 1000
@@ -1942,7 +1942,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    108	private const val ACCOUNT_PROMPT_LANDSCAPE_TEXT_SIZE = 24.3f
    109	private const val ACCOUNT_PROMPT_SECONDARY_TEXT_SCALE = 0.8f
    110	private const val ACCOUNT_PROMPT_LINE_HEIGHT = 38f
-   111
+   111	
    112	private val ColorFrame1Background = Color(0xFF000000)
    113	private val ColorFrame2Background = Color(0xFF600878)
    114	private val ColorFrame3Background = Color(0xFF1F1F1F)
@@ -1952,14 +1952,14 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    118	private val ColorIntroGradientBottom = Color(0xFF100114)
    119	private val ColorFavoritesFullPromptFill = Color(0xFF303030)
    120	private val ColorFavoritesFullPromptAccent = Color(0xFF858585)
-   121
+   121	
    122	@Composable
    123	fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
    124	    val introBootStartMillis by rememberSaveable { mutableStateOf(bootStartMillis) }
    125	    var showHome by rememberSaveable { mutableStateOf(false) }
    126	    var signedInProfile by rememberSaveable { mutableStateOf(CinerificProfile.Guest) }
    127	    var selectedLanguage by rememberSaveable { mutableStateOf(CinerificLanguage.English) }
-   128
+   128	
    129	    if (showHome) {
    130	        CinerificLocalizedResources(selectedLanguage) {
    131	            CinerificMainExperience(
@@ -1994,7 +1994,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    160	        )
    161	    }
    162	}
-   163
+   163	
    164	internal enum class CinerificDestination {
    165	    Home,
    166	    Movies,
@@ -2003,7 +2003,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    169	    Settings,
    170	    ProgramDetails
    171	}
-   172
+   172	
    173	internal enum class CinerificProfile(
    174	    @DrawableRes val avatarResId: Int,
    175	    @DrawableRes val nameResId: Int
@@ -2013,7 +2013,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    179	    Janny(R.drawable.janny_avatar_bubble_edge50_body0_test, R.drawable.janny_name),
    180	    Guest(R.drawable.guest_avatar_bubble_edge50_body0_test, R.drawable.guest_name)
    181	}
-   182
+   182	
    183	@Composable
    184	private fun CinerificMainExperience(
    185	    signedInProfile: CinerificProfile,
@@ -2055,13 +2055,13 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    221	            modeName = catalogRouteModeName
    222	        )
    223	    }
-   224
+   224	
    225	    fun clearCatalogRoute() {
    226	        catalogRouteDestinationName = ""
    227	        catalogRouteGenreName = ""
    228	        catalogRouteModeName = ""
    229	    }
-   230
+   230	
    231	    LaunchedEffect(autoLogoutEnabled, userInitiatedPlaybackActive, lastInteractionMillis) {
    232	        if (!autoLogoutEnabled || userInitiatedPlaybackActive) return@LaunchedEffect
    233	        delay(AUTO_LOGOUT_TIMEOUT_MS)
@@ -2074,30 +2074,30 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    240	            onSignOut()
    241	        }
    242	    }
-   243
+   243	
    244	    fun showProgramDetails(title: String) {
    245	        clearCatalogRoute()
    246	        selectedProgramTitle = title
    247	        destination = CinerificDestination.ProgramDetails
    248	    }
-   249
+   249	
    250	    fun showCatalog(route: CinerificCatalogRoute) {
    251	        catalogRouteDestinationName = route.destination.name
    252	        catalogRouteGenreName = route.genre.name
    253	        catalogRouteModeName = route.mode.name
    254	        destination = route.destination
    255	    }
-   256
+   256	
    257	    fun rateProgram(title: String, rating: Int) {
    258	        userProgramRatings = userProgramRatings + (title to rating.coerceIn(1, 5))
    259	    }
-   260
+   260	
    261	    fun toggleFavoriteProgram(title: String) {
    262	        if (title in favoriteProgramTitles) {
    263	            favoriteProgramTitles = favoriteProgramTitles - title
    264	            return
    265	        }
-   266
+   266	
    267	        val isShow = cinerificProgramIsShow(title)
    268	        val filledSlots = cinerificFilledFavoritePlaceholderCount(
    269	            titles = favoriteProgramTitles,
@@ -2107,10 +2107,10 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    273	            favoritesFullPromptRequestId += 1
    274	            return
    275	        }
-   276
+   276	
    277	        favoriteProgramTitles = favoriteProgramTitles + title
    278	    }
-   279
+   279	
    280	    CompositionLocalProvider(LocalCinerificPlaybackSessionController provides playbackSessionController) {
    281	        Box(
    282	            modifier = Modifier
@@ -2162,7 +2162,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    328	                    modifier = Modifier.fillMaxSize()
    329	                )
    330	            }
-   331
+   331	
    332	            CinerificRightSideNavBar(
    333	                currentDestination = destination,
    334	                onDestinationSelected = {
@@ -2171,7 +2171,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    337	                },
    338	                modifier = Modifier.fillMaxSize()
    339	            )
-   340
+   340	
    341	            FavoritesFullPromptOverlay(
    342	                requestId = favoritesFullPromptRequestId,
    343	                currentDestination = destination,
@@ -2181,25 +2181,25 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    347	        }
    348	    }
    349	}
-   350
+   350	
    351	private fun cinerificSavedCatalogRoute(
    352	    destinationName: String,
    353	    genreName: String,
    354	    modeName: String
    355	): CinerificCatalogRoute? {
    356	    if (destinationName.isBlank() || genreName.isBlank() || modeName.isBlank()) return null
-   357
+   357	
    358	    val destination = CinerificDestination.values().firstOrNull { it.name == destinationName } ?: return null
    359	    val genre = ViewportGenre.values().firstOrNull { it.name == genreName } ?: return null
    360	    val mode = ViewportMode.values().firstOrNull { it.name == modeName } ?: return null
-   361
+   361	
    362	    return CinerificCatalogRoute(
    363	        destination = destination,
    364	        genre = genre,
    365	        mode = mode
    366	    )
    367	}
-   368
+   368	
    369	@Composable
    370	private fun FavoritesFullPromptOverlay(
    371	    requestId: Int,
@@ -2208,7 +2208,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    374	    modifier: Modifier = Modifier
    375	) {
    376	    var visible by remember { mutableStateOf(false) }
-   377
+   377	
    378	    LaunchedEffect(requestId, suppressed) {
    379	        if (suppressed) {
    380	            visible = false
@@ -2222,7 +2222,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    388	        delay(FAVORITES_FULL_PROMPT_VISIBLE_MS)
    389	        visible = false
    390	    }
-   391
+   391	
    392	    val alpha by animateFloatAsState(
    393	        targetValue = if (visible) 1f else 0f,
    394	        animationSpec = tween(durationMillis = if (visible) 140 else 190),
@@ -2233,9 +2233,9 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    399	        animationSpec = tween(durationMillis = if (visible) 140 else 190),
    400	        label = "favorites-full-prompt-scale"
    401	    )
-   402
+   402	
    403	    if (suppressed || requestId == 0 || (!visible && alpha <= 0.01f)) return
-   404
+   404	
    405	    BoxWithConstraints(modifier = modifier) {
    406	        val stageScale = maxWidth.value / FIGMA_FRAME_WIDTH
    407	        val isPortraitDetail = currentDestination == CinerificDestination.ProgramDetails &&
@@ -2261,7 +2261,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    427	        )
    428	    }
    429	}
-   430
+   430	
    431	@Composable
    432	private fun FavoritesFullPromptBubble(
    433	    stageScale: Float,
@@ -2333,7 +2333,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    499	        )
    500	    }
    501	}
-   502
+   502	
    503	@Composable
    504	private fun BootIntroFromFigma(progress: Float) {
    505	    val p = progress.coerceIn(0f, 1f)
@@ -2353,15 +2353,15 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    519	    val logoFinalProgress = easedSegmentMs(p, FINAL_SETTLE_START_MS, FINAL_SETTLE_END_MS)
    520	    val avatarSettleAlpha = easedSegmentMs(p, 2300, FINAL_SETTLE_END_MS)
    521	    val avatarYOffset = lerpFloat(56f, 0f, avatarSettleAlpha)
-   522
+   522	
    523	    Canvas(modifier = Modifier.fillMaxSize()) {
    524	        val stageScale = min(size.width / FIGMA_FRAME_WIDTH, size.height / FIGMA_FRAME_HEIGHT)
    525	        val stageLeft = (size.width - FIGMA_FRAME_WIDTH * stageScale) / 2f
    526	        val stageTop = (size.height - FIGMA_FRAME_HEIGHT * stageScale) / 2f
    527	        val stackShiftY = signInStackShiftY(size.width > size.height)
-   528
+   528	
    529	        drawRect(brush = background, size = size)
-   530
+   530	
    531	        if (logoAlpha > 0.01f) {
    532	            val baseBounds = FigmaBounds(x = 222f, y = 150f, w = 750f, h = 535f)
    533	            val simpleEntry = lerpBounds(
@@ -2375,7 +2375,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    541	                amount = logoEntryProgress
    542	            )
    543	            val finalBounds = FigmaBounds(x = 297f, y = 11f, w = 600f, h = 428f)
-   544
+   544	
    545	            drawFigmaImage(
    546	                image = images.logoSimple,
    547	                bounds = lerpBounds(simpleEntry, finalBounds, logoFinalProgress),
@@ -2393,14 +2393,14 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    559	                alpha = logoAlpha
    560	            )
    561	        }
-   562
+   562	
    563	        if (avatarSettleAlpha > 0.01f) {
    564	            val y = avatarYOffset
    565	            drawFigmaImage(images.steveAvatar, FigmaBounds(152f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
    566	            drawFigmaImage(images.martinAvatar, FigmaBounds(390f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
    567	            drawFigmaImage(images.jannyAvatar, FigmaBounds(628f, 454f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
    568	            drawFigmaImage(images.guestAvatar, FigmaBounds(866f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
-   569
+   569	
    570	            drawFigmaImage(images.steveName, FigmaBounds(130f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
    571	            drawFigmaImage(images.martinName, FigmaBounds(368f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
    572	            drawFigmaImage(images.jannyName, FigmaBounds(606f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
@@ -2408,18 +2408,18 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    574	        }
    575	    }
    576	}
-   577
+   577	
    578	@Composable
    579	private fun IntroFrame1FromFigma() {
    580	    // Node 474:7309 has only a pure black fill.
    581	    FigmaStage(background = solidBrush(ColorFrame1Background)) { }
    582	}
-   583
+   583	
    584	@Composable
    585	private fun IntroFrame2FromFigma() {
    586	    // Node 474:7311 with Logo Slide 1 instance 478:6917.
    587	    val slideYOffset = remember { Animatable(-417f) }
-   588
+   588	
    589	    LaunchedEffect(Unit) {
    590	        slideYOffset.snapTo(-417f)
    591	        slideYOffset.animateTo(
@@ -2427,12 +2427,12 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    593	            animationSpec = tween(durationMillis = 1800, easing = FastOutSlowInEasing)
    594	        )
    595	    }
-   596
+   596	
    597	    FigmaStage(background = solidBrush(ColorFrame2Background)) { scale ->
    598	        LogoSlide1Layer(scale = scale, yOffset = slideYOffset.value)
    599	    }
    600	}
-   601
+   601	
    602	@Composable
    603	private fun IntroFrame3FromFigma() {
    604	    // Node 476:6937 with PROMO background1 2 (793:7049) and Logo Slide 2 (478:6970).
@@ -2449,7 +2449,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    615	        )
    616	    }
    617	}
-   618
+   618	
    619	@Composable
    620	private fun SignInFrameFromFigma() {
    621	    // Node 478:6975 + Star Overlay 482:7696.
@@ -2464,7 +2464,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    630	            logoResId = R.drawable.logo_simple_signin,
    631	            eyesResId = R.drawable.logo_eyes_signin
    632	        )
-   633
+   633	
    634	        // Node 480:7611 (Ellipse 43) x:894 y:266 size:200x200.
    635	        Box(
    636	            modifier = Modifier
@@ -2477,7 +2477,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    643	                    )
    644	                )
    645	        )
-   646
+   646	
    647	        // Node 485:7113 loading spinner instance, rebuilt from centered standalone layers.
    648	        val spinnerHeight = 300f *
    649	            CINERIFIC_LOADING_SPINNER_CANVAS_HEIGHT /
@@ -2492,7 +2492,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    658	        )
    659	    }
    660	}
-   661
+   661	
    662	@Composable
    663	private fun LogoSlide1Layer(scale: Float, yOffset: Float, alpha: Float = 1f) {
    664	    Box(
@@ -2510,7 +2510,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    676	            scale = scale,
    677	            resId = R.drawable.logo_simple_intro2
    678	        )
-   679
+   679	
    680	        // Node I478:6917;478:6925 logo eyes only 2 at x:453 y:1454 size:300x214.
    681	        FigmaAssetImage(
    682	            x = 453f,
@@ -2522,7 +2522,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    688	        )
    689	    }
    690	}
-   691
+   691	
    692	@Composable
    693	private fun LogoSlide2Layer(
    694	    scale: Float,
@@ -2539,7 +2539,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    705	        LogoDot(x = 507f, y = 516f, scale = scale, active = false)
    706	        LogoDot(x = 587f, y = 516f, scale = scale, active = false)
    707	        LogoDot(x = 667f, y = 516f, scale = scale, active = true)
-   708
+   708	
    709	        // Visible logo bounds from the Figma instance in the 1194x834 frame.
    710	        FigmaAssetImage(
    711	            x = 222f,
@@ -2549,7 +2549,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    715	            scale = scale,
    716	            resId = logoResId
    717	        )
-   718
+   718	
    719	        // Eye layer sits on the same logo bounds.
    720	        FigmaAssetImage(
    721	            x = 222f,
@@ -2561,14 +2561,14 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    727	        )
    728	    }
    729	}
-   730
+   730	
    731	private data class FigmaBounds(
    732	    val x: Float,
    733	    val y: Float,
    734	    val w: Float,
    735	    val h: Float
    736	)
-   737
+   737	
    738	private data class IntroImages(
    739	    val logoSimple: ImageBitmap,
    740	    val logoEyes: ImageBitmap,
@@ -2581,7 +2581,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    747	    val jannyName: ImageBitmap,
    748	    val guestName: ImageBitmap
    749	)
-   750
+   750	
    751	@Composable
    752	private fun rememberIntroImages(): IntroImages {
    753	    val resources = LocalContext.current.resources
@@ -2600,7 +2600,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    766	        )
    767	    }
    768	}
-   769
+   769	
    770	private fun DrawScope.drawFigmaImage(
    771	    image: ImageBitmap,
    772	    bounds: FigmaBounds,
@@ -2614,7 +2614,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    780	    val top = stageTop + bounds.y * stageScale
    781	    val width = bounds.w * stageScale
    782	    val height = bounds.h * stageScale
-   783
+   783	
    784	    if (clipCircle) {
    785	        val clip = Path().apply {
    786	            addOval(Rect(left, top, left + width, top + height))
@@ -2626,7 +2626,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    792	        drawImageBitmap(image, left, top, width, height, alpha)
    793	    }
    794	}
-   795
+   795	
    796	private fun DrawScope.drawImageBitmap(
    797	    image: ImageBitmap,
    798	    left: Float,
@@ -2642,7 +2642,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    808	        alpha = alpha.coerceIn(0f, 1f)
    809	    )
    810	}
-   811
+   811	
    812	@Composable
    813	private fun SettlingLogoLayer(
    814	    scale: Float,
@@ -2664,7 +2664,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    830	    val finalBounds = FigmaBounds(x = 297f, y = 11f, w = 600f, h = 428f)
    831	    val simpleBounds = lerpBounds(simpleEntry, finalBounds, finalProgress)
    832	    val eyesBounds = lerpBounds(eyesEntry, finalBounds, finalProgress)
-   833
+   833	
    834	    TransformedFigmaAssetImage(
    835	        base = baseBounds,
    836	        target = simpleBounds,
@@ -2680,7 +2680,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    846	        alpha = alpha
    847	    )
    848	}
-   849
+   849	
    850	@Composable
    851	private fun AvatarSelectionLayer(scale: Float, alpha: Float, yOffset: Float) {
    852	    val density = LocalDensity.current.density
@@ -2703,7 +2703,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    869	        FigmaAvatarImage(x = 390f, y = 450f + stackShiftY, w = SIGN_IN_AVATAR_SIZE, h = SIGN_IN_AVATAR_SIZE, scale = scale, resId = R.drawable.martin_avatar_bubble_edge50_body0_test)
    870	        FigmaAvatarImage(x = 628f, y = 454f + stackShiftY, w = SIGN_IN_AVATAR_SIZE, h = SIGN_IN_AVATAR_SIZE, scale = scale, resId = R.drawable.janny_avatar_bubble_edge50_body0_test)
    871	        FigmaAvatarImage(x = 866f, y = 450f + stackShiftY, w = SIGN_IN_AVATAR_SIZE, h = SIGN_IN_AVATAR_SIZE, scale = scale, resId = R.drawable.guest_avatar_bubble_edge50_body0_test)
-   872
+   872	
    873	        FigmaAssetImage(x = 130f, y = SIGN_IN_NAME_TOP + stackShiftY, w = 220f, h = 72f, scale = scale, resId = R.drawable.steve_name)
    874	        FigmaAssetImage(x = 368f, y = SIGN_IN_NAME_TOP + stackShiftY, w = 220f, h = 72f, scale = scale, resId = R.drawable.martin_name)
    875	        FigmaAssetImage(x = 606f, y = SIGN_IN_NAME_TOP + stackShiftY, w = 220f, h = 72f, scale = scale, resId = R.drawable.janny_name)
@@ -2734,7 +2734,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    900	        )
    901	    }
    902	}
-   903
+   903	
    904	@Composable
    905	private fun SignInPromptText(
    906	    text: String,
@@ -2775,7 +2775,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    941	        )
    942	    }
    943	}
-   944
+   944	
    945	@Composable
    946	private fun FigmaAvatarImage(
    947	    x: Float,
@@ -2795,7 +2795,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    961	            .clip(CircleShape)
    962	    )
    963	}
-   964
+   964	
    965	@Composable
    966	private fun LogoDot(x: Float, y: Float, scale: Float, active: Boolean) {
    967	    Box(
@@ -2806,7 +2806,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    972	            .background(if (active) Color(0xFFE7E7E7) else Color(0xFF050505))
    973	    )
    974	}
-   975
+   975	
    976	@Composable
    977	private fun PromoBackgroundLayer(
    978	    scale: Float,
@@ -2824,7 +2824,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
    990	        resId = backgroundResId,
    991	        alpha = alpha
    992	    )
-   993
+   993	
    994	    if (darkOverlay > 0f) {
    995	        Box(
    996	            modifier = Modifier
@@ -2835,7 +2835,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
   1001	        )
   1002	    }
   1003	}
-  1004
+  1004	
   1005	@Composable
   1006	private fun TransformedFigmaAssetImage(
   1007	    base: FigmaBounds,
@@ -2862,7 +2862,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
   1028	            }
   1029	    )
   1030	}
-  1031
+  1031	
   1032	@Composable
   1033	private fun FigmaAssetImage(
   1034	    x: Float,
@@ -2883,7 +2883,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
   1049	            .graphicsLayer(alpha = alpha)
   1050	    )
   1051	}
-  1052
+  1052	
   1053	@Composable
   1054	private fun FigmaStage(background: Brush, content: @Composable BoxWithConstraintsScope.(Float) -> Unit) {
   1055	    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
@@ -2892,7 +2892,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
   1058	        val scale = min(outerMaxWidth.value / FIGMA_FRAME_WIDTH, outerMaxHeight.value / FIGMA_FRAME_HEIGHT)
   1059	        val stageWidth = figma(FIGMA_FRAME_WIDTH, scale)
   1060	        val stageHeight = figma(FIGMA_FRAME_HEIGHT, scale)
-  1061
+  1061	
   1062	        Box(
   1063	            modifier = Modifier
   1064	                .fillMaxSize()
@@ -2908,9 +2908,9 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
   1074	        }
   1075	    }
   1076	}
-  1077
+  1077	
   1078	private fun figma(px: Float, scale: Float) = (px * scale).dp
-  1079
+  1079	
   1080	private fun signInStackShiftY(isLandscape: Boolean): Float {
   1081	    return if (isLandscape) {
   1082	        SIGN_IN_LANDSCAPE_STACK_SHIFT_Y
@@ -2918,15 +2918,15 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
   1084	        SIGN_IN_PORTRAIT_STACK_SHIFT_Y
   1085	    }
   1086	}
-  1087
+  1087	
   1088	private fun signInAccountPromptExtraShiftY(isLandscape: Boolean): Float {
   1089	    return if (isLandscape) SIGN_IN_LANDSCAPE_ACCOUNT_PROMPT_EXTRA_SHIFT_Y else 0f
   1090	}
-  1091
+  1091	
   1092	private fun signInAccountPromptTextSize(isLandscape: Boolean): Float {
   1093	    return if (isLandscape) ACCOUNT_PROMPT_LANDSCAPE_TEXT_SIZE else ACCOUNT_PROMPT_TEXT_SIZE
   1094	}
-  1095
+  1095	
   1096	private fun introBackgroundBrush(solidProgress: Float, gradientProgress: Float): Brush {
   1097	    val solid = lerpColor(ColorFrame1Background, ColorFrame2Background, solidProgress)
   1098	    return Brush.verticalGradient(
@@ -2937,43 +2937,43 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
   1103	        )
   1104	    )
   1105	}
-  1106
+  1106	
   1107	private fun solidBrush(color: Color): Brush = Brush.verticalGradient(
   1108	    colors = listOf(color, color)
   1109	)
-  1110
+  1110	
   1111	private fun bootProgressAt(bootStartMillis: Long): Float {
   1112	    val elapsed = SystemClock.uptimeMillis() - bootStartMillis
   1113	    return (elapsed / BOOT_ANIMATION_MS.toFloat()).coerceIn(0f, 1f)
   1114	}
-  1115
+  1115	
   1116	private fun easedSegment(value: Float, start: Float, end: Float): Float {
   1117	    val progress = ((value - start) / (end - start)).coerceIn(0f, 1f)
   1118	    return FastOutSlowInEasing.transform(progress)
   1119	}
-  1120
+  1120	
   1121	private fun linearSegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
   1122	    val ms = progress.coerceIn(0f, 1f) * BOOT_ANIMATION_MS
   1123	    return ((ms - startMs) / (endMs - startMs).toFloat()).coerceIn(0f, 1f)
   1124	}
-  1125
+  1125	
   1126	private fun easedSegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
   1127	    return FastOutSlowInEasing.transform(linearSegmentMs(progress, startMs, endMs))
   1128	}
-  1129
+  1129	
   1130	private fun bouncySegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
   1131	    return bouncyEasing(linearSegmentMs(progress, startMs, endMs))
   1132	}
-  1133
+  1133	
   1134	private fun bouncyEasing(value: Float): Float {
   1135	    val t = value.coerceIn(0f, 1f)
   1136	    val base = FastOutSlowInEasing.transform(t)
   1137	    val bounce = sin(t * PI.toFloat() * 4.5f) * (1f - t) * 0.13f
   1138	    return base + bounce
   1139	}
-  1140
+  1140	
   1141	private fun lerpFloat(start: Float, end: Float, amount: Float) = start + (end - start) * amount
-  1142
+  1142	
   1143	private fun lerpBounds(start: FigmaBounds, end: FigmaBounds, amount: Float) = FigmaBounds(
   1144	    x = lerpFloat(start.x, end.x, amount),
   1145	    y = lerpFloat(start.y, end.y, amount),
@@ -2987,7 +2987,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
 ============================================================
 
      1	package com.prahlin.cinerific.ui
-     2
+     2	
      3	import android.content.Context
      4	import android.graphics.Bitmap
      5	import android.graphics.BitmapFactory
@@ -3017,7 +3017,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
     29	import kotlin.math.min
     30	import kotlin.math.roundToInt
     31	import kotlin.math.sin
-    32
+    32	
     33	private const val FIGMA_FRAME_WIDTH = 1194f
     34	private const val FIGMA_FRAME_HEIGHT = 834f
     35	private const val SCREEN_BLACK_HOLD_MS = 1000
@@ -3030,7 +3030,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
     42	private const val MOCK_SIGN_IN_TRANSITION_MS = 720
     43	private const val MOCK_SIGN_IN_STACK_EXIT_Y = 430f
     44	private const val MOCK_FORM_FOCUS_TRANSITION_MS = 520
-    45
+    45	
     46	private const val COLOR_FRAME_1 = 0xFF000000.toInt()
     47	private const val COLOR_FRAME_2 = 0xFF600878.toInt()
     48	private const val COLOR_GRADIENT_TOP = 0xFF050006.toInt()
@@ -3080,14 +3080,14 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
     92	private const val MOCK_FORM_STACK_HEIGHT = MOCK_FORM_FIELD_HEIGHT * 2f + MOCK_FORM_FIELD_GAP
     93	private const val MOCK_FORM_STACK_CENTER_Y = MOCK_FORM_Y + MOCK_FORM_STACK_HEIGHT / 2f
     94	private const val MOCK_FORM_FOCUS_SHIFT_Y = LOGO_FINAL_CENTER_Y - MOCK_FORM_STACK_CENTER_Y
-    95
+    95	
     96	private val FINAL_AVATAR_TARGETS = listOf(
     97	    AvatarTarget(CinerificProfile.Steve, Bounds(152f, 450f, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE)),
     98	    AvatarTarget(CinerificProfile.Martin, Bounds(390f, 450f, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE)),
     99	    AvatarTarget(CinerificProfile.Janny, Bounds(628f, 454f, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE)),
    100	    AvatarTarget(CinerificProfile.Guest, Bounds(866f, 450f, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE))
    101	)
-   102
+   102	
    103	internal class CinerificIntroView(context: Context) : View(context) {
    104	    var bootStartMillis: Long = SystemClock.uptimeMillis()
    105	        set(value) {
@@ -3096,7 +3096,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    108	            postInvalidateOnAnimation()
    109	        }
    110	    var onAvatarSelected: ((CinerificProfile) -> Unit)? = null
-   111
+   111	
    112	    private val bitmapOptions = BitmapFactory.Options().apply {
    113	        inScaled = false
    114	        inPreferredConfig = Bitmap.Config.ARGB_8888
@@ -3114,7 +3114,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    126	    private val guestName = decode(R.drawable.guest_name)
    127	    private val standardLandscapeBackground = decode(R.drawable.signin_background_standard_landscape)
    128	    private val standardPortraitBackground = decode(R.drawable.signin_background_standard_portrait)
-   129
+   129	
    130	    private val imagePaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG or Paint.DITHER_FLAG)
    131	    private val backgroundPaint = Paint()
    132	    private val accountPromptPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.SUBPIXEL_TEXT_FLAG).apply {
@@ -3161,18 +3161,18 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    173	    private var lastFormLabelAnimationMillis = SystemClock.uptimeMillis()
    174	    private var mockFormFocusProgress = 0f
    175	    private var lastFormFocusAnimationMillis = SystemClock.uptimeMillis()
-   176
+   176	
    177	    init {
    178	        isClickable = true
    179	        isFocusable = true
    180	        isFocusableInTouchMode = true
    181	    }
-   182
+   182	
    183	    override fun onAttachedToWindow() {
    184	        super.onAttachedToWindow()
    185	        postInvalidateOnAnimation()
    186	    }
-   187
+   187	
    188	    override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
    189	        super.onSizeChanged(width, height, oldWidth, oldHeight)
    190	        pressedAvatarProfile = null
@@ -3181,10 +3181,10 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    193	        pressedMockField = null
    194	        postInvalidateOnAnimation()
    195	    }
-   196
+   196	
    197	    override fun onDraw(canvas: Canvas) {
    198	        super.onDraw(canvas)
-   199
+   199	
    200	        val progress = bootProgressAt(bootStartMillis)
    201	        val blackToPurple = linearSegmentMs(
    202	            progress,
@@ -3193,17 +3193,17 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    205	        )
    206	        val purpleToSettle = easedSegmentMs(progress, 2500, 3900)
    207	        drawIntroBackground(canvas, blackToPurple, purpleToSettle)
-   208
+   208	
    209	        val stage = currentStageMetrics() ?: return
    210	        val mockProgress = mockSignInProgress()
    211	        updateMockFormFocusAnimation()
    212	        val formFocusMotion = FastOutSlowInEasing.transform(mockFormFocusProgress)
-   213
+   213	
    214	        val logoAlpha = linearSegmentMs(progress, 90, LOGO_ENTRY_START_MS)
    215	        if (logoAlpha > 0.01f) {
    216	            drawSettlingLogo(canvas, stage.left, stage.top, stage.scale, progress, logoAlpha, formFocusMotion)
    217	        }
-   218
+   218	
    219	        val avatarAlpha = easedSegmentMs(progress, 2300, FINAL_SETTLE_END_MS)
    220	        val mockMotion = FastOutSlowInEasing.transform(mockProgress)
    221	        if (avatarAlpha > 0.01f) {
@@ -3215,7 +3215,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    227	                drawFigmaBitmap(canvas, martinAvatar, Bounds(390f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stage.left, stage.top, stage.scale, stackAlpha)
    228	                drawFigmaBitmap(canvas, jannyAvatar, Bounds(628f, 454f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stage.left, stage.top, stage.scale, stackAlpha)
    229	                drawFigmaBitmap(canvas, guestAvatar, Bounds(866f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stage.left, stage.top, stage.scale, stackAlpha)
-   230
+   230	
    231	                drawFigmaBitmap(canvas, steveName, Bounds(130f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stage.left, stage.top, stage.scale, stackAlpha)
    232	                drawFigmaBitmap(canvas, martinName, Bounds(368f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stage.left, stage.top, stage.scale, stackAlpha)
    233	                drawFigmaBitmap(canvas, jannyName, Bounds(606f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stage.left, stage.top, stage.scale, stackAlpha)
@@ -3226,12 +3226,12 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    238	        if (mockProgress > 0f) {
    239	            drawMockSignInForm(canvas, stage.left, stage.top, stage.scale, mockMotion, formFocusMotion)
    240	        }
-   241
+   241	
    242	        if (progress < 1f || isMockSignInAnimating() || isMockFormLabelAnimating() || isMockFormFocusAnimating()) {
    243	            postInvalidateOnAnimation()
    244	        }
    245	    }
-   246
+   246	
    247	    override fun onTouchEvent(event: MotionEvent): Boolean {
    248	        return when (event.actionMasked) {
    249	            MotionEvent.ACTION_DOWN -> {
@@ -3289,11 +3289,11 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    301	            else -> pressedSignInPrompt || pressedAvatarProfile != null || mockSignInStartMillis != null
    302	        }
    303	    }
-   304
+   304	
    305	    override fun onCheckIsTextEditor(): Boolean {
    306	        return mockSignInStartMillis != null
    307	    }
-   308
+   308	
    309	    override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection? {
    310	        val field = focusedMockField ?: return null
    311	        outAttrs.inputType = if (field == MockSignInField.Password) {
@@ -3311,14 +3311,14 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    323	        outAttrs.initialSelEnd = textLength
    324	        return MockSignInInputConnection()
    325	    }
-   326
+   326	
    327	    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
    328	        if (focusedMockField != null) {
    329	            return handleMockSignInKeyEvent(keyCode, event) || super.onKeyDown(keyCode, event)
    330	        }
    331	        return super.onKeyDown(keyCode, event)
    332	    }
-   333
+   333	
    334	    @Suppress("DEPRECATION")
    335	    override fun onKeyMultiple(keyCode: Int, repeatCount: Int, event: KeyEvent): Boolean {
    336	        val characters = event.getCharacters()
@@ -3327,7 +3327,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    339	        }
    340	        return super.onKeyMultiple(keyCode, repeatCount, event)
    341	    }
-   342
+   342	
    343	    override fun performClick(): Boolean {
    344	        super.performClick()
    345	        if (!isFinalFrameSettled()) return false
@@ -3336,7 +3336,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    348	        clickAvatarProfile = null
    349	        return true
    350	    }
-   351
+   351	
    352	    private fun drawSettlingLogo(
    353	        canvas: Canvas,
    354	        stageLeft: Float,
@@ -3351,25 +3351,25 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    363	        val focusShiftY = mockLogoFocusShiftY(formFocusMotion)
    364	        val base = offsetBounds(Bounds(222f, 150f, 750f, 535f), focusShiftY)
    365	        val final = offsetBounds(Bounds(297f, LOGO_FINAL_TOP, 600f, LOGO_FINAL_HEIGHT), focusShiftY)
-   366
+   366	
    367	        if (logoEntry >= 0.999f) {
    368	            drawFigmaBitmap(canvas, logoCombined, lerpBounds(base, final, finalProgress), stageLeft, stageTop, stageScale, alpha)
    369	            return
    370	        }
-   371
+   371	
    372	        val simpleEntry = lerpBounds(Bounds(447f, 1037f, 300f, 214f), base, logoEntry)
    373	        val eyesEntry = lerpBounds(Bounds(453f, -417f, 300f, 214f), base, logoEntry)
    374	        drawFigmaBitmap(canvas, logoSimple, lerpBounds(simpleEntry, final, finalProgress), stageLeft, stageTop, stageScale, alpha)
    375	        drawFigmaBitmap(canvas, logoEyes, lerpBounds(eyesEntry, final, finalProgress), stageLeft, stageTop, stageScale, alpha)
    376	    }
-   377
+   377	
    378	    private fun drawIntroBackground(canvas: Canvas, solidProgress: Float, gradientProgress: Float) {
    379	        val standardSignInBackground = standardSignInBackgroundForSize()
    380	        if (gradientProgress <= 0.001f) {
    381	            canvas.drawColor(lerpColor(COLOR_FRAME_1, COLOR_FRAME_2, solidProgress))
    382	            return
    383	        }
-   384
+   384	
    385	        val solid = lerpColor(COLOR_FRAME_1, COLOR_FRAME_2, solidProgress)
    386	        backgroundPaint.shader = LinearGradient(
    387	            0f,
@@ -3386,27 +3386,27 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    398	        )
    399	        canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), backgroundPaint)
    400	        backgroundPaint.shader = null
-   401
+   401	
    402	        if (standardSignInBackground != null) {
    403	            drawStandardSignInBlackMatte(canvas, gradientProgress)
    404	            drawStandardSignInBackground(canvas, standardSignInBackground, gradientProgress)
    405	        }
    406	    }
-   407
+   407	
    408	    private fun drawStandardSignInBlackMatte(canvas: Canvas, alpha: Float) {
    409	        backgroundPaint.color = COLOR_FRAME_1
    410	        backgroundPaint.alpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
    411	        canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), backgroundPaint)
    412	        backgroundPaint.alpha = 255
    413	    }
-   414
+   414	
    415	    private fun drawStandardSignInBackground(canvas: Canvas, bitmap: Bitmap, alpha: Float) {
    416	        tempRect.set(0f, 0f, width.toFloat(), height.toFloat())
    417	        imagePaint.alpha = (alpha.coerceIn(0f, 1f) * STANDARD_BACKGROUND_SETTLED_ALPHA * 255f).roundToInt()
    418	        canvas.drawBitmap(bitmap, null, tempRect, imagePaint)
    419	        imagePaint.alpha = 255
    420	    }
-   421
+   421	
    422	    private fun drawFigmaBitmap(
    423	        canvas: Canvas,
    424	        bitmap: Bitmap,
@@ -3426,7 +3426,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    438	        canvas.drawBitmap(bitmap, null, tempRect, imagePaint)
    439	        imagePaint.alpha = 255
    440	    }
-   441
+   441	
    442	    private fun drawAccountPrompt(
    443	        canvas: Canvas,
    444	        stageLeft: Float,
@@ -3444,7 +3444,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    456	        accountPromptBoldPaint.strokeWidth = 0.65f * stageScale
    457	        accountPromptPaint.alpha = paintAlpha
    458	        accountPromptBoldPaint.alpha = paintAlpha
-   459
+   459	
    460	        val accountPromptShiftY = if (isLandscape) SIGN_IN_LANDSCAPE_ACCOUNT_PROMPT_EXTRA_SHIFT_Y else 0f
    461	        val centerY = stageTop +
    462	            (ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + accountPromptShiftY + yOffset) * stageScale
@@ -3477,7 +3477,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    489	        accountPromptPaint.textAlign = Paint.Align.CENTER
    490	        accountPromptBoldPaint.alpha = 255
    491	    }
-   492
+   492	
    493	    private fun drawMockSignInForm(
    494	        canvas: Canvas,
    495	        stageLeft: Float,
@@ -3487,7 +3487,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    499	        formFocusMotion: Float
    500	    ) {
    501	        updateMockFormLabelAnimation()
-   502
+   502	
    503	        val alpha = progress.coerceIn(0f, 1f)
    504	        val yOffset = MOCK_FORM_ENTRY_Y * (1f - alpha)
    505	        val fieldFillAlpha = (alpha * 26f).roundToInt()
@@ -3495,21 +3495,21 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    507	        val fieldX = mockFormX()
    508	        val usernameY = MOCK_FORM_Y + yOffset
    509	        val passwordY = usernameY + MOCK_FORM_FIELD_HEIGHT + MOCK_FORM_FIELD_GAP
-   510
+   510	
    511	        formFieldFillPaint.color = Color.argb(fieldFillAlpha, 255, 255, 255)
    512	        formFieldStrokePaint.color = Color.argb(fieldStrokeAlpha, 255, 255, 255)
    513	        formFieldStrokePaint.strokeWidth = MOCK_FORM_FIELD_STROKE_WIDTH * stageScale
    514	        formCaretPaint.strokeWidth = 1.45f * stageScale
-   515
+   515	
    516	        val focusShiftY = mockFormFocusShiftY(formFocusMotion)
    517	        drawMockSignInField(canvas, MockSignInField.Username, fieldX, usernameY + focusShiftY, stageLeft, stageTop, stageScale, alpha)
    518	        drawMockSignInField(canvas, MockSignInField.Password, fieldX, passwordY + focusShiftY, stageLeft, stageTop, stageScale, alpha)
-   519
+   519	
    520	        formLabelPaint.alpha = 255
    521	        formInputPaint.alpha = 255
    522	        formCaretPaint.alpha = 255
    523	    }
-   524
+   524	
    525	    private fun drawMockSignInField(
    526	        canvas: Canvas,
    527	        field: MockSignInField,
@@ -3529,7 +3529,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    541	        val radius = MOCK_FORM_FIELD_RADIUS * stageScale
    542	        canvas.drawRoundRect(tempRect, radius, radius, formFieldFillPaint)
    543	        canvas.drawRoundRect(tempRect, radius, radius, formFieldStrokePaint)
-   544
+   544	
    545	        val label = mockSignInFieldLabel(field)
    546	        val labelProgress = mockSignInFieldLabelProgress(field)
    547	        val textAlpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
@@ -3555,7 +3555,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    567	            labelBaselineY,
    568	            formLabelPaint
    569	        )
-   570
+   570	
    571	        val fieldText = mockSignInFieldDisplayText(field)
    572	        val shouldDrawInput = fieldText.isNotEmpty() || focusedMockField == field
    573	        if (shouldDrawInput) {
@@ -3563,13 +3563,13 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    575	            formInputPaint.textSize = MOCK_FORM_LABEL_TEXT_SIZE * stageScale
    576	            formInputPaint.alpha = inputAlpha
    577	            formCaretPaint.alpha = inputAlpha
-   578
+   578	
    579	            val inputX = tempRect.left + MOCK_FORM_LABEL_INSET_X * stageScale
    580	            val inputBaselineY = tempRect.top + MOCK_FORM_INPUT_BASELINE_FROM_TOP * stageScale
    581	            val maxInputWidth = MOCK_FORM_WIDTH * stageScale - MOCK_FORM_LABEL_INSET_X * stageScale * 2f
    582	            val visibleText = trailingFittingText(fieldText, maxInputWidth, formInputPaint)
    583	            canvas.drawText(visibleText, inputX, inputBaselineY, formInputPaint)
-   584
+   584	
    585	            if (focusedMockField == field) {
    586	                val caretX = inputX + formInputPaint.measureText(visibleText) + 2f * stageScale
    587	                val inputMetrics = formInputPaint.fontMetrics
@@ -3583,11 +3583,11 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    595	            }
    596	        }
    597	    }
-   598
+   598	
    599	    private fun decode(resId: Int): Bitmap {
    600	        return BitmapFactory.decodeResource(resources, resId, bitmapOptions)
    601	    }
-   602
+   602	
    603	    private fun standardSignInBackgroundForSize(): Bitmap? {
    604	        return when {
    605	            isSizeCloseTo(width, STANDARD_TABLET_LONG_EDGE) &&
@@ -3597,21 +3597,21 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    609	            else -> null
    610	        }
    611	    }
-   612
+   612	
    613	    private fun isSizeCloseTo(actual: Int, expected: Int): Boolean {
    614	        return abs(actual - expected) <= STANDARD_TABLET_SIZE_TOLERANCE
    615	    }
-   616
+   616	
    617	    private fun isFinalFrameSettled(): Boolean {
    618	        return bootProgressAt(bootStartMillis) >= 1f
    619	    }
-   620
+   620	
    621	    private fun settledAvatarHitProfile(x: Float, y: Float): CinerificProfile? {
    622	        if (mockSignInStartMillis != null) return null
    623	        if (!isFinalFrameSettled()) return null
-   624
+   624	
    625	        val stage = currentStageMetrics() ?: return null
-   626
+   626	
    627	        val stackShiftY = signInStackShiftY()
    628	        return FINAL_AVATAR_TARGETS.firstOrNull { target ->
    629	            val bounds = target.bounds
@@ -3623,10 +3623,10 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    635	            dx * dx + dy * dy <= radius * radius
    636	        }?.profile
    637	    }
-   638
+   638	
    639	    private fun settledSignInPromptHit(x: Float, y: Float): Boolean {
    640	        if (mockSignInStartMillis != null || !isFinalFrameSettled()) return false
-   641
+   641	
    642	        val stage = currentStageMetrics() ?: return false
    643	        val centerX = stage.left + ACCOUNT_PROMPT_SIGN_IN_CENTER_X * stage.scale
    644	        val centerY = stage.top +
@@ -3636,10 +3636,10 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    648	        return x in (centerX - halfWidth)..(centerX + halfWidth) &&
    649	            y in (centerY - halfHeight)..(centerY + halfHeight)
    650	    }
-   651
+   651	
    652	    private fun mockSignInFieldHit(x: Float, y: Float): MockSignInField? {
    653	        if (mockSignInStartMillis == null) return null
-   654
+   654	
    655	        val stage = currentStageMetrics() ?: return null
    656	        val progress = FastOutSlowInEasing.transform(mockSignInProgress())
    657	        val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
@@ -3653,7 +3653,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    665	            else -> null
    666	        }
    667	    }
-   668
+   668	
    669	    private fun mockSignInFieldContains(
    670	        pointerX: Float,
    671	        pointerY: Float,
@@ -3667,7 +3667,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    679	        val bottom = stage.top + (fieldY + MOCK_FORM_FIELD_HEIGHT) * stage.scale
    680	        return pointerX in left..right && pointerY in top..bottom
    681	    }
-   682
+   682	
    683	    private fun focusMockSignInField(field: MockSignInField) {
    684	        if (focusedMockField != field) {
    685	            activeComposingText = ""
@@ -3683,7 +3683,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    695	        }
    696	        postInvalidateOnAnimation()
    697	    }
-   698
+   698	
    699	    private fun clearMockSignInFieldFocus() {
    700	        if (focusedMockField == null) return
    701	        activeComposingText = ""
@@ -3695,11 +3695,11 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    707	        clearFocus()
    708	        postInvalidateOnAnimation()
    709	    }
-   710
+   710	
    711	    private fun mockFormX(): Float {
    712	        return (FIGMA_FRAME_WIDTH - MOCK_FORM_WIDTH) / 2f
    713	    }
-   714
+   714	
    715	    private fun updateMockFormLabelAnimation() {
    716	        val now = SystemClock.uptimeMillis()
    717	        val elapsed = (now - lastFormLabelAnimationMillis).coerceIn(0L, 48L)
@@ -3716,7 +3716,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    728	            step
    729	        )
    730	    }
-   731
+   731	
    732	    private fun updateMockFormFocusAnimation() {
    733	        val now = SystemClock.uptimeMillis()
    734	        val elapsed = (now - lastFormFocusAnimationMillis).coerceIn(0L, 48L)
@@ -3724,24 +3724,24 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    736	        val step = elapsed / MOCK_FORM_FOCUS_TRANSITION_MS.toFloat()
    737	        mockFormFocusProgress = moveToward(mockFormFocusProgress, mockFormFocusTarget(), step)
    738	    }
-   739
+   739	
    740	    private fun isMockFormLabelAnimating(): Boolean {
    741	        return usernameLabelFloatProgress != mockSignInFieldLabelTarget(MockSignInField.Username) ||
    742	            passwordLabelFloatProgress != mockSignInFieldLabelTarget(MockSignInField.Password)
    743	    }
-   744
+   744	
    745	    private fun isMockFormFocusAnimating(): Boolean {
    746	        return mockFormFocusProgress != mockFormFocusTarget()
    747	    }
-   748
+   748	
    749	    private fun restartMockFormLabelAnimation() {
    750	        lastFormLabelAnimationMillis = SystemClock.uptimeMillis() - 16L
    751	    }
-   752
+   752	
    753	    private fun restartMockFormFocusAnimation() {
    754	        lastFormFocusAnimationMillis = SystemClock.uptimeMillis() - 16L
    755	    }
-   756
+   756	
    757	    private fun mockFormFocusTarget(): Float {
    758	        return if (
    759	            focusedMockField != null ||
@@ -3753,11 +3753,11 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    765	            0f
    766	        }
    767	    }
-   768
+   768	
    769	    private fun mockFormFocusShiftY(formFocusMotion: Float): Float {
    770	        return MOCK_FORM_FOCUS_SHIFT_Y * formFocusMotion.coerceIn(0f, 1f)
    771	    }
-   772
+   772	
    773	    private fun mockLogoFocusShiftY(formFocusMotion: Float): Float {
    774	        val focusMotion = formFocusMotion.coerceIn(0f, 1f)
    775	        return if (width > height) {
@@ -3766,39 +3766,39 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    778	            mockFormFocusShiftY(focusMotion)
    779	        }
    780	    }
-   781
+   781	
    782	    private fun mockSignInFieldLabelTarget(field: MockSignInField): Float {
    783	        return if (focusedMockField == field || mockSignInFieldText(field).isNotEmpty()) 1f else 0f
    784	    }
-   785
+   785	
    786	    private fun mockSignInFieldLabelProgress(field: MockSignInField): Float {
    787	        return when (field) {
    788	            MockSignInField.Username -> usernameLabelFloatProgress
    789	            MockSignInField.Password -> passwordLabelFloatProgress
    790	        }
    791	    }
-   792
+   792	
    793	    private fun mockSignInFieldLabel(field: MockSignInField): String {
    794	        return when (field) {
    795	            MockSignInField.Username -> MOCK_FORM_USERNAME_TEXT
    796	            MockSignInField.Password -> MOCK_FORM_PASSWORD_TEXT
    797	        }
    798	    }
-   799
+   799	
    800	    private fun mockSignInFieldText(field: MockSignInField): String {
    801	        return when (field) {
    802	            MockSignInField.Username -> usernameText
    803	            MockSignInField.Password -> passwordText
    804	        }
    805	    }
-   806
+   806	
    807	    private fun mockSignInFieldDisplayText(field: MockSignInField): String {
    808	        return when (field) {
    809	            MockSignInField.Username -> usernameText
    810	            MockSignInField.Password -> "*".repeat(passwordText.length)
    811	        }
    812	    }
-   813
+   813	
    814	    private fun setMockSignInFieldText(field: MockSignInField, text: String) {
    815	        val limitedText = text.take(MOCK_FORM_INPUT_MAX_CHARS)
    816	        when (field) {
@@ -3809,7 +3809,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    821	        restartMockFormFocusAnimation()
    822	        postInvalidateOnAnimation()
    823	    }
-   824
+   824	
    825	    private fun appendMockSignInInput(rawInput: String): Boolean {
    826	        val field = focusedMockField ?: return false
    827	        val input = sanitizeMockSignInInput(rawInput)
@@ -3822,7 +3822,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    834	        activeComposingText = ""
    835	        return true
    836	    }
-   837
+   837	
    838	    private fun replaceMockSignInComposingText(rawInput: String): Boolean {
    839	        val field = focusedMockField ?: return false
    840	        val input = sanitizeMockSignInInput(rawInput)
@@ -3834,12 +3834,12 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    846	        activeComposingText = composingText
    847	        return true
    848	    }
-   849
+   849	
    850	    private fun finishMockSignInComposingText(): Boolean {
    851	        activeComposingText = ""
    852	        return true
    853	    }
-   854
+   854	
    855	    private fun deleteMockSignInInput(beforeLength: Int): Boolean {
    856	        val field = focusedMockField ?: return false
    857	        val currentText = mockSignInFieldText(field)
@@ -3852,7 +3852,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    864	        setMockSignInFieldText(field, currentText.dropLast(deleteCount))
    865	        return true
    866	    }
-   867
+   867	
    868	    private fun handleMockSignInEditorAction(actionCode: Int): Boolean {
    869	        activeComposingText = ""
    870	        if (focusedMockField == MockSignInField.Username && actionCode != EditorInfo.IME_ACTION_DONE) {
@@ -3863,7 +3863,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    875	        }
    876	        return true
    877	    }
-   878
+   878	
    879	    private fun handleMockSignInKeyEvent(keyCode: Int, event: KeyEvent): Boolean {
    880	        if (event.action != KeyEvent.ACTION_DOWN) return true
    881	        return when (keyCode) {
@@ -3875,7 +3875,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    887	            }
    888	        }
    889	    }
-   890
+   890	
    891	    private fun sanitizeMockSignInInput(input: String): String {
    892	        return buildString {
    893	            input.forEach { character ->
@@ -3885,17 +3885,17 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    897	            }
    898	        }
    899	    }
-   900
+   900	
    901	    private fun trailingFittingText(text: String, maxWidth: Float, paint: Paint): String {
    902	        if (paint.measureText(text) <= maxWidth) return text
-   903
+   903	
    904	        var startIndex = 0
    905	        while (startIndex < text.length && paint.measureText(text.substring(startIndex)) > maxWidth) {
    906	            startIndex += 1
    907	        }
    908	        return text.substring(startIndex)
    909	    }
-   910
+   910	
    911	    private fun moveToward(current: Float, target: Float, amount: Float): Float {
    912	        return when {
    913	            current < target -> (current + amount).coerceAtMost(target)
@@ -3903,10 +3903,10 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    915	            else -> current
    916	        }
    917	    }
-   918
+   918	
    919	    private fun currentStageMetrics(): StageMetrics? {
    920	        if (width <= 0 || height <= 0) return null
-   921
+   921	
    922	        val stageScale = min(width / FIGMA_FRAME_WIDTH, height / FIGMA_FRAME_HEIGHT)
    923	        return StageMetrics(
    924	            left = (width - FIGMA_FRAME_WIDTH * stageScale) / 2f,
@@ -3914,7 +3914,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    926	            scale = stageScale
    927	        )
    928	    }
-   929
+   929	
    930	    private fun signInStackShiftY(): Float {
    931	        return if (width > height) {
    932	            SIGN_IN_LANDSCAPE_STACK_SHIFT_Y
@@ -3922,70 +3922,70 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
    934	            SIGN_IN_PORTRAIT_STACK_SHIFT_Y
    935	        }
    936	    }
-   937
+   937	
    938	    private fun signInAccountPromptTextSize(): Float {
    939	        return if (width > height) ACCOUNT_PROMPT_LANDSCAPE_TEXT_SIZE else ACCOUNT_PROMPT_TEXT_SIZE
    940	    }
-   941
+   941	
    942	    private fun signInAccountPromptExtraShiftY(): Float {
    943	        return if (width > height) SIGN_IN_LANDSCAPE_ACCOUNT_PROMPT_EXTRA_SHIFT_Y else 0f
    944	    }
-   945
+   945	
    946	    private fun openMockSignInScreen() {
    947	        if (mockSignInStartMillis != null) return
    948	        mockSignInStartMillis = SystemClock.uptimeMillis()
    949	        postInvalidateOnAnimation()
    950	    }
-   951
+   951	
    952	    private fun mockSignInProgress(): Float {
    953	        val startMillis = mockSignInStartMillis ?: return 0f
    954	        val elapsed = SystemClock.uptimeMillis() - startMillis
    955	        return (elapsed / MOCK_SIGN_IN_TRANSITION_MS.toFloat()).coerceIn(0f, 1f)
    956	    }
-   957
+   957	
    958	    private fun isMockSignInAnimating(): Boolean {
    959	        val startMillis = mockSignInStartMillis ?: return false
    960	        return SystemClock.uptimeMillis() - startMillis < MOCK_SIGN_IN_TRANSITION_MS
    961	    }
-   962
+   962	
    963	    private inner class MockSignInInputConnection : BaseInputConnection(this@CinerificIntroView, false) {
    964	        override fun commitText(text: CharSequence?, newCursorPosition: Int): Boolean {
    965	            return appendMockSignInInput(text?.toString().orEmpty())
    966	        }
-   967
+   967	
    968	        override fun setComposingText(text: CharSequence?, newCursorPosition: Int): Boolean {
    969	            return replaceMockSignInComposingText(text?.toString().orEmpty())
    970	        }
-   971
+   971	
    972	        override fun finishComposingText(): Boolean {
    973	            return finishMockSignInComposingText()
    974	        }
-   975
+   975	
    976	        override fun deleteSurroundingText(beforeLength: Int, afterLength: Int): Boolean {
    977	            return deleteMockSignInInput(beforeLength)
    978	        }
-   979
+   979	
    980	        override fun deleteSurroundingTextInCodePoints(beforeLength: Int, afterLength: Int): Boolean {
    981	            return deleteSurroundingText(beforeLength, afterLength)
    982	        }
-   983
+   983	
    984	        override fun getTextBeforeCursor(n: Int, flags: Int): CharSequence {
    985	            val text = focusedMockField?.let(::mockSignInFieldText).orEmpty()
    986	            return text.takeLast(n.coerceAtLeast(0))
    987	        }
-   988
+   988	
    989	        override fun getTextAfterCursor(n: Int, flags: Int): CharSequence {
    990	            return ""
    991	        }
-   992
+   992	
    993	        override fun getSelectedText(flags: Int): CharSequence {
    994	            return ""
    995	        }
-   996
+   996	
    997	        override fun performEditorAction(actionCode: Int): Boolean {
    998	            return handleMockSignInEditorAction(actionCode)
    999	        }
-  1000
+  1000	
   1001	        override fun sendKeyEvent(event: KeyEvent): Boolean {
   1002	            if (event.action != KeyEvent.ACTION_DOWN) return true
   1003	            return when (event.keyCode) {
@@ -4003,71 +4003,71 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
   1015	        }
   1016	    }
   1017	}
-  1018
+  1018	
   1019	private enum class MockSignInField {
   1020	    Username,
   1021	    Password
   1022	}
-  1023
+  1023	
   1024	private data class AvatarTarget(
   1025	    val profile: CinerificProfile,
   1026	    val bounds: Bounds
   1027	)
-  1028
+  1028	
   1029	private data class StageMetrics(
   1030	    val left: Float,
   1031	    val top: Float,
   1032	    val scale: Float
   1033	)
-  1034
+  1034	
   1035	private data class Bounds(
   1036	    val x: Float,
   1037	    val y: Float,
   1038	    val w: Float,
   1039	    val h: Float
   1040	)
-  1041
+  1041	
   1042	private fun bootProgressAt(bootStartMillis: Long): Float {
   1043	    val elapsed = SystemClock.uptimeMillis() - bootStartMillis
   1044	    return (elapsed / BOOT_ANIMATION_MS.toFloat()).coerceIn(0f, 1f)
   1045	}
-  1046
+  1046	
   1047	private fun linearSegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
   1048	    val ms = progress.coerceIn(0f, 1f) * BOOT_ANIMATION_MS
   1049	    return ((ms - startMs) / (endMs - startMs).toFloat()).coerceIn(0f, 1f)
   1050	}
-  1051
+  1051	
   1052	private fun easedSegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
   1053	    return FastOutSlowInEasing.transform(linearSegmentMs(progress, startMs, endMs))
   1054	}
-  1055
+  1055	
   1056	private fun bouncySegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
   1057	    return bouncyEasing(linearSegmentMs(progress, startMs, endMs))
   1058	}
-  1059
+  1059	
   1060	private fun bouncyEasing(value: Float): Float {
   1061	    val t = value.coerceIn(0f, 1f)
   1062	    val base = FastOutSlowInEasing.transform(t)
   1063	    val bounce = sin(t * PI.toFloat() * 4.5f) * (1f - t) * 0.13f
   1064	    return base + bounce
   1065	}
-  1066
+  1066	
   1067	private fun lerpFloat(start: Float, end: Float, amount: Float) = start + (end - start) * amount
-  1068
+  1068	
   1069	private fun lerpBounds(start: Bounds, end: Bounds, amount: Float) = Bounds(
   1070	    x = lerpFloat(start.x, end.x, amount),
   1071	    y = lerpFloat(start.y, end.y, amount),
   1072	    w = lerpFloat(start.w, end.w, amount),
   1073	    h = lerpFloat(start.h, end.h, amount)
   1074	)
-  1075
+  1075	
   1076	private fun offsetBounds(bounds: Bounds, yOffset: Float) = Bounds(
   1077	    x = bounds.x,
   1078	    y = bounds.y + yOffset,
   1079	    w = bounds.w,
   1080	    h = bounds.h
   1081	)
-  1082
+  1082	
   1083	private fun lerpColor(start: Int, end: Int, amount: Float): Int {
   1084	    val t = amount.coerceIn(0f, 1f)
   1085	    return Color.argb(
@@ -4077,11 +4077,11 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
   1089	        lerpInt(Color.blue(start), Color.blue(end), t)
   1090	    )
   1091	}
-  1092
+  1092	
   1093	private fun lerpInt(start: Int, end: Int, amount: Float): Int {
   1094	    return (start + (end - start) * amount).roundToInt()
   1095	}
-  1096
+  1096	
   1097	private fun combineBitmaps(base: Bitmap, overlay: Bitmap): Bitmap {
   1098	    val output = Bitmap.createBitmap(base.width, base.height, Bitmap.Config.ARGB_8888)
   1099	    val canvas = Canvas(output)
@@ -4090,7 +4090,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
   1102	    canvas.drawBitmap(overlay, 0f, 0f, paint)
   1103	    return output
   1104	}
-  1105
+  1105	
   1106	private fun circularBitmap(source: Bitmap): Bitmap {
   1107	    val output = Bitmap.createBitmap(source.width, source.height, Bitmap.Config.ARGB_8888)
   1108	    val canvas = Canvas(output)
@@ -4110,12 +4110,12 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/theme/Theme.kt
 ============================================================
 
      1	package com.prahlin.cinerific.ui.theme
-     2
+     2	
      3	import androidx.compose.material3.MaterialTheme
      4	import androidx.compose.material3.darkColorScheme
      5	import androidx.compose.runtime.Composable
      6	import androidx.compose.ui.graphics.Color
-     7
+     7	
      8	private val DarkColors = darkColorScheme(
      9	    primary = Color(0xFFB7C8FF),
     10	    onPrimary = Color(0xFF10285F),
@@ -4132,7 +4132,7 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/theme/Theme.kt
     21	    surfaceVariant = Color(0xFF1F2937),
     22	    onSurfaceVariant = Color(0xFFCBD5E1),
     23	)
-    24
+    24	
     25	@Composable
     26	fun CinerificTheme(content: @Composable () -> Unit) {
     27	    MaterialTheme(
@@ -4156,11 +4156,11 @@ FILE: app/src/main/res/values/strings.xml
      7	    <string name="destination_settings">Settings</string>
      8	    <string name="movies_description">Explore a curated selection of exhilarating films</string>
      9	    <string name="shows_description">Browse episodic picks, genre collections, and returning favorites</string>
-    10
+    10	
     11	    <string name="language_english">English</string>
     12	    <string name="language_spanish">Spanish</string>
     13	    <string name="language_mandarin">Mandarin</string>
-    14
+    14	
     15	    <string name="genre_all">All</string>
     16	    <string name="genre_action">Action</string>
     17	    <string name="genre_comedy">Comedy</string>
@@ -4176,7 +4176,7 @@ FILE: app/src/main/res/values/strings.xml
     27	    <string name="genre_drama_compact">DRA</string>
     28	    <string name="genre_horror_compact">HOR</string>
     29	    <string name="genre_thriller_compact">THR</string>
-    30
+    30	
     31	    <string name="home_row_crime">Crime</string>
     32	    <string name="home_row_thriller">Thriller</string>
     33	    <string name="home_row_comedy">Comedy</string>
@@ -4184,7 +4184,7 @@ FILE: app/src/main/res/values/strings.xml
     35	    <string name="home_row_drama">Drama</string>
     36	    <string name="home_row_documentary">Documentary</string>
     37	    <string name="home_row_horror">Horror</string>
-    38
+    38	
     39	    <string name="row_action_movies">Action Movies</string>
     40	    <string name="row_comedy_movies">Comedy Movies</string>
     41	    <string name="row_crime_movies">Crime Movies</string>
@@ -4199,7 +4199,7 @@ FILE: app/src/main/res/values/strings.xml
     50	    <string name="row_drama_shows">Drama Shows</string>
     51	    <string name="row_horror_shows">Horror Shows</string>
     52	    <string name="row_thriller_shows">Thriller Shows</string>
-    53
+    53	
     54	    <string name="settings_accessibility">Accessibility</string>
     55	    <string name="settings_language">Language</string>
     56	    <string name="settings_language_detail">Select your language of choice</string>
@@ -4226,12 +4226,12 @@ FILE: app/src/main/res/values/strings.xml
     77	    <string name="settings_two_factor_authentication_detail">Provides an extra level of security</string>
     78	    <string name="settings_signed_in_as">Signed in as</string>
     79	    <string name="settings_sign_out">Sign out</string>
-    80
+    80	
     81	    <string name="favorites_most_frequently_viewed">Most Frequently Viewed (7 times)</string>
     82	    <string name="favorites_longest_playtime">Longest Playtime (32 hrs)</string>
     83	    <string name="favorites_most_used_device">Most Used Device</string>
     84	    <string name="favorites_favorite_genre">Favorite Genre</string>
-    85
+    85	
     86	    <string name="program_one_last_breath">One Last Breath</string>
     87	    <string name="program_sink_or_swim">Sink or Swim</string>
     88	    <string name="program_the_baller">The Baller</string>
@@ -4269,7 +4269,7 @@ FILE: app/src/main/res/values/strings.xml
    120	    <string name="program_infatuation">Infatuation</string>
    121	    <string name="program_into_the_wild">Into The Wild</string>
    122	    <string name="program_morbid_temptations">Morbid Temptations</string>
-   123
+   123	
    124	    <string name="program_synopsis_one_last_breath">A curious woman sleuthing through unresolved family business uncovers more than she originally bargained for</string>
    125	    <string name="program_synopsis_sink_or_swim">Swimming takes on a whole new meaning when an unphased man is confronted with the inevitable</string>
    126	    <string name="program_synopsis_the_baller">Shooting hoops is all fun and games until life itself becomes the greatest challenge</string>
@@ -4461,7 +4461,7 @@ FILE: .github/copilot-instructions.md
      7	[x] Create and Run Task
      8	[x] Launch the Project
      9	[x] Ensure Documentation is Complete
-    10
+    10	
     11	Project notes:
     12	- Local workspace path: `/Users/prahlin/cinerific`
     13	- GitHub remote repo: `prahlin/cinerific`
@@ -4538,37 +4538,37 @@ FILE: README.md
 ============================================================
 
      1	# Cinerific
-     2
+     2	
      3	Local Android project for the `prahlin/cinerific` GitHub repo.
-     4
+     4	
      5	This is a first Kotlin / Jetpack Compose scaffold based on the Figma intro and sign-in frames. The current app opens as a tablet-friendly full-screen frame preview with:
-     6
+     6	
      7	- Intro frame 1
      8	- Animated intro frame 2
      9	- Promo/logo intro frame 3
     10	- Sign-in/loading frame 4
-    11
+    11	
     12	## Stack
-    13
+    13	
     14	- Kotlin
     15	- Jetpack Compose Material 3
     16	- Android Gradle Plugin 8.5.x
     17	- Gradle 8.7
-    18
+    18	
     19	## Run it
-    20
+    20	
     21	Open the project in Android Studio and run `app`, or use the Gradle wrapper:
-    22
+    22	
     23	```bash
     24	./gradlew :app:assembleDebug
     25	```
-    26
+    26	
     27	The project pins Gradle to Android Studio's bundled JBR in `gradle.properties`, so command-line builds do not accidentally use an unsupported system JDK.
-    28
+    28	
     29	From VS Code, run the default build task `Android: assemble debug`. There are also tasks for `Android: install debug` and `Android: launch Cinerific` when an emulator or device is connected.
-    30
+    30	
     31	## Notes for the first Kotlin pass
-    32
+    32	
     33	- The layout is intentionally simple and adaptive for tablets.
     34	- The current visuals are Compose approximations of the Figma frames and are meant to be replaced with production assets screen by screen.
     35	- The local project folder is the same path as the GitHub remote: `prahlin/cinerific`.
@@ -4592,24 +4592,24 @@ FILE: app/build.gradle.kts
      2	    id("com.android.application")
      3	    id("org.jetbrains.kotlin.android")
      4	}
-     5
+     5	
      6	android {
      7	    namespace = "com.prahlin.cinerific"
      8	    compileSdk = 34
-     9
+     9	
     10	    defaultConfig {
     11	        applicationId = "com.prahlin.cinerific"
     12	        minSdk = 24
     13	        targetSdk = 34
     14	        versionCode = 1
     15	        versionName = "1.0"
-    16
+    16	
     17	        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     18	        vectorDrawables {
     19	            useSupportLibrary = true
     20	        }
     21	    }
-    22
+    22	
     23	    buildTypes {
     24	        release {
     25	            isMinifyEnabled = false
@@ -4619,31 +4619,31 @@ FILE: app/build.gradle.kts
     29	            )
     30	        }
     31	    }
-    32
+    32	
     33	    compileOptions {
     34	        sourceCompatibility = JavaVersion.VERSION_17
     35	        targetCompatibility = JavaVersion.VERSION_17
     36	    }
-    37
+    37	
     38	    kotlinOptions {
     39	        jvmTarget = "17"
     40	    }
-    41
+    41	
     42	    buildFeatures {
     43	        compose = true
     44	    }
-    45
+    45	
     46	    composeOptions {
     47	        kotlinCompilerExtensionVersion = "1.5.14"
     48	    }
-    49
+    49	
     50	    packaging {
     51	        resources {
     52	            excludes += "/META-INF/{AL2.0,LGPL2.1}"
     53	        }
     54	    }
     55	}
-    56
+    56	
     57	dependencies {
     58	    implementation(platform("androidx.compose:compose-bom:2024.06.00"))
     59	    implementation("androidx.core:core-ktx:1.13.1")
@@ -4671,7 +4671,7 @@ FILE: settings.gradle.kts
      5	        gradlePluginPortal()
      6	    }
      7	}
-     8
+     8	
      9	dependencyResolutionManagement {
     10	    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     11	    repositories {
@@ -4679,7 +4679,7 @@ FILE: settings.gradle.kts
     13	        mavenCentral()
     14	    }
     15	}
-    16
+    16	
     17	rootProject.name = "cinerific"
     18	include(":app")
 
@@ -4714,21 +4714,21 @@ FILE: read_project.sh
 ============================================================
 
      1	#!/bin/bash
-     2
+     2	
      3	PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
      4	OUTPUT_FILE="$PROJECT_DIR/cinerific_PROJECT_SNAPSHOT.txt"
-     5
+     5	
      6	echo "Generating Cinerific project snapshot..."
      7	echo "Project directory: $PROJECT_DIR"
      8	echo "Snapshot: $OUTPUT_FILE"
      9	echo ""
-    10
+    10	
     11	write_header() {
     12	  cat > "$OUTPUT_FILE" <<EOF
     13	Cinerific Android PROJECT SNAPSHOT
     14	Generated: $(date)
     15	Project directory: $PROJECT_DIR
-    16
+    16	
     17	IMPORTANT INSTRUCTIONS FOR CHATGPT & CODEX:
     18	1. Read this entire snapshot before giving code edits.
     19	2. Preserve all assets, spacing, alignment, fonts, images, layout, animations, and relative positioning unless specifically asked to change them.
@@ -4739,15 +4739,15 @@ FILE: read_project.sh
     24	7. Treat this project structure as the source of truth.
     25	8. If you don't understand something, ask for clarification instead of making assumptions.
     26	9. Warn me, or at least caution me, if I ask for something that would break the project or cause it to not work as intended.
-    27
-    28
+    27	
+    28	
     29	============================================================
     30	SNAPSHOT IGNORE POLICY
     31	============================================================
-    32
+    32	
     33	This file is rebuilt from the current Cinerific workspace every time ./read_project.sh runs.
     34	Ignored paths are omitted from the project tree and file dumps unless they appear inside an included text file such as .gitignore or read_project.sh.
-    35
+    35	
     36	The snapshot intentionally ignores:
     37	- .git
     38	- .gradle
@@ -4762,20 +4762,20 @@ FILE: read_project.sh
     47	- *_PROJECT_SNAPSHOT.txt
     48	- *.jks
     49	- *.keystore
-    50
+    50	
     51	Binary image and screenshot files are inventoried by path, size, and modified time only. Raw binary bytes are not printed.
-    52
-    53
+    52	
+    53	
     54	============================================================
     55	PROJECT FILE TREE
     56	============================================================
-    57
+    57	
     58	EOF
     59	}
-    60
+    60	
     61	print_file() {
     62	  local file="$1"
-    63
+    63	
     64	  if [ -f "$file" ]; then
     65	    {
     66	      echo ""
@@ -4788,11 +4788,11 @@ FILE: read_project.sh
     73	    } >> "$OUTPUT_FILE"
     74	  fi
     75	}
-    76
+    76	
     77	print_binary_inventory() {
     78	  local title="$1"
     79	  local dir="$2"
-    80
+    80	
     81	  {
     82	    echo ""
     83	    echo ""
@@ -4801,12 +4801,12 @@ FILE: read_project.sh
     86	    echo "============================================================"
     87	    echo ""
     88	  } >> "$OUTPUT_FILE"
-    89
+    89	
     90	  if [ ! -d "$dir" ]; then
     91	    echo "Directory not present: ${dir#$PROJECT_DIR/}" >> "$OUTPUT_FILE"
     92	    return
     93	  fi
-    94
+    94	
     95	  find "$dir" -type f \
     96	    ! -name ".DS_Store" \
     97	    ! -name "*_PROJECT_SNAPSHOT.txt" \
@@ -4820,10 +4820,10 @@ FILE: read_project.sh
    105	    printf '%s | %s bytes | modified %s\n' "${file#$PROJECT_DIR/}" "$size" "$modified" >> "$OUTPUT_FILE"
    106	  done
    107	}
-   108
+   108	
    109	write_snapshot() {
    110	  write_header
-   111
+   111	
    112	  find "$PROJECT_DIR" \
    113	    -path "$PROJECT_DIR/.git" -prune -o \
    114	    -path "$PROJECT_DIR/.gradle" -prune -o \
@@ -4839,16 +4839,16 @@ FILE: read_project.sh
    124	    -name "*.jks" -prune -o \
    125	    -name "*.keystore" -prune -o \
    126	    -print | sort >> "$OUTPUT_FILE"
-   127
+   127	
    128	  cat >> "$OUTPUT_FILE" <<EOF
-   129
-   130
+   129	
+   130	
    131	============================================================
    132	FILE CONTENTS — ANDROID SOURCE
    133	============================================================
-   134
+   134	
    135	EOF
-   136
+   136	
    137	  for file in \
    138	    "$PROJECT_DIR/app/src/main/AndroidManifest.xml" \
    139	    "$PROJECT_DIR/app/src/main/java/com/prahlin/cinerific/MainActivity.kt" \
@@ -4867,16 +4867,16 @@ FILE: read_project.sh
    152	  do
    153	    print_file "$file"
    154	  done
-   155
+   155	
    156	  cat >> "$OUTPUT_FILE" <<EOF
-   157
-   158
+   157	
+   158	
    159	============================================================
    160	FILE CONTENTS — ROOT / TOOLING
    161	============================================================
-   162
+   162	
    163	EOF
-   164
+   164	
    165	  for file in \
    166	    "$PROJECT_DIR/.gitignore" \
    167	    "$PROJECT_DIR/.github/copilot-instructions.md" \
@@ -4892,17 +4892,17 @@ FILE: read_project.sh
    177	  do
    178	    print_file "$file"
    179	  done
-   180
+   180	
    181	  print_binary_inventory "BINARY / IMAGE ASSET INVENTORY — DRAWABLE-NODPI" "$PROJECT_DIR/app/src/main/res/drawable-nodpi"
    182	  print_binary_inventory "BINARY / SCREENSHOT INVENTORY" "$PROJECT_DIR/screenshots"
-   183
+   183	
    184	  cat >> "$OUTPUT_FILE" <<EOF
-   185
-   186
+   185	
+   186	
    187	============================================================
    188	NOT INCLUDED IN SNAPSHOT
    189	============================================================
-   190
+   190	
    191	The Cinerific snapshot intentionally excludes generated/cache/runtime/private directories:
    192	- .git
    193	- .gradle
@@ -4917,14 +4917,14 @@ FILE: read_project.sh
    202	- *_PROJECT_SNAPSHOT.txt
    203	- *.jks
    204	- *.keystore
-   205
+   205	
    206	The snapshot lists binary assets and screenshots by path, size, and modified time, but does not print raw PNG/JPG/PDF bytes.
-   207
+   207	
    208	EOF
    209	}
-   210
+   210	
    211	write_snapshot
-   212
+   212	
    213	echo "Done."
    214	echo ""
    215	echo "Snapshot created here:"

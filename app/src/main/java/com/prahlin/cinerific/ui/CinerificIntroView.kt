@@ -7,22 +7,27 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Paint
+import android.graphics.Path
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
+import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.Shader
-import android.graphics.Typeface
 import android.os.SystemClock
 import android.text.InputType
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewConfiguration
+import android.view.WindowInsets
 import android.view.inputmethod.BaseInputConnection
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodManager
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.prahlin.cinerific.R
 import kotlin.math.PI
 import kotlin.math.abs
@@ -42,6 +47,9 @@ private const val BOOT_ANIMATION_MS = FINAL_SETTLE_END_MS
 private const val MOCK_SIGN_IN_TRANSITION_MS = 720
 private const val MOCK_SIGN_IN_STACK_EXIT_Y = 430f
 private const val MOCK_FORM_FOCUS_TRANSITION_MS = 520
+private const val MOCK_LANDSCAPE_INPUT_LIFT_TRANSITION_MS = 420
+private const val MOCK_INPUT_DIM_TRANSITION_MS = 150
+private const val MOCK_INPUT_DIM_ALPHA = 0.52f
 
 private const val COLOR_FRAME_1 = 0xFF000000.toInt()
 private const val COLOR_FRAME_2 = 0xFF600878.toInt()
@@ -67,6 +75,8 @@ private const val ACCOUNT_PROMPT_CENTER_Y = 792f
 private const val ACCOUNT_PROMPT_TEXT_SIZE = 30f
 private const val ACCOUNT_PROMPT_LANDSCAPE_TEXT_SIZE = 24.3f
 private const val ACCOUNT_PROMPT_SECONDARY_TEXT_SCALE = 0.8f
+private const val ACCOUNT_PROMPT_CREATE_HIT_WIDTH = 280f
+private const val ACCOUNT_PROMPT_CREATE_HIT_HEIGHT = 80f
 private const val ACCOUNT_PROMPT_SIGN_IN_HIT_WIDTH = 180f
 private const val ACCOUNT_PROMPT_SIGN_IN_HIT_HEIGHT = 80f
 private const val MOCK_FORM_Y = 420f
@@ -74,9 +84,12 @@ private const val MOCK_FORM_ENTRY_Y = 82f
 private const val MOCK_FORM_WIDTH = 330f
 private const val MOCK_FORM_FIELD_HEIGHT = 64f
 private const val MOCK_FORM_FIELD_GAP = 34f
+private const val MOCK_CREATE_FORM_COLUMNS = 3
+private const val MOCK_CREATE_FORM_ROWS = 3
+private const val MOCK_CREATE_FORM_COLUMN_GAP = MOCK_FORM_FIELD_GAP
 private const val MOCK_FORM_FIELD_RADIUS = 10f
 private const val MOCK_FORM_LABEL_TEXT_SIZE = 24f
-private const val MOCK_FORM_FLOATING_LABEL_SCALE = 0.15f
+private const val MOCK_FORM_FLOATING_LABEL_SCALE = 0.30f
 private const val MOCK_FORM_LABEL_FLOAT_ANIMATION_MS = 180
 private const val MOCK_FORM_FIELD_STROKE_WIDTH = 2f
 private const val MOCK_FORM_LABEL_INSET_X = 22f
@@ -84,14 +97,75 @@ private const val MOCK_FORM_LABEL_FLOAT_INSET_X = 16f
 private const val MOCK_FORM_LABEL_FLOAT_TOP_INSET_Y = 7f
 private const val MOCK_FORM_INPUT_BASELINE_FROM_TOP = 49f
 private const val MOCK_FORM_INPUT_MAX_CHARS = 34
-private const val MOCK_FORM_USERNAME_TEXT = "Username:"
-private const val MOCK_FORM_PASSWORD_TEXT = "Password:"
+private const val MOCK_FORM_USERNAME_TEXT = "Username"
+private const val MOCK_FORM_PASSWORD_TEXT = "Password"
+private const val MOCK_FORM_CONFIRM_PASSWORD_TEXT = "Confirm Password"
+private const val MOCK_FORM_EMAIL_TEXT = "Email Address"
+private const val MOCK_FORM_SUBSCRIPTION_TIER_TEXT = "Subscription Tier"
+private const val MOCK_FORM_MONTH_TEXT = "Month"
+private const val MOCK_FORM_DAY_TEXT = "Day"
+private const val MOCK_FORM_YEAR_TEXT = "Year"
+private const val MOCK_FORM_AVATAR_TEXT = "Avatar"
+private const val MOCK_MEMBERSHIP_OPTION_1_TEXT = "Option 1"
+private const val MOCK_MEMBERSHIP_OPTION_2_TEXT = "Option 2"
+private const val MOCK_MEMBERSHIP_OPTION_3_TEXT = "Option 3"
+private const val MOCK_DATE_FIELD_GAP = 10f
+private const val MOCK_DATE_MONTH_WIDTH = 96f
+private const val MOCK_DATE_DAY_WIDTH = MOCK_DATE_MONTH_WIDTH
+private const val MOCK_DATE_YEAR_WIDTH = MOCK_FORM_WIDTH - MOCK_DATE_MONTH_WIDTH - MOCK_DATE_DAY_WIDTH - MOCK_DATE_FIELD_GAP * 2f
+private const val MOCK_DROPDOWN_OPTION_HEIGHT = 42f
+private const val MOCK_DROPDOWN_CHEVRON_SIZE = 12f
+private const val MOCK_DATE_DROPDOWN_VISIBLE_OPTION_COUNT = 5
+private const val MOCK_DATE_DROPDOWN_VISIBLE_OPTION_COUNT_FLOAT = 5f
+private const val MOCK_DATE_DROPDOWN_OPTION_HEIGHT = (MOCK_FORM_FIELD_HEIGHT + MOCK_FORM_FIELD_GAP) * 2f /
+    MOCK_DATE_DROPDOWN_VISIBLE_OPTION_COUNT_FLOAT
+private const val MOCK_DATE_DROPDOWN_OPTION_TEXT_SIZE = 12f
+private const val MOCK_DATE_DROPDOWN_SCROLLBAR_WIDTH = 3.5f
+private const val MOCK_DATE_DROPDOWN_SCROLLBAR_INSET_X = 4f
+private const val MOCK_DATE_DROPDOWN_SCROLLBAR_INSET_Y = 4f
+private const val MOCK_DATE_DROPDOWN_TEXT_SIZE = 22f
+private const val MOCK_DATE_DROPDOWN_TEXT_INSET_X = 10f
+private const val MOCK_DATE_DROPDOWN_CHEVRON_INSET_X = 10f
+private const val MOCK_DATE_DROPDOWN_CHEVRON_SIZE = 9f
+private const val MOCK_CREATE_AVATAR_SIZE = 176f
+private const val MOCK_CREATE_AVATAR_COUNT = 3
+private const val MOCK_CREATE_AVATAR_STACK_SCALE = 1.25f
+private const val MOCK_CREATE_AVATAR_LABEL_BASELINE_FROM_TOP = 24f
+private const val MOCK_CREATE_AVATAR_TOP_GAP = 16f
+private const val MOCK_CREATE_AVATAR_CAROUSEL_MS = 280
+private const val MOCK_CREATE_AVATAR_CHEVRON_SIDE_GAP = 20f
+private const val MOCK_CREATE_AVATAR_CHEVRON_WIDTH = 18f
+private const val MOCK_CREATE_AVATAR_CHEVRON_HEIGHT = 34f
+private const val MOCK_CREATE_AVATAR_CHEVRON_STROKE_WIDTH = 2.2f
+private const val MOCK_CREATE_AVATAR_CHEVRON_HIT_WIDTH = 62f
+private const val MOCK_CREATE_AVATAR_CHEVRON_HIT_HEIGHT = 92f
+private const val MOCK_CREATE_AVATAR_DRAG_COMMIT_PROGRESS = 0.24f
+private const val MOCK_CREATE_AVATAR_BUBBLE_INNER_INSET_RATIO = 0.105f
+private const val MOCK_FORM_TITLE_TEXT_SIZE = 33f
+private const val MOCK_FORM_TITLE_BASELINE_GAP = 24f
+private const val MOCK_REMEMBER_ME_TEXT = "Remember me"
+private const val MOCK_REMEMBER_ME_TOP_GAP = 24f
+private const val MOCK_REMEMBER_ME_BOX_SIZE = 22f
+private const val MOCK_REMEMBER_ME_BOX_RADIUS = 5f
+private const val MOCK_REMEMBER_ME_LABEL_GAP = 12f
+private const val MOCK_REMEMBER_ME_TEXT_SIZE = 18f
+private const val MOCK_REMEMBER_ME_HIT_TOP_PADDING = 11f
+private const val MOCK_REMEMBER_ME_HIT_HEIGHT = 44f
+private const val MOCK_BACK_CHEVRON_TOP_GAP = 50f
+private const val MOCK_BACK_CHEVRON_WIDTH = 112f
+private const val MOCK_BACK_CHEVRON_HEIGHT = 20f
+private const val MOCK_BACK_CHEVRON_STROKE_WIDTH = 3.9375f
+private const val MOCK_BACK_CHEVRON_HIT_WIDTH = 168f
+private const val MOCK_BACK_CHEVRON_HIT_HEIGHT = 70f
+private const val MOCK_BACK_DRAG_THRESHOLD = 64f
 private const val LOGO_FINAL_TOP = 11f
 private const val LOGO_FINAL_HEIGHT = 428f
 private const val LOGO_FINAL_CENTER_Y = LOGO_FINAL_TOP + LOGO_FINAL_HEIGHT / 2f
 private const val MOCK_FORM_STACK_HEIGHT = MOCK_FORM_FIELD_HEIGHT * 2f + MOCK_FORM_FIELD_GAP
 private const val MOCK_FORM_STACK_CENTER_Y = MOCK_FORM_Y + MOCK_FORM_STACK_HEIGHT / 2f
 private const val MOCK_FORM_FOCUS_SHIFT_Y = LOGO_FINAL_CENTER_Y - MOCK_FORM_STACK_CENTER_Y
+private const val MOCK_FORM_LANDSCAPE_FOCUS_FIRST_FIELD_Y = MOCK_FORM_TITLE_BASELINE_GAP + MOCK_FORM_TITLE_TEXT_SIZE
+private const val MOCK_FORM_LANDSCAPE_FOCUS_SHIFT_Y = MOCK_FORM_LANDSCAPE_FOCUS_FIRST_FIELD_Y - MOCK_FORM_Y
 
 private val FINAL_AVATAR_TARGETS = listOf(
     AvatarTarget(CinerificProfile.Steve, Bounds(152f, 450f, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE)),
@@ -120,12 +194,17 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private val martinAvatar = decode(R.drawable.martin_avatar_bubble_edge50_body0_test)
     private val jannyAvatar = decode(R.drawable.janny_avatar_bubble_edge50_body0_test)
     private val guestAvatar = decode(R.drawable.guest_avatar_bubble_edge50_body0_test)
+    private val createAvatarBubbleShell = createAvatarBubbleShellBitmap(steveAvatar)
+    private val steveCreateAvatarCharacter = createAvatarCharacterBitmap(steveAvatar)
+    private val martinCreateAvatarCharacter = createAvatarCharacterBitmap(martinAvatar)
+    private val jannyCreateAvatarCharacter = createAvatarCharacterBitmap(jannyAvatar)
     private val steveName = decode(R.drawable.steve_name)
     private val martinName = decode(R.drawable.martin_name)
     private val jannyName = decode(R.drawable.janny_name)
     private val guestName = decode(R.drawable.guest_name)
     private val standardLandscapeBackground = decode(R.drawable.signin_background_standard_landscape)
     private val standardPortraitBackground = decode(R.drawable.signin_background_standard_portrait)
+    private val touchSlop = ViewConfiguration.get(context).scaledTouchSlop.toFloat()
 
     private val imagePaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG or Paint.DITHER_FLAG)
     private val backgroundPaint = Paint()
@@ -133,13 +212,6 @@ internal class CinerificIntroView(context: Context) : View(context) {
         color = Color.WHITE
         textAlign = Paint.Align.CENTER
         typeface = ResourcesCompat.getFont(context, R.font.manrope)
-    }
-    private val accountPromptBoldPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.SUBPIXEL_TEXT_FLAG).apply {
-        color = Color.WHITE
-        isFakeBoldText = true
-        style = Paint.Style.FILL_AND_STROKE
-        textAlign = Paint.Align.CENTER
-        typeface = Typeface.create(ResourcesCompat.getFont(context, R.font.manrope), Typeface.BOLD)
     }
     private val formLabelPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.SUBPIXEL_TEXT_FLAG).apply {
         color = Color.WHITE
@@ -151,28 +223,99 @@ internal class CinerificIntroView(context: Context) : View(context) {
         textAlign = Paint.Align.LEFT
         typeface = ResourcesCompat.getFont(context, R.font.manrope)
     }
+    private val formTitlePaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.SUBPIXEL_TEXT_FLAG).apply {
+        color = Color.WHITE
+        textAlign = Paint.Align.LEFT
+        typeface = ResourcesCompat.getFont(context, R.font.manrope)
+    }
     private val formCaretPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.WHITE
+    }
+    private val inputDimPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.BLACK
     }
     private val formFieldFillPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val formFieldStrokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
     }
+    private val rememberMeTextPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.SUBPIXEL_TEXT_FLAG).apply {
+        color = Color.WHITE
+        textAlign = Paint.Align.LEFT
+        typeface = ResourcesCompat.getFont(context, R.font.manrope)
+    }
+    private val rememberMeBoxFillPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val rememberMeBoxStrokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+    }
+    private val rememberMeCheckPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.WHITE
+        style = Paint.Style.STROKE
+        strokeCap = Paint.Cap.ROUND
+        strokeJoin = Paint.Join.ROUND
+    }
+    private val backChevronPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.WHITE
+        style = Paint.Style.STROKE
+        strokeCap = Paint.Cap.ROUND
+        strokeJoin = Paint.Join.ROUND
+    }
     private val tempRect = RectF()
+    private val tempPath = Path()
+    private val tempWindowRect = Rect()
     private var pressedAvatarProfile: CinerificProfile? = null
     private var clickAvatarProfile: CinerificProfile? = null
+    private var pressedCreateAccountPrompt = false
     private var pressedSignInPrompt = false
     private var mockSignInStartMillis: Long? = null
+    private var activeMockFlow: MockAccountFlow? = null
+    private var mockSignInTransitionStartProgress = 0f
+    private var mockSignInTransitionTargetProgress = 0f
     private var pressedMockField: MockSignInField? = null
+    private var pressedRememberMe = false
+    private var pressedBackChevron = false
+    private var pressedMockCreateAvatarNav: MockAvatarCarouselDirection? = null
+    private var activeMockCreateAvatarDrag = false
+    private var mockCreateAvatarDragMoved = false
+    private var mockCreateAvatarDragDeltaX = 0f
+    private var pressedMockDropdown: MockDropdown? = null
+    private var pressedMockDropdownOption: MockDropdownOption? = null
+    private var activeMockDropdownScroll: MockDropdown? = null
+    private var mockDropdownScrollStartY = 0f
+    private var mockDropdownScrollStartOffset = 0
+    private var mockDropdownScrollMoved = false
+    private var mockTouchDownX = 0f
+    private var mockTouchDownY = 0f
+    private var mockDragReturnInProgress = false
     private var focusedMockField: MockSignInField? = null
+    private var mockInputDimProgress = 0f
+    private var lastMockInputDimAnimationMillis = SystemClock.uptimeMillis()
+    private var mockInputDimAwaitingField: MockSignInField? = null
+    private var mockInputDimActiveField: MockSignInField? = null
+    private var mockInputDimActiveDropdown: MockDropdown? = null
+    private var rememberMeChecked = false
     private var usernameText = ""
     private var passwordText = ""
+    private var confirmPasswordText = ""
+    private var emailText = ""
+    private var monthText = MOCK_FORM_MONTH_TEXT
+    private var dayText = MOCK_FORM_DAY_TEXT
+    private var yearText = MOCK_FORM_YEAR_TEXT
+    private var subscriptionTierText = MOCK_FORM_SUBSCRIPTION_TIER_TEXT
+    private var mockCreateAvatarIndex = 0
+    private var mockCreateAvatarCarouselStartMillis: Long? = null
+    private var mockCreateAvatarCarouselFromIndex = 0
+    private var mockCreateAvatarCarouselToIndex = 0
+    private var mockCreateAvatarCarouselDirection = MockAvatarCarouselDirection.Next
+    private var mockCreateAvatarCarouselStartProgress = 0f
+    private var expandedMockDropdown: MockDropdown? = null
     private var activeComposingText = ""
-    private var usernameLabelFloatProgress = 0f
-    private var passwordLabelFloatProgress = 0f
+    private val mockFieldLabelFloatProgress = MockSignInField.values().associateWith { 0f }.toMutableMap()
+    private val mockDropdownScrollOffsets = MockDropdown.values().associateWith { 0 }.toMutableMap()
     private var lastFormLabelAnimationMillis = SystemClock.uptimeMillis()
     private var mockFormFocusProgress = 0f
     private var lastFormFocusAnimationMillis = SystemClock.uptimeMillis()
+    private var mockLandscapeInputLiftProgress = 0f
+    private var lastMockLandscapeInputLiftAnimationMillis = SystemClock.uptimeMillis()
 
     init {
         isClickable = true
@@ -189,9 +332,25 @@ internal class CinerificIntroView(context: Context) : View(context) {
         super.onSizeChanged(width, height, oldWidth, oldHeight)
         pressedAvatarProfile = null
         clickAvatarProfile = null
+        pressedCreateAccountPrompt = false
         pressedSignInPrompt = false
         pressedMockField = null
+        pressedRememberMe = false
+        pressedBackChevron = false
+        pressedMockCreateAvatarNav = null
+        activeMockCreateAvatarDrag = false
+        mockCreateAvatarDragMoved = false
+        pressedMockDropdown = null
+        pressedMockDropdownOption = null
+        activeMockDropdownScroll = null
+        mockDropdownScrollMoved = false
+        mockDragReturnInProgress = false
         postInvalidateOnAnimation()
+    }
+
+    override fun onApplyWindowInsets(insets: WindowInsets): WindowInsets {
+        postInvalidateOnAnimation()
+        return super.onApplyWindowInsets(insets)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -207,8 +366,12 @@ internal class CinerificIntroView(context: Context) : View(context) {
         drawIntroBackground(canvas, blackToPurple, purpleToSettle)
 
         val stage = currentStageMetrics() ?: return
+        finishMockSignInTransitionIfNeeded()
+        finishMockCreateAvatarCarouselIfNeeded()
         val mockProgress = mockSignInProgress()
         updateMockFormFocusAnimation()
+        updateMockLandscapeInputLiftAnimation()
+        updateMockInputDimAnimation()
         val formFocusMotion = FastOutSlowInEasing.transform(mockFormFocusProgress)
 
         val logoAlpha = linearSegmentMs(progress, 90, LOGO_ENTRY_START_MS)
@@ -235,11 +398,19 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 drawAccountPrompt(canvas, stage.left, stage.top, stage.scale, y, stackAlpha)
             }
         }
-        if (mockProgress > 0f) {
+        if (mockSignInStartMillis != null) {
             drawMockSignInForm(canvas, stage.left, stage.top, stage.scale, mockMotion, formFocusMotion)
         }
 
-        if (progress < 1f || isMockSignInAnimating() || isMockFormLabelAnimating() || isMockFormFocusAnimating()) {
+        if (
+            progress < 1f ||
+            isMockSignInAnimating() ||
+            isMockFormLabelAnimating() ||
+            isMockFormFocusAnimating() ||
+            isMockLandscapeInputLiftAnimating() ||
+            isMockCreateAvatarCarouselAnimating() ||
+            isMockInputDimAnimating()
+        ) {
             postInvalidateOnAnimation()
         }
     }
@@ -248,38 +419,224 @@ internal class CinerificIntroView(context: Context) : View(context) {
         return when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 if (mockSignInStartMillis != null) {
-                    pressedMockField = mockSignInFieldHit(event.x, event.y)
+                    mockTouchDownX = event.x
+                    mockTouchDownY = event.y
+                    mockDragReturnInProgress = false
+                    mockDropdownScrollMoved = false
+                    val touchedDropdownOptions = mockDropdownOptionsHit(event.x, event.y)
+                    activeMockDropdownScroll = touchedDropdownOptions?.takeIf { mockDropdownCanScroll(it) }
+                    mockDropdownScrollStartY = event.y
+                    mockDropdownScrollStartOffset = activeMockDropdownScroll?.let { mockDropdownScrollOffset(it) } ?: 0
+                    pressedMockDropdownOption = if (touchedDropdownOptions != null) {
+                        mockDropdownOptionHit(event.x, event.y)
+                    } else {
+                        null
+                    }
+                    pressedMockDropdown = if (pressedMockDropdownOption == null && touchedDropdownOptions == null) {
+                        mockDropdownHit(event.x, event.y)
+                    } else {
+                        null
+                    }
+                    val touchedCreateAvatarCarousel = touchedDropdownOptions == null &&
+                        pressedMockDropdownOption == null &&
+                        pressedMockDropdown == null &&
+                        mockCreateAvatarCarouselHit(event.x, event.y) &&
+                        !isMockCreateAvatarCarouselAnimating()
+                    activeMockCreateAvatarDrag = touchedCreateAvatarCarousel
+                    mockCreateAvatarDragMoved = false
+                    mockCreateAvatarDragDeltaX = 0f
+                    pressedMockCreateAvatarNav = if (
+                        touchedDropdownOptions == null &&
+                        pressedMockDropdownOption == null &&
+                        pressedMockDropdown == null &&
+                        touchedCreateAvatarCarousel
+                    ) {
+                        mockCreateAvatarNavHit(event.x, event.y)
+                    } else {
+                        null
+                    }
+                    pressedMockField = if (
+                        touchedDropdownOptions == null &&
+                        pressedMockDropdownOption == null &&
+                        pressedMockDropdown == null &&
+                        pressedMockCreateAvatarNav == null &&
+                        !touchedCreateAvatarCarousel
+                    ) {
+                        mockSignInFieldHit(event.x, event.y)
+                    } else {
+                        null
+                    }
+                    pressedRememberMe = touchedDropdownOptions == null &&
+                        !touchedCreateAvatarCarousel &&
+                        pressedMockField == null &&
+                        mockRememberMeHit(event.x, event.y)
+                    pressedBackChevron = pressedMockField == null &&
+                        touchedDropdownOptions == null &&
+                        !touchedCreateAvatarCarousel &&
+                        !pressedRememberMe &&
+                        pressedMockDropdown == null &&
+                        pressedMockDropdownOption == null &&
+                        pressedMockCreateAvatarNav == null &&
+                        mockBackChevronHit(event.x, event.y)
+                    postInvalidateOnAnimation()
                     return true
                 }
-                pressedSignInPrompt = settledSignInPromptHit(event.x, event.y)
-                pressedAvatarProfile = if (pressedSignInPrompt) {
+                pressedCreateAccountPrompt = settledCreateAccountPromptHit(event.x, event.y)
+                pressedSignInPrompt = !pressedCreateAccountPrompt && settledSignInPromptHit(event.x, event.y)
+                pressedAvatarProfile = if (pressedCreateAccountPrompt || pressedSignInPrompt) {
                     null
                 } else {
                     settledAvatarHitProfile(event.x, event.y)
                 }
-                pressedSignInPrompt || pressedAvatarProfile != null
+                pressedCreateAccountPrompt || pressedSignInPrompt || pressedAvatarProfile != null
             }
-            MotionEvent.ACTION_UP -> {
+            MotionEvent.ACTION_MOVE -> {
                 if (mockSignInStartMillis != null) {
-                    val releasedField = mockSignInFieldHit(event.x, event.y)
-                    val shouldFocusField = releasedField != null &&
-                        (pressedMockField == null || pressedMockField == releasedField)
-                    pressedMockField = null
-                    super.performClick()
-                    if (shouldFocusField && releasedField != null) {
-                        focusMockSignInField(releasedField)
-                    } else {
-                        clearMockSignInFieldFocus()
+                    if (updateMockCreateAvatarDrag(event)) {
+                        return true
+                    }
+                    if (updateMockDropdownScroll(event)) {
+                        return true
+                    }
+                    if (mockDropdownOptionsHit(mockTouchDownX, mockTouchDownY) == null && shouldStartMockDragReturn(event)) {
+                        mockDragReturnInProgress = true
+                        closeMockSignInScreen()
                     }
                     return true
                 }
+                pressedCreateAccountPrompt || pressedSignInPrompt || pressedAvatarProfile != null
+            }
+            MotionEvent.ACTION_UP -> {
+                if (mockDragReturnInProgress) {
+                    mockDragReturnInProgress = false
+                    pressedMockField = null
+                    pressedRememberMe = false
+                    pressedBackChevron = false
+                    pressedMockCreateAvatarNav = null
+                    activeMockCreateAvatarDrag = false
+                    mockCreateAvatarDragMoved = false
+                    mockCreateAvatarDragDeltaX = 0f
+                    pressedMockDropdown = null
+                    pressedMockDropdownOption = null
+                    activeMockDropdownScroll = null
+                    mockDropdownScrollMoved = false
+                    return true
+                }
+                if (mockSignInStartMillis != null) {
+                    val releasedDropdownOption = mockDropdownOptionHit(event.x, event.y)
+                    val releasedDropdown = mockDropdownHit(event.x, event.y)
+                    val releasedField = mockSignInFieldHit(event.x, event.y)
+                    val releasedRememberMe = mockRememberMeHit(event.x, event.y)
+                    val releasedBackChevron = mockBackChevronHit(event.x, event.y)
+                    val releasedCreateAvatarNav = mockCreateAvatarNavHit(event.x, event.y)
+                    val wasTouchingDropdownOptions = activeMockDropdownScroll != null ||
+                        mockDropdownOptionsHit(mockTouchDownX, mockTouchDownY) != null
+                    val wasScrollingDropdown = mockDropdownScrollMoved
+                    val wasPressingRememberMe = pressedRememberMe
+                    val wasPressingBackChevron = pressedBackChevron
+                    val wasDraggingCreateAvatar = activeMockCreateAvatarDrag
+                    val createAvatarDragMoved = mockCreateAvatarDragMoved
+                    val createAvatarDragDirection = mockCreateAvatarDragDirection()
+                    val createAvatarDragProgress = mockCreateAvatarDragProgress()
+                    val pressedDropdown = pressedMockDropdown
+                    val pressedOption = pressedMockDropdownOption
+                    val pressedCreateAvatarNav = pressedMockCreateAvatarNav
+                    val shouldSelectDropdownOption = !wasScrollingDropdown &&
+                        pressedOption != null &&
+                        pressedOption == releasedDropdownOption
+                    val shouldToggleDropdown = pressedDropdown != null && pressedDropdown == releasedDropdown
+                    val shouldToggleRememberMe = wasPressingRememberMe && releasedRememberMe
+                    val shouldCloseMockSignIn = wasPressingBackChevron && releasedBackChevron
+                    val shouldNavigateCreateAvatar = pressedCreateAvatarNav != null &&
+                        !createAvatarDragMoved &&
+                        pressedCreateAvatarNav == releasedCreateAvatarNav
+                    val shouldSwipeCreateAvatar = wasDraggingCreateAvatar &&
+                        createAvatarDragMoved &&
+                        createAvatarDragDirection != null &&
+                        createAvatarDragProgress >= MOCK_CREATE_AVATAR_DRAG_COMMIT_PROGRESS
+                    val shouldFocusField = releasedField != null &&
+                        !wasTouchingDropdownOptions &&
+                        !wasPressingRememberMe &&
+                        !wasPressingBackChevron &&
+                        !wasDraggingCreateAvatar &&
+                        pressedDropdown == null &&
+                        pressedOption == null &&
+                        pressedCreateAvatarNav == null &&
+                        (pressedMockField == null || pressedMockField == releasedField)
+                    pressedMockField = null
+                    pressedRememberMe = false
+                    pressedBackChevron = false
+                    pressedMockCreateAvatarNav = null
+                    activeMockCreateAvatarDrag = false
+                    mockCreateAvatarDragMoved = false
+                    mockCreateAvatarDragDeltaX = 0f
+                    pressedMockDropdown = null
+                    pressedMockDropdownOption = null
+                    activeMockDropdownScroll = null
+                    mockDropdownScrollMoved = false
+                    super.performClick()
+                    if (shouldCloseMockSignIn) {
+                        closeMockSignInScreen()
+                    } else if (shouldSwipeCreateAvatar && createAvatarDragDirection != null) {
+                        expandedMockDropdown = null
+                        clearMockSignInFieldFocus()
+                        startMockCreateAvatarCarousel(createAvatarDragDirection, createAvatarDragProgress)
+                    } else if (shouldNavigateCreateAvatar && pressedCreateAvatarNav != null) {
+                        expandedMockDropdown = null
+                        clearMockSignInFieldFocus()
+                        startMockCreateAvatarCarousel(pressedCreateAvatarNav)
+                    } else if (wasDraggingCreateAvatar) {
+                        postInvalidateOnAnimation()
+                    } else if (shouldSelectDropdownOption && pressedOption != null) {
+                        setMockDropdownValue(pressedOption)
+                        expandedMockDropdown = null
+                        restartMockLandscapeInputLiftAnimation()
+                        restartMockInputDimAnimation()
+                        clearMockSignInFieldFocus()
+                        postInvalidateOnAnimation()
+                    } else if (shouldToggleDropdown && pressedDropdown != null) {
+                        expandedMockDropdown = if (expandedMockDropdown == pressedDropdown) null else pressedDropdown
+                        expandedMockDropdown?.let { prepareMockDropdownScroll(it) }
+                        restartMockLandscapeInputLiftAnimation()
+                        restartMockInputDimAnimation()
+                        clearMockSignInFieldFocus()
+                        postInvalidateOnAnimation()
+                    } else if (shouldToggleRememberMe) {
+                        rememberMeChecked = !rememberMeChecked
+                        postInvalidateOnAnimation()
+                    } else if (shouldFocusField && releasedField != null) {
+                        expandedMockDropdown = null
+                        restartMockLandscapeInputLiftAnimation()
+                        restartMockInputDimAnimation()
+                        focusMockSignInField(releasedField)
+                    } else if (wasTouchingDropdownOptions || wasScrollingDropdown) {
+                        postInvalidateOnAnimation()
+                    } else if (!wasPressingRememberMe && !wasPressingBackChevron) {
+                        if (expandedMockDropdown != null && activeMockFlow == MockAccountFlow.CreateAccount) {
+                            expandedMockDropdown = null
+                            restartMockLandscapeInputLiftAnimation()
+                            restartMockInputDimAnimation()
+                        }
+                        clearMockSignInFieldFocus()
+                    } else {
+                        postInvalidateOnAnimation()
+                    }
+                    return true
+                }
+                val shouldOpenMockCreateAccount = pressedCreateAccountPrompt &&
+                    settledCreateAccountPromptHit(event.x, event.y)
                 val shouldOpenMockSignIn = pressedSignInPrompt && settledSignInPromptHit(event.x, event.y)
                 val releasedAvatarProfile = settledAvatarHitProfile(event.x, event.y)
                 val shouldNavigate = pressedAvatarProfile != null && pressedAvatarProfile == releasedAvatarProfile
                 clickAvatarProfile = pressedAvatarProfile
                 pressedAvatarProfile = null
+                pressedCreateAccountPrompt = false
                 pressedSignInPrompt = false
-                if (shouldOpenMockSignIn) {
+                if (shouldOpenMockCreateAccount) {
+                    super.performClick()
+                    openMockCreateAccountScreen()
+                    true
+                } else if (shouldOpenMockSignIn) {
                     super.performClick()
                     openMockSignInScreen()
                     true
@@ -294,29 +651,48 @@ internal class CinerificIntroView(context: Context) : View(context) {
             MotionEvent.ACTION_CANCEL -> {
                 pressedAvatarProfile = null
                 clickAvatarProfile = null
+                pressedCreateAccountPrompt = false
                 pressedSignInPrompt = false
                 pressedMockField = null
+                pressedRememberMe = false
+                pressedBackChevron = false
+                pressedMockCreateAvatarNav = null
+                activeMockCreateAvatarDrag = false
+                mockCreateAvatarDragMoved = false
+                mockCreateAvatarDragDeltaX = 0f
+                pressedMockDropdown = null
+                pressedMockDropdownOption = null
+                activeMockDropdownScroll = null
+                mockDropdownScrollMoved = false
+                mockDragReturnInProgress = false
                 false
             }
-            else -> pressedSignInPrompt || pressedAvatarProfile != null || mockSignInStartMillis != null
+            else -> pressedCreateAccountPrompt ||
+                pressedSignInPrompt ||
+                pressedAvatarProfile != null ||
+                mockSignInStartMillis != null
         }
     }
 
     override fun onCheckIsTextEditor(): Boolean {
-        return mockSignInStartMillis != null
+        return mockSignInStartMillis != null && !isMockSignInClosing()
     }
 
     override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection? {
         val field = focusedMockField ?: return null
-        outAttrs.inputType = if (field == MockSignInField.Password) {
-            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-        } else {
-            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+        outAttrs.inputType = when (field) {
+            MockSignInField.Password,
+            MockSignInField.ConfirmPassword -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            MockSignInField.Email -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+            MockSignInField.Month,
+            MockSignInField.Day,
+            MockSignInField.Year -> InputType.TYPE_CLASS_NUMBER
+            else -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
         }
-        outAttrs.imeOptions = if (field == MockSignInField.Username) {
-            EditorInfo.IME_ACTION_NEXT
-        } else {
+        outAttrs.imeOptions = if (field == activeMockFields().lastOrNull()) {
             EditorInfo.IME_ACTION_DONE
+        } else {
+            EditorInfo.IME_ACTION_NEXT
         }
         val textLength = mockSignInFieldText(field).length
         outAttrs.initialSelStart = textLength
@@ -452,32 +828,35 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val secondaryTextSize = textSize * ACCOUNT_PROMPT_SECONDARY_TEXT_SCALE
         val paintAlpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
         accountPromptPaint.textSize = secondaryTextSize
-        accountPromptBoldPaint.textSize = textSize
-        accountPromptBoldPaint.strokeWidth = 0.65f * stageScale
+        formTitlePaint.textSize = textSize
         accountPromptPaint.alpha = paintAlpha
-        accountPromptBoldPaint.alpha = paintAlpha
+        formTitlePaint.alpha = paintAlpha
 
         val accountPromptShiftY = if (isLandscape) SIGN_IN_LANDSCAPE_ACCOUNT_PROMPT_EXTRA_SHIFT_Y else 0f
         val centerY = stageTop +
             (ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + accountPromptShiftY + yOffset) * stageScale
         val secondaryMetrics = accountPromptPaint.fontMetrics
-        val primaryMetrics = accountPromptBoldPaint.fontMetrics
+        val primaryMetrics = formTitlePaint.fontMetrics
         val secondaryBaselineY = centerY - (secondaryMetrics.ascent + secondaryMetrics.descent) / 2f
         val primaryBaselineY = centerY - (primaryMetrics.ascent + primaryMetrics.descent) / 2f
-        accountPromptPaint.textAlign = Paint.Align.LEFT
-        canvas.drawText(
-            ACCOUNT_PROMPT_CREATE_TEXT,
-            stageLeft + ACCOUNT_PROMPT_LEFT_ANCHOR_X * stageScale,
-            secondaryBaselineY,
-            accountPromptPaint
-        )
-        accountPromptBoldPaint.textAlign = Paint.Align.CENTER
-        canvas.drawText(
-            ACCOUNT_PROMPT_SIGN_IN_TEXT,
-            stageLeft + ACCOUNT_PROMPT_SIGN_IN_CENTER_X * stageScale,
-            primaryBaselineY,
-            accountPromptBoldPaint
-        )
+        if (activeMockFlow != MockAccountFlow.CreateAccount) {
+            accountPromptPaint.textAlign = Paint.Align.LEFT
+            canvas.drawText(
+                ACCOUNT_PROMPT_CREATE_TEXT,
+                stageLeft + ACCOUNT_PROMPT_LEFT_ANCHOR_X * stageScale,
+                secondaryBaselineY,
+                accountPromptPaint
+            )
+        }
+        if (activeMockFlow != MockAccountFlow.SignIn) {
+            formTitlePaint.textAlign = Paint.Align.CENTER
+            canvas.drawText(
+                ACCOUNT_PROMPT_SIGN_IN_TEXT,
+                stageLeft + ACCOUNT_PROMPT_SIGN_IN_CENTER_X * stageScale,
+                primaryBaselineY,
+                formTitlePaint
+            )
+        }
         accountPromptPaint.textAlign = Paint.Align.RIGHT
         canvas.drawText(
             ACCOUNT_PROMPT_FORGOT_TEXT,
@@ -487,7 +866,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         )
         accountPromptPaint.alpha = 255
         accountPromptPaint.textAlign = Paint.Align.CENTER
-        accountPromptBoldPaint.alpha = 255
+        formTitlePaint.alpha = 255
     }
 
     private fun drawMockSignInForm(
@@ -501,6 +880,11 @@ internal class CinerificIntroView(context: Context) : View(context) {
         updateMockFormLabelAnimation()
 
         val alpha = progress.coerceIn(0f, 1f)
+        if (activeMockFlow == MockAccountFlow.CreateAccount) {
+            drawMockCreateAccountForm(canvas, stageLeft, stageTop, stageScale, alpha, formFocusMotion)
+            return
+        }
+
         val yOffset = MOCK_FORM_ENTRY_Y * (1f - alpha)
         val fieldFillAlpha = (alpha * 26f).roundToInt()
         val fieldStrokeAlpha = (alpha * 185f).roundToInt()
@@ -514,12 +898,613 @@ internal class CinerificIntroView(context: Context) : View(context) {
         formCaretPaint.strokeWidth = 1.45f * stageScale
 
         val focusShiftY = mockFormFocusShiftY(formFocusMotion)
+        val rememberMeY = passwordY + MOCK_FORM_FIELD_HEIGHT + MOCK_REMEMBER_ME_TOP_GAP + focusShiftY
+        drawMockSignInTitle(canvas, fieldX, usernameY + focusShiftY, stageLeft, stageTop, stageScale, alpha)
         drawMockSignInField(canvas, MockSignInField.Username, fieldX, usernameY + focusShiftY, stageLeft, stageTop, stageScale, alpha)
         drawMockSignInField(canvas, MockSignInField.Password, fieldX, passwordY + focusShiftY, stageLeft, stageTop, stageScale, alpha)
+        drawRememberMeCheckbox(
+            canvas,
+            fieldX,
+            rememberMeY,
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha
+        )
+        drawBackChevron(
+            canvas,
+            fieldX + MOCK_FORM_WIDTH / 2f,
+            rememberMeY + MOCK_REMEMBER_ME_BOX_SIZE + MOCK_BACK_CHEVRON_TOP_GAP,
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha
+        )
+        drawMockInputDimOverlayAndActiveControl(
+            canvas,
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha,
+            yOffset,
+            focusShiftY
+        )
 
         formLabelPaint.alpha = 255
         formInputPaint.alpha = 255
+        formTitlePaint.alpha = 255
         formCaretPaint.alpha = 255
+    }
+
+    private fun drawMockCreateAccountForm(
+        canvas: Canvas,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float,
+        formFocusMotion: Float
+    ) {
+        val yOffset = MOCK_FORM_ENTRY_Y * (1f - alpha)
+        val fieldFillAlpha = (alpha * 26f).roundToInt()
+        val fieldStrokeAlpha = (alpha * 185f).roundToInt()
+        val fieldX = mockCreateFormX()
+        val focusShiftY = mockFormFocusShiftY(formFocusMotion)
+
+        formFieldFillPaint.color = Color.argb(fieldFillAlpha, 255, 255, 255)
+        formFieldStrokePaint.color = Color.argb(fieldStrokeAlpha, 255, 255, 255)
+        formFieldStrokePaint.strokeWidth = MOCK_FORM_FIELD_STROKE_WIDTH * stageScale
+        formCaretPaint.strokeWidth = 1.45f * stageScale
+
+        val firstFieldY = MOCK_FORM_Y + yOffset + focusShiftY
+        drawMockCreateAccountTitle(canvas, fieldX, firstFieldY, stageLeft, stageTop, stageScale, alpha)
+        activeMockFields().forEach { field ->
+            drawMockSignInField(
+                canvas,
+                field,
+                mockActiveFieldX(field),
+                mockActiveFieldY(field, yOffset, focusShiftY),
+                stageLeft,
+                stageTop,
+                stageScale,
+                alpha,
+                mockActiveFieldWidth(field)
+            )
+        }
+        drawMockDropdownControl(
+            canvas,
+            MockDropdown.SubscriptionTier,
+            mockDropdownX(MockDropdown.SubscriptionTier),
+            mockDropdownY(MockDropdown.SubscriptionTier, yOffset, focusShiftY),
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha
+        )
+        listOf(MockDropdown.Month, MockDropdown.Day, MockDropdown.Year).forEach { dropdown ->
+            drawMockDropdownControl(
+                canvas,
+                dropdown,
+                mockDropdownX(dropdown),
+                mockDropdownY(dropdown, yOffset, focusShiftY),
+                stageLeft,
+                stageTop,
+                stageScale,
+                alpha,
+                mockDropdownWidth(dropdown)
+            )
+        }
+        drawMockCreateAccountAvatarText(
+            canvas,
+            fieldX + (MOCK_CREATE_FORM_COLUMNS - 1) * (MOCK_FORM_WIDTH + MOCK_CREATE_FORM_COLUMN_GAP),
+            firstFieldY,
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha
+        )
+        drawMockDropdownOptions(canvas, stageLeft, stageTop, stageScale, alpha)
+        drawBackChevron(
+            canvas,
+            fieldX + mockCreateFormWidth() / 2f,
+            firstFieldY + mockCreateFormHeight() + MOCK_BACK_CHEVRON_TOP_GAP,
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha
+        )
+        drawMockInputDimOverlayAndActiveControl(
+            canvas,
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha,
+            yOffset,
+            focusShiftY
+        )
+
+        formLabelPaint.alpha = 255
+        formInputPaint.alpha = 255
+        formTitlePaint.alpha = 255
+        formCaretPaint.alpha = 255
+    }
+
+    private fun drawMockInputDimOverlayAndActiveControl(
+        canvas: Canvas,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float,
+        yOffset: Float,
+        focusShiftY: Float
+    ) {
+        val dimProgress = mockInputDimProgress.coerceIn(0f, 1f)
+        if (dimProgress <= 0.01f) return
+
+        inputDimPaint.alpha = (dimProgress * MOCK_INPUT_DIM_ALPHA * 255f).roundToInt()
+        canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), inputDimPaint)
+        inputDimPaint.alpha = 255
+
+        formFieldFillPaint.color = Color.argb((alpha * 26f).roundToInt(), 255, 255, 255)
+        formFieldStrokePaint.color = Color.argb((alpha * 185f).roundToInt(), 255, 255, 255)
+        formFieldStrokePaint.strokeWidth = MOCK_FORM_FIELD_STROKE_WIDTH * stageScale
+        formCaretPaint.strokeWidth = 1.45f * stageScale
+
+        val activeDropdown = expandedMockDropdown ?: mockInputDimActiveDropdown
+        if (activeDropdown != null && activeMockFlow == MockAccountFlow.CreateAccount) {
+            drawMockDropdownControl(
+                canvas,
+                activeDropdown,
+                mockDropdownX(activeDropdown),
+                mockDropdownY(activeDropdown, yOffset, focusShiftY),
+                stageLeft,
+                stageTop,
+                stageScale,
+                alpha,
+                mockDropdownWidth(activeDropdown)
+            )
+            if (expandedMockDropdown == activeDropdown) {
+                drawMockDropdownOptions(canvas, stageLeft, stageTop, stageScale, alpha)
+            }
+            return
+        }
+
+        val activeField = focusedMockField ?: mockInputDimActiveField ?: return
+        drawMockSignInField(
+            canvas,
+            activeField,
+            mockActiveFieldX(activeField),
+            mockActiveFieldY(activeField, yOffset, focusShiftY),
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha,
+            mockActiveFieldWidth(activeField)
+        )
+    }
+
+    private fun drawMockSignInTitle(
+        canvas: Canvas,
+        x: Float,
+        fieldTopY: Float,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float
+    ) {
+        val motion = alpha.coerceIn(0f, 1f)
+        val sourceTextSize = signInAccountPromptTextSize() * stageScale
+        val targetTextSize = MOCK_FORM_TITLE_TEXT_SIZE * stageScale
+        val sourceCenterX = stageLeft + ACCOUNT_PROMPT_SIGN_IN_CENTER_X * stageScale
+        val targetCenterX = stageLeft + (x + MOCK_FORM_WIDTH / 2f) * stageScale
+        val sourceCenterY = stageTop +
+            (ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + signInAccountPromptExtraShiftY()) * stageScale
+        formTitlePaint.textSize = sourceTextSize
+        val sourceMetrics = formTitlePaint.fontMetrics
+        val sourceBaselineY = sourceCenterY - (sourceMetrics.ascent + sourceMetrics.descent) / 2f
+        val targetBaselineY = stageTop + (fieldTopY - MOCK_FORM_TITLE_BASELINE_GAP) * stageScale
+
+        formTitlePaint.textSize = lerpFloat(sourceTextSize, targetTextSize, motion)
+        formTitlePaint.alpha = 255
+        formTitlePaint.textAlign = Paint.Align.CENTER
+        canvas.drawText(
+            ACCOUNT_PROMPT_SIGN_IN_TEXT,
+            lerpFloat(sourceCenterX, targetCenterX, motion),
+            lerpFloat(sourceBaselineY, targetBaselineY, motion),
+            formTitlePaint
+        )
+    }
+
+    private fun drawMockCreateAccountTitle(
+        canvas: Canvas,
+        x: Float,
+        fieldTopY: Float,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float
+    ) {
+        val motion = alpha.coerceIn(0f, 1f)
+        val sourceTextSize = signInAccountPromptTextSize() * ACCOUNT_PROMPT_SECONDARY_TEXT_SCALE * stageScale
+        val targetTextSize = MOCK_FORM_TITLE_TEXT_SIZE * stageScale
+        val sourceX = stageLeft + ACCOUNT_PROMPT_LEFT_ANCHOR_X * stageScale
+        val targetX = stageLeft + x * stageScale
+        val sourceCenterY = stageTop +
+            (ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + signInAccountPromptExtraShiftY()) * stageScale
+        formTitlePaint.textSize = sourceTextSize
+        val sourceMetrics = formTitlePaint.fontMetrics
+        val sourceBaselineY = sourceCenterY - (sourceMetrics.ascent + sourceMetrics.descent) / 2f
+        val targetBaselineY = stageTop + (fieldTopY - MOCK_FORM_TITLE_BASELINE_GAP) * stageScale
+
+        formTitlePaint.textSize = lerpFloat(sourceTextSize, targetTextSize, motion)
+        formTitlePaint.alpha = 255
+        formTitlePaint.textAlign = Paint.Align.LEFT
+        canvas.drawText(
+            ACCOUNT_PROMPT_CREATE_TEXT,
+            lerpFloat(sourceX, targetX, motion),
+            lerpFloat(sourceBaselineY, targetBaselineY, motion),
+            formTitlePaint
+        )
+    }
+
+    private fun drawMockCreateAccountAvatarText(
+        canvas: Canvas,
+        columnX: Float,
+        firstFieldY: Float,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float
+    ) {
+        val avatarScale = MOCK_CREATE_AVATAR_STACK_SCALE
+        val scaledAvatarSize = MOCK_CREATE_AVATAR_SIZE * avatarScale
+        val labelBaselineFromTop = MOCK_CREATE_AVATAR_LABEL_BASELINE_FROM_TOP * avatarScale
+        val avatarTopGap = MOCK_CREATE_AVATAR_TOP_GAP * avatarScale
+        val centerX = stageLeft + (columnX + MOCK_FORM_WIDTH / 2f) * stageScale
+        val baselineY = stageTop + (firstFieldY + labelBaselineFromTop) * stageScale
+        formLabelPaint.textSize = MOCK_FORM_LABEL_TEXT_SIZE * avatarScale * stageScale
+        formLabelPaint.alpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
+        formLabelPaint.textAlign = Paint.Align.CENTER
+        canvas.drawText(
+            MOCK_FORM_AVATAR_TEXT,
+            centerX,
+            baselineY,
+            formLabelPaint
+        )
+
+        val avatarLeftX = columnX + (MOCK_FORM_WIDTH - scaledAvatarSize) / 2f
+        val avatarTopY = firstFieldY + labelBaselineFromTop + avatarTopGap
+        val avatarBounds = Bounds(
+            avatarLeftX,
+            avatarTopY,
+            scaledAvatarSize,
+            scaledAvatarSize
+        )
+        val carouselProgress = mockCreateAvatarCarouselProgress()
+        val slideDirection = mockCreateAvatarCarouselDirection.stageDirection
+        val slideDistance = mockCreateAvatarSlideDistance(scaledAvatarSize)
+        val dragDirection = mockCreateAvatarDragDirection()
+        val dragProgress = mockCreateAvatarDragProgress(slideDistance, stageScale)
+
+        drawMockCreateAvatarBubbleShell(canvas, avatarBounds, stageLeft, stageTop, stageScale, alpha)
+
+        canvas.save()
+        clipMockCreateAvatarBubbleInterior(canvas, avatarBounds, stageLeft, stageTop, stageScale)
+        if (
+            activeMockCreateAvatarDrag &&
+            mockCreateAvatarDragMoved &&
+            dragDirection != null &&
+            !isMockCreateAvatarCarouselAnimating()
+        ) {
+            val dragSlideDirection = dragDirection.stageDirection
+            drawMockCreateAvatarBitmap(
+                canvas,
+                mockCreateAvatarIndex,
+                avatarBounds,
+                -dragSlideDirection * dragProgress * slideDistance,
+                stageLeft,
+                stageTop,
+                stageScale,
+                alpha
+            )
+            drawMockCreateAvatarBitmap(
+                canvas,
+                mockCreateAvatarIndexForDirection(dragDirection),
+                avatarBounds,
+                dragSlideDirection * (1f - dragProgress) * slideDistance,
+                stageLeft,
+                stageTop,
+                stageScale,
+                alpha
+            )
+        } else if (isMockCreateAvatarCarouselAnimating()) {
+            drawMockCreateAvatarBitmap(
+                canvas,
+                mockCreateAvatarCarouselFromIndex,
+                avatarBounds,
+                -slideDirection * carouselProgress * slideDistance,
+                stageLeft,
+                stageTop,
+                stageScale,
+                alpha
+            )
+            drawMockCreateAvatarBitmap(
+                canvas,
+                mockCreateAvatarCarouselToIndex,
+                avatarBounds,
+                slideDirection * (1f - carouselProgress) * slideDistance,
+                stageLeft,
+                stageTop,
+                stageScale,
+                alpha
+            )
+        } else {
+            drawMockCreateAvatarBitmap(
+                canvas,
+                mockCreateAvatarIndex,
+                avatarBounds,
+                0f,
+                stageLeft,
+                stageTop,
+                stageScale,
+                alpha
+            )
+        }
+        canvas.restore()
+        drawMockCreateAvatarChevron(
+            canvas,
+            MockAvatarCarouselDirection.Previous,
+            avatarBounds,
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha
+        )
+        drawMockCreateAvatarChevron(
+            canvas,
+            MockAvatarCarouselDirection.Next,
+            avatarBounds,
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha
+        )
+    }
+
+    private fun drawMockCreateAvatarBitmap(
+        canvas: Canvas,
+        avatarIndex: Int,
+        bounds: Bounds,
+        offsetX: Float,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float
+    ) {
+        drawFigmaBitmap(
+            canvas,
+            mockCreateAvatarBitmap(avatarIndex),
+            Bounds(bounds.x + offsetX, bounds.y, bounds.w, bounds.h),
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha
+        )
+    }
+
+    private fun drawMockCreateAvatarBubbleShell(
+        canvas: Canvas,
+        avatarBounds: Bounds,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float
+    ) {
+        drawFigmaBitmap(
+            canvas,
+            createAvatarBubbleShell,
+            avatarBounds,
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha
+        )
+    }
+
+    private fun clipMockCreateAvatarBubbleInterior(
+        canvas: Canvas,
+        avatarBounds: Bounds,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float
+    ) {
+        tempPath.reset()
+        tempPath.addCircle(
+            stageLeft + (avatarBounds.x + avatarBounds.w / 2f) * stageScale,
+            stageTop + (avatarBounds.y + avatarBounds.h / 2f) * stageScale,
+            mockCreateAvatarBubbleInnerRadius(avatarBounds, stageScale),
+            Path.Direction.CW
+        )
+        canvas.clipPath(tempPath)
+    }
+
+    private fun mockCreateAvatarBubbleInnerRadius(avatarBounds: Bounds, stageScale: Float): Float {
+        return (avatarBounds.w / 2f - avatarBounds.w * MOCK_CREATE_AVATAR_BUBBLE_INNER_INSET_RATIO) * stageScale
+    }
+
+    private fun drawMockCreateAvatarChevron(
+        canvas: Canvas,
+        direction: MockAvatarCarouselDirection,
+        avatarBounds: Bounds,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float
+    ) {
+        val centerX = stageLeft + mockCreateAvatarChevronCenterX(direction, avatarBounds) * stageScale
+        val centerY = stageTop + mockCreateAvatarChevronCenterY(avatarBounds) * stageScale
+        val halfWidth = MOCK_CREATE_AVATAR_CHEVRON_WIDTH * stageScale / 2f
+        val halfHeight = MOCK_CREATE_AVATAR_CHEVRON_HEIGHT * stageScale / 2f
+        val pressedAlpha = if (pressedMockCreateAvatarNav == direction) 0.62f else 0.9f
+        backChevronPaint.alpha = (alpha.coerceIn(0f, 1f) * pressedAlpha * 255f).roundToInt()
+        backChevronPaint.strokeWidth = MOCK_CREATE_AVATAR_CHEVRON_STROKE_WIDTH * stageScale
+
+        if (direction == MockAvatarCarouselDirection.Previous) {
+            canvas.drawLine(centerX + halfWidth, centerY - halfHeight, centerX - halfWidth, centerY, backChevronPaint)
+            canvas.drawLine(centerX - halfWidth, centerY, centerX + halfWidth, centerY + halfHeight, backChevronPaint)
+        } else {
+            canvas.drawLine(centerX - halfWidth, centerY - halfHeight, centerX + halfWidth, centerY, backChevronPaint)
+            canvas.drawLine(centerX + halfWidth, centerY, centerX - halfWidth, centerY + halfHeight, backChevronPaint)
+        }
+        backChevronPaint.alpha = 255
+    }
+
+    private fun drawMockDropdownControl(
+        canvas: Canvas,
+        dropdown: MockDropdown,
+        x: Float,
+        y: Float,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float,
+        dropdownWidth: Float = MOCK_FORM_WIDTH
+    ) {
+        tempRect.set(
+            stageLeft + x * stageScale,
+            stageTop + y * stageScale,
+            stageLeft + (x + dropdownWidth) * stageScale,
+            stageTop + (y + MOCK_FORM_FIELD_HEIGHT) * stageScale
+        )
+        val radius = MOCK_FORM_FIELD_RADIUS * stageScale
+        canvas.drawRoundRect(tempRect, radius, radius, formFieldFillPaint)
+        canvas.drawRoundRect(tempRect, radius, radius, formFieldStrokePaint)
+
+        val textAlpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
+        formInputPaint.textSize = mockDropdownTextSize(dropdown) * stageScale
+        formInputPaint.alpha = textAlpha
+        formInputPaint.textAlign = Paint.Align.LEFT
+        val textInset = mockDropdownTextInsetX(dropdown) * stageScale
+        val chevronInset = mockDropdownChevronInsetX(dropdown) * stageScale
+        val maxTextWidth = (dropdownWidth * stageScale - textInset - chevronInset * 2f).coerceAtLeast(0f)
+        canvas.drawText(
+            trailingFittingText(mockDropdownDisplayText(dropdown), maxTextWidth, formInputPaint),
+            tempRect.left + textInset,
+            tempRect.centerY() - (formInputPaint.fontMetrics.ascent + formInputPaint.fontMetrics.descent) / 2f,
+            formInputPaint
+        )
+
+        val centerX = tempRect.right - chevronInset
+        val centerY = tempRect.centerY() + 2f * stageScale
+        val halfSize = mockDropdownChevronSize(dropdown) * stageScale / 2f
+        backChevronPaint.alpha = textAlpha
+        backChevronPaint.strokeWidth = 1.65f * stageScale
+        canvas.drawLine(centerX - halfSize, centerY - halfSize / 2f, centerX, centerY + halfSize / 2f, backChevronPaint)
+        canvas.drawLine(centerX, centerY + halfSize / 2f, centerX + halfSize, centerY - halfSize / 2f, backChevronPaint)
+        backChevronPaint.alpha = 255
+    }
+
+    private fun drawMockDropdownOptions(
+        canvas: Canvas,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float
+    ) {
+        val dropdown = expandedMockDropdown ?: return
+        if (activeMockFlow != MockAccountFlow.CreateAccount) return
+
+        val x = mockDropdownX(dropdown)
+        val y = mockDropdownOptionsY(
+            dropdown,
+            MOCK_FORM_ENTRY_Y * (1f - alpha),
+            mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
+        )
+        val left = stageLeft + x * stageScale
+        val top = stageTop + y * stageScale
+        val right = stageLeft + (x + mockDropdownWidth(dropdown)) * stageScale
+        val optionHeight = mockDropdownOptionHeight(dropdown) * stageScale
+        val optionAlpha = 255
+        val optionTextInset = mockDropdownOptionTextInsetX(dropdown) * stageScale
+        val scrollbarReservedWidth = if (mockDropdownCanScroll(dropdown)) {
+            (MOCK_DATE_DROPDOWN_SCROLLBAR_WIDTH + MOCK_DATE_DROPDOWN_SCROLLBAR_INSET_X * 2f) * stageScale
+        } else {
+            0f
+        }
+        val maxTextWidth = (right - left - optionTextInset - scrollbarReservedWidth).coerceAtLeast(0f)
+
+        val visibleOptions = mockDropdownVisibleOptions(dropdown)
+        visibleOptions.forEachIndexed { index, option ->
+            val optionTop = top + index * optionHeight
+            val optionBottom = optionTop + optionHeight
+            val fillColor = if (option == mockDropdownSelectedValue(dropdown)) {
+                Color.argb(optionAlpha, 76, 12, 94)
+            } else {
+                Color.argb(optionAlpha, 14, 2, 18)
+            }
+            tempRect.set(left, optionTop, right, optionBottom)
+            formFieldFillPaint.color = fillColor
+            formFieldStrokePaint.color = Color.argb(optionAlpha, 255, 255, 255)
+            formFieldStrokePaint.strokeWidth = 1.2f * stageScale
+            canvas.drawRect(tempRect, formFieldFillPaint)
+            canvas.drawRect(tempRect, formFieldStrokePaint)
+
+            formInputPaint.textSize = mockDropdownOptionTextSize(dropdown) * stageScale
+            formInputPaint.alpha = optionAlpha
+            formInputPaint.textAlign = Paint.Align.LEFT
+            val metrics = formInputPaint.fontMetrics
+            canvas.drawText(
+                trailingFittingText(option, maxTextWidth, formInputPaint),
+                left + optionTextInset,
+                (optionTop + optionBottom) / 2f - (metrics.ascent + metrics.descent) / 2f,
+                formInputPaint
+            )
+        }
+
+        if (mockDropdownCanScroll(dropdown)) {
+            drawMockDropdownScrollbar(
+                canvas,
+                dropdown,
+                top,
+                right,
+                optionHeight * visibleOptions.size,
+                stageScale,
+                optionAlpha
+            )
+        }
+    }
+
+    private fun drawMockDropdownScrollbar(
+        canvas: Canvas,
+        dropdown: MockDropdown,
+        top: Float,
+        right: Float,
+        dropdownHeight: Float,
+        stageScale: Float,
+        alpha: Int
+    ) {
+        val options = mockDropdownOptions(dropdown)
+        val visibleCount = mockDropdownVisibleOptionCount(dropdown)
+        val maxOffset = mockDropdownMaxScrollOffset(dropdown)
+        if (options.isEmpty() || maxOffset <= 0) return
+
+        val trackRight = right - MOCK_DATE_DROPDOWN_SCROLLBAR_INSET_X * stageScale
+        val trackLeft = trackRight - MOCK_DATE_DROPDOWN_SCROLLBAR_WIDTH * stageScale
+        val trackTop = top + MOCK_DATE_DROPDOWN_SCROLLBAR_INSET_Y * stageScale
+        val trackBottom = top + dropdownHeight - MOCK_DATE_DROPDOWN_SCROLLBAR_INSET_Y * stageScale
+        val trackHeight = (trackBottom - trackTop).coerceAtLeast(0f)
+        val thumbHeight = maxOf(14f * stageScale, trackHeight * visibleCount / options.size)
+            .coerceAtMost(trackHeight)
+        val thumbProgress = mockDropdownScrollOffset(dropdown) / maxOffset.toFloat()
+        val thumbTop = trackTop + (trackHeight - thumbHeight) * thumbProgress
+        val radius = MOCK_DATE_DROPDOWN_SCROLLBAR_WIDTH * stageScale / 2f
+
+        tempRect.set(trackLeft, trackTop, trackRight, trackBottom)
+        formFieldFillPaint.color = Color.argb((alpha * 0.28f).roundToInt(), 255, 255, 255)
+        canvas.drawRoundRect(tempRect, radius, radius, formFieldFillPaint)
+
+        tempRect.set(trackLeft, thumbTop, trackRight, thumbTop + thumbHeight)
+        formFieldFillPaint.color = Color.argb((alpha * 0.78f).roundToInt(), 255, 255, 255)
+        canvas.drawRoundRect(tempRect, radius, radius, formFieldFillPaint)
     }
 
     private fun drawMockSignInField(
@@ -530,12 +1515,13 @@ internal class CinerificIntroView(context: Context) : View(context) {
         stageLeft: Float,
         stageTop: Float,
         stageScale: Float,
-        alpha: Float
+        alpha: Float,
+        fieldWidth: Float = MOCK_FORM_WIDTH
     ) {
         tempRect.set(
             stageLeft + x * stageScale,
             stageTop + y * stageScale,
-            stageLeft + (x + MOCK_FORM_WIDTH) * stageScale,
+            stageLeft + (x + fieldWidth) * stageScale,
             stageTop + (y + MOCK_FORM_FIELD_HEIGHT) * stageScale
         )
         val radius = MOCK_FORM_FIELD_RADIUS * stageScale
@@ -578,7 +1564,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
             val inputX = tempRect.left + MOCK_FORM_LABEL_INSET_X * stageScale
             val inputBaselineY = tempRect.top + MOCK_FORM_INPUT_BASELINE_FROM_TOP * stageScale
-            val maxInputWidth = MOCK_FORM_WIDTH * stageScale - MOCK_FORM_LABEL_INSET_X * stageScale * 2f
+            val maxInputWidth = fieldWidth * stageScale - MOCK_FORM_LABEL_INSET_X * stageScale * 2f
             val visibleText = trailingFittingText(fieldText, maxInputWidth, formInputPaint)
             canvas.drawText(visibleText, inputX, inputBaselineY, formInputPaint)
 
@@ -596,8 +1582,183 @@ internal class CinerificIntroView(context: Context) : View(context) {
         }
     }
 
+    private fun drawRememberMeCheckbox(
+        canvas: Canvas,
+        x: Float,
+        y: Float,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float
+    ) {
+        val paintAlpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
+        val boxLeft = stageLeft + x * stageScale
+        val boxTop = stageTop + y * stageScale
+        val boxRight = boxLeft + MOCK_REMEMBER_ME_BOX_SIZE * stageScale
+        val boxBottom = boxTop + MOCK_REMEMBER_ME_BOX_SIZE * stageScale
+        val fillAlpha = (alpha * if (rememberMeChecked || pressedRememberMe) 46f else 18f).roundToInt()
+        val strokeAlpha = (alpha * if (rememberMeChecked) 220f else 168f).roundToInt()
+
+        rememberMeBoxFillPaint.color = Color.argb(fillAlpha, 255, 255, 255)
+        rememberMeBoxStrokePaint.color = Color.argb(strokeAlpha, 255, 255, 255)
+        rememberMeBoxStrokePaint.strokeWidth = 1.7f * stageScale
+        tempRect.set(boxLeft, boxTop, boxRight, boxBottom)
+        val radius = MOCK_REMEMBER_ME_BOX_RADIUS * stageScale
+        canvas.drawRoundRect(tempRect, radius, radius, rememberMeBoxFillPaint)
+        canvas.drawRoundRect(tempRect, radius, radius, rememberMeBoxStrokePaint)
+
+        if (rememberMeChecked) {
+            rememberMeCheckPaint.alpha = paintAlpha
+            rememberMeCheckPaint.strokeWidth = 2.45f * stageScale
+            canvas.drawLine(
+                boxLeft + 5.3f * stageScale,
+                boxTop + 11.8f * stageScale,
+                boxLeft + 9.1f * stageScale,
+                boxTop + 15.8f * stageScale,
+                rememberMeCheckPaint
+            )
+            canvas.drawLine(
+                boxLeft + 9.1f * stageScale,
+                boxTop + 15.8f * stageScale,
+                boxLeft + 17.2f * stageScale,
+                boxTop + 6.9f * stageScale,
+                rememberMeCheckPaint
+            )
+            rememberMeCheckPaint.alpha = 255
+        }
+
+        rememberMeTextPaint.textSize = MOCK_REMEMBER_ME_TEXT_SIZE * stageScale
+        rememberMeTextPaint.alpha = paintAlpha
+        rememberMeTextPaint.textAlign = Paint.Align.LEFT
+        val metrics = rememberMeTextPaint.fontMetrics
+        val baselineY = (boxTop + boxBottom) / 2f - (metrics.ascent + metrics.descent) / 2f
+        canvas.drawText(
+            MOCK_REMEMBER_ME_TEXT,
+            boxRight + MOCK_REMEMBER_ME_LABEL_GAP * stageScale,
+            baselineY,
+            rememberMeTextPaint
+        )
+        rememberMeTextPaint.alpha = 255
+    }
+
+    private fun drawBackChevron(
+        canvas: Canvas,
+        centerX: Float,
+        topY: Float,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float
+    ) {
+        val chevronAlpha = alpha.coerceIn(0f, 1f) * if (pressedBackChevron) 0.68f else 0.92f
+        val center = stageLeft + centerX * stageScale
+        val top = stageTop + topY * stageScale
+        val bottom = top + MOCK_BACK_CHEVRON_HEIGHT * stageScale
+        val halfWidth = MOCK_BACK_CHEVRON_WIDTH * stageScale / 2f
+
+        backChevronPaint.alpha = (chevronAlpha * 255f).roundToInt()
+        backChevronPaint.strokeWidth = MOCK_BACK_CHEVRON_STROKE_WIDTH * stageScale
+        canvas.drawLine(center - halfWidth, top, center, bottom, backChevronPaint)
+        canvas.drawLine(center, bottom, center + halfWidth, top, backChevronPaint)
+        backChevronPaint.alpha = 255
+    }
+
     private fun decode(resId: Int): Bitmap {
         return BitmapFactory.decodeResource(resources, resId, bitmapOptions)
+    }
+
+    private fun createAvatarCharacterBitmap(source: Bitmap): Bitmap {
+        val bitmapWidth = source.width
+        val bitmapHeight = source.height
+        val pixels = IntArray(bitmapWidth * bitmapHeight)
+        source.getPixels(pixels, 0, bitmapWidth, 0, 0, bitmapWidth, bitmapHeight)
+
+        val mask = createAvatarCharacterMask(pixels, bitmapWidth, bitmapHeight)
+        val outputPixels = IntArray(pixels.size) { index ->
+            if (mask[index]) pixels[index] else Color.TRANSPARENT
+        }
+        return Bitmap.createBitmap(bitmapWidth, bitmapHeight, Bitmap.Config.ARGB_8888).apply {
+            setPixels(outputPixels, 0, bitmapWidth, 0, 0, bitmapWidth, bitmapHeight)
+        }
+    }
+
+    private fun createAvatarBubbleShellBitmap(source: Bitmap): Bitmap {
+        val bitmapWidth = source.width
+        val bitmapHeight = source.height
+        val pixels = IntArray(bitmapWidth * bitmapHeight)
+        source.getPixels(pixels, 0, bitmapWidth, 0, 0, bitmapWidth, bitmapHeight)
+
+        val centerX = (bitmapWidth - 1f) / 2f
+        val centerY = (bitmapHeight - 1f) / 2f
+        val innerRadius = min(bitmapWidth, bitmapHeight) * (0.5f - MOCK_CREATE_AVATAR_BUBBLE_INNER_INSET_RATIO)
+        val innerRadiusSquared = innerRadius * innerRadius
+
+        val outputPixels = IntArray(pixels.size) { index ->
+            val x = index % bitmapWidth
+            val y = index / bitmapWidth
+            val dx = x - centerX
+            val dy = y - centerY
+            if (dx * dx + dy * dy < innerRadiusSquared) {
+                Color.TRANSPARENT
+            } else {
+                pixels[index]
+            }
+        }
+        return Bitmap.createBitmap(bitmapWidth, bitmapHeight, Bitmap.Config.ARGB_8888).apply {
+            setPixels(outputPixels, 0, bitmapWidth, 0, 0, bitmapWidth, bitmapHeight)
+        }
+    }
+
+    private fun createAvatarCharacterMask(
+        pixels: IntArray,
+        bitmapWidth: Int,
+        bitmapHeight: Int
+    ): BooleanArray {
+        val coloredPixels = BooleanArray(pixels.size)
+        pixels.forEachIndexed { index, pixel ->
+            coloredPixels[index] = isColorfulAvatarPixel(pixel)
+        }
+
+        val mask = BooleanArray(pixels.size)
+        val outlineRadius = 7
+        for (y in 0 until bitmapHeight) {
+            for (x in 0 until bitmapWidth) {
+                val index = y * bitmapWidth + x
+                if (!coloredPixels[index]) continue
+
+                mask[index] = true
+                for (dy in -outlineRadius..outlineRadius) {
+                    val sampleY = y + dy
+                    if (sampleY !in 0 until bitmapHeight) continue
+                    for (dx in -outlineRadius..outlineRadius) {
+                        val sampleX = x + dx
+                        if (sampleX !in 0 until bitmapWidth) continue
+                        val sampleIndex = sampleY * bitmapWidth + sampleX
+                        val samplePixel = pixels[sampleIndex]
+                        val sampleAlpha = Color.alpha(samplePixel)
+                        val sampleMax = maxOf(
+                            Color.red(samplePixel),
+                            Color.green(samplePixel),
+                            Color.blue(samplePixel)
+                        )
+                        if (sampleAlpha > 16 && sampleMax <= 44) {
+                            mask[sampleIndex] = true
+                        }
+                    }
+                }
+            }
+        }
+        return mask
+    }
+
+    private fun isColorfulAvatarPixel(pixel: Int): Boolean {
+        val alpha = Color.alpha(pixel)
+        val red = Color.red(pixel)
+        val green = Color.green(pixel)
+        val blue = Color.blue(pixel)
+        val channelMax = maxOf(red, green, blue)
+        val channelMin = minOf(red, green, blue)
+        return alpha > 16 && channelMax > 48 && channelMax - channelMin > 22
     }
 
     private fun standardSignInBackgroundForSize(): Bitmap? {
@@ -636,6 +1797,18 @@ internal class CinerificIntroView(context: Context) : View(context) {
         }?.profile
     }
 
+    private fun settledCreateAccountPromptHit(x: Float, y: Float): Boolean {
+        if (mockSignInStartMillis != null || !isFinalFrameSettled()) return false
+
+        val stage = currentStageMetrics() ?: return false
+        val left = stage.left + ACCOUNT_PROMPT_LEFT_ANCHOR_X * stage.scale
+        val centerY = stage.top +
+            (ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + signInAccountPromptExtraShiftY()) * stage.scale
+        val right = left + ACCOUNT_PROMPT_CREATE_HIT_WIDTH * stage.scale
+        val halfHeight = ACCOUNT_PROMPT_CREATE_HIT_HEIGHT * stage.scale / 2f
+        return x in left..right && y in (centerY - halfHeight)..(centerY + halfHeight)
+    }
+
     private fun settledSignInPromptHit(x: Float, y: Float): Boolean {
         if (mockSignInStartMillis != null || !isFinalFrameSettled()) return false
 
@@ -656,14 +1829,209 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val progress = FastOutSlowInEasing.transform(mockSignInProgress())
         val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
         val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
+        return activeMockFields().firstOrNull { field ->
+            val fieldX = mockActiveFieldX(field)
+            val fieldY = mockActiveFieldY(field, yOffset, focusShiftY)
+            mockSignInFieldContains(x, y, fieldX, fieldY, stage, mockActiveFieldWidth(field))
+        }
+    }
+
+    private fun mockRememberMeHit(x: Float, y: Float): Boolean {
+        if (mockSignInStartMillis == null || activeMockFlow != MockAccountFlow.SignIn) return false
+
+        val stage = currentStageMetrics() ?: return false
+        val progress = FastOutSlowInEasing.transform(mockSignInProgress())
+        val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
+        val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
         val fieldX = mockFormX()
         val usernameY = MOCK_FORM_Y + yOffset + focusShiftY
         val passwordY = usernameY + MOCK_FORM_FIELD_HEIGHT + MOCK_FORM_FIELD_GAP
-        return when {
-            mockSignInFieldContains(x, y, fieldX, usernameY, stage) -> MockSignInField.Username
-            mockSignInFieldContains(x, y, fieldX, passwordY, stage) -> MockSignInField.Password
-            else -> null
+        val rememberMeY = passwordY + MOCK_FORM_FIELD_HEIGHT + MOCK_REMEMBER_ME_TOP_GAP
+        return mockRememberMeContains(x, y, fieldX, rememberMeY, stage)
+    }
+
+    private fun mockDropdownHit(x: Float, y: Float): MockDropdown? {
+        if (mockSignInStartMillis == null || activeMockFlow != MockAccountFlow.CreateAccount) return null
+
+        val stage = currentStageMetrics() ?: return null
+        val progress = FastOutSlowInEasing.transform(mockSignInProgress())
+        val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
+        val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
+        return MockDropdown.values().firstOrNull { dropdown ->
+            mockSignInFieldContains(
+                x,
+                y,
+                mockDropdownX(dropdown),
+                mockDropdownY(dropdown, yOffset, focusShiftY),
+                stage,
+                mockDropdownWidth(dropdown)
+            )
         }
+    }
+
+    private fun mockCreateAvatarNavHit(x: Float, y: Float): MockAvatarCarouselDirection? {
+        if (mockSignInStartMillis == null || activeMockFlow != MockAccountFlow.CreateAccount) return null
+
+        val stage = currentStageMetrics() ?: return null
+        val progress = FastOutSlowInEasing.transform(mockSignInProgress())
+        val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
+        val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
+        val columnX = mockCreateFormX() + (MOCK_CREATE_FORM_COLUMNS - 1) * (MOCK_FORM_WIDTH + MOCK_CREATE_FORM_COLUMN_GAP)
+        val firstFieldY = MOCK_FORM_Y + yOffset + focusShiftY
+        val avatarBounds = mockCreateAvatarBounds(columnX, firstFieldY)
+        return MockAvatarCarouselDirection.values().firstOrNull { direction ->
+            mockCreateAvatarChevronContains(x, y, direction, avatarBounds, stage)
+        }
+    }
+
+    private fun mockCreateAvatarCarouselHit(x: Float, y: Float): Boolean {
+        if (mockSignInStartMillis == null || activeMockFlow != MockAccountFlow.CreateAccount) return false
+
+        val stage = currentStageMetrics() ?: return false
+        val progress = FastOutSlowInEasing.transform(mockSignInProgress())
+        val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
+        val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
+        val columnX = mockCreateFormX() + (MOCK_CREATE_FORM_COLUMNS - 1) * (MOCK_FORM_WIDTH + MOCK_CREATE_FORM_COLUMN_GAP)
+        val firstFieldY = MOCK_FORM_Y + yOffset + focusShiftY
+        val avatarBounds = mockCreateAvatarBounds(columnX, firstFieldY)
+        val carouselBounds = mockCreateAvatarCarouselBounds(columnX, firstFieldY, avatarBounds)
+        val left = stage.left + carouselBounds.x * stage.scale
+        val top = stage.top + carouselBounds.y * stage.scale
+        val right = stage.left + (carouselBounds.x + carouselBounds.w) * stage.scale
+        val bottom = stage.top + (carouselBounds.y + carouselBounds.h) * stage.scale
+        return x in left..right && y in top..bottom
+    }
+
+    private fun updateMockCreateAvatarDrag(event: MotionEvent): Boolean {
+        if (!activeMockCreateAvatarDrag) return false
+
+        mockCreateAvatarDragDeltaX = event.x - mockTouchDownX
+        val dragDeltaY = event.y - mockTouchDownY
+        if (
+            !mockCreateAvatarDragMoved &&
+            abs(mockCreateAvatarDragDeltaX) > touchSlop &&
+            abs(mockCreateAvatarDragDeltaX) > abs(dragDeltaY)
+        ) {
+            mockCreateAvatarDragMoved = true
+            pressedMockCreateAvatarNav = null
+        }
+
+        if (mockCreateAvatarDragMoved) {
+            postInvalidateOnAnimation()
+        }
+        return true
+    }
+
+    private fun mockDropdownOptionHit(pointerX: Float, pointerY: Float): MockDropdownOption? {
+        if (
+            mockSignInStartMillis == null ||
+            activeMockFlow != MockAccountFlow.CreateAccount ||
+            expandedMockDropdown == null
+        ) {
+            return null
+        }
+
+        val dropdown = expandedMockDropdown ?: return null
+        val stage = currentStageMetrics() ?: return null
+        val progress = FastOutSlowInEasing.transform(mockSignInProgress())
+        val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
+        val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
+        val dropdownX = mockDropdownX(dropdown)
+        val yStart = mockDropdownOptionsY(dropdown, yOffset, focusShiftY)
+        val left = stage.left + dropdownX * stage.scale
+        val right = stage.left + (dropdownX + mockDropdownWidth(dropdown)) * stage.scale
+        if (pointerX !in left..right) return null
+        if (mockDropdownCanScroll(dropdown)) {
+            val scrollbarLeft = right -
+                (MOCK_DATE_DROPDOWN_SCROLLBAR_WIDTH + MOCK_DATE_DROPDOWN_SCROLLBAR_INSET_X * 2f) * stage.scale
+            if (pointerX >= scrollbarLeft) return null
+        }
+
+        mockDropdownVisibleOptions(dropdown).forEachIndexed { optionIndex, option ->
+            val optionHeight = mockDropdownOptionHeight(dropdown)
+            val top = stage.top + (yStart + optionIndex * optionHeight) * stage.scale
+            val bottom = top + optionHeight * stage.scale
+            if (pointerY in top..bottom) return MockDropdownOption(dropdown, option)
+        }
+        return null
+    }
+
+    private fun mockDropdownOptionsHit(pointerX: Float, pointerY: Float): MockDropdown? {
+        if (
+            mockSignInStartMillis == null ||
+            activeMockFlow != MockAccountFlow.CreateAccount ||
+            expandedMockDropdown == null
+        ) {
+            return null
+        }
+
+        val dropdown = expandedMockDropdown ?: return null
+        val stage = currentStageMetrics() ?: return null
+        val progress = FastOutSlowInEasing.transform(mockSignInProgress())
+        val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
+        val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
+        val dropdownX = mockDropdownX(dropdown)
+        val yStart = mockDropdownOptionsY(dropdown, yOffset, focusShiftY)
+        val left = stage.left + dropdownX * stage.scale
+        val right = stage.left + (dropdownX + mockDropdownWidth(dropdown)) * stage.scale
+        val top = stage.top + yStart * stage.scale
+        val bottom = top + mockDropdownVisibleOptionCount(dropdown) * mockDropdownOptionHeight(dropdown) * stage.scale
+        return if (pointerX in left..right && pointerY in top..bottom) dropdown else null
+    }
+
+    private fun updateMockDropdownScroll(event: MotionEvent): Boolean {
+        val dropdown = activeMockDropdownScroll ?: return false
+        if (expandedMockDropdown != dropdown || !mockDropdownCanScroll(dropdown)) return false
+
+        val stage = currentStageMetrics() ?: return true
+        val optionHeightPx = (mockDropdownOptionHeight(dropdown) * stage.scale).coerceAtLeast(1f)
+        val dragDeltaY = event.y - mockDropdownScrollStartY
+        if (abs(dragDeltaY) > touchSlop) {
+            mockDropdownScrollMoved = true
+            pressedMockDropdownOption = null
+        }
+
+        if (mockDropdownScrollMoved) {
+            val rowDelta = ((mockDropdownScrollStartY - event.y) / optionHeightPx).roundToInt()
+            setMockDropdownScrollOffset(dropdown, mockDropdownScrollStartOffset + rowDelta)
+            postInvalidateOnAnimation()
+        }
+        return true
+    }
+
+    private fun mockBackChevronHit(x: Float, y: Float): Boolean {
+        if (mockSignInStartMillis == null || isMockSignInClosing()) return false
+
+        val stage = currentStageMetrics() ?: return false
+        val progress = FastOutSlowInEasing.transform(mockSignInProgress())
+        val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
+        val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
+        val lastField = activeMockFields().lastOrNull() ?: return false
+        val lastFieldY = mockActiveFieldY(lastField, yOffset, focusShiftY)
+        val chevronTopY = if (activeMockFlow == MockAccountFlow.SignIn) {
+            lastFieldY + MOCK_FORM_FIELD_HEIGHT + MOCK_REMEMBER_ME_TOP_GAP + MOCK_REMEMBER_ME_BOX_SIZE +
+                MOCK_BACK_CHEVRON_TOP_GAP
+        } else {
+            MOCK_FORM_Y + yOffset + focusShiftY + mockCreateFormHeight() + MOCK_BACK_CHEVRON_TOP_GAP
+        }
+        return mockBackChevronContains(x, y, mockActiveFormCenterX(), chevronTopY, stage)
+    }
+
+    private fun shouldStartMockDragReturn(event: MotionEvent): Boolean {
+        if (mockDragReturnInProgress || isMockSignInClosing()) return false
+
+        val upwardDragY = mockTouchDownY - event.y
+        if (upwardDragY <= mockBackDragThresholdPx()) return false
+
+        val dragX = event.x - mockTouchDownX
+        return upwardDragY > abs(dragX)
+    }
+
+    private fun mockBackDragThresholdPx(): Float {
+        val stageThreshold = currentStageMetrics()?.let { stage ->
+            MOCK_BACK_DRAG_THRESHOLD * stage.scale
+        } ?: MOCK_BACK_DRAG_THRESHOLD
+        return maxOf(stageThreshold, touchSlop * 3f)
     }
 
     private fun mockSignInFieldContains(
@@ -671,16 +2039,118 @@ internal class CinerificIntroView(context: Context) : View(context) {
         pointerY: Float,
         fieldX: Float,
         fieldY: Float,
-        stage: StageMetrics
+        stage: StageMetrics,
+        fieldWidth: Float = MOCK_FORM_WIDTH
     ): Boolean {
         val left = stage.left + fieldX * stage.scale
         val top = stage.top + fieldY * stage.scale
-        val right = stage.left + (fieldX + MOCK_FORM_WIDTH) * stage.scale
+        val right = stage.left + (fieldX + fieldWidth) * stage.scale
         val bottom = stage.top + (fieldY + MOCK_FORM_FIELD_HEIGHT) * stage.scale
         return pointerX in left..right && pointerY in top..bottom
     }
 
+    private fun mockRememberMeContains(
+        pointerX: Float,
+        pointerY: Float,
+        x: Float,
+        y: Float,
+        stage: StageMetrics
+    ): Boolean {
+        val left = stage.left + x * stage.scale
+        val top = stage.top + (y - MOCK_REMEMBER_ME_HIT_TOP_PADDING) * stage.scale
+        val right = stage.left + (x + MOCK_FORM_WIDTH) * stage.scale
+        val bottom = stage.top + (y - MOCK_REMEMBER_ME_HIT_TOP_PADDING + MOCK_REMEMBER_ME_HIT_HEIGHT) * stage.scale
+        return pointerX in left..right && pointerY in top..bottom
+    }
+
+    private fun mockBackChevronContains(
+        pointerX: Float,
+        pointerY: Float,
+        centerX: Float,
+        topY: Float,
+        stage: StageMetrics
+    ): Boolean {
+        val center = stage.left + centerX * stage.scale
+        val hitHalfWidth = MOCK_BACK_CHEVRON_HIT_WIDTH * stage.scale / 2f
+        val left = center - hitHalfWidth
+        val right = center + hitHalfWidth
+        val top = stage.top + (topY - (MOCK_BACK_CHEVRON_HIT_HEIGHT - MOCK_BACK_CHEVRON_HEIGHT) / 2f) * stage.scale
+        val bottom = top + MOCK_BACK_CHEVRON_HIT_HEIGHT * stage.scale
+        return pointerX in left..right && pointerY in top..bottom
+    }
+
+    private fun mockCreateAvatarBounds(columnX: Float, firstFieldY: Float): Bounds {
+        val scaledAvatarSize = MOCK_CREATE_AVATAR_SIZE * MOCK_CREATE_AVATAR_STACK_SCALE
+        return Bounds(
+            columnX + (MOCK_FORM_WIDTH - scaledAvatarSize) / 2f,
+            firstFieldY +
+                MOCK_CREATE_AVATAR_LABEL_BASELINE_FROM_TOP * MOCK_CREATE_AVATAR_STACK_SCALE +
+                MOCK_CREATE_AVATAR_TOP_GAP * MOCK_CREATE_AVATAR_STACK_SCALE,
+            scaledAvatarSize,
+            scaledAvatarSize
+        )
+    }
+
+    private fun mockCreateAvatarCarouselBounds(
+        columnX: Float,
+        firstFieldY: Float,
+        avatarBounds: Bounds
+    ): Bounds {
+        val centerX = columnX + MOCK_FORM_WIDTH / 2f
+        val contentTop = firstFieldY
+        val contentBottom = avatarBounds.y + avatarBounds.h
+        val contentCenterY = (contentTop + contentBottom) / 2f
+        val chevronSpan = avatarBounds.w +
+            (MOCK_CREATE_AVATAR_CHEVRON_SIDE_GAP + MOCK_CREATE_AVATAR_CHEVRON_HIT_WIDTH / 2f) * 2f
+        val side = maxOf(chevronSpan, contentBottom - contentTop)
+        return Bounds(
+            centerX - side / 2f,
+            contentCenterY - side / 2f,
+            side,
+            side
+        )
+    }
+
+    private fun mockCreateAvatarSlideDistance(scaledAvatarSize: Float): Float {
+        return scaledAvatarSize + MOCK_CREATE_AVATAR_CHEVRON_SIDE_GAP * 2f
+    }
+
+    private fun mockCreateAvatarChevronCenterX(
+        direction: MockAvatarCarouselDirection,
+        avatarBounds: Bounds
+    ): Float {
+        return if (direction == MockAvatarCarouselDirection.Previous) {
+            avatarBounds.x - MOCK_CREATE_AVATAR_CHEVRON_SIDE_GAP
+        } else {
+            avatarBounds.x + avatarBounds.w + MOCK_CREATE_AVATAR_CHEVRON_SIDE_GAP
+        }
+    }
+
+    private fun mockCreateAvatarChevronCenterY(avatarBounds: Bounds): Float {
+        return avatarBounds.y + avatarBounds.h / 2f
+    }
+
+    private fun mockCreateAvatarChevronContains(
+        pointerX: Float,
+        pointerY: Float,
+        direction: MockAvatarCarouselDirection,
+        avatarBounds: Bounds,
+        stage: StageMetrics
+    ): Boolean {
+        val centerX = stage.left + mockCreateAvatarChevronCenterX(direction, avatarBounds) * stage.scale
+        val centerY = stage.top + mockCreateAvatarChevronCenterY(avatarBounds) * stage.scale
+        val halfWidth = MOCK_CREATE_AVATAR_CHEVRON_HIT_WIDTH * stage.scale / 2f
+        val halfHeight = MOCK_CREATE_AVATAR_CHEVRON_HIT_HEIGHT * stage.scale / 2f
+        return pointerX in (centerX - halfWidth)..(centerX + halfWidth) &&
+            pointerY in (centerY - halfHeight)..(centerY + halfHeight)
+    }
+
     private fun focusMockSignInField(field: MockSignInField) {
+        mockInputDimAwaitingField = field
+        mockInputDimActiveField = field
+        mockInputDimActiveDropdown = null
+        restartMockLandscapeInputLiftAnimation()
+        restartMockInputDimAnimation()
         if (focusedMockField != field) {
             activeComposingText = ""
             focusedMockField = field
@@ -700,8 +2170,11 @@ internal class CinerificIntroView(context: Context) : View(context) {
         if (focusedMockField == null) return
         activeComposingText = ""
         focusedMockField = null
+        mockInputDimAwaitingField = null
         restartMockFormLabelAnimation()
         restartMockFormFocusAnimation()
+        restartMockLandscapeInputLiftAnimation()
+        restartMockInputDimAnimation()
         val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         inputMethodManager?.hideSoftInputFromWindow(windowToken, 0)
         clearFocus()
@@ -712,21 +2185,333 @@ internal class CinerificIntroView(context: Context) : View(context) {
         return (FIGMA_FRAME_WIDTH - MOCK_FORM_WIDTH) / 2f
     }
 
+    private fun mockCreateFormWidth(): Float {
+        return MOCK_CREATE_FORM_COLUMNS * MOCK_FORM_WIDTH +
+            (MOCK_CREATE_FORM_COLUMNS - 1) * MOCK_CREATE_FORM_COLUMN_GAP
+    }
+
+    private fun mockCreateFormHeight(): Float {
+        return MOCK_CREATE_FORM_ROWS * MOCK_FORM_FIELD_HEIGHT +
+            (MOCK_CREATE_FORM_ROWS - 1) * MOCK_FORM_FIELD_GAP
+    }
+
+    private fun mockCreateFormX(): Float {
+        return (FIGMA_FRAME_WIDTH - mockCreateFormWidth()) / 2f
+    }
+
+    private fun activeMockFields(): List<MockSignInField> {
+        return if (activeMockFlow == MockAccountFlow.CreateAccount) {
+            MOCK_CREATE_ACCOUNT_FIELDS
+        } else {
+            MOCK_SIGN_IN_FIELDS
+        }
+    }
+
+    private fun mockActiveFieldX(field: MockSignInField): Float {
+        if (activeMockFlow != MockAccountFlow.CreateAccount) return mockFormX()
+
+        val middleColumnX = mockCreateFormX() + MOCK_FORM_WIDTH + MOCK_CREATE_FORM_COLUMN_GAP
+        return when (field) {
+            MockSignInField.Username,
+            MockSignInField.Password,
+            MockSignInField.ConfirmPassword -> mockCreateFormX()
+            MockSignInField.Email -> middleColumnX
+            MockSignInField.Month -> middleColumnX
+            MockSignInField.Day -> middleColumnX + MOCK_DATE_MONTH_WIDTH + MOCK_DATE_FIELD_GAP
+            MockSignInField.Year -> middleColumnX + MOCK_DATE_MONTH_WIDTH + MOCK_DATE_DAY_WIDTH + MOCK_DATE_FIELD_GAP * 2f
+        }
+    }
+
+    private fun mockActiveFieldY(field: MockSignInField, yOffset: Float, focusShiftY: Float): Float {
+        val rowIndex = if (activeMockFlow == MockAccountFlow.CreateAccount) {
+            when (field) {
+                MockSignInField.Username,
+                MockSignInField.Email -> 0
+                MockSignInField.Password -> 1
+                MockSignInField.ConfirmPassword,
+                MockSignInField.Month,
+                MockSignInField.Day,
+                MockSignInField.Year -> 2
+            }
+        } else {
+            activeMockFields().indexOf(field).coerceAtLeast(0)
+        }
+        return MOCK_FORM_Y + yOffset + focusShiftY + rowIndex * (MOCK_FORM_FIELD_HEIGHT + MOCK_FORM_FIELD_GAP)
+    }
+
+    private fun mockActiveFieldWidth(field: MockSignInField): Float {
+        return when (field) {
+            MockSignInField.Month -> MOCK_DATE_MONTH_WIDTH
+            MockSignInField.Day -> MOCK_DATE_DAY_WIDTH
+            MockSignInField.Year -> MOCK_DATE_YEAR_WIDTH
+            else -> MOCK_FORM_WIDTH
+        }
+    }
+
+    private fun mockActiveFormCenterX(): Float {
+        return if (activeMockFlow == MockAccountFlow.CreateAccount) {
+            mockCreateFormX() + mockCreateFormWidth() / 2f
+        } else {
+            mockFormX() + MOCK_FORM_WIDTH / 2f
+        }
+    }
+
+    private fun mockCreateFormColumnForIndex(index: Int): Int {
+        return index / MOCK_CREATE_FORM_ROWS
+    }
+
+    private fun mockCreateFormRowForIndex(index: Int): Int {
+        return index % MOCK_CREATE_FORM_ROWS
+    }
+
+    private fun mockDropdownX(dropdown: MockDropdown): Float {
+        val middleColumnX = mockCreateFormX() + MOCK_FORM_WIDTH + MOCK_CREATE_FORM_COLUMN_GAP
+        return when (dropdown) {
+            MockDropdown.SubscriptionTier -> middleColumnX
+            MockDropdown.Month -> middleColumnX
+            MockDropdown.Day -> middleColumnX + MOCK_DATE_MONTH_WIDTH + MOCK_DATE_FIELD_GAP
+            MockDropdown.Year -> middleColumnX + MOCK_DATE_MONTH_WIDTH + MOCK_DATE_DAY_WIDTH + MOCK_DATE_FIELD_GAP * 2f
+        }
+    }
+
+    private fun mockDropdownY(dropdown: MockDropdown, yOffset: Float, focusShiftY: Float): Float {
+        val rowIndex = when (dropdown) {
+            MockDropdown.SubscriptionTier -> 1
+            MockDropdown.Month,
+            MockDropdown.Day,
+            MockDropdown.Year -> 2
+        }
+        return MOCK_FORM_Y + yOffset + focusShiftY + rowIndex * (MOCK_FORM_FIELD_HEIGHT + MOCK_FORM_FIELD_GAP)
+    }
+
+    private fun mockDropdownWidth(dropdown: MockDropdown): Float {
+        return when (dropdown) {
+            MockDropdown.SubscriptionTier -> MOCK_FORM_WIDTH
+            MockDropdown.Month -> MOCK_DATE_MONTH_WIDTH
+            MockDropdown.Day -> MOCK_DATE_DAY_WIDTH
+            MockDropdown.Year -> MOCK_DATE_YEAR_WIDTH
+        }
+    }
+
+    private fun mockDropdownOptionsY(dropdown: MockDropdown, yOffset: Float, focusShiftY: Float): Float {
+        val controlY = mockDropdownY(dropdown, yOffset, focusShiftY)
+        return if (mockDropdownUsesDateViewport(dropdown)) {
+            mockActiveFieldY(MockSignInField.Email, yOffset, focusShiftY)
+        } else {
+            controlY + MOCK_FORM_FIELD_HEIGHT
+        }
+    }
+
+    private fun mockDropdownOpensUp(dropdown: MockDropdown): Boolean {
+        return dropdown != MockDropdown.SubscriptionTier
+    }
+
+    private fun mockDropdownTextSize(dropdown: MockDropdown): Float {
+        return if (mockDropdownOpensUp(dropdown)) MOCK_DATE_DROPDOWN_TEXT_SIZE else MOCK_FORM_LABEL_TEXT_SIZE
+    }
+
+    private fun mockDropdownTextInsetX(dropdown: MockDropdown): Float {
+        return if (mockDropdownOpensUp(dropdown)) MOCK_DATE_DROPDOWN_TEXT_INSET_X else MOCK_FORM_LABEL_INSET_X
+    }
+
+    private fun mockDropdownChevronInsetX(dropdown: MockDropdown): Float {
+        return if (mockDropdownOpensUp(dropdown)) MOCK_DATE_DROPDOWN_CHEVRON_INSET_X else 20f
+    }
+
+    private fun mockDropdownChevronSize(dropdown: MockDropdown): Float {
+        return if (mockDropdownOpensUp(dropdown)) MOCK_DATE_DROPDOWN_CHEVRON_SIZE else MOCK_DROPDOWN_CHEVRON_SIZE
+    }
+
+    private fun mockDropdownOptionHeight(dropdown: MockDropdown): Float {
+        return if (mockDropdownOpensUp(dropdown)) MOCK_DATE_DROPDOWN_OPTION_HEIGHT else MOCK_DROPDOWN_OPTION_HEIGHT
+    }
+
+    private fun mockDropdownOptionTextSize(dropdown: MockDropdown): Float {
+        return if (mockDropdownOpensUp(dropdown)) MOCK_DATE_DROPDOWN_OPTION_TEXT_SIZE else 18f
+    }
+
+    private fun mockDropdownOptionTextInsetX(dropdown: MockDropdown): Float {
+        return if (mockDropdownUsesDateViewport(dropdown)) MOCK_DATE_DROPDOWN_TEXT_INSET_X else MOCK_FORM_LABEL_INSET_X
+    }
+
+    private fun mockDropdownUsesDateViewport(dropdown: MockDropdown): Boolean {
+        return dropdown != MockDropdown.SubscriptionTier
+    }
+
+    private fun mockDropdownVisibleOptionCount(dropdown: MockDropdown): Int {
+        val optionCount = mockDropdownOptions(dropdown).size
+        val viewportCount = if (mockDropdownUsesDateViewport(dropdown)) {
+            MOCK_DATE_DROPDOWN_VISIBLE_OPTION_COUNT
+        } else {
+            optionCount
+        }
+        return min(optionCount, viewportCount)
+    }
+
+    private fun mockDropdownCanScroll(dropdown: MockDropdown): Boolean {
+        return mockDropdownOptions(dropdown).size > mockDropdownVisibleOptionCount(dropdown)
+    }
+
+    private fun mockDropdownScrollOffset(dropdown: MockDropdown): Int {
+        return (mockDropdownScrollOffsets[dropdown] ?: 0).coerceIn(0, mockDropdownMaxScrollOffset(dropdown))
+    }
+
+    private fun mockDropdownMaxScrollOffset(dropdown: MockDropdown): Int {
+        return (mockDropdownOptions(dropdown).size - mockDropdownVisibleOptionCount(dropdown)).coerceAtLeast(0)
+    }
+
+    private fun setMockDropdownScrollOffset(dropdown: MockDropdown, offset: Int) {
+        mockDropdownScrollOffsets[dropdown] = offset.coerceIn(0, mockDropdownMaxScrollOffset(dropdown))
+    }
+
+    private fun mockDropdownVisibleOptions(dropdown: MockDropdown): List<String> {
+        val options = mockDropdownOptions(dropdown)
+        val offset = mockDropdownScrollOffset(dropdown)
+        return options.drop(offset).take(mockDropdownVisibleOptionCount(dropdown))
+    }
+
+    private fun prepareMockDropdownScroll(dropdown: MockDropdown) {
+        if (!mockDropdownCanScroll(dropdown)) {
+            setMockDropdownScrollOffset(dropdown, 0)
+            return
+        }
+
+        val selectedIndex = mockDropdownOptions(dropdown).indexOf(mockDropdownSelectedValue(dropdown))
+        setMockDropdownScrollOffset(dropdown, if (selectedIndex >= 0) selectedIndex else 0)
+    }
+
+    private fun mockDropdownDisplayText(dropdown: MockDropdown): String {
+        return mockDropdownSelectedValue(dropdown)
+    }
+
+    private fun mockDropdownSelectedValue(dropdown: MockDropdown): String {
+        return when (dropdown) {
+            MockDropdown.SubscriptionTier -> subscriptionTierText
+            MockDropdown.Month -> monthText
+            MockDropdown.Day -> dayText
+            MockDropdown.Year -> yearText
+        }
+    }
+
+    private fun mockDropdownOptions(dropdown: MockDropdown): List<String> {
+        return when (dropdown) {
+            MockDropdown.SubscriptionTier -> MOCK_MEMBERSHIP_OPTIONS
+            MockDropdown.Month -> MOCK_MONTH_OPTIONS
+            MockDropdown.Day -> MOCK_DAY_OPTIONS
+            MockDropdown.Year -> MOCK_YEAR_OPTIONS
+        }
+    }
+
+    private fun setMockDropdownValue(selection: MockDropdownOption) {
+        mockInputDimAwaitingField = null
+        mockInputDimActiveDropdown = selection.dropdown
+        mockInputDimActiveField = null
+        when (selection.dropdown) {
+            MockDropdown.SubscriptionTier -> subscriptionTierText = selection.option
+            MockDropdown.Month -> monthText = selection.option
+            MockDropdown.Day -> dayText = selection.option
+            MockDropdown.Year -> yearText = selection.option
+        }
+        restartMockLandscapeInputLiftAnimation()
+        restartMockInputDimAnimation()
+    }
+
+    private fun startMockCreateAvatarCarousel(
+        direction: MockAvatarCarouselDirection,
+        startProgress: Float = 0f
+    ) {
+        if (activeMockFlow != MockAccountFlow.CreateAccount || isMockCreateAvatarCarouselAnimating()) return
+
+        val nextIndex = mockCreateAvatarIndexForDirection(direction)
+        if (nextIndex == mockCreateAvatarIndex) return
+
+        pressedMockCreateAvatarNav = null
+        mockCreateAvatarCarouselFromIndex = mockCreateAvatarIndex
+        mockCreateAvatarCarouselToIndex = nextIndex
+        mockCreateAvatarCarouselDirection = direction
+        mockCreateAvatarCarouselStartProgress = startProgress.coerceIn(0f, 0.96f)
+        mockCreateAvatarIndex = nextIndex
+        mockCreateAvatarCarouselStartMillis = SystemClock.uptimeMillis()
+        postInvalidateOnAnimation()
+    }
+
+    private fun mockCreateAvatarIndexForDirection(direction: MockAvatarCarouselDirection): Int {
+        return (mockCreateAvatarIndex + direction.indexDelta + MOCK_CREATE_AVATAR_COUNT) % MOCK_CREATE_AVATAR_COUNT
+    }
+
+    private fun mockCreateAvatarDragDirection(): MockAvatarCarouselDirection? {
+        return when {
+            mockCreateAvatarDragDeltaX < 0f -> MockAvatarCarouselDirection.Next
+            mockCreateAvatarDragDeltaX > 0f -> MockAvatarCarouselDirection.Previous
+            else -> null
+        }
+    }
+
+    private fun mockCreateAvatarDragProgress(): Float {
+        val stage = currentStageMetrics() ?: return 0f
+        val scaledAvatarSize = MOCK_CREATE_AVATAR_SIZE * MOCK_CREATE_AVATAR_STACK_SCALE
+        return mockCreateAvatarDragProgress(mockCreateAvatarSlideDistance(scaledAvatarSize), stage.scale)
+    }
+
+    private fun mockCreateAvatarDragProgress(slideDistance: Float, stageScale: Float): Float {
+        val slideDistancePx = (slideDistance * stageScale).coerceAtLeast(1f)
+        return (abs(mockCreateAvatarDragDeltaX) / slideDistancePx).coerceIn(0f, 1f)
+    }
+
+    private fun mockCreateAvatarBitmap(index: Int): Bitmap {
+        return when (index.coerceIn(0, MOCK_CREATE_AVATAR_COUNT - 1)) {
+            0 -> steveCreateAvatarCharacter
+            1 -> martinCreateAvatarCharacter
+            else -> jannyCreateAvatarCharacter
+        }
+    }
+
+    private fun mockCreateAvatarCarouselProgress(): Float {
+        val startMillis = mockCreateAvatarCarouselStartMillis ?: return 1f
+        val elapsed = SystemClock.uptimeMillis() - startMillis
+        val elapsedProgress = (elapsed / MOCK_CREATE_AVATAR_CAROUSEL_MS.toFloat()).coerceIn(0f, 1f)
+        return lerpFloat(mockCreateAvatarCarouselStartProgress, 1f, elapsedProgress).coerceIn(0f, 1f)
+    }
+
+    private fun isMockCreateAvatarCarouselAnimating(): Boolean {
+        return mockCreateAvatarCarouselStartMillis != null
+    }
+
+    private fun finishMockCreateAvatarCarouselIfNeeded() {
+        val startMillis = mockCreateAvatarCarouselStartMillis ?: return
+        if (SystemClock.uptimeMillis() - startMillis < MOCK_CREATE_AVATAR_CAROUSEL_MS) return
+
+        mockCreateAvatarCarouselStartMillis = null
+        mockCreateAvatarCarouselFromIndex = mockCreateAvatarIndex
+        mockCreateAvatarCarouselToIndex = mockCreateAvatarIndex
+        mockCreateAvatarCarouselStartProgress = 0f
+    }
+
+    private fun resetMockCreateAvatarCarousel() {
+        pressedMockCreateAvatarNav = null
+        activeMockCreateAvatarDrag = false
+        mockCreateAvatarDragMoved = false
+        mockCreateAvatarDragDeltaX = 0f
+        mockCreateAvatarIndex = 0
+        mockCreateAvatarCarouselStartMillis = null
+        mockCreateAvatarCarouselFromIndex = 0
+        mockCreateAvatarCarouselToIndex = 0
+        mockCreateAvatarCarouselDirection = MockAvatarCarouselDirection.Next
+        mockCreateAvatarCarouselStartProgress = 0f
+    }
+
     private fun updateMockFormLabelAnimation() {
         val now = SystemClock.uptimeMillis()
         val elapsed = (now - lastFormLabelAnimationMillis).coerceIn(0L, 48L)
         lastFormLabelAnimationMillis = now
         val step = elapsed / MOCK_FORM_LABEL_FLOAT_ANIMATION_MS.toFloat()
-        usernameLabelFloatProgress = moveToward(
-            usernameLabelFloatProgress,
-            mockSignInFieldLabelTarget(MockSignInField.Username),
-            step
-        )
-        passwordLabelFloatProgress = moveToward(
-            passwordLabelFloatProgress,
-            mockSignInFieldLabelTarget(MockSignInField.Password),
-            step
-        )
+        mockFieldLabelFloatProgress.keys.forEach { field ->
+            mockFieldLabelFloatProgress[field] = moveToward(
+                mockFieldLabelFloatProgress[field] ?: 0f,
+                mockSignInFieldLabelTarget(field),
+                step
+            )
+        }
     }
 
     private fun updateMockFormFocusAnimation() {
@@ -737,13 +2522,49 @@ internal class CinerificIntroView(context: Context) : View(context) {
         mockFormFocusProgress = moveToward(mockFormFocusProgress, mockFormFocusTarget(), step)
     }
 
+    private fun updateMockLandscapeInputLiftAnimation() {
+        val now = SystemClock.uptimeMillis()
+        val elapsed = (now - lastMockLandscapeInputLiftAnimationMillis).coerceIn(0L, 48L)
+        lastMockLandscapeInputLiftAnimationMillis = now
+        val step = elapsed / MOCK_LANDSCAPE_INPUT_LIFT_TRANSITION_MS.toFloat()
+        mockLandscapeInputLiftProgress = moveToward(mockLandscapeInputLiftProgress, mockLandscapeInputLiftTarget(), step)
+    }
+
+    private fun updateMockInputDimAnimation() {
+        val target = mockInputDimTarget()
+        if (target > 0f) {
+            mockInputDimActiveDropdown = expandedMockDropdown
+            mockInputDimActiveField = if (expandedMockDropdown == null) focusedMockField else null
+        }
+
+        val now = SystemClock.uptimeMillis()
+        val elapsed = (now - lastMockInputDimAnimationMillis).coerceIn(0L, 48L)
+        lastMockInputDimAnimationMillis = now
+        val step = elapsed / MOCK_INPUT_DIM_TRANSITION_MS.toFloat()
+        mockInputDimProgress = moveToward(mockInputDimProgress, target, step)
+
+        if (mockInputDimProgress == 0f && target == 0f) {
+            mockInputDimActiveField = null
+            mockInputDimActiveDropdown = null
+        }
+    }
+
     private fun isMockFormLabelAnimating(): Boolean {
-        return usernameLabelFloatProgress != mockSignInFieldLabelTarget(MockSignInField.Username) ||
-            passwordLabelFloatProgress != mockSignInFieldLabelTarget(MockSignInField.Password)
+        return mockFieldLabelFloatProgress.any { (field, progress) ->
+            progress != mockSignInFieldLabelTarget(field)
+        }
     }
 
     private fun isMockFormFocusAnimating(): Boolean {
         return mockFormFocusProgress != mockFormFocusTarget()
+    }
+
+    private fun isMockLandscapeInputLiftAnimating(): Boolean {
+        return mockLandscapeInputLiftProgress != mockLandscapeInputLiftTarget()
+    }
+
+    private fun isMockInputDimAnimating(): Boolean {
+        return mockInputDimProgress != mockInputDimTarget()
     }
 
     private fun restartMockFormLabelAnimation() {
@@ -754,11 +2575,64 @@ internal class CinerificIntroView(context: Context) : View(context) {
         lastFormFocusAnimationMillis = SystemClock.uptimeMillis() - 16L
     }
 
-    private fun mockFormFocusTarget(): Float {
+    private fun restartMockLandscapeInputLiftAnimation() {
+        lastMockLandscapeInputLiftAnimationMillis = SystemClock.uptimeMillis() - 16L
+    }
+
+    private fun restartMockInputDimAnimation() {
+        lastMockInputDimAnimationMillis = SystemClock.uptimeMillis() - 16L
+    }
+
+    private fun mockLandscapeInputLiftTarget(): Float {
+        if (width <= height) return 0f
+        if (mockSignInStartMillis == null || isMockSignInClosing()) return 0f
         return if (
             focusedMockField != null ||
-            usernameText.isNotEmpty() ||
-            passwordText.isNotEmpty()
+            expandedMockDropdown != null ||
+            isSoftKeyboardVisible()
+        ) {
+            1f
+        } else {
+            0f
+        }
+    }
+
+    private fun mockLandscapeInputStageLiftY(stageScale: Float): Float {
+        if (width <= height || mockSignInStartMillis == null) return 0f
+        val liftMotion = FastOutSlowInEasing.transform(mockLandscapeInputLiftProgress)
+        return MOCK_FORM_LANDSCAPE_FOCUS_SHIFT_Y * stageScale * liftMotion
+    }
+
+    private fun isSoftKeyboardVisible(): Boolean {
+        val rootInsets = ViewCompat.getRootWindowInsets(this)
+        if (rootInsets != null) {
+            val imeInsets = rootInsets.getInsets(WindowInsetsCompat.Type.ime())
+            if (rootInsets.isVisible(WindowInsetsCompat.Type.ime()) || imeInsets.bottom > 0) return true
+        }
+
+        val rootHeight = rootView?.height ?: 0
+        if (rootHeight <= 0) return false
+        getWindowVisibleDisplayFrame(tempWindowRect)
+        val obscuredHeight = rootHeight - tempWindowRect.height()
+        return obscuredHeight > rootHeight * 0.18f
+    }
+
+    private fun mockInputDimTarget(): Float {
+        if (mockSignInStartMillis == null || isMockSignInClosing()) return 0f
+        if (expandedMockDropdown != null) return 1f
+        val awaitingField = mockInputDimAwaitingField ?: return 0f
+        return if (focusedMockField == awaitingField) 1f else 0f
+    }
+
+    private fun mockFormFocusTarget(): Float {
+        if (mockSignInStartMillis == null || isMockSignInClosing()) return 0f
+        if (width > height) {
+            return if (focusedMockField != null || expandedMockDropdown != null) 1f else 0f
+        }
+        if (activeMockFlow == MockAccountFlow.CreateAccount) return 0f
+        return if (
+            focusedMockField != null ||
+            activeMockFields().any { mockSignInFieldText(it).isNotEmpty() }
         ) {
             1f
         } else {
@@ -767,15 +2641,16 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun mockFormFocusShiftY(formFocusMotion: Float): Float {
+        if (width > height) return 0f
         return MOCK_FORM_FOCUS_SHIFT_Y * formFocusMotion.coerceIn(0f, 1f)
     }
 
     private fun mockLogoFocusShiftY(formFocusMotion: Float): Float {
-        val focusMotion = formFocusMotion.coerceIn(0f, 1f)
         return if (width > height) {
-            -(LOGO_FINAL_TOP + LOGO_FINAL_HEIGHT + 24f) * focusMotion
+            val liftMotion = FastOutSlowInEasing.transform(mockLandscapeInputLiftProgress)
+            -(LOGO_FINAL_TOP + LOGO_FINAL_HEIGHT + 64f) * liftMotion
         } else {
-            mockFormFocusShiftY(focusMotion)
+            mockFormFocusShiftY(formFocusMotion)
         }
     }
 
@@ -784,16 +2659,18 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun mockSignInFieldLabelProgress(field: MockSignInField): Float {
-        return when (field) {
-            MockSignInField.Username -> usernameLabelFloatProgress
-            MockSignInField.Password -> passwordLabelFloatProgress
-        }
+        return mockFieldLabelFloatProgress[field] ?: 0f
     }
 
     private fun mockSignInFieldLabel(field: MockSignInField): String {
         return when (field) {
             MockSignInField.Username -> MOCK_FORM_USERNAME_TEXT
             MockSignInField.Password -> MOCK_FORM_PASSWORD_TEXT
+            MockSignInField.ConfirmPassword -> MOCK_FORM_CONFIRM_PASSWORD_TEXT
+            MockSignInField.Email -> MOCK_FORM_EMAIL_TEXT
+            MockSignInField.Month -> MOCK_FORM_MONTH_TEXT
+            MockSignInField.Day -> MOCK_FORM_DAY_TEXT
+            MockSignInField.Year -> MOCK_FORM_YEAR_TEXT
         }
     }
 
@@ -801,6 +2678,11 @@ internal class CinerificIntroView(context: Context) : View(context) {
         return when (field) {
             MockSignInField.Username -> usernameText
             MockSignInField.Password -> passwordText
+            MockSignInField.ConfirmPassword -> confirmPasswordText
+            MockSignInField.Email -> emailText
+            MockSignInField.Month -> monthText
+            MockSignInField.Day -> dayText
+            MockSignInField.Year -> yearText
         }
     }
 
@@ -808,6 +2690,11 @@ internal class CinerificIntroView(context: Context) : View(context) {
         return when (field) {
             MockSignInField.Username -> usernameText
             MockSignInField.Password -> "*".repeat(passwordText.length)
+            MockSignInField.ConfirmPassword -> "*".repeat(confirmPasswordText.length)
+            MockSignInField.Email -> emailText
+            MockSignInField.Month -> monthText
+            MockSignInField.Day -> dayText
+            MockSignInField.Year -> yearText
         }
     }
 
@@ -816,9 +2703,18 @@ internal class CinerificIntroView(context: Context) : View(context) {
         when (field) {
             MockSignInField.Username -> usernameText = limitedText
             MockSignInField.Password -> passwordText = limitedText
+            MockSignInField.ConfirmPassword -> confirmPasswordText = limitedText
+            MockSignInField.Email -> emailText = limitedText
+            MockSignInField.Month -> monthText = limitedText
+            MockSignInField.Day -> dayText = limitedText
+            MockSignInField.Year -> yearText = limitedText
+        }
+        if (mockInputDimAwaitingField == field) {
+            mockInputDimAwaitingField = null
         }
         restartMockFormLabelAnimation()
         restartMockFormFocusAnimation()
+        restartMockInputDimAnimation()
         postInvalidateOnAnimation()
     }
 
@@ -867,11 +2763,14 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun handleMockSignInEditorAction(actionCode: Int): Boolean {
         activeComposingText = ""
-        if (focusedMockField == MockSignInField.Username && actionCode != EditorInfo.IME_ACTION_DONE) {
-            focusMockSignInField(MockSignInField.Password)
+        val fields = activeMockFields()
+        val fieldIndex = fields.indexOf(focusedMockField)
+        if (fieldIndex >= 0 && fieldIndex < fields.lastIndex && actionCode != EditorInfo.IME_ACTION_DONE) {
+            focusMockSignInField(fields[fieldIndex + 1])
         } else {
             val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(windowToken, 0)
+            clearMockSignInFieldFocus()
         }
         return true
     }
@@ -922,7 +2821,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val stageScale = min(width / FIGMA_FRAME_WIDTH, height / FIGMA_FRAME_HEIGHT)
         return StageMetrics(
             left = (width - FIGMA_FRAME_WIDTH * stageScale) / 2f,
-            top = (height - FIGMA_FRAME_HEIGHT * stageScale) / 2f,
+            top = (height - FIGMA_FRAME_HEIGHT * stageScale) / 2f + mockLandscapeInputStageLiftY(stageScale),
             scale = stageScale
         )
     }
@@ -944,20 +2843,117 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun openMockSignInScreen() {
-        if (mockSignInStartMillis != null) return
+        if (mockSignInStartMillis != null && mockSignInTransitionTargetProgress == 1f) return
+        val currentProgress = mockSignInProgress()
+        activeMockFlow = MockAccountFlow.SignIn
         mockSignInStartMillis = SystemClock.uptimeMillis()
+        mockSignInTransitionStartProgress = currentProgress
+        mockSignInTransitionTargetProgress = 1f
+        postInvalidateOnAnimation()
+    }
+
+    private fun openMockCreateAccountScreen() {
+        if (mockSignInStartMillis != null && mockSignInTransitionTargetProgress == 1f) return
+        val currentProgress = mockSignInProgress()
+        activeMockFlow = MockAccountFlow.CreateAccount
+        mockSignInStartMillis = SystemClock.uptimeMillis()
+        mockSignInTransitionStartProgress = currentProgress
+        mockSignInTransitionTargetProgress = 1f
+        postInvalidateOnAnimation()
+    }
+
+    private fun closeMockSignInScreen() {
+        if (mockSignInStartMillis == null) return
+        val currentProgress = mockSignInProgress()
+        pressedMockField = null
+        pressedRememberMe = false
+        pressedBackChevron = false
+        pressedMockCreateAvatarNav = null
+        pressedMockDropdown = null
+        pressedMockDropdownOption = null
+        activeMockDropdownScroll = null
+        mockDropdownScrollMoved = false
+        activeComposingText = ""
+        mockInputDimAwaitingField = null
+        usernameText = ""
+        passwordText = ""
+        confirmPasswordText = ""
+        emailText = ""
+        monthText = MOCK_FORM_MONTH_TEXT
+        dayText = MOCK_FORM_DAY_TEXT
+        yearText = MOCK_FORM_YEAR_TEXT
+        subscriptionTierText = MOCK_FORM_SUBSCRIPTION_TIER_TEXT
+        resetMockCreateAvatarCarousel()
+        expandedMockDropdown = null
+        mockDropdownScrollOffsets.keys.forEach { dropdown ->
+            mockDropdownScrollOffsets[dropdown] = 0
+        }
+        focusedMockField = null
+        restartMockFormLabelAnimation()
+        restartMockFormFocusAnimation()
+        restartMockLandscapeInputLiftAnimation()
+        restartMockInputDimAnimation()
+        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        inputMethodManager?.hideSoftInputFromWindow(windowToken, 0)
+        clearFocus()
+        mockSignInStartMillis = SystemClock.uptimeMillis()
+        mockSignInTransitionStartProgress = currentProgress
+        mockSignInTransitionTargetProgress = 0f
         postInvalidateOnAnimation()
     }
 
     private fun mockSignInProgress(): Float {
         val startMillis = mockSignInStartMillis ?: return 0f
         val elapsed = SystemClock.uptimeMillis() - startMillis
-        return (elapsed / MOCK_SIGN_IN_TRANSITION_MS.toFloat()).coerceIn(0f, 1f)
+        val progress = (elapsed / mockSignInTransitionDurationMs().toFloat()).coerceIn(0f, 1f)
+        return lerpFloat(
+            mockSignInTransitionStartProgress,
+            mockSignInTransitionTargetProgress,
+            progress
+        )
     }
 
     private fun isMockSignInAnimating(): Boolean {
         val startMillis = mockSignInStartMillis ?: return false
-        return SystemClock.uptimeMillis() - startMillis < MOCK_SIGN_IN_TRANSITION_MS
+        return SystemClock.uptimeMillis() - startMillis < mockSignInTransitionDurationMs()
+    }
+
+    private fun isMockSignInClosing(): Boolean {
+        return mockSignInStartMillis != null && mockSignInTransitionTargetProgress == 0f
+    }
+
+    private fun mockSignInTransitionDurationMs(): Long {
+        val distance = abs(mockSignInTransitionTargetProgress - mockSignInTransitionStartProgress)
+        return (MOCK_SIGN_IN_TRANSITION_MS * distance)
+            .roundToInt()
+            .coerceAtLeast(1)
+            .toLong()
+    }
+
+    private fun finishMockSignInTransitionIfNeeded() {
+        val startMillis = mockSignInStartMillis ?: return
+        if (SystemClock.uptimeMillis() - startMillis < mockSignInTransitionDurationMs()) return
+
+        if (mockSignInTransitionTargetProgress == 0f) {
+            mockSignInStartMillis = null
+            activeMockFlow = null
+            mockSignInTransitionStartProgress = 0f
+            mockSignInTransitionTargetProgress = 0f
+            pressedMockField = null
+            pressedRememberMe = false
+            pressedBackChevron = false
+            pressedMockCreateAvatarNav = null
+            pressedMockDropdown = null
+            pressedMockDropdownOption = null
+            activeMockDropdownScroll = null
+            mockDropdownScrollMoved = false
+            mockDragReturnInProgress = false
+            resetMockCreateAvatarCarousel()
+            return
+        }
+
+        mockSignInTransitionStartProgress = 1f
+        mockSignInTransitionTargetProgress = 1f
     }
 
     private inner class MockSignInInputConnection : BaseInputConnection(this@CinerificIntroView, false) {
@@ -1016,10 +3012,77 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 }
 
+private enum class MockAccountFlow {
+    SignIn,
+    CreateAccount
+}
+
 private enum class MockSignInField {
     Username,
-    Password
+    Password,
+    ConfirmPassword,
+    Email,
+    Month,
+    Day,
+    Year
 }
+
+private enum class MockDropdown {
+    SubscriptionTier,
+    Month,
+    Day,
+    Year
+}
+
+private enum class MockAvatarCarouselDirection(
+    val indexDelta: Int,
+    val stageDirection: Float
+) {
+    Previous(indexDelta = -1, stageDirection = -1f),
+    Next(indexDelta = 1, stageDirection = 1f)
+}
+
+private data class MockDropdownOption(
+    val dropdown: MockDropdown,
+    val option: String
+)
+
+private val MOCK_SIGN_IN_FIELDS = listOf(
+    MockSignInField.Username,
+    MockSignInField.Password
+)
+
+private val MOCK_CREATE_ACCOUNT_FIELDS = listOf(
+    MockSignInField.Username,
+    MockSignInField.Password,
+    MockSignInField.ConfirmPassword,
+    MockSignInField.Email
+)
+
+private val MOCK_MEMBERSHIP_OPTIONS = listOf(
+    MOCK_MEMBERSHIP_OPTION_1_TEXT,
+    MOCK_MEMBERSHIP_OPTION_2_TEXT,
+    MOCK_MEMBERSHIP_OPTION_3_TEXT
+)
+
+private val MOCK_MONTH_OPTIONS = listOf(
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+)
+
+private val MOCK_DAY_OPTIONS = (1..31).map { it.toString() }
+
+private val MOCK_YEAR_OPTIONS = (1900..2026).map { it.toString() }
 
 private data class AvatarTarget(
     val profile: CinerificProfile,
