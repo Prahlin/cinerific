@@ -196,7 +196,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private val guestAvatar = decode(R.drawable.guest_avatar_bubble_edge50_body0_test)
     private val createAvatarBubbleShell = createAvatarBubbleShellBitmap(steveAvatar)
     private val steveCreateAvatarCharacter = createAvatarCharacterBitmap(steveAvatar)
-    private val martinCreateAvatarCharacter = createAvatarCharacterBitmap(martinAvatar)
+    private val martinCreateAvatarCharacter = createAvatarCharacterBitmap(martinAvatar, includeDarkSaturatedPixels = true)
     private val jannyCreateAvatarCharacter = createAvatarCharacterBitmap(jannyAvatar)
     private val steveName = decode(R.drawable.steve_name)
     private val martinName = decode(R.drawable.martin_name)
@@ -1667,13 +1667,16 @@ internal class CinerificIntroView(context: Context) : View(context) {
         return BitmapFactory.decodeResource(resources, resId, bitmapOptions)
     }
 
-    private fun createAvatarCharacterBitmap(source: Bitmap): Bitmap {
+    private fun createAvatarCharacterBitmap(
+        source: Bitmap,
+        includeDarkSaturatedPixels: Boolean = false
+    ): Bitmap {
         val bitmapWidth = source.width
         val bitmapHeight = source.height
         val pixels = IntArray(bitmapWidth * bitmapHeight)
         source.getPixels(pixels, 0, bitmapWidth, 0, 0, bitmapWidth, bitmapHeight)
 
-        val mask = createAvatarCharacterMask(pixels, bitmapWidth, bitmapHeight)
+        val mask = createAvatarCharacterMask(pixels, bitmapWidth, bitmapHeight, includeDarkSaturatedPixels)
         val outputPixels = IntArray(pixels.size) { index ->
             if (mask[index]) pixels[index] else Color.TRANSPARENT
         }
@@ -1712,11 +1715,12 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private fun createAvatarCharacterMask(
         pixels: IntArray,
         bitmapWidth: Int,
-        bitmapHeight: Int
+        bitmapHeight: Int,
+        includeDarkSaturatedPixels: Boolean
     ): BooleanArray {
         val coloredPixels = BooleanArray(pixels.size)
         pixels.forEachIndexed { index, pixel ->
-            coloredPixels[index] = isColorfulAvatarPixel(pixel)
+            coloredPixels[index] = isColorfulAvatarPixel(pixel, includeDarkSaturatedPixels)
         }
 
         val mask = BooleanArray(pixels.size)
@@ -1751,14 +1755,21 @@ internal class CinerificIntroView(context: Context) : View(context) {
         return mask
     }
 
-    private fun isColorfulAvatarPixel(pixel: Int): Boolean {
+    private fun isColorfulAvatarPixel(
+        pixel: Int,
+        includeDarkSaturatedPixels: Boolean
+    ): Boolean {
         val alpha = Color.alpha(pixel)
         val red = Color.red(pixel)
         val green = Color.green(pixel)
         val blue = Color.blue(pixel)
         val channelMax = maxOf(red, green, blue)
         val channelMin = minOf(red, green, blue)
-        return alpha > 16 && channelMax > 48 && channelMax - channelMin > 22
+        if (alpha <= 16) return false
+
+        val chroma = channelMax - channelMin
+        return (channelMax > 48 && chroma > 22) ||
+            (includeDarkSaturatedPixels && channelMax > 36 && chroma > 14)
     }
 
     private fun standardSignInBackgroundForSize(): Bitmap? {

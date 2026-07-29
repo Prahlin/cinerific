@@ -26,12 +26,11 @@ import androidx.annotation.RawRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -60,14 +59,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -75,12 +80,18 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.annotation.StringRes
 import com.prahlin.cinerific.R
 import androidx.compose.ui.res.stringResource
+import kotlin.math.abs
 import kotlin.math.max
 
 private const val HOME_FRAME_WIDTH = 1194f
 private const val HERO_REEL_VIEWPORT_ASPECT = 1194f / 834f
 private const val CARD_ASPECT = 350f / 263f
 private const val CARD_SCALE = 0.8f
+private const val CARD_CORNER_RADIUS_DP = 22f
+private const val SELECTED_CARD_CLEAR_STROKE_PX = 10f
+private const val SELECTED_CARD_OUTER_STROKE_PX = 3f
+private const val HOME_ROW_HEADER_HEIGHT_DP = 48f
+private const val HOME_ROW_CARDS_TOP_PADDING_DP = 20f
 private const val PORTRAIT_HERO_HEIGHT_FRACTION = 0.48f
 private const val PORTRAIT_CARD_VISIBLE_COUNT = 2.75f
 private const val PORTRAIT_BOTTOM_NAV_CLEARANCE = 118f
@@ -89,6 +100,7 @@ private val HomeBackgroundTop = Color(0xFF080007)
 private val HomeBackgroundMid = Color(0xFF23001F)
 private val HomeBackgroundBottom = Color(0xFF060004)
 private val HomeText = Color(0xFFE7E7E7)
+private val HomeSelectedCardStroke = Color(0xFFE7E7E7)
 
 @Composable
 internal fun CinerificHomeScreen(
@@ -107,6 +119,9 @@ internal fun CinerificHomeScreen(
         val horizontalPadding = figmaDp(50f, scale)
         val endPadding = horizontalPadding
         val cardGap = figmaDp(if (isPortrait) 42f else 50f, scale)
+        val selectedCardClearStroke = figmaDp(SELECTED_CARD_CLEAR_STROKE_PX, scale)
+        val selectedCardOuterStroke = figmaDp(SELECTED_CARD_OUTER_STROKE_PX, scale)
+        val selectionStrokeAlpha = rememberCinerificSelectionStrokeAlpha()
         val cardWidth = if (isPortrait) {
             val availableWidth = (
                 maxWidth.value -
@@ -133,6 +148,15 @@ internal fun CinerificHomeScreen(
         var activeReelIndex by remember { mutableStateOf(0) }
         var heroPlayKey by remember { mutableStateOf(0) }
         var scrollToTopRequestId by remember { mutableStateOf(0) }
+        val selectedCarouselIndex = homeSelectedCarouselIndex(
+            scrollOffsetPx = scrollState.value,
+            viewportHeight = maxHeight,
+            heroHeight = heroHeight,
+            cardHeight = cardHeight,
+            interStackGap = interStackGap,
+            isPortrait = isPortrait,
+            density = density
+        )
         val handleHomeProgramSelected: (String) -> Unit = { title ->
             val targetReelIndex = homeHeroReelIndexForProgramTitle(title)
             if (targetReelIndex != null) {
@@ -188,11 +212,11 @@ internal fun CinerificHomeScreen(
                     cardWidth = cardWidth,
                     cardHeight = cardHeight,
                     cardGap = cardGap,
-                    topPadding = if (index == 0) {
-                        if (isPortrait) 38.dp else 52.dp
-                    } else {
-                        interStackGap
-                    }
+                    selectedCardClearStroke = selectedCardClearStroke,
+                    selectedCardOuterStroke = selectedCardOuterStroke,
+                    selectionStrokeAlpha = selectionStrokeAlpha,
+                    selected = selectedCarouselIndex == index,
+                    topPadding = homeRowTopPadding(index, isPortrait, interStackGap)
                 )
             }
 
@@ -287,6 +311,10 @@ private fun HomeProgramRow(
     cardWidth: Dp,
     cardHeight: Dp,
     cardGap: Dp,
+    selectedCardClearStroke: Dp,
+    selectedCardOuterStroke: Dp,
+    selectionStrokeAlpha: Float,
+    selected: Boolean,
     topPadding: Dp
 ) {
     Column(
@@ -297,7 +325,13 @@ private fun HomeProgramRow(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = horizontalPadding, end = endPadding),
+                .padding(start = horizontalPadding, end = endPadding)
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null
+                ) {
+                    onCatalogSelected()
+                },
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -306,49 +340,40 @@ private fun HomeProgramRow(
                 fontFamily = CinerificAppTextFontFamily,
                 fontSize = 36.sp,
                 fontWeight = FontWeight.Black,
-                letterSpacing = 0.sp,
-                modifier = Modifier.clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null
-                ) {
-                    onCatalogSelected()
-                }
+                letterSpacing = 0.sp
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
                 imageVector = Icons.Rounded.ChevronRight,
                 contentDescription = "$title row",
                 tint = HomeText,
-                modifier = Modifier
-                    .size(48.dp)
-                    .clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null
-                    ) {
-                        onCatalogSelected()
-                    }
+                modifier = Modifier.size(48.dp)
             )
         }
 
-        Row(
+        CinerificCircularCardRow(
+            itemCount = cardIds.size,
+            selected = selected,
+            itemSpacing = cardGap,
             modifier = Modifier
                 .fillMaxWidth()
-                .horizontalScroll(rememberScrollState())
-                .padding(start = horizontalPadding, end = endPadding)
                 .padding(top = 20.dp),
-            horizontalArrangement = Arrangement.spacedBy(cardGap)
-        ) {
-            cardIds.forEach { cardId ->
-                val programTitle = homeProgramTitleForCard(cardId)
-                ProgramCard(
-                    drawableId = cardId,
-                    width = cardWidth,
-                    height = cardHeight,
-                    onClick = programTitle?.let { title ->
-                        { onProgramSelected(title) }
-                    }
-                )
-            }
+            contentPadding = PaddingValues(start = horizontalPadding, end = endPadding)
+        ) { index, cardSelected ->
+            val cardId = cardIds[index]
+            val programTitle = homeProgramTitleForCard(cardId)
+            ProgramCard(
+                drawableId = cardId,
+                width = cardWidth,
+                height = cardHeight,
+                selected = cardSelected,
+                selectedCardClearStroke = selectedCardClearStroke,
+                selectedCardOuterStroke = selectedCardOuterStroke,
+                selectionStrokeAlpha = selectionStrokeAlpha,
+                onClick = programTitle?.let { title ->
+                    { onProgramSelected(title) }
+                }
+            )
         }
     }
 }
@@ -358,9 +383,13 @@ private fun ProgramCard(
     @DrawableRes drawableId: Int,
     width: Dp,
     height: Dp,
+    selected: Boolean,
+    selectedCardClearStroke: Dp,
+    selectedCardOuterStroke: Dp,
+    selectionStrokeAlpha: Float,
     onClick: (() -> Unit)? = null
 ) {
-    val shape = RoundedCornerShape(22.dp)
+    val shape = RoundedCornerShape(CARD_CORNER_RADIUS_DP.dp)
     Box(
         modifier = Modifier
             .width(width)
@@ -369,6 +398,13 @@ private fun ProgramCard(
                 elevation = 12.dp,
                 shape = shape,
                 clip = false
+            )
+            .selectedHomeCardFrame(
+                selected = selected,
+                clearStrokeWidth = selectedCardClearStroke,
+                outerStrokeWidth = selectedCardOuterStroke,
+                strokeAlpha = selectionStrokeAlpha,
+                cornerRadius = CARD_CORNER_RADIUS_DP.dp
             )
             .clip(shape)
             .clickable(enabled = onClick != null) {
@@ -381,6 +417,79 @@ private fun ProgramCard(
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillBounds
+        )
+    }
+}
+
+private fun homeSelectedCarouselIndex(
+    scrollOffsetPx: Int,
+    viewportHeight: Dp,
+    heroHeight: Dp,
+    cardHeight: Dp,
+    interStackGap: Dp,
+    isPortrait: Boolean,
+    density: Density
+): Int {
+    val viewportCenterY = scrollOffsetPx + with(density) { viewportHeight.toPx() / 2f }
+    val headerHeightPx = with(density) { HOME_ROW_HEADER_HEIGHT_DP.dp.toPx() }
+    val cardTopPaddingPx = with(density) { HOME_ROW_CARDS_TOP_PADDING_DP.dp.toPx() }
+    val cardHeightPx = with(density) { cardHeight.toPx() }
+    var rowTopY = with(density) { heroHeight.toPx() }
+    var selectedIndex = 0
+    var selectedDistance = Float.MAX_VALUE
+
+    HomeProgramRows.indices.forEach { index ->
+        val topPaddingPx = with(density) {
+            homeRowTopPadding(index, isPortrait, interStackGap).toPx()
+        }
+        val carouselCenterY = rowTopY + topPaddingPx + headerHeightPx + cardTopPaddingPx + cardHeightPx / 2f
+        val distance = abs(carouselCenterY - viewportCenterY)
+        if (distance < selectedDistance) {
+            selectedDistance = distance
+            selectedIndex = index
+        }
+        rowTopY += topPaddingPx + headerHeightPx + cardTopPaddingPx + cardHeightPx
+    }
+
+    return selectedIndex
+}
+
+private fun homeRowTopPadding(
+    index: Int,
+    isPortrait: Boolean,
+    interStackGap: Dp
+): Dp {
+    return if (index == 0) {
+        if (isPortrait) 38.dp else 52.dp
+    } else {
+        interStackGap
+    }
+}
+
+private fun Modifier.selectedHomeCardFrame(
+    selected: Boolean,
+    clearStrokeWidth: Dp,
+    outerStrokeWidth: Dp,
+    strokeAlpha: Float,
+    cornerRadius: Dp
+): Modifier {
+    if (!selected) return this
+
+    return this.drawWithContent {
+        drawContent()
+
+        val clearStrokePx = clearStrokeWidth.toPx()
+        val outerStrokePx = outerStrokeWidth.toPx()
+        val strokeCenterOffset = clearStrokePx + outerStrokePx / 2f
+        drawRoundRect(
+            color = HomeSelectedCardStroke.copy(alpha = strokeAlpha.coerceIn(0f, 1f)),
+            topLeft = Offset(-strokeCenterOffset, -strokeCenterOffset),
+            size = Size(
+                width = size.width + strokeCenterOffset * 2f,
+                height = size.height + strokeCenterOffset * 2f
+            ),
+            cornerRadius = CornerRadius(cornerRadius.toPx() + strokeCenterOffset),
+            style = Stroke(width = outerStrokePx)
         )
     }
 }

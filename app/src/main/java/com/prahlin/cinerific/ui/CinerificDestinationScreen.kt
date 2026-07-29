@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.Spring
@@ -12,16 +13,19 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.FlingBehavior
+import androidx.compose.foundation.gestures.ScrollScope
 import androidx.compose.foundation.interaction.collectIsPressedAsState
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -50,6 +54,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -60,8 +65,11 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.CompositingStrategy
@@ -113,6 +121,11 @@ private const val DESTINATION_LIST_IMAGE_WIDTH = 300f
 private const val DESTINATION_LIST_IMAGE_HEIGHT = 225f
 private const val DESTINATION_LIST_TEXT_START_PADDING = 50f
 private const val DESTINATION_LIST_TEXT_COLUMN_HEIGHT = 222f
+private const val DESTINATION_LIST_CARD_CLEAR_STROKE_PX = 20f
+private const val DESTINATION_LIST_CARD_OUTER_STROKE_PX = 3f
+private const val DESTINATION_LIST_CARD_CORNER_RADIUS = 15f
+private const val DESTINATION_LIST_VERTICAL_SNAP_MS = 150
+private const val DESTINATION_LIST_VERTICAL_SNAP_VELOCITY_STRIDE_FRACTION = 0.62f
 private const val DESTINATION_LIST_META_ROW_HEIGHT = 76f
 private const val DESTINATION_LIST_RATING_ROW_HEIGHT = 40f
 private const val DESTINATION_LIST_TEXT_VERTICAL_GAP = 20f
@@ -207,6 +220,8 @@ private const val DETAIL_INFO_PANEL_MIN_HEIGHT = 465f
 private const val DETAIL_INFO_PANEL_BACKGROUND_ALPHA = 0.25f
 private const val DETAIL_INFO_PANEL_BACKGROUND_FADE_START = 0.5f
 private const val DETAIL_LIBRARY_HORIZONTAL_PADDING = 50f
+private const val DETAIL_LIBRARY_SELECTED_CARD_CLEAR_STROKE_PX = 10f
+private const val DETAIL_LIBRARY_SELECTED_CARD_OUTER_STROKE_PX = 3f
 private const val DETAIL_INFO_PANEL_TITLE_FONT_SIZE = 72f
 private const val DETAIL_INFO_PANEL_TITLE_LINE_HEIGHT = DETAIL_INFO_PANEL_TITLE_FONT_SIZE * 1.2f
 private const val DETAIL_INFO_PANEL_SECONDARY_CONTENT_SCALE = 2f
@@ -383,6 +398,38 @@ private fun CinerificCatalogScreen(
         } else {
             rows.filter { it.genre == selectedGenre }
         }
+        val listCardCenterYs = remember(titleResId, selectedGenre, selectedMode) {
+            mutableStateMapOf<String, Float>()
+        }
+        val visibleListProgramTitles = if (selectedMode == ViewportMode.List) {
+            visibleRows
+                .flatMap { listPrograms(it.programs) }
+                .map { it.title }
+        } else {
+            emptyList()
+        }
+        val selectedListProgramTitle = if (selectedMode == ViewportMode.List) {
+            val viewportCenterY = with(density) { maxHeight.toPx() / 2f }
+            listCardCenterYs
+                .minByOrNull { (_, centerY) -> abs(centerY - viewportCenterY) }
+                ?.key
+                ?: visibleListProgramTitles.firstOrNull()
+        } else {
+            null
+        }
+        val selectionStrokeAlpha = rememberCinerificSelectionStrokeAlpha()
+        val listVerticalFlingBehavior = if (selectedMode == ViewportMode.List) {
+            remember(scrollState, visibleListProgramTitles, listCardCenterYs, maxHeight) {
+                DestinationListVerticalSnapFlingBehavior(
+                    scrollState = scrollState,
+                    orderedProgramTitles = visibleListProgramTitles,
+                    cardCenterYs = listCardCenterYs,
+                    viewportCenterY = with(density) { maxHeight.toPx() / 2f }
+                )
+            }
+        } else {
+            null
+        }
         LaunchedEffect(title, selectedGenre, selectedMode) {
             scrollState.scrollTo(0)
         }
@@ -390,7 +437,7 @@ private fun CinerificCatalogScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(scrollState)
+                .verticalScroll(scrollState, flingBehavior = listVerticalFlingBehavior)
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(DestinationTop, DestinationMid, DestinationBottom)
@@ -443,12 +490,18 @@ private fun CinerificCatalogScreen(
                 }
                 ViewportMode.List -> {
                     visibleRows.forEachIndexed { index, row ->
+                        val programs = listPrograms(row.programs)
                         DestinationProgramList(
                             title = stringResource(row.titleResId),
-                            programs = listPrograms(row.programs),
+                            programs = programs,
                             horizontalPadding = horizontalPadding,
                             rightPadding = rightPadding,
                             scale = scale,
+                            selectedProgramTitle = selectedListProgramTitle,
+                            selectionStrokeAlpha = selectionStrokeAlpha,
+                            onProgramCenterChanged = { programTitle, centerY ->
+                                listCardCenterYs[programTitle] = centerY
+                            },
                             onProgramSelected = onProgramSelected,
                             topPadding = destinationSectionTopPadding(index = index, showViewportNav = showViewportNav)
                         )
@@ -683,6 +736,9 @@ private fun DestinationProgramList(
     horizontalPadding: Dp,
     rightPadding: Dp,
     scale: Float,
+    selectedProgramTitle: String?,
+    selectionStrokeAlpha: Float,
+    onProgramCenterChanged: (String, Float) -> Unit,
     onProgramSelected: (String) -> Unit,
     topPadding: Dp
 ) {
@@ -708,6 +764,11 @@ private fun DestinationProgramList(
                 DestinationProgramListItem(
                     program = program,
                     scale = scale,
+                    selected = program.title == selectedProgramTitle,
+                    selectionStrokeAlpha = selectionStrokeAlpha,
+                    onCenterChanged = { centerY ->
+                        onProgramCenterChanged(program.title, centerY)
+                    },
                     onProgramSelected = onProgramSelected
                 )
             }
@@ -719,6 +780,9 @@ private fun DestinationProgramList(
 private fun DestinationProgramListItem(
     program: DestinationProgramSpec,
     scale: Float,
+    selected: Boolean,
+    selectionStrokeAlpha: Float,
+    onCenterChanged: (Float) -> Unit,
     onProgramSelected: (String) -> Unit
 ) {
     val imageShape = RoundedCornerShape(destinationDp(15f, scale))
@@ -734,6 +798,16 @@ private fun DestinationProgramListItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .onGloballyPositioned { coordinates ->
+                onCenterChanged(coordinates.positionInRoot().y + coordinates.size.height / 2f)
+            }
+            .destinationListCardFrame(
+                selected = selected,
+                clearStrokeWidth = destinationDp(DESTINATION_LIST_CARD_CLEAR_STROKE_PX, scale),
+                outerStrokeWidth = destinationDp(DESTINATION_LIST_CARD_OUTER_STROKE_PX, scale),
+                strokeAlpha = selectionStrokeAlpha,
+                cornerRadius = destinationDp(DESTINATION_LIST_CARD_CORNER_RADIUS, scale)
+            )
             .clickable(enabled = program.hasDetailHero) {
                 onProgramSelected(program.title)
             },
@@ -795,6 +869,97 @@ private fun DestinationProgramListItem(
                 scale = scale
             )
         }
+    }
+}
+
+private fun Modifier.destinationListCardFrame(
+    selected: Boolean,
+    clearStrokeWidth: Dp,
+    outerStrokeWidth: Dp,
+    strokeAlpha: Float,
+    cornerRadius: Dp
+): Modifier {
+    if (!selected) return this
+
+    return this.drawWithContent {
+        drawContent()
+
+        val clearStrokePx = clearStrokeWidth.toPx()
+        val outerStrokePx = outerStrokeWidth.toPx()
+        val strokeCenterOffset = clearStrokePx + outerStrokePx / 2f
+        drawRoundRect(
+            color = DestinationText.copy(alpha = strokeAlpha.coerceIn(0f, 1f)),
+            topLeft = Offset(-strokeCenterOffset, -strokeCenterOffset),
+            size = Size(
+                width = size.width + strokeCenterOffset * 2f,
+                height = size.height + strokeCenterOffset * 2f
+            ),
+            cornerRadius = CornerRadius(cornerRadius.toPx() + strokeCenterOffset),
+            style = Stroke(width = outerStrokePx)
+        )
+    }
+}
+
+private class DestinationListVerticalSnapFlingBehavior(
+    private val scrollState: ScrollState,
+    private val orderedProgramTitles: List<String>,
+    private val cardCenterYs: Map<String, Float>,
+    private val viewportCenterY: Float
+) : FlingBehavior {
+    override suspend fun ScrollScope.performFling(initialVelocity: Float): Float {
+        val measuredProgramTitles = orderedProgramTitles.filter { it in cardCenterYs }
+        val currentTitle = measuredProgramTitles.minByOrNull { title ->
+            abs(cardCenterYs.getValue(title) - viewportCenterY)
+        } ?: return 0f
+        val currentIndex = orderedProgramTitles.indexOf(currentTitle).takeIf { it >= 0 } ?: return 0f
+        val currentCenterY = cardCenterYs[currentTitle] ?: return 0f
+        val stridePx = measuredListCardStridePx().coerceAtLeast(1f)
+        val velocityThresholdPx = stridePx * DESTINATION_LIST_VERTICAL_SNAP_VELOCITY_STRIDE_FRACTION
+        val targetIndex = when {
+            initialVelocity > velocityThresholdPx -> currentIndex + 1
+            initialVelocity < -velocityThresholdPx -> currentIndex - 1
+            else -> currentIndex
+        }.coerceIn(0, orderedProgramTitles.lastIndex)
+        val targetTitle = orderedProgramTitles.getOrNull(targetIndex) ?: return 0f
+        val targetCenterY = cardCenterYs[targetTitle]
+            ?: currentCenterY + (targetIndex - currentIndex) * stridePx
+        val scrollDelta = targetCenterY - viewportCenterY
+
+        if (abs(scrollDelta) < 0.5f) return 0f
+
+        var previousValue = 0f
+        animate(
+            initialValue = 0f,
+            targetValue = scrollDelta,
+            animationSpec = tween(
+                durationMillis = DESTINATION_LIST_VERTICAL_SNAP_MS,
+                easing = FastOutSlowInEasing
+            )
+        ) { value, _ ->
+            val consumed = scrollBy(value - previousValue)
+            previousValue += consumed
+        }
+        return 0f
+    }
+
+    private fun measuredListCardStridePx(): Float {
+        val measuredCenters = orderedProgramTitles
+            .mapIndexedNotNull { index, title ->
+                cardCenterYs[title]?.let { index to it }
+            }
+            .sortedBy { it.first }
+
+        return measuredCenters
+            .zipWithNext()
+            .firstNotNullOfOrNull { (previous, next) ->
+                val indexDelta = next.first - previous.first
+                if (indexDelta > 0) {
+                    abs(next.second - previous.second) / indexDelta
+                } else {
+                    null
+                }
+            }
+            ?: (scrollState.viewportSize * 0.4f).coerceAtLeast(1f)
     }
 }
 
@@ -1053,6 +1218,7 @@ internal fun CinerificProgramDetailsScreen(
             .background(DestinationBottom)
     ) {
         val scale = maxWidth.value / DESTINATION_FRAME_WIDTH
+        val viewportHeight = maxHeight
         val density = LocalDensity.current
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
         val naturalHeroHeight = (maxWidth.value / DETAIL_HERO_ASPECT).dp
@@ -1159,6 +1325,7 @@ internal fun CinerificProgramDetailsScreen(
                 )
                 SinkOrSwimLibraryRows(
                     scale = scale,
+                    viewportHeight = viewportHeight,
                     onProgramSelected = onProgramSelected
                 )
             }
@@ -1510,12 +1677,23 @@ private fun HeroImageControlButton(
 @Composable
 private fun SinkOrSwimLibraryRows(
     scale: Float,
+    viewportHeight: Dp,
     onProgramSelected: (String) -> Unit
 ) {
+    val density = LocalDensity.current
     val horizontalPadding = destinationDp(DETAIL_LIBRARY_HORIZONTAL_PADDING, scale)
     val cardWidth = destinationDp(350f, scale) * DESTINATION_CARD_SCALE
     val cardHeight = cardWidth / DESTINATION_CARD_ASPECT
     val cardGap = destinationDp(50f, scale)
+    val selectedCardClearStroke = destinationDp(DETAIL_LIBRARY_SELECTED_CARD_CLEAR_STROKE_PX, scale)
+    val selectedCardOuterStroke = destinationDp(DETAIL_LIBRARY_SELECTED_CARD_OUTER_STROKE_PX, scale)
+    val selectionStrokeAlpha = rememberCinerificSelectionStrokeAlpha()
+    val viewportCenterY = with(density) { viewportHeight.toPx() / 2f }
+    val carouselCenterYs = remember { mutableStateMapOf<Int, Float>() }
+    val selectedCarouselIndex = carouselCenterYs
+        .minByOrNull { (_, centerY) -> abs(centerY - viewportCenterY) }
+        ?.key
+        ?: 0
 
     Column(
         modifier = Modifier
@@ -1549,22 +1727,30 @@ private fun SinkOrSwimLibraryRows(
                 )
             }
 
-            Row(
+            CinerificCircularCardRow(
+                itemCount = row.programs.size,
+                selected = selectedCarouselIndex == index,
+                itemSpacing = cardGap,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .horizontalScroll(rememberScrollState())
-                    .padding(start = horizontalPadding, end = horizontalPadding)
-                    .padding(top = 20.dp),
-                horizontalArrangement = Arrangement.spacedBy(cardGap)
-            ) {
-                row.programs.forEach { program ->
-                    SinkOrSwimLibraryCard(
-                        program = program,
-                        width = cardWidth,
-                        height = cardHeight,
-                        onProgramSelected = onProgramSelected
-                    )
-                }
+                    .padding(top = 20.dp)
+                    .onGloballyPositioned { coordinates ->
+                        carouselCenterYs[index] =
+                            coordinates.positionInRoot().y + coordinates.size.height / 2f
+                    },
+                contentPadding = PaddingValues(start = horizontalPadding, end = horizontalPadding)
+            ) { programIndex, cardSelected ->
+                val program = row.programs[programIndex]
+                SinkOrSwimLibraryCard(
+                    program = program,
+                    width = cardWidth,
+                    height = cardHeight,
+                    selected = cardSelected,
+                    selectedCardClearStroke = selectedCardClearStroke,
+                    selectedCardOuterStroke = selectedCardOuterStroke,
+                    selectionStrokeAlpha = selectionStrokeAlpha,
+                    onProgramSelected = onProgramSelected
+                )
             }
         }
     }
@@ -1575,6 +1761,10 @@ private fun SinkOrSwimLibraryCard(
     program: DestinationProgramSpec,
     width: Dp,
     height: Dp,
+    selected: Boolean,
+    selectedCardClearStroke: Dp,
+    selectedCardOuterStroke: Dp,
+    selectionStrokeAlpha: Float,
     onProgramSelected: (String) -> Unit
 ) {
     val shape = RoundedCornerShape(22.dp)
@@ -1583,6 +1773,13 @@ private fun SinkOrSwimLibraryCard(
             .width(width)
             .height(height)
             .shadow(12.dp, shape, clip = false)
+            .detailLibrarySelectedCardFrame(
+                selected = selected,
+                clearStrokeWidth = selectedCardClearStroke,
+                outerStrokeWidth = selectedCardOuterStroke,
+                strokeAlpha = selectionStrokeAlpha,
+                cornerRadius = 22.dp
+            )
             .clip(shape)
             .clickable(enabled = program.hasDetailHero) {
                 onProgramSelected(program.title)
@@ -1594,6 +1791,34 @@ private fun SinkOrSwimLibraryCard(
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillBounds
+        )
+    }
+}
+
+private fun Modifier.detailLibrarySelectedCardFrame(
+    selected: Boolean,
+    clearStrokeWidth: Dp,
+    outerStrokeWidth: Dp,
+    strokeAlpha: Float,
+    cornerRadius: Dp
+): Modifier {
+    if (!selected) return this
+
+    return this.drawWithContent {
+        drawContent()
+
+        val clearStrokePx = clearStrokeWidth.toPx()
+        val outerStrokePx = outerStrokeWidth.toPx()
+        val strokeCenterOffset = clearStrokePx + outerStrokePx / 2f
+        drawRoundRect(
+            color = DestinationText.copy(alpha = strokeAlpha.coerceIn(0f, 1f)),
+            topLeft = Offset(-strokeCenterOffset, -strokeCenterOffset),
+            size = Size(
+                width = size.width + strokeCenterOffset * 2f,
+                height = size.height + strokeCenterOffset * 2f
+            ),
+            cornerRadius = CornerRadius(cornerRadius.toPx() + strokeCenterOffset),
+            style = Stroke(width = outerStrokePx)
         )
     }
 }
