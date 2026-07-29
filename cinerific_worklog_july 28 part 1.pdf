@@ -1,0 +1,630 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+2 0 obj
+<< /Length 7074 >>
+stream
+BT
+/F1 7.35 Tf
+42 748 Td
+8.35 TL
+(Cinerific Android App Work Log - July 28, 2026 Part 1 \(U.S. EST\)) Tj
+T*
+(Compiled summary for Tuesday, July 28, 2026 - Part 1 \(U.S. EST\) - focus: continuing the) Tj
+T*
+(post-July-27 sign-in and detail-hero polish pass by reading the refreshed project snapshot and) Tj
+T*
+(worklog history, recentering portrait detail favorite affordances around the Cinerific logo,) Tj
+T*
+(preventing landscape detail heroes from exposing black right-side space, tightening the sign-in) Tj
+T*
+(avatar/name/action stack across portrait and landscape layouts, replacing the old account prompt) Tj
+T*
+(with Create Account, bold Sign In, and Forgot Password controls, turning Sign In into a mock form) Tj
+T*
+(transition, centering the Username and Password fields, adding live text-input behavior, shrinking) Tj
+T*
+(focused labels by 85 percent into the top-left of each field, sliding the focused form stack to) Tj
+T*
+(the Cinerific logo centerline, pushing the logo upward differently in landscape and portrait,) Tj
+T*
+(validating the work on the Cinerific tablet AVD, refreshing the project snapshot, and generating) Tj
+T*
+(this latest Part 1 Cinerific PDF worklog artifact.) Tj
+T*
+(Generated in continuity with the established Cinerific worklog cadence from July 12, July 14, July) Tj
+T*
+(15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, July 25, and) Tj
+T*
+(July 27: compact opening summary, source-material review, baseline state, goal list, themed) Tj
+T*
+(work-completed sections, validation, files touched, follow-up context, and output-artifact close.) Tj
+T*
+(This artifact records the current source state on main through HEAD 1a6966a, plus the refreshed) Tj
+T*
+(snapshot and generated worklog artifact from this July 28 Part 1 pass, and follows the prior) Tj
+T*
+(root-level naming, letter layout, footer convention, metadata, and plain-text-readable PDF style.) Tj
+T*
+() Tj
+T*
+(Source Materials Reviewed) Tj
+T*
+(- Reviewed every pre-existing Cinerific worklog PDF at the repository root: July 12, July 14, July) Tj
+T*
+(  15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, July 25, and) Tj
+T*
+(  July 27.) Tj
+T*
+(- Used pdftotext output from all prior PDFs to preserve the established title pattern,) Tj
+T*
+(  opening-summary rhythm, source review style, baseline/goals sections, themed work-completed) Tj
+T*
+(  sections, validation language, files-touched list, follow-up close, output-artifact phrasing,) Tj
+T*
+(  footer convention, and four-page daily-log shape.) Tj
+T*
+(- Used pdfinfo on the latest July 27 PDF to confirm the letter page size, four-page count,) Tj
+T*
+(  metadata style, title/subject/author fields, PDF 1.4 output, and standard-library PDF generator) Tj
+T*
+(  convention.) Tj
+T*
+(- Ran ./read_project.sh and reviewed the refreshed cinerific_PROJECT_SNAPSHOT.txt so this worklog) Tj
+T*
+(  reflected the current Android source layout, worklog inventory, generated-file policy, drawable) Tj
+T*
+(  resources, and post-commit project state.) Tj
+T*
+(- Reviewed git status, git log, git show --stat, and git show --name-status around HEAD 1a6966a,) Tj
+T*
+(  the July 28 source commit titled Refined sign-in form flow and detail hero layout.) Tj
+T*
+(- Reviewed the current touched source files and generated artifact scope: CinerificIntroView.kt,) Tj
+T*
+(  CinerificApp.kt, CinerificDestinationScreen.kt, and cinerific_PROJECT_SNAPSHOT.txt.) Tj
+T*
+(- Reviewed the current implementation details around native intro drawing, custom View touch) Tj
+T*
+(  handling, input-method bridging, form-label animation state, form focus motion, favorite prompt) Tj
+T*
+(  overlay positioning, detail hero content scaling, and fallback Compose intro constants.) Tj
+T*
+(- Reviewed emulator verification evidence from the July 28 pass: landscape sign-in screenshots,) Tj
+T*
+(  centered form screenshots, focused-field screenshots with keyboard input, portrait wm-size) Tj
+T*
+(  spot-check screenshots, and detail-hero orientation checks.) Tj
+T*
+() Tj
+T*
+(Baseline Status Before July 28 Part 1) Tj
+T*
+(- Cinerific entered July 28 with the July 27 source state accepted on main through 0dedffc and the) Tj
+T*
+(  July 27 worklog committed afterward as d6fec29.) Tj
+T*
+(- The app already had stateful ratings, routed Home genre labels and chevrons, deduplicated) Tj
+T*
+(  movie/show catalogs, responsive portrait navigation, full-sensor sign-in rotation,) Tj
+T*
+(  standard-tablet sign-in backgrounds, black-to-purple intro timing, and hollow gradient avatar) Tj
+T*
+(  bubble resources.) Tj
+T*
+(- Detail hero favorite stars and the full-favorites prompt existed, but portrait movie/title) Tj
+T*
+(  heroes still needed the favorite star, its animation, and the error/prompt box vertically) Tj
+T*
+(  centered to the Cinerific logo rather than sitting at the earlier landscape-oriented top) Tj
+T*
+(  placement.) Tj
+T*
+(- Landscape detail heroes could still expose an unwanted black vertical region on the right side) Tj
+T*
+(  when the image fit behavior preserved the full asset instead of filling the available hero area.) Tj
+T*
+(- The sign-in avatar/name stack had the accepted gradient-bubble treatment, but the user wanted) Tj
+T*
+(  smaller avatar icons, reduced avatar-to-name spacing, careful preservation of the logo position,) Tj
+T*
+(  and tighter landscape vertical distribution.) Tj
+T*
+(- The sign-in action text was still evolving from a single I need an account prompt toward a more) Tj
+T*
+(  realistic three-action row with Create Account, Sign In, and Forgot Password.) Tj
+T*
+() Tj
+T*
+(- Sign In did not yet open a mock sign-in form; avatar taps still represented the primary way to) Tj
+T*
+(  enter the app.) Tj
+T*
+(- No live username/password input existed inside the native intro view, so any form treatment had) Tj
+T*
+(  to be added inside a custom canvas-based View rather than by placing ordinary Compose TextFields) Tj
+T*
+(  over the intro.) Tj
+T*
+() Tj
+T*
+(Main Goals for July 28 Part 1) Tj
+T*
+(- Recenter detail hero favorite controls and full-prompt feedback against the Cinerific logo in) Tj
+T*
+(  portrait mode while preserving landscape behavior.) Tj
+T*
+(- Stop landscape hero artwork from leaving a black vertical box or gutter on the right side of) Tj
+T*
+(  movie/title hero surfaces.) Tj
+T*
+(- Tighten the sign-in avatar stack without moving the established logo position, including 20) Tj
+T*
+(  percent smaller avatar bubbles and reduced avatar/name gaps.) Tj
+T*
+(- Keep portrait sign-in stack placement stable while making landscape vertical spacing more even) Tj
+T*
+(  and more compact.) Tj
+T*
+(- Replace I need an account with Create Account, bold Sign In, and Forgot Password, with the) Tj
+T*
+(  secondary actions anchored to the left and right edges of the avatar stack.) Tj
+T*
+(- Make tapping Sign In open a mock sign-in screen where the avatar/name/action stack moves) Tj
+T*
+(  downward and fades away while username/password fields rise and fade in.) Tj
+ET
+BT
+/F1 7.35 Tf
+309.81 31 Td
+(Cinerific Work Log - July 28, 2026 Part 1 \(U.S. EST\) Page 1) Tj
+ET
+endstream
+endobj
+3 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 2 0 R >>
+endobj
+4 0 obj
+<< /Length 6873 >>
+stream
+BT
+/F1 7.35 Tf
+42 748 Td
+8.35 TL
+(- Center the form fields horizontally and make field taps focus the selected field, bring up text) Tj
+T*
+(  input, and render typed content directly in the native intro canvas.) Tj
+T*
+(- Animate field labels to shrink by 85 percent and move into the top-left corner of each field) Tj
+T*
+(  when focused or populated.) Tj
+T*
+(- On field focus, slide the form stack to the Cinerific logo's vertical center position while) Tj
+T*
+(  pushing the logo up; make the logo fully exit in landscape while only moving upward in portrait.) Tj
+T*
+() Tj
+T*
+(Work Completed - Detail Hero Favorite Placement and Image Fill) Tj
+T*
+(- Added a shared detail-hero logo center constant so portrait favorite controls and the) Tj
+T*
+(  full-prompt overlay could align to the Cinerific logo's vertical center instead of relying on) Tj
+T*
+(  the old fixed star Y position.) Tj
+T*
+(- Passed the current destination into FavoritesFullPromptOverlay so the overlay can treat) Tj
+T*
+(  ProgramDetails portrait screens differently from other app surfaces.) Tj
+T*
+(- Repositioned the favorites-full prompt bubble in portrait ProgramDetails views by centering its) Tj
+T*
+(  height on DETAIL_HERO_LOGO_CENTER_Y.) Tj
+T*
+(- Added an isPortrait calculation inside CinerificProgramDetailsScreen and threaded it into) Tj
+T*
+(  ProgramDetailRevealImage.) Tj
+T*
+(- Switched detail hero image behavior by orientation: portrait continued to fit the artwork, while) Tj
+T*
+(  landscape used crop scaling so the hero filled the available area and avoided right-side black) Tj
+T*
+(  space.) Tj
+T*
+(- Updated HeroFavoriteToggleButton to accept a centerVerticallyOnLogo flag and use the) Tj
+T*
+(  logo-centered Y coordinate only in portrait detail heroes.) Tj
+T*
+(- Kept the favorite burst padding and bounce animation intact while moving the portrait anchor, so) Tj
+T*
+(  the visual feedback still expands around the star rather than around the old top coordinate.) Tj
+T*
+() Tj
+T*
+(Work Completed - Sign-In Avatar Stack and Account Prompt Row) Tj
+T*
+(- Scaled the four sign-in avatar bubble targets from the prior 220 px size to 176 px, preserving) Tj
+T*
+(  the visual order and center positions across Steve, Martin, Janny, and Guest.) Tj
+T*
+(- Halved the vertical gap between avatar character bubbles and their name images by moving the) Tj
+T*
+(  name row upward to the new SIGN_IN_NAME_TOP baseline.) Tj
+T*
+(- Shifted the combined avatar/name/action stack upward while maintaining the absolute Cinerific) Tj
+T*
+(  logo placement already shown in the settled sign-in screen.) Tj
+T*
+(- Added separate portrait and landscape stack-shift constants so portrait placement could remain) Tj
+T*
+(  stable while landscape spacing could be narrowed and balanced.) Tj
+T*
+(- Replaced the previous account prompt with three Manrope labels: Create Account, Sign In, and) Tj
+T*
+(  Forgot Password.) Tj
+T*
+(- Made Sign In visibly bold using a dedicated bold/stroked paint in the native intro view and) Tj
+T*
+(  FontWeight.Black in the fallback Compose path.) Tj
+T*
+(- Anchored Create Account to the left avatar-stack edge and Forgot Password to the right) Tj
+T*
+(  avatar-stack edge, with Sign In centered between them.) Tj
+T*
+(- Kept Create Account and Forgot Password at 80 percent of the Sign In text size and vertically) Tj
+T*
+(  centered them against the Sign In baseline.) Tj
+T*
+(- Mirrored the same sign-in stack constants and prompt-row treatment into the dormant Compose) Tj
+T*
+(  intro helpers so fallback paths stay visually aligned with the active native intro view.) Tj
+T*
+() Tj
+T*
+(Work Completed - Mock Sign-In Form Transition) Tj
+T*
+(- Added Sign In hit-testing to the native intro view so tapping the bold Sign In prompt opens a) Tj
+T*
+(  mock sign-in form instead of falling through to the old default Guest avatar navigation path.) Tj
+T*
+(- Changed performClick behavior so only an actual avatar tap invokes onAvatarSelected, preventing) Tj
+T*
+(  non-avatar prompt taps from entering Home/default accidentally.) Tj
+T*
+(- Added a mock sign-in transition clock and easing path that moves the avatar/name/action stack) Tj
+T*
+(  downward while fading it out.) Tj
+T*
+(- Drew the mock form as two rounded translucent outline fields labeled Username: and Password: in) Tj
+T*
+(  Manrope, initially rising and fading into view as the avatar stack exits.) Tj
+T*
+(- Centered the Username and Password field stack horizontally within the 1194 px Figma stage) Tj
+T*
+(  rather than keeping the fields hard-positioned on the right.) Tj
+T*
+(- Preserved the Cinerific logo through the first Sign In transition so the form appears beneath) Tj
+T*
+(  the established brand mark rather than replacing the whole intro surface.) Tj
+T*
+(- Added hit-testing for both mock form fields using the same stage metrics, form X, form Y, focus) Tj
+T*
+(  shift, and scale math used by the drawing path.) Tj
+T*
+() Tj
+T*
+(Work Completed - Form Input, Floating Labels, and Focus Motion) Tj
+T*
+(- Made CinerificIntroView act as a text editor only after the mock sign-in screen is active, using) Tj
+T*
+(  onCheckIsTextEditor and onCreateInputConnection.) Tj
+T*
+(- Added a custom BaseInputConnection for username/password text entry, composing text replacement,) Tj
+T*
+(  finishComposingText, deleteSurroundingText, editor actions, and soft-keyboard key events.) Tj
+T*
+(- Added hardware/ADB key handling through onKeyDown and onKeyMultiple so automated emulator input) Tj
+T*
+(  and physical-keyboard style events both update the custom canvas text fields.) Tj
+T*
+(- Stored username and password text separately, limited mock input length, displayed password text) Tj
+T*
+(  as masked asterisks, and drew a caret at the end of the visible field text.) Tj
+T*
+(- Animated each label independently from centered placeholder text into a top-left floating label) Tj
+T*
+(  whenever its field is focused or already contains text.) Tj
+T*
+(- Corrected the requested shrink behavior so the floating labels use 15 percent of their original) Tj
+T*
+(  text size, representing an 85 percent shrink rather than a 75 percent remaining scale.) Tj
+T*
+(- Added a focus-stage animation that begins when a mock field is tapped and slides the entire form) Tj
+T*
+(  stack upward until the stack center reaches the original Cinerific logo vertical centerline.) Tj
+T*
+(- Pushed the Cinerific logo upward during the same focus-stage motion. Landscape uses a stronger) Tj
+T*
+(  logo shift so the logo fully exits the screen; portrait uses the proportional form-focus shift) Tj
+T*
+(  so the logo moves up but remains visible.) Tj
+T*
+(- Matched the moving form hit boxes to the moving draw coordinates so field taps continue to work) Tj
+T*
+(  while the stack is transitioning.) Tj
+T*
+() Tj
+T*
+(Work Completed - Validation, Snapshot, and Commit State) Tj
+ET
+BT
+/F1 7.35 Tf
+309.81 31 Td
+(Cinerific Work Log - July 28, 2026 Part 1 \(U.S. EST\) Page 2) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 6336 >>
+stream
+BT
+/F1 7.35 Tf
+42 748 Td
+8.35 TL
+(- Built the app repeatedly during the July 28 sign-in and detail-hero pass with ./gradlew) Tj
+T*
+(  :app:assembleDebug.) Tj
+T*
+(- Installed debug APKs to Cinerific_Standard_Tablet and relaunched com.prahlin.cinerific through) Tj
+T*
+(  adb after implementation steps that affected runtime touch behavior.) Tj
+T*
+(- Verified the mock Sign In transition in landscape, including avatar/action stack fade-out,) Tj
+T*
+(  centered form display, username field focus, soft keyboard appearance, and typed testuser) Tj
+T*
+(  rendering.) Tj
+T*
+(- Verified that the focused landscape form stack moved into the logo band and that the Cinerific) Tj
+T*
+(  logo fully exited the top of the screen when a field was focused.) Tj
+T*
+(- Used a temporary adb wm size 1600x2560 portrait override to spot-check portrait behavior on the) Tj
+T*
+(  standard tablet AVD after the rotation framebuffer resisted ordinary user_rotation changes.) Tj
+T*
+(- Verified in portrait that the focused form stack rose to the original logo centerline while the) Tj
+T*
+(  Cinerific logo moved upward but remained visible.) Tj
+T*
+(- Reset the temporary adb wm size override after the portrait spot-check and restored the standard) Tj
+T*
+(  tablet emulator display state.) Tj
+T*
+(- Committed the source work on main as HEAD 1a6966a with the message Refined sign-in form flow and) Tj
+T*
+(  detail hero layout.) Tj
+T*
+(- Ran ./read_project.sh again for this worklog pass so cinerific_PROJECT_SNAPSHOT.txt reflected) Tj
+T*
+(  the latest project tree and worklog inventory.) Tj
+T*
+(- Ran ./gradlew :app:assembleDebug during this artifact pass; the current debug build completed) Tj
+T*
+(  successfully.) Tj
+T*
+() Tj
+T*
+(Validation and Checks Performed) Tj
+T*
+(- Converted all pre-existing Cinerific worklog PDFs to text with pdftotext and inspected line/word) Tj
+T*
+() Tj
+T*
+(  counts to preserve the existing length band and structure.) Tj
+T*
+(- Inspected the July 15 Part 1 PDF as the closest naming precedent for this artifact's lowercase) Tj
+T*
+(  part label and Part 1 title wording.) Tj
+T*
+(- Inspected the July 27 PDF as the latest mature template for source-review detail, HEAD reference) Tj
+T*
+(  style, four-page layout, and output-artifact wording.) Tj
+T*
+(- Ran pdfinfo on cinerific_worklog_july 27.pdf to verify title metadata, author/creator/producer) Tj
+T*
+(  fields, letter geometry, PDF version, and page count.) Tj
+T*
+(- Ran git log --oneline --decorate, git show --stat --format=fuller HEAD, git show --name-status) Tj
+T*
+(  HEAD, git status --short --branch, and git diff --stat HEAD to confirm that HEAD 1a6966a) Tj
+T*
+(  contains the July 28 source changes and that no source diff remained before snapshot/worklog) Tj
+T*
+(  generation.) Tj
+T*
+(- Ran ./read_project.sh before generating this PDF, which refreshed cinerific_PROJECT_SNAPSHOT.txt) Tj
+T*
+(  at the repository root.) Tj
+T*
+(- Ran ./gradlew :app:assembleDebug after the snapshot refresh; the build completed successfully) Tj
+T*
+(  with BUILD SUCCESSFUL.) Tj
+T*
+(- Ran git diff --check after the snapshot refresh and confirmed that remaining warnings came from) Tj
+T*
+(  generated snapshot source-dump whitespace, not from Kotlin source changes. The generated) Tj
+T*
+(  snapshot was mechanically cleaned after the final refresh.) Tj
+T*
+(- Generated this PDF with a small standard-library PDF writer so the output remains) Tj
+T*
+(  text-extractable and consistent with prior Cinerific worklogs.) Tj
+T*
+() Tj
+T*
+(Files Touched During July 28 Part 1) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt: active native sign-in stack) Tj
+T*
+(  sizing, account prompt row, Sign In hit testing, mock form transition, centered) Tj
+T*
+(  username/password fields, form focus, input-method bridge, typed text rendering, floating) Tj
+T*
+(  labels, password masking, focus-stage form motion, and logo push behavior.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt: fallback Compose intro constants and) Tj
+T*
+(  prompt-row visuals, plus portrait ProgramDetails full-favorites prompt positioning against the) Tj
+T*
+(  logo center.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt: portrait detail) Tj
+T*
+(  favorite star vertical centering, orientation-aware detail hero content scale, and hero image) Tj
+T*
+(  crop behavior for landscape.) Tj
+T*
+(- cinerific_PROJECT_SNAPSHOT.txt: refreshed generated snapshot reflecting the current July 28) Tj
+T*
+(  project state and worklog inventory.) Tj
+T*
+(- cinerific_worklog_july 28 part 1.pdf: this Part 1 \(U.S. EST\) worklog artifact generated at the) Tj
+T*
+(  repository root.) Tj
+T*
+() Tj
+T*
+(Follow-Up Context) Tj
+T*
+(- The mock sign-in form is intentionally a prototype surface. It accepts local username/password) Tj
+T*
+(  input and animations, but it does not yet authenticate, validate, store credentials, or route to) Tj
+T*
+(  a real account session.) Tj
+T*
+(- Create Account and Forgot Password are visually placed and anchored, but they do not yet open) Tj
+T*
+(  their own mock or real flows.) Tj
+T*
+(- The custom View input bridge is now sufficient for soft keyboard, ADB text, hardware-style key) Tj
+T*
+(  events, backspace, next/done, caret rendering, and password masking. Future edits should) Tj
+T*
+(  preserve the single coordinate source for draw and hit-test math.) Tj
+T*
+(- The active sign-in view still depends on the standard tablet background resources and stage) Tj
+T*
+(  scaling. Any future small/wide or large/narrow sign-in background expansion should reuse the) Tj
+T*
+(  same orientation-aware stack constants.) Tj
+T*
+(- Portrait detail favorite centering depends on DETAIL_HERO_LOGO_CENTER_Y. If the detail logo) Tj
+T*
+(  asset or logo placement changes, the portrait star and prompt center should be recalculated with) Tj
+T*
+(  that same source of truth.) Tj
+T*
+(- The generated avatar resources still carry _test naming from the July 27 accepted visual pass. A) Tj
+T*
+(  future cleanup can promote accepted gradient-bubble avatars to final names after the sign-in) Tj
+T*
+(  design settles.) Tj
+T*
+(- Generated PDFs and snapshots remain project-management artifacts unless explicitly committed) Tj
+T*
+(  after review.) Tj
+T*
+() Tj
+ET
+BT
+/F1 7.35 Tf
+309.81 31 Td
+(Cinerific Work Log - July 28, 2026 Part 1 \(U.S. EST\) Page 3) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 1280 >>
+stream
+BT
+/F1 7.35 Tf
+42 748 Td
+8.35 TL
+(Output Artifact) Tj
+T*
+(- Filename: cinerific_worklog_july 28 part 1.pdf) Tj
+T*
+(- Created at the repository root in /Users/prahlin/gh/cinerific.) Tj
+T*
+(- Covers Tuesday, July 28, 2026 Part 1 \(U.S. EST\) Cinerific work and uses the lowercase part) Tj
+T*
+(  naming precedent established by cinerific_worklog_july 15 part 1.pdf.) Tj
+T*
+() Tj
+T*
+(- Follows the Cinerific filename convention established by cinerific_worklog_july 12.pdf and) Tj
+T*
+(  continued by the July 14, July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22,) Tj
+T*
+(  July 23, July 24, July 25, and July 27 artifacts, including the space before the day number.) Tj
+T*
+(- Follows the established Alla Vostra/Prahlin/Cinerific daily worklog structure while keeping the) Tj
+T*
+(  body content specific to Cinerific work completed during the July 28 Part 1 session.) Tj
+T*
+(- No external PDF dependency was installed; this artifact was generated with a small) Tj
+T*
+(  standard-library PDF writer in the same plain-text-readable spirit as the prior Cinerific) Tj
+T*
+(  worklogs.) Tj
+T*
+(- Created this daily worklog PDF: cinerific_worklog_july 28 part 1.pdf.) Tj
+ET
+BT
+/F1 7.35 Tf
+309.81 31 Td
+(Cinerific Work Log - July 28, 2026 Part 1 \(U.S. EST\) Page 4) Tj
+ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Type /Pages /Kids [3 0 R 5 0 R 7 0 R 9 0 R] /Count 4 >>
+endobj
+11 0 obj
+<< /Type /Catalog /Pages 10 0 R >>
+endobj
+12 0 obj
+<< /Title (Cinerific Android App Work Log - July 28, 2026 Part 1 \(U.S. EST\)) /Subject (Cinerific Android app development worklog) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260728090500-04'00') /ModDate (D:20260728090500-04'00') >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000083 00000 n 
+0000007209 00000 n 
+0000007336 00000 n 
+0000014261 00000 n 
+0000014388 00000 n 
+0000020776 00000 n 
+0000020903 00000 n 
+0000022235 00000 n 
+0000022362 00000 n 
+0000022438 00000 n 
+0000022489 00000 n 
+trailer
+<< /Size 13 /Root 11 0 R /Info 12 0 R >>
+startxref
+22828
+%%EOF
