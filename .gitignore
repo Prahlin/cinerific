@@ -9,3 +9,4 @@ screenshots/
 .venv/
 __pycache__/
 .pytest_cache/
+.github/alla_vostra_worklog_july1.pdf

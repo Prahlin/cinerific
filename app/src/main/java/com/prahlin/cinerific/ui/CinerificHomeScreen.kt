@@ -49,7 +49,6 @@ import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -146,8 +145,6 @@ internal fun CinerificHomeScreen(
         }
         val scrollState = rememberScrollState()
         var activeReelIndex by remember { mutableStateOf(0) }
-        var heroPlayKey by remember { mutableStateOf(0) }
-        var scrollToTopRequestId by remember { mutableStateOf(0) }
         val selectedCarouselIndex = homeSelectedCarouselIndex(
             scrollOffsetPx = scrollState.value,
             viewportHeight = maxHeight,
@@ -157,22 +154,6 @@ internal fun CinerificHomeScreen(
             isPortrait = isPortrait,
             density = density
         )
-        val handleHomeProgramSelected: (String) -> Unit = { title ->
-            val targetReelIndex = homeHeroReelIndexForProgramTitle(title)
-            if (targetReelIndex != null) {
-                activeReelIndex = targetReelIndex
-                heroPlayKey += 1
-                scrollToTopRequestId += 1
-            } else {
-                onProgramSelected(title)
-            }
-        }
-
-        LaunchedEffect(scrollToTopRequestId) {
-            if (scrollToTopRequestId > 0) {
-                scrollState.animateScrollTo(0)
-            }
-        }
 
         Column(
             modifier = Modifier
@@ -192,7 +173,6 @@ internal fun CinerificHomeScreen(
                 scale = scale,
                 height = heroHeight,
                 activeReelIndex = activeReelIndex,
-                heroPlayKey = heroPlayKey,
                 onReelChanged = { activeReelIndex = it },
                 onProgramSelected = onProgramSelected
             )
@@ -205,7 +185,7 @@ internal fun CinerificHomeScreen(
                 HomeProgramRow(
                     title = stringResource(row.titleResId),
                     cardIds = row.cardIds,
-                    onProgramSelected = handleHomeProgramSelected,
+                    onProgramSelected = onProgramSelected,
                     onCatalogSelected = { onCatalogSelected(catalogRoute) },
                     horizontalPadding = horizontalPadding,
                     endPadding = endPadding,
@@ -236,7 +216,6 @@ private fun HomeHeroHeader(
     scale: Float,
     height: Dp,
     activeReelIndex: Int,
-    heroPlayKey: Int,
     onReelChanged: (Int) -> Unit,
     onProgramSelected: (String) -> Unit
 ) {
@@ -262,7 +241,7 @@ private fun HomeHeroHeader(
 
         HeroPresentationTextAnimation(
             presentation = activePresentation,
-            playKey = activeReelIndex to heroPlayKey,
+            playKey = activeReelIndex,
             modifier = Modifier.fillMaxSize()
         )
 
@@ -495,12 +474,6 @@ private fun Modifier.selectedHomeCardFrame(
 }
 
 private fun figmaDp(px: Float, scale: Float): Dp = (px * scale).dp
-
-private fun homeHeroReelIndexForProgramTitle(title: String): Int? {
-    return HeroPresentation.values()
-        .indexOfFirst { it.programTitle == title }
-        .takeIf { it >= 0 }
-}
 
 private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
     private var activeSlot = VideoSlot(context)
@@ -962,7 +935,7 @@ private fun homeProgramTitleForCard(@DrawableRes cardId: Int): String? = when (c
     R.drawable.enlightenment_card -> "Enlightenment"
     R.drawable.deadbeat_card -> "Deadbeat"
     R.drawable.playing_with_fire_card -> "Playing with Fire"
-    R.drawable.morbid_temptations_card -> "Morbid Temptations"
+    R.drawable.morbid_temptations_title_card -> "Morbid Temptations"
     R.drawable.citric_card -> "Citric"
     R.drawable.laughing_matters_card -> "Laughing Matters"
     R.drawable.lost_in_time_card -> "Lost in Time"
@@ -970,13 +943,13 @@ private fun homeProgramTitleForCard(@DrawableRes cardId: Int): String? = when (c
     R.drawable.smoke_card -> "Smoke"
     R.drawable.joyriders_card -> "Joyriders"
     R.drawable.breathing_card -> "Breathing"
-    R.drawable.infatuation_card -> "Infatuation"
+    R.drawable.infatuation_title_card -> "Infatuation"
     R.drawable.falling_behind_card -> "Falling Behind"
     R.drawable.still_there_card -> "Still There"
     R.drawable.moments_card -> "Moments"
     R.drawable.chasing_light_card -> "Chasing Light"
-    R.drawable.light_as_air_card -> "Light As Air"
-    R.drawable.into_the_wild_card -> "Into The Wild"
+    R.drawable.light_as_air_title_card -> "Light As Air"
+    R.drawable.into_the_wild_title_card -> "Into The Wild"
     R.drawable.incan_descent_card -> "Incan Descent"
     R.drawable.or_not_to_be_card -> "Or Not To Be"
     R.drawable.surfside_card -> "Surfside"
@@ -1002,7 +975,7 @@ private val HomeProgramRows = listOf(
         titleResId = R.string.home_row_thriller,
         genre = ViewportGenre.Thriller,
         cardIds = listOf(
-            R.drawable.morbid_temptations_card,
+            R.drawable.morbid_temptations_title_card,
             R.drawable.enlightenment_card,
             R.drawable.ignition_card,
             R.drawable.deadbeat_card,
@@ -1035,7 +1008,7 @@ private val HomeProgramRows = listOf(
         titleResId = R.string.home_row_drama,
         genre = ViewportGenre.Drama,
         cardIds = listOf(
-            R.drawable.infatuation_card,
+            R.drawable.infatuation_title_card,
             R.drawable.breathing_card,
             R.drawable.falling_behind_card,
             R.drawable.still_there_card,
@@ -1048,8 +1021,8 @@ private val HomeProgramRows = listOf(
         titleResId = R.string.home_row_documentary,
         genre = ViewportGenre.Documentary,
         cardIds = listOf(
-            R.drawable.light_as_air_card,
-            R.drawable.into_the_wild_card,
+            R.drawable.light_as_air_title_card,
+            R.drawable.into_the_wild_title_card,
             R.drawable.incan_descent_card,
             R.drawable.or_not_to_be_card,
             R.drawable.surfside_card,

@@ -3619,7 +3619,7 @@ private val MovieRows = listOf(
         titleResId = R.string.row_thriller_movies,
         genre = ViewportGenre.Thriller,
         programs = listOf(
-            movie("Morbid Temptations", ViewportGenre.Thriller, R.drawable.morbid_temptations_card),
+            movie("Morbid Temptations", ViewportGenre.Thriller, R.drawable.morbid_temptations_title_card),
             movie("Ignition", ViewportGenre.Thriller, R.drawable.ignition_card)
         )
     )
@@ -3656,8 +3656,8 @@ private val ShowRows = listOf(
         titleResId = R.string.row_documentary_shows,
         genre = ViewportGenre.Documentary,
         programs = listOf(
-            show("Light As Air", ViewportGenre.Documentary, R.drawable.light_as_air_card),
-            show("Into The Wild", ViewportGenre.Documentary, R.drawable.into_the_wild_card),
+            show("Light As Air", ViewportGenre.Documentary, R.drawable.light_as_air_title_card),
+            show("Into The Wild", ViewportGenre.Documentary, R.drawable.into_the_wild_title_card),
             show("Surfside", ViewportGenre.Documentary, R.drawable.surfside_card),
             show("Wheels", ViewportGenre.Documentary, R.drawable.wheels_card),
             show("Light as a Feather", ViewportGenre.Documentary, R.drawable.light_as_a_feather_card),
@@ -3669,7 +3669,7 @@ private val ShowRows = listOf(
         titleResId = R.string.row_drama_shows,
         genre = ViewportGenre.Drama,
         programs = listOf(
-            show("Infatuation", ViewportGenre.Drama, R.drawable.infatuation_card),
+            show("Infatuation", ViewportGenre.Drama, R.drawable.infatuation_title_card),
             show("Moments", ViewportGenre.Drama, R.drawable.moments_card),
             show("Chasing Light", ViewportGenre.Drama, R.drawable.chasing_light_card),
             show("Breathing", ViewportGenre.Drama, R.drawable.breathing_card),
@@ -3851,10 +3851,10 @@ private fun listPosterDrawableId(title: String): Int? = when (title) {
     "Or Not To Be" -> R.drawable.or_not_to_be_card
     "Skin and Bones" -> R.drawable.skin_and_bones_card
     "The Appetizer" -> R.drawable.the_appetizer_card
-    "Light As Air" -> R.drawable.light_as_air_card
-    "Infatuation" -> R.drawable.infatuation_card
-    "Into The Wild" -> R.drawable.into_the_wild_card
-    "Morbid Temptations" -> R.drawable.morbid_temptations_card
+    "Light As Air" -> R.drawable.light_as_air_title_card
+    "Infatuation" -> R.drawable.infatuation_title_card
+    "Into The Wild" -> R.drawable.into_the_wild_title_card
+    "Morbid Temptations" -> R.drawable.morbid_temptations_title_card
     else -> null
 }
 
@@ -3893,10 +3893,10 @@ private fun detailHeroDrawableId(title: String): Int? = when (title) {
     "Or Not To Be" -> R.drawable.or_not_to_be_hero
     "Skin and Bones" -> R.drawable.skin_and_bones_hero
     "The Appetizer" -> R.drawable.the_appetizer_hero
-    "Light As Air" -> R.drawable.light_as_air_hero
-    "Infatuation" -> R.drawable.infatuation_hero
-    "Into The Wild" -> R.drawable.into_the_wild_hero
-    "Morbid Temptations" -> R.drawable.morbid_temptations_hero
+    "Light As Air" -> R.drawable.light_as_air_title_card
+    "Infatuation" -> R.drawable.infatuation_title_card
+    "Into The Wild" -> R.drawable.into_the_wild_title_card
+    "Morbid Temptations" -> R.drawable.morbid_temptations_title_card
     else -> null
 }
 
