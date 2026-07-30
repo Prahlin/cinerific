@@ -1,0 +1,284 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 4 /Kids [6 0 R 8 0 R 10 0 R 12 0 R] >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Title (Cinerific Android App Work Log - July 29, 2026 \(U.S. EST\)) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260729202100-04'00') /ModDate (D:20260729202100-04'00') >>
+endobj
+5 0 obj
+<< /Length 6876 >>
+stream
+BT
+/F1 10.80 Tf 1 0 0 1 54.00 746.00 Tm (Cinerific Android App Work Log - July 29, 2026 \(U.S. EST\)) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 728.10 Tm (Compiled summary for Wednesday, July 29, 2026 \(U.S. EST\) - focus: continuing the post-July-28) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 719.15 Tm (Create Account, Home/default, catalog, and detail-card interaction pass by reviewing the refreshed) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 710.20 Tm (project snapshot and all prior Cinerific worklogs, restoring Martin's Create Account avatar hair) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 701.25 Tm (stroke, adding active center-card stroke stacks across Home and list/detail card surfaces, converting) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 692.30 Tm (horizontal rows into cyclical one-card snap carousels, adding vertical list snap behavior, making full) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 683.35 Tm (carousel headers actionable, creating static title-only card art for the four Home hero-reel titles,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 674.40 Tm (routing those assets through every card surface, preventing those card taps from jumping back to the) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 665.45 Tm (hero video reel, validating Kotlin compilation, committing the two July 29 source passes as 47bcaf4) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 656.50 Tm (and 19054a3, refreshing the project snapshot, and generating this latest Cinerific PDF worklog artifact.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 638.60 Tm (Generated in continuity with the established Cinerific worklog cadence from July 12, July 14, July 15) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 629.65 Tm (Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, July 25, July 27,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 620.70 Tm (July 28 Part 1, and July 28 Part 2: compact opening summary, source-material review, baseline state,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 611.75 Tm (goal list, themed work-completed sections, validation, files touched, follow-up context, and) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 602.80 Tm (output-artifact close. This artifact records the current source state on main through HEAD 19054a3,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 593.85 Tm (plus the refreshed snapshot and generated worklog artifact from this July 29 pass, and follows the) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 584.90 Tm (prior root-level naming, letter layout, footer convention, metadata, and plain-text-readable PDF style.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 567.00 Tm (Source Materials Reviewed) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 549.10 Tm (- Reviewed every pre-existing Cinerific worklog PDF at the repository root: July 12, July 14, July 15) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 540.15 Tm (  Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, July 25, July 27,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 531.20 Tm (  July 28 Part 1, and July 28 Part 2.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 513.30 Tm (- Used pdftotext output from all prior PDFs to preserve the established title pattern, summary rhythm,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 504.35 Tm (  source review style, section order, validation language, file-list style, follow-up close, output) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 495.40 Tm (  artifact phrasing, footer convention, and four-page daily-log shape.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 477.50 Tm (- Used pdfinfo on prior PDFs, especially July 28 Part 1 and Part 2, to confirm the U.S. EST title) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 468.55 Tm (  precedent, letter page geometry, PDF 1.4 output, metadata fields, and Codex standard-library PDF) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 459.60 Tm (  generator naming.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 441.70 Tm (- Ran ./read_project.sh and reviewed cinerific_PROJECT_SNAPSHOT.txt for the current source layout,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 432.75 Tm (  drawable inventory, generated title-card mockups, ignored artifacts, worklog inventory, and scanner) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 423.80 Tm (  convention.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 405.90 Tm (- Reviewed git status, git log, git show --stat, and git show --name-status around the July 29 commits) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 396.95 Tm (  47bcaf4 and 19054a3.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 379.05 Tm (- Reviewed CinerificIntroView.kt, CinerificHomeScreen.kt, CinerificDestinationScreen.kt,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 370.10 Tm (  CinerificCircularCardCarousel.kt, .gitignore, the new drawable-nodpi title cards, and the generated) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 361.15 Tm (  mockup folders used to produce the card art.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 343.25 Tm (- Reviewed Light As Air, Infatuation, Into The Wild, and Morbid Temptations card stills, hero stills,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 334.30 Tm (  presentation variant PNGs, and HeroPresentationTextAnimation.kt constants before creating static) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 325.35 Tm (  title-only card assets.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 307.45 Tm (Baseline Status Before July 29 Work) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 289.55 Tm (- Cinerific entered July 29 with the July 28 Part 2 mock Sign In and Create Account flows accepted,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 280.60 Tm (  including dropdown controls, input dimming, landscape keyboard lift, and the Create Account avatar) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 271.65 Tm (  carousel.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 253.75 Tm (- Martin's Create Account avatar still lost part of the border stroke along his dark brown hair because) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 244.80 Tm (  the character mask rejected dark saturated hair pixels.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 226.90 Tm (- Home/default carousels used finite horizontal scrolling and had no selected center-card frame tied to) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 217.95 Tm (  the carousel nearest the screen's vertical center.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 200.05 Tm (- Movies/Shows list mode did not yet share the same selected-card frame language around the combined) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 191.10 Tm (  landscape image and info box.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 173.20 Tm (- Detail library rows still used ordinary finite horizontal scrolling instead of cyclical one-card snap) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 164.25 Tm (  carousel behavior.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 146.35 Tm (- Carousel headers had separate title/chevron affordances rather than one full-width title-to-chevron) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 137.40 Tm (  navigation target.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 119.50 Tm (- The four Home hero-reel titles had accepted card stills and animated presentation overlays, but their) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 110.55 Tm (  ordinary cards did not yet include the large custom title art.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 92.65 Tm (- Home card taps for those four titles still switched the top hero video reel instead of opening the) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 83.70 Tm (  normal static card/detail surface.) Tj
+/F1 8.00 Tf 1 0 0 1 362.48 32.00 Tm (Cinerific Work Log - July 29, 2026 \(U.S. EST\) Page 1) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 5964 >>
+stream
+BT
+/F1 7.75 Tf 1 0 0 1 54.00 746.00 Tm (Main Goals for July 29) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 728.10 Tm (- Preserve Martin's dark brown hair and matching hair-edge stroke on the Create Account avatar without) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 719.15 Tm (  disturbing the other avatar extraction paths.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 701.25 Tm (- Add selected-card stroke stacks to the horizontally centered card in the carousel closest to the) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 692.30 Tm (  vertical center of Home/default.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 674.40 Tm (- Tune the selected stroke to a 10 px invisible clear gap, 3 px right-rail-white visible stroke, and a) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 665.45 Tm (  continuous 67 percent to 50 percent opacity pulse.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 647.55 Tm (- Make horizontal card rows cyclical from both directions and add subtle one-card snap resistance so) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 638.60 Tm (  drag/fling gestures do not accidentally skip cards.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 620.70 Tm (- Apply the selected stroke system to Movies/Shows list cards as one landscape image-plus-info unit,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 611.75 Tm (  with only the vertically centered list row selected at a time.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 593.85 Tm (- Add vertical one-card snap behavior to list mode and matching selected-card frames to detail library) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 584.90 Tm (  carousels.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 567.00 Tm (- Make the full carousel header span actionable while preserving the established nested Movies/Shows) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 558.05 Tm (  genre/mode route behavior.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 540.15 Tm (- Create and route static title-only cards for the four hero-reel titles, then make those card taps) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 531.20 Tm (  behave like all other non-video-related cards.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 513.30 Tm (Work Completed - Martin Avatar and Selected Strokes) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 495.40 Tm (- Updated Martin's Create Account avatar character extraction so createAvatarCharacterBitmap can opt) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 486.45 Tm (  into dark saturated pixels during mask generation.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 468.55 Tm (- Threaded includeDarkSaturatedPixels through createAvatarCharacterMask and isColorfulAvatarPixel,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 459.60 Tm (  preserving Martin's hair fill and hair-border stroke while leaving Steve and Janny on the default) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 450.65 Tm (  stricter mask path.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 432.75 Tm (- Added Home selected-card frames outside the clipped card image, using a clear inner gap and visible) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 423.80 Tm (  outer stroke rather than resizing or shifting the card layout.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 405.90 Tm (- Tuned the Home visible outer stroke down through the requested iterations to the final 3 px size and) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 396.95 Tm (  matched its color to the selected right-rail navigation white.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 379.05 Tm (- Added rememberCinerificSelectionStrokeAlpha as a shared infinite pulse, settling the visible stroke at) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 370.10 Tm (  a subtle 67 percent to 50 percent opacity loop that does not restart when selection moves.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 352.20 Tm (- Computed Home's active row from viewport center geometry and the active card from the row's centered) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 343.25 Tm (  visible item, with fallback selection so a center carousel never appears without a stroke.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 325.35 Tm (Work Completed - Circular Carousels and Header Routing) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 307.45 Tm (- Added CinerificCircularCardCarousel.kt as a shared circular LazyRow helper with virtual Int.MAX_VALUE) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 298.50 Tm (  item space, modulo item mapping, midpoint initialization, and recentering near guard bands.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 280.60 Tm (- Replaced finite horizontalScroll card rows in Home/default and detail library rows with) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 271.65 Tm (  CinerificCircularCardRow.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 253.75 Tm (- Added one-card snap fling behavior based on visible item stride and velocity threshold, allowing a) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 244.80 Tm (  fling to settle only on the previous, current, or next card.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 226.90 Tm (- Tuned the horizontal resistance to stay nearly invisible while preventing accidental skipped cards) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 217.95 Tm (  during left/right drag release.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 200.05 Tm (- Made every horizontal carousel truly cyclical so dragging left of the first item brings in the last) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 191.10 Tm (  item, and dragging right of the last item brings in the first item.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 173.20 Tm (- Made each Home carousel header row clickable across the whole horizontal span from genre title through) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 164.25 Tm (  chevron, reusing the existing nested Movies/Shows genre and mode route.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 146.35 Tm (Work Completed - List Mode and Detail Library Selection) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 128.45 Tm (- Added a list-mode selected frame around the whole landscape row unit, including both the image and the) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 119.50 Tm (  visible information box.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 101.60 Tm (- Restricted list-mode strokes to the single card row closest to the vertical center of the viewport,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 92.65 Tm (  matching the one-active-stroke rule established for carousels.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 74.75 Tm (- Doubled only the list-mode invisible inner clear stroke from 10 px to 20 px to avoid cramping around) Tj
+/F1 8.00 Tf 1 0 0 1 362.48 32.00 Tm (Cinerific Work Log - July 29, 2026 \(U.S. EST\) Page 2) Tj
+ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 6086 >>
+stream
+BT
+/F1 7.75 Tf 1 0 0 1 54.00 746.00 Tm (  the landscape card unit.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 728.10 Tm (- Applied the same 3 px right-rail-white visible stroke and shared 67 percent to 50 percent opacity) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 719.15 Tm (  pulse to selected list rows and detail library cards.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 701.25 Tm (- Tracked list row centers with onGloballyPositioned and positionInRoot so list selection follows the) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 692.30 Tm (  actual composed card geometry.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 674.40 Tm (- Added DestinationListVerticalSnapFlingBehavior so upward/downward list flings settle one card at a) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 665.45 Tm (  time rather than coasting past nearby rows.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 647.55 Tm (- Selected only the detail library carousel closest to the viewport center and only the centered card in) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 638.60 Tm (  that row, then gave detail library rows the same cyclical carousel behavior as Home.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 620.70 Tm (Work Completed - Static Title-Only Hero-Reel Cards) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 602.80 Tm (- Created a title-only Light As Air card mockup from the existing 700 by 526 card still and the accepted) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 593.85 Tm (  presentation title/kite art, excluding the description and genre lines.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 575.95 Tm (- Created matching title-only card mockups for Infatuation, Into The Wild, and Morbid Temptations,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 567.00 Tm (  preserving their presentation title styling and decorative marks while excluding later copy bands.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 549.10 Tm (- Imported the approved static PNGs into drawable-nodpi as light_as_air_title_card,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 540.15 Tm (  infatuation_title_card, into_the_wild_title_card, and morbid_temptations_title_card.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 522.25 Tm (- Updated HomeProgramRows, homeProgramTitleForCard, MovieRows, ShowRows, listPosterDrawableId, and) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 513.30 Tm (  generic card lookup paths so all card appearances for those titles use the new title-card assets.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 495.40 Tm (- Updated detailHeroDrawableId so those four detail screens use the static title cards instead of the) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 486.45 Tm (  previous video-frame hero stills.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 468.55 Tm (- Removed Home's special card-tap path that switched the top hero reel for those titles, making their) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 459.60 Tm (  cards navigate to normal details like other movie/show cards.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 441.70 Tm (- Preserved the existing detail reveal, favorite button, play button, previous/next controls, and) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 432.75 Tm (  play-loading spinner behavior over the new static card heroes.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 414.85 Tm (Work Completed - Validation, Snapshot, and Commit State) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 396.95 Tm (- Ran ./gradlew :app:compileDebugKotlin during the July 29 source work after the selected-stroke tuning,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 388.00 Tm (  list/detail selection work, title-card import/routing, and final static-detail routing.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 370.10 Tm (- Visually inspected the generated title-only card mockups before copying the accepted versions into) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 361.15 Tm (  drawable-nodpi.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 343.25 Tm (- Committed the Martin avatar, selected-stroke, circular carousel, list snap, and detail library work as) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 334.30 Tm (  47bcaf4, Polished selected-card strokes and carousel cycling.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 316.40 Tm (- Committed the static title-card asset import and hero-reel card routing work as 19054a3, Swapped) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 307.45 Tm (  hero-reel titles to static title cards.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 289.55 Tm (- Updated .gitignore so the unrelated .github/alla_vostra_worklog_july1.pdf is ignored during) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 280.60 Tm (  Cinerific work, then confirmed it with git check-ignore.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 262.70 Tm (- Refreshed cinerific_PROJECT_SNAPSHOT.txt during this artifact pass so the snapshot includes the new) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 253.75 Tm (  carousel helper, title-card drawables, generated mockup folders, ignored Alla Vostra PDF, and current) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 244.80 Tm (  worklog inventory.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 226.90 Tm (Validation and Checks Performed) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 209.00 Tm (- Converted all pre-existing Cinerific worklog PDFs to text with pdftotext and inspected their section) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 200.05 Tm (  headings and recent July 28 wording before generating this artifact.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 182.15 Tm (- Ran pdfinfo across prior worklogs to verify four-page count, letter-size geometry, metadata style,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 173.20 Tm (  PDF version, and generator convention.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 155.30 Tm (- Ran git status --short --branch, git log --oneline --decorate, git show --stat --format=fuller HEAD,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 146.35 Tm (  git show --name-status for 47bcaf4 and 19054a3, and git diff for the refreshed snapshot.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 128.45 Tm (- Ran rg across Home, Destination, Intro, and the new circular carousel helper to verify title-card) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 119.50 Tm (  routing, stroke helpers, snap behavior, cyclical row usage, and Martin avatar extraction flags.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 101.60 Tm (- Ran file checks on the new title-card PNGs and confirmed each is a 700 by 526 card image.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 83.70 Tm (- Ran ./read_project.sh during this artifact pass; it refreshed cinerific_PROJECT_SNAPSHOT.txt at the) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 74.75 Tm (  repository root.) Tj
+/F1 8.00 Tf 1 0 0 1 362.48 32.00 Tm (Cinerific Work Log - July 29, 2026 \(U.S. EST\) Page 3) Tj
+ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Length 5734 >>
+stream
+BT
+/F1 7.75 Tf 1 0 0 1 54.00 737.05 Tm (- Ran ./gradlew :app:compileDebugKotlin during this artifact pass; the build completed successfully with) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 728.10 Tm (  BUILD SUCCESSFUL.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 710.20 Tm (- Generated this PDF with a small standard-library PDF writer so the output remains text-extractable and) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 701.25 Tm (  consistent with prior Cinerific worklogs.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 683.35 Tm (Files Touched During July 29) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 665.45 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt: Martin Create Account avatar) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 656.50 Tm (  character extraction now preserves dark saturated hair pixels.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 638.60 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificCircularCardCarousel.kt: new circular card row,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 629.65 Tm (  virtual modulo mapping, recentering, one-card horizontal snap fling behavior, and shared selected) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 620.70 Tm (  stroke pulse.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 602.80 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificHomeScreen.kt: selected center-card frames,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 593.85 Tm (  vertical-center carousel selection, clickable full-row headers, cyclical carousel rows, title-card) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 584.90 Tm (  resources, and normal card-to-detail routing.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 567.00 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt: list-card frames, vertical) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 558.05 Tm (  list snap behavior, detail library cyclical rows, detail selected-card frames, static title-card) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 549.10 Tm (  routing, and static title-card detail heroes.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 531.20 Tm (- app/src/main/res/drawable-nodpi/light_as_air_title_card.png, infatuation_title_card.png,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 522.25 Tm (  into_the_wild_title_card.png, and morbid_temptations_title_card.png: new static title-card artwork) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 513.30 Tm (  used anywhere those hero-reel titles appear as cards.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 495.40 Tm (- screenshots/generated/light_as_air_card_mockups and) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 486.45 Tm (  screenshots/generated/hero_reel_card_title_mockups:) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 477.50 Tm (  ignored generated mockups used to preview the title-only card compositions.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 459.60 Tm (- .gitignore: ignored the unrelated .github/alla_vostra_worklog_july1.pdf file.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 441.70 Tm (- cinerific_PROJECT_SNAPSHOT.txt and cinerific_worklog_july 29.pdf: refreshed/generated) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 432.75 Tm (  project-management artifacts during this worklog pass.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 414.85 Tm (Follow-Up Context) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 396.95 Tm (- Home and detail horizontal carousels now use a virtual LazyRow loop; future row edits should preserve) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 388.00 Tm (  stable title/card mappings for modulo selection.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 370.10 Tm (- Movies/Shows list mode now has one-card vertical snap behavior, but the vertical catalog list remains) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 361.15 Tm (  finite rather than cyclical.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 343.25 Tm (- The selected stroke animation is intentionally subtle: final visible stroke width is 3 px and the) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 334.30 Tm (  opacity pulse stays between 67 percent and 50 percent.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 316.40 Tm (- The four title-card PNGs intentionally combine the original card stills with only the custom title) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 307.45 Tm (  art;) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 298.50 Tm (  descriptions, genres, and later reveal variants remain excluded from card assets.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 280.60 Tm (- The Home hero reel remains available as the top video/presentation surface. Tapping carousel cards for) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 271.65 Tm (  those titles now opens the ordinary static detail screen.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 253.75 Tm (- Generated PDFs and snapshots remain project-management artifacts unless explicitly committed after) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 244.80 Tm (  review.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 226.90 Tm (Output Artifact) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 209.00 Tm (- Filename: cinerific_worklog_july 29.pdf) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 191.10 Tm (- Created at the repository root in /Users/prahlin/gh/cinerific.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 173.20 Tm (- Covers Wednesday, July 29, 2026 \(U.S. EST\) Cinerific work, including source commits 47bcaf4 and) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 164.25 Tm (  19054a3 plus this refreshed snapshot/worklog artifact pass.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 146.35 Tm (- Follows the Cinerific filename convention established by cinerific_worklog_july 12.pdf and continued) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 137.40 Tm (  by the July 14, July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23,) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 128.45 Tm (  July 24, July 25, July 27, July 28 Part 1, and July 28 Part 2 artifacts.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 110.55 Tm (- No external PDF dependency was installed; this artifact was generated with a small standard-library) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 101.60 Tm (  PDF writer in the same plain-text-readable spirit as the prior Cinerific worklogs.) Tj
+/F1 7.75 Tf 1 0 0 1 54.00 83.70 Tm (- Created this daily worklog PDF: cinerific_worklog_july 29.pdf.) Tj
+/F1 8.00 Tf 1 0 0 1 362.48 32.00 Tm (Cinerific Work Log - July 29, 2026 \(U.S. EST\) Page 4) Tj
+ET
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 11 0 R >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000141 00000 n 
+0000000211 00000 n 
+0000000489 00000 n 
+0000007417 00000 n 
+0000007543 00000 n 
+0000013559 00000 n 
+0000013685 00000 n 
+0000019823 00000 n 
+0000019950 00000 n 
+0000025737 00000 n 
+trailer
+<< /Size 13 /Root 1 0 R /Info 4 0 R >>
+startxref
+25865
+%%EOF
