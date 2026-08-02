@@ -74,11 +74,12 @@ private const val ACCOUNT_PROMPT_RIGHT_ANCHOR_X = 1042f
 private const val ACCOUNT_PROMPT_CENTER_Y = 792f
 private const val ACCOUNT_PROMPT_TEXT_SIZE = 30f
 private const val ACCOUNT_PROMPT_LANDSCAPE_TEXT_SIZE = 24.3f
-private const val ACCOUNT_PROMPT_SECONDARY_TEXT_SCALE = 0.8f
 private const val ACCOUNT_PROMPT_CREATE_HIT_WIDTH = 280f
 private const val ACCOUNT_PROMPT_CREATE_HIT_HEIGHT = 80f
 private const val ACCOUNT_PROMPT_SIGN_IN_HIT_WIDTH = 180f
 private const val ACCOUNT_PROMPT_SIGN_IN_HIT_HEIGHT = 80f
+private const val ACCOUNT_PROMPT_FORGOT_HIT_WIDTH = 320f
+private const val ACCOUNT_PROMPT_FORGOT_HIT_HEIGHT = 80f
 private const val MOCK_FORM_Y = 420f
 private const val MOCK_FORM_ENTRY_Y = 82f
 private const val MOCK_FORM_WIDTH = 330f
@@ -143,6 +144,30 @@ private const val MOCK_CREATE_AVATAR_DRAG_COMMIT_PROGRESS = 0.24f
 private const val MOCK_CREATE_AVATAR_BUBBLE_INNER_INSET_RATIO = 0.105f
 private const val MOCK_FORM_TITLE_TEXT_SIZE = 33f
 private const val MOCK_FORM_TITLE_BASELINE_GAP = 24f
+private const val MOCK_FORGOT_PASSWORD_BODY_TEXT =
+    "Enter the email address linked to your account and we'll send reset instructions."
+private const val MOCK_FORGOT_PASSWORD_HELP_TEXT =
+    "If an account exists, a reset link will be sent."
+private const val MOCK_FORGOT_PASSWORD_SELECTOR_TEXT = "I forgot my:"
+private const val MOCK_FORGOT_PASSWORD_BUTTON_TEXT = "Send Reset Link"
+private const val MOCK_FORGOT_PASSWORD_COPY_WIDTH = MOCK_FORM_WIDTH * 2f + MOCK_CREATE_FORM_COLUMN_GAP
+private const val MOCK_FORGOT_PASSWORD_BODY_TOP_GAP = 18f
+private const val MOCK_FORGOT_PASSWORD_BODY_TEXT_SIZE = 16f
+private const val MOCK_FORGOT_PASSWORD_BODY_LINE_HEIGHT = 22f
+private const val MOCK_FORGOT_PASSWORD_HELP_TEXT_SIZE = 14f
+private const val MOCK_FORGOT_PASSWORD_HELP_LINE_HEIGHT = 19f
+private const val MOCK_FORGOT_PASSWORD_SELECTOR_TOP_GAP = 24f
+private const val MOCK_FORGOT_PASSWORD_SELECTOR_TEXT_SIZE = 17f
+private const val MOCK_FORGOT_PASSWORD_SELECTOR_BOX_WIDTH = 90f
+private const val MOCK_FORGOT_PASSWORD_SELECTOR_BOX_HEIGHT = 44f
+private const val MOCK_FORGOT_PASSWORD_SELECTOR_LABEL_GAP = 10f
+private const val MOCK_FORGOT_PASSWORD_SELECTOR_BOX_GAP = 8f
+private const val MOCK_FORGOT_PASSWORD_FIELD_OFFSET_Y = 96f
+private const val MOCK_FORGOT_PASSWORD_BUTTON_TOP_GAP = 26f
+private const val MOCK_FORGOT_PASSWORD_BUTTON_HEIGHT = 54f
+private const val MOCK_FORGOT_PASSWORD_BUTTON_RADIUS = 10f
+private const val MOCK_FORGOT_PASSWORD_HELP_TOP_GAP = 16f
+private const val MOCK_FORGOT_PASSWORD_BACK_CHEVRON_TOP_GAP = 16f
 private const val MOCK_REMEMBER_ME_TEXT = "Remember me"
 private const val MOCK_REMEMBER_ME_TOP_GAP = 24f
 private const val MOCK_REMEMBER_ME_BOX_SIZE = 22f
@@ -266,6 +291,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private var clickAvatarProfile: CinerificProfile? = null
     private var pressedCreateAccountPrompt = false
     private var pressedSignInPrompt = false
+    private var pressedForgotPasswordPrompt = false
     private var mockSignInStartMillis: Long? = null
     private var activeMockFlow: MockAccountFlow? = null
     private var mockSignInTransitionStartProgress = 0f
@@ -279,6 +305,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private var mockCreateAvatarDragDeltaX = 0f
     private var pressedMockDropdown: MockDropdown? = null
     private var pressedMockDropdownOption: MockDropdownOption? = null
+    private var pressedForgotRecoveryTarget: MockForgotRecoveryTarget? = null
     private var activeMockDropdownScroll: MockDropdown? = null
     private var mockDropdownScrollStartY = 0f
     private var mockDropdownScrollStartOffset = 0
@@ -301,6 +328,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private var dayText = MOCK_FORM_DAY_TEXT
     private var yearText = MOCK_FORM_YEAR_TEXT
     private var subscriptionTierText = MOCK_FORM_SUBSCRIPTION_TIER_TEXT
+    private var forgotRecoveryTarget = MockForgotRecoveryTarget.Password
     private var mockCreateAvatarIndex = 0
     private var mockCreateAvatarCarouselStartMillis: Long? = null
     private var mockCreateAvatarCarouselFromIndex = 0
@@ -334,6 +362,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         clickAvatarProfile = null
         pressedCreateAccountPrompt = false
         pressedSignInPrompt = false
+        pressedForgotPasswordPrompt = false
         pressedMockField = null
         pressedRememberMe = false
         pressedBackChevron = false
@@ -342,6 +371,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         mockCreateAvatarDragMoved = false
         pressedMockDropdown = null
         pressedMockDropdownOption = null
+        pressedForgotRecoveryTarget = null
         activeMockDropdownScroll = null
         mockDropdownScrollMoved = false
         mockDragReturnInProgress = false
@@ -437,9 +467,19 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     } else {
                         null
                     }
+                    pressedForgotRecoveryTarget = if (
+                        touchedDropdownOptions == null &&
+                        pressedMockDropdownOption == null &&
+                        pressedMockDropdown == null
+                    ) {
+                        mockForgotRecoveryTargetHit(event.x, event.y)
+                    } else {
+                        null
+                    }
                     val touchedCreateAvatarCarousel = touchedDropdownOptions == null &&
                         pressedMockDropdownOption == null &&
                         pressedMockDropdown == null &&
+                        pressedForgotRecoveryTarget == null &&
                         mockCreateAvatarCarouselHit(event.x, event.y) &&
                         !isMockCreateAvatarCarouselAnimating()
                     activeMockCreateAvatarDrag = touchedCreateAvatarCarousel
@@ -449,6 +489,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                         touchedDropdownOptions == null &&
                         pressedMockDropdownOption == null &&
                         pressedMockDropdown == null &&
+                        pressedForgotRecoveryTarget == null &&
                         touchedCreateAvatarCarousel
                     ) {
                         mockCreateAvatarNavHit(event.x, event.y)
@@ -459,6 +500,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                         touchedDropdownOptions == null &&
                         pressedMockDropdownOption == null &&
                         pressedMockDropdown == null &&
+                        pressedForgotRecoveryTarget == null &&
                         pressedMockCreateAvatarNav == null &&
                         !touchedCreateAvatarCarousel
                     ) {
@@ -476,6 +518,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                         !pressedRememberMe &&
                         pressedMockDropdown == null &&
                         pressedMockDropdownOption == null &&
+                        pressedForgotRecoveryTarget == null &&
                         pressedMockCreateAvatarNav == null &&
                         mockBackChevronHit(event.x, event.y)
                     postInvalidateOnAnimation()
@@ -483,12 +526,22 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 }
                 pressedCreateAccountPrompt = settledCreateAccountPromptHit(event.x, event.y)
                 pressedSignInPrompt = !pressedCreateAccountPrompt && settledSignInPromptHit(event.x, event.y)
-                pressedAvatarProfile = if (pressedCreateAccountPrompt || pressedSignInPrompt) {
+                pressedForgotPasswordPrompt = !pressedCreateAccountPrompt &&
+                    !pressedSignInPrompt &&
+                    settledForgotPasswordPromptHit(event.x, event.y)
+                pressedAvatarProfile = if (
+                    pressedCreateAccountPrompt ||
+                    pressedSignInPrompt ||
+                    pressedForgotPasswordPrompt
+                ) {
                     null
                 } else {
                     settledAvatarHitProfile(event.x, event.y)
                 }
-                pressedCreateAccountPrompt || pressedSignInPrompt || pressedAvatarProfile != null
+                pressedCreateAccountPrompt ||
+                    pressedSignInPrompt ||
+                    pressedForgotPasswordPrompt ||
+                    pressedAvatarProfile != null
             }
             MotionEvent.ACTION_MOVE -> {
                 if (mockSignInStartMillis != null) {
@@ -504,7 +557,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     }
                     return true
                 }
-                pressedCreateAccountPrompt || pressedSignInPrompt || pressedAvatarProfile != null
+                pressedCreateAccountPrompt ||
+                    pressedSignInPrompt ||
+                    pressedForgotPasswordPrompt ||
+                    pressedAvatarProfile != null
             }
             MotionEvent.ACTION_UP -> {
                 if (mockDragReturnInProgress) {
@@ -518,6 +574,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     mockCreateAvatarDragDeltaX = 0f
                     pressedMockDropdown = null
                     pressedMockDropdownOption = null
+                    pressedForgotRecoveryTarget = null
                     activeMockDropdownScroll = null
                     mockDropdownScrollMoved = false
                     return true
@@ -529,11 +586,13 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     val releasedRememberMe = mockRememberMeHit(event.x, event.y)
                     val releasedBackChevron = mockBackChevronHit(event.x, event.y)
                     val releasedCreateAvatarNav = mockCreateAvatarNavHit(event.x, event.y)
+                    val releasedForgotRecoveryTarget = mockForgotRecoveryTargetHit(event.x, event.y)
                     val wasTouchingDropdownOptions = activeMockDropdownScroll != null ||
                         mockDropdownOptionsHit(mockTouchDownX, mockTouchDownY) != null
                     val wasScrollingDropdown = mockDropdownScrollMoved
                     val wasPressingRememberMe = pressedRememberMe
                     val wasPressingBackChevron = pressedBackChevron
+                    val wasPressingForgotRecoveryTarget = pressedForgotRecoveryTarget != null
                     val wasDraggingCreateAvatar = activeMockCreateAvatarDrag
                     val createAvatarDragMoved = mockCreateAvatarDragMoved
                     val createAvatarDragDirection = mockCreateAvatarDragDirection()
@@ -541,9 +600,12 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     val pressedDropdown = pressedMockDropdown
                     val pressedOption = pressedMockDropdownOption
                     val pressedCreateAvatarNav = pressedMockCreateAvatarNav
+                    val pressedForgotRecoverySelection = pressedForgotRecoveryTarget
                     val shouldSelectDropdownOption = !wasScrollingDropdown &&
                         pressedOption != null &&
                         pressedOption == releasedDropdownOption
+                    val shouldSelectForgotRecoveryTarget = pressedForgotRecoverySelection != null &&
+                        pressedForgotRecoverySelection == releasedForgotRecoveryTarget
                     val shouldToggleDropdown = pressedDropdown != null && pressedDropdown == releasedDropdown
                     val shouldToggleRememberMe = wasPressingRememberMe && releasedRememberMe
                     val shouldCloseMockSignIn = wasPressingBackChevron && releasedBackChevron
@@ -558,6 +620,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                         !wasTouchingDropdownOptions &&
                         !wasPressingRememberMe &&
                         !wasPressingBackChevron &&
+                        !wasPressingForgotRecoveryTarget &&
                         !wasDraggingCreateAvatar &&
                         pressedDropdown == null &&
                         pressedOption == null &&
@@ -572,6 +635,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     mockCreateAvatarDragDeltaX = 0f
                     pressedMockDropdown = null
                     pressedMockDropdownOption = null
+                    this.pressedForgotRecoveryTarget = null
                     activeMockDropdownScroll = null
                     mockDropdownScrollMoved = false
                     super.performClick()
@@ -604,6 +668,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     } else if (shouldToggleRememberMe) {
                         rememberMeChecked = !rememberMeChecked
                         postInvalidateOnAnimation()
+                    } else if (shouldSelectForgotRecoveryTarget && pressedForgotRecoverySelection != null) {
+                        setMockForgotRecoveryTarget(pressedForgotRecoverySelection)
                     } else if (shouldFocusField && releasedField != null) {
                         expandedMockDropdown = null
                         restartMockLandscapeInputLiftAnimation()
@@ -611,7 +677,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                         focusMockSignInField(releasedField)
                     } else if (wasTouchingDropdownOptions || wasScrollingDropdown) {
                         postInvalidateOnAnimation()
-                    } else if (!wasPressingRememberMe && !wasPressingBackChevron) {
+                    } else if (!wasPressingRememberMe && !wasPressingBackChevron && !wasPressingForgotRecoveryTarget) {
                         if (expandedMockDropdown != null && activeMockFlow == MockAccountFlow.CreateAccount) {
                             expandedMockDropdown = null
                             restartMockLandscapeInputLiftAnimation()
@@ -626,12 +692,15 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 val shouldOpenMockCreateAccount = pressedCreateAccountPrompt &&
                     settledCreateAccountPromptHit(event.x, event.y)
                 val shouldOpenMockSignIn = pressedSignInPrompt && settledSignInPromptHit(event.x, event.y)
+                val shouldOpenMockForgotPassword = pressedForgotPasswordPrompt &&
+                    settledForgotPasswordPromptHit(event.x, event.y)
                 val releasedAvatarProfile = settledAvatarHitProfile(event.x, event.y)
                 val shouldNavigate = pressedAvatarProfile != null && pressedAvatarProfile == releasedAvatarProfile
                 clickAvatarProfile = pressedAvatarProfile
                 pressedAvatarProfile = null
                 pressedCreateAccountPrompt = false
                 pressedSignInPrompt = false
+                pressedForgotPasswordPrompt = false
                 if (shouldOpenMockCreateAccount) {
                     super.performClick()
                     openMockCreateAccountScreen()
@@ -639,6 +708,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 } else if (shouldOpenMockSignIn) {
                     super.performClick()
                     openMockSignInScreen()
+                    true
+                } else if (shouldOpenMockForgotPassword) {
+                    super.performClick()
+                    openMockForgotPasswordScreen()
                     true
                 } else if (shouldNavigate) {
                     performClick()
@@ -653,6 +726,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 clickAvatarProfile = null
                 pressedCreateAccountPrompt = false
                 pressedSignInPrompt = false
+                pressedForgotPasswordPrompt = false
                 pressedMockField = null
                 pressedRememberMe = false
                 pressedBackChevron = false
@@ -662,6 +736,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 mockCreateAvatarDragDeltaX = 0f
                 pressedMockDropdown = null
                 pressedMockDropdownOption = null
+                pressedForgotRecoveryTarget = null
                 activeMockDropdownScroll = null
                 mockDropdownScrollMoved = false
                 mockDragReturnInProgress = false
@@ -669,6 +744,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             }
             else -> pressedCreateAccountPrompt ||
                 pressedSignInPrompt ||
+                pressedForgotPasswordPrompt ||
                 pressedAvatarProfile != null ||
                 mockSignInStartMillis != null
         }
@@ -683,7 +759,14 @@ internal class CinerificIntroView(context: Context) : View(context) {
         outAttrs.inputType = when (field) {
             MockSignInField.Password,
             MockSignInField.ConfirmPassword -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            MockSignInField.Email -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+            MockSignInField.Email -> if (
+                activeMockFlow == MockAccountFlow.ForgotPassword &&
+                forgotRecoveryTarget == MockForgotRecoveryTarget.Username
+            ) {
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+            } else {
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+            }
             MockSignInField.Month,
             MockSignInField.Day,
             MockSignInField.Year -> InputType.TYPE_CLASS_NUMBER
@@ -825,9 +908,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
     ) {
         val isLandscape = width > height
         val textSize = signInAccountPromptTextSize() * stageScale
-        val secondaryTextSize = textSize * ACCOUNT_PROMPT_SECONDARY_TEXT_SCALE
         val paintAlpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
-        accountPromptPaint.textSize = secondaryTextSize
+        accountPromptPaint.textSize = textSize
         formTitlePaint.textSize = textSize
         accountPromptPaint.alpha = paintAlpha
         formTitlePaint.alpha = paintAlpha
@@ -857,13 +939,15 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 formTitlePaint
             )
         }
-        accountPromptPaint.textAlign = Paint.Align.RIGHT
-        canvas.drawText(
-            ACCOUNT_PROMPT_FORGOT_TEXT,
-            stageLeft + ACCOUNT_PROMPT_RIGHT_ANCHOR_X * stageScale,
-            secondaryBaselineY,
-            accountPromptPaint
-        )
+        if (activeMockFlow != MockAccountFlow.ForgotPassword) {
+            accountPromptPaint.textAlign = Paint.Align.RIGHT
+            canvas.drawText(
+                ACCOUNT_PROMPT_FORGOT_TEXT,
+                stageLeft + ACCOUNT_PROMPT_RIGHT_ANCHOR_X * stageScale,
+                secondaryBaselineY,
+                accountPromptPaint
+            )
+        }
         accountPromptPaint.alpha = 255
         accountPromptPaint.textAlign = Paint.Align.CENTER
         formTitlePaint.alpha = 255
@@ -882,6 +966,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val alpha = progress.coerceIn(0f, 1f)
         if (activeMockFlow == MockAccountFlow.CreateAccount) {
             drawMockCreateAccountForm(canvas, stageLeft, stageTop, stageScale, alpha, formFocusMotion)
+            return
+        }
+        if (activeMockFlow == MockAccountFlow.ForgotPassword) {
+            drawMockForgotPasswordForm(canvas, stageLeft, stageTop, stageScale, alpha, formFocusMotion)
             return
         }
 
@@ -1028,6 +1116,110 @@ internal class CinerificIntroView(context: Context) : View(context) {
         formCaretPaint.alpha = 255
     }
 
+    private fun drawMockForgotPasswordForm(
+        canvas: Canvas,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float,
+        formFocusMotion: Float
+    ) {
+        val yOffset = MOCK_FORM_ENTRY_Y * (1f - alpha)
+        val fieldFillAlpha = (alpha * 26f).roundToInt()
+        val fieldStrokeAlpha = (alpha * 185f).roundToInt()
+        val fieldX = mockForgotPasswordFormX()
+        val copyX = mockForgotPasswordCopyX()
+        val focusShiftY = mockFormFocusShiftY(formFocusMotion)
+        val formTopY = MOCK_FORM_Y + yOffset + focusShiftY
+        val emailY = mockForgotPasswordFieldY(yOffset, focusShiftY)
+        val buttonY = mockForgotPasswordButtonY(yOffset, focusShiftY)
+        val helpTopY = buttonY + MOCK_FORGOT_PASSWORD_BUTTON_HEIGHT + MOCK_FORGOT_PASSWORD_HELP_TOP_GAP
+
+        formFieldFillPaint.color = Color.argb(fieldFillAlpha, 255, 255, 255)
+        formFieldStrokePaint.color = Color.argb(fieldStrokeAlpha, 255, 255, 255)
+        formFieldStrokePaint.strokeWidth = MOCK_FORM_FIELD_STROKE_WIDTH * stageScale
+        formCaretPaint.strokeWidth = 1.45f * stageScale
+
+        drawMockForgotPasswordTitle(canvas, fieldX, formTopY, stageLeft, stageTop, stageScale, alpha)
+        drawMockFormParagraph(
+            canvas,
+            MOCK_FORGOT_PASSWORD_BODY_TEXT,
+            copyX + MOCK_FORGOT_PASSWORD_COPY_WIDTH / 2f,
+            formTopY + MOCK_FORGOT_PASSWORD_BODY_TOP_GAP,
+            MOCK_FORGOT_PASSWORD_COPY_WIDTH,
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha,
+            MOCK_FORGOT_PASSWORD_BODY_TEXT_SIZE,
+            MOCK_FORGOT_PASSWORD_BODY_LINE_HEIGHT
+        )
+        drawMockForgotRecoverySelector(
+            canvas,
+            fieldX,
+            mockForgotRecoverySelectorY(yOffset, focusShiftY),
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha
+        )
+        drawMockSignInField(
+            canvas,
+            MockSignInField.Email,
+            fieldX,
+            emailY,
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha
+        )
+        drawMockForgotPasswordButton(
+            canvas,
+            fieldX,
+            buttonY,
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha
+        )
+        drawMockFormParagraph(
+            canvas,
+            MOCK_FORGOT_PASSWORD_HELP_TEXT,
+            fieldX + MOCK_FORM_WIDTH / 2f,
+            helpTopY,
+            MOCK_FORM_WIDTH,
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha,
+            MOCK_FORGOT_PASSWORD_HELP_TEXT_SIZE,
+            MOCK_FORGOT_PASSWORD_HELP_LINE_HEIGHT
+        )
+        drawBackChevron(
+            canvas,
+            fieldX + MOCK_FORM_WIDTH / 2f,
+            mockForgotPasswordBackChevronTopY(yOffset, focusShiftY),
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha
+        )
+        drawMockInputDimOverlayAndActiveControl(
+            canvas,
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha,
+            yOffset,
+            focusShiftY
+        )
+
+        formLabelPaint.alpha = 255
+        formInputPaint.alpha = 255
+        formTitlePaint.alpha = 255
+        formCaretPaint.alpha = 255
+    }
+
     private fun drawMockInputDimOverlayAndActiveControl(
         canvas: Canvas,
         stageLeft: Float,
@@ -1124,7 +1316,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         alpha: Float
     ) {
         val motion = alpha.coerceIn(0f, 1f)
-        val sourceTextSize = signInAccountPromptTextSize() * ACCOUNT_PROMPT_SECONDARY_TEXT_SCALE * stageScale
+        val sourceTextSize = signInAccountPromptTextSize() * stageScale
         val targetTextSize = MOCK_FORM_TITLE_TEXT_SIZE * stageScale
         val sourceX = stageLeft + ACCOUNT_PROMPT_LEFT_ANCHOR_X * stageScale
         val targetX = stageLeft + x * stageScale
@@ -1144,6 +1336,193 @@ internal class CinerificIntroView(context: Context) : View(context) {
             lerpFloat(sourceBaselineY, targetBaselineY, motion),
             formTitlePaint
         )
+    }
+
+    private fun drawMockForgotPasswordTitle(
+        canvas: Canvas,
+        x: Float,
+        formTopY: Float,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float
+    ) {
+        val motion = alpha.coerceIn(0f, 1f)
+        val sourceTextSize = signInAccountPromptTextSize() * stageScale
+        val targetTextSize = MOCK_FORM_TITLE_TEXT_SIZE * stageScale
+        val sourceRightX = stageLeft + ACCOUNT_PROMPT_RIGHT_ANCHOR_X * stageScale
+        val sourceCenterY = stageTop +
+            (ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + signInAccountPromptExtraShiftY()) * stageScale
+        formTitlePaint.textSize = sourceTextSize
+        val sourceTextWidth = formTitlePaint.measureText(ACCOUNT_PROMPT_FORGOT_TEXT)
+        val sourceCenterX = sourceRightX - sourceTextWidth / 2f
+        val sourceMetrics = formTitlePaint.fontMetrics
+        val sourceBaselineY = sourceCenterY - (sourceMetrics.ascent + sourceMetrics.descent) / 2f
+        val targetBaselineY = stageTop + (formTopY - MOCK_FORM_TITLE_BASELINE_GAP) * stageScale
+        formTitlePaint.textSize = targetTextSize
+        val targetTextWidth = formTitlePaint.measureText(ACCOUNT_PROMPT_FORGOT_TEXT)
+        val targetCenterX = stageLeft + x * stageScale + targetTextWidth / 2f
+
+        formTitlePaint.textSize = lerpFloat(sourceTextSize, targetTextSize, motion)
+        formTitlePaint.alpha = 255
+        formTitlePaint.textAlign = Paint.Align.CENTER
+        canvas.drawText(
+            ACCOUNT_PROMPT_FORGOT_TEXT,
+            lerpFloat(sourceCenterX, targetCenterX, motion),
+            lerpFloat(sourceBaselineY, targetBaselineY, motion),
+            formTitlePaint
+        )
+    }
+
+    private fun drawMockForgotPasswordButton(
+        canvas: Canvas,
+        x: Float,
+        y: Float,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float
+    ) {
+        tempRect.set(
+            stageLeft + x * stageScale,
+            stageTop + y * stageScale,
+            stageLeft + (x + MOCK_FORM_WIDTH) * stageScale,
+            stageTop + (y + MOCK_FORGOT_PASSWORD_BUTTON_HEIGHT) * stageScale
+        )
+        val radius = MOCK_FORGOT_PASSWORD_BUTTON_RADIUS * stageScale
+        formFieldFillPaint.color = Color.argb((alpha * 68f).roundToInt(), 255, 255, 255)
+        formFieldStrokePaint.color = Color.argb((alpha * 210f).roundToInt(), 255, 255, 255)
+        formFieldStrokePaint.strokeWidth = MOCK_FORM_FIELD_STROKE_WIDTH * stageScale
+        canvas.drawRoundRect(tempRect, radius, radius, formFieldFillPaint)
+        canvas.drawRoundRect(tempRect, radius, radius, formFieldStrokePaint)
+
+        formTitlePaint.textSize = MOCK_REMEMBER_ME_TEXT_SIZE * stageScale
+        formTitlePaint.alpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
+        formTitlePaint.textAlign = Paint.Align.CENTER
+        val metrics = formTitlePaint.fontMetrics
+        val baselineY = tempRect.centerY() - (metrics.ascent + metrics.descent) / 2f
+        val maxTextWidth = MOCK_FORM_WIDTH * stageScale - MOCK_FORM_LABEL_INSET_X * stageScale * 2f
+        canvas.drawText(
+            trailingFittingText(MOCK_FORGOT_PASSWORD_BUTTON_TEXT, maxTextWidth, formTitlePaint),
+            tempRect.centerX(),
+            baselineY,
+            formTitlePaint
+        )
+    }
+
+    private fun drawMockForgotRecoverySelector(
+        canvas: Canvas,
+        x: Float,
+        y: Float,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float
+    ) {
+        formLabelPaint.textSize = MOCK_FORGOT_PASSWORD_SELECTOR_TEXT_SIZE * stageScale
+        formLabelPaint.alpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
+        formLabelPaint.textAlign = Paint.Align.LEFT
+
+        val labelWidth = formLabelPaint.measureText(MOCK_FORGOT_PASSWORD_SELECTOR_TEXT)
+        val rowWidth = labelWidth +
+            MOCK_FORGOT_PASSWORD_SELECTOR_LABEL_GAP * stageScale +
+            MOCK_FORGOT_PASSWORD_SELECTOR_BOX_WIDTH * stageScale * 2f +
+            MOCK_FORGOT_PASSWORD_SELECTOR_BOX_GAP * stageScale
+        val rowLeft = stageLeft + (x + MOCK_FORM_WIDTH / 2f) * stageScale - rowWidth / 2f
+        val rowTop = stageTop + y * stageScale
+        val rowCenterY = rowTop + MOCK_FORGOT_PASSWORD_SELECTOR_BOX_HEIGHT * stageScale / 2f
+        val labelMetrics = formLabelPaint.fontMetrics
+        canvas.drawText(
+            MOCK_FORGOT_PASSWORD_SELECTOR_TEXT,
+            rowLeft,
+            rowCenterY - (labelMetrics.ascent + labelMetrics.descent) / 2f,
+            formLabelPaint
+        )
+
+        val firstBoxX = rowLeft + labelWidth + MOCK_FORGOT_PASSWORD_SELECTOR_LABEL_GAP * stageScale
+        drawMockForgotRecoveryOption(
+            canvas,
+            MockForgotRecoveryTarget.Username,
+            firstBoxX,
+            rowTop,
+            stageScale,
+            alpha
+        )
+        drawMockForgotRecoveryOption(
+            canvas,
+            MockForgotRecoveryTarget.Password,
+            firstBoxX + (MOCK_FORGOT_PASSWORD_SELECTOR_BOX_WIDTH + MOCK_FORGOT_PASSWORD_SELECTOR_BOX_GAP) * stageScale,
+            rowTop,
+            stageScale,
+            alpha
+        )
+    }
+
+    private fun drawMockForgotRecoveryOption(
+        canvas: Canvas,
+        target: MockForgotRecoveryTarget,
+        left: Float,
+        top: Float,
+        stageScale: Float,
+        alpha: Float
+    ) {
+        val right = left + MOCK_FORGOT_PASSWORD_SELECTOR_BOX_WIDTH * stageScale
+        val bottom = top + MOCK_FORGOT_PASSWORD_SELECTOR_BOX_HEIGHT * stageScale
+        tempRect.set(left, top, right, bottom)
+        val selected = forgotRecoveryTarget == target
+        val pressed = pressedForgotRecoveryTarget == target
+        val fillAlpha = (alpha * when {
+            pressed -> 62f
+            selected -> 46f
+            else -> 18f
+        }).roundToInt()
+        val strokeAlpha = (alpha * if (selected || pressed) 220f else 168f).roundToInt()
+        val radius = MOCK_FORM_FIELD_RADIUS * stageScale
+
+        formFieldFillPaint.color = Color.argb(fillAlpha, 255, 255, 255)
+        formFieldStrokePaint.color = Color.argb(strokeAlpha, 255, 255, 255)
+        formFieldStrokePaint.strokeWidth = MOCK_FORM_FIELD_STROKE_WIDTH * stageScale
+        canvas.drawRoundRect(tempRect, radius, radius, formFieldFillPaint)
+        canvas.drawRoundRect(tempRect, radius, radius, formFieldStrokePaint)
+
+        formInputPaint.textSize = MOCK_FORGOT_PASSWORD_SELECTOR_TEXT_SIZE * stageScale
+        formInputPaint.alpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
+        formInputPaint.textAlign = Paint.Align.CENTER
+        val metrics = formInputPaint.fontMetrics
+        canvas.drawText(
+            target.displayText,
+            tempRect.centerX(),
+            tempRect.centerY() - (metrics.ascent + metrics.descent) / 2f,
+            formInputPaint
+        )
+    }
+
+    private fun drawMockFormParagraph(
+        canvas: Canvas,
+        text: String,
+        centerX: Float,
+        topY: Float,
+        maxWidth: Float,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float,
+        textSize: Float,
+        lineHeight: Float
+    ): Float {
+        formInputPaint.textSize = textSize * stageScale
+        formInputPaint.alpha = (alpha.coerceIn(0f, 1f) * 218f).roundToInt()
+        formInputPaint.textAlign = Paint.Align.CENTER
+
+        val lines = wrappedTextLines(text, maxWidth * stageScale, formInputPaint)
+        val metrics = formInputPaint.fontMetrics
+        val x = stageLeft + centerX * stageScale
+        var baselineY = stageTop + topY * stageScale - metrics.ascent
+        lines.forEach { line ->
+            canvas.drawText(line, x, baselineY, formInputPaint)
+            baselineY += lineHeight * stageScale
+        }
+        return topY + lines.size * lineHeight
     }
 
     private fun drawMockCreateAccountAvatarText(
@@ -1833,6 +2212,18 @@ internal class CinerificIntroView(context: Context) : View(context) {
             y in (centerY - halfHeight)..(centerY + halfHeight)
     }
 
+    private fun settledForgotPasswordPromptHit(x: Float, y: Float): Boolean {
+        if (mockSignInStartMillis != null || !isFinalFrameSettled()) return false
+
+        val stage = currentStageMetrics() ?: return false
+        val right = stage.left + ACCOUNT_PROMPT_RIGHT_ANCHOR_X * stage.scale
+        val centerY = stage.top +
+            (ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + signInAccountPromptExtraShiftY()) * stage.scale
+        val left = right - ACCOUNT_PROMPT_FORGOT_HIT_WIDTH * stage.scale
+        val halfHeight = ACCOUNT_PROMPT_FORGOT_HIT_HEIGHT * stage.scale / 2f
+        return x in left..right && y in (centerY - halfHeight)..(centerY + halfHeight)
+    }
+
     private fun mockSignInFieldHit(x: Float, y: Float): MockSignInField? {
         if (mockSignInStartMillis == null) return null
 
@@ -1844,6 +2235,19 @@ internal class CinerificIntroView(context: Context) : View(context) {
             val fieldX = mockActiveFieldX(field)
             val fieldY = mockActiveFieldY(field, yOffset, focusShiftY)
             mockSignInFieldContains(x, y, fieldX, fieldY, stage, mockActiveFieldWidth(field))
+        }
+    }
+
+    private fun mockForgotRecoveryTargetHit(x: Float, y: Float): MockForgotRecoveryTarget? {
+        if (mockSignInStartMillis == null || activeMockFlow != MockAccountFlow.ForgotPassword) return null
+
+        val stage = currentStageMetrics() ?: return null
+        val progress = FastOutSlowInEasing.transform(mockSignInProgress())
+        val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
+        val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
+        val selectorY = mockForgotRecoverySelectorY(yOffset, focusShiftY)
+        return MockForgotRecoveryTarget.values().firstOrNull { target ->
+            mockForgotRecoveryTargetContains(x, y, target, selectorY, stage)
         }
     }
 
@@ -2017,13 +2421,18 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val progress = FastOutSlowInEasing.transform(mockSignInProgress())
         val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
         val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
-        val lastField = activeMockFields().lastOrNull() ?: return false
-        val lastFieldY = mockActiveFieldY(lastField, yOffset, focusShiftY)
-        val chevronTopY = if (activeMockFlow == MockAccountFlow.SignIn) {
-            lastFieldY + MOCK_FORM_FIELD_HEIGHT + MOCK_REMEMBER_ME_TOP_GAP + MOCK_REMEMBER_ME_BOX_SIZE +
-                MOCK_BACK_CHEVRON_TOP_GAP
-        } else {
-            MOCK_FORM_Y + yOffset + focusShiftY + mockCreateFormHeight() + MOCK_BACK_CHEVRON_TOP_GAP
+        val chevronTopY = when (activeMockFlow) {
+            MockAccountFlow.SignIn -> {
+                val lastField = activeMockFields().lastOrNull() ?: return false
+                val lastFieldY = mockActiveFieldY(lastField, yOffset, focusShiftY)
+                lastFieldY + MOCK_FORM_FIELD_HEIGHT + MOCK_REMEMBER_ME_TOP_GAP + MOCK_REMEMBER_ME_BOX_SIZE +
+                    MOCK_BACK_CHEVRON_TOP_GAP
+            }
+            MockAccountFlow.CreateAccount -> {
+                MOCK_FORM_Y + yOffset + focusShiftY + mockCreateFormHeight() + MOCK_BACK_CHEVRON_TOP_GAP
+            }
+            MockAccountFlow.ForgotPassword -> mockForgotPasswordBackChevronTopY(yOffset, focusShiftY)
+            null -> return false
         }
         return mockBackChevronContains(x, y, mockActiveFormCenterX(), chevronTopY, stage)
     }
@@ -2071,6 +2480,31 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val top = stage.top + (y - MOCK_REMEMBER_ME_HIT_TOP_PADDING) * stage.scale
         val right = stage.left + (x + MOCK_FORM_WIDTH) * stage.scale
         val bottom = stage.top + (y - MOCK_REMEMBER_ME_HIT_TOP_PADDING + MOCK_REMEMBER_ME_HIT_HEIGHT) * stage.scale
+        return pointerX in left..right && pointerY in top..bottom
+    }
+
+    private fun mockForgotRecoveryTargetContains(
+        pointerX: Float,
+        pointerY: Float,
+        target: MockForgotRecoveryTarget,
+        selectorY: Float,
+        stage: StageMetrics
+    ): Boolean {
+        formLabelPaint.textSize = MOCK_FORGOT_PASSWORD_SELECTOR_TEXT_SIZE
+        val labelWidth = formLabelPaint.measureText(MOCK_FORGOT_PASSWORD_SELECTOR_TEXT)
+        val rowWidth = labelWidth +
+            MOCK_FORGOT_PASSWORD_SELECTOR_LABEL_GAP +
+            MOCK_FORGOT_PASSWORD_SELECTOR_BOX_WIDTH * 2f +
+            MOCK_FORGOT_PASSWORD_SELECTOR_BOX_GAP
+        val rowLeft = mockForgotPasswordFormX() + MOCK_FORM_WIDTH / 2f - rowWidth / 2f
+        val firstBoxX = rowLeft + labelWidth + MOCK_FORGOT_PASSWORD_SELECTOR_LABEL_GAP
+        val optionIndex = if (target == MockForgotRecoveryTarget.Username) 0f else 1f
+        val boxX = firstBoxX +
+            optionIndex * (MOCK_FORGOT_PASSWORD_SELECTOR_BOX_WIDTH + MOCK_FORGOT_PASSWORD_SELECTOR_BOX_GAP)
+        val left = stage.left + boxX * stage.scale
+        val top = stage.top + selectorY * stage.scale
+        val right = stage.left + (boxX + MOCK_FORGOT_PASSWORD_SELECTOR_BOX_WIDTH) * stage.scale
+        val bottom = stage.top + (selectorY + MOCK_FORGOT_PASSWORD_SELECTOR_BOX_HEIGHT) * stage.scale
         return pointerX in left..right && pointerY in top..bottom
     }
 
@@ -2210,15 +2644,46 @@ internal class CinerificIntroView(context: Context) : View(context) {
         return (FIGMA_FRAME_WIDTH - mockCreateFormWidth()) / 2f
     }
 
+    private fun mockForgotPasswordFormX(): Float {
+        return mockCreateFormX() + (MOCK_FORM_WIDTH + MOCK_CREATE_FORM_COLUMN_GAP) * 2f
+    }
+
+    private fun mockForgotPasswordCopyX(): Float {
+        return mockCreateFormX()
+    }
+
+    private fun mockForgotPasswordFieldY(yOffset: Float, focusShiftY: Float): Float {
+        return MOCK_FORM_Y + yOffset + focusShiftY + MOCK_FORGOT_PASSWORD_FIELD_OFFSET_Y
+    }
+
+    private fun mockForgotRecoverySelectorY(yOffset: Float, focusShiftY: Float): Float {
+        return MOCK_FORM_Y + yOffset + focusShiftY + MOCK_FORGOT_PASSWORD_SELECTOR_TOP_GAP
+    }
+
+    private fun mockForgotPasswordButtonY(yOffset: Float, focusShiftY: Float): Float {
+        return mockForgotPasswordFieldY(yOffset, focusShiftY) +
+            MOCK_FORM_FIELD_HEIGHT +
+            MOCK_FORGOT_PASSWORD_BUTTON_TOP_GAP
+    }
+
+    private fun mockForgotPasswordBackChevronTopY(yOffset: Float, focusShiftY: Float): Float {
+        return mockForgotPasswordButtonY(yOffset, focusShiftY) +
+            MOCK_FORGOT_PASSWORD_BUTTON_HEIGHT +
+            MOCK_FORGOT_PASSWORD_HELP_TOP_GAP +
+            MOCK_FORGOT_PASSWORD_HELP_LINE_HEIGHT * 2f +
+            MOCK_FORGOT_PASSWORD_BACK_CHEVRON_TOP_GAP
+    }
+
     private fun activeMockFields(): List<MockSignInField> {
-        return if (activeMockFlow == MockAccountFlow.CreateAccount) {
-            MOCK_CREATE_ACCOUNT_FIELDS
-        } else {
-            MOCK_SIGN_IN_FIELDS
+        return when (activeMockFlow) {
+            MockAccountFlow.CreateAccount -> MOCK_CREATE_ACCOUNT_FIELDS
+            MockAccountFlow.ForgotPassword -> MOCK_FORGOT_PASSWORD_FIELDS
+            else -> MOCK_SIGN_IN_FIELDS
         }
     }
 
     private fun mockActiveFieldX(field: MockSignInField): Float {
+        if (activeMockFlow == MockAccountFlow.ForgotPassword) return mockForgotPasswordFormX()
         if (activeMockFlow != MockAccountFlow.CreateAccount) return mockFormX()
 
         val middleColumnX = mockCreateFormX() + MOCK_FORM_WIDTH + MOCK_CREATE_FORM_COLUMN_GAP
@@ -2234,6 +2699,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun mockActiveFieldY(field: MockSignInField, yOffset: Float, focusShiftY: Float): Float {
+        if (activeMockFlow == MockAccountFlow.ForgotPassword) {
+            return mockForgotPasswordFieldY(yOffset, focusShiftY)
+        }
+
         val rowIndex = if (activeMockFlow == MockAccountFlow.CreateAccount) {
             when (field) {
                 MockSignInField.Username,
@@ -2260,10 +2729,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun mockActiveFormCenterX(): Float {
-        return if (activeMockFlow == MockAccountFlow.CreateAccount) {
-            mockCreateFormX() + mockCreateFormWidth() / 2f
-        } else {
-            mockFormX() + MOCK_FORM_WIDTH / 2f
+        return when (activeMockFlow) {
+            MockAccountFlow.CreateAccount -> mockCreateFormX() + mockCreateFormWidth() / 2f
+            MockAccountFlow.ForgotPassword -> mockForgotPasswordFormX() + MOCK_FORM_WIDTH / 2f
+            else -> mockFormX() + MOCK_FORM_WIDTH / 2f
         }
     }
 
@@ -2425,6 +2894,28 @@ internal class CinerificIntroView(context: Context) : View(context) {
         }
         restartMockLandscapeInputLiftAnimation()
         restartMockInputDimAnimation()
+    }
+
+    private fun setMockForgotRecoveryTarget(target: MockForgotRecoveryTarget) {
+        if (activeMockFlow != MockAccountFlow.ForgotPassword) return
+        if (forgotRecoveryTarget == target) {
+            postInvalidateOnAnimation()
+            return
+        }
+
+        forgotRecoveryTarget = target
+        emailText = ""
+        activeComposingText = ""
+        mockInputDimAwaitingField = null
+        if (focusedMockField != null) {
+            clearMockSignInFieldFocus()
+        } else {
+            restartMockFormLabelAnimation()
+            restartMockFormFocusAnimation()
+            restartMockLandscapeInputLiftAnimation()
+            restartMockInputDimAnimation()
+            postInvalidateOnAnimation()
+        }
     }
 
     private fun startMockCreateAvatarCarousel(
@@ -2674,6 +3165,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun mockSignInFieldLabel(field: MockSignInField): String {
+        if (activeMockFlow == MockAccountFlow.ForgotPassword && field == MockSignInField.Email) {
+            return forgotRecoveryTarget.inputLabel
+        }
+
         return when (field) {
             MockSignInField.Username -> MOCK_FORM_USERNAME_TEXT
             MockSignInField.Password -> MOCK_FORM_PASSWORD_TEXT
@@ -2818,6 +3313,24 @@ internal class CinerificIntroView(context: Context) : View(context) {
         return text.substring(startIndex)
     }
 
+    private fun wrappedTextLines(text: String, maxWidth: Float, paint: Paint): List<String> {
+        val lines = mutableListOf<String>()
+        var currentLine = ""
+        text.split(" ").forEach { word ->
+            val candidateLine = if (currentLine.isEmpty()) word else "$currentLine $word"
+            if (currentLine.isEmpty() || paint.measureText(candidateLine) <= maxWidth) {
+                currentLine = candidateLine
+            } else {
+                lines += currentLine
+                currentLine = word
+            }
+        }
+        if (currentLine.isNotEmpty()) {
+            lines += currentLine
+        }
+        return lines
+    }
+
     private fun moveToward(current: Float, target: Float, amount: Float): Float {
         return when {
             current < target -> (current + amount).coerceAtMost(target)
@@ -2873,6 +3386,18 @@ internal class CinerificIntroView(context: Context) : View(context) {
         postInvalidateOnAnimation()
     }
 
+    private fun openMockForgotPasswordScreen() {
+        if (mockSignInStartMillis != null && mockSignInTransitionTargetProgress == 1f) return
+        val currentProgress = mockSignInProgress()
+        activeMockFlow = MockAccountFlow.ForgotPassword
+        forgotRecoveryTarget = MockForgotRecoveryTarget.Password
+        emailText = ""
+        mockSignInStartMillis = SystemClock.uptimeMillis()
+        mockSignInTransitionStartProgress = currentProgress
+        mockSignInTransitionTargetProgress = 1f
+        postInvalidateOnAnimation()
+    }
+
     private fun closeMockSignInScreen() {
         if (mockSignInStartMillis == null) return
         val currentProgress = mockSignInProgress()
@@ -2882,6 +3407,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         pressedMockCreateAvatarNav = null
         pressedMockDropdown = null
         pressedMockDropdownOption = null
+        pressedForgotRecoveryTarget = null
         activeMockDropdownScroll = null
         mockDropdownScrollMoved = false
         activeComposingText = ""
@@ -2894,6 +3420,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         dayText = MOCK_FORM_DAY_TEXT
         yearText = MOCK_FORM_YEAR_TEXT
         subscriptionTierText = MOCK_FORM_SUBSCRIPTION_TIER_TEXT
+        forgotRecoveryTarget = MockForgotRecoveryTarget.Password
         resetMockCreateAvatarCarousel()
         expandedMockDropdown = null
         mockDropdownScrollOffsets.keys.forEach { dropdown ->
@@ -2956,6 +3483,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             pressedMockCreateAvatarNav = null
             pressedMockDropdown = null
             pressedMockDropdownOption = null
+            pressedForgotRecoveryTarget = null
             activeMockDropdownScroll = null
             mockDropdownScrollMoved = false
             mockDragReturnInProgress = false
@@ -3025,7 +3553,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
 private enum class MockAccountFlow {
     SignIn,
-    CreateAccount
+    CreateAccount,
+    ForgotPassword
 }
 
 private enum class MockSignInField {
@@ -3043,6 +3572,14 @@ private enum class MockDropdown {
     Month,
     Day,
     Year
+}
+
+private enum class MockForgotRecoveryTarget(
+    val displayText: String,
+    val inputLabel: String
+) {
+    Username(MOCK_FORM_USERNAME_TEXT, MOCK_FORM_USERNAME_TEXT),
+    Password(MOCK_FORM_PASSWORD_TEXT, MOCK_FORM_EMAIL_TEXT)
 }
 
 private enum class MockAvatarCarouselDirection(
@@ -3067,6 +3604,10 @@ private val MOCK_CREATE_ACCOUNT_FIELDS = listOf(
     MockSignInField.Username,
     MockSignInField.Password,
     MockSignInField.ConfirmPassword,
+    MockSignInField.Email
+)
+
+private val MOCK_FORGOT_PASSWORD_FIELDS = listOf(
     MockSignInField.Email
 )
 

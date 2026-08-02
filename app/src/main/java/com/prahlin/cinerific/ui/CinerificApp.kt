@@ -106,7 +106,7 @@ private const val ACCOUNT_PROMPT_TOP = 770f
 private const val ACCOUNT_PROMPT_HEIGHT = 45f
 private const val ACCOUNT_PROMPT_TEXT_SIZE = 30f
 private const val ACCOUNT_PROMPT_LANDSCAPE_TEXT_SIZE = 24.3f
-private const val ACCOUNT_PROMPT_SECONDARY_TEXT_SCALE = 0.8f
+private const val ACCOUNT_PROMPT_SECONDARY_TEXT_SCALE = 1f
 private const val ACCOUNT_PROMPT_LINE_HEIGHT = 38f
 
 private val ColorFrame1Background = Color(0xFF000000)
@@ -880,6 +880,7 @@ private fun AvatarSelectionLayer(scale: Float, alpha: Float, yOffset: Float) {
             y = ACCOUNT_PROMPT_TOP + stackShiftY + accountPromptExtraShiftY,
             textSize = accountPromptSecondaryTextSize,
             textAlign = TextAlign.Left,
+            fontWeight = FontWeight.Black,
             scale = scale
         )
         SignInPromptText(
@@ -896,6 +897,7 @@ private fun AvatarSelectionLayer(scale: Float, alpha: Float, yOffset: Float) {
             y = ACCOUNT_PROMPT_TOP + stackShiftY + accountPromptExtraShiftY,
             textSize = accountPromptSecondaryTextSize,
             textAlign = TextAlign.Right,
+            fontWeight = FontWeight.Black,
             scale = scale
         )
     }
