@@ -1,0 +1,260 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+3 0 obj
+<< /Length 6732 >>
+stream
+BT /F2 12.40 Tf 50.00 748.00 Td (Cinerific Android App Work Log - August 1, 2026 \(U.S. EST\)) Tj ET
+BT /F1 8.55 Tf 50.00 718.35 Td (Compiled summary for Saturday, August 1, 2026 \(U.S. EST\) - focus: continuing the post-July-29) Tj ET
+BT /F1 8.55 Tf 50.00 708.20 Td (auth-preview and emulator-handoff pass by reviewing the current project snapshot and all prior) Tj ET
+BT /F1 8.55 Tf 50.00 698.05 Td (Cinerific worklogs, shutting down the Alla Vostra Android Small and Android Large AVDs,) Tj ET
+BT /F1 8.55 Tf 50.00 687.90 Td (booting the Cinerific Standard Tablet AVD, installing and launching Cinerific on that) Tj ET
+BT /F1 8.55 Tf 50.00 677.75 Td (emulator, matching the Create Account and Forgot Password prompt typography to Sign In,) Tj ET
+BT /F1 8.55 Tf 50.00 667.60 Td (creating a tappable Forgot Password slide-in screen, shaping the reset UI through multiple) Tj ET
+BT /F1 8.55 Tf 50.00 657.45 Td (layout revisions, adding Username versus Password recovery selection, preserving the requested) Tj ET
+BT /F1 8.55 Tf 50.00 647.30 Td (left-side explanatory paragraph, validating the right-side form stack on-device, committing) Tj ET
+BT /F1 8.55 Tf 50.00 637.15 Td (the source work as 2a08d44, refreshing the project snapshot, and generating this latest) Tj ET
+BT /F1 8.55 Tf 50.00 627.00 Td (Cinerific PDF worklog artifact.) Tj ET
+BT /F1 8.55 Tf 50.00 606.70 Td (Generated in continuity with the established Cinerific worklog cadence from July 12, July 14,) Tj ET
+BT /F1 8.55 Tf 50.00 596.55 Td (July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, July) Tj ET
+BT /F1 8.55 Tf 50.00 586.40 Td (25, July 27, July 28 Part 1, July 28 Part 2, and July 29: compact opening summary,) Tj ET
+BT /F1 8.55 Tf 50.00 576.25 Td (source-material review, baseline state, goals, themed work-completed sections, validation,) Tj ET
+BT /F1 8.55 Tf 50.00 566.10 Td (files touched, follow-up context, and output-artifact close. No August 1 Part 1 PDF existed in) Tj ET
+BT /F1 8.55 Tf 50.00 555.95 Td (the repository, so this artifact follows the user-requested no-part filename convention for) Tj ET
+BT /F1 8.55 Tf 50.00 545.80 Td (the first August 1 worklog. It records the current source state on main through HEAD 2a08d44,) Tj ET
+BT /F1 8.55 Tf 50.00 535.65 Td (plus the refreshed snapshot and generated worklog artifact from this August 1 pass.) Tj ET
+BT /F2 10.20 Tf 50.00 511.35 Td (Source Materials Reviewed) Tj ET
+BT /F1 8.55 Tf 50.00 498.85 Td (- Reviewed every pre-existing Cinerific worklog PDF at the repository root: July 12, July) Tj ET
+BT /F1 8.55 Tf 50.00 487.60 Td (14, July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July) Tj ET
+BT /F1 8.55 Tf 50.00 477.45 Td (24, July 25, July 27, July 28 Part 1, July 28 Part 2, and July 29.) Tj ET
+BT /F1 8.55 Tf 50.00 467.30 Td (- Converted the prior worklogs with pdftotext and inspected headings, word counts, section) Tj ET
+BT /F1 8.55 Tf 50.00 456.05 Td (order, opening-summary rhythm, validation language, files-touched style, follow-up close,) Tj ET
+BT /F1 8.55 Tf 50.00 445.90 Td (and output-artifact phrasing.) Tj ET
+BT /F1 8.55 Tf 50.00 435.75 Td (- Ran pdfinfo across the earlier PDFs to preserve the four-page letter layout, title) Tj ET
+BT /F1 8.55 Tf 50.00 424.50 Td (metadata, author/creator/producer fields, PDF 1.4 output, footer convention, and Codex) Tj ET
+BT /F1 8.55 Tf 50.00 414.35 Td (standard-library PDF generator style.) Tj ET
+BT /F1 8.55 Tf 50.00 404.20 Td (- Ran ./read_project.sh and reviewed the refreshed cinerific_PROJECT_SNAPSHOT.txt for) Tj ET
+BT /F1 8.55 Tf 50.00 392.95 Td (current source layout, generated worklog inventory, current file tree, and snapshot) Tj ET
+BT /F1 8.55 Tf 50.00 382.80 Td (timestamp convention.) Tj ET
+BT /F1 8.55 Tf 50.00 372.65 Td (- Reviewed git log, git status, git show --stat, and git show --name-status around HEAD) Tj ET
+BT /F1 8.55 Tf 50.00 361.40 Td (2a08d44, Refined auth preview typography and forgot-password flow.) Tj ET
+BT /F1 8.55 Tf 50.00 351.25 Td (- Reviewed CinerificIntroView.kt and CinerificApp.kt around intro rendering, account-prompt) Tj ET
+BT /F1 8.55 Tf 50.00 340.00 Td (typography, native custom View touch handling, mock auth flow state, field focus, IME) Tj ET
+BT /F1 8.55 Tf 50.00 329.85 Td (behavior, dim overlays, chevron return, and fallback Compose prompt text.) Tj ET
+BT /F1 8.55 Tf 50.00 319.70 Td (- Reviewed emulator and runtime context from the pass: Alla Vostra AVD shutdown, Cinerific) Tj ET
+BT /F1 8.55 Tf 50.00 308.45 Td (Standard Tablet boot, emulator-5554 device availability, debug APK installs, MainActivity) Tj ET
+BT /F1 8.55 Tf 50.00 298.30 Td (launches, and screenshots captured for the revised Forgot Password flow.) Tj ET
+BT /F2 10.20 Tf 50.00 274.00 Td (Baseline Status Before August 1 Work) Tj ET
+BT /F1 8.55 Tf 50.00 261.50 Td (- Cinerific entered August 1 with the July 29 carousel, selected-stroke, list snap,) Tj ET
+BT /F1 8.55 Tf 50.00 250.25 Td (detail-library, and static title-card work committed and logged.) Tj ET
+BT /F1 8.55 Tf 50.00 240.10 Td (- The mock Sign In and Create Account flows already existed in the native intro view,) Tj ET
+BT /F1 8.55 Tf 50.00 228.85 Td (including input fields, dropdowns, remembered state, keyboard handling, dimmed focus,) Tj ET
+BT /F1 8.55 Tf 50.00 218.70 Td (landscape lift behavior, and Create Account avatar carousel interactions.) Tj ET
+BT /F1 8.55 Tf 50.00 198.40 Td (- The settled sign-in preview displayed Create Account, Sign In, and Forgot Password) Tj ET
+BT /F1 8.55 Tf 50.00 187.15 Td (prompts, but the secondary prompt text still needed to match Sign In in weight and size) Tj ET
+BT /F1 8.55 Tf 50.00 177.00 Td (across the active native intro and fallback Compose path.) Tj ET
+BT /F1 8.55 Tf 50.00 166.85 Td (- Forgot Password existed only as a visible prompt in the action row; it did not yet have) Tj ET
+BT /F1 8.55 Tf 50.00 155.60 Td (its own tap target, transition state, slide-in screen, reset form, input behavior, or) Tj ET
+BT /F1 8.55 Tf 50.00 145.45 Td (back-chevron return path.) Tj ET
+BT /F1 8.55 Tf 50.00 135.30 Td (- The active development environment also needed emulator handoff from Alla Vostra test) Tj ET
+BT /F1 8.55 Tf 50.00 124.05 Td (devices back to the Cinerific Standard Tablet AVD before validating the current app.) Tj ET
+BT /F1 8.55 Tf 50.00 113.90 Td (- No August 1 root-level Cinerific worklog PDF existed before this artifact pass, and the) Tj ET
+BT /F1 8.55 Tf 50.00 102.65 Td (user explicitly requested omitting a part suffix unless an August 1 Part 1 file was) Tj ET
+BT /F1 8.55 Tf 50.00 92.50 Td (already present.) Tj ET
+BT /F1 8.00 Tf 338.00 30.00 Td (Cinerific Work Log - August 1, 2026 \(U.S. EST\) Page 1) Tj ET
+endstream
+endobj
+4 0 obj
+<< /Length 6335 >>
+stream
+BT /F2 10.20 Tf 50.00 748.00 Td (Main Goals for August 1) Tj ET
+BT /F1 8.55 Tf 50.00 735.50 Td (- Study the current project snapshot and all existing worklogs before changing or) Tj ET
+BT /F1 8.55 Tf 50.00 724.25 Td (documenting the project state.) Tj ET
+BT /F1 8.55 Tf 50.00 714.10 Td (- Shut down Alla Vostra Android Small and Android Large AVDs, boot the Cinerific Standard) Tj ET
+BT /F1 8.55 Tf 50.00 702.85 Td (Tablet AVD, install the app, and verify that Cinerific was the focused activity.) Tj ET
+BT /F1 8.55 Tf 50.00 692.70 Td (- Make Create Account and Forgot Password match Sign In typography on the sign-in preview) Tj ET
+BT /F1 8.55 Tf 50.00 681.45 Td (screen.) Tj ET
+BT /F1 8.55 Tf 50.00 671.30 Td (- Create a Forgot Password slide-in screen that mimics the Sign In and Create Account) Tj ET
+BT /F1 8.55 Tf 50.00 660.05 Td (transition logic, custom canvas styling, input behavior, dim focus, and chevron return.) Tj ET
+BT /F1 8.55 Tf 50.00 649.90 Td (- Iterate the Forgot Password layout into a right-side form stack, keep the explanatory) Tj ET
+BT /F1 8.55 Tf 50.00 638.65 Td (paragraph on the left side, and add a compact Username/Password recovery selector between) Tj ET
+BT /F1 8.55 Tf 50.00 628.50 Td (the Forgot Password header and the form field.) Tj ET
+BT /F1 8.55 Tf 50.00 618.35 Td (- Ensure Password recovery shows the Email Address placeholder, while Username recovery) Tj ET
+BT /F1 8.55 Tf 50.00 607.10 Td (changes the same field to Username.) Tj ET
+BT /F1 8.55 Tf 50.00 596.95 Td (- Compile, install, screenshot, and touch-test the result on the Cinerific Standard Tablet) Tj ET
+BT /F1 8.55 Tf 50.00 585.70 Td (AVD, then record the finished source state and worklog artifact.) Tj ET
+BT /F2 10.20 Tf 50.00 561.40 Td (Work Completed - Project Review and Emulator Handoff) Tj ET
+BT /F1 8.55 Tf 50.00 548.90 Td (- Ran read_project.sh, reviewed the generated Cinerific project snapshot, and read through) Tj ET
+BT /F1 8.55 Tf 50.00 537.65 Td (the established worklog history before continuing the auth-preview work.) Tj ET
+BT /F1 8.55 Tf 50.00 527.50 Td (- Located all existing root-level Cinerific worklog PDFs and confirmed that the project) Tj ET
+BT /F1 8.55 Tf 50.00 516.25 Td (worklog sequence ran through July 29 before the August 1 artifact was created.) Tj ET
+BT /F1 8.55 Tf 50.00 506.10 Td (- Shut down the Alla Vostra Android Small and Android Large AVDs that were occupying) Tj ET
+BT /F1 8.55 Tf 50.00 494.85 Td (emulator sessions from the previous project context.) Tj ET
+BT /F1 8.55 Tf 50.00 484.70 Td (- Booted the Cinerific_Standard_Tablet AVD, confirmed it appeared as emulator-5554,) Tj ET
+BT /F1 8.55 Tf 50.00 473.45 Td (installed the debug APK, and launched com.prahlin.cinerific/.MainActivity.) Tj ET
+BT /F1 8.55 Tf 50.00 463.30 Td (- Verified that the Cinerific activity was focused after install and launch so subsequent) Tj ET
+BT /F1 8.55 Tf 50.00 452.05 Td (visual checks were performed against the correct app and device.) Tj ET
+BT /F2 10.20 Tf 50.00 427.75 Td (Work Completed - Auth Preview Typography) Tj ET
+BT /F1 8.55 Tf 50.00 415.25 Td (- Updated the native intro account-prompt drawing so Create Account and Forgot Password used) Tj ET
+BT /F1 8.55 Tf 50.00 404.00 Td (the same text size as Sign In rather than the older secondary-size scale.) Tj ET
+BT /F1 8.55 Tf 50.00 393.85 Td (- Removed the stale native secondary prompt scale constant after it stopped driving the) Tj ET
+BT /F1 8.55 Tf 50.00 382.60 Td (active custom View prompt rendering.) Tj ET
+BT /F1 8.55 Tf 50.00 362.30 Td (- Updated the fallback Compose intro constants so accountPromptSecondaryTextSize evaluates) Tj ET
+BT /F1 8.55 Tf 50.00 351.05 Td (to the same scale as Sign In.) Tj ET
+BT /F1 8.55 Tf 50.00 340.90 Td (- Set the fallback Compose Create Account and Forgot Password SignInPromptText calls to) Tj ET
+BT /F1 8.55 Tf 50.00 329.65 Td (FontWeight.Black, keeping dormant paths visually aligned with the native intro treatment.) Tj ET
+BT /F1 8.55 Tf 50.00 319.50 Td (- Installed and relaunched the debug build on the standard tablet AVD and captured a) Tj ET
+BT /F1 8.55 Tf 50.00 308.25 Td (sign-in-preview screenshot confirming the three prompt labels matched in size and style.) Tj ET
+BT /F2 10.20 Tf 50.00 283.95 Td (Work Completed - Forgot Password Flow Foundation) Tj ET
+BT /F1 8.55 Tf 50.00 271.45 Td (- Added Forgot Password settled-screen hit testing, pressed-state tracking, launch routing,) Tj ET
+BT /F1 8.55 Tf 50.00 260.20 Td (and reset behavior alongside the existing Create Account and Sign In prompt paths.) Tj ET
+BT /F1 8.55 Tf 50.00 250.05 Td (- Extended the mock account flow state with a ForgotPassword branch so the new screen has) Tj ET
+BT /F1 8.55 Tf 50.00 238.80 Td (its own draw path, active field list, form center, and transition source label.) Tj ET
+BT /F1 8.55 Tf 50.00 228.65 Td (- Animated the Forgot Password title from the right-side prompt into the form header, using) Tj ET
+BT /F1 8.55 Tf 50.00 217.40 Td (the same custom canvas transition style as the Sign In and Create Account flows.) Tj ET
+BT /F1 8.55 Tf 50.00 207.25 Td (- Built the reset form with a best-practice explanatory paragraph, a single recovery input) Tj ET
+BT /F1 8.55 Tf 50.00 196.00 Td (field, Send Reset Link action, account-existence-safe helper copy, and the same back) Tj ET
+BT /F1 8.55 Tf 50.00 185.85 Td (chevron convention.) Tj ET
+BT /F1 8.55 Tf 50.00 175.70 Td (- Reused the existing field renderer, input connection, label animation, caret drawing,) Tj ET
+BT /F1 8.55 Tf 50.00 164.45 Td (keyboard focus, dimmed overlay, and landscape lift behavior for the Forgot Password input) Tj ET
+BT /F1 8.55 Tf 50.00 154.30 Td (field.) Tj ET
+BT /F1 8.55 Tf 50.00 144.15 Td (- Matched the chevron hit box to the new Forgot Password layout so tap-to-return and drag-up) Tj ET
+BT /F1 8.55 Tf 50.00 132.90 Td (return behavior stayed consistent with the existing auth screens.) Tj ET
+BT /F2 10.20 Tf 50.00 108.60 Td (Work Completed - Right-Side Stack and Recovery Selector) Tj ET
+BT /F1 8.55 Tf 50.00 96.10 Td (- Moved the Forgot Password form stack to the right-side Create Account-style column while) Tj ET
+BT /F1 8.55 Tf 50.00 84.85 Td (leaving the explanatory paragraph on the left/center side as requested.) Tj ET
+BT /F1 8.00 Tf 338.00 30.00 Td (Cinerific Work Log - August 1, 2026 \(U.S. EST\) Page 2) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Length 6360 >>
+stream
+BT /F1 8.55 Tf 50.00 748.00 Td (- Added a new recovery selector state with Password as the default mode and Username as an) Tj ET
+BT /F1 8.55 Tf 50.00 736.75 Td (alternate mode.) Tj ET
+BT /F1 8.55 Tf 50.00 726.60 Td (- Drew an I forgot my: horizontal selector row with Username and Password boxes and) Tj ET
+BT /F1 8.55 Tf 50.00 715.35 Td (selected/pressed visual states in the same translucent rounded-field language as the form) Tj ET
+BT /F1 8.55 Tf 50.00 705.20 Td (controls.) Tj ET
+BT /F1 8.55 Tf 50.00 695.05 Td (- Placed the selector between the Forgot Password header and the input field, then compacted) Tj ET
+BT /F1 8.55 Tf 50.00 683.80 Td (the label, box widths, gaps, and text size so the full row fits inside the form field) Tj ET
+BT /F1 8.55 Tf 50.00 673.65 Td (width.) Tj ET
+BT /F1 8.55 Tf 50.00 663.50 Td (- Changed the visible input label dynamically: Password mode shows Email Address, while) Tj ET
+BT /F1 8.55 Tf 50.00 652.25 Td (Username mode shows Username.) Tj ET
+BT /F1 8.55 Tf 50.00 642.10 Td (- Updated the email-field input type in Forgot Password mode so Username recovery uses) Tj ET
+BT /F1 8.55 Tf 50.00 630.85 Td (normal text keyboard behavior and Password recovery keeps email-oriented keyboard) Tj ET
+BT /F1 8.55 Tf 50.00 620.70 Td (behavior.) Tj ET
+BT /F1 8.55 Tf 50.00 610.55 Td (- Cleared the current recovery input when switching modes so an email value does not remain) Tj ET
+BT /F1 8.55 Tf 50.00 599.30 Td (under the Username placeholder or vice versa.) Tj ET
+BT /F2 10.20 Tf 50.00 575.00 Td (Work Completed - Validation, Snapshot, and Commit State) Tj ET
+BT /F1 8.55 Tf 50.00 562.50 Td (- Ran ./gradlew :app:compileDebugKotlin after the Forgot Password implementation and after) Tj ET
+BT /F1 8.55 Tf 50.00 551.25 Td (the final selector-layout adjustment; both passes completed successfully.) Tj ET
+BT /F1 8.55 Tf 50.00 541.10 Td (- Ran ./gradlew :app:installDebug and relaunched MainActivity on the Cinerific Standard) Tj ET
+BT /F1 8.55 Tf 50.00 529.85 Td (Tablet AVD after source changes that affected runtime visual behavior.) Tj ET
+BT /F1 8.55 Tf 50.00 509.55 Td (- Captured screenshots for the centered Forgot Password form, the right-side form stack,) Tj ET
+BT /F1 8.55 Tf 50.00 498.30 Td (Username mode, Password mode, field focus with keyboard, and chevron return to the settled) Tj ET
+BT /F1 8.55 Tf 50.00 488.15 Td (sign-in preview.) Tj ET
+BT /F1 8.55 Tf 50.00 478.00 Td (- Verified that tapping Username changed the right-side placeholder to Username, tapping) Tj ET
+BT /F1 8.55 Tf 50.00 466.75 Td (Password restored Email Address, field focus remained on the right-side field, and the) Tj ET
+BT /F1 8.55 Tf 50.00 456.60 Td (back chevron returned to the settled sign-in screen.) Tj ET
+BT /F1 8.55 Tf 50.00 446.45 Td (- Committed the auth preview and Forgot Password source work on main as HEAD 2a08d44,) Tj ET
+BT /F1 8.55 Tf 50.00 435.20 Td (Refined auth preview typography and forgot-password flow.) Tj ET
+BT /F1 8.55 Tf 50.00 425.05 Td (- Ran ./read_project.sh again during this artifact pass, refreshing) Tj ET
+BT /F1 8.55 Tf 50.00 413.80 Td (cinerific_PROJECT_SNAPSHOT.txt at the repository root with the latest timestamp and) Tj ET
+BT /F1 8.55 Tf 50.00 403.65 Td (committed source state.) Tj ET
+BT /F2 10.20 Tf 50.00 379.35 Td (Validation and Checks Performed) Tj ET
+BT /F1 8.55 Tf 50.00 366.85 Td (- Converted all pre-existing Cinerific worklog PDFs to text with pdftotext and inspected) Tj ET
+BT /F1 8.55 Tf 50.00 355.60 Td (their headings, line counts, word counts, and recent July 28/July 29 prose conventions.) Tj ET
+BT /F1 8.55 Tf 50.00 345.45 Td (- Ran pdfinfo on prior worklogs to confirm letter page geometry, four-page page counts,) Tj ET
+BT /F1 8.55 Tf 50.00 334.20 Td (title metadata, PDF version, and Codex standard-library PDF generator metadata.) Tj ET
+BT /F1 8.55 Tf 50.00 324.05 Td (- Ran find and rg file searches to confirm that no August 1 Cinerific worklog PDF already) Tj ET
+BT /F1 8.55 Tf 50.00 312.80 Td (existed in the repository before generating this no-part artifact.) Tj ET
+BT /F1 8.55 Tf 50.00 302.65 Td (- Ran git log --oneline --decorate, git show --stat --format=fuller HEAD, git show) Tj ET
+BT /F1 8.55 Tf 50.00 291.40 Td (--name-status HEAD, git status --short --branch, and git diff --stat during the artifact) Tj ET
+BT /F1 8.55 Tf 50.00 281.25 Td (pass.) Tj ET
+BT /F1 8.55 Tf 50.00 271.10 Td (- Ran ./gradlew :app:compileDebugKotlin and ./gradlew :app:installDebug after the final) Tj ET
+BT /F1 8.55 Tf 50.00 259.85 Td (source state; the Gradle commands completed successfully.) Tj ET
+BT /F1 8.55 Tf 50.00 249.70 Td (- Used adb devices, adb shell input taps, adb exec-out screencap, and dumpsys window focus) Tj ET
+BT /F1 8.55 Tf 50.00 238.45 Td (checks to validate the app on the connected Cinerific Standard Tablet AVD.) Tj ET
+BT /F1 8.55 Tf 50.00 228.30 Td (- Generated this PDF with a small standard-library PDF writer so the output remains) Tj ET
+BT /F1 8.55 Tf 50.00 217.05 Td (text-extractable and consistent with prior Cinerific worklogs.) Tj ET
+BT /F2 10.20 Tf 50.00 192.75 Td (Files Touched During August 1) Tj ET
+BT /F1 8.55 Tf 50.00 180.25 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt: prompt hit testing,) Tj ET
+BT /F1 8.55 Tf 50.00 169.00 Td (matching account prompt text size, Forgot Password flow state, title transition, reset) Tj ET
+BT /F1 8.55 Tf 50.00 158.85 Td (form drawing, input behavior, right-side form layout, recovery selector drawing and hit) Tj ET
+BT /F1 8.55 Tf 50.00 148.70 Td (testing, dynamic placeholder labels, and chevron return.) Tj ET
+BT /F1 8.55 Tf 50.00 138.55 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt: fallback Compose prompt scale) Tj ET
+BT /F1 8.55 Tf 50.00 127.30 Td (and font weight updates so dormant Create Account and Forgot Password labels match Sign) Tj ET
+BT /F1 8.55 Tf 50.00 117.15 Td (In.) Tj ET
+BT /F1 8.55 Tf 50.00 107.00 Td (- cinerific_PROJECT_SNAPSHOT.txt: refreshed generated project snapshot timestamp and source) Tj ET
+BT /F1 8.55 Tf 50.00 95.75 Td (dump after the auth flow commit and again before producing this artifact.) Tj ET
+BT /F1 8.55 Tf 50.00 85.60 Td (- cinerific_worklog_august 1.pdf: new root-level PDF worklog artifact for the August 1 pass,) Tj ET
+BT /F1 8.00 Tf 338.00 30.00 Td (Cinerific Work Log - August 1, 2026 \(U.S. EST\) Page 3) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Length 1702 >>
+stream
+BT /F1 8.55 Tf 50.00 748.00 Td (intentionally without a part suffix because no August 1 Part 1 PDF existed in the repo.) Tj ET
+BT /F2 10.20 Tf 50.00 723.70 Td (Follow-Up Context) Tj ET
+BT /F1 8.55 Tf 50.00 711.20 Td (- The Forgot Password screen is still a mock/prototype flow; Send Reset Link is a visual) Tj ET
+BT /F1 8.55 Tf 50.00 699.95 Td (action and does not yet call a backend or account-recovery service.) Tj ET
+BT /F1 8.55 Tf 50.00 689.80 Td (- The recovery copy, helper text, selector labels, and control placement were intentionally) Tj ET
+BT /F1 8.55 Tf 50.00 678.55 Td (kept editable for future product/design revisions.) Tj ET
+BT /F1 8.55 Tf 50.00 658.25 Td (- The active app remains installed and focused on the Cinerific Standard Tablet AVD after) Tj ET
+BT /F1 8.55 Tf 50.00 647.00 Td (validation.) Tj ET
+BT /F1 8.55 Tf 50.00 636.85 Td (- The next source pass can wire real account recovery, validation messaging, or additional) Tj ET
+BT /F1 8.55 Tf 50.00 625.60 Td (auth navigation once the prototype wording and layout are accepted.) Tj ET
+BT /F2 10.20 Tf 50.00 601.30 Td (Output Artifact) Tj ET
+BT /F1 8.55 Tf 50.00 588.80 Td (Generated cinerific_worklog_august 1.pdf at the repository root. The file follows the) Tj ET
+BT /F1 8.55 Tf 50.00 578.65 Td (established Cinerific root-level worklog naming, letter-size PDF layout, text-extractable) Tj ET
+BT /F1 8.55 Tf 50.00 568.50 Td (content style, footer convention, metadata pattern, and no-part filename rule requested for) Tj ET
+BT /F1 8.55 Tf 50.00 558.35 Td (August 1 because no August 1 Part 1 worklog was present in the repo.) Tj ET
+BT /F1 8.00 Tf 338.00 30.00 Td (Cinerific Work Log - August 1, 2026 \(U.S. EST\) Page 4) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 3 0 R >>
+endobj
+8 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 4 0 R >>
+endobj
+9 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 5 0 R >>
+endobj
+10 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 6 0 R >>
+endobj
+11 0 obj
+<< /Type /Pages /Kids [7 0 R 8 0 R 9 0 R 10 0 R] /Count 4 >>
+endobj
+12 0 obj
+<< /Type /Catalog /Pages 11 0 R >>
+endobj
+13 0 obj
+<< /Title (Cinerific Android App Work Log - August 1, 2026 \(U.S. EST\)) /Subject (Cinerific Android app development worklog) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260801203500-04'00') /ModDate (D:20260801203500-04'00') >>
+endobj
+xref
+0 14
+0000000000 65535 f 
+0000000015 00000 n 
+0000000085 00000 n 
+0000000160 00000 n 
+0000006943 00000 n 
+0000013329 00000 n 
+0000019740 00000 n 
+0000021493 00000 n 
+0000021630 00000 n 
+0000021767 00000 n 
+0000021904 00000 n 
+0000022042 00000 n 
+0000022119 00000 n 
+0000022170 00000 n 
+trailer
+<< /Size 14 /Root 12 0 R /Info 13 0 R >>
+startxref
+22503
+%%EOF
