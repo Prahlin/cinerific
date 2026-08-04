@@ -1,0 +1,269 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R 11 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 7608 >>
+stream
+BT /F1 12.00 Tf 50.00 742.00 Td (Cinerific Android App Work Log - August 3, 2026 \(U.S. EST\)) Tj ET
+BT /F1 8.55 Tf 50.00 717.85 Td (Compiled summary for Monday, August 3, 2026 \(U.S. EST\) - focus: continuing the post-August-1) Tj ET
+BT /F1 8.55 Tf 50.00 707.70 Td (auth-preview and Forgot Password polish pass by reviewing the current project snapshot and all prior) Tj ET
+BT /F1 8.55 Tf 50.00 697.55 Td (Cinerific worklogs, iterating the Create Account, Sign In, and Forgot Username/Password prompt row,) Tj ET
+BT /F1 8.55 Tf 50.00 687.40 Td (matching the slide-in title destination for Create My Account and Forgot Username/Password to Sign) Tj ET
+BT /F1 8.55 Tf 50.00 677.25 Td (In, correcting the Forgot title target after a Kotlin View.x resolution issue, preserving the) Tj ET
+BT /F1 8.55 Tf 50.00 667.10 Td (requested all-assets-on-right Forgot layout, replacing the Forgot recovery copy with friendlier) Tj ET
+BT /F1 8.55 Tf 50.00 656.95 Td (paragraph-length guidance, adding Username versus Password recovery wording and button states,) Tj ET
+BT /F1 8.55 Tf 50.00 646.80 Td (doubling the auth chevron wing spread without changing vertical placement, validating the result on) Tj ET
+BT /F1 8.55 Tf 50.00 636.65 Td (the Cinerific Standard Tablet AVD, committing the source work as 7e6835e, refreshing the project) Tj ET
+BT /F1 8.55 Tf 50.00 626.50 Td (snapshot, and generating this latest Cinerific PDF worklog artifact.) Tj ET
+BT /F1 8.55 Tf 50.00 606.20 Td (Generated in continuity with the established Cinerific worklog cadence from July 12, July 14, July 15) Tj ET
+BT /F1 8.55 Tf 50.00 596.05 Td (Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, July 25, July 27,) Tj ET
+BT /F1 8.55 Tf 50.00 585.90 Td (July 28 Part 1, July 28 Part 2, July 29, and August 1: compact opening summary, source-material) Tj ET
+BT /F1 8.55 Tf 50.00 575.75 Td (review, baseline state, goals, themed work-completed sections, validation, files touched, follow-up) Tj ET
+BT /F1 8.55 Tf 50.00 565.60 Td (context, and output-artifact close. No August 3 Part 1 PDF existed in the repository, so this) Tj ET
+BT /F1 8.55 Tf 50.00 555.45 Td (artifact follows the no-part filename convention for the first August 3 worklog. It records the) Tj ET
+BT /F1 8.55 Tf 50.00 545.30 Td (current source state on main through HEAD 7e6835e, plus the refreshed snapshot and generated worklog) Tj ET
+BT /F1 8.55 Tf 50.00 535.15 Td (artifact from this August 3 pass.) Tj ET
+BT /F1 8.55 Tf 50.00 504.70 Td (Source Materials Reviewed) Tj ET
+BT /F1 8.55 Tf 50.00 494.55 Td (- Reviewed every pre-existing Cinerific worklog PDF at the repository root: July 12, July 14, July) Tj ET
+BT /F1 8.55 Tf 50.00 484.40 Td (  15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, July 25, July) Tj ET
+BT /F1 8.55 Tf 50.00 474.25 Td (  27, July 28 Part 1, July 28 Part 2, July 29, and August 1.) Tj ET
+BT /F1 8.55 Tf 50.00 464.10 Td (- Converted the prior worklogs with pdftotext and inspected headings, line counts, opening-summary) Tj ET
+BT /F1 8.55 Tf 50.00 453.95 Td (  rhythm, section order, validation language, files-touched style, follow-up close,) Tj ET
+BT /F1 8.55 Tf 50.00 443.80 Td (  output-artifact phrasing, and the recent U.S. EST title convention.) Tj ET
+BT /F1 8.55 Tf 50.00 433.65 Td (- Ran pdfinfo across the earlier PDFs to preserve the four-page letter layout, title metadata,) Tj ET
+BT /F1 8.55 Tf 50.00 423.50 Td (  author/creator/producer fields, PDF 1.4 output, footer convention, and Codex standard-library) Tj ET
+BT /F1 8.55 Tf 50.00 413.35 Td (  PDF generator style.) Tj ET
+BT /F1 8.55 Tf 50.00 403.20 Td (- Ran ./read_project.sh and reviewed the refreshed cinerific_PROJECT_SNAPSHOT.txt for the current) Tj ET
+BT /F1 8.55 Tf 50.00 393.05 Td (  source layout, generated worklog inventory, root file tree, snapshot timestamp convention, and) Tj ET
+BT /F1 8.55 Tf 50.00 382.90 Td (  inclusion of the root icon asset added by the latest source commit.) Tj ET
+BT /F1 8.55 Tf 50.00 372.75 Td (- Reviewed git status, git log, git show --stat, and git show --name-status around HEAD 7e6835e,) Tj ET
+BT /F1 8.55 Tf 50.00 362.60 Td (  Refined account prompt slide-ins and recovery flow, with context from the August 1 worklog) Tj ET
+BT /F1 8.55 Tf 50.00 352.45 Td (  commit 3e95c79 and source commit 2a08d44.) Tj ET
+BT /F1 8.55 Tf 50.00 342.30 Td (- Reviewed app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt around account-prompt) Tj ET
+BT /F1 8.55 Tf 50.00 332.15 Td (  labels, slide-in title centers, Forgot recovery state, custom canvas paragraph wrapping, dynamic) Tj ET
+BT /F1 8.55 Tf 50.00 322.00 Td (  input labels, submit-button states, chevron geometry, hit testing, and keyboard/focus behavior.) Tj ET
+BT /F1 8.55 Tf 50.00 311.85 Td (- Reviewed runtime context from the pass: Cinerific Standard Tablet AVD availability, debug APK) Tj ET
+BT /F1 8.55 Tf 50.00 301.70 Td (  install output, MainActivity launches, adb screenshots for Create My Account and Forgot) Tj ET
+BT /F1 8.55 Tf 50.00 291.55 Td (  Username/Password, and visual inspection of the final title centering.) Tj ET
+BT /F1 8.55 Tf 50.00 261.10 Td (Baseline Status Before August 3 Work) Tj ET
+BT /F1 8.55 Tf 50.00 250.95 Td (- Cinerific entered August 3 with the August 1 auth-preview foundation committed and logged: Sign) Tj ET
+BT /F1 8.55 Tf 50.00 240.80 Td (  In and Create Account mock flows, a tappable Forgot Password flow, a right-side Forgot form) Tj ET
+BT /F1 8.55 Tf 50.00 230.65 Td (  stack, recovery selector basics, custom canvas input behavior, dim overlays, keyboard lift,) Tj ET
+BT /F1 8.55 Tf 50.00 220.50 Td (  chevron return, and project snapshot generation.) Tj ET
+BT /F1 8.55 Tf 50.00 210.35 Td (- The settled account prompt row still used the earlier Create Account and Forgot Password product) Tj ET
+BT /F1 8.55 Tf 50.00 200.20 Td (  wording and did not yet reflect the final Create My Account and Forgot Username/Password labels) Tj ET
+BT /F1 8.55 Tf 50.00 190.05 Td (  requested for preview and slide-in destinations.) Tj ET
+BT /F1 8.55 Tf 50.00 179.90 Td (- The Forgot recovery screen existed, but the left-side explanation still needed friendlier) Tj ET
+BT /F1 8.55 Tf 50.00 169.75 Td (  paragraph-length copy, larger tiered typography, and explicit Username-or-Password recovery) Tj ET
+BT /F1 8.55 Tf 50.00 159.60 Td (  guidance.) Tj ET
+BT /F1 8.55 Tf 50.00 149.45 Td (- The recovery selector and submit actions needed final wording: Recover my:, Send Reminder Link) Tj ET
+BT /F1 8.55 Tf 50.00 139.30 Td (  for username recovery, Send Reset Link for password recovery, and Username as the visible) Tj ET
+BT /F1 8.55 Tf 50.00 129.15 Td (  username field label.) Tj ET
+BT /F1 8.55 Tf 50.00 119.00 Td (- The Forgot title and Create title still needed to land on the same horizontal centerline as Sign) Tj ET
+BT /F1 8.55 Tf 50.00 108.85 Td (  In rather than reading as left/right slide-up destinations from their prompt positions.) Tj ET
+BT /F1 8.55 Tf 50.00 98.70 Td (- The downward chevrons needed a wider wing spread across Sign In, Create Account, and Forgot) Tj ET
+BT /F1 8.55 Tf 50.00 88.55 Td (  Username/Password while keeping their existing vertical placement and alignment behavior intact.) Tj ET
+BT /F1 8.55 Tf 50.00 78.40 Td (- The user explicitly asked not to change the all-assets-on-right layout, so every Forgot recovery) Tj ET
+BT /F1 8.55 Tf 50.00 68.25 Td (  polish item had to preserve the accepted paragraph-left and controls-right composition.) Tj ET
+BT /F1 8.40 Tf 306.00 28.00 Td (Cinerific Work Log - August 3, 2026 \(U.S. EST\) Page 1) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 6751 >>
+stream
+BT /F1 8.55 Tf 50.00 721.70 Td (Main Goals for August 3) Tj ET
+BT /F1 8.55 Tf 50.00 711.55 Td (- Apply the requested product language changes across the sign-in preview and Forgot recovery) Tj ET
+BT /F1 8.55 Tf 50.00 701.40 Td (  slide-in without disturbing the established auth-screen drawing system.) Tj ET
+BT /F1 8.55 Tf 50.00 691.25 Td (- Replace the Forgot screen explanation with the approved three-paragraph friendly copy and tune) Tj ET
+BT /F1 8.55 Tf 50.00 681.10 Td (  paragraph font sizes so the top line, middle paragraph, and bottom paragraph match the requested) Tj ET
+BT /F1 8.55 Tf 50.00 670.95 Td (  hierarchy.) Tj ET
+BT /F1 8.55 Tf 50.00 660.80 Td (- Expand Forgot recovery from a reset-only presentation into a username/password helper flow with) Tj ET
+BT /F1 8.55 Tf 50.00 650.65 Td (  dynamic button text, helper copy, loading state, sent state, and visual feedback.) Tj ET
+BT /F1 8.55 Tf 50.00 640.50 Td (- Match the slide-in destination X position for Create My Account and Forgot Username/Password to) Tj ET
+BT /F1 8.55 Tf 50.00 630.35 Td (  Sign In while keeping each prompt label drawn and tapped from its normal preview-row position.) Tj ET
+BT /F1 8.55 Tf 50.00 620.20 Td (- Keep the Forgot screen all-assets-on-right layout exactly intact while improving title) Tj ET
+BT /F1 8.55 Tf 50.00 610.05 Td (  alignment, copy, selector wording, input label behavior, and submit affordance clarity.) Tj ET
+BT /F1 8.55 Tf 50.00 599.90 Td (- Compile, install, screenshot, and inspect the result on the Cinerific Standard Tablet AVD, then) Tj ET
+BT /F1 8.55 Tf 50.00 589.75 Td (  record the committed source state and worklog artifact.) Tj ET
+BT /F1 8.55 Tf 50.00 559.30 Td (Work Completed - Project Review and Runtime Orientation) Tj ET
+BT /F1 8.55 Tf 50.00 549.15 Td (- Read the available root-level worklogs from July 12 through August 1 and used their shared) Tj ET
+BT /F1 8.55 Tf 50.00 539.00 Td (  structure as the template for this artifact.) Tj ET
+BT /F1 8.55 Tf 50.00 528.85 Td (- Refreshed cinerific_PROJECT_SNAPSHOT.txt with ./read_project.sh before generating the worklog so) Tj ET
+BT /F1 8.55 Tf 50.00 518.70 Td (  the artifact pass started from the current root tree and source dump.) Tj ET
+BT /F1 8.55 Tf 50.00 508.55 Td (- Confirmed the latest source commit on main was 7e6835e, containing the account prompt slide-in) Tj ET
+BT /F1 8.55 Tf 50.00 498.40 Td (  and recovery-flow refinements requested after the August 1 pass.) Tj ET
+BT /F1 8.55 Tf 50.00 488.25 Td (- Confirmed the pending tree after the source commit contained only the refreshed project snapshot) Tj ET
+BT /F1 8.55 Tf 50.00 478.10 Td (  generated during this worklog pass.) Tj ET
+BT /F1 8.55 Tf 50.00 467.95 Td (- Kept this work local to the Android app and repository files; no Figma MCP, web lookup, or) Tj ET
+BT /F1 8.55 Tf 50.00 457.80 Td (  external PDF package was needed for the worklog artifact.) Tj ET
+BT /F1 8.55 Tf 50.00 427.35 Td (Work Completed - Account Prompt Copy and Slide-In Centers) Tj ET
+BT /F1 8.55 Tf 50.00 417.20 Td (- Renamed the preview Create Account prompt to Create My Account and renamed Forgot Password to) Tj ET
+BT /F1 8.55 Tf 50.00 407.05 Td (  Forgot Username/Password so the settled sign-in preview matched the requested product language.) Tj ET
+BT /F1 8.55 Tf 50.00 396.90 Td (- Increased prompt hit widths for the longer Create My Account and Forgot Username/Password labels) Tj ET
+BT /F1 8.55 Tf 50.00 386.75 Td (  so the tappable zones stayed comfortable after the text changed.) Tj ET
+BT /F1 8.55 Tf 50.00 376.60 Td (- Updated Sign In, Create My Account, and Forgot Username/Password title drawing so active) Tj ET
+BT /F1 8.55 Tf 50.00 366.45 Td (  slide-in titles use centered text alignment and a shared target center based on) Tj ET
+BT /F1 8.55 Tf 50.00 356.30 Td (  ACCOUNT_PROMPT_SIGN_IN_CENTER_X.) Tj ET
+BT /F1 8.55 Tf 50.00 346.15 Td (- Preserved Create and Forgot source positions in the settled prompt row while changing only their) Tj ET
+BT /F1 8.55 Tf 50.00 336.00 Td (  slide-in destination center, so the prompt row still reads left, center, and right before a flow) Tj ET
+BT /F1 8.55 Tf 50.00 325.85 Td (  opens.) Tj ET
+BT /F1 8.55 Tf 50.00 315.70 Td (- Fixed the late Forgot alignment issue caused by a removed parameter letting Kotlin resolve x as) Tj ET
+BT /F1 8.55 Tf 50.00 305.55 Td (  the View.x property; the Forgot title target now explicitly uses the Sign In center constant.) Tj ET
+BT /F1 8.55 Tf 50.00 295.40 Td (- Verified by emulator screenshot that Create My Account and Forgot Username/Password land) Tj ET
+BT /F1 8.55 Tf 50.00 285.25 Td (  centered under the Cinerific logo while the Forgot controls remain on the right side.) Tj ET
+BT /F1 8.55 Tf 50.00 254.80 Td (Work Completed - Forgot Recovery Copy and Typography) Tj ET
+BT /F1 8.55 Tf 50.00 244.65 Td (- Replaced the older Enter the email address copy with the approved three-paragraph text beginning) Tj ET
+BT /F1 8.55 Tf 50.00 234.50 Td (  No Sign-In Information? No problem., followed by the recovery-selection guidance and the) Tj ET
+BT /F1 8.55 Tf 50.00 224.35 Td (  account-existence-safe helper paragraph.) Tj ET
+BT /F1 8.55 Tf 50.00 214.20 Td (- Extended wrappedTextLines so paragraph breaks are preserved instead of flattening the Forgot) Tj ET
+BT /F1 8.55 Tf 50.00 204.05 Td (  copy into one continuous wrapped block.) Tj ET
+BT /F1 8.55 Tf 50.00 193.90 Td (- Added a Forgot-specific paragraph renderer that can draw the lead line, middle paragraph, and) Tj ET
+BT /F1 8.55 Tf 50.00 183.75 Td (  bottom paragraph with separate text sizes and line heights.) Tj ET
+BT /F1 8.55 Tf 50.00 173.60 Td (- Increased the first sentence through the requested font-size iterations and matched the bottom) Tj ET
+BT /F1 8.55 Tf 50.00 163.45 Td (  paragraph font size to the middle paragraph font size in the final state.) Tj ET
+BT /F1 8.55 Tf 50.00 153.30 Td (- Kept the left-side paragraph placement and width aligned with the accepted all-assets-on-right) Tj ET
+BT /F1 8.55 Tf 50.00 143.15 Td (  layout rather than pulling the explanatory text into the control column.) Tj ET
+BT /F1 8.55 Tf 50.00 112.70 Td (Work Completed - Recovery Selector and Submit States) Tj ET
+BT /F1 8.55 Tf 50.00 102.55 Td (- Changed the selector label from the earlier recovery wording to Recover my: and kept Username) Tj ET
+BT /F1 8.55 Tf 50.00 92.40 Td (  and Password as the two selectable targets.) Tj ET
+BT /F1 8.55 Tf 50.00 82.25 Td (- Updated username recovery to use Username as the input label and Send Reminder Link as the) Tj ET
+BT /F1 8.55 Tf 50.00 72.10 Td (  primary action, while password recovery uses Email Address and Send Reset Link.) Tj ET
+BT /F1 8.40 Tf 306.00 28.00 Td (Cinerific Work Log - August 3, 2026 \(U.S. EST\) Page 2) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 6868 >>
+stream
+BT /F1 8.55 Tf 50.00 742.00 Td (- Added dynamic helper text for empty, idle, loading, and sent states so the right-side form) Tj ET
+BT /F1 8.55 Tf 50.00 731.85 Td (  responds to the selected recovery target and current input state.) Tj ET
+BT /F1 8.55 Tf 50.00 721.70 Td (- Added submit-button press handling, disabled-state styling, loading-state shimmer, sent-state) Tj ET
+BT /F1 8.55 Tf 50.00 711.55 Td (  check feedback, and sent button text for both username and password recovery.) Tj ET
+BT /F1 8.55 Tf 50.00 701.40 Td (- Reset the Forgot submission state when the user switches recovery target or edits the recovery) Tj ET
+BT /F1 8.55 Tf 50.00 691.25 Td (  input, preventing stale sent/loading feedback from persisting under a new mode.) Tj ET
+BT /F1 8.55 Tf 50.00 681.10 Td (- Preserved email-oriented keyboard behavior for password reset mode and normal text behavior for) Tj ET
+BT /F1 8.55 Tf 50.00 670.95 Td (  username reminder mode.) Tj ET
+BT /F1 8.55 Tf 50.00 640.50 Td (Work Completed - Chevron Geometry and Layout Preservation) Tj ET
+BT /F1 8.55 Tf 50.00 630.35 Td (- Matched the Forgot downward-facing chevron center to the active Create Account form centerline) Tj ET
+BT /F1 8.55 Tf 50.00 620.20 Td (  so it aligns with the Create Account and Sign In slide-in treatment.) Tj ET
+BT /F1 8.55 Tf 50.00 610.05 Td (- Doubled the shared back-chevron wing width and hit width, expanding the left/right spread across) Tj ET
+BT /F1 8.55 Tf 50.00 599.90 Td (  Sign In, Create My Account, and Forgot Username/Password without changing top gaps, vertical) Tj ET
+BT /F1 8.55 Tf 50.00 589.75 Td (  placement, or stroke style.) Tj ET
+BT /F1 8.55 Tf 50.00 579.60 Td (- Kept Forgot recovery controls, selector, input field, submit button, helper text, and chevron in) Tj ET
+BT /F1 8.55 Tf 50.00 569.45 Td (  the right-side form column, preserving the user-requested all-assets-on-right layout.) Tj ET
+BT /F1 8.55 Tf 50.00 559.30 Td (- Avoided unrelated navigation, Home/default, catalog, Favorites, Settings, or detail-screen) Tj ET
+BT /F1 8.55 Tf 50.00 549.15 Td (  changes during this auth-specific pass.) Tj ET
+BT /F1 8.55 Tf 50.00 518.70 Td (Work Completed - Validation, Snapshot, and Commit State) Tj ET
+BT /F1 8.55 Tf 50.00 508.55 Td (- Ran rg and focused sed inspections over CinerificIntroView.kt to verify the title target) Tj ET
+BT /F1 8.55 Tf 50.00 498.40 Td (  centers, prompt helper centers, field labels, button labels, and absence of stale x plus) Tj ET
+BT /F1 8.55 Tf 50.00 488.25 Td (  MOCK_FORM_WIDTH title targeting.) Tj ET
+BT /F1 8.55 Tf 50.00 478.10 Td (- Ran ./gradlew :app:installDebug after the final source fix; the build succeeded and installed) Tj ET
+BT /F1 8.55 Tf 50.00 467.95 Td (  app-debug.apk on Cinerific_Standard_Tablet at emulator-5554.) Tj ET
+BT /F1 8.55 Tf 50.00 457.80 Td (- Launched com.prahlin.cinerific/.MainActivity and captured final Create My Account and Forgot) Tj ET
+BT /F1 8.55 Tf 50.00 447.65 Td (  Username/Password screenshots from the emulator after their slide-ins settled.) Tj ET
+BT /F1 8.55 Tf 50.00 437.50 Td (- Visually inspected /tmp/cinerific_create_title_center_final.png and) Tj ET
+BT /F1 8.55 Tf 50.00 427.35 Td (  /tmp/cinerific_forgot_title_center_final.png, confirming centered titles and the preserved) Tj ET
+BT /F1 8.55 Tf 50.00 417.20 Td (  right-side Forgot form stack.) Tj ET
+BT /F1 8.55 Tf 50.00 407.05 Td (- Ran git diff --check against CinerificIntroView.kt during the source pass; no whitespace errors) Tj ET
+BT /F1 8.55 Tf 50.00 396.90 Td (  were reported.) Tj ET
+BT /F1 8.55 Tf 50.00 386.75 Td (- Committed the source and snapshot work on main as HEAD 7e6835e, Refined account prompt slide-ins) Tj ET
+BT /F1 8.55 Tf 50.00 376.60 Td (  and recovery flow, including CinerificIntroView.kt, cinerific_PROJECT_SNAPSHOT.txt, and the root) Tj ET
+BT /F1 8.55 Tf 50.00 366.45 Td (  _cinerific_icon.png asset.) Tj ET
+BT /F1 8.55 Tf 50.00 356.30 Td (- Ran ./gradlew :app:compileDebugKotlin during this artifact pass; the Kotlin compile completed) Tj ET
+BT /F1 8.55 Tf 50.00 346.15 Td (  successfully with BUILD SUCCESSFUL.) Tj ET
+BT /F1 8.55 Tf 50.00 315.70 Td (Validation and Checks Performed) Tj ET
+BT /F1 8.55 Tf 50.00 305.55 Td (- Converted all pre-existing Cinerific worklog PDFs to text with pdftotext -layout and inspected) Tj ET
+BT /F1 8.55 Tf 50.00 295.40 Td (  their headings, line counts, section ordering, prose density, and latest August 1 conventions) Tj ET
+BT /F1 8.55 Tf 50.00 285.25 Td (  before generating this artifact.) Tj ET
+BT /F1 8.55 Tf 50.00 275.10 Td (- Ran pdfinfo on the existing worklogs, especially August 1, to confirm title metadata, subject,) Tj ET
+BT /F1 8.55 Tf 50.00 264.95 Td (  author, creator, producer, letter page size, four-page count, and PDF 1.4 output.) Tj ET
+BT /F1 8.55 Tf 50.00 254.80 Td (- Ran date and TZ=America/New_York date during the artifact pass; both local/Eastern workspace) Tj ET
+BT /F1 8.55 Tf 50.00 244.65 Td (  clocks reported Monday, August 3, 2026 EDT, matching the source commit date for this worklog.) Tj ET
+BT /F1 8.55 Tf 50.00 234.50 Td (- Ran git status --short, git log --oneline --decorate, git show --stat --summary HEAD, git show) Tj ET
+BT /F1 8.55 Tf 50.00 224.35 Td (  --name-status --format=fuller HEAD, and git diff --stat for the refreshed snapshot state.) Tj ET
+BT /F1 8.55 Tf 50.00 214.20 Td (- Ran ./read_project.sh during this artifact pass and reviewed the snapshot diff showing the) Tj ET
+BT /F1 8.55 Tf 50.00 204.05 Td (  refreshed timestamp, _cinerific_icon.png inventory, and current CinerificIntroView.kt source) Tj ET
+BT /F1 8.55 Tf 50.00 193.90 Td (  dump.) Tj ET
+BT /F1 8.55 Tf 50.00 183.75 Td (- Ran ./gradlew :app:compileDebugKotlin during this artifact pass; the build completed) Tj ET
+BT /F1 8.55 Tf 50.00 173.60 Td (  successfully after the committed account prompt and Forgot recovery changes.) Tj ET
+BT /F1 8.55 Tf 50.00 163.45 Td (- Generated this PDF with a small standard-library PDF writer so the output remains) Tj ET
+BT /F1 8.55 Tf 50.00 153.30 Td (  text-extractable and consistent with prior Cinerific worklogs.) Tj ET
+BT /F1 8.55 Tf 50.00 122.85 Td (Files Touched During August 3) Tj ET
+BT /F1 8.55 Tf 50.00 112.70 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt: account prompt labels, hit) Tj ET
+BT /F1 8.55 Tf 50.00 102.55 Td (  widths, Sign In/Create/Forgot title target centers, Forgot body copy, paragraph-break wrapping,) Tj ET
+BT /F1 8.55 Tf 50.00 92.40 Td (  tiered paragraph typography, recovery selector label, username/password button text, dynamic) Tj ET
+BT /F1 8.55 Tf 50.00 82.25 Td (  helper/sent/loading states, submit hit testing, shimmer/check feedback, chevron width, and) Tj ET
+BT /F1 8.55 Tf 50.00 72.10 Td (  Forgot right-side layout preservation.) Tj ET
+BT /F1 8.40 Tf 306.00 28.00 Td (Cinerific Work Log - August 3, 2026 \(U.S. EST\) Page 3) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Length 2679 >>
+stream
+BT /F1 8.55 Tf 50.00 742.00 Td (- _cinerific_icon.png: root Cinerific icon asset added to the repository in the August 3 source) Tj ET
+BT /F1 8.55 Tf 50.00 731.85 Td (  commit.) Tj ET
+BT /F1 8.55 Tf 50.00 721.70 Td (- cinerific_PROJECT_SNAPSHOT.txt: refreshed generated project snapshot timestamp, root file tree,) Tj ET
+BT /F1 8.55 Tf 50.00 711.55 Td (  icon inventory, worklog inventory, and CinerificIntroView.kt source dump during the source and) Tj ET
+BT /F1 8.55 Tf 50.00 701.40 Td (  artifact passes.) Tj ET
+BT /F1 8.55 Tf 50.00 691.25 Td (- cinerific_worklog_august 3.pdf: new root-level PDF worklog artifact for the August 3 pass,) Tj ET
+BT /F1 8.55 Tf 50.00 681.10 Td (  intentionally without a part suffix because no August 3 Part 1 PDF existed in the repository.) Tj ET
+BT /F1 8.55 Tf 50.00 650.65 Td (Follow-Up Context) Tj ET
+BT /F1 8.55 Tf 50.00 640.50 Td (- The Forgot Username/Password flow remains a native mock/prototype; Send Reminder Link and Send) Tj ET
+BT /F1 8.55 Tf 50.00 630.35 Td (  Reset Link are visual states and do not yet call a backend account-recovery service.) Tj ET
+BT /F1 8.55 Tf 50.00 620.20 Td (- The latest accepted layout keeps all Forgot recovery controls on the right and all explanatory) Tj ET
+BT /F1 8.55 Tf 50.00 610.05 Td (  copy on the left, so future revisions should avoid moving those assets unless the user) Tj ET
+BT /F1 8.55 Tf 50.00 599.90 Td (  explicitly asks.) Tj ET
+BT /F1 8.55 Tf 50.00 589.75 Td (- The centered slide-in destination for Create My Account and Forgot Username/Password is now tied) Tj ET
+BT /F1 8.55 Tf 50.00 579.60 Td (  to the same center constant as Sign In; any future prompt-row changes should preserve that) Tj ET
+BT /F1 8.55 Tf 50.00 569.45 Td (  distinction between preview source position and active title destination.) Tj ET
+BT /F1 8.55 Tf 50.00 559.30 Td (- The next source pass can wire real recovery, validation errors, backend email behavior, or) Tj ET
+BT /F1 8.55 Tf 50.00 549.15 Td (  further auth navigation after the current copy and layout treatment is accepted.) Tj ET
+BT /F1 8.55 Tf 50.00 518.70 Td (Output Artifact) Tj ET
+BT /F1 8.55 Tf 50.00 508.55 Td (Generated cinerific_worklog_august 3.pdf at the repository root. The file follows the established) Tj ET
+BT /F1 8.55 Tf 50.00 498.40 Td (Cinerific root-level worklog naming, letter-size PDF layout, text-extractable content style, footer) Tj ET
+BT /F1 8.55 Tf 50.00 488.25 Td (convention, metadata pattern, PDF 1.4 output, and no-part filename rule for the first August 3) Tj ET
+BT /F1 8.55 Tf 50.00 478.10 Td (worklog artifact.) Tj ET
+BT /F1 8.40 Tf 306.00 28.00 Td (Cinerific Work Log - August 3, 2026 \(U.S. EST\) Page 4) Tj ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 10 0 R >>
+endobj
+12 0 obj
+<< /Title (Cinerific Android App Work Log - August 3, 2026 \(U.S. EST\)) /Subject (Cinerific Android app development worklog) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260803234806-04'00') /ModDate (D:20260803234806-04'00') >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000134 00000 n 
+0000000204 00000 n 
+0000007863 00000 n 
+0000007989 00000 n 
+0000014791 00000 n 
+0000014917 00000 n 
+0000021836 00000 n 
+0000021962 00000 n 
+0000024693 00000 n 
+0000024821 00000 n 
+trailer
+<< /Size 13 /Root 1 0 R /Info 12 0 R >>
+startxref
+25154
+%%EOF
