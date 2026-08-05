@@ -25,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameMillis
@@ -125,6 +126,9 @@ fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
     var showHome by rememberSaveable { mutableStateOf(false) }
     var signedInProfile by rememberSaveable { mutableStateOf(CinerificProfile.Guest) }
     var selectedLanguage by rememberSaveable { mutableStateOf(CinerificLanguage.English) }
+    var introSnapshot by rememberSaveable(stateSaver = CinerificIntroSnapshotSaver) {
+        mutableStateOf(CinerificIntroSnapshot())
+    }
 
     if (showHome) {
         CinerificLocalizedResources(selectedLanguage) {
@@ -134,6 +138,7 @@ fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
                 onLanguageSelected = { selectedLanguage = it },
                 onSignOut = {
                     signedInProfile = CinerificProfile.Guest
+                    introSnapshot = CinerificIntroSnapshot()
                     showHome = false
                 }
             )
@@ -144,7 +149,14 @@ fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
             factory = { context ->
                 CinerificIntroView(context).apply {
                     this.bootStartMillis = introBootStartMillis
+                    onIntroSnapshotChanged = { snapshot ->
+                        if (introSnapshot != snapshot) {
+                            introSnapshot = snapshot
+                        }
+                    }
+                    restoreIntroSnapshot(introSnapshot)
                     onAvatarSelected = { profile ->
+                        introSnapshot = CinerificIntroSnapshot()
                         signedInProfile = profile
                         showHome = true
                     }
@@ -152,7 +164,14 @@ fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
             },
             update = { view ->
                 view.bootStartMillis = introBootStartMillis
+                view.onIntroSnapshotChanged = { snapshot ->
+                    if (introSnapshot != snapshot) {
+                        introSnapshot = snapshot
+                    }
+                }
+                view.restoreIntroSnapshot(introSnapshot)
                 view.onAvatarSelected = { profile ->
+                    introSnapshot = CinerificIntroSnapshot()
                     signedInProfile = profile
                     showHome = true
                 }
@@ -1147,4 +1166,41 @@ private fun lerpBounds(start: FigmaBounds, end: FigmaBounds, amount: Float) = Fi
     y = lerpFloat(start.y, end.y, amount),
     w = lerpFloat(start.w, end.w, amount),
     h = lerpFloat(start.h, end.h, amount)
+)
+
+private val CinerificIntroSnapshotSaver = listSaver<CinerificIntroSnapshot, Any>(
+    save = { snapshot ->
+        listOf(
+            snapshot.activeFlowName,
+            snapshot.usernameText,
+            snapshot.passwordText,
+            snapshot.confirmPasswordText,
+            snapshot.emailText,
+            snapshot.monthText,
+            snapshot.dayText,
+            snapshot.yearText,
+            snapshot.subscriptionTierText,
+            snapshot.forgotRecoveryTargetName,
+            snapshot.forgotPasswordSubmissionStateName,
+            snapshot.rememberMeChecked,
+            snapshot.createAvatarIndex
+        )
+    },
+    restore = { values ->
+        CinerificIntroSnapshot(
+            activeFlowName = values.getOrNull(0) as? String ?: "",
+            usernameText = values.getOrNull(1) as? String ?: "",
+            passwordText = values.getOrNull(2) as? String ?: "",
+            confirmPasswordText = values.getOrNull(3) as? String ?: "",
+            emailText = values.getOrNull(4) as? String ?: "",
+            monthText = values.getOrNull(5) as? String ?: "Month",
+            dayText = values.getOrNull(6) as? String ?: "Day",
+            yearText = values.getOrNull(7) as? String ?: "Year",
+            subscriptionTierText = values.getOrNull(8) as? String ?: "Subscription Tier",
+            forgotRecoveryTargetName = values.getOrNull(9) as? String ?: "Password",
+            forgotPasswordSubmissionStateName = values.getOrNull(10) as? String ?: "Idle",
+            rememberMeChecked = values.getOrNull(11) as? Boolean ?: false,
+            createAvatarIndex = values.getOrNull(12) as? Int ?: 0
+        )
+    }
 )

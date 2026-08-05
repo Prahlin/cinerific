@@ -10,6 +10,7 @@
         android:theme="@style/Theme.Cinerific">
         <activity
             android:name=".MainActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|smallestScreenSize"
             android:exported="true"
             android:screenOrientation="fullSensor"
             android:theme="@style/Theme.Cinerific">
