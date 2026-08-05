@@ -1,0 +1,304 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+3 0 obj
+<< /Length 7237 >>
+stream
+BT
+/F2 11.35 Tf 1 0 0 1 54.00 744.00 Tm (Cinerific Android App Work Log - August 4, 2026 \(U.S. EST\)) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 731.69 Tm (Compiled summary for Tuesday, August 4, 2026 \(U.S. EST\) - focus: continuing the post August 3) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 721.84 Tm (auth preview polish pass by reviewing the current project snapshot and all prior Cinerific) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 711.99 Tm (worklogs, booting and using the Cinerific Standard Tablet AVD, iterating the Forgot) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 702.14 Tm (Username/Password layout through left aligned descriptive copy, 60/40 horizontal) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 692.29 Tm (redistribution, protected outer margins, wider internal stack spacing, evenly spaced recovery) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 682.44 Tm (controls, and doubled Username/Password selector padding, then fixing a returning orientation) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 672.59 Tm (bug so rotation no longer navigates away from active Sign In, Create Account, or Forgot) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 662.74 Tm (Username/Password preview states.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 652.89 Tm (Generated in continuity with the established Cinerific worklog cadence from July 12, July 14,) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 643.04 Tm (July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, July) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 633.19 Tm (25, July 27, July 28 Part 1, July 28 Part 2, July 29, August 1, and August 3: compact opening) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 623.34 Tm (summary, source material review, baseline state, goals, themed work completed sections,) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 613.49 Tm (validation, files touched, follow up context, and output artifact close.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 603.64 Tm (No August 4 Part 1 PDF existed in the repository, so this artifact follows the no part) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 593.79 Tm (filename convention for the first August 4 worklog. It records the current source state on) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 583.94 Tm (main through HEAD 437405c, Preserved intro flow state across rotation, plus the refreshed) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 574.09 Tm (snapshot and generated worklog artifact from this August 4 documentation pass.) Tj
+/F2 10.00 Tf 1 0 0 1 54.00 558.13 Tm (Source Materials Reviewed) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 547.49 Tm (- Reviewed every pre-existing Cinerific worklog PDF at the repository root: July 12, July 14,) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 537.64 Tm (  July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, July) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 527.79 Tm (  25, July 27, July 28 Part 1, July 28 Part 2, July 29, August 1, and August 3.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 517.94 Tm (- Converted the latest and earlier worklogs with pdftotext and inspected heading cadence,) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 508.09 Tm (  opening summary rhythm, section order, prose density, validation language, files touched) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 498.24 Tm (  style, follow up close, output artifact phrasing, and the U.S. EST title convention.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 488.39 Tm (- Ran pdfinfo across the worklog PDFs to preserve the four page letter layout, title metadata,) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 478.54 Tm (  author/creator/producer pattern, PDF 1.4 output, footer convention, and Codex standard) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 468.69 Tm (  library PDF generator style.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 458.84 Tm (- Reviewed cinerific_PROJECT_SNAPSHOT.txt for the current generated timestamp, file tree,) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 448.99 Tm (  worklog inventory, Android source dump, asset inventory, and read_project.sh snapshot) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 439.14 Tm (  convention.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 429.29 Tm (- Reviewed git log, git show --stat, git show --name-status, and the diff from 26d9f0e to HEAD) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 419.44 Tm (  437405c to identify the August 4 source changes that had been committed before this artifact) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 409.59 Tm (  pass.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 399.74 Tm (- Reviewed app/src/main/AndroidManifest.xml, CinerificApp.kt, and CinerificIntroView.kt around) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 389.89 Tm (  configuration changes, Compose saveable state, AndroidView hosting, native intro snapshot) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 380.04 Tm (  restoration, Forgot layout constants, recovery selector layout, touch hit testing, and mock) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 370.19 Tm (  auth state changes.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 360.34 Tm (- Reviewed runtime context from the pass: Cinerific Standard Tablet AVD launch/install) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 350.49 Tm (  activity, emulator screenshots for Forgot Username/Password and Sign In rotation behavior,) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 340.64 Tm (  adb rotation commands, Gradle compile/install output, and final git status before worklog) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 330.79 Tm (  generation.) Tj
+/F2 10.00 Tf 1 0 0 1 54.00 314.84 Tm (Baseline Status Before August 4 Work) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 304.20 Tm (- Cinerific entered August 4 with the August 3 account prompt and recovery flow pass committed) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 294.35 Tm (  and logged: Create My Account and Forgot Username/Password prompt copy, centered slide in) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 284.50 Tm (  titles, dynamic Username/Password recovery copy, loading/sent states, chevron tuning, and) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 274.65 Tm (  the accepted right side Forgot form stack.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 264.80 Tm (- The Forgot Username/Password screen still needed finer typographic alignment: the left) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 254.95 Tm (  explanatory paragraphs were not yet all left aligned, the Recover my: label needed to match) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 245.10 Tm (  the descriptive paragraph size, and the right side controls needed better horizontal) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 235.25 Tm (  distribution inside their column.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 225.40 Tm (- The Forgot layout needed a formal 60 percent explanatory copy region and 40 percent) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 215.55 Tm (  form/control region while keeping the accepted copy left and controls right composition) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 205.70 Tm (  intact.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 195.85 Tm (- The user requested additional horizontal spacing between the left paragraph stack and right) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 186.00 Tm (  form stack, but explicitly required protecting the outer screen margins from creeping inward) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 176.15 Tm (  or outward.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 166.30 Tm (- The Username and Password recovery selector buttons still used the older fixed width, so) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 156.45 Tm (  their text to edge padding needed to be doubled while keeping the visual button bounds and) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 146.60 Tm (  tap bounds synchronized.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 136.75 Tm (- A regression had returned where rotating between portrait and landscape during Sign In slide) Tj
+/F1 8.45 Tf 1 0 0 1 178.00 28.00 Tm (Cinerific Work Log - August 4, 2026 \(U.S. EST\) Page 1) Tj
+ET
+endstream
+endobj
+4 0 obj
+<< /Length 7002 >>
+stream
+BT
+/F1 8.45 Tf 1 0 0 1 54.00 744.00 Tm (  ins could reset navigation back to the profile prompt or otherwise leave the active screen,) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 734.15 Tm (  violating the rule that rotation must resize the app without navigating elsewhere.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 724.30 Tm (- The project had no August 4 root level PDF worklog before this pass.) Tj
+/F2 10.00 Tf 1 0 0 1 54.00 708.34 Tm (Main Goals for August 4) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 697.70 Tm (- Apply the requested Forgot Username/Password copy alignment, label sizing, 60/40 horizontal) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 687.85 Tm (  split, protected margins, and selector button padding refinements without moving the) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 678.00 Tm (  accepted controls right form stack.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 668.15 Tm (- Maintain the 40 percent selector row while spacing Recover my:, Username, and Password) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 658.30 Tm (  evenly and keeping the row within the usable Forgot form column.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 648.45 Tm (- Make Username and Password selector buttons wider based on measured text so the apparent) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 638.60 Tm (  left/right padding doubled and the same width drove hit testing.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 628.75 Tm (- Stop orientation changes from acting like navigation events anywhere in the app, especially) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 618.90 Tm (  during Sign In, Create Account, and Forgot Username/Password preview slide ins.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 609.05 Tm (- Preserve active native intro/form state through rotation and rebuilt views, including) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 599.20 Tm (  current auth flow, field text, recovery target, Remember me state, dropdown selections,) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 589.35 Tm (  submit state, and Create Account avatar selection.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 579.50 Tm (- Compile, install, rotate test, screenshot check, commit, refresh the project snapshot, and) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 569.65 Tm (  generate the latest root level PDF worklog artifact.) Tj
+/F2 10.00 Tf 1 0 0 1 54.00 553.70 Tm (Work Completed - Project Orientation and Emulator Setup) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 543.06 Tm (- Ran read_project.sh at the start of the session, reviewed the generated Cinerific project) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 533.21 Tm (  snapshot, and read the prior worklog and snapshot context before continuing UI work.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 523.36 Tm (- Confirmed the Cinerific Standard Tablet AVD was available as emulator-5554, installed the) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 513.51 Tm (  debug APK, and launched com.prahlin.cinerific/.MainActivity for visual inspection.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 503.66 Tm (- Kept the work scoped to the native auth preview surface and Activity/Compose host needed for) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 493.81 Tm (  rotation behavior; Home, catalog, Favorites, Settings, playback, and detail surfaces were) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 483.96 Tm (  intentionally left alone except for app wide rotation protection.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 474.11 Tm (- Worked from the established custom View drawing model in CinerificIntroView.kt rather than) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 464.26 Tm (  introducing a new layout framework for the Forgot screen.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 454.41 Tm (- Reused the existing Gradle, adb, screenshot, and project snapshot workflow used by the) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 444.56 Tm (  recent August 1 and August 3 passes.) Tj
+/F2 10.00 Tf 1 0 0 1 54.00 428.60 Tm (Work Completed - Forgot Username/Password Layout Polish) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 417.96 Tm (- Left aligned the lefthand descriptive paragraphs while preserving the centered lead row No) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 408.11 Tm (  Sign-In Information? No problem. as the one exception requested by the user.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 398.26 Tm (- Matched Recover my: font size to the larger bottom descriptive paragraphs so the selector) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 388.41 Tm (  label visually belongs to the current Forgot screen hierarchy.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 378.56 Tm (- Reworked the Forgot horizontal region into a protected usable width with a 60 percent copy) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 368.71 Tm (  column and 40 percent form/control column.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 358.86 Tm (- Doubled the internal stack gap between the paragraph column and button/form column only on) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 349.01 Tm (  Forgot Username/Password, while subtracting that gap from internal content width so the left) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 339.16 Tm (  and right outer screen margins remained protected.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 329.31 Tm (- Kept the controls in the accepted right side stack and the explanatory copy in the left side) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 319.46 Tm (  stack throughout every spacing iteration.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 309.61 Tm (- Updated the Forgot form width, field width, submit button width, helper copy width, and hit) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 299.76 Tm (  testing to use the new 40 percent column instead of the old fixed MOCK_FORM_WIDTH) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 289.91 Tm (  assumptions.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 280.06 Tm (- Kept the Forgot prompt center calculation aligned with the protected usable width so the) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 270.21 Tm (  preview prompt and active title behavior stayed coherent after the layout redistribution.) Tj
+/F2 10.00 Tf 1 0 0 1 54.00 254.26 Tm (Work Completed - Recovery Selector Row and Button Padding) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 243.62 Tm (- Redistributed the Recover my:, Username, and Password row evenly across the 40 percent) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 233.77 Tm (  Forgot form column.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 223.92 Tm (- Replaced the older fixed selector row gap math with a helper that divided remaining) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 214.07 Tm (  horizontal space into even internal gaps while preserving the row width.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 204.22 Tm (- Doubled Username and Password button text to edge padding by measuring the Username and) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 194.37 Tm (  Password labels, deriving the previous side padding from the old 90f button width, and) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 184.52 Tm (  expanding both option boxes from that measured baseline.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 174.67 Tm (- Shared the computed selector button width between drawing and hit testing so taps follow the) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 164.82 Tm (  widened visual button bounds exactly.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 154.97 Tm (- Verified in emulator screenshots that the widened Username/Password buttons fit cleanly in) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 145.12 Tm (  the 40 percent column, kept centered text, retained protected margins, and still switched) Tj
+/F1 8.45 Tf 1 0 0 1 178.00 28.00 Tm (Cinerific Work Log - August 4, 2026 \(U.S. EST\) Page 2) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Length 6851 >>
+stream
+BT
+/F1 8.45 Tf 1 0 0 1 54.00 744.00 Tm (  the active recovery target on tap.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 734.15 Tm (- Preserved the existing selected and pressed translucent field styling, rounded corners, and) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 724.30 Tm (  text opacity language for both selector options.) Tj
+/F2 10.00 Tf 1 0 0 1 54.00 708.34 Tm (Work Completed - Rotation Navigation Protection) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 697.70 Tm (- Added MainActivity configuration handling for keyboard, keyboardHidden, navigation,) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 687.85 Tm (  orientation, screenLayout, screenSize, and smallestScreenSize so ordinary orientation) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 678.00 Tm (  changes resize the existing Activity instead of forcing navigation through Activity) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 668.15 Tm (  recreation.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 658.30 Tm (- Added a saveable CinerificIntroSnapshot in CinerificApp.kt using a compact listSaver so) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 648.45 Tm (  Compose can preserve native intro state across recomposition and Activity rebuild fallbacks.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 638.60 Tm (- Added onIntroSnapshotChanged and restoreIntroSnapshot hooks to CinerificIntroView so the) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 628.75 Tm (  native custom View can publish and restore active auth preview state instead of losing it) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 618.90 Tm (  when AndroidView is recreated.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 609.05 Tm (- Captured active flow, field text, recovery target, Forgot submission state, Remember me) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 599.20 Tm (  state, dropdown values, and Create Account avatar index in the snapshot.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 589.35 Tm (- Reset transient press, drag, dropdown, focus, composing, and dim overlay state during) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 579.50 Tm (  restore so rotation revives stable navigation/form state without preserving an in flight) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 569.65 Tm (  touch gesture.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 559.80 Tm (- Reset the intro snapshot only on intentional profile entry or sign out, so user navigation) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 549.95 Tm (  remains explicit while orientation remains a layout only event.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 540.10 Tm (- Ensured user triggered chevron/back closing still intentionally returns to the profile) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 530.25 Tm (  prompt, while rotation alone cannot do that.) Tj
+/F2 10.00 Tf 1 0 0 1 54.00 514.30 Tm (Work Completed - Validation, Snapshot, and Commit State) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 503.66 Tm (- Ran ./gradlew :app:compileDebugKotlin after the selector button padding changes; Kotlin) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 493.81 Tm (  compilation succeeded.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 483.96 Tm (- Installed the debug APK on the Cinerific Standard Tablet AVD and relaunched the app after UI) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 474.11 Tm (  changes that affected runtime layout and hit testing.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 464.26 Tm (- Captured and visually inspected Forgot Username/Password screenshots after the doubled) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 454.41 Tm (  selector padding and confirmed Username selection changed the active state, input label,) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 444.56 Tm (  helper copy, and submit button text.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 434.71 Tm (- Ran ./gradlew :app:assembleDebug and ./gradlew :app:installDebug after adding rotation) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 424.86 Tm (  protection and the intro snapshot saver.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 415.01 Tm (- Reproduced the orientation issue during early testing, confirmed the Activity level) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 405.16 Tm (  configChanges alone was insufficient, and added the saveable native intro snapshot layer to) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 395.31 Tm (  cover rebuilt view fallbacks.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 385.46 Tm (- Verified Sign In stayed open when rotating portrait to landscape, stayed open when rotating) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 375.61 Tm (  landscape to portrait, and stayed open after a mid slide portrait to landscape rotation once) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 365.76 Tm (  the sign in tap timing was isolated from raw emulator coordinate issues.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 355.91 Tm (- Ran git diff --check and ./gradlew :app:compileDebugKotlin before handoff; both completed) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 346.06 Tm (  successfully.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 336.21 Tm (- Committed the source and snapshot work on main as HEAD 437405c, Preserved intro flow state) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 326.36 Tm (  across rotation.) Tj
+/F2 10.00 Tf 1 0 0 1 54.00 310.40 Tm (Validation and Checks Performed) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 299.76 Tm (- Used pdftotext and pdfinfo on every prior root level Cinerific worklog PDF before generating) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 289.91 Tm (  this artifact, with closest comparison against August 1 and August 3.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 280.06 Tm (- Ran git status --short --branch, git log --oneline --decorate, git show --stat --summary) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 270.21 Tm (  HEAD, git show --name-status --format=fuller HEAD, and git diff 26d9f0e..437405c --stat to) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 260.36 Tm (  confirm the committed source scope.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 250.51 Tm (- Ran rg and sed inspections around MainActivity configChanges, CinerificIntroSnapshot,) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 240.66 Tm (  restoreIntroSnapshot, onIntroSnapshotChanged, CinerificIntroSnapshotSaver, Forgot layout) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 230.81 Tm (  constants, selector layout helpers, and snapshot notification calls.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 220.96 Tm (- Ran ./gradlew :app:compileDebugKotlin multiple times during the source pass and after the) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 211.11 Tm (  final worklog generation setup; the Kotlin build reported BUILD SUCCESSFUL.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 201.26 Tm (- Ran ./gradlew :app:assembleDebug and ./gradlew :app:installDebug during runtime validation;) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 191.41 Tm (  app-debug.apk installed on Cinerific_Standard_Tablet.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 181.56 Tm (- Used adb shell settings put system user_rotation, adb shell input tap, adb exec-out) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 171.71 Tm (  screencap, wm size, dumpsys activity, and dumpsys window checks while validating rotation) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 161.86 Tm (  and foreground Activity state.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 152.01 Tm (- Visually inspected the relevant screenshots in /tmp, including the Forgot widened selector) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 142.16 Tm (  state and the Sign In portrait/landscape rotation results.) Tj
+/F1 8.45 Tf 1 0 0 1 178.00 28.00 Tm (Cinerific Work Log - August 4, 2026 \(U.S. EST\) Page 3) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Length 4830 >>
+stream
+BT
+/F1 8.45 Tf 1 0 0 1 54.00 744.00 Tm (- Generated this PDF with a small standard library PDF writer so the output remains text) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 734.15 Tm (  extractable and consistent with prior Cinerific worklogs.) Tj
+/F2 10.00 Tf 1 0 0 1 54.00 718.19 Tm (Files Touched During August 4) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 707.55 Tm (- app/src/main/AndroidManifest.xml: MainActivity now handles orientation and screen size) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 697.70 Tm (  configuration changes so rotation does not recreate and navigate away from active app state.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 687.85 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt: added saveable intro snapshot) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 678.00 Tm (  state, a listSaver, AndroidView snapshot wiring, and snapshot resets on intentional profile) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 668.15 Tm (  entry/sign out.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 658.30 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt: Forgot 60/40 layout) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 648.45 Tm (  constants, protected internal stack gap, left aligned descriptive copy, Recover my: font) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 638.60 Tm (  sizing, evenly spaced selector layout, measured wider selector buttons, updated hit testing,) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 628.75 Tm (  native intro snapshot restore/publish behavior, and state notification calls.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 618.90 Tm (- cinerific_PROJECT_SNAPSHOT.txt: refreshed generated project snapshot timestamp and source) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 609.05 Tm (  dump as part of the committed source pass and this artifact workflow.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 599.20 Tm (- cinerific_worklog_august 4.pdf: new root level PDF worklog artifact for the August 4 pass,) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 589.35 Tm (  intentionally without a part suffix because no August 4 Part 1 PDF existed in the) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 579.50 Tm (  repository.) Tj
+/F2 10.00 Tf 1 0 0 1 54.00 563.55 Tm (Follow-Up Context) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 552.91 Tm (- Rotation is now treated as a layout resize event, not a navigation event. Future auth) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 543.06 Tm (  preview changes should preserve that rule for Sign In, Create Account, Forgot) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 533.21 Tm (  Username/Password, and any new intro sub flow.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 523.36 Tm (- The saveable intro snapshot intentionally restores stable UI state but clears transient) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 513.51 Tm (  press/drag/focus/composing details; that keeps rotation safe without freezing a half) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 503.66 Tm (  gesture.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 493.81 Tm (- The Forgot Username/Password flow remains a native mock/prototype. Reminder/reset actions) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 483.96 Tm (  still represent visual states rather than backend account recovery calls.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 474.11 Tm (- The accepted Forgot composition is copy on the left and controls on the right with protected) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 464.26 Tm (  outer margins, a wider internal gutter, 60/40 content distribution, and widened selector) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 454.41 Tm (  buttons.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 444.56 Tm (- If future work adds real auth navigation, backend validation, or additional recovery modes,) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 434.71 Tm (  those new states should be added to the intro snapshot before they are exposed to rotation.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 424.86 Tm (- The current app remains oriented by fullSensor while retaining the latest preview state) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 415.01 Tm (  through orientation changes.) Tj
+/F2 10.00 Tf 1 0 0 1 54.00 399.05 Tm (Output Artifact) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 388.41 Tm (Generated cinerific_worklog_august 4.pdf at the repository root. The file follows the) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 378.56 Tm (established Cinerific root level worklog naming, letter size PDF layout, text extractable) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 368.71 Tm (content style, footer convention, metadata pattern, PDF 1.4 output, and no part filename rule) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 358.86 Tm (for the first August 4 worklog artifact.) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 349.01 Tm (This artifact covers the Tuesday, August 4, 2026 Cinerific work that culminated in source) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 339.16 Tm (commit 437405c, including the Forgot Username/Password layout refinements, the orientation) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 329.31 Tm (navigation guard, the saveable native intro snapshot, emulator validation, snapshot refresh,) Tj
+/F1 8.45 Tf 1 0 0 1 54.00 319.46 Tm (and worklog generation pass.) Tj
+/F1 8.45 Tf 1 0 0 1 178.00 28.00 Tm (Cinerific Work Log - August 4, 2026 \(U.S. EST\) Page 4) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 3 0 R >>
+endobj
+8 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 4 0 R >>
+endobj
+9 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 5 0 R >>
+endobj
+10 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 6 0 R >>
+endobj
+11 0 obj
+<< /Type /Pages /Kids [ 7 0 R 8 0 R 9 0 R 10 0 R ] /Count 4 >>
+endobj
+12 0 obj
+<< /Type /Catalog /Pages 11 0 R >>
+endobj
+13 0 obj
+<< /Title (Cinerific Android App Work Log - August 4, 2026 \(U.S. EST\)) /Author (Codex) /Subject (Cinerific Android App daily project work log for August 4, 2026) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260805053400-04'00') /ModDate (D:20260805053400-04'00') >>
+endobj
+xref
+0 14
+0000000000 65535 f 
+0000000015 00000 n 
+0000000085 00000 n 
+0000000160 00000 n 
+0000007449 00000 n 
+0000014503 00000 n 
+0000021406 00000 n 
+0000026288 00000 n 
+0000026425 00000 n 
+0000026562 00000 n 
+0000026699 00000 n 
+0000026837 00000 n 
+0000026916 00000 n 
+0000026967 00000 n 
+trailer
+<< /Size 14 /Root 12 0 R /Info 13 0 R >>
+startxref
+27322
+%%EOF
