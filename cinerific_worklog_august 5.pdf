@@ -1,0 +1,648 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Length 5158 >>
+stream
+BT
+/F1 8.35 Tf
+54 746 Td
+10.05 TL
+(Cinerific Android App Work Log - August 5, 2026 \(U.S. EST\)) Tj
+T*
+() Tj
+T*
+(Compiled summary for Wednesday, August 5, 2026 \(U.S. EST\) - focus: continuing the post) Tj
+T*
+(August 4 auth preview and Create My Account pass by reviewing the current project snapshot) Tj
+T*
+(and all prior Cinerific worklogs, fixing the Android Studio AVD rotation path so the app) Tj
+T*
+(layout responds to device rotation again, importing the Basic, Pro, and Rock Star Membership) Tj
+T*
+(Tier artwork from the Figma Settings section, cleaning and cropping those PNG assets, wiring) Tj
+T*
+(the Create My Account Subscription Tier dropdown to real tier names, preserving Subscription) Tj
+T*
+(Tier as the pre-selection placeholder, replacing Option 1 through Option 3 with Basic, Pro,) Tj
+T*
+(and Rock Star, scaling and validating the new tier imagery in the open and selected dropdown) Tj
+T*
+(states, preserving framed tier assets for future Settings screens, refreshing the project) Tj
+T*
+(snapshot, compiling the app, committing the source work as b21da95, and generating this) Tj
+T*
+(latest Cinerific PDF worklog artifact.) Tj
+T*
+() Tj
+T*
+(Generated in continuity with the established Cinerific worklog cadence from July 12, July) Tj
+T*
+(14, July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24,) Tj
+T*
+(July 25, July 27, July 28 Part 1, July 28 Part 2, July 29, August 1, August 3, and August 4:) Tj
+T*
+(compact opening summary, source material review, baseline state, goals, themed work) Tj
+T*
+(completed sections, validation, files touched, follow up context, and output artifact close.) Tj
+T*
+() Tj
+T*
+(No August 5 Part 1 PDF existed in the repository, so this artifact follows the no part) Tj
+T*
+(filename convention for the first August 5 worklog. It records the current source state on) Tj
+T*
+(main through HEAD b21da95, Updated Create Account tiers and rotation behavior, plus the) Tj
+T*
+(refreshed snapshot and generated worklog artifact from this August 5 documentation pass.) Tj
+T*
+() Tj
+T*
+(Source Materials Reviewed) Tj
+T*
+(- Reviewed every pre-existing Cinerific worklog PDF at the repository root: July 12, July) Tj
+T*
+(  14, July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July) Tj
+T*
+(  24, July 25, July 27, July 28 Part 1, July 28 Part 2, July 29, August 1, August 3, and) Tj
+T*
+(  August 4.) Tj
+T*
+(- Converted the prior worklogs with pdftotext and inspected heading cadence, opening summary) Tj
+T*
+(  rhythm, source review style, baseline/goals sections, themed work completed sections,) Tj
+T*
+(  validation language, files touched lists, follow up close, output artifact phrasing,) Tj
+T*
+(  footer convention, and U.S. EST title convention.) Tj
+T*
+(- Ran pdfinfo against the latest August 4 worklog to preserve the four page letter layout,) Tj
+T*
+(  title metadata, subject, author, creator, producer fields, PDF 1.4 output, and Codex) Tj
+T*
+(  standard-library PDF generator pattern.) Tj
+T*
+(- Reviewed cinerific_PROJECT_SNAPSHOT.txt for the August 5 generated timestamp, project) Tj
+T*
+(  tree, drawable inventory, root worklog inventory, binary asset inventory, Android source) Tj
+T*
+(  dump, and read_project.sh snapshot convention.) Tj
+T*
+(- Reviewed git log, git status, git show --stat, git show --name-status, and git show) Tj
+T*
+(  c1d1aa8..HEAD to identify the source changes committed after the August 4 worklog) Tj
+T*
+(  artifact.) Tj
+T*
+(- Reviewed app/src/main/AndroidManifest.xml, CinerificApp.kt, and CinerificIntroView.kt) Tj
+T*
+(  around orientation behavior, saved dropdown fallback text, native intro dropdown drawing,) Tj
+T*
+(  membership tier image decoding, selected tier state, and dropdown hit/render behavior.) Tj
+T*
+(- Reviewed the committed drawable-nodpi tier assets: membership_tier_basic.png,) Tj
+T*
+(  membership_tier_pro.png, membership_tier_rock_star.png, and the separate art-only variants) Tj
+T*
+(  used by Create My Account.) Tj
+T*
+(- Reviewed runtime context from the August 5 pass, including the Android Studio hosted) Tj
+T*
+(  Cinerific Standard Tablet AVD, adb launch/install commands, rotation checks, Create My) Tj
+T*
+(  Account screenshots, dropdown open-state screenshots, selected-state screenshots, and) Tj
+T*
+(  Gradle build output.) Tj
+T*
+() Tj
+T*
+(Baseline Status Before August 5 Work) Tj
+T*
+(- Cinerific entered August 5 with the August 4 Forgot Username/Password layout and rotation) Tj
+T*
+(  state preservation pass committed and logged.) Tj
+T*
+(- The native auth preview already supported Sign In, Create My Account, and Forgot) Tj
+T*
+(  Username/Password slide-in screens with remembered input state, dropdown values,) Tj
+T*
+() Tj
+T*
+() Tj
+T*
+() Tj
+T*
+() Tj
+T*
+() Tj
+T*
+(  keyboard-aware landscape lift, dimmed focus states, Create Account avatar selection, and) Tj
+T*
+(  chevron return behavior.) Tj
+T*
+(- Rotation had been protected as state preservation on August 4, but the app layout was not) Tj
+T*
+(  visibly rotating when the user rotated the Android Studio AVD, so the orientation handling) Tj
+T*
+ET
+BT
+/F1 8.5 Tf
+310 30 Td
+(Cinerific Work Log - August 5, 2026 \(U.S. EST\) Page 1) Tj
+ET
+endstream
+endobj
+3 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 2 0 R >>
+endobj
+4 0 obj
+<< /Length 4753 >>
+stream
+BT
+/F1 8.35 Tf
+54 746 Td
+10.05 TL
+(  needed a follow-up correction.) Tj
+T*
+(- The Create My Account birth month control still used the longer Month placeholder, while) Tj
+T*
+(  the user wanted the compact Mon label in the dropdown field.) Tj
+T*
+(- The Subscription Tier dropdown still used generic Option 1, Option 2, and Option 3 names) Tj
+T*
+(  instead of the actual product tier names.) Tj
+T*
+(- No tier artwork was available inside the Create My Account dropdown before the Figma) Tj
+T*
+(  Membership Tiers import, so the tier choices were text-only.) Tj
+T*
+(- The Figma file contained a Settings parent section with a Membership Tiers section that) Tj
+T*
+(  held separate Basic, Pro, and Rock Star components intended for reuse.) Tj
+T*
+(- The final Create My Account direction required preserving full framed tier imagery for) Tj
+T*
+(  future Settings screens while using art-only imagery and real names in the account) Tj
+T*
+(  creation dropdown.) Tj
+T*
+(- No August 5 root level Cinerific worklog PDF existed before this artifact generation pass.) Tj
+T*
+() Tj
+T*
+(Main Goals for August 5) Tj
+T*
+(- Make the Cinerific app layout rotate correctly again when the already-open Android Studio) Tj
+T*
+(  AVD rotates.) Tj
+T*
+(- Preserve the existing auth preview navigation and rotation state rules while removing the) Tj
+T*
+(  orientation behavior that prevented visible layout rotation.) Tj
+T*
+(- Change the Create My Account birth month placeholder from Month to Mon in both live state) Tj
+T*
+(  and saved snapshot restore fallback.) Tj
+T*
+(- Pull the Basic, Pro, and Rock Star Membership Tier imagery from Figma and store it as) Tj
+T*
+(  Android drawable assets.) Tj
+T*
+(- Remove the gray background/fill family from the imported tier assets, including exterior) Tj
+T*
+(  fill, interior box fill, and small gray pockets such as Basic house windows.) Tj
+T*
+(- Replace generic Subscription Tier options with Basic, Pro, and Rock Star while keeping) Tj
+T*
+(  Subscription Tier as the untouched placeholder before selection.) Tj
+T*
+(- Show tier imagery in the open dropdown and selected dropdown states without distorting the) Tj
+T*
+(  artwork, and keep full framed tier assets available for later Settings implementation.) Tj
+T*
+(- Compile, install, screenshot check, commit the source/snapshot work, and generate the) Tj
+T*
+(  latest PDF worklog artifact.) Tj
+T*
+() Tj
+T*
+(Work Completed - Rotation and AVD Behavior) Tj
+T*
+(- Removed the activity orientation configuration override from AndroidManifest.xml so) Tj
+T*
+(  Android could deliver actual layout changes again when the AVD rotated.) Tj
+T*
+(- Confirmed the package and launcher activity for the installed app as) Tj
+T*
+(  com.prahlin.cinerific/.MainActivity before repeated adb relaunches.) Tj
+T*
+(- Corrected the local AVD orientation setting by ensuring ignore-orientation-request was) Tj
+T*
+(  disabled, so app-side fullSensor behavior was no longer masked by emulator policy.) Tj
+T*
+(- Rebuilt, installed, force-stopped, and relaunched Cinerific on the Cinerific Standard) Tj
+T*
+(  Tablet AVD after the orientation change.) Tj
+T*
+(- Preserved the August 4 native intro snapshot and saveable state machinery; the August 5) Tj
+T*
+(  rotation fix focused on allowing the layout to rotate rather than removing state) Tj
+T*
+(  restoration.) Tj
+T*
+(- Verified that the fix was app-visible in the open Android Studio AVD instead of relying) Tj
+T*
+(  only on source inspection.) Tj
+T*
+() Tj
+T*
+(Work Completed - Create My Account Field Copy) Tj
+T*
+(- Changed the Create My Account month placeholder from Month to Mon in the native intro view) Tj
+T*
+(  constants.) Tj
+T*
+(- Updated CinerificIntroSnapshotSaver restore fallback from Month to Mon so restored and) Tj
+T*
+(  freshly initialized Create Account state stay consistent.) Tj
+T*
+(- Kept Day and Year placeholders unchanged and left the date dropdown option lists intact.) Tj
+T*
+(- Confirmed the closed Create My Account date row showed Mon in the emulator screenshot) Tj
+T*
+(  after rebuild and relaunch.) Tj
+T*
+() Tj
+T*
+() Tj
+T*
+() Tj
+T*
+() Tj
+T*
+() Tj
+T*
+(- Kept the change scoped to Create My Account date field presentation rather than altering) Tj
+T*
+(  date parsing or any future account creation data model.) Tj
+T*
+() Tj
+T*
+(Work Completed - Figma Membership Tier Asset Import) Tj
+T*
+(- Used the Figma MCP workflow against the Settings parent section and Membership Tiers) Tj
+T*
+(  section to identify the Basic, Pro, and Rock Star components.) Tj
+T*
+(- Exported the three tier components into drawable-nodpi PNG resources for Android use.) Tj
+T*
+(- Created full tier-card assets for Basic, Pro, and Rock Star that retain the roundish) Tj
+T*
+ET
+BT
+/F1 8.5 Tf
+310 30 Td
+(Cinerific Work Log - August 5, 2026 \(U.S. EST\) Page 2) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 5049 >>
+stream
+BT
+/F1 8.35 Tf
+54 746 Td
+10.05 TL
+(  framed tier treatment for future Settings screen work.) Tj
+T*
+(- Processed the exported PNGs to remove the repeated charcoal/gray fill colors from outside) Tj
+T*
+(  the boxes and inside the boxes, leaving transparency in those regions.) Tj
+T*
+(- Removed the same gray fill family from nested areas inside the artwork, including the gray) Tj
+T*
+(  Basic house window regions requested by the user.) Tj
+T*
+(- Cropped the full tier-card assets from their original export footprint to a tighter) Tj
+T*
+(  transparent 215 by 215 image around the roundish tier frame and artwork.) Tj
+T*
+(- Added separate art-only assets for Basic, Pro, and Rock Star by cropping away the frame) Tj
+T*
+(  and baked-in tier title, leaving only the house/tree, car, and crown/mic imagery.) Tj
+T*
+(- Verified the cleaned PNGs remained RGBA assets with transparent regions and no remaining) Tj
+T*
+(  pixels in the targeted gray-fill range.) Tj
+T*
+() Tj
+T*
+(Work Completed - Subscription Tier Dropdown Behavior) Tj
+T*
+(- Replaced Subscription Tier option text from Option 1, Option 2, and Option 3 to Basic,) Tj
+T*
+(  Pro, and Rock Star.) Tj
+T*
+(- Added legacy normalization so any saved Option 1, Option 2, or Option 3 value maps forward) Tj
+T*
+(  to Basic, Pro, or Rock Star without breaking older restored state.) Tj
+T*
+(- Preserved Subscription Tier as the placeholder before the user taps or chooses a tier.) Tj
+T*
+(- Added decoded bitmap references for the full framed tier images and the separate art-only) Tj
+T*
+(  tier images inside CinerificIntroView.kt.) Tj
+T*
+(- Drew large tier images in the open dropdown rows and later switched the Create My Account) Tj
+T*
+(  open dropdown to use art-only imagery wholesale, so each row reads as image plus tier name) Tj
+T*
+(  only.) Tj
+T*
+(- Drew the selected closed dropdown state with the art-only tier image on the left and the) Tj
+T*
+(  selected tier name on the right.) Tj
+T*
+(- Changed the bitmap drawing helper to preserve source aspect ratio when fitting the artwork) Tj
+T*
+(  into the dropdown field, avoiding stretched car, crown, microphone, house, or tree shapes.) Tj
+T*
+(- Scaled the open tier images up through the requested 200 percent and 300 percent passes,) Tj
+T*
+(  then kept row height aligned to the larger visual treatment.) Tj
+T*
+(- Kept the framed tier PNGs in the project for later Settings screens while using the) Tj
+T*
+(  art-only PNGs for Create My Account dropdown interaction.) Tj
+T*
+() Tj
+T*
+(Work Completed - Validation, Snapshot, and Commit State) Tj
+T*
+(- Ran ./gradlew :app:compileDebugKotlin during the subscription tier implementation and) Tj
+T*
+(  after the final committed state; Kotlin compilation succeeded.) Tj
+T*
+(- Ran ./gradlew :app:assembleDebug and ./gradlew :app:installDebug while validating resource) Tj
+T*
+(  packaging and runtime behavior on the already-running AVD.) Tj
+T*
+(- Reinstalled the debug APK several times and used adb force-stop plus direct MainActivity) Tj
+T*
+(  launch so new drawable resources were visible in the emulator.) Tj
+T*
+(- Captured and visually inspected Create My Account screenshots for the Mon placeholder, the) Tj
+T*
+(  open Subscription Tier dropdown, the 200 percent and 300 percent tier image sizing, and) Tj
+T*
+(  selected Basic and Rock Star states.) Tj
+T*
+(- Confirmed the open dropdown displayed Basic, Pro, and Rock Star labels with tier imagery) Tj
+T*
+(  and no generic Option 1 through Option 3 text.) Tj
+T*
+(- Confirmed the selected closed dropdown displayed Basic and Rock Star as tier names with) Tj
+T*
+(  art-only images fitted at the left side of the field.) Tj
+T*
+(- Refreshed cinerific_PROJECT_SNAPSHOT.txt during the source pass so the repository snapshot) Tj
+T*
+(  reflected the current August 5 project state.) Tj
+T*
+(- Committed the source, assets, and refreshed snapshot on main as b21da95, Updated Create) Tj
+T*
+(  Account tiers and rotation behavior.) Tj
+T*
+() Tj
+T*
+() Tj
+T*
+() Tj
+T*
+() Tj
+T*
+() Tj
+T*
+(Validation and Checks Performed) Tj
+T*
+(- Used pdftotext and pdfinfo on the prior root level Cinerific PDFs before generating this) Tj
+T*
+(  artifact, with the closest style comparison against August 4.) Tj
+T*
+(- Ran git status --short --branch to confirm the repository was clean at main before) Tj
+T*
+(  creating this new PDF artifact.) Tj
+T*
+(- Ran git log --oneline --decorate, git show --stat --summary HEAD, git show --name-status) Tj
+T*
+(  --summary HEAD, and git show --stat c1d1aa8..HEAD to confirm the August 5 committed source) Tj
+T*
+(  scope.) Tj
+T*
+(- Ran git diff --check HEAD before PDF generation; it completed without whitespace errors.) Tj
+T*
+(- Ran ./gradlew :app:compileDebugKotlin immediately before the worklog generation; Gradle) Tj
+T*
+(  reported BUILD SUCCESSFUL.) Tj
+T*
+(- Inspected file metadata for the membership tier PNG assets to confirm the full framed) Tj
+T*
+(  assets are 215 by 215 RGBA PNGs and the art-only variants are transparent RGBA crops.) Tj
+T*
+ET
+BT
+/F1 8.5 Tf
+310 30 Td
+(Cinerific Work Log - August 5, 2026 \(U.S. EST\) Page 3) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 4462 >>
+stream
+BT
+/F1 8.35 Tf
+54 746 Td
+10.05 TL
+(- Used adb devices, adb shell cmd package resolve-activity, adb shell am start, adb shell) Tj
+T*
+(  input tap, adb exec-out screencap, and emulator screenshot inspection during the) Tj
+T*
+(  implementation pass.) Tj
+T*
+(- Generated this PDF with a small standard library PDF writer so the output remains text) Tj
+T*
+(  extractable and consistent with the prior root worklogs.) Tj
+T*
+() Tj
+T*
+(Files Touched During August 5) Tj
+T*
+(- app/src/main/AndroidManifest.xml: removed the activity orientation config override that) Tj
+T*
+(  was preventing visible layout rotation in the AVD.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt: updated the Create Account) Tj
+T*
+(  month snapshot restore fallback from Month to Mon.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt: updated month) Tj
+T*
+(  placeholder copy, imported tier bitmaps, normalized tier names, drew tier imagery in open) Tj
+T*
+(  and selected dropdown states, preserved Subscription Tier as placeholder, and fitted) Tj
+T*
+(  selected artwork without distortion.) Tj
+T*
+(- app/src/main/res/drawable-nodpi/membership_tier_basic.png: added cleaned full Basic tier) Tj
+T*
+(  component asset for future framed use.) Tj
+T*
+(- app/src/main/res/drawable-nodpi/membership_tier_pro.png: added cleaned full Pro tier) Tj
+T*
+(  component asset for future framed use.) Tj
+T*
+(- app/src/main/res/drawable-nodpi/membership_tier_rock_star.png: added cleaned full Rock) Tj
+T*
+(  Star tier component asset for future framed use.) Tj
+T*
+(- app/src/main/res/drawable-nodpi/membership_tier_basic_art.png: added art-only Basic) Tj
+T*
+(  house/tree asset for Create My Account dropdown use.) Tj
+T*
+(- app/src/main/res/drawable-nodpi/membership_tier_pro_art.png: added art-only Pro car asset) Tj
+T*
+(  for Create My Account dropdown use.) Tj
+T*
+(- app/src/main/res/drawable-nodpi/membership_tier_rock_star_art.png: added art-only Rock) Tj
+T*
+(  Star crown/microphone asset for Create My Account dropdown use.) Tj
+T*
+(- cinerific_PROJECT_SNAPSHOT.txt: refreshed generated project snapshot timestamp and) Tj
+T*
+(  source/resource inventory for the August 5 state.) Tj
+T*
+(- cinerific_worklog_august 5.pdf: new root level PDF worklog artifact for the August 5 pass,) Tj
+T*
+(  intentionally without a part suffix because no earlier August 5 part log existed.) Tj
+T*
+() Tj
+T*
+(Follow-Up Context) Tj
+T*
+(- The Create My Account Subscription Tier dropdown now presents user-facing plan names, but) Tj
+T*
+(  the flow remains a native mock/prototype rather than a connected account creation backend.) Tj
+T*
+(- Full framed Membership Tier PNGs remain available for the later Settings screens; Create) Tj
+T*
+(  My Account intentionally uses the separate art-only assets.) Tj
+T*
+(- Future Settings implementation should reuse the framed tier components instead of) Tj
+T*
+(  re-exporting them unless the Figma source changes.) Tj
+T*
+(- Future tier copy, pricing, or benefit descriptions can be layered into the Create My) Tj
+T*
+(  Account dropdown separately, but the August 5 committed state focuses on image and name) Tj
+T*
+(  presentation.) Tj
+T*
+(- Rotation should continue to be treated as layout resizing, with native intro state) Tj
+T*
+(  preservation kept from the August 4 pass and visible AVD layout rotation restored by the) Tj
+T*
+() Tj
+T*
+() Tj
+T*
+() Tj
+T*
+() Tj
+T*
+() Tj
+T*
+(  August 5 correction.) Tj
+T*
+(- If emulator rotation appears stuck again, confirm the AVD ignore-orientation-request) Tj
+T*
+() Tj
+T*
+() Tj
+T*
+() Tj
+T*
+() Tj
+T*
+(  setting before assuming the app source regressed.) Tj
+T*
+(- The user explicitly preferred direct AVD relaunch and screenshot verification after visual) Tj
+T*
+(  changes, so future dropdown and auth-preview work should keep using the same install,) Tj
+T*
+(  force-stop, launch, and capture loop.) Tj
+T*
+() Tj
+T*
+(Output Artifact) Tj
+T*
+(- Generated cinerific_worklog_august 5.pdf at the repository root using the established) Tj
+T*
+(  no-part filename convention for the first worklog on a date.) Tj
+T*
+(- The PDF uses the August 5, 2026 \(U.S. EST\) title/date requested by the user, even though) Tj
+T*
+(  the generation command was run after midnight local time.) Tj
+T*
+(- The artifact is intended to be committed after review alongside no other source edits from) Tj
+T*
+(  this documentation-only pass.) Tj
+T*
+ET
+BT
+/F1 8.5 Tf
+310 30 Td
+(Cinerific Work Log - August 5, 2026 \(U.S. EST\) Page 4) Tj
+ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Type /Pages /Kids [3 0 R 5 0 R 7 0 R 9 0 R] /Count 4 >>
+endobj
+11 0 obj
+<< /Type /Catalog /Pages 10 0 R >>
+endobj
+12 0 obj
+<< /Title (Cinerific Android App Work Log - August 5, 2026 \(U.S. EST\)) /Subject (Cinerific Android App daily project work log for August 5, 2026) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260806002824-04'00') /ModDate (D:20260806002824-04'00') >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000085 00000 n 
+0000005294 00000 n 
+0000005421 00000 n 
+0000010225 00000 n 
+0000010352 00000 n 
+0000015452 00000 n 
+0000015579 00000 n 
+0000020092 00000 n 
+0000020219 00000 n 
+0000020295 00000 n 
+0000020346 00000 n 
+trailer
+<< /Size 13 /Root 11 0 R /Info 12 0 R >>
+startxref
+20701
+%%EOF
