@@ -101,18 +101,24 @@ private const val MOCK_FORM_PASSWORD_TEXT = "Password"
 private const val MOCK_FORM_CONFIRM_PASSWORD_TEXT = "Confirm Password"
 private const val MOCK_FORM_EMAIL_TEXT = "Email Address"
 private const val MOCK_FORM_SUBSCRIPTION_TIER_TEXT = "Subscription Tier"
-private const val MOCK_FORM_MONTH_TEXT = "Month"
+private const val MOCK_FORM_MONTH_TEXT = "Mon"
 private const val MOCK_FORM_DAY_TEXT = "Day"
 private const val MOCK_FORM_YEAR_TEXT = "Year"
 private const val MOCK_FORM_AVATAR_TEXT = "Avatar"
-private const val MOCK_MEMBERSHIP_OPTION_1_TEXT = "Option 1"
-private const val MOCK_MEMBERSHIP_OPTION_2_TEXT = "Option 2"
-private const val MOCK_MEMBERSHIP_OPTION_3_TEXT = "Option 3"
+private const val MOCK_MEMBERSHIP_BASIC_TEXT = "Basic"
+private const val MOCK_MEMBERSHIP_PRO_TEXT = "Pro"
+private const val MOCK_MEMBERSHIP_ROCK_STAR_TEXT = "Rock Star"
+private const val MOCK_MEMBERSHIP_LEGACY_OPTION_1_TEXT = "Option 1"
+private const val MOCK_MEMBERSHIP_LEGACY_OPTION_2_TEXT = "Option 2"
+private const val MOCK_MEMBERSHIP_LEGACY_OPTION_3_TEXT = "Option 3"
+private const val MOCK_MEMBERSHIP_TIER_OPTION_ICON_SIZE = 114f
+private const val MOCK_MEMBERSHIP_TIER_CONTROL_ICON_SIZE = 46f
+private const val MOCK_MEMBERSHIP_TIER_ICON_TEXT_GAP = 10f
 private const val MOCK_DATE_FIELD_GAP = 10f
 private const val MOCK_DATE_MONTH_WIDTH = 96f
 private const val MOCK_DATE_DAY_WIDTH = MOCK_DATE_MONTH_WIDTH
 private const val MOCK_DATE_YEAR_WIDTH = MOCK_FORM_WIDTH - MOCK_DATE_MONTH_WIDTH - MOCK_DATE_DAY_WIDTH - MOCK_DATE_FIELD_GAP * 2f
-private const val MOCK_DROPDOWN_OPTION_HEIGHT = 42f
+private const val MOCK_DROPDOWN_OPTION_HEIGHT = 126f
 private const val MOCK_DROPDOWN_CHEVRON_SIZE = 12f
 private const val MOCK_DATE_DROPDOWN_VISIBLE_OPTION_COUNT = 5
 private const val MOCK_DATE_DROPDOWN_VISIBLE_OPTION_COUNT_FLOAT = 5f
@@ -257,6 +263,12 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private val guestName = decode(R.drawable.guest_name)
     private val standardLandscapeBackground = decode(R.drawable.signin_background_standard_landscape)
     private val standardPortraitBackground = decode(R.drawable.signin_background_standard_portrait)
+    private val membershipTierBasicIcon = decode(R.drawable.membership_tier_basic)
+    private val membershipTierProIcon = decode(R.drawable.membership_tier_pro)
+    private val membershipTierRockStarIcon = decode(R.drawable.membership_tier_rock_star)
+    private val membershipTierBasicArtworkIcon = decode(R.drawable.membership_tier_basic_art)
+    private val membershipTierProArtworkIcon = decode(R.drawable.membership_tier_pro_art)
+    private val membershipTierRockStarArtworkIcon = decode(R.drawable.membership_tier_rock_star_art)
     private val touchSlop = ViewConfiguration.get(context).scaledTouchSlop.toFloat()
 
     private val imagePaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG or Paint.DITHER_FLAG)
@@ -313,6 +325,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         strokeJoin = Paint.Join.ROUND
     }
     private val tempRect = RectF()
+    private val tempIconRect = RectF()
     private val tempPath = Path()
     private val tempWindowRect = Rect()
     private var pressedAvatarProfile: CinerificProfile? = null
@@ -443,7 +456,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         monthText = snapshot.monthText
         dayText = snapshot.dayText
         yearText = snapshot.yearText
-        subscriptionTierText = snapshot.subscriptionTierText
+        subscriptionTierText = normalizedMembershipTierSelection(snapshot.subscriptionTierText)
         forgotRecoveryTarget = restoredRecoveryTarget
         forgotPasswordSubmissionState = restoredSubmissionState
         forgotPasswordSubmissionStartMillis = if (
@@ -2064,10 +2077,29 @@ internal class CinerificIntroView(context: Context) : View(context) {
         formInputPaint.textAlign = Paint.Align.LEFT
         val textInset = mockDropdownTextInsetX(dropdown) * stageScale
         val chevronInset = mockDropdownChevronInsetX(dropdown) * stageScale
-        val maxTextWidth = (dropdownWidth * stageScale - textInset - chevronInset * 2f).coerceAtLeast(0f)
+        val displayText = mockDropdownDisplayText(dropdown)
+        val membershipIcon = membershipTierArtworkIconForOption(displayText)
+            ?.takeIf { dropdown == MockDropdown.SubscriptionTier }
+        val iconLaneWidth = if (membershipIcon != null) {
+            (MOCK_MEMBERSHIP_TIER_CONTROL_ICON_SIZE + MOCK_MEMBERSHIP_TIER_ICON_TEXT_GAP) * stageScale
+        } else {
+            0f
+        }
+        val maxTextWidth = (dropdownWidth * stageScale - textInset - iconLaneWidth - chevronInset * 2f)
+            .coerceAtLeast(0f)
+        if (membershipIcon != null) {
+            drawMembershipTierIcon(
+                canvas = canvas,
+                bitmap = membershipIcon,
+                left = tempRect.left + textInset,
+                centerY = tempRect.centerY(),
+                iconSize = MOCK_MEMBERSHIP_TIER_CONTROL_ICON_SIZE * stageScale,
+                alpha = textAlpha
+            )
+        }
         canvas.drawText(
-            trailingFittingText(mockDropdownDisplayText(dropdown), maxTextWidth, formInputPaint),
-            tempRect.left + textInset,
+            trailingFittingText(displayText, maxTextWidth, formInputPaint),
+            tempRect.left + textInset + iconLaneWidth,
             tempRect.centerY() - (formInputPaint.fontMetrics.ascent + formInputPaint.fontMetrics.descent) / 2f,
             formInputPaint
         )
@@ -2109,7 +2141,6 @@ internal class CinerificIntroView(context: Context) : View(context) {
         } else {
             0f
         }
-        val maxTextWidth = (right - left - optionTextInset - scrollbarReservedWidth).coerceAtLeast(0f)
 
         val visibleOptions = mockDropdownVisibleOptions(dropdown)
         visibleOptions.forEachIndexed { index, option ->
@@ -2131,9 +2162,28 @@ internal class CinerificIntroView(context: Context) : View(context) {
             formInputPaint.alpha = optionAlpha
             formInputPaint.textAlign = Paint.Align.LEFT
             val metrics = formInputPaint.fontMetrics
+            val membershipIcon = membershipTierArtworkIconForOption(option)
+                ?.takeIf { dropdown == MockDropdown.SubscriptionTier }
+            val iconLaneWidth = if (membershipIcon != null) {
+                (MOCK_MEMBERSHIP_TIER_OPTION_ICON_SIZE + MOCK_MEMBERSHIP_TIER_ICON_TEXT_GAP) * stageScale
+            } else {
+                0f
+            }
+            if (membershipIcon != null) {
+                drawMembershipTierIcon(
+                    canvas = canvas,
+                    bitmap = membershipIcon,
+                    left = left + optionTextInset,
+                    centerY = (optionTop + optionBottom) / 2f,
+                    iconSize = MOCK_MEMBERSHIP_TIER_OPTION_ICON_SIZE * stageScale,
+                    alpha = optionAlpha
+                )
+            }
+            val maxTextWidth = (right - left - optionTextInset - iconLaneWidth - scrollbarReservedWidth)
+                .coerceAtLeast(0f)
             canvas.drawText(
                 trailingFittingText(option, maxTextWidth, formInputPaint),
-                left + optionTextInset,
+                left + optionTextInset + iconLaneWidth,
                 (optionTop + optionBottom) / 2f - (metrics.ascent + metrics.descent) / 2f,
                 formInputPaint
             )
@@ -2150,6 +2200,31 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 optionAlpha
             )
         }
+    }
+
+    private fun drawMembershipTierIcon(
+        canvas: Canvas,
+        bitmap: Bitmap,
+        left: Float,
+        centerY: Float,
+        iconSize: Float,
+        alpha: Int
+    ) {
+        val bitmapAspect = bitmap.width.toFloat() / bitmap.height.toFloat()
+        val width: Float
+        val height: Float
+        if (bitmapAspect >= 1f) {
+            width = iconSize
+            height = iconSize / bitmapAspect
+        } else {
+            width = iconSize * bitmapAspect
+            height = iconSize
+        }
+        val top = centerY - height / 2f
+        tempIconRect.set(left, top, left + width, top + height)
+        imagePaint.alpha = alpha.coerceIn(0, 255)
+        canvas.drawBitmap(bitmap, null, tempIconRect, imagePaint)
+        imagePaint.alpha = 255
     }
 
     private fun drawMockDropdownScrollbar(
@@ -3243,12 +3318,15 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun mockDropdownDisplayText(dropdown: MockDropdown): String {
-        return mockDropdownSelectedValue(dropdown)
+        return when (dropdown) {
+            MockDropdown.SubscriptionTier -> normalizedMembershipTierSelection(subscriptionTierText)
+            else -> mockDropdownSelectedValue(dropdown)
+        }
     }
 
     private fun mockDropdownSelectedValue(dropdown: MockDropdown): String {
         return when (dropdown) {
-            MockDropdown.SubscriptionTier -> subscriptionTierText
+            MockDropdown.SubscriptionTier -> normalizedMembershipTierSelection(subscriptionTierText)
             MockDropdown.Month -> monthText
             MockDropdown.Day -> dayText
             MockDropdown.Year -> yearText
@@ -3269,7 +3347,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         mockInputDimActiveDropdown = selection.dropdown
         mockInputDimActiveField = null
         when (selection.dropdown) {
-            MockDropdown.SubscriptionTier -> subscriptionTierText = selection.option
+            MockDropdown.SubscriptionTier -> subscriptionTierText = normalizedMembershipTierSelection(selection.option)
             MockDropdown.Month -> monthText = selection.option
             MockDropdown.Day -> dayText = selection.option
             MockDropdown.Year -> yearText = selection.option
@@ -3277,6 +3355,33 @@ internal class CinerificIntroView(context: Context) : View(context) {
         notifyIntroSnapshotChanged()
         restartMockLandscapeInputLiftAnimation()
         restartMockInputDimAnimation()
+    }
+
+    private fun membershipTierIconForOption(option: String): Bitmap? {
+        return when (normalizedMembershipTierSelection(option)) {
+            MOCK_MEMBERSHIP_BASIC_TEXT -> membershipTierBasicIcon
+            MOCK_MEMBERSHIP_PRO_TEXT -> membershipTierProIcon
+            MOCK_MEMBERSHIP_ROCK_STAR_TEXT -> membershipTierRockStarIcon
+            else -> null
+        }
+    }
+
+    private fun membershipTierArtworkIconForOption(option: String): Bitmap? {
+        return when (normalizedMembershipTierSelection(option)) {
+            MOCK_MEMBERSHIP_BASIC_TEXT -> membershipTierBasicArtworkIcon
+            MOCK_MEMBERSHIP_PRO_TEXT -> membershipTierProArtworkIcon
+            MOCK_MEMBERSHIP_ROCK_STAR_TEXT -> membershipTierRockStarArtworkIcon
+            else -> null
+        }
+    }
+
+    private fun normalizedMembershipTierSelection(selection: String): String {
+        return when (selection) {
+            MOCK_MEMBERSHIP_LEGACY_OPTION_1_TEXT -> MOCK_MEMBERSHIP_BASIC_TEXT
+            MOCK_MEMBERSHIP_LEGACY_OPTION_2_TEXT -> MOCK_MEMBERSHIP_PRO_TEXT
+            MOCK_MEMBERSHIP_LEGACY_OPTION_3_TEXT -> MOCK_MEMBERSHIP_ROCK_STAR_TEXT
+            else -> selection
+        }
     }
 
     private fun setMockForgotRecoveryTarget(target: MockForgotRecoveryTarget) {
@@ -3874,7 +3979,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             monthText = monthText,
             dayText = dayText,
             yearText = yearText,
-            subscriptionTierText = subscriptionTierText,
+            subscriptionTierText = normalizedMembershipTierSelection(subscriptionTierText),
             forgotRecoveryTargetName = forgotRecoveryTarget.name,
             forgotPasswordSubmissionStateName = forgotPasswordSubmissionState.name,
             rememberMeChecked = rememberMeChecked,
@@ -4196,9 +4301,9 @@ private val MOCK_FORGOT_PASSWORD_FIELDS = listOf(
 )
 
 private val MOCK_MEMBERSHIP_OPTIONS = listOf(
-    MOCK_MEMBERSHIP_OPTION_1_TEXT,
-    MOCK_MEMBERSHIP_OPTION_2_TEXT,
-    MOCK_MEMBERSHIP_OPTION_3_TEXT
+    MOCK_MEMBERSHIP_BASIC_TEXT,
+    MOCK_MEMBERSHIP_PRO_TEXT,
+    MOCK_MEMBERSHIP_ROCK_STAR_TEXT
 )
 
 private val MOCK_MONTH_OPTIONS = listOf(
