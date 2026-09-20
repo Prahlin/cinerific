@@ -125,6 +125,7 @@ fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
     val introBootStartMillis by rememberSaveable { mutableStateOf(bootStartMillis) }
     var showHome by rememberSaveable { mutableStateOf(false) }
     var signedInProfile by rememberSaveable { mutableStateOf(CinerificProfile.Guest) }
+    var signInSessionId by rememberSaveable { mutableStateOf(0) }
     var selectedLanguage by rememberSaveable { mutableStateOf(CinerificLanguage.English) }
     var introSnapshot by rememberSaveable(stateSaver = CinerificIntroSnapshotSaver) {
         mutableStateOf(CinerificIntroSnapshot())
@@ -133,6 +134,7 @@ fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
     if (showHome) {
         CinerificLocalizedResources(selectedLanguage) {
             CinerificMainExperience(
+                signInSessionId = signInSessionId,
                 signedInProfile = signedInProfile,
                 selectedLanguage = selectedLanguage,
                 onLanguageSelected = { selectedLanguage = it },
@@ -158,6 +160,7 @@ fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
                     onAvatarSelected = { profile ->
                         introSnapshot = CinerificIntroSnapshot()
                         signedInProfile = profile
+                        signInSessionId += 1
                         showHome = true
                     }
                 }
@@ -173,6 +176,7 @@ fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
                 view.onAvatarSelected = { profile ->
                     introSnapshot = CinerificIntroSnapshot()
                     signedInProfile = profile
+                    signInSessionId += 1
                     showHome = true
                 }
             }
@@ -201,18 +205,19 @@ internal enum class CinerificProfile(
 
 @Composable
 private fun CinerificMainExperience(
+    signInSessionId: Int,
     signedInProfile: CinerificProfile,
     selectedLanguage: CinerificLanguage,
     onLanguageSelected: (CinerificLanguage) -> Unit,
     onSignOut: () -> Unit
 ) {
-    var destination by rememberSaveable { mutableStateOf(CinerificDestination.Home) }
-    var selectedProgramTitle by rememberSaveable { mutableStateOf("Sink or Swim") }
+    var destination by rememberSaveable(signInSessionId) { mutableStateOf(CinerificDestination.Home) }
+    var selectedProgramTitle by rememberSaveable(signInSessionId) { mutableStateOf("Sink or Swim") }
     var favoriteProgramTitles by rememberSaveable { mutableStateOf(emptyList<String>()) }
     var userProgramRatings by rememberSaveable { mutableStateOf(emptyMap<String, Int>()) }
-    var catalogRouteDestinationName by rememberSaveable { mutableStateOf("") }
-    var catalogRouteGenreName by rememberSaveable { mutableStateOf("") }
-    var catalogRouteModeName by rememberSaveable { mutableStateOf("") }
+    var catalogRouteDestinationName by rememberSaveable(signInSessionId) { mutableStateOf("") }
+    var catalogRouteGenreName by rememberSaveable(signInSessionId) { mutableStateOf("") }
+    var catalogRouteModeName by rememberSaveable(signInSessionId) { mutableStateOf("") }
     var favoritesFullPromptRequestId by remember { mutableStateOf(0) }
     var autoLogoutEnabled by rememberSaveable { mutableStateOf(false) }
     var userInitiatedPlaybackActive by remember { mutableStateOf(false) }

@@ -78,7 +78,7 @@ internal fun CinerificLoadingSpinner(
             rotation = redSpin
         )
         CinerificLoadingSpinnerLayer(
-            resId = R.drawable.loading_spinner_wheel_centered,
+            resId = R.drawable.loading_spinner_wheel_clean,
             rotation = wheelSpin
         )
         CinerificLoadingSpinnerLayer(

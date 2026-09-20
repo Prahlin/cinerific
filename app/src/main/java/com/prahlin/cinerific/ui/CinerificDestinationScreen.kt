@@ -210,6 +210,7 @@ private const val FAVORITE_BURST_STROKE = 2.4f
 private const val FAVORITE_BURST_DURATION_MS = 240
 private const val DETAIL_LOADING_SPINNER_WIDTH = 190f
 private const val DETAIL_LOADING_SCRIM_MAX_ALPHA = 0.68f
+private const val DETAIL_PLAY_LOADING_FEEDBACK_MS = 900L
 private const val DETAIL_HERO_LOGO_WIDTH = 300f
 private const val DETAIL_HERO_LOGO_HEIGHT = 214f
 internal const val DETAIL_HERO_LOGO_CENTER_Y = DETAIL_HERO_LOGO_HEIGHT / 2f
@@ -1273,6 +1274,13 @@ internal fun CinerificProgramDetailsScreen(
             detailScrollState.animateScrollTo(0)
         }
 
+        LaunchedEffect(program.title, playLoading) {
+            if (!playLoading) return@LaunchedEffect
+            delay(DETAIL_PLAY_LOADING_FEEDBACK_MS)
+            playLoading = false
+            playbackSessionController.onUserInitiatedPlaybackFinished()
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -1286,6 +1294,7 @@ internal fun CinerificProgramDetailsScreen(
                 contentDescription = title,
                 scale = scale,
                 isPortrait = isPortrait,
+                preserveBottomTitle = detailHeroPreservesBottomTitle(program.title),
                 isFavorited = isFavorited,
                 playLoading = playLoading,
                 onFavoriteToggled = { onFavoriteToggled(program.title) },
@@ -1342,6 +1351,7 @@ private fun ProgramDetailRevealImage(
     contentDescription: String,
     scale: Float,
     isPortrait: Boolean,
+    preserveBottomTitle: Boolean,
     isFavorited: Boolean,
     playLoading: Boolean,
     onFavoriteToggled: () -> Unit,
@@ -1374,7 +1384,11 @@ private fun ProgramDetailRevealImage(
                 .graphicsLayer {
                     alpha = 0.46f + revealProgress * 0.54f
                 },
-            alignment = Alignment.TopStart,
+            alignment = if (isPortrait || !preserveBottomTitle) {
+                Alignment.TopStart
+            } else {
+                Alignment.BottomStart
+            },
             contentScale = heroContentScale
         )
         if (heroFullyVisible) {
@@ -3898,6 +3912,14 @@ private fun detailHeroDrawableId(title: String): Int? = when (title) {
     "Into The Wild" -> R.drawable.into_the_wild_title_card
     "Morbid Temptations" -> R.drawable.morbid_temptations_title_card
     else -> null
+}
+
+private fun detailHeroPreservesBottomTitle(title: String): Boolean = when (title) {
+    "Light As Air",
+    "Infatuation",
+    "Into The Wild",
+    "Morbid Temptations" -> true
+    else -> false
 }
 
 private fun detailProgramSpec(title: String): DestinationProgramSpec? {
