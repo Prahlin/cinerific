@@ -1,0 +1,665 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [4 0 R 6 0 R 8 0 R 10 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Length 6607 >>
+stream
+BT
+/F1 10.4 Tf
+54 748 Td
+(Cinerific Android App Work Log - September 19, 2026 \(U.S. EST\)) Tj
+0 -18.50 Td
+/F1 8.5 Tf
+(Compiled summary for Saturday, September 19, 2026 \(U.S. Eastern Time\) - focus: resuming) Tj
+0 -9.25 Td
+(the post-August-5 Cinerific Android pass by reviewing the current project snapshot and all) Tj
+0 -9.25 Td
+(prior worklogs, restoring the Android Studio and ADB runtime across a standard tablet) Tj
+0 -9.25 Td
+(emulator and native Samsung devices, keeping every authentication route visible and) Tj
+0 -9.25 Td
+(actionable during slide-in states, synchronizing vertical transitions between Create My) Tj
+0 -9.25 Td
+(Account, Sign In, and Forgot Username/Password, restoring the centered chevron row,) Tj
+0 -9.25 Td
+(protecting landscape spacing, resetting stale navigation after each login, correcting) Tj
+0 -9.25 Td
+(title-card hero crops, bounding playback-loading feedback, diagnosing a Figma-derived) Tj
+0 -9.25 Td
+(spinner shadow, replacing the fragile live mask with a clean transparent wheel asset,) Tj
+0 -9.25 Td
+(validating the result on the emulator, Samsung phone, and Galaxy Tab A tablet, committing) Tj
+0 -9.25 Td
+(the two source passes as cc8c036 and b40e734, refreshing the project snapshot, and) Tj
+0 -9.25 Td
+(generating this latest Cinerific PDF worklog artifact.) Tj
+0 -9.25 Td
+() Tj
+0 -9.25 Td
+(Generated in continuity with the established Cinerific worklog cadence from July 12, July) Tj
+0 -9.25 Td
+(14, July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July) Tj
+0 -9.25 Td
+(24, July 25, July 27, July 28 Part 1, July 28 Part 2, July 29, August 1, August 3, August) Tj
+0 -9.25 Td
+(4, and August 5: compact opening summary, source material review, baseline state, goals,) Tj
+0 -9.25 Td
+(themed work completed sections, validation, files touched, follow up context, and output) Tj
+0 -9.25 Td
+(artifact close.) Tj
+0 -9.25 Td
+() Tj
+0 -9.25 Td
+(No September 19 Part 1 PDF existed in the repository, so this artifact follows the no-part) Tj
+0 -9.25 Td
+(filename convention for the first September 19 worklog. Eastern Time was verified from the) Tj
+0 -9.25 Td
+(host as Saturday, September 19, 2026 at 8:23 PM EDT, UTC-04:00. The title retains the) Tj
+0 -9.25 Td
+(repository's established U.S. EST label while the body records the seasonally accurate EDT) Tj
+0 -9.25 Td
+(verification. This artifact records the current source state on main through HEAD b40e734,) Tj
+0 -9.25 Td
+(Fixed playback loading visuals and post-login navigation state, plus the refreshed) Tj
+0 -9.25 Td
+(snapshot and generated worklog artifact from this documentation pass.) Tj
+0 -9.25 Td
+() Tj
+0 -9.25 Td
+(Source Materials Reviewed) Tj
+0 -9.25 Td
+(- Reviewed every pre-existing Cinerific worklog PDF at the repository root: July 12, July) Tj
+0 -9.25 Td
+(  14, July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July) Tj
+0 -9.25 Td
+(  24, July 25, July 27, July 28 Part 1, July 28 Part 2, July 29, August 1, August 3,) Tj
+0 -9.25 Td
+(  August 4, and August 5.) Tj
+0 -9.25 Td
+(- Converted all twenty prior PDFs with pdftotext and inspected title cadence, summary) Tj
+0 -9.25 Td
+(  rhythm, source review language, baseline and goals sections, themed work-completed) Tj
+0 -9.25 Td
+(  sections, validation phrasing, file lists, follow-up close, and output-artifact wording.) Tj
+0 -9.25 Td
+(- Ran pdfinfo and pdffonts across the worklog set, with the closest comparison against) Tj
+0 -9.25 Td
+(  August 5, to preserve the four-page U.S. Letter layout, Helvetica body font, PDF 1.4) Tj
+0 -9.25 Td
+(  output, text-extractable structure, title and subject metadata, Codex) Tj
+0 -9.25 Td
+(  author/creator/producer fields, and right-aligned page footer convention.) Tj
+0 -9.25 Td
+(- Ran ./read_project.sh and reviewed the refreshed cinerific_PROJECT_SNAPSHOT.txt for the) Tj
+0 -9.25 Td
+(  current source tree, Android source dump, drawable inventory, worklog inventory,) Tj
+0 -9.25 Td
+(  generated-file policy, and September 19 timestamp.) Tj
+0 -9.25 Td
+(- Reviewed git status, git log, git show --stat, git show --name-status, and the September) Tj
+0 -9.25 Td
+(  19 commit range from the August 6 worklog commit through HEAD b40e734.) Tj
+0 -9.25 Td
+(- Reviewed CinerificIntroView.kt, CinerificApp.kt, CinerificDestinationScreen.kt,) Tj
+0 -9.25 Td
+(  CinerificLoadingSpinner.kt, the cleaned spinner wheel drawable, .vscode/settings.json,) Tj
+0 -9.25 Td
+(  and the regenerated project snapshot.) Tj
+0 -9.25 Td
+(- Reviewed runtime evidence from the Standard tablet emulator, Samsung SM-G990U phone, and) Tj
+0 -9.25 Td
+(  Samsung SM-T580 Galaxy Tab A tablet, including adb discovery, streamed APK installs,) Tj
+0 -9.25 Td
+(  activity launches, UI hierarchy dumps, playback-spinner captures, and restored) Tj
+0 -9.25 Td
+(  transport-control semantics.) Tj
+0 -9.25 Td
+(- Reviewed the linked Figma Loading Spinner Animation component set and its six variants,) Tj
+0 -9.25 Td
+(  inspected image hashes and node effects through Figma MCP, and compared the original) Tj
+0 -9.25 Td
+(  wheel raster with the Android drawable assets.) Tj
+0 -9.25 Td
+() Tj
+0 -9.25 Td
+(Baseline Status Before September 19 Work) Tj
+0 -9.25 Td
+(- Cinerific entered September 19 with the August 5 Create My Account tier dropdown and) Tj
+0 -9.25 Td
+(  rotation behavior committed and documented, but no newer root-level PDF worklog.) Tj
+0 -9.25 Td
+(- The native authentication preview already contained Create My Account, Sign In, and) Tj
+0 -9.25 Td
+(  Forgot Username/Password screens, yet inactive route labels did not remain consistently) Tj
+0 -9.25 Td
+(  visible or actionable while another slide-in screen was open.) Tj
+0 -9.25 Td
+(- Switching directly between authentication routes did not yet provide the requested) Tj
+0 -9.25 Td
+(  simultaneous vertical exit and entrance behavior.) Tj
+0 -9.25 Td
+(- Chevron placement and limited landscape height still needed a consistent rule that) Tj
+0 -9.25 Td
+(  protected the prompt row and consumed space above the Cinerific logo first.) Tj
+0 -9.25 Td
+(- Re-entering the main experience after another login could preserve the previous) Tj
+0 -9.25 Td
+(  destination, selected title, or catalog route instead of returning to Home.) Tj
+0 -9.25 Td
+(- Landscape detail heroes for the four Home reel titles could crop away title artwork) Tj
+0 -9.25 Td
+(- The spinner wheel raster contained semitransparent dark pixels both inside and outside) Tj
+0 -9.25 Td
+(  the bright metallic band, producing an unwanted circular shadow over the red star.) Tj
+ET
+BT
+/F1 8.2 Tf
+328.97 28 Td
+(Cinerific Work Log - September 19, 2026 \(U.S. EST\) Page 1) Tj
+ET
+endstream
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 3 0 R >>
+endobj
+5 0 obj
+<< /Length 5669 >>
+stream
+BT
+/F1 8.5 Tf
+54 748 Td
+(- A first runtime clipping approach looked correct on the emulator but caused the white) Tj
+0 -9.25 Td
+(  wheel to appear briefly and then disappear on the older SM-T580 tablet GPU.) Tj
+0 -9.25 Td
+(- Emulator playback was smoother after hardware graphics and resource tuning, but) Tj
+0 -9.25 Td
+(  native-device comparison remained important for visual and timing QA.) Tj
+0 -9.25 Td
+() Tj
+0 -9.25 Td
+(Main Goals for September 19) Tj
+0 -9.25 Td
+(- Keep all three authentication route labels visible and tappable regardless of which) Tj
+0 -9.25 Td
+(  slide-in screen is active.) Tj
+0 -9.25 Td
+(- Make route-to-route transitions vertically synchronized and preserve the centered) Tj
+0 -9.25 Td
+(  chevron on its own row beneath the links.) Tj
+0 -9.25 Td
+(- Protect the lower authentication controls in constrained landscape layouts by reclaiming) Tj
+0 -9.25 Td
+(  vertical space from above the logo.) Tj
+0 -9.25 Td
+(- Reset navigation and catalog routing state for every new sign-in session without) Tj
+0 -9.25 Td
+(  discarding unrelated favorites or ratings.) Tj
+0 -9.25 Td
+(- Preserve title text in the landscape hero crops for Light As Air, Infatuation, Into The) Tj
+0 -9.25 Td
+(  Wild, and Morbid Temptations.) Tj
+0 -9.25 Td
+(- Guarantee that playback loading feedback finishes and transport controls return after a) Tj
+0 -9.25 Td
+(  short, visible interval.) Tj
+0 -9.25 Td
+(- Remove the spinner wheel shadow while preserving the original white texture and) Tj
+0 -9.25 Td
+(  independent red-star, wheel, and mini-star rotations.) Tj
+0 -9.25 Td
+(- Validate the same APK across the active emulator and available physical Samsung devices,) Tj
+0 -9.25 Td
+(  including the older Galaxy Tab A.) Tj
+0 -9.25 Td
+(- Refresh the project snapshot and generate the next convention-matched four-page PDF) Tj
+0 -9.25 Td
+(  worklog.) Tj
+0 -9.25 Td
+() Tj
+0 -9.25 Td
+(Work Completed - Authentication Navigation and Responsive Layout) Tj
+0 -9.25 Td
+(- Kept Create My Account, Sign In, and Forgot Username/Password labels present across the) Tj
+0 -9.25 Td
+(  authentication overlay states instead of hiding the inactive destinations.) Tj
+0 -9.25 Td
+(- Expanded hit handling so any inactive route label can open its corresponding screen) Tj
+0 -9.25 Td
+(  directly from another open authentication screen.) Tj
+0 -9.25 Td
+(- Reworked route changes into synchronized vertical slide-out and slide-in motion,) Tj
+0 -9.25 Td
+(  replacing the briefly introduced horizontal direction with the established vertical) Tj
+0 -9.25 Td
+(  behavior.) Tj
+0 -9.25 Td
+(- Preserved the selected screen transition while keeping the other route labels anchored) Tj
+0 -9.25 Td
+(  to their original prompt-row positions.) Tj
+0 -9.25 Td
+(- Returned the wide downward chevron to one centered location instead of moving it under) Tj
+0 -9.25 Td
+(  the selected route.) Tj
+0 -9.25 Td
+(- Dedicated a separate row beneath the authentication links to the chevron so its visual) Tj
+0 -9.25 Td
+(  weight no longer cluttered the route labels.) Tj
+0 -9.25 Td
+(- Kept the chevron centered independent of the active screen and aligned its touch target) Tj
+0 -9.25 Td
+(  with the rendered geometry.) Tj
+0 -9.25 Td
+(- Adjusted constrained landscape spacing so the layout borrows height from the area above) Tj
+0 -9.25 Td
+(  the Cinerific logo rather than compressing the avatar, prompt, or chevron rows.) Tj
+0 -9.25 Td
+(- Updated the VS Code active-border theme setting during the same committed pass and) Tj
+0 -9.25 Td
+(  refreshed the project snapshot.) Tj
+0 -9.25 Td
+(- Committed the authentication and responsive-layout pass as cc8c036, Refined) Tj
+0 -9.25 Td
+(  authentication navigation and responsive layout.) Tj
+0 -9.25 Td
+() Tj
+0 -9.25 Td
+(Work Completed - Login Session and Destination Reset) Tj
+0 -9.25 Td
+(- Added a sign-in session identifier at the root app level and incremented it whenever an) Tj
+0 -9.25 Td
+(  avatar/profile completes the authentication handoff.) Tj
+0 -9.25 Td
+(- Keyed destination, selected program title, catalog destination, catalog genre, and) Tj
+0 -9.25 Td
+(  catalog mode saveable state to the new session identifier.) Tj
+0 -9.25 Td
+(- Ensured a newly authenticated profile enters the default Home experience instead of) Tj
+0 -9.25 Td
+(  inheriting stale navigation from the prior session.) Tj
+0 -9.25 Td
+(- Kept favorites and user ratings outside the session-reset key so the navigation) Tj
+0 -9.25 Td
+(  correction did not erase unrelated prototype preferences.) Tj
+0 -9.25 Td
+(- Applied the same session increment through both the Compose fallback path and native) Tj
+0 -9.25 Td
+(  intro-view avatar selection callback.) Tj
+0 -9.25 Td
+() Tj
+0 -9.25 Td
+(Work Completed - Detail Hero Cropping and Playback Feedback) Tj
+0 -9.25 Td
+(- Added title-aware landscape alignment for Light As Air, Infatuation, Into The Wild, and) Tj
+0 -9.25 Td
+(  Morbid Temptations so bottom-positioned title artwork remains inside the cropped hero) Tj
+0 -9.25 Td
+(  image.) Tj
+0 -9.25 Td
+(- Preserved the existing top-start alignment for portrait mode and for detail heroes that) Tj
+0 -9.25 Td
+(  do not require bottom-title protection.) Tj
+0 -9.25 Td
+(- Kept ContentScale.Crop in landscape and ContentScale.Fit in portrait, changing only the) Tj
+0 -9.25 Td
+(  alignment needed to retain the artwork.) Tj
+0 -9.25 Td
+(- Added a 900 millisecond playback-loading feedback interval after the Play action.) Tj
+0 -9.25 Td
+(- Cleared the loading state after the interval and notified the shared playback-session) Tj
+0 -9.25 Td
+(  controller that user-initiated playback feedback had finished.) Tj
+ET
+BT
+/F1 8.2 Tf
+328.97 28 Td
+(Cinerific Work Log - September 19, 2026 \(U.S. EST\) Page 2) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 5690 >>
+stream
+BT
+/F1 8.5 Tf
+54 748 Td
+(- Restored Favorite, Previous, Play, and Next controls after loading instead of leaving) Tj
+0 -9.25 Td
+(  the spinner active indefinitely.) Tj
+0 -9.25 Td
+(- Confirmed the favorite affordance remained suppressed while the loading overlay was) Tj
+0 -9.25 Td
+(  active and returned with the transport controls afterward.) Tj
+0 -9.25 Td
+() Tj
+0 -9.25 Td
+(Work Completed - Spinner Asset Diagnosis and Correction) Tj
+0 -9.25 Td
+(- Inspected CinerificLoadingSpinner.kt and confirmed the Compose implementation only) Tj
+0 -9.25 Td
+(  layered and rotated three PNGs; it did not draw a shadow, blur, dark circle, or) Tj
+0 -9.25 Td
+(  background.) Tj
+0 -9.25 Td
+(- Measured the existing wheel PNG and found semitransparent black pixels through the) Tj
+0 -9.25 Td
+(  center and outside the bright wheel band, confirming an asset-level artifact.) Tj
+0 -9.25 Td
+(- Used the linked Figma component set at node 319:6227 to inspect all six animation) Tj
+0 -9.25 Td
+(  variants and confirmed every wheel layer reused the same raster image hash with no Figma) Tj
+0 -9.25 Td
+(  node effect applied.) Tj
+0 -9.25 Td
+(- Created a separate corrected Figma component-set copy while preserving the original) Tj
+0 -9.25 Td
+(  source component.) Tj
+0 -9.25 Td
+(- Initially applied an even-odd annular Compose clip to exclude the contaminated center) Tj
+0 -9.25 Td
+(  and outer shadow, then tightened the measured mask to the bright metallic wheel band.) Tj
+0 -9.25 Td
+(- Verified that the tightened mask removed the visible dark circle on the emulator and) Tj
+0 -9.25 Td
+(  preserved the textured white ring.) Tj
+0 -9.25 Td
+(- Diagnosed the SM-T580-only disappearance as a compatibility problem with the rotating) Tj
+0 -9.25 Td
+(  runtime clip rather than missing artwork or animation state.) Tj
+0 -9.25 Td
+(- Generated loading_spinner_wheel_clean.png as a deterministic RGBA derivative of the) Tj
+0 -9.25 Td
+(  original wheel, preserving the bright texture while making the center and exterior) Tj
+0 -9.25 Td
+(  shadow pixels transparent.) Tj
+0 -9.25 Td
+(- Replaced the runtime-clipped wheel reference with the cleaned drawable and returned the) Tj
+0 -9.25 Td
+(  wheel layer to the same plain graphicsLayer rotation used by the red and mini stars.) Tj
+0 -9.25 Td
+(- Left loading_spinner_wheel_centered.png intact as the source asset and kept the cleaned) Tj
+0 -9.25 Td
+(  derivative as the runtime-safe drawable.) Tj
+0 -9.25 Td
+() Tj
+0 -9.25 Td
+(Work Completed - Emulator and Native Device QA) Tj
+0 -9.25 Td
+(- Tuned the Standard tablet AVD toward hardware graphics, Quick Boot, four CPU cores,) Tj
+0 -9.25 Td
+(  three GB of guest RAM, and a 512 MB VM heap while monitoring the M4 Mac's memory) Tj
+0 -9.25 Td
+(  pressure and emulator process footprint.) Tj
+0 -9.25 Td
+(- Distinguished emulator rendering overhead from app-level playback behavior by comparing) Tj
+0 -9.25 Td
+(  the same content against physical Samsung hardware.) Tj
+0 -9.25 Td
+(- Repeatedly built and streamed the debug APK to the active emulator and connected devices) Tj
+0 -9.25 Td
+(  without clearing application data.) Tj
+0 -9.25 Td
+(- Identified the Samsung phone as SM-G990U and avoided treating it as the older tablet) Tj
+0 -9.25 Td
+(  after the device inventory was clarified.) Tj
+0 -9.25 Td
+(- Reconnected and authorized the Galaxy Tab A as SM-T580, serial 52036e1dfc3634eb, then) Tj
+0 -9.25 Td
+(  installed and launched the current debug build.) Tj
+0 -9.25 Td
+(- Captured the corrected spinner on the SM-T580 near the beginning and approximately) Tj
+0 -9.25 Td
+(  halfway through its loading interval; the white wheel remained present and visibly) Tj
+0 -9.25 Td
+(  rotated.) Tj
+0 -9.25 Td
+(- Used UI Automator semantics after the interval to confirm Add to favorites, Previous) Tj
+0 -9.25 Td
+(  title, Play title, and Next title controls returned on both emulator and tablet paths.) Tj
+0 -9.25 Td
+(- Verified Cinerific MainActivity was resumed on the native tablet after installation and) Tj
+0 -9.25 Td
+(  launch.) Tj
+0 -9.25 Td
+() Tj
+0 -9.25 Td
+(Work Completed - Validation, Snapshot, and Commit State) Tj
+0 -9.25 Td
+(- Ran ./gradlew :app:assembleDebug after the hero, loading-state, and spinner changes;) Tj
+0 -9.25 Td
+(  Gradle reported BUILD SUCCESSFUL.) Tj
+0 -9.25 Td
+(- Ran git diff --check during the source passes and again before documentation generation) Tj
+0 -9.25 Td
+(  without whitespace errors.) Tj
+0 -9.25 Td
+(- Installed the final asset-based spinner APK on the Standard emulator, Samsung phone when) Tj
+0 -9.25 Td
+(  connected, and Galaxy Tab A tablet after reconnection.) Tj
+0 -9.25 Td
+(- Visually compared early and later spinner frames to verify independent rotation and) Tj
+0 -9.25 Td
+(  persistent wheel visibility.) Tj
+0 -9.25 Td
+(- Confirmed the 900 millisecond loading interval returned transport controls instead of) Tj
+0 -9.25 Td
+(  leaving an indefinite spinner.) Tj
+0 -9.25 Td
+(- Committed the playback, navigation-reset, hero-crop, and final spinner asset pass as) Tj
+0 -9.25 Td
+(  b40e734, Fixed playback loading visuals and post-login navigation state.) Tj
+0 -9.25 Td
+(- Refreshed cinerific_PROJECT_SNAPSHOT.txt during this worklog pass so the generated) Tj
+0 -9.25 Td
+(  project record reflects the current September 19 source and drawable inventory.) Tj
+0 -9.25 Td
+() Tj
+0 -9.25 Td
+(Validation and Checks Performed) Tj
+0 -9.25 Td
+(- Verified host Eastern Time with TZ=America/New_York; the system reported Saturday,) Tj
+0 -9.25 Td
+(  September 19, 2026 in EDT at UTC-04:00.) Tj
+0 -9.25 Td
+(- Used pdftotext on every earlier worklog and pdfinfo on all prior PDFs before generating) Tj
+ET
+BT
+/F1 8.2 Tf
+328.97 28 Td
+(Cinerific Work Log - September 19, 2026 \(U.S. EST\) Page 3) Tj
+ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 5588 >>
+stream
+BT
+/F1 8.5 Tf
+54 748 Td
+(  this artifact.) Tj
+0 -9.25 Td
+(- Confirmed all twenty prior worklogs used four U.S. Letter pages and that the recent) Tj
+0 -9.25 Td
+(  files used Helvetica, text-extractable PDF 1.4 output, and Codex metadata.) Tj
+0 -9.25 Td
+(- Reviewed the two September 19 commits, their stats, names, and bodies against the source) Tj
+0 -9.25 Td
+(  files they changed.) Tj
+0 -9.25 Td
+(- Built the debug APK successfully after replacing the live clip with) Tj
+0 -9.25 Td
+(  loading_spinner_wheel_clean.png.) Tj
+0 -9.25 Td
+(- Used adb devices -l to distinguish emulator-5554, SM-G990U, and SM-T580 targets as their) Tj
+0 -9.25 Td
+(  USB availability changed.) Tj
+0 -9.25 Td
+(- Used streamed installs, launcher events, activity-state inspection, screen captures, and) Tj
+0 -9.25 Td
+(  UI hierarchy dumps to validate the final behavior.) Tj
+0 -9.25 Td
+(- Confirmed the clean wheel remained visible on the older SM-T580 after rotation advanced,) Tj
+0 -9.25 Td
+(  directly addressing the native-tablet-only regression.) Tj
+0 -9.25 Td
+(- Rendered this generated PDF to PNG pages and inspected the output for clipping, footer) Tj
+0 -9.25 Td
+(  placement, page count, and readable density.) Tj
+0 -9.25 Td
+() Tj
+0 -9.25 Td
+(Files Touched During September 19) Tj
+0 -9.25 Td
+(- .vscode/settings.json: updated the editor active-border theme setting during the) Tj
+0 -9.25 Td
+(  authentication layout pass.) Tj
+0 -9.25 Td
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt: kept all auth route) Tj
+0 -9.25 Td
+(  labels actionable, synchronized vertical route transitions, centered the chevron row,) Tj
+0 -9.25 Td
+(  and refined constrained landscape positioning.) Tj
+0 -9.25 Td
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt: added sign-in session) Tj
+0 -9.25 Td
+(  tracking and reset destination/program/catalog routing state after each authentication) Tj
+0 -9.25 Td
+(  handoff.) Tj
+0 -9.25 Td
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt: preserved) Tj
+0 -9.25 Td
+(  bottom title artwork for selected detail heroes and bounded playback loading feedback to) Tj
+0 -9.25 Td
+(  900 milliseconds.) Tj
+0 -9.25 Td
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificLoadingSpinner.kt: switched the) Tj
+0 -9.25 Td
+(  wheel layer to the cleaned runtime-safe drawable.) Tj
+0 -9.25 Td
+(- app/src/main/res/drawable-nodpi/loading_spinner_wheel_clean.png: added the transparent,) Tj
+0 -9.25 Td
+(  shadow-free wheel derivative used across emulator and native hardware.) Tj
+0 -9.25 Td
+(- cinerific_PROJECT_SNAPSHOT.txt: refreshed the generated snapshot timestamp, source dump,) Tj
+0 -9.25 Td
+(  project tree, and asset inventory.) Tj
+0 -9.25 Td
+(- cinerific_worklog_september 19.pdf: added this root-level September 19 worklog using the) Tj
+0 -9.25 Td
+(  established no-part naming convention.) Tj
+0 -9.25 Td
+() Tj
+0 -9.25 Td
+(Follow-Up Context) Tj
+0 -9.25 Td
+(- Authentication forms remain prototype UI and are not yet connected to production) Tj
+0 -9.25 Td
+(  identity, account creation, password recovery, or the planned backend functions.) Tj
+0 -9.25 Td
+(- The session identifier intentionally resets navigation state but preserves favorites and) Tj
+0 -9.25 Td
+(  ratings; future account-scoped persistence should define those ownership boundaries) Tj
+0 -9.25 Td
+(  explicitly.) Tj
+0 -9.25 Td
+(- The four protected hero titles use title-specific bottom alignment in landscape. New) Tj
+0 -9.25 Td
+(  hero artwork with embedded lower titles should be added to the same helper rather than) Tj
+0 -9.25 Td
+(  changing every detail image.) Tj
+0 -9.25 Td
+(- The 900 millisecond loading state is feedback timing, not real media buffering. A future) Tj
+0 -9.25 Td
+(  playback backend should replace it with player readiness and error events while) Tj
+0 -9.25 Td
+(  retaining a timeout fallback.) Tj
+0 -9.25 Td
+(- loading_spinner_wheel_clean.png should remain the runtime wheel on older Android) Tj
+0 -9.25 Td
+(  hardware. Reintroducing a rotating even-odd clip may reproduce the SM-T580) Tj
+0 -9.25 Td
+(  disappearance.) Tj
+0 -9.25 Td
+(- The original wheel drawable and original Figma spinner component remain available for) Tj
+0 -9.25 Td
+(  provenance; the corrected derivative and Figma copy carry the visual fix.) Tj
+0 -9.25 Td
+(- Device names should be checked with adb devices -l before deployment so the SM-G990U) Tj
+0 -9.25 Td
+(  phone and SM-T580 tablet are not conflated.) Tj
+0 -9.25 Td
+(- The Standard AVD can still render video less smoothly than native hardware because it) Tj
+0 -9.25 Td
+(  must emulate the guest display and decode media while Android Studio and other desktop) Tj
+0 -9.25 Td
+(  applications are active.) Tj
+0 -9.25 Td
+() Tj
+0 -9.25 Td
+(Output Artifact) Tj
+0 -9.25 Td
+(- Generated cinerific_worklog_september 19.pdf at the repository root using the) Tj
+0 -9.25 Td
+(  first-log-of-the-day no-part filename convention.) Tj
+0 -9.25 Td
+(- Preserved the established four-page U.S. Letter layout, Helvetica text, PDF 1.4) Tj
+0 -9.25 Td
+(  compatibility, Codex metadata, right-aligned page footers, and plain-text-readable) Tj
+0 -9.25 Td
+(  structure.) Tj
+0 -9.25 Td
+(- Used the verified September 19, 2026 U.S. Eastern date and documented the host's actual) Tj
+0 -9.25 Td
+(  EDT offset while retaining the historical U.S. EST title label.) Tj
+0 -9.25 Td
+(- The artifact is intended to be committed after review alongside the refreshed) Tj
+0 -9.25 Td
+(  cinerific_PROJECT_SNAPSHOT.txt and no additional source changes.) Tj
+ET
+BT
+/F1 8.2 Tf
+328.97 28 Td
+(Cinerific Work Log - September 19, 2026 \(U.S. EST\) Page 4) Tj
+ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+12 0 obj
+<< /Title (Cinerific Android App Work Log - September 19, 2026 \(U.S. EST\)) /Subject (Cinerific Android App daily project work log for September 19, 2026) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260919203346-04'00') /ModDate (D:20260919203346-04'00') >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000085 00000 n 
+0000000161 00000 n 
+0000006820 00000 n 
+0000006946 00000 n 
+0000012667 00000 n 
+0000012793 00000 n 
+0000018535 00000 n 
+0000018661 00000 n 
+0000024301 00000 n 
+0000024428 00000 n 
+0000024478 00000 n 
+trailer
+<< /Size 13 /Root 11 0 R /Info 12 0 R >>
+startxref
+24841
+%%EOF
