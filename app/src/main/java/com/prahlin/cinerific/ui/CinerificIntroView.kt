@@ -74,20 +74,24 @@ private const val PORTRAIT_INTER_STACK_GAP_SCALE = 0.4f
 private const val PORTRAIT_LINK_SPACING_SCALE = 1.5f
 private const val PORTRAIT_LINK_BOTTOM_MARGIN = 12f
 private const val PORTRAIT_PROMPT_VISIBLE_HALF_HEIGHT = 39.6f
+// The S21 FE portrait viewport (360 x 780 dp) defines the stack's height proportion.
+private const val PORTRAIT_REFERENCE_HEIGHT_TO_WIDTH = 780f / 360f
 private const val PORTRAIT_COMPACT_DESIGN_HEIGHT = 1800f
 private const val PORTRAIT_COMFORTABLE_DESIGN_HEIGHT = 2200f
 private const val PORTRAIT_COMPACT_AVATAR_SHIFT_Y = 60f
 private const val PORTRAIT_COMFORTABLE_AVATAR_SHIFT_Y = 84f
 private const val PORTRAIT_COMPACT_PROMPT_CENTER_SPACING = 96f
 private const val PORTRAIT_COMFORTABLE_PROMPT_CENTER_SPACING = 120f
-private const val PORTRAIT_PROFILE_SWIPE_COMMIT_DP = 56f
+private const val PORTRAIT_PROFILE_SWIPE_COMMIT_PROGRESS = 0.12f
+private const val PORTRAIT_PROFILE_SWIPE_HIT_HORIZONTAL_PADDING = 72f
+private const val PORTRAIT_PROFILE_SWIPE_HIT_BOTTOM_PADDING = 28f
 private const val SIGN_IN_PORTRAIT_STACK_SHIFT_Y = -51f
 private const val SIGN_IN_LANDSCAPE_STACK_SHIFT_Y = -61f
 private const val SIGN_IN_NAME_TOP = 655f
 private const val SIGN_IN_LANDSCAPE_ACCOUNT_PROMPT_EXTRA_SHIFT_Y = -36f
 private const val ACCOUNT_PROMPT_CREATE_TEXT = "Create My Account"
 private const val ACCOUNT_PROMPT_SIGN_IN_TEXT = "Sign In"
-private const val ACCOUNT_PROMPT_FORGOT_TEXT = "Forgot User/Password"
+private const val ACCOUNT_PROMPT_FORGOT_TEXT = "Forgot Password"
 private const val ACCOUNT_PROMPT_SIGN_IN_CENTER_X = 597f
 private const val ACCOUNT_PROMPT_CENTER_Y = 792f
 private const val ACCOUNT_PROMPT_TEXT_SIZE = 30f
@@ -164,7 +168,7 @@ private const val MOCK_CREATE_AVATAR_CHEVRON_HEIGHT = 34f
 private const val MOCK_CREATE_AVATAR_CHEVRON_STROKE_WIDTH = 2.2f
 private const val MOCK_CREATE_AVATAR_CHEVRON_HIT_WIDTH = 62f
 private const val MOCK_CREATE_AVATAR_CHEVRON_HIT_HEIGHT = 92f
-private const val MOCK_CREATE_AVATAR_DRAG_COMMIT_PROGRESS = 0.24f
+private const val MOCK_CREATE_AVATAR_DRAG_COMMIT_PROGRESS = 0.12f
 private const val MOCK_CREATE_AVATAR_BUBBLE_INNER_INSET_RATIO = 0.105f
 private const val MOCK_FORM_TITLE_TEXT_SIZE = 33f
 private const val MOCK_FORM_TITLE_BASELINE_GAP = 24f
@@ -352,6 +356,12 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private var clickAvatarProfile: CinerificProfile? = null
     private var portraitProfileIndex = 0
     private var portraitProfileSwipeMoved = false
+    private var portraitProfileDragDeltaX = 0f
+    private var portraitProfileCarouselStartMillis: Long? = null
+    private var portraitProfileCarouselFromIndex = 0
+    private var portraitProfileCarouselToIndex = 0
+    private var portraitProfileCarouselDirection = MockAvatarCarouselDirection.Next
+    private var portraitProfileCarouselStartProgress = 0f
     private var systemBarInsetTopPx = 0
     private var systemBarInsetBottomPx = 0
     private var pressedCreateAccountPrompt = false
@@ -370,6 +380,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private var activeMockCreateAvatarDrag = false
     private var mockCreateAvatarDragMoved = false
     private var mockCreateAvatarDragDeltaX = 0f
+    private var lockedMockCreateAvatarDragDirection: MockAvatarCarouselDirection? = null
     private var pressedMockDropdown: MockDropdown? = null
     private var pressedMockDropdownOption: MockDropdownOption? = null
     private var pressedForgotRecoveryTarget: MockForgotRecoveryTarget? = null
@@ -449,6 +460,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         activeMockCreateAvatarDrag = false
         mockCreateAvatarDragMoved = false
         mockCreateAvatarDragDeltaX = 0f
+        lockedMockCreateAvatarDragDirection = null
         pressedMockDropdown = null
         pressedMockDropdownOption = null
         pressedForgotRecoveryTarget = null
@@ -495,6 +507,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
         mockCreateAvatarIndex = snapshot.createAvatarIndex.coerceIn(0, MOCK_CREATE_AVATAR_COUNT - 1)
         portraitProfileIndex = snapshot.portraitProfileIndex.coerceIn(0, FINAL_AVATAR_TARGETS.lastIndex)
+        resetPortraitProfileCarousel()
         mockCreateAvatarCarouselStartMillis = null
         mockCreateAvatarCarouselFromIndex = mockCreateAvatarIndex
         mockCreateAvatarCarouselToIndex = mockCreateAvatarIndex
@@ -532,6 +545,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         activeMockDropdownScroll = null
         mockDropdownScrollMoved = false
         mockDragReturnInProgress = false
+        resetPortraitProfileCarousel()
         postInvalidateOnAnimation()
     }
 
@@ -559,6 +573,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val stage = currentStageMetrics() ?: return
         finishMockSignInTransitionIfNeeded()
         finishMockFlowSwitchIfNeeded()
+        finishPortraitProfileCarouselIfNeeded()
         finishMockCreateAvatarCarouselIfNeeded()
         finishMockForgotPasswordSubmissionIfNeeded()
         val mockProgress = mockSignInProgress()
@@ -653,6 +668,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             isMockFormLabelAnimating() ||
             isMockFormFocusAnimating() ||
             isMockLandscapeInputLiftAnimating() ||
+            isPortraitProfileCarouselAnimating() ||
             isMockCreateAvatarCarouselAnimating() ||
             isMockForgotPasswordSubmissionAnimating() ||
             isMockInputDimAnimating()
@@ -667,6 +683,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 mockTouchDownX = event.x
                 mockTouchDownY = event.y
                 portraitProfileSwipeMoved = false
+                portraitProfileDragDeltaX = 0f
                 if (mockSignInStartMillis != null) {
                     mockDragReturnInProgress = false
                     mockDropdownScrollMoved = false
@@ -725,6 +742,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     activeMockCreateAvatarDrag = touchedCreateAvatarCarousel
                     mockCreateAvatarDragMoved = false
                     mockCreateAvatarDragDeltaX = 0f
+                    lockedMockCreateAvatarDragDirection = null
                     pressedMockCreateAvatarNav = if (
                         touchedDropdownOptions == null &&
                         pressedMockDropdownOption == null &&
@@ -776,7 +794,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 pressedAvatarProfile = if (
                     pressedCreateAccountPrompt ||
                     pressedSignInPrompt ||
-                    pressedForgotPasswordPrompt
+                    pressedForgotPasswordPrompt ||
+                    isPortraitProfileCarouselAnimating()
                 ) {
                     null
                 } else {
@@ -807,6 +826,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     if (abs(horizontalDelta) > touchSlop && abs(horizontalDelta) > abs(verticalDelta)) {
                         portraitProfileSwipeMoved = true
                     }
+                    if (portraitProfileSwipeMoved) {
+                        portraitProfileDragDeltaX = horizontalDelta
+                        postInvalidateOnAnimation()
+                    }
                     return true
                 }
                 pressedCreateAccountPrompt ||
@@ -824,6 +847,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     activeMockCreateAvatarDrag = false
                     mockCreateAvatarDragMoved = false
                     mockCreateAvatarDragDeltaX = 0f
+                    lockedMockCreateAvatarDragDirection = null
                     pressedMockDropdown = null
                     pressedMockDropdownOption = null
                     pressedForgotRecoveryTarget = null
@@ -916,6 +940,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     activeMockCreateAvatarDrag = false
                     mockCreateAvatarDragMoved = false
                     mockCreateAvatarDragDeltaX = 0f
+                    lockedMockCreateAvatarDragDirection = null
                     pressedMockDropdown = null
                     pressedMockDropdownOption = null
                     this.pressedForgotRecoveryTarget = null
@@ -982,12 +1007,13 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 val shouldOpenMockForgotPassword = pressedForgotPasswordPrompt &&
                     settledForgotPasswordPromptHit(event.x, event.y)
                 val releasedAvatarProfile = settledAvatarHitProfile(event.x, event.y)
-                val swipeDeltaX = event.x - mockTouchDownX
-                val swipeThreshold = PORTRAIT_PROFILE_SWIPE_COMMIT_DP * resources.displayMetrics.density
+                val swipeDirection = portraitProfileSwipeDirection()
+                val swipeProgress = portraitProfileDragProgress()
                 val shouldSwipeProfile = isPortraitIntroLayout() &&
                     pressedAvatarProfile != null &&
                     portraitProfileSwipeMoved &&
-                    abs(swipeDeltaX) >= swipeThreshold
+                    swipeProgress >= PORTRAIT_PROFILE_SWIPE_COMMIT_PROGRESS &&
+                    swipeDirection != null
                 val shouldNavigate = !shouldSwipeProfile && !portraitProfileSwipeMoved &&
                     pressedAvatarProfile != null && pressedAvatarProfile == releasedAvatarProfile
                 clickAvatarProfile = pressedAvatarProfile
@@ -995,16 +1021,11 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 pressedCreateAccountPrompt = false
                 pressedSignInPrompt = false
                 pressedForgotPasswordPrompt = false
-                if (shouldSwipeProfile) {
-                    portraitProfileIndex = if (swipeDeltaX < 0f) {
-                        (portraitProfileIndex + 1) % FINAL_AVATAR_TARGETS.size
-                    } else {
-                        (portraitProfileIndex - 1 + FINAL_AVATAR_TARGETS.size) % FINAL_AVATAR_TARGETS.size
-                    }
+                if (shouldSwipeProfile && swipeDirection != null) {
                     clickAvatarProfile = null
                     portraitProfileSwipeMoved = false
-                    notifyIntroSnapshotChanged()
-                    postInvalidateOnAnimation()
+                    portraitProfileDragDeltaX = 0f
+                    startPortraitProfileCarousel(swipeDirection, swipeProgress)
                     true
                 } else if (shouldOpenMockCreateAccount) {
                     super.performClick()
@@ -1023,6 +1044,9 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     true
                 } else {
                     clickAvatarProfile = null
+                    portraitProfileSwipeMoved = false
+                    portraitProfileDragDeltaX = 0f
+                    postInvalidateOnAnimation()
                     false
                 }
             }
@@ -1039,6 +1063,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 activeMockCreateAvatarDrag = false
                 mockCreateAvatarDragMoved = false
                 mockCreateAvatarDragDeltaX = 0f
+                lockedMockCreateAvatarDragDirection = null
                 pressedMockDropdown = null
                 pressedMockDropdownOption = null
                 pressedForgotRecoveryTarget = null
@@ -1047,6 +1072,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 mockDropdownScrollMoved = false
                 mockDragReturnInProgress = false
                 portraitProfileSwipeMoved = false
+                portraitProfileDragDeltaX = 0f
                 false
             }
             else -> pressedCreateAccountPrompt ||
@@ -1154,7 +1180,45 @@ internal class CinerificIntroView(context: Context) : View(context) {
         yOffset: Float,
         alpha: Float
     ) {
-        val profile = FINAL_AVATAR_TARGETS[portraitProfileIndex].profile
+        val slideDistance = portraitAvatarSize()
+        val dragDirection = portraitProfileSwipeDirection()
+        val dragProgress = portraitProfileDragProgress()
+        val carouselProgress = portraitProfileCarouselProgress()
+        val carouselDirection = portraitProfileCarouselDirection.stageDirection
+
+        if (portraitProfileSwipeMoved && dragDirection != null && !isPortraitProfileCarouselAnimating()) {
+            val direction = dragDirection.stageDirection
+            drawPortraitProfileAtIndex(
+                canvas, stage, yOffset, alpha * (1f - dragProgress), portraitProfileIndex,
+                -direction * dragProgress * slideDistance
+            )
+            drawPortraitProfileAtIndex(
+                canvas, stage, yOffset, alpha * dragProgress, portraitProfileIndexForDirection(dragDirection),
+                direction * (1f - dragProgress) * slideDistance
+            )
+        } else if (isPortraitProfileCarouselAnimating()) {
+            drawPortraitProfileAtIndex(
+                canvas, stage, yOffset, alpha * (1f - carouselProgress), portraitProfileCarouselFromIndex,
+                -carouselDirection * carouselProgress * slideDistance
+            )
+            drawPortraitProfileAtIndex(
+                canvas, stage, yOffset, alpha * carouselProgress, portraitProfileCarouselToIndex,
+                carouselDirection * (1f - carouselProgress) * slideDistance
+            )
+        } else {
+            drawPortraitProfileAtIndex(canvas, stage, yOffset, alpha, portraitProfileIndex, 0f)
+        }
+    }
+
+    private fun drawPortraitProfileAtIndex(
+        canvas: Canvas,
+        stage: StageMetrics,
+        yOffset: Float,
+        alpha: Float,
+        profileIndex: Int,
+        offsetX: Float
+    ) {
+        val profile = FINAL_AVATAR_TARGETS[profileIndex].profile
         val avatarBitmap = when (profile) {
             CinerificProfile.Steve -> steveAvatar
             CinerificProfile.Martin -> martinAvatar
@@ -1173,7 +1237,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             canvas,
             avatarBitmap,
             Bounds(
-                (FIGMA_FRAME_WIDTH - avatarSize) / 2f,
+                (FIGMA_FRAME_WIDTH - avatarSize) / 2f + offsetX,
                 portraitAvatarTop() + yOffset,
                 avatarSize,
                 avatarSize
@@ -1187,7 +1251,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             canvas,
             nameBitmap,
             Bounds(
-                (FIGMA_FRAME_WIDTH - nameWidth) / 2f,
+                (FIGMA_FRAME_WIDTH - nameWidth) / 2f + offsetX,
                 portraitProfileNameTop() + yOffset,
                 nameWidth,
                 portraitProfileNameHeight()
@@ -2801,11 +2865,13 @@ internal class CinerificIntroView(context: Context) : View(context) {
         if (isPortraitIntroLayout()) {
             val avatarSize = portraitAvatarSize()
             val centerX = stage.left + FIGMA_FRAME_WIDTH * stage.scale / 2f
-            val centerY = stage.top + (portraitAvatarTop() + avatarSize / 2f) * stage.scale
-            val radius = avatarSize * stage.scale / 2f
-            val dx = x - centerX
-            val dy = y - centerY
-            return if (dx * dx + dy * dy <= radius * radius) {
+            val halfWidth = (avatarSize / 2f + PORTRAIT_PROFILE_SWIPE_HIT_HORIZONTAL_PADDING) * stage.scale
+            val top = stage.top + portraitAvatarTop() * stage.scale
+            val bottom = stage.top + (
+                portraitProfileNameTop() + portraitProfileNameHeight() +
+                    PORTRAIT_PROFILE_SWIPE_HIT_BOTTOM_PADDING
+                ) * stage.scale
+            return if (x in (centerX - halfWidth)..(centerX + halfWidth) && y in top..bottom) {
                 FINAL_AVATAR_TARGETS[portraitProfileIndex].profile
             } else {
                 null
@@ -3034,6 +3100,11 @@ internal class CinerificIntroView(context: Context) : View(context) {
             abs(mockCreateAvatarDragDeltaX) > abs(dragDeltaY)
         ) {
             mockCreateAvatarDragMoved = true
+            lockedMockCreateAvatarDragDirection = if (mockCreateAvatarDragDeltaX < 0f) {
+                MockAvatarCarouselDirection.Next
+            } else {
+                MockAvatarCarouselDirection.Previous
+            }
             pressedMockCreateAvatarNav = null
         }
 
@@ -3801,12 +3872,78 @@ internal class CinerificIntroView(context: Context) : View(context) {
         postInvalidateOnAnimation()
     }
 
+    private fun startPortraitProfileCarousel(
+        direction: MockAvatarCarouselDirection,
+        startProgress: Float
+    ) {
+        if (!isPortraitIntroLayout() || isPortraitProfileCarouselAnimating()) return
+
+        portraitProfileCarouselFromIndex = portraitProfileIndex
+        portraitProfileCarouselToIndex = portraitProfileIndexForDirection(direction)
+        portraitProfileCarouselDirection = direction
+        portraitProfileCarouselStartProgress = startProgress.coerceIn(0f, 0.96f)
+        portraitProfileIndex = portraitProfileCarouselToIndex
+        portraitProfileCarouselStartMillis = SystemClock.uptimeMillis()
+        notifyIntroSnapshotChanged()
+        postInvalidateOnAnimation()
+    }
+
+    private fun portraitProfileIndexForDirection(direction: MockAvatarCarouselDirection): Int {
+        return (portraitProfileIndex + direction.indexDelta + FINAL_AVATAR_TARGETS.size) %
+            FINAL_AVATAR_TARGETS.size
+    }
+
+    private fun portraitProfileSwipeDirection(): MockAvatarCarouselDirection? {
+        return when {
+            portraitProfileDragDeltaX < 0f -> MockAvatarCarouselDirection.Next
+            portraitProfileDragDeltaX > 0f -> MockAvatarCarouselDirection.Previous
+            else -> null
+        }
+    }
+
+    private fun portraitProfileDragProgress(): Float {
+        val stage = currentStageMetrics() ?: return 0f
+        val slideDistancePx = (portraitAvatarSize() * stage.scale).coerceAtLeast(1f)
+        return (abs(portraitProfileDragDeltaX) / slideDistancePx).coerceIn(0f, 1f)
+    }
+
+    private fun portraitProfileCarouselProgress(): Float {
+        val startMillis = portraitProfileCarouselStartMillis ?: return 1f
+        val elapsed = SystemClock.uptimeMillis() - startMillis
+        val elapsedProgress = (elapsed / MOCK_CREATE_AVATAR_CAROUSEL_MS.toFloat()).coerceIn(0f, 1f)
+        return lerpFloat(portraitProfileCarouselStartProgress, 1f, elapsedProgress).coerceIn(0f, 1f)
+    }
+
+    private fun isPortraitProfileCarouselAnimating(): Boolean {
+        return portraitProfileCarouselStartMillis != null
+    }
+
+    private fun finishPortraitProfileCarouselIfNeeded() {
+        val startMillis = portraitProfileCarouselStartMillis ?: return
+        if (SystemClock.uptimeMillis() - startMillis < MOCK_CREATE_AVATAR_CAROUSEL_MS) return
+
+        portraitProfileCarouselStartMillis = null
+        portraitProfileCarouselFromIndex = portraitProfileIndex
+        portraitProfileCarouselToIndex = portraitProfileIndex
+        portraitProfileCarouselStartProgress = 0f
+    }
+
+    private fun resetPortraitProfileCarousel() {
+        portraitProfileSwipeMoved = false
+        portraitProfileDragDeltaX = 0f
+        portraitProfileCarouselStartMillis = null
+        portraitProfileCarouselFromIndex = portraitProfileIndex
+        portraitProfileCarouselToIndex = portraitProfileIndex
+        portraitProfileCarouselDirection = MockAvatarCarouselDirection.Next
+        portraitProfileCarouselStartProgress = 0f
+    }
+
     private fun mockCreateAvatarIndexForDirection(direction: MockAvatarCarouselDirection): Int {
         return (mockCreateAvatarIndex + direction.indexDelta + MOCK_CREATE_AVATAR_COUNT) % MOCK_CREATE_AVATAR_COUNT
     }
 
     private fun mockCreateAvatarDragDirection(): MockAvatarCarouselDirection? {
-        return when {
+        return lockedMockCreateAvatarDragDirection ?: when {
             mockCreateAvatarDragDeltaX < 0f -> MockAvatarCarouselDirection.Next
             mockCreateAvatarDragDeltaX > 0f -> MockAvatarCarouselDirection.Previous
             else -> null
@@ -3858,6 +3995,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         activeMockCreateAvatarDrag = false
         mockCreateAvatarDragMoved = false
         mockCreateAvatarDragDeltaX = 0f
+        lockedMockCreateAvatarDragDirection = null
         mockCreateAvatarIndex = 0
         mockCreateAvatarCarouselStartMillis = null
         mockCreateAvatarCarouselFromIndex = 0
@@ -4227,7 +4365,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         if (width <= 0 || height <= 0) return null
 
         val standardScale = min(width / FIGMA_FRAME_WIDTH, height / FIGMA_FRAME_HEIGHT)
-        val portraitScale = width / FIGMA_FRAME_WIDTH
+        val portraitScale = portraitDesignScale()
         val portraitAmount = portraitIntroAmount()
         val stageScale = lerpFloat(standardScale, portraitScale, portraitAmount)
         val standardTop = (height - FIGMA_FRAME_HEIGHT * standardScale) / 2f
@@ -4248,7 +4386,13 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun portraitDesignScale(): Float {
-        return if (width > 0) width / FIGMA_FRAME_WIDTH else 1f
+        if (width <= 0 || height <= 0) return 1f
+
+        val widthScale = width / FIGMA_FRAME_WIDTH
+        if (!isPortraitIntroLayout()) return widthScale
+
+        val referenceDesignHeight = FIGMA_FRAME_WIDTH * PORTRAIT_REFERENCE_HEIGHT_TO_WIDTH
+        return min(widthScale, height / referenceDesignHeight)
     }
 
     private fun portraitSafeTop(): Float = systemBarInsetTopPx / portraitDesignScale()
@@ -4455,6 +4599,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         activeMockCreateAvatarDrag = false
         mockCreateAvatarDragMoved = false
         mockCreateAvatarDragDeltaX = 0f
+        lockedMockCreateAvatarDragDirection = null
         pressedMockDropdown = null
         pressedMockDropdownOption = null
         pressedForgotRecoveryTarget = null
