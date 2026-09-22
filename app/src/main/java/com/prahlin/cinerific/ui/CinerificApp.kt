@@ -121,8 +121,7 @@ private val ColorFavoritesFullPromptFill = Color(0xFF303030)
 private val ColorFavoritesFullPromptAccent = Color(0xFF858585)
 
 @Composable
-fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
-    val introBootStartMillis by rememberSaveable { mutableStateOf(bootStartMillis) }
+fun CinerificApp() {
     var showHome by rememberSaveable { mutableStateOf(false) }
     var signedInProfile by rememberSaveable { mutableStateOf(CinerificProfile.Guest) }
     var signInSessionId by rememberSaveable { mutableStateOf(0) }
@@ -150,7 +149,6 @@ fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
             modifier = Modifier.fillMaxSize(),
             factory = { context ->
                 CinerificIntroView(context).apply {
-                    this.bootStartMillis = introBootStartMillis
                     onIntroSnapshotChanged = { snapshot ->
                         if (introSnapshot != snapshot) {
                             introSnapshot = snapshot
@@ -166,7 +164,6 @@ fun CinerificApp(bootStartMillis: Long = SystemClock.uptimeMillis()) {
                 }
             },
             update = { view ->
-                view.bootStartMillis = introBootStartMillis
                 view.onIntroSnapshotChanged = { snapshot ->
                     if (introSnapshot != snapshot) {
                         introSnapshot = snapshot

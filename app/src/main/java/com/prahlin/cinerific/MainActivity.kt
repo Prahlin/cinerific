@@ -5,7 +5,6 @@ import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -16,7 +15,6 @@ import com.prahlin.cinerific.ui.theme.CinerificTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        val bootStartMillis = SystemClock.uptimeMillis()
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             getSystemService(UiModeManager::class.java).setApplicationNightMode(
@@ -39,7 +37,7 @@ class MainActivity : ComponentActivity() {
         }
         setContent {
             CinerificTheme {
-                CinerificApp(bootStartMillis = bootStartMillis)
+                CinerificApp()
             }
         }
     }

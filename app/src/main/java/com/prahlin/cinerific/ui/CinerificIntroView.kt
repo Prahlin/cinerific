@@ -62,6 +62,7 @@ private const val STANDARD_TABLET_SIZE_TOLERANCE = 8
 private const val STANDARD_BACKGROUND_SETTLED_ALPHA = 0.5f
 private const val SIGN_IN_AVATAR_SIZE = 176f
 private const val PORTRAIT_LOGO_SCALE = 1.76f
+private const val LOGO_PRE_SETTLE_SCALE = 1.25f
 private const val PORTRAIT_ACTION_SCALE = 2.904f
 private const val PORTRAIT_PROFILE_SCALE = 4.02f
 // Compensates for transparent padding above the name PNGs to halve the visible gap.
@@ -255,13 +256,11 @@ private val FINAL_AVATAR_TARGETS = listOf(
     AvatarTarget(CinerificProfile.Guest, Bounds(866f, 450f, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE))
 )
 
+private object IntroAnimationClock {
+    var processStartMillis: Long = 0L
+}
+
 internal class CinerificIntroView(context: Context) : View(context) {
-    var bootStartMillis: Long = SystemClock.uptimeMillis()
-        set(value) {
-            if (field == value) return
-            field = value
-            postInvalidateOnAnimation()
-        }
     var onAvatarSelected: ((CinerificProfile) -> Unit)? = null
     var onIntroSnapshotChanged: ((CinerificIntroSnapshot) -> Unit)? = null
     private var appliedIntroSnapshot = CinerificIntroSnapshot()
@@ -561,7 +560,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        val progress = bootProgressAt(bootStartMillis)
+        if (IntroAnimationClock.processStartMillis == 0L) {
+            IntroAnimationClock.processStartMillis = SystemClock.uptimeMillis()
+        }
+        val progress = bootProgressAt(IntroAnimationClock.processStartMillis)
         val blackToPurple = linearSegmentMs(
             progress,
             SCREEN_BLACK_HOLD_MS,
@@ -1154,8 +1156,16 @@ internal class CinerificIntroView(context: Context) : View(context) {
             600f * PORTRAIT_LOGO_SCALE,
             LOGO_FINAL_HEIGHT * PORTRAIT_LOGO_SCALE
         )
+        val portraitCenteredLogo = Bounds(
+            x = portraitLogo.x + portraitLogo.w / 2f -
+                portraitLogo.w * LOGO_PRE_SETTLE_SCALE / 2f,
+            y = portraitStackCenter(0.5f) -
+                portraitLogo.h * LOGO_PRE_SETTLE_SCALE / 2f,
+            w = portraitLogo.w * LOGO_PRE_SETTLE_SCALE,
+            h = portraitLogo.h * LOGO_PRE_SETTLE_SCALE
+        )
         val base = offsetBounds(
-            lerpBounds(Bounds(222f, 150f, 750f, 535f), portraitLogo, portraitAmount),
+            lerpBounds(Bounds(222f, 150f, 750f, 535f), portraitCenteredLogo, portraitAmount),
             focusShiftY
         )
         val final = offsetBounds(
@@ -2853,7 +2863,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun isFinalFrameSettled(): Boolean {
-        return bootProgressAt(bootStartMillis) >= 1f
+        return IntroAnimationClock.processStartMillis > 0L &&
+            bootProgressAt(IntroAnimationClock.processStartMillis) >= 1f
     }
 
     private fun settledAvatarHitProfile(x: Float, y: Float): CinerificProfile? {
