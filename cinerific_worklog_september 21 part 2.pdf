@@ -1,0 +1,573 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+2 0 obj
+<< /Length 4950 >>
+stream
+BT
+/F1 12 Tf
+54 766 Td
+(Cinerific Android App Work Log - September 21, 2026 Part 2 \(U.S. EST\)) Tj
+ET
+BT
+/F1 9.2 Tf
+11.25 TL
+54 742 Td
+(Compiled continuation for Monday, September 21, 2026 \(U.S. Eastern Time\) - focus: refining the) Tj
+T*
+(portrait-only Cinerific intro after the first September 21 worklog, using the connected Samsung) Tj
+T*
+(Galaxy S21 FE as the reference for stack-to-screen-height proportions, preventing short and wide) Tj
+T*
+(portrait displays from cramming or clipping the logo, profile, name, and account routes, shortening) Tj
+T*
+(the recovery label, adding continuous bidirectional profile slide-and-fade motion, strengthening) Tj
+T*
+(Create My Account avatar navigation, validating the same APK on the phone and Standard tablet) Tj
+T*
+(emulator, correcting cold-launch intro timing, and matching the accepted landscape logo animation) Tj
+T*
+(with a larger center-stage portrait assembly that shrinks while settling to the top.) Tj
+T*
+(Generated in continuity with the established Cinerific worklog cadence and the earlier September 21) Tj
+T*
+(worklog: compact opening summary, source material review, baseline state, goals, themed) Tj
+T*
+(work-completed sections, validation, files touched, follow-up context, and output-artifact close.) Tj
+T*
+(Because cinerific_worklog_september 21.pdf already existed, this continuation follows the) Tj
+T*
+(repository's same-day naming convention as cinerific_worklog_september 21 part 2.pdf. Eastern Time) Tj
+T*
+(was verified from the host as Monday, September 21, 2026 at 10:38 PM EDT, UTC-04:00. The title) Tj
+T*
+(retains the established U.S. EST label while the body records the seasonally accurate EDT) Tj
+T*
+(verification. This artifact covers commits 4e71699 and 0b5b23c after the first September 21 worklog) Tj
+T*
+(commit 7f2ec94.) Tj
+T*
+() Tj
+T*
+/F1 11 Tf
+(Source Materials Reviewed) Tj
+/F1 9.2 Tf
+T*
+(- Reviewed every pre-existing Cinerific worklog PDF at the repository root: July 12, July 14, July) Tj
+T*
+(  15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, July 25, July) Tj
+T*
+(  27, July 28 Part 1, July 28 Part 2, July 29, August 1, August 3, August 4, August 5, September) Tj
+T*
+(  19, and September 21.) Tj
+T*
+(- Compared title cadence, opening-summary density, baseline and goals sections, themed completion) Tj
+T*
+(  sections, validation language, files-touched inventories, follow-up closes, filename casing, PDF) Tj
+T*
+(  metadata, and right-aligned footer treatment.) Tj
+T*
+(- Re-read the generated project snapshot and current Kotlin source paths for MainActivity,) Tj
+T*
+(  CinerificApp, and CinerificIntroView, then inspected repository history and full diffs for) Tj
+T*
+(  commits 4e71699 and 0b5b23c.) Tj
+T*
+(- Reviewed live ADB state, display sizes, densities, rotations, window bounds, app focus,) Tj
+T*
+(  screenshots, touch behavior, and repeated APK installs on Samsung SM-G990U R5CRC33MGNZ and) Tj
+T*
+(  emulator-5554.) Tj
+T*
+(- Compared the portrait logo, avatar, nameplate, and account-link stack against the S21 FE) Tj
+T*
+(  reference viewport of 360 by 780 dp and the Standard tablet portrait app viewport of 800 by 1220) Tj
+T*
+(  pixels at 160 dpi.) Tj
+T*
+(- Inspected the existing Create My Account avatar carousel drag, clipping, direction, progress, and) Tj
+T*
+(  280 millisecond completion logic before sharing its motion model with the portrait profile) Tj
+T*
+(  selector.) Tj
+T*
+(- Used pdfinfo, pdffonts, and pdftotext against the prior worklogs to preserve U.S. Letter pages,) Tj
+T*
+(  Helvetica, PDF 1.4 output, text extraction, Codex metadata, and footer conventions.) Tj
+T*
+() Tj
+T*
+/F1 11 Tf
+(Baseline Status Before Part 2 Work) Tj
+/F1 9.2 Tf
+T*
+(- The first September 21 pass had introduced a dedicated portrait composition with one swipeable) Tj
+T*
+(  profile, safe-area spacing, high-resolution avatar artwork, and an optimized standalone tablet QA) Tj
+T*
+(  environment.) Tj
+T*
+(- Portrait rendering still scaled its design stage entirely from screen width, which made the) Tj
+T*
+(  short, wide tablet portrait viewport enlarge the complete stack more aggressively than the taller) Tj
+T*
+(  S21 FE.) Tj
+T*
+(- The tablet therefore showed reduced vertical breathing room and risked crowding the final) Tj
+T*
+(  recovery route against the bottom system area.) Tj
+T*
+(- The settled portrait profile changed only after swipe release; it did not visibly track the) Tj
+T*
+(  finger or animate the outgoing and incoming profiles like the Create My Account carousel.) Tj
+T*
+(- The Create My Account carousel recalculated direction from the latest pointer delta and used a) Tj
+T*
+(  larger commit fraction, making one direction vulnerable to rotated-emulator release jitter.) Tj
+T*
+(- The account route still read Forgot User/Password instead of the shorter requested Forgot) Tj
+T*
+(  Password label.) Tj
+ET
+BT
+/F1 8 Tf
+279.6 28 Td
+(Cinerific Work Log - September 21, 2026 Part 2 \(U.S. EST\) Page 1) Tj
+ET
+endstream
+endobj
+3 0 obj
+<< /Length 4091 >>
+stream
+BT
+/F1 9.2 Tf
+11.25 TL
+54 742 Td
+(- The intro timestamp passed through MainActivity and rememberSaveable, so restored state could) Tj
+T*
+(  point to an old uptime value and skip directly to the final frame after a cold relaunch.) Tj
+T*
+(- Portrait logo bounds used the final top position as both the assembled and settled target, so the) Tj
+T*
+(  visible center-stage logo movement from landscape was absent.) Tj
+T*
+() Tj
+T*
+/F1 11 Tf
+(Main Goals for September 21 Part 2) Tj
+/F1 9.2 Tf
+T*
+(- Treat the S21 FE's current portrait stack-to-height proportions as the reference across portrait) Tj
+T*
+(  aspect ratios.) Tj
+T*
+(- Prevent short or wide portrait viewports from introducing overlap, clipping, bleed-in, or) Tj
+T*
+(  compressed vertical rhythm.) Tj
+T*
+(- Make profile swiping visibly continuous, bidirectional, and actionable across the full) Tj
+T*
+(  avatar/name region.) Tj
+T*
+(- Match the portrait profile transition to the Create My Account carousel's slide timing while) Tj
+T*
+(  adding requested cross-fades.) Tj
+T*
+(- Stabilize both directional paths in the Create My Account avatar carousel on the rotated tablet) Tj
+T*
+(  emulator.) Tj
+T*
+(- Ensure every true cold app process visibly begins the intro timeline after the custom view is) Tj
+T*
+(  ready to draw.) Tj
+T*
+(- Restore the landscape-style logo story in portrait: assemble larger at vertical center, then) Tj
+T*
+(  shrink and move to the existing top position.) Tj
+T*
+(- Preserve accepted landscape behavior unless an explicitly shared interaction required common) Tj
+T*
+(  handling.) Tj
+T*
+() Tj
+T*
+/F1 11 Tf
+(Work Completed - Portrait Scale and Copy) Tj
+/F1 9.2 Tf
+T*
+(- Added a portrait reference height-to-width ratio from the S21 FE's 360 by 780 dp viewport.) Tj
+T*
+(- Capped portrait design scale by both available width and the S21-derived height proportion,) Tj
+T*
+(  allowing tall phones to retain their approved size while reducing the full stack on shorter,) Tj
+T*
+(  wider portrait screens.) Tj
+T*
+(- Kept logo, avatar, profile name, and account routes inside one proportional system instead of) Tj
+T*
+(  shrinking isolated elements independently.) Tj
+T*
+(- Confirmed the S21 FE retained its accepted composition while the tablet gained clear top,) Tj
+T*
+(  inter-stack, and bottom breathing room.) Tj
+T*
+(- Preserved portrait safe-top and safe-bottom calculations after the scale change so system bars) Tj
+T*
+(  remained part of the layout constraints.) Tj
+T*
+(- Changed the shared recovery route from Forgot User/Password to Forgot Password, producing the) Tj
+T*
+(  requested copy across portrait aspect ratios and the common source path.) Tj
+T*
+() Tj
+T*
+/F1 11 Tf
+(Work Completed - Portrait Profile Motion) Tj
+/F1 9.2 Tf
+T*
+(- Added dedicated portrait drag delta, from-index, to-index, direction, start-progress, and) Tj
+T*
+(  animation-clock state.) Tj
+T*
+(- Rendered outgoing and incoming avatar/name pairs together while the finger moved instead of) Tj
+T*
+(  swapping the selected index after release.) Tj
+T*
+(- Used the Create My Account carousel's 280 millisecond completion timing for a consistent) Tj
+T*
+(  interaction language.) Tj
+T*
+(- Moved each profile name with its avatar so the selected identity remained one coherent animated) Tj
+T*
+(  unit.) Tj
+T*
+(- Added progress-based cross-fading: the outgoing avatar/name fades toward zero while the incoming) Tj
+T*
+(  avatar/name fades toward full opacity.) Tj
+T*
+(- Applied the same fade progression during direct drag and release completion, removing endpoint) Tj
+T*
+(  snaps.) Tj
+T*
+(- Expanded the portrait gesture surface beyond the circular avatar to include the complete) Tj
+T*
+(  avatar/name region and surrounding horizontal padding.) Tj
+T*
+(- Replaced a density-based fixed commit distance with a responsive fraction of rendered avatar) Tj
+T*
+(  width, improving mouse and touch usability across tablet and phone densities.) Tj
+T*
+(- Kept cyclic previous/next profile selection, persisted selected profile state, and blocked new) Tj
+ET
+BT
+/F1 8 Tf
+279.6 28 Td
+(Cinerific Work Log - September 21, 2026 Part 2 \(U.S. EST\) Page 2) Tj
+ET
+endstream
+endobj
+4 0 obj
+<< /Length 4138 >>
+stream
+BT
+/F1 9.2 Tf
+11.25 TL
+54 742 Td
+(  profile touches while completion animation was active.) Tj
+T*
+() Tj
+T*
+/F1 11 Tf
+(Work Completed - Create Account Carousel Reliability) Tj
+/F1 9.2 Tf
+T*
+(- Reproduced and separated rotated-emulator coordinate behavior from the Create My Account) Tj
+T*
+(  carousel's actual gesture path.) Tj
+T*
+(- Locked the carousel direction as soon as horizontal intent crossed touch slop, preventing release) Tj
+T*
+(  jitter from reversing or clearing the chosen direction.) Tj
+T*
+(- Reset the locked direction on new touches, cancellation, flow closure, snapshot restoration, and) Tj
+T*
+(  carousel reset paths.) Tj
+T*
+(- Reduced the Create My Account avatar drag commit fraction from 24 percent to 12 percent for) Tj
+T*
+(  reliable use near the right side of compact portrait screens.) Tj
+T*
+(- Preserved chevron navigation, circular clipping, wraparound index behavior, artwork, and the) Tj
+T*
+(  established completion duration.) Tj
+T*
+(- Kept the carousel implementation shared across device classes and orientations while limiting the) Tj
+T*
+(  main welcome-profile carousel to its portrait-only presentation.) Tj
+T*
+() Tj
+T*
+/F1 11 Tf
+(Work Completed - Intro Launch Timing and Logo Motion) Tj
+/F1 9.2 Tf
+T*
+(- Removed the boot timestamp parameter from MainActivity and CinerificApp and stopped persisting it) Tj
+T*
+(  through rememberSaveable.) Tj
+T*
+(- Added a process-scoped intro animation clock owned by CinerificIntroView and initialized it from) Tj
+T*
+(  the first actual draw.) Tj
+T*
+(- Prevented stale restored uptime values from reporting a fully completed animation immediately) Tj
+T*
+(  after force-stop and cold launch.) Tj
+T*
+(- Preserved one process timeline through orientation-driven view recreation so rotation does not) Tj
+T*
+(  restart the intro unexpectedly.) Tj
+T*
+(- Temporarily looped the intro at 4.812 seconds with a 1.2 second settled hold while both portrait) Tj
+T*
+(  devices were used to inspect execution, then removed the diagnostic loop from the accepted build.) Tj
+T*
+(- Added a portrait-specific assembled logo target at the usable screen's vertical center before the) Tj
+T*
+(  existing top settle position.) Tj
+T*
+(- Matched landscape's pre-settle ratio by rendering the centered portrait logo at 1.25 times its) Tj
+T*
+(  settled width and height.) Tj
+T*
+(- Interpolated size and position together so the assembled logo continuously shrinks while) Tj
+T*
+(  traveling upward.) Tj
+T*
+(- Preserved the approved settled portrait size, optical horizontal correction, top position, and) Tj
+T*
+(  all established landscape logo bounds.) Tj
+T*
+() Tj
+T*
+/F1 11 Tf
+(Work Completed - Device and Runtime QA) Tj
+/F1 9.2 Tf
+T*
+(- Confirmed ADB visibility for the Samsung Galaxy S21 FE and Standard tablet emulator before each) Tj
+T*
+(  runtime pass.) Tj
+T*
+(- Measured the S21 FE at 1080 by 2340 physical pixels, 480 dpi, and 360 by 780 dp in portrait.) Tj
+T*
+(- Measured the Standard tablet emulator at 1280 by 800 physical pixels and 160 dpi, with portrait) Tj
+T*
+(  app bounds of 800 by 1220 pixels after rotation.) Tj
+T*
+(- Built and installed the same debug APK repeatedly on both targets after scaling, copy, swipe,) Tj
+T*
+(  fade, direction, timing, and logo-motion changes.) Tj
+T*
+(- Captured live mid-drag frames showing outgoing and incoming profiles simultaneously on the tablet) Tj
+T*
+(  and S21 FE.) Tj
+T*
+(- Verified short drags beginning on the tablet profile name advanced profiles after the) Tj
+T*
+(  touch-region and commit-progress changes.) Tj
+T*
+(- Cleared Cinerific cache and Compose inspection cache on the tablet, then performed a full) Tj
+T*
+(  app-data reset and clean reinstall when cache clearing alone did not alter preserved state.) Tj
+T*
+(- Rebooted both Android targets, waited for sys.boot_completed=1, relaunched Cinerific, and) Tj
+T*
+(  corrected each device's distinct natural-orientation rotation value.) Tj
+T*
+(- Locked the S21 FE to rotation 0 and the landscape-native tablet emulator to rotation 1 for) Tj
+T*
+(  portrait comparison.) Tj
+T*
+() Tj
+ET
+BT
+/F1 8 Tf
+279.6 28 Td
+(Cinerific Work Log - September 21, 2026 Part 2 \(U.S. EST\) Page 3) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Length 4490 >>
+stream
+BT
+/F1 9.2 Tf
+11.25 TL
+54 742 Td
+/F1 11 Tf
+(Validation and Checks Performed) Tj
+/F1 9.2 Tf
+T*
+(- Ran ./gradlew :app:assembleDebug after each completed source pass; all final builds reported) Tj
+T*
+(  BUILD SUCCESSFUL.) Tj
+T*
+(- Ran git diff --check without whitespace errors before the commits and documentation pass.) Tj
+T*
+(- Verified commit 4e71699, Improved portrait scaling and avatar navigation, contained the) Tj
+T*
+(  responsive scale, copy, swipe, fade, and direction work plus a refreshed snapshot.) Tj
+T*
+(- Verified commit 0b5b23c, Improved portrait intro launch timing and logo motion, contained the) Tj
+T*
+(  first-draw timing correction and accepted portrait logo movement.) Tj
+T*
+(- Installed the committed APK on both connected devices and confirmed Cinerific MainActivity held) Tj
+T*
+(  current focus.) Tj
+T*
+(- Inspected settled phone and tablet screenshots for safe-area clearance, stack spacing, readable) Tj
+T*
+(  recovery copy, and unchanged final logo placement.) Tj
+T*
+(- Inspected mid-swipe screenshots to confirm synchronized translation and opacity changes for both) Tj
+T*
+(  outgoing and incoming profile pairs.) Tj
+T*
+(- Verified the diagnostic loop was removed after motion approval and the production intro returned) Tj
+T*
+(  to a one-shot timeline.) Tj
+T*
+(- Verified host Eastern Time directly with TZ=America/New_York before generating this Part 2) Tj
+T*
+(  artifact.) Tj
+T*
+(- Rendered and inspected the generated PDF pages for four-page count, clipping, wrapping, footer) Tj
+T*
+(  placement, metadata, and text extraction.) Tj
+T*
+() Tj
+T*
+/F1 11 Tf
+(Files Touched During September 21 Part 2) Tj
+/F1 9.2 Tf
+T*
+(- app/src/main/java/com/prahlin/cinerific/MainActivity.kt: removed activity-owned intro timing) Tj
+T*
+(  plumbing and returned the root composable call to CinerificApp\(\).) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt: removed saveable boot-start state and) Tj
+T*
+(  timestamp forwarding while preserving intro snapshots and authenticated navigation state.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt: added S21-derived portrait) Tj
+T*
+(  scaling, shorter recovery copy, profile slide/fade state, expanded swipe targeting, responsive) Tj
+T*
+(  commit progress, Create Account direction locking, first-draw process timing, and larger) Tj
+T*
+(  center-stage portrait logo settling.) Tj
+T*
+(- cinerific_PROJECT_SNAPSHOT.txt: refreshed during commit 4e71699 to include the newest worklog) Tj
+T*
+(  inventory and project timestamp.) Tj
+T*
+(- cinerific_worklog_september 21 part 2.pdf: added this convention-matched same-day continuation) Tj
+T*
+(  artifact.) Tj
+T*
+() Tj
+T*
+/F1 11 Tf
+(Follow-Up Context) Tj
+/F1 9.2 Tf
+T*
+(- Portrait layout remains intentionally governed by the S21 FE stack-to-height reference; future) Tj
+T*
+(  portrait tuning should preserve the proportional system rather than add device-name branches.) Tj
+T*
+(- The welcome profile carousel is portrait-only because landscape presents all four profiles) Tj
+T*
+(  simultaneously; the Create My Account carousel remains available across orientations.) Tj
+T*
+(- The approved portrait logo now assembles larger at vertical center and shrinks while moving) Tj
+T*
+(  upward. Its final size and top location should remain stable unless explicitly revisited.) Tj
+T*
+(- The intro clock now begins on first draw and persists for the process lifetime. A true force-stop) Tj
+T*
+(  or process restart creates a new timeline, while a rotation within the process retains progress.) Tj
+T*
+(- The temporary loop used for motion review is not present in the accepted source.) Tj
+T*
+(- The tablet emulator is landscape-native and requires rotation 1 for portrait, while the S21 FE) Tj
+T*
+(  requires rotation 0; ADB input coordinates can be transformed when testing the rotated emulator.) Tj
+T*
+(- Both commits are on main and origin/main. This PDF is the only new uncommitted artifact created) Tj
+T*
+(  by the Part 2 documentation pass.) Tj
+T*
+() Tj
+T*
+/F1 11 Tf
+(Output Artifact) Tj
+/F1 9.2 Tf
+T*
+(- Created cinerific_worklog_september 21 part 2.pdf at the repository root as the latest Cinerific) Tj
+T*
+(  worklog for Monday, September 21, 2026 Eastern Time.) Tj
+T*
+(- The artifact follows the established four-page U.S. Letter, Helvetica, text-extractable PDF 1.4) Tj
+T*
+(  format with Codex metadata and right-aligned page footers.) Tj
+ET
+BT
+/F1 8 Tf
+279.6 28 Td
+(Cinerific Work Log - September 21, 2026 Part 2 \(U.S. EST\) Page 4) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 2 0 R >>
+endobj
+7 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 3 0 R >>
+endobj
+8 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 4 0 R >>
+endobj
+9 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 5 0 R >>
+endobj
+10 0 obj
+<< /Type /Pages /Count 4 /Kids [6 0 R 7 0 R 8 0 R 9 0 R] >>
+endobj
+11 0 obj
+<< /Type /Catalog /Pages 10 0 R >>
+endobj
+12 0 obj
+<< /Title (Cinerific Android App Work Log - September 21, 2026 Part 2 \(U.S. EST\)) /Subject (Cinerific Android App daily project work log for September 21, 2026 Part 2) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260921223854-04'00') /ModDate (D:20260921223854-04'00') >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000112 00000 n 
+0000005114 00000 n 
+0000009257 00000 n 
+0000013447 00000 n 
+0000017989 00000 n 
+0000018116 00000 n 
+0000018243 00000 n 
+0000018370 00000 n 
+0000018497 00000 n 
+0000018573 00000 n 
+0000018624 00000 n 
+trailer
+<< /Size 13 /Root 11 0 R /Info 12 0 R >>
+startxref
+19001
+%%EOF
