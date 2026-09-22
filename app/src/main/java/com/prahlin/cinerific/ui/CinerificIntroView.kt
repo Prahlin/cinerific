@@ -61,13 +61,33 @@ private const val STANDARD_TABLET_SHORT_EDGE = 1600
 private const val STANDARD_TABLET_SIZE_TOLERANCE = 8
 private const val STANDARD_BACKGROUND_SETTLED_ALPHA = 0.5f
 private const val SIGN_IN_AVATAR_SIZE = 176f
+private const val PORTRAIT_LOGO_SCALE = 1.76f
+private const val PORTRAIT_ACTION_SCALE = 2.904f
+private const val PORTRAIT_PROFILE_SCALE = 4.02f
+// Compensates for transparent padding above the name PNGs to halve the visible gap.
+private const val PORTRAIT_PROFILE_NAME_GAP = -40f
+private const val PORTRAIT_LOGO_VISIBLE_CENTER_OFFSET_X = 14.4f
+private const val PORTRAIT_LOGO_WHITE_EYE_TOP_INSET = 152f
+private const val PORTRAIT_LOGO_VISIBLE_BOTTOM_FRACTION = 0.797f
+private const val PORTRAIT_PROFILE_NAME_VISIBLE_BOTTOM_FRACTION = 0.806f
+private const val PORTRAIT_INTER_STACK_GAP_SCALE = 0.4f
+private const val PORTRAIT_LINK_SPACING_SCALE = 1.5f
+private const val PORTRAIT_LINK_BOTTOM_MARGIN = 12f
+private const val PORTRAIT_PROMPT_VISIBLE_HALF_HEIGHT = 39.6f
+private const val PORTRAIT_COMPACT_DESIGN_HEIGHT = 1800f
+private const val PORTRAIT_COMFORTABLE_DESIGN_HEIGHT = 2200f
+private const val PORTRAIT_COMPACT_AVATAR_SHIFT_Y = 60f
+private const val PORTRAIT_COMFORTABLE_AVATAR_SHIFT_Y = 84f
+private const val PORTRAIT_COMPACT_PROMPT_CENTER_SPACING = 96f
+private const val PORTRAIT_COMFORTABLE_PROMPT_CENTER_SPACING = 120f
+private const val PORTRAIT_PROFILE_SWIPE_COMMIT_DP = 56f
 private const val SIGN_IN_PORTRAIT_STACK_SHIFT_Y = -51f
 private const val SIGN_IN_LANDSCAPE_STACK_SHIFT_Y = -61f
 private const val SIGN_IN_NAME_TOP = 655f
 private const val SIGN_IN_LANDSCAPE_ACCOUNT_PROMPT_EXTRA_SHIFT_Y = -36f
 private const val ACCOUNT_PROMPT_CREATE_TEXT = "Create My Account"
 private const val ACCOUNT_PROMPT_SIGN_IN_TEXT = "Sign In"
-private const val ACCOUNT_PROMPT_FORGOT_TEXT = "Forgot Username/Password"
+private const val ACCOUNT_PROMPT_FORGOT_TEXT = "Forgot User/Password"
 private const val ACCOUNT_PROMPT_SIGN_IN_CENTER_X = 597f
 private const val ACCOUNT_PROMPT_CENTER_Y = 792f
 private const val ACCOUNT_PROMPT_TEXT_SIZE = 30f
@@ -330,6 +350,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private val tempWindowRect = Rect()
     private var pressedAvatarProfile: CinerificProfile? = null
     private var clickAvatarProfile: CinerificProfile? = null
+    private var portraitProfileIndex = 0
+    private var portraitProfileSwipeMoved = false
+    private var systemBarInsetTopPx = 0
+    private var systemBarInsetBottomPx = 0
     private var pressedCreateAccountPrompt = false
     private var pressedSignInPrompt = false
     private var pressedForgotPasswordPrompt = false
@@ -470,6 +494,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         }
 
         mockCreateAvatarIndex = snapshot.createAvatarIndex.coerceIn(0, MOCK_CREATE_AVATAR_COUNT - 1)
+        portraitProfileIndex = snapshot.portraitProfileIndex.coerceIn(0, FINAL_AVATAR_TARGETS.lastIndex)
         mockCreateAvatarCarouselStartMillis = null
         mockCreateAvatarCarouselFromIndex = mockCreateAvatarIndex
         mockCreateAvatarCarouselToIndex = mockCreateAvatarIndex
@@ -511,6 +536,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     override fun onApplyWindowInsets(insets: WindowInsets): WindowInsets {
+        val systemBars = WindowInsetsCompat.toWindowInsetsCompat(insets, this)
+            .getInsets(WindowInsetsCompat.Type.systemBars())
+        systemBarInsetTopPx = systemBars.top
+        systemBarInsetBottomPx = systemBars.bottom
         postInvalidateOnAnimation()
         return super.onApplyWindowInsets(insets)
     }
@@ -550,15 +579,19 @@ internal class CinerificIntroView(context: Context) : View(context) {
             val y = lerpFloat(56f, 0f, avatarAlpha) + MOCK_SIGN_IN_STACK_EXIT_Y * mockMotion
             val stackShiftY = signInStackShiftY()
             if (stackAlpha > 0.01f) {
-                drawFigmaBitmap(canvas, steveAvatar, Bounds(152f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stage.left, stage.top, stage.scale, stackAlpha)
-                drawFigmaBitmap(canvas, martinAvatar, Bounds(390f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stage.left, stage.top, stage.scale, stackAlpha)
-                drawFigmaBitmap(canvas, jannyAvatar, Bounds(628f, 454f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stage.left, stage.top, stage.scale, stackAlpha)
-                drawFigmaBitmap(canvas, guestAvatar, Bounds(866f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stage.left, stage.top, stage.scale, stackAlpha)
+                if (isPortraitIntroLayout()) {
+                    drawPortraitProfile(canvas, stage, y, stackAlpha)
+                } else {
+                    drawFigmaBitmap(canvas, steveAvatar, Bounds(152f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stage.left, stage.top, stage.scale, stackAlpha)
+                    drawFigmaBitmap(canvas, martinAvatar, Bounds(390f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stage.left, stage.top, stage.scale, stackAlpha)
+                    drawFigmaBitmap(canvas, jannyAvatar, Bounds(628f, 454f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stage.left, stage.top, stage.scale, stackAlpha)
+                    drawFigmaBitmap(canvas, guestAvatar, Bounds(866f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stage.left, stage.top, stage.scale, stackAlpha)
 
-                drawFigmaBitmap(canvas, steveName, Bounds(130f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stage.left, stage.top, stage.scale, stackAlpha)
-                drawFigmaBitmap(canvas, martinName, Bounds(368f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stage.left, stage.top, stage.scale, stackAlpha)
-                drawFigmaBitmap(canvas, jannyName, Bounds(606f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stage.left, stage.top, stage.scale, stackAlpha)
-                drawFigmaBitmap(canvas, guestName, Bounds(854f, SIGN_IN_NAME_TOP + stackShiftY + y, 200f, 72f), stage.left, stage.top, stage.scale, stackAlpha)
+                    drawFigmaBitmap(canvas, steveName, Bounds(130f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stage.left, stage.top, stage.scale, stackAlpha)
+                    drawFigmaBitmap(canvas, martinName, Bounds(368f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stage.left, stage.top, stage.scale, stackAlpha)
+                    drawFigmaBitmap(canvas, jannyName, Bounds(606f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stage.left, stage.top, stage.scale, stackAlpha)
+                    drawFigmaBitmap(canvas, guestName, Bounds(854f, SIGN_IN_NAME_TOP + stackShiftY + y, 200f, 72f), stage.left, stage.top, stage.scale, stackAlpha)
+                }
             }
         }
         if (mockSignInStartMillis != null) {
@@ -603,7 +636,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         drawAccountPrompt(
             canvas = canvas,
             stageLeft = stage.left,
-            stageTop = accountPromptStageTop(stage.scale),
+            stageTop = if (isPortraitIntroLayout()) stage.top else accountPromptStageTop(stage.scale),
             stageScale = stage.scale,
             yOffset = if (mockSignInStartMillis == null) {
                 lerpFloat(56f, 0f, avatarAlpha)
@@ -631,9 +664,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
+                mockTouchDownX = event.x
+                mockTouchDownY = event.y
+                portraitProfileSwipeMoved = false
                 if (mockSignInStartMillis != null) {
-                    mockTouchDownX = event.x
-                    mockTouchDownY = event.y
                     mockDragReturnInProgress = false
                     mockDropdownScrollMoved = false
                     if (isMockFlowSwitchAnimating()) {
@@ -764,6 +798,14 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     if (mockDropdownOptionsHit(mockTouchDownX, mockTouchDownY) == null && shouldStartMockDragReturn(event)) {
                         mockDragReturnInProgress = true
                         closeMockSignInScreen()
+                    }
+                    return true
+                }
+                if (isPortraitIntroLayout() && pressedAvatarProfile != null) {
+                    val horizontalDelta = event.x - mockTouchDownX
+                    val verticalDelta = event.y - mockTouchDownY
+                    if (abs(horizontalDelta) > touchSlop && abs(horizontalDelta) > abs(verticalDelta)) {
+                        portraitProfileSwipeMoved = true
                     }
                     return true
                 }
@@ -940,13 +982,31 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 val shouldOpenMockForgotPassword = pressedForgotPasswordPrompt &&
                     settledForgotPasswordPromptHit(event.x, event.y)
                 val releasedAvatarProfile = settledAvatarHitProfile(event.x, event.y)
-                val shouldNavigate = pressedAvatarProfile != null && pressedAvatarProfile == releasedAvatarProfile
+                val swipeDeltaX = event.x - mockTouchDownX
+                val swipeThreshold = PORTRAIT_PROFILE_SWIPE_COMMIT_DP * resources.displayMetrics.density
+                val shouldSwipeProfile = isPortraitIntroLayout() &&
+                    pressedAvatarProfile != null &&
+                    portraitProfileSwipeMoved &&
+                    abs(swipeDeltaX) >= swipeThreshold
+                val shouldNavigate = !shouldSwipeProfile && !portraitProfileSwipeMoved &&
+                    pressedAvatarProfile != null && pressedAvatarProfile == releasedAvatarProfile
                 clickAvatarProfile = pressedAvatarProfile
                 pressedAvatarProfile = null
                 pressedCreateAccountPrompt = false
                 pressedSignInPrompt = false
                 pressedForgotPasswordPrompt = false
-                if (shouldOpenMockCreateAccount) {
+                if (shouldSwipeProfile) {
+                    portraitProfileIndex = if (swipeDeltaX < 0f) {
+                        (portraitProfileIndex + 1) % FINAL_AVATAR_TARGETS.size
+                    } else {
+                        (portraitProfileIndex - 1 + FINAL_AVATAR_TARGETS.size) % FINAL_AVATAR_TARGETS.size
+                    }
+                    clickAvatarProfile = null
+                    portraitProfileSwipeMoved = false
+                    notifyIntroSnapshotChanged()
+                    postInvalidateOnAnimation()
+                    true
+                } else if (shouldOpenMockCreateAccount) {
                     super.performClick()
                     openMockCreateAccountScreen()
                     true
@@ -986,6 +1046,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 activeMockDropdownScroll = null
                 mockDropdownScrollMoved = false
                 mockDragReturnInProgress = false
+                portraitProfileSwipeMoved = false
                 false
             }
             else -> pressedCreateAccountPrompt ||
@@ -1059,8 +1120,22 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val logoEntry = bouncySegmentMs(progress, LOGO_ENTRY_START_MS, LOGO_ENTRY_END_MS)
         val finalProgress = easedSegmentMs(progress, FINAL_SETTLE_START_MS, FINAL_SETTLE_END_MS)
         val focusShiftY = mockLogoFocusShiftY(formFocusMotion)
-        val base = offsetBounds(Bounds(222f, 150f, 750f, 535f), focusShiftY)
-        val final = offsetBounds(Bounds(297f, LOGO_FINAL_TOP, 600f, LOGO_FINAL_HEIGHT), focusShiftY)
+        val portraitAmount = portraitIntroAmount()
+        val portraitLogo = Bounds(
+            (FIGMA_FRAME_WIDTH - 600f * PORTRAIT_LOGO_SCALE) / 2f +
+                PORTRAIT_LOGO_VISIBLE_CENTER_OFFSET_X,
+            portraitLogoTop(),
+            600f * PORTRAIT_LOGO_SCALE,
+            LOGO_FINAL_HEIGHT * PORTRAIT_LOGO_SCALE
+        )
+        val base = offsetBounds(
+            lerpBounds(Bounds(222f, 150f, 750f, 535f), portraitLogo, portraitAmount),
+            focusShiftY
+        )
+        val final = offsetBounds(
+            lerpBounds(Bounds(297f, LOGO_FINAL_TOP, 600f, LOGO_FINAL_HEIGHT), portraitLogo, portraitAmount),
+            focusShiftY
+        )
 
         if (logoEntry >= 0.999f) {
             drawFigmaBitmap(canvas, logoCombined, lerpBounds(base, final, finalProgress), stageLeft, stageTop, stageScale, alpha)
@@ -1071,6 +1146,57 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val eyesEntry = lerpBounds(Bounds(453f, -417f, 300f, 214f), base, logoEntry)
         drawFigmaBitmap(canvas, logoSimple, lerpBounds(simpleEntry, final, finalProgress), stageLeft, stageTop, stageScale, alpha)
         drawFigmaBitmap(canvas, logoEyes, lerpBounds(eyesEntry, final, finalProgress), stageLeft, stageTop, stageScale, alpha)
+    }
+
+    private fun drawPortraitProfile(
+        canvas: Canvas,
+        stage: StageMetrics,
+        yOffset: Float,
+        alpha: Float
+    ) {
+        val profile = FINAL_AVATAR_TARGETS[portraitProfileIndex].profile
+        val avatarBitmap = when (profile) {
+            CinerificProfile.Steve -> steveAvatar
+            CinerificProfile.Martin -> martinAvatar
+            CinerificProfile.Janny -> jannyAvatar
+            CinerificProfile.Guest -> guestAvatar
+        }
+        val nameBitmap = when (profile) {
+            CinerificProfile.Steve -> steveName
+            CinerificProfile.Martin -> martinName
+            CinerificProfile.Janny -> jannyName
+            CinerificProfile.Guest -> guestName
+        }
+        val avatarSize = portraitAvatarSize()
+        val nameWidth = (if (profile == CinerificProfile.Guest) 200f else 220f) * PORTRAIT_PROFILE_SCALE
+        drawFigmaBitmap(
+            canvas,
+            avatarBitmap,
+            Bounds(
+                (FIGMA_FRAME_WIDTH - avatarSize) / 2f,
+                portraitAvatarTop() + yOffset,
+                avatarSize,
+                avatarSize
+            ),
+            stage.left,
+            stage.top,
+            stage.scale,
+            alpha
+        )
+        drawFigmaBitmap(
+            canvas,
+            nameBitmap,
+            Bounds(
+                (FIGMA_FRAME_WIDTH - nameWidth) / 2f,
+                portraitProfileNameTop() + yOffset,
+                nameWidth,
+                portraitProfileNameHeight()
+            ),
+            stage.left,
+            stage.top,
+            stage.scale,
+            alpha
+        )
     }
 
     private fun drawIntroBackground(canvas: Canvas, solidProgress: Float, gradientProgress: Float) {
@@ -1146,7 +1272,12 @@ internal class CinerificIntroView(context: Context) : View(context) {
         alpha: Float
     ) {
         val isLandscape = width > height
-        val textSize = signInAccountPromptTextSize() * stageScale
+        val portraitAmount = portraitIntroAmount()
+        val textSize = lerpFloat(
+            signInAccountPromptTextSize(),
+            ACCOUNT_PROMPT_TEXT_SIZE * PORTRAIT_ACTION_SCALE,
+            portraitAmount
+        ) * stageScale
         val paintAlpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
         accountPromptPaint.textSize = textSize
         formTitlePaint.textSize = textSize
@@ -1154,12 +1285,22 @@ internal class CinerificIntroView(context: Context) : View(context) {
         formTitlePaint.alpha = paintAlpha
 
         val accountPromptShiftY = if (isLandscape) SIGN_IN_LANDSCAPE_ACCOUNT_PROMPT_EXTRA_SHIFT_Y else 0f
-        val centerY = stageTop +
+        val standardCenterY = stageTop +
             (ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + accountPromptShiftY + yOffset) * stageScale
         val secondaryMetrics = accountPromptPaint.fontMetrics
         val primaryMetrics = formTitlePaint.fontMetrics
-        val secondaryBaselineY = centerY - (secondaryMetrics.ascent + secondaryMetrics.descent) / 2f
-        val primaryBaselineY = centerY - (primaryMetrics.ascent + primaryMetrics.descent) / 2f
+        fun promptCenterY(portraitCenterY: Float): Float = lerpFloat(
+            standardCenterY,
+            stageTop + (portraitCenterY + yOffset) * stageScale,
+            portraitAmount
+        )
+        val createCenterY = promptCenterY(portraitPromptCreateCenterY())
+        val signInCenterY = promptCenterY(portraitPromptSignInCenterY())
+        val forgotCenterY = promptCenterY(portraitPromptForgotCenterY())
+        val createBaselineY = createCenterY - (secondaryMetrics.ascent + secondaryMetrics.descent) / 2f
+        val signInBaselineY = signInCenterY - (primaryMetrics.ascent + primaryMetrics.descent) / 2f
+        val forgotBaselineY = forgotCenterY - (secondaryMetrics.ascent + secondaryMetrics.descent) / 2f
+        val portraitCenterX = FIGMA_FRAME_WIDTH / 2f
         if (
             activeMockFlow != MockAccountFlow.CreateAccount &&
             outgoingMockFlow != MockAccountFlow.CreateAccount
@@ -1167,8 +1308,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
             accountPromptPaint.textAlign = Paint.Align.CENTER
             canvas.drawText(
                 ACCOUNT_PROMPT_CREATE_TEXT,
-                stageLeft + accountPromptCreateCenterX() * stageScale,
-                secondaryBaselineY,
+                stageLeft + lerpFloat(accountPromptCreateCenterX(), portraitCenterX, portraitAmount) * stageScale,
+                createBaselineY,
                 accountPromptPaint
             )
         }
@@ -1179,8 +1320,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
             formTitlePaint.textAlign = Paint.Align.CENTER
             canvas.drawText(
                 ACCOUNT_PROMPT_SIGN_IN_TEXT,
-                stageLeft + ACCOUNT_PROMPT_SIGN_IN_CENTER_X * stageScale,
-                primaryBaselineY,
+                stageLeft + lerpFloat(ACCOUNT_PROMPT_SIGN_IN_CENTER_X, portraitCenterX, portraitAmount) * stageScale,
+                signInBaselineY,
                 formTitlePaint
             )
         }
@@ -1191,8 +1332,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
             accountPromptPaint.textAlign = Paint.Align.CENTER
             canvas.drawText(
                 ACCOUNT_PROMPT_FORGOT_TEXT,
-                stageLeft + accountPromptForgotCenterX() * stageScale,
-                secondaryBaselineY,
+                stageLeft + lerpFloat(accountPromptForgotCenterX(), portraitCenterX, portraitAmount) * stageScale,
+                forgotBaselineY,
                 accountPromptPaint
             )
         }
@@ -2657,6 +2798,20 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
         val stage = currentStageMetrics() ?: return null
 
+        if (isPortraitIntroLayout()) {
+            val avatarSize = portraitAvatarSize()
+            val centerX = stage.left + FIGMA_FRAME_WIDTH * stage.scale / 2f
+            val centerY = stage.top + (portraitAvatarTop() + avatarSize / 2f) * stage.scale
+            val radius = avatarSize * stage.scale / 2f
+            val dx = x - centerX
+            val dy = y - centerY
+            return if (dx * dx + dy * dy <= radius * radius) {
+                FINAL_AVATAR_TARGETS[portraitProfileIndex].profile
+            } else {
+                null
+            }
+        }
+
         val stackShiftY = signInStackShiftY()
         return FINAL_AVATAR_TARGETS.firstOrNull { target ->
             val bounds = target.bounds
@@ -2673,6 +2828,14 @@ internal class CinerificIntroView(context: Context) : View(context) {
         if (!accountPromptCanOpen(MockAccountFlow.CreateAccount)) return false
 
         val stage = currentStageMetrics() ?: return false
+        if (portraitIntroAmount() >= 0.999f) {
+            return portraitPromptHit(
+                x,
+                y,
+                portraitPromptCreateCenterY(),
+                ACCOUNT_PROMPT_CREATE_HIT_WIDTH
+            )
+        }
         val centerX = stage.left + accountPromptCreateCenterX() * stage.scale
         val centerY = accountPromptStageTop(stage.scale) +
             (ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + signInAccountPromptExtraShiftY()) * stage.scale
@@ -2686,6 +2849,14 @@ internal class CinerificIntroView(context: Context) : View(context) {
         if (!accountPromptCanOpen(MockAccountFlow.SignIn)) return false
 
         val stage = currentStageMetrics() ?: return false
+        if (portraitIntroAmount() >= 0.999f) {
+            return portraitPromptHit(
+                x,
+                y,
+                portraitPromptSignInCenterY(),
+                ACCOUNT_PROMPT_SIGN_IN_HIT_WIDTH
+            )
+        }
         val centerX = stage.left + ACCOUNT_PROMPT_SIGN_IN_CENTER_X * stage.scale
         val centerY = accountPromptStageTop(stage.scale) +
             (ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + signInAccountPromptExtraShiftY()) * stage.scale
@@ -2699,6 +2870,14 @@ internal class CinerificIntroView(context: Context) : View(context) {
         if (!accountPromptCanOpen(MockAccountFlow.ForgotPassword)) return false
 
         val stage = currentStageMetrics() ?: return false
+        if (portraitIntroAmount() >= 0.999f) {
+            return portraitPromptHit(
+                x,
+                y,
+                portraitPromptForgotCenterY(),
+                ACCOUNT_PROMPT_FORGOT_HIT_WIDTH
+            )
+        }
         val centerX = stage.left + accountPromptForgotCenterX() * stage.scale
         val centerY = accountPromptStageTop(stage.scale) +
             (ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + signInAccountPromptExtraShiftY()) * stage.scale
@@ -2706,6 +2885,16 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val halfHeight = ACCOUNT_PROMPT_FORGOT_HIT_HEIGHT * stage.scale / 2f
         return x in (centerX - halfWidth)..(centerX + halfWidth) &&
             y in (centerY - halfHeight)..(centerY + halfHeight)
+    }
+
+    private fun portraitPromptHit(x: Float, y: Float, centerY: Float, hitWidth: Float): Boolean {
+        val stage = currentStageMetrics() ?: return false
+        val physicalCenterX = stage.left + FIGMA_FRAME_WIDTH * stage.scale / 2f
+        val physicalCenterY = stage.top + centerY * stage.scale
+        val halfWidth = hitWidth * PORTRAIT_ACTION_SCALE * stage.scale / 2f
+        val halfHeight = ACCOUNT_PROMPT_SIGN_IN_HIT_HEIGHT * PORTRAIT_ACTION_SCALE * stage.scale / 2f
+        return x in (physicalCenterX - halfWidth)..(physicalCenterX + halfWidth) &&
+            y in (physicalCenterY - halfHeight)..(physicalCenterY + halfHeight)
     }
 
     private fun accountPromptCanOpen(flow: MockAccountFlow): Boolean {
@@ -3727,6 +3916,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun isMockFormLabelAnimating(): Boolean {
+        if (mockSignInStartMillis == null) return false
         return mockFieldLabelFloatProgress.any { (field, progress) ->
             progress != mockSignInFieldLabelTarget(field)
         }
@@ -4036,13 +4226,147 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private fun currentStageMetrics(): StageMetrics? {
         if (width <= 0 || height <= 0) return null
 
-        val stageScale = min(width / FIGMA_FRAME_WIDTH, height / FIGMA_FRAME_HEIGHT)
+        val standardScale = min(width / FIGMA_FRAME_WIDTH, height / FIGMA_FRAME_HEIGHT)
+        val portraitScale = width / FIGMA_FRAME_WIDTH
+        val portraitAmount = portraitIntroAmount()
+        val stageScale = lerpFloat(standardScale, portraitScale, portraitAmount)
+        val standardTop = (height - FIGMA_FRAME_HEIGHT * standardScale) / 2f
         return StageMetrics(
             left = (width - FIGMA_FRAME_WIDTH * stageScale) / 2f,
-            top = (height - FIGMA_FRAME_HEIGHT * stageScale) / 2f +
+            top = lerpFloat(standardTop, 0f, portraitAmount) +
                 mockAuthOpenStageLiftY(stageScale) +
                 mockLandscapeInputStageLiftY(stageScale),
             scale = stageScale
+        )
+    }
+
+    private fun isPortraitIntroLayout(): Boolean = width <= height
+
+    private fun portraitIntroAmount(): Float {
+        if (!isPortraitIntroLayout()) return 0f
+        return 1f - FastOutSlowInEasing.transform(mockSignInProgress())
+    }
+
+    private fun portraitDesignScale(): Float {
+        return if (width > 0) width / FIGMA_FRAME_WIDTH else 1f
+    }
+
+    private fun portraitSafeTop(): Float = systemBarInsetTopPx / portraitDesignScale()
+
+    private fun portraitSafeBottom(): Float {
+        return (height - systemBarInsetBottomPx) / portraitDesignScale()
+    }
+
+    private fun portraitStackCenter(fraction: Float): Float {
+        val top = portraitSafeTop()
+        return top + (portraitSafeBottom() - top) * fraction
+    }
+
+    private fun portraitLogoTop(): Float {
+        val logoHeight = LOGO_FINAL_HEIGHT * PORTRAIT_LOGO_SCALE
+        return portraitStackCenter(1f / 6f) - logoHeight / 2f + portraitContentOffsetY() -
+            portraitOuterBreathingRoom() / 2f
+    }
+
+    private fun portraitAvatarSize(): Float = SIGN_IN_AVATAR_SIZE * PORTRAIT_PROFILE_SCALE
+
+    private fun portraitProfileNameHeight(): Float = 72f * PORTRAIT_PROFILE_SCALE
+
+    private fun portraitBaseAvatarTop(): Float {
+        val stackHeight = portraitAvatarSize() + PORTRAIT_PROFILE_NAME_GAP + portraitProfileNameHeight()
+        val responsiveShift = lerpFloat(
+            PORTRAIT_COMPACT_AVATAR_SHIFT_Y,
+            PORTRAIT_COMFORTABLE_AVATAR_SHIFT_Y,
+            portraitVerticalRoomProgress()
+        )
+        return portraitStackCenter(0.5f) - stackHeight / 2f + responsiveShift + portraitContentOffsetY()
+    }
+
+    private fun portraitAvatarShiftY(): Float {
+        val logoVisibleBottom = portraitLogoTop() +
+            LOGO_FINAL_HEIGHT * PORTRAIT_LOGO_SCALE * PORTRAIT_LOGO_VISIBLE_BOTTOM_FRACTION
+        val upperGap = (portraitBaseAvatarTop() - logoVisibleBottom).coerceAtLeast(0f)
+        return -upperGap * (1f - PORTRAIT_INTER_STACK_GAP_SCALE)
+    }
+
+    private fun portraitAvatarTop(): Float = portraitBaseAvatarTop() + portraitAvatarShiftY()
+
+    private fun portraitProfileNameTop(): Float {
+        return portraitAvatarTop() + portraitAvatarSize() + PORTRAIT_PROFILE_NAME_GAP
+    }
+
+    private fun portraitBasePromptStackCenterY(): Float {
+        return portraitStackCenter(5f / 6f) + portraitContentOffsetY() +
+            portraitOuterBreathingRoom() / 2f
+    }
+
+    private fun portraitLinkStackShiftY(): Float {
+        val baseNameVisibleBottom = portraitBaseAvatarTop() + portraitAvatarSize() +
+            PORTRAIT_PROFILE_NAME_GAP +
+            portraitProfileNameHeight() * PORTRAIT_PROFILE_NAME_VISIBLE_BOTTOM_FRACTION
+        val baseLinkVisibleTop = portraitBasePromptStackCenterY() -
+            portraitPromptCenterSpacing() - PORTRAIT_PROMPT_VISIBLE_HALF_HEIGHT
+        val lowerGap = (baseLinkVisibleTop - baseNameVisibleBottom).coerceAtLeast(0f)
+        return portraitAvatarShiftY() - lowerGap * (1f - PORTRAIT_INTER_STACK_GAP_SCALE)
+    }
+
+    private fun portraitPromptCreateCenterY(): Float {
+        return portraitBasePromptStackCenterY() - portraitPromptCenterSpacing() +
+            portraitLinkStackShiftY() + portraitLinkBottomSafetyShiftY()
+    }
+
+    private fun portraitLinkBottomSafetyShiftY(): Float {
+        val createCenter = portraitBasePromptStackCenterY() - portraitPromptCenterSpacing() +
+            portraitLinkStackShiftY()
+        val forgotVisibleBottom = createCenter +
+            portraitPromptCenterSpacing() * PORTRAIT_LINK_SPACING_SCALE * 2f +
+            PORTRAIT_PROMPT_VISIBLE_HALF_HEIGHT
+        val safeBottom = portraitSafeBottom() - PORTRAIT_LINK_BOTTOM_MARGIN
+        return (safeBottom - forgotVisibleBottom).coerceAtMost(0f)
+    }
+
+    private fun portraitPromptSignInCenterY(): Float {
+        return portraitPromptCreateCenterY() +
+            portraitPromptCenterSpacing() * PORTRAIT_LINK_SPACING_SCALE
+    }
+
+    private fun portraitPromptForgotCenterY(): Float {
+        return portraitPromptCreateCenterY() +
+            portraitPromptCenterSpacing() * PORTRAIT_LINK_SPACING_SCALE * 2f
+    }
+
+    private fun portraitContentOffsetY(): Float {
+        val logoHeight = LOGO_FINAL_HEIGHT * PORTRAIT_LOGO_SCALE
+        val rawLogoTop = portraitStackCenter(1f / 6f) - logoHeight / 2f
+        val rawForgotCenter = portraitStackCenter(5f / 6f) + portraitPromptCenterSpacing()
+        val topBreathingRoom = rawLogoTop + PORTRAIT_LOGO_WHITE_EYE_TOP_INSET - portraitSafeTop()
+        val bottomBreathingRoom = portraitSafeBottom() -
+            (rawForgotCenter + PORTRAIT_PROMPT_VISIBLE_HALF_HEIGHT)
+        return (bottomBreathingRoom - topBreathingRoom) / 2f
+    }
+
+    private fun portraitOuterBreathingRoom(): Float {
+        val logoHeight = LOGO_FINAL_HEIGHT * PORTRAIT_LOGO_SCALE
+        val rawLogoTop = portraitStackCenter(1f / 6f) - logoHeight / 2f
+        val rawForgotCenter = portraitStackCenter(5f / 6f) + portraitPromptCenterSpacing()
+        val rawTopRoom = rawLogoTop + PORTRAIT_LOGO_WHITE_EYE_TOP_INSET - portraitSafeTop()
+        val rawBottomRoom = portraitSafeBottom() -
+            (rawForgotCenter + PORTRAIT_PROMPT_VISIBLE_HALF_HEIGHT)
+        return (rawTopRoom + rawBottomRoom) / 2f
+    }
+
+    private fun portraitVerticalRoomProgress(): Float {
+        val usableHeight = portraitSafeBottom() - portraitSafeTop()
+        return ((usableHeight - PORTRAIT_COMPACT_DESIGN_HEIGHT) /
+            (PORTRAIT_COMFORTABLE_DESIGN_HEIGHT - PORTRAIT_COMPACT_DESIGN_HEIGHT))
+            .coerceIn(0f, 1f)
+    }
+
+    private fun portraitPromptCenterSpacing(): Float {
+        return lerpFloat(
+            PORTRAIT_COMPACT_PROMPT_CENTER_SPACING,
+            PORTRAIT_COMFORTABLE_PROMPT_CENTER_SPACING,
+            portraitVerticalRoomProgress()
         )
     }
 
@@ -4095,7 +4419,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
             forgotRecoveryTargetName = forgotRecoveryTarget.name,
             forgotPasswordSubmissionStateName = forgotPasswordSubmissionState.name,
             rememberMeChecked = rememberMeChecked,
-            createAvatarIndex = mockCreateAvatarIndex
+            createAvatarIndex = mockCreateAvatarIndex,
+            portraitProfileIndex = portraitProfileIndex
         )
     }
 
@@ -4377,7 +4702,8 @@ internal data class CinerificIntroSnapshot(
     val forgotRecoveryTargetName: String = "Password",
     val forgotPasswordSubmissionStateName: String = "Idle",
     val rememberMeChecked: Boolean = false,
-    val createAvatarIndex: Int = 0
+    val createAvatarIndex: Int = 0,
+    val portraitProfileIndex: Int = 0
 )
 
 private enum class MockAccountFlow {

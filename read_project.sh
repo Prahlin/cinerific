@@ -173,12 +173,15 @@ EOF
     "$PROJECT_DIR/settings.gradle.kts" \
     "$PROJECT_DIR/gradle.properties" \
     "$PROJECT_DIR/gradle/wrapper/gradle-wrapper.properties" \
+    "$PROJECT_DIR/launchd/com.cinerific.standardavd.plist" \
+    "$PROJECT_DIR/start_cinerific_android_standard.sh" \
     "$PROJECT_DIR/read_project.sh"
   do
     print_file "$file"
   done
 
   print_binary_inventory "BINARY / IMAGE ASSET INVENTORY — DRAWABLE-NODPI" "$PROJECT_DIR/app/src/main/res/drawable-nodpi"
+  print_binary_inventory "BINARY / IMAGE ASSET INVENTORY — EMULATOR SKINS" "$PROJECT_DIR/emulator/skins"
   print_binary_inventory "BINARY / SCREENSHOT INVENTORY" "$PROJECT_DIR/screenshots"
 
   cat >> "$OUTPUT_FILE" <<EOF

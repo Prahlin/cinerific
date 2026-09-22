@@ -1188,7 +1188,8 @@ private val CinerificIntroSnapshotSaver = listSaver<CinerificIntroSnapshot, Any>
             snapshot.forgotRecoveryTargetName,
             snapshot.forgotPasswordSubmissionStateName,
             snapshot.rememberMeChecked,
-            snapshot.createAvatarIndex
+            snapshot.createAvatarIndex,
+            snapshot.portraitProfileIndex
         )
     },
     restore = { values ->
@@ -1205,7 +1206,8 @@ private val CinerificIntroSnapshotSaver = listSaver<CinerificIntroSnapshot, Any>
             forgotRecoveryTargetName = values.getOrNull(9) as? String ?: "Password",
             forgotPasswordSubmissionStateName = values.getOrNull(10) as? String ?: "Idle",
             rememberMeChecked = values.getOrNull(11) as? Boolean ?: false,
-            createAvatarIndex = values.getOrNull(12) as? Int ?: 0
+            createAvatarIndex = values.getOrNull(12) as? Int ?: 0,
+            portraitProfileIndex = values.getOrNull(13) as? Int ?: 0
         )
     }
 )

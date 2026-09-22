@@ -28,6 +28,20 @@ The project pins Gradle to Android Studio's bundled JBR in `gradle.properties`, 
 
 From VS Code, run the default build task `Android: assemble debug`. There are also tasks for `Android: install debug` and `Android: launch Cinerific` when an emulator or device is connected.
 
+### Standard tablet emulator
+
+Use the guarded launcher for the persistent low-load QA profile:
+
+```bash
+./start_cinerific_android_standard.sh
+```
+
+The launcher requests and verifies `1280x800` at `160 dpi`, two guest CPU cores,
+host GPU acceleration, and the repository-owned rounded tablet bezel before
+opening Cinerific. It refuses to continue if the running AVD does not match.
+Emulator logs are written to
+`~/Library/Logs/Cinerific/standard-emulator.log`.
+
 ## Notes for the first Kotlin pass
 
 - The layout is intentionally simple and adaptive for tablets.
