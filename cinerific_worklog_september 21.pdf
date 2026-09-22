@@ -1,0 +1,340 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 4 /Kids [4 0 R 6 0 R 8 0 R 10 0 R] >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 5 0 R >>
+endobj
+5 0 obj
+<< /Length 8880 >>
+stream
+BT /F1 13.0 Tf 1 0 0 1 54 756.0 Tm (Cinerific Android App Work Log - September 21, 2026 \(U.S. EST\)) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 738.0 Tm (Compiled summary for Monday, September 21, 2026 \(U.S. Eastern Time\) - focus: resuming the) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 728.5 Tm (post-September-19 Cinerific Android pass by reviewing the current project snapshot and every) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 719.0 Tm (prior worklog, diagnosing an unreliable Galaxy Tab A USB path and a macOS kernel panic,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 709.5 Tm (separating hub and cable behavior from Android authorization state, identifying Android emulator) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 700.0 Tm (rendering as the dominant host load, rebuilding the Standard tablet AVD around a lower-pixel QA) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 690.5 Tm (profile, restoring a representative rounded bezel, creating a guarded standalone launcher,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 681.0 Tm (redesigning the settled intro specifically for portrait phones and tablets, presenting one) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 671.5 Tm (swipeable profile at a time, enlarging and rebalancing the logo, avatar, name, and account-link) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 662.0 Tm (stacks, preserving landscape behavior, replacing low-resolution avatar artwork with) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 652.5 Tm (Figma-derived high-resolution renders, validating repeated builds on the standalone emulator and) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 643.0 Tm (USB Samsung phone, committing the completed source pass as d0a9047, refreshing the project) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 633.5 Tm (snapshot, and generating this latest Cinerific PDF worklog artifact.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 618.0 Tm (Generated in continuity with the established Cinerific worklog cadence from July 12, July 14,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 608.5 Tm (July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, July 25,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 599.0 Tm (July 27, July 28 Part 1, July 28 Part 2, July 29, August 1, August 3, August 4, August 5, and) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 589.5 Tm (September 19: compact opening summary, source material review, baseline state, goals, themed) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 580.0 Tm (work completed sections, validation, files touched, follow-up context, and output artifact) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 570.5 Tm (close.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 555.0 Tm (No September 21 Part 1 PDF existed in the repository, so this artifact follows the no-part) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 545.5 Tm (filename convention for the first September 21 worklog. Eastern Time was verified from the host) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 536.0 Tm (as Monday, September 21, 2026 at 8:05 PM EDT, UTC-04:00. The title retains the repository's) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 526.5 Tm (established U.S. EST label while the body records the seasonally accurate EDT verification. This) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 517.0 Tm (artifact records the current source state on main through HEAD d0a9047, Refined the portrait) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 507.5 Tm (intro and stabilized the standard tablet QA environment, plus the refreshed snapshot and) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 498.0 Tm (generated worklog artifact from this documentation pass.) Tj ET
+BT /F1 9.6 Tf 1 0 0 1 54 482.5 Tm (Source Materials Reviewed) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 471.0 Tm (- Reviewed every pre-existing Cinerific worklog PDF at the repository root: July 12, July 14,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 461.5 Tm (  July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, July) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 452.0 Tm (  25, July 27, July 28 Part 1, July 28 Part 2, July 29, August 1, August 3, August 4, August 5,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 442.5 Tm (  and September 19.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 433.0 Tm (- Converted all twenty-one prior PDFs with pdftotext and inspected title cadence, summary) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 423.5 Tm (  rhythm, source-review language, baseline and goals sections, themed work-completed sections,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 414.0 Tm (  validation phrasing, file lists, follow-up close, and output-artifact wording.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 404.5 Tm (- Ran pdfinfo and pdffonts across the worklog set, with the closest comparison against September) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 395.0 Tm (  19, to preserve the four-page U.S. Letter layout, Helvetica body font, PDF 1.4 output,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 385.5 Tm (  text-extractable structure, Codex metadata, and right-aligned page footer convention.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 376.0 Tm (- Ran ./read_project.sh and reviewed the refreshed cinerific_PROJECT_SNAPSHOT.txt for the) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 366.5 Tm (  current source tree, Android source dump, drawable inventory, emulator skin inventory,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 357.0 Tm (  launcher files, generated-file policy, and September 21 timestamp.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 347.5 Tm (- Reviewed git status, git log, git show --stat, git show --name-status, and commit d0a9047) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 338.0 Tm (  against the September 19 worklog commit fa1ca6a.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 328.5 Tm (- Reviewed README.md, CinerificApp.kt, CinerificIntroView.kt, the four active avatar drawables,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 319.0 Tm (  the custom emulator skin, LaunchAgent property list, guarded AVD launcher, read_project.sh,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 309.5 Tm (  and regenerated project snapshot.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 300.0 Tm (- Reviewed runtime evidence from the Standard tablet emulator and Samsung SM-G990U phone,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 290.5 Tm (  including ADB inventories, repeated streamed APK installs, activity launches, screenshots,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 281.0 Tm (  cache inspection, system-bar behavior, and all four swipe-selected profiles.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 271.5 Tm (- Reviewed the macOS panic report, Activity Monitor captures, USB hub experiments, Android USB) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 262.0 Tm (  mode behavior, emulator process usage, and the last-loaded AppleUSBHostiOSDevice kernel) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 252.5 Tm (  extension without treating correlation as proof of a single crash cause.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 243.0 Tm (- Reviewed the open Figma file's Animations \(Original\) section, Logo, Slide & Sign-In Components) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 233.5 Tm (  subsection, exact Steve, Martin, Janny, and Guest avatar/name component nodes, available) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 224.0 Tm (  design context, exported vectors, and Starter-plan MCP quota response.) Tj ET
+BT /F1 9.6 Tf 1 0 0 1 54 208.5 Tm (Baseline Status Before September 21 Work) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 197.0 Tm (- Cinerific entered September 21 with the September 19 authentication navigation, destination) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 187.5 Tm (  reset, hero crop, playback feedback, and spinner correction committed and documented.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 178.0 Tm (- The intro remained optimized primarily around its landscape sign-in composition: all four) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 168.5 Tm (  profiles appeared in a horizontal row and the three account routes shared a horizontal prompt) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 159.0 Tm (  row.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 149.5 Tm (- Portrait phones and tablets inherited that composition rather than receiving a full-height) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 140.0 Tm (  layout designed around their safe top and bottom system areas.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 130.5 Tm (- The active avatar resources were only 254 by 254 pixels and the nameplates were roughly 220 by) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 121.0 Tm (  72 pixels, so aggressive portrait enlargement exposed visible softness.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 111.5 Tm (- The Standard tablet AVD could run at 1920 by 1200 and 240 dpi with four guest CPU cores,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 102.0 Tm (  causing the qemu process to oscillate at high host CPU and occasionally exceed 300 percent) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 92.5 Tm (  during active rendering.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 83.0 Tm (- The Galaxy Tab A charging port still accepted power, but the tablet did not consistently) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 73.5 Tm (  expose an ADB or MTP data device through the tested cable and Atolla hub path.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 64.0 Tm (- The connected Samsung phone remained available as the reliable native portrait QA target,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 54.5 Tm (  while the standalone AVD remained the reliable tablet target.) Tj ET
+BT /F1 8.2 Tf 1 0 0 1 329.0 28 Tm (Cinerific Work Log - September 21, 2026 \(U.S. EST\) Page 1) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 7 0 R >>
+endobj
+7 0 obj
+<< /Length 8507 >>
+stream
+BT /F1 8.5 Tf 1 0 0 1 54 756.0 Tm (- The local Figma Dev Mode MCP path required a paid seat that was not present, while the cloud) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 746.5 Tm (  Starter connector imposed a finite tool-call quota.) Tj ET
+BT /F1 9.6 Tf 1 0 0 1 54 731.0 Tm (Main Goals for September 21) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 719.5 Tm (- Establish a stable, persistent Standard tablet QA profile with fewer rendered pixels and fewer) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 710.0 Tm (  guest CPU cores while preserving the same Android layout space.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 700.5 Tm (- Keep the AVD independent of VS Code, verify its configuration before every launch, and restore) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 691.0 Tm (  a realistic rounded tablet frame.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 681.5 Tm (- Build a dedicated portrait intro for phones and tablets without changing the accepted) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 672.0 Tm (  landscape layout.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 662.5 Tm (- Scale, center, and vertically distribute the logo, selected profile, nameplate, and three) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 653.0 Tm (  account routes around real visible asset edges and system-bar insets.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 643.5 Tm (- Show one profile at a time in portrait and support cyclic left/right profile selection without) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 634.0 Tm (  breaking profile activation.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 624.5 Tm (- Improve enlarged avatar clarity from exact Figma source artwork while preserving the approved) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 615.0 Tm (  hollow gradient-bubble treatment.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 605.5 Tm (- Keep portrait touch regions synchronized with every visual move and preserve the selected) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 596.0 Tm (  profile across state restoration.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 586.5 Tm (- Validate the same debug APK on both the standalone tablet emulator and USB Samsung phone, then) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 577.0 Tm (  refresh documentation and generate the next convention-matched worklog.) Tj ET
+BT /F1 9.6 Tf 1 0 0 1 54 561.5 Tm (Work Completed - USB, Hub, and macOS Runtime Diagnosis) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 550.0 Tm (- Repeated ADB inventories while swapping known data cables, hub ports, hub power, direct-phone) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 540.5 Tm (  connections, and Mac-to-hub upstream connections.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 531.0 Tm (- Confirmed that the Samsung phone could enumerate through USB and accept file-transfer) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 521.5 Tm (  authorization, proving that at least one cable and host path carried data.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 512.0 Tm (- Distinguished the hub's upstream Mac connection from downstream device ports and clarified) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 502.5 Tm (  that a phone connected only to the hub cannot reach ADB unless the hub's upstream data path) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 493.0 Tm (  reaches the Mac.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 483.5 Tm (- Confirmed the Atolla hub's separate DC 5V input could be powered by a compatible regulated 5V) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 474.0 Tm (  adapter, then retested enumeration after external power was attached.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 464.5 Tm (- Walked through Android USB control, File Transfer/MTP, USB debugging, authorization prompts,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 455.0 Tm (  charging-only indicators, and the meaning of a failed Connected device control switch.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 445.5 Tm (- Recorded that the Galaxy Tab A reported USB Connected and slow charging but did not expose the) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 436.0 Tm (  expected file-transfer notification or appear in ADB during the tested paths.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 426.5 Tm (- Interpreted the macOS panic as a kernel-level bounds-safety trap in kernel_task and noted that) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 417.0 Tm (  AppleUSBHostiOSDevice was the last-started extension, while avoiding an unsupported claim that) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 407.5 Tm (  one device or hub definitively caused the panic.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 398.0 Tm (- Inspected Activity Monitor after reboot and identified qemu-system-aarch64-headless, not an) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 388.5 Tm (  unknown second emulator, as the running Standard tablet AVD process.) Tj ET
+BT /F1 9.6 Tf 1 0 0 1 54 373.0 Tm (Work Completed - Low-Load Standard Tablet QA Profile) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 361.5 Tm (- Changed the Standard AVD rendering target from 1920 by 1200 at 240 dpi to 1280 by 800 at 160) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 352.0 Tm (  dpi, preserving the same 1280 by 800 Android density-independent layout space while rendering) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 342.5 Tm (  about 56 percent fewer pixels.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 333.0 Tm (- Reduced the emulator from four guest CPU cores to two and retained host GPU acceleration to) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 323.5 Tm (  limit sustained qemu CPU pressure on the Mac.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 314.0 Tm (- Confirmed the active AVD name as Cinerific_Standard_Tablet and kept it separate from VS Code's) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 304.5 Tm (  embedded emulator controls.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 295.0 Tm (- Added a repository-owned rounded tablet bezel and mask so the reduced-resolution emulator) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 285.5 Tm (  still represents a physical tablet instead of an unframed rectangle.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 276.0 Tm (- Added start_cinerific_android_standard.sh as a guarded launcher that verifies the AVD name,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 266.5 Tm (  skin, device frame, physical size, density, and guest core count before opening Cinerific.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 257.0 Tm (- Added a LaunchAgent definition for the standalone AVD and centralized logs under the user's) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 247.5 Tm (  Cinerific log directory.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 238.0 Tm (- Made the launcher reuse a correct running instance, reject the wrong AVD on emulator-5554,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 228.5 Tm (  wait for Android boot completion, recheck connectivity, and launch Cinerific when installed.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 219.0 Tm (- Documented the low-load launcher in README.md and expanded read_project.sh so future snapshots) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 209.5 Tm (  include launcher files and emulator skin inventories.) Tj ET
+BT /F1 9.6 Tf 1 0 0 1 54 194.0 Tm (Work Completed - Portrait Intro Layout and Profile Carousel) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 182.5 Tm (- Added a dedicated portrait branch that expands the design stage to the full screen width and) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 173.0 Tm (  reads top and bottom system-bar insets.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 163.5 Tm (- Kept the accepted landscape intro path intact while transitioning only portrait devices into) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 154.0 Tm (  the new full-height composition.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 144.5 Tm (- Enlarged and visually centered the Cinerific logo using its visible artwork rather than its) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 135.0 Tm (  transparent bitmap bounds, including a small rightward optical correction.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 125.5 Tm (- Built a single-profile portrait stack that draws the selected avatar and nameplate at the) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 116.0 Tm (  horizontal center instead of showing all four profiles at once.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 106.5 Tm (- Added cyclic left and right swipe handling with direction checks, touch-slop protection, a 56) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 97.0 Tm (  dp commit threshold, and tap navigation for the selected profile.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 87.5 Tm (- Persisted the portrait profile index through CinerificIntroSnapshot and its Compose saver so) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 78.0 Tm (  rotation or view restoration does not silently return to Steve.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 68.5 Tm (- Added portrait-specific circular avatar hit testing and resized account-route hit regions so) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 59.0 Tm (  interactions follow the enlarged artwork.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 49.5 Tm (- Renamed Forgot Username/Password to Forgot User/Password across portrait and landscape to) Tj ET
+BT /F1 8.2 Tf 1 0 0 1 329.0 28 Tm (Cinerific Work Log - September 21, 2026 \(U.S. EST\) Page 2) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 9 0 R >>
+endobj
+9 0 obj
+<< /Length 8467 >>
+stream
+BT /F1 8.5 Tf 1 0 0 1 54 756.0 Tm (  balance the route-label length.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 746.5 Tm (- Guarded form-label animation checks until an authentication form has actually started,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 737.0 Tm (  preventing idle-state animation work from being treated as active.) Tj ET
+BT /F1 9.6 Tf 1 0 0 1 54 721.5 Tm (Work Completed - Portrait Scale, Spacing, and Safe Areas) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 710.0 Tm (- Iteratively tuned the logo, profile, nameplate, and account-link scales against screenshots) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 700.5 Tm (  from both the 800 by 1280 emulator and 1080 by 2340 Samsung phone.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 691.0 Tm (- Matched the avatar stack's visible width to the logo stack by accounting for the logo PNG's) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 681.5 Tm (  transparent horizontal padding rather than equating nominal bitmap rectangles.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 672.0 Tm (- Reduced the avatar-to-name gap by compensating for transparent nameplate padding and centered) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 662.5 Tm (  each profile stack vertically between the surrounding groups.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 653.0 Tm (- Calculated vertical gaps from measured alpha bounds, kept the final logo position fixed, and) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 643.5 Tm (  reduced the spaces above and below the avatar stack to 40 percent of their original size.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 634.0 Tm (- Enlarged the portrait account-route text to 2.904 times its base size and maintained) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 624.5 Tm (  corresponding touch targets.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 615.0 Tm (- Increased spacing between Create My Account, Sign In, and Forgot User/Password to 1.5 times) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 605.5 Tm (  the responsive base spacing while anchoring the first route on taller screens.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 596.0 Tm (- Added a safe-bottom clamp that preserves the requested inter-link spacing but lifts the entire) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 586.5 Tm (  link stack only when the compact tablet's native bottom toolbar would cover the final line.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 577.0 Tm (- Preserved responsive compact and comfortable spacing ranges so the same portrait logic adapts) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 567.5 Tm (  between tablet and tall-phone aspect ratios.) Tj ET
+BT /F1 9.6 Tf 1 0 0 1 54 552.0 Tm (Work Completed - Figma Avatar Restoration) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 540.5 Tm (- Located the exact source nodes under Animations \(Original\), Logo, Slide & Sign-In Components) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 531.0 Tm (  for all four avatar components and all four name components.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 521.5 Tm (- Retrieved design context for Steve, Martin, Janny, and Guest, including the avatar vectors and) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 512.0 Tm (  the Broadway nameplate typography/effect specifications.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 502.5 Tm (- Documented that local Dev Mode context was unavailable without a paid seat and that the cloud) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 493.0 Tm (  Starter connector reached its tool-call limit before all nameplate exports completed.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 483.5 Tm (- Rendered the four clean avatar vectors at 1270 by 1270 pixels, five times the prior raster) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 474.0 Tm (  dimensions.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 464.5 Tm (- Preserved the approved dark ring and hollow 50-to-zero percent gradient-bubble treatment by) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 455.0 Tm (  combining the high-resolution vector character/ring geometry with the accepted interior) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 445.5 Tm (  treatment.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 436.0 Tm (- Replaced the four active *_avatar_bubble_edge50_body0_test.png resources without changing) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 426.5 Tm (  their Android resource identifiers or profile wiring.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 417.0 Tm (- Archived the recovered vector sources locally under the existing generated avatar experiment) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 407.5 Tm (  area for future provenance and rerendering.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 398.0 Tm (- Left the low-resolution nameplates unchanged rather than substituting an inexact font; the) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 388.5 Tm (  remaining visible name softness is isolated and explicitly tracked for a later exact export) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 379.0 Tm (  pass.) Tj ET
+BT /F1 9.6 Tf 1 0 0 1 54 363.5 Tm (Work Completed - Device QA, Cache Check, and Commit State) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 352.0 Tm (- Rebuilt the debug APK repeatedly with ./gradlew :app:assembleDebug; every final iteration) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 342.5 Tm (  reported BUILD SUCCESSFUL.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 333.0 Tm (- Installed and relaunched the same APK on emulator-5554 and USB phone R5CRC33MGNZ after each) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 323.5 Tm (  significant portrait scale or spacing adjustment.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 314.0 Tm (- Captured and inspected portrait screenshots for Steve, Martin, Janny, and Guest to confirm) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 304.5 Tm (  clean vector rendering, centered stacks, cyclic selection, and unchanged landscape behavior.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 295.0 Tm (- Verified the final 800 by 1280 tablet layout retained link readability above the native bottom) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 285.5 Tm (  toolbar and the 1080 by 2340 phone retained the requested first-link anchor.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 276.0 Tm (- Cleared the phone app cache and code cache, confirmed both were already effectively empty,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 266.5 Tm (  force-stopped Cinerific, and relaunched the installed native APK.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 257.0 Tm (- Confirmed that Android does not separately cache the Kotlin layout constants and that the) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 247.5 Tm (  measured phone movement came from the live build rather than a stale tunnel.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 238.0 Tm (- Committed the completed implementation as d0a9047, Refined the portrait intro and stabilized) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 228.5 Tm (  the standard tablet QA environment, and pushed main to origin/main.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 219.0 Tm (- Refreshed cinerific_PROJECT_SNAPSHOT.txt after the commit so the generated project record) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 209.5 Tm (  reflects the final September 21 source, launcher, skin, and drawable inventory.) Tj ET
+BT /F1 9.6 Tf 1 0 0 1 54 194.0 Tm (Validation and Checks Performed) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 182.5 Tm (- Verified host Eastern Time with TZ=America/New_York; the system reported Monday, September 21,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 173.0 Tm (  2026 in EDT at UTC-04:00.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 163.5 Tm (- Used pdftotext on every earlier worklog and pdfinfo/pdffonts across the set before generating) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 154.0 Tm (  this artifact.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 144.5 Tm (- Confirmed all twenty-one prior worklogs used four U.S. Letter pages and that the latest file) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 135.0 Tm (  used Helvetica, text-extractable PDF 1.4 output, Codex metadata, and right-aligned footers.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 125.5 Tm (- Confirmed the running standalone AVD reported Cinerific_Standard_Tablet, physical size 1280 by) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 116.0 Tm (  800, physical density 160, and two guest processors.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 106.5 Tm (- Confirmed ADB currently listed both emulator-5554 and Samsung SM-G990U R5CRC33MGNZ as) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 97.0 Tm (  connected devices.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 87.5 Tm (- Verified the guarded launcher, LaunchAgent, custom skin, README guidance, and snapshot) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 78.0 Tm (  inventory were included in commit d0a9047.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 68.5 Tm (- Inspected final portrait captures at both QA aspect ratios after the 10 percent text) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 59.0 Tm (  enlargement and 25 percent inter-link spacing increase.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 49.5 Tm (- Rendered this generated PDF to PNG pages and inspected it for clipping, footer placement, page) Tj ET
+BT /F1 8.2 Tf 1 0 0 1 329.0 28 Tm (Cinerific Work Log - September 21, 2026 \(U.S. EST\) Page 3) Tj ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 11 0 R >>
+endobj
+11 0 obj
+<< /Length 6320 >>
+stream
+BT /F1 8.5 Tf 1 0 0 1 54 756.0 Tm (  count, and readable density.) Tj ET
+BT /F1 9.6 Tf 1 0 0 1 54 740.5 Tm (Files Touched During September 21) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 729.0 Tm (- README.md: documented the guarded standalone Standard tablet emulator workflow and persistent) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 719.5 Tm (  low-load QA settings.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 710.0 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt: persisted the selected portrait) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 700.5 Tm (  profile index through the intro snapshot saver.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 691.0 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt: added the portrait layout,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 681.5 Tm (  safe-area calculations, profile carousel, optical alignment, responsive scales and gaps,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 672.0 Tm (  account-link layout, hit testing, copy update, and idle-label guard.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 662.5 Tm (- app/src/main/res/drawable-nodpi/steve_avatar_bubble_edge50_body0_test.png,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 653.0 Tm (  martin_avatar_bubble_edge50_body0_test.png, janny_avatar_bubble_edge50_body0_test.png, and) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 643.5 Tm (  guest_avatar_bubble_edge50_body0_test.png: replaced the active 254-pixel resources with) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 634.0 Tm (  high-resolution Figma-derived renders.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 624.5 Tm (- emulator/skins/cinerific_pixel_tablet_1280/back.png, mask.png, and layout: added the rounded) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 615.0 Tm (  repository-owned tablet frame.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 605.5 Tm (- launchd/com.cinerific.standardavd.plist: added the standalone emulator LaunchAgent definition.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 596.0 Tm (- start_cinerific_android_standard.sh: added guarded launch, boot wait, runtime verification,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 586.5 Tm (  app start, and log reporting.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 577.0 Tm (- read_project.sh: included launcher files and emulator skins in future project snapshots.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 567.5 Tm (- cinerific_PROJECT_SNAPSHOT.txt: refreshed the generated timestamp, source dump, tree, launcher) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 558.0 Tm (  content, and binary inventories.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 548.5 Tm (- cinerific_worklog_september 21.pdf: added this root-level September 21 worklog using the) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 539.0 Tm (  established no-part naming convention.) Tj ET
+BT /F1 9.6 Tf 1 0 0 1 54 523.5 Tm (Follow-Up Context) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 512.0 Tm (- The Galaxy Tab A USB data path remains unresolved; charging success does not prove that its) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 502.5 Tm (  port, negotiated USB mode, hub route, or current cable path exposes ADB/MTP data.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 493.0 Tm (- The Samsung phone and standalone AVD remain the verified portrait QA pair until the tablet) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 483.5 Tm (  enumerates again or wireless debugging can be established from an authorized connection.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 474.0 Tm (- The high-resolution avatar pass is complete, but exact Martin, Janny, and Guest nameplate) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 464.5 Tm (  vectors still require renewed Figma connector quota or manual SVG exports from the source) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 455.0 Tm (  file.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 445.5 Tm (- The raw nameplates should not be replaced with a lookalike font; their outlined Broadway) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 436.0 Tm (  styling and shadow should be preserved from the original components.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 426.5 Tm (- The LaunchAgent contains machine-specific Android SDK and repository paths. Moving the) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 417.0 Tm (  checkout or sharing the launcher with another Mac requires updating those paths or generating) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 407.5 Tm (  the property list dynamically.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 398.0 Tm (- Portrait-only constants should remain isolated from landscape unless a future request) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 388.5 Tm (  explicitly changes both orientations.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 379.0 Tm (- The bottom safety clamp should remain in place when link text or spacing grows further;) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 369.5 Tm (  removing it can place Forgot User/Password behind the emulator toolbar.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 360.0 Tm (- Authentication screens remain prototype UI and are not yet connected to production identity,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 350.5 Tm (  account creation, recovery, or backend services.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 341.0 Tm (- The low-load AVD materially reduces rendering work, but qemu and WindowServer can still) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 331.5 Tm (  consume visible CPU while the emulator stream is active.) Tj ET
+BT /F1 9.6 Tf 1 0 0 1 54 316.0 Tm (Output Artifact) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 304.5 Tm (- Generated cinerific_worklog_september 21.pdf at the repository root using the) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 295.0 Tm (  first-log-of-the-day no-part filename convention.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 285.5 Tm (- Preserved the established four-page U.S. Letter layout, Helvetica text, PDF 1.4 compatibility,) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 276.0 Tm (  Codex metadata, right-aligned page footers, and plain-text-readable structure.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 266.5 Tm (- Used the verified September 21, 2026 U.S. Eastern date and documented the host's actual EDT) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 257.0 Tm (  offset while retaining the historical U.S. EST title label.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 247.5 Tm (- Recorded main through d0a9047 and the refreshed project snapshot; the generated snapshot and) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 238.0 Tm (  this PDF are the only expected post-commit documentation changes.) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 228.5 Tm (- The artifact is intended to be committed after review alongside cinerific_PROJECT_SNAPSHOT.txt) Tj ET
+BT /F1 8.5 Tf 1 0 0 1 54 219.0 Tm (  and no additional source edits.) Tj ET
+BT /F1 8.2 Tf 1 0 0 1 329.0 28 Tm (Cinerific Work Log - September 21, 2026 \(U.S. EST\) Page 4) Tj ET
+endstream
+endobj
+12 0 obj
+<< /Title (Cinerific Android App Work Log - September 21, 2026 \(U.S. EST\)) /Subject (Cinerific Android App daily project work log for September 21, 2026) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260921200500-04'00') /ModDate (D:20260921200500-04'00') >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000140 00000 n 
+0000000237 00000 n 
+0000000363 00000 n 
+0000009294 00000 n 
+0000009420 00000 n 
+0000017978 00000 n 
+0000018104 00000 n 
+0000026622 00000 n 
+0000026750 00000 n 
+0000033122 00000 n 
+trailer
+<< /Size 13 /Root 1 0 R /Info 12 0 R >>
+startxref
+33485
+%%EOF
