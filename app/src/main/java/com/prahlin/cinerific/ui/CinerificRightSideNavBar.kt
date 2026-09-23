@@ -82,8 +82,17 @@ private const val NAV_EDGE_GAP = NAV_ICON_CENTER_GAP - (NAV_TOGGLE_ICON_SIZE + N
 private const val NAV_TOP_RAIL_VISUAL_NUDGE = 14f
 private const val NAV_OPEN_MS = 150
 private const val HOME_AUTO_COLLAPSE_MS = 5000L
+private const val PORTRAIT_NAV_REFERENCE_WIDTH = 360f
+private const val PORTRAIT_NAV_BASE_SCALE = 0.729f
+private const val PORTRAIT_NAV_MAX_SCALE = 0.972f
 private const val PORTRAIT_NAV_BAR_HEIGHT = 92f
 private const val PORTRAIT_NAV_ITEM_HEIGHT = 72f
+private const val PORTRAIT_NAV_ITEM_WIDTH = 72f
+private const val PORTRAIT_NAV_ICON_SLOT_SIZE = 39f
+private const val PORTRAIT_NAV_FEATURED_ICON_SCALE = 1.21f
+private const val PORTRAIT_NAV_LABEL_SIZE = 12f
+private const val PORTRAIT_NAV_LABEL_LINE_HEIGHT = 18f
+private const val PORTRAIT_NAV_LABEL_BOTTOM_SHIFT = 7.5f
 
 private val NavFrameDestinations = setOf(
     CinerificDestination.Home,
@@ -121,10 +130,11 @@ internal fun CinerificRightSideNavBar(
         val navigationBarBottom = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
 
         if (isPortrait) {
+            val portraitScale = cinerificPortraitNavScale(maxWidth)
             CinerificBottomNavBar(
                 visualDestination = visualDestination,
                 navigationBarBottom = navigationBarBottom,
-                scale = scale,
+                scale = portraitScale,
                 onDestinationSelected = onDestinationSelected,
                 modifier = Modifier.align(Alignment.BottomCenter)
             )
@@ -327,7 +337,6 @@ private fun CinerificBottomNavBar(
                     width = NAV_HOME_ICON_WIDTH,
                     height = NAV_HOME_ICON_HEIGHT
                 ),
-                iconSize = NAV_HOME_ICON_SIZE,
                 scale = scale,
                 selected = visualDestination == CinerificDestination.Home,
                 onClick = onDestinationSelected
@@ -340,7 +349,7 @@ private fun CinerificBottomNavBar(
                     width = NAV_MOVIES_ICON_WIDTH,
                     height = NAV_MOVIES_ICON_HEIGHT
                 ),
-                iconSize = NAV_MOVIES_ICON_SIZE,
+                iconScale = PORTRAIT_NAV_FEATURED_ICON_SCALE,
                 scale = scale,
                 selected = visualDestination == CinerificDestination.Movies,
                 onClick = onDestinationSelected
@@ -353,7 +362,7 @@ private fun CinerificBottomNavBar(
                     width = NAV_SHOWS_ICON_WIDTH,
                     height = NAV_SHOWS_ICON_HEIGHT
                 ),
-                iconSize = NAV_SHOWS_ICON_SIZE,
+                iconScale = PORTRAIT_NAV_FEATURED_ICON_SCALE,
                 scale = scale,
                 selected = visualDestination == CinerificDestination.Shows,
                 onClick = onDestinationSelected
@@ -366,7 +375,7 @@ private fun CinerificBottomNavBar(
                     width = NAV_FAVORITES_ICON_WIDTH,
                     height = NAV_FAVORITES_ICON_HEIGHT
                 ),
-                iconSize = NAV_FAVORITES_ICON_SIZE,
+                iconScale = PORTRAIT_NAV_FEATURED_ICON_SCALE,
                 scale = scale,
                 selected = visualDestination == CinerificDestination.Favorites,
                 onClick = onDestinationSelected
@@ -379,7 +388,6 @@ private fun CinerificBottomNavBar(
                     width = NAV_SETTINGS_ICON_WIDTH,
                     height = NAV_SETTINGS_ICON_HEIGHT
                 ),
-                iconSize = NAV_SETTINGS_ICON_SIZE,
                 scale = scale,
                 selected = visualDestination == CinerificDestination.Settings,
                 onClick = onDestinationSelected
@@ -393,17 +401,22 @@ private fun BottomNavItemButton(
     destination: CinerificDestination,
     label: String,
     icon: NavIconAsset,
-    iconSize: Float,
+    iconScale: Float = 1f,
     scale: Float,
     selected: Boolean,
     onClick: (CinerificDestination) -> Unit
 ) {
     val color = if (selected) NavSelected else NavInactive
     val itemAlpha = if (selected) 1f else 0.58f
+    val iconCenterOffsetY = if (iconScale != 1f) {
+        -(NAV_HOME_ICON_HEIGHT - icon.height) / 2f
+    } else {
+        0f
+    }
 
     Box(
         modifier = Modifier
-            .width(navDp(86f, scale))
+            .width(navDp(PORTRAIT_NAV_ITEM_WIDTH, scale))
             .height(navDp(PORTRAIT_NAV_ITEM_HEIGHT, scale))
             .graphicsLayer { alpha = itemAlpha }
             .clickable { onClick(destination) },
@@ -411,8 +424,8 @@ private fun BottomNavItemButton(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Box(
-                modifier = Modifier.size(navDp(iconSize, scale)),
-                contentAlignment = Alignment.Center
+                modifier = Modifier.size(navDp(PORTRAIT_NAV_ICON_SLOT_SIZE, scale)),
+                contentAlignment = Alignment.BottomCenter
             ) {
                 Image(
                     painter = painterResource(id = icon.resId),
@@ -422,17 +435,25 @@ private fun BottomNavItemButton(
                     modifier = Modifier
                         .width(navDp(icon.width, scale))
                         .height(navDp(icon.height, scale))
+                        .absoluteOffset(y = navDp(iconCenterOffsetY, scale))
+                        .graphicsLayer {
+                            scaleX = iconScale
+                            scaleY = iconScale
+                        }
                 )
             }
             Text(
                 text = label,
                 color = color,
-                fontSize = 10.sp,
+                fontSize = (PORTRAIT_NAV_LABEL_SIZE * scale).sp,
                 fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal,
-                lineHeight = 15.sp,
+                lineHeight = (PORTRAIT_NAV_LABEL_LINE_HEIGHT * scale).sp,
                 letterSpacing = 0.sp,
                 textAlign = TextAlign.Center,
-                maxLines = 1
+                maxLines = 1,
+                modifier = Modifier.absoluteOffset(
+                    y = navDp(PORTRAIT_NAV_LABEL_BOTTOM_SHIFT, scale)
+                )
             )
         }
     }
@@ -591,9 +612,14 @@ internal fun cinerificTopRailHeight(
 
 internal fun cinerificPortraitBottomNavContentHeight(
     viewportWidth: Dp,
-    viewportHeight: Dp
+    @Suppress("UNUSED_PARAMETER") viewportHeight: Dp
 ): Dp {
-    return navDp(PORTRAIT_NAV_BAR_HEIGHT, cinerificNavScale(viewportWidth, viewportHeight))
+    return navDp(PORTRAIT_NAV_BAR_HEIGHT, cinerificPortraitNavScale(viewportWidth))
+}
+
+private fun cinerificPortraitNavScale(viewportWidth: Dp): Float {
+    return (viewportWidth.value / PORTRAIT_NAV_REFERENCE_WIDTH * PORTRAIT_NAV_BASE_SCALE)
+        .coerceIn(PORTRAIT_NAV_BASE_SCALE, PORTRAIT_NAV_MAX_SCALE)
 }
 
 private fun navDp(px: Float, scale: Float): Dp = (px * scale).dp
