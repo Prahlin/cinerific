@@ -26,6 +26,8 @@ import androidx.annotation.RawRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -38,8 +40,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -53,6 +57,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -67,6 +72,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -94,6 +101,8 @@ private const val HOME_ROW_CARDS_TOP_PADDING_DP = 20f
 private const val PORTRAIT_HERO_HEIGHT_FRACTION = 0.48f
 private const val PORTRAIT_CARD_VISIBLE_COUNT = 2.75f
 private const val PORTRAIT_BOTTOM_NAV_CLEARANCE = 118f
+private const val HOME_HERO_SWIPE_THRESHOLD_DP = 48f
+private const val PHONE_PORTRAIT_HERO_ART_SCALE = 1.44f
 
 private val HomeBackgroundTop = Color(0xFF080007)
 private val HomeBackgroundMid = Color(0xFF23001F)
@@ -135,6 +144,12 @@ internal fun CinerificHomeScreen(
         val cardHeight = cardWidth / CARD_ASPECT
         val interStackGap = if (isPortrait) 58.dp else 80.dp
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
+        val isPhonePortrait = isPortrait && maxWidth < 600.dp
+        val phonePortraitLogoTopPadding = if (isPhonePortrait) {
+            with(density) { WindowInsets.statusBars.getTop(this).toDp() } - 2.dp
+        } else {
+            0.dp
+        }
         val naturalHeroHeight = (maxWidth.value / HERO_REEL_VIEWPORT_ASPECT).dp
         val visibleHeroHeight = (maxHeight - bottomSystemPadding).coerceAtLeast(0.dp)
         val portraitHeroHeight = visibleHeroHeight * PORTRAIT_HERO_HEIGHT_FRACTION
@@ -144,7 +159,8 @@ internal fun CinerificHomeScreen(
             minOf(naturalHeroHeight, visibleHeroHeight)
         }
         val scrollState = rememberScrollState()
-        var activeReelIndex by remember { mutableStateOf(0) }
+        var requestedReelIndex by rememberSaveable { mutableStateOf(0) }
+        var displayedReelIndex by rememberSaveable { mutableStateOf(0) }
         val selectedCarouselIndex = homeSelectedCarouselIndex(
             scrollOffsetPx = scrollState.value,
             viewportHeight = maxHeight,
@@ -172,8 +188,17 @@ internal fun CinerificHomeScreen(
             HomeHeroHeader(
                 scale = scale,
                 height = heroHeight,
-                activeReelIndex = activeReelIndex,
-                onReelChanged = { activeReelIndex = it },
+                isPortrait = isPortrait,
+                isPhonePortrait = isPhonePortrait,
+                logoTopPadding = phonePortraitLogoTopPadding,
+                requestedReelIndex = requestedReelIndex,
+                displayedReelIndex = displayedReelIndex,
+                onReelRequested = { requestedReelIndex = it },
+                onReelSettled = { settledIndex ->
+                    val wasFollowingPlayback = requestedReelIndex == displayedReelIndex
+                    displayedReelIndex = settledIndex
+                    if (wasFollowingPlayback) requestedReelIndex = settledIndex
+                },
                 onProgramSelected = onProgramSelected
             )
 
@@ -215,33 +240,85 @@ internal fun CinerificHomeScreen(
 private fun HomeHeroHeader(
     scale: Float,
     height: Dp,
-    activeReelIndex: Int,
-    onReelChanged: (Int) -> Unit,
+    isPortrait: Boolean,
+    isPhonePortrait: Boolean,
+    logoTopPadding: Dp,
+    requestedReelIndex: Int,
+    displayedReelIndex: Int,
+    onReelRequested: (Int) -> Unit,
+    onReelSettled: (Int) -> Unit,
     onProgramSelected: (String) -> Unit
 ) {
-    val activePresentation = HeroPresentation.forReelIndex(activeReelIndex)
+    val displayedPresentation = HeroPresentation.forReelIndex(displayedReelIndex)
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(height)
             .clipToBounds()
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null
-            ) {
-                onProgramSelected(activePresentation.programTitle)
-            }
     ) {
         HeroReelVideo(
-            targetReelIndex = activeReelIndex,
-            onReelChanged = onReelChanged,
+            targetReelIndex = requestedReelIndex,
+            onReelChanged = onReelSettled,
             modifier = Modifier.fillMaxSize()
         )
 
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .pointerInput(requestedReelIndex, displayedPresentation) {
+                    val swipeThresholdPx = HOME_HERO_SWIPE_THRESHOLD_DP.dp.toPx()
+                    awaitEachGesture {
+                        val down = awaitFirstDown(requireUnconsumed = false)
+                        var totalX = 0f
+                        var totalY = 0f
+                        var horizontalGesture = false
+                        var released = false
+
+                        while (!released) {
+                            val event = awaitPointerEvent()
+                            val change = event.changes.firstOrNull { it.id == down.id } ?: break
+                            val delta = change.positionChange()
+                            totalX += delta.x
+                            totalY += delta.y
+                            if (
+                                !horizontalGesture &&
+                                abs(totalX) > viewConfiguration.touchSlop &&
+                                abs(totalX) > abs(totalY)
+                            ) {
+                                horizontalGesture = true
+                            }
+                            if (horizontalGesture) change.consume()
+                            released = !change.pressed
+                        }
+
+                        when {
+                            horizontalGesture && totalX <= -swipeThresholdPx -> {
+                                onReelRequested(
+                                    (requestedReelIndex + 1) % HeroPresentation.values().size
+                                )
+                            }
+                            horizontalGesture && totalX >= swipeThresholdPx -> {
+                                onReelRequested(
+                                    (requestedReelIndex - 1 + HeroPresentation.values().size) %
+                                        HeroPresentation.values().size
+                                )
+                            }
+                            !horizontalGesture &&
+                                abs(totalX) <= viewConfiguration.touchSlop &&
+                                abs(totalY) <= viewConfiguration.touchSlop -> {
+                                onProgramSelected(displayedPresentation.programTitle)
+                            }
+                        }
+                    }
+                }
+        )
+
         HeroPresentationTextAnimation(
-            presentation = activePresentation,
-            playKey = activeReelIndex,
+            presentation = displayedPresentation,
+            playKey = displayedReelIndex,
+            isPortrait = isPortrait,
+            titleVisualScale = if (isPhonePortrait) PHONE_PORTRAIT_HERO_ART_SCALE else 1f,
             modifier = Modifier.fillMaxSize()
         )
 
@@ -250,8 +327,15 @@ private fun HomeHeroHeader(
             contentDescription = null,
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .width(figmaDp(300f, scale))
-                .height(figmaDp(214f, scale)),
+                .offset(y = logoTopPadding)
+                .width(
+                    figmaDp(300f, scale) *
+                        if (isPhonePortrait) PHONE_PORTRAIT_HERO_ART_SCALE else 1f
+                )
+                .height(
+                    figmaDp(214f, scale) *
+                        if (isPhonePortrait) PHONE_PORTRAIT_HERO_ART_SCALE else 1f
+                ),
             contentScale = ContentScale.FillBounds
         )
     }
@@ -484,6 +568,7 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
     private var initialPlaybackStarted = false
     private var transitionInProgress = false
     private var queuedTransitionIndex: Int? = null
+    private var queuedTransitionDirection = 1f
     var reelChangedListener: ((Int) -> Unit)? = null
 
     init {
@@ -498,8 +583,10 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
         activeSlot.applyCenterCropTransform(width, height)
         incomingSlot.applyCenterCropTransform(width, height)
         if (!transitionInProgress) {
-            incomingSlot.layer.translationX = width.toFloat()
-            queuedTransitionIndex?.let { requestTransitionToVideo(it) }
+            incomingSlot.layer.translationX = width * queuedTransitionDirection
+            queuedTransitionIndex?.let {
+                requestTransitionToVideo(it, queuedTransitionDirection)
+            }
         }
     }
 
@@ -514,7 +601,8 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
             return
         }
 
-        requestTransitionToVideo(targetIndex)
+        val direction = if (targetIndex == normalizeVideoIndex(currentVideoIndex - 1)) -1f else 1f
+        requestTransitionToVideo(targetIndex, direction)
     }
 
     private fun addVideoSlot(slot: VideoSlot, initiallyOffscreen: Boolean) {
@@ -633,7 +721,7 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
         if (incomingSlot.mediaPlayer != null && incomingSlot.videoIndex == videoIndex) {
             if (incomingSlot.isPrepared && queuedTransitionIndex == videoIndex) {
                 queuedTransitionIndex = null
-                animateIncomingVideo(videoIndex)
+                animateIncomingVideo(videoIndex, queuedTransitionDirection)
             }
             return
         }
@@ -648,23 +736,25 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
             val queuedIndex = queuedTransitionIndex
             if (queuedIndex == videoIndex) {
                 queuedTransitionIndex = null
-                animateIncomingVideo(videoIndex)
+                animateIncomingVideo(videoIndex, queuedTransitionDirection)
             }
         }
     }
 
-    private fun requestTransitionToVideo(videoIndex: Int) {
+    private fun requestTransitionToVideo(videoIndex: Int, direction: Float = 1f) {
         if (width == 0) {
             queuedTransitionIndex = videoIndex
+            queuedTransitionDirection = direction
             return
         }
         if (transitionInProgress) {
             queuedTransitionIndex = videoIndex
+            queuedTransitionDirection = direction
             return
         }
         if (incomingSlot.mediaPlayer != null && incomingSlot.videoIndex == videoIndex && incomingSlot.isPrepared) {
             queuedTransitionIndex = null
-            animateIncomingVideo(videoIndex)
+            animateIncomingVideo(videoIndex, direction)
             return
         }
         if (queuedTransitionIndex == videoIndex && incomingSlot.mediaPlayer != null && incomingSlot.videoIndex == videoIndex) {
@@ -673,6 +763,7 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
 
         handler.removeCallbacksAndMessages(null)
         queuedTransitionIndex = videoIndex
+        queuedTransitionDirection = direction
         preloadVideo(videoIndex)
     }
 
@@ -688,24 +779,28 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
     private fun beginSlideTransition() {
         if (transitionInProgress || width == 0) return
         val nextIndex = queuedTransitionIndex ?: nextVideoIndex()
+        val direction = if (queuedTransitionIndex == null) 1f else queuedTransitionDirection
         if (incomingSlot.mediaPlayer == null || incomingSlot.videoIndex != nextIndex || !incomingSlot.isPrepared) {
             queuedTransitionIndex = nextIndex
+            queuedTransitionDirection = direction
             preloadVideo(nextIndex)
             return
         }
 
         queuedTransitionIndex = null
-        animateIncomingVideo(nextIndex)
+        animateIncomingVideo(nextIndex, direction)
     }
 
-    private fun animateIncomingVideo(nextIndex: Int) {
+    private fun animateIncomingVideo(nextIndex: Int, direction: Float) {
         if (transitionInProgress || width == 0) return
         transitionInProgress = true
         handler.removeCallbacksAndMessages(null)
+        val maximumBlendWidth = width * HERO_REEL_EDGE_BLEND_WIDTH_FRACTION
 
         incomingSlot.layer.apply {
-            leadingEdgeBlendWidthPx = width * HERO_REEL_EDGE_BLEND_WIDTH_FRACTION
-            translationX = width.toFloat()
+            leadingEdgeBlendWidthPx = maximumBlendWidth
+            blendOnRightEdge = direction < 0f
+            translationX = width * direction
             bringToFront()
         }
         incomingSlot.mediaPlayer?.apply {
@@ -714,12 +809,15 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
         }
 
         transitionAnimator?.cancel()
-        transitionAnimator = ValueAnimator.ofFloat(width.toFloat(), 0f).apply {
+        transitionAnimator = ValueAnimator.ofFloat(width * direction, 0f).apply {
             var canceled = false
             duration = HERO_REEL_SLIDE_DURATION_MS.toLong()
             interpolator = DecelerateInterpolator(1.35f)
             addUpdateListener { animator ->
-                incomingSlot.layer.translationX = animator.animatedValue as Float
+                val translation = animator.animatedValue as Float
+                val remainingTravel = (abs(translation) / width.toFloat()).coerceIn(0f, 1f)
+                incomingSlot.layer.translationX = translation
+                incomingSlot.layer.leadingEdgeBlendWidthPx = maximumBlendWidth * remainingTravel
             }
             addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationCancel(animation: Animator) {
@@ -742,12 +840,14 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
         transitionAnimator = null
         incomingSlot.layer.translationX = 0f
         incomingSlot.layer.leadingEdgeBlendWidthPx = 0f
+        incomingSlot.layer.blendOnRightEdge = false
 
         val oldActiveSlot = activeSlot
         activeSlot = incomingSlot
         incomingSlot = oldActiveSlot
         releaseSlot(incomingSlot, releaseSurface = false)
         incomingSlot.layer.leadingEdgeBlendWidthPx = 0f
+        incomingSlot.layer.blendOnRightEdge = false
         incomingSlot.layer.translationX = width.toFloat()
 
         currentVideoIndex = nextIndex
@@ -756,7 +856,7 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
 
         val queuedIndex = queuedTransitionIndex
         if (queuedIndex != null && queuedIndex != currentVideoIndex) {
-            requestTransitionToVideo(queuedIndex)
+            requestTransitionToVideo(queuedIndex, queuedTransitionDirection)
         } else {
             queuedTransitionIndex = null
             preloadNextVideo()
@@ -840,10 +940,17 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
         }
         private var edgeMaskShader: LinearGradient? = null
         private var edgeMaskShaderWidth = -1f
+        private var edgeMaskShaderOnRight = false
 
         var leadingEdgeBlendWidthPx = 0f
             set(value) {
                 field = value.coerceAtLeast(0f)
+                invalidate()
+            }
+
+        var blendOnRightEdge = false
+            set(value) {
+                field = value
                 invalidate()
             }
 
@@ -876,25 +983,41 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
 
         private fun edgeMaskShaderFor(edgeWidth: Float): LinearGradient {
             val existingShader = edgeMaskShader
-            if (existingShader != null && edgeMaskShaderWidth == edgeWidth) {
+            if (
+                existingShader != null &&
+                edgeMaskShaderWidth == edgeWidth &&
+                edgeMaskShaderOnRight == blendOnRightEdge
+            ) {
                 return existingShader
             }
 
-            return LinearGradient(
-                0f,
-                0f,
-                edgeWidth,
-                0f,
+            val startX = if (blendOnRightEdge) width - edgeWidth else 0f
+            val endX = if (blendOnRightEdge) width.toFloat() else edgeWidth
+            val colors = if (blendOnRightEdge) {
+                intArrayOf(
+                    android.graphics.Color.BLACK,
+                    android.graphics.Color.argb(110, 0, 0, 0),
+                    android.graphics.Color.TRANSPARENT
+                )
+            } else {
                 intArrayOf(
                     android.graphics.Color.TRANSPARENT,
                     android.graphics.Color.argb(110, 0, 0, 0),
                     android.graphics.Color.BLACK
-                ),
+                )
+            }
+            return LinearGradient(
+                startX,
+                0f,
+                endX,
+                0f,
+                colors,
                 floatArrayOf(0f, 0.42f, 1f),
                 Shader.TileMode.CLAMP
             ).also {
                 edgeMaskShader = it
                 edgeMaskShaderWidth = edgeWidth
+                edgeMaskShaderOnRight = blendOnRightEdge
             }
         }
     }

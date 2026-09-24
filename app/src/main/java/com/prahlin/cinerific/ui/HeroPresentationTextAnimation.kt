@@ -8,7 +8,10 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,7 +39,8 @@ internal enum class HeroPresentation(
     val programTitle: String,
     val frames: List<HeroPresentationFrame>,
     val textBands: HeroPresentationTextBands,
-    val copy: HeroPresentationCopy
+    val copy: HeroPresentationCopy,
+    val portraitTitleLiftMultiplier: Float = 1.5f
 ) {
     LightAsAir(
         programTitle = "Light As Air",
@@ -55,7 +59,8 @@ internal enum class HeroPresentation(
             genres = listOf("documentary", "adventure", "home improvement"),
             descriptionTopPx = 238f,
             genresTopPx = 283f
-        )
+        ),
+        portraitTitleLiftMultiplier = 1.28f
     ),
     Infatuation(
         programTitle = "Infatuation",
@@ -93,7 +98,8 @@ internal enum class HeroPresentation(
             genres = listOf("documentary", "nature", "educational"),
             descriptionTopPx = 125f,
             genresTopPx = 163f
-        )
+        ),
+        portraitTitleLiftMultiplier = 1.75f
     ),
     MorbidTemptations(
         programTitle = "Morbid Temptations",
@@ -149,6 +155,8 @@ internal data class HeroPresentationCopy(
 internal fun HeroPresentationTextAnimation(
     presentation: HeroPresentation,
     playKey: Any,
+    isPortrait: Boolean = false,
+    titleVisualScale: Float = 1f,
     modifier: Modifier = Modifier
 ) {
     var elapsedMs by remember(presentation, playKey) { mutableStateOf(0L) }
@@ -166,8 +174,12 @@ internal fun HeroPresentationTextAnimation(
         contentAlignment = Alignment.TopStart
     ) {
         val scale = maxWidth.value / PRESENTATION_HOME_FRAME_WIDTH
-        val stackTop = maxHeight -
-            ((presentation.contentBottomPx + PRESENTATION_REEL_EDGE_PADDING_PX) * scale).dp
+        val stackBottomPx = if (isPortrait) {
+            presentation.textBands.descriptionTopPx * presentation.portraitTitleLiftMultiplier
+        } else {
+            presentation.contentBottomPx + PRESENTATION_REEL_EDGE_PADDING_PX
+        }
+        val stackTop = maxHeight - (stackBottomPx * scale).dp
         val elapsed = elapsedMs
 
         Box(
@@ -187,21 +199,24 @@ internal fun HeroPresentationTextAnimation(
                 textBands = presentation.textBands,
                 scale = scale,
                 alpha = titleLayer.alphaFor(elapsed),
-                slideYPx = titleLayer.slideFor(elapsed)
+                slideYPx = titleLayer.slideFor(elapsed),
+                visualScale = titleVisualScale
             )
-            HeroPresentationDescriptionText(
-                text = presentation.copy.description,
-                topPx = presentation.copy.descriptionTopPx,
-                scale = scale,
-                alpha = HeroPresentationTextLayer.Description.alphaFor(elapsed)
-            )
-            HeroPresentationGenresText(
-                genres = presentation.copy.genres,
-                topPx = presentation.copy.genresTopPx,
-                scale = scale,
-                alpha = HeroPresentationTextLayer.Genres.alphaFor(elapsed),
-                slideYPx = HeroPresentationTextLayer.Genres.slideFor(elapsed)
-            )
+            if (!isPortrait) {
+                HeroPresentationDescriptionText(
+                    text = presentation.copy.description,
+                    topPx = presentation.copy.descriptionTopPx,
+                    scale = scale,
+                    alpha = HeroPresentationTextLayer.Description.alphaFor(elapsed)
+                )
+                HeroPresentationGenresText(
+                    genres = presentation.copy.genres,
+                    topPx = presentation.copy.genresTopPx,
+                    scale = scale,
+                    alpha = HeroPresentationTextLayer.Genres.alphaFor(elapsed),
+                    slideYPx = HeroPresentationTextLayer.Genres.slideFor(elapsed)
+                )
+            }
         }
     }
 }
@@ -214,6 +229,7 @@ private fun HeroPresentationFrameBandImage(
     scale: Float,
     alpha: Float,
     slideYPx: Float,
+    visualScale: Float,
     modifier: Modifier = Modifier
 ) {
     val clipTopPx = band.clipTop(textBands).coerceIn(0f, frame.figmaHeightPx)
@@ -222,6 +238,7 @@ private fun HeroPresentationFrameBandImage(
     if (clipHeightPx <= 0f || alpha <= 0.001f) return
 
     val painter = painterResource(frame.drawableId)
+    val scaledBandTopPx = clipBottomPx - clipHeightPx * visualScale + slideYPx
 
     Box(
         modifier = modifier
@@ -231,18 +248,19 @@ private fun HeroPresentationFrameBandImage(
         Canvas(
             modifier = Modifier
                 .offset(
-                    y = ((clipTopPx + slideYPx) * scale).dp
+                    y = (scaledBandTopPx * scale).dp
                 )
-                .width((frame.figmaWidthPx * scale).dp)
-                .height((clipHeightPx * scale).dp)
+                .wrapContentSize(Alignment.TopStart, unbounded = true)
+                .requiredWidth((frame.figmaWidthPx * scale * visualScale).dp)
+                .requiredHeight((clipHeightPx * scale * visualScale).dp)
                 .clipToBounds()
                 .graphicsLayer {
                     this.alpha = alpha.coerceIn(0f, 1f)
                 }
         ) {
-            val frameWidth = (frame.figmaWidthPx * scale).dp.toPx()
-            val frameHeight = (frame.figmaHeightPx * scale).dp.toPx()
-            translate(top = -(clipTopPx * scale).dp.toPx()) {
+            val frameWidth = (frame.figmaWidthPx * scale * visualScale).dp.toPx()
+            val frameHeight = (frame.figmaHeightPx * scale * visualScale).dp.toPx()
+            translate(top = -(clipTopPx * scale * visualScale).dp.toPx()) {
                 with(painter) {
                     draw(size = Size(frameWidth, frameHeight))
                 }
