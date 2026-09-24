@@ -97,12 +97,14 @@ private const val SELECTED_CARD_CLEAR_STROKE_PX = 10f
 private const val SELECTED_CARD_OUTER_STROKE_PX = 3f
 private const val HOME_ROW_HEADER_HEIGHT_DP = 48f
 private const val HOME_ROW_CARDS_TOP_PADDING_DP = 20f
+private const val ENABLE_PORTRAIT_FULLSCREEN_HERO_EXPERIMENT = true
 private const val PORTRAIT_HERO_HEIGHT_FRACTION = 0.48f
 private const val PORTRAIT_CARD_WIDTH_TO_GENRE_TEXT_RATIO = 6.9f
 private const val LANDSCAPE_CARD_WIDTH_TO_GENRE_TEXT_RATIO = 8.34f
 private const val PORTRAIT_BOTTOM_NAV_CLEARANCE = 118f
 private const val HOME_HERO_SWIPE_THRESHOLD_DP = 48f
 private const val PHONE_PORTRAIT_HERO_ART_SCALE = 1.44f
+private val HERO_REEL_PORTRAIT_FOCAL_X = floatArrayOf(0.50f, 0.48f, 0.63f, 0.56f)
 
 private val HomeBackgroundTop = Color(0xFF080007)
 private val HomeBackgroundMid = Color(0xFF23001F)
@@ -146,9 +148,16 @@ internal fun CinerificHomeScreen(
         }
         val naturalHeroHeight = (maxWidth.value / HERO_REEL_VIEWPORT_ASPECT).dp
         val visibleHeroHeight = (maxHeight - bottomSystemPadding).coerceAtLeast(0.dp)
+        val portraitFullscreenHeroHeight = (
+            visibleHeroHeight - cinerificPortraitBottomNavContentHeight(maxWidth, maxHeight)
+            ).coerceAtLeast(0.dp)
         val portraitHeroHeight = visibleHeroHeight * PORTRAIT_HERO_HEIGHT_FRACTION
         val heroHeight = if (isPortrait) {
-            minOf(maxOf(naturalHeroHeight, portraitHeroHeight), visibleHeroHeight)
+            if (ENABLE_PORTRAIT_FULLSCREEN_HERO_EXPERIMENT) {
+                portraitFullscreenHeroHeight
+            } else {
+                minOf(maxOf(naturalHeroHeight, portraitHeroHeight), visibleHeroHeight)
+            }
         } else {
             minOf(naturalHeroHeight, visibleHeroHeight)
         }
@@ -574,8 +583,8 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
 
     override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
         super.onSizeChanged(width, height, oldWidth, oldHeight)
-        activeSlot.applyCenterCropTransform(width, height)
-        incomingSlot.applyCenterCropTransform(width, height)
+        activeSlot.applySubjectCropTransform(width, height)
+        incomingSlot.applySubjectCropTransform(width, height)
         if (!transitionInProgress) {
             incomingSlot.layer.translationX = width * queuedTransitionDirection
             queuedTransitionIndex?.let {
@@ -619,7 +628,7 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
                 width: Int,
                 height: Int
             ) {
-                slot.applyCenterCropTransform(this@LoopingHeroVideoView.width, this@LoopingHeroVideoView.height)
+                slot.applySubjectCropTransform(this@LoopingHeroVideoView.width, this@LoopingHeroVideoView.height)
             }
 
             override fun onSurfaceTextureDestroyed(surfaceTexture: SurfaceTexture): Boolean {
@@ -678,12 +687,12 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
             setOnVideoSizeChangedListener { _, videoWidth, videoHeight ->
                 slot.videoWidth = videoWidth
                 slot.videoHeight = videoHeight
-                slot.applyCenterCropTransform(this@LoopingHeroVideoView.width, this@LoopingHeroVideoView.height)
+                slot.applySubjectCropTransform(this@LoopingHeroVideoView.width, this@LoopingHeroVideoView.height)
             }
             setOnPreparedListener { player ->
                 if (slot.mediaPlayer !== player) return@setOnPreparedListener
                 slot.isPrepared = true
-                slot.applyCenterCropTransform(this@LoopingHeroVideoView.width, this@LoopingHeroVideoView.height)
+                slot.applySubjectCropTransform(this@LoopingHeroVideoView.width, this@LoopingHeroVideoView.height)
                 if (autoStart) {
                     player.start()
                 } else {
@@ -902,7 +911,7 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
         var videoHeight = 0
         var isPrepared = false
 
-        fun applyCenterCropTransform(viewWidthPx: Int, viewHeightPx: Int) {
+        fun applySubjectCropTransform(viewWidthPx: Int, viewHeightPx: Int) {
             if (viewWidthPx == 0 || viewHeightPx == 0 || videoWidth == 0 || videoHeight == 0) {
                 return
             }
@@ -914,13 +923,24 @@ private class LoopingHeroVideoView(context: Context) : FrameLayout(context) {
             val scale = max(scaleX, scaleY)
             val scaledWidth = videoWidth * scale
             val scaledHeight = videoHeight * scale
+            val focalX = if (viewHeight > viewWidth) {
+                HERO_REEL_PORTRAIT_FOCAL_X.getOrElse(videoIndex) { 0.5f }
+            } else {
+                0.5f
+            }
+            val scaleToViewX = scaledWidth / viewWidth
+            val scaleToViewY = scaledHeight / viewHeight
+            val translationX = (viewWidth / 2f - focalX * scaledWidth)
+                .coerceIn(viewWidth - scaledWidth, 0f)
+            val translationY = (viewHeight - scaledHeight) / 2f
 
             centerCropMatrix.reset()
-            centerCropMatrix.setScale(
-                scaledWidth / viewWidth,
-                scaledHeight / viewHeight,
-                viewWidth / 2f,
-                viewHeight / 2f
+            centerCropMatrix.setValues(
+                floatArrayOf(
+                    scaleToViewX, 0f, translationX,
+                    0f, scaleToViewY, translationY,
+                    0f, 0f, 1f
+                )
             )
             textureView.setTransform(centerCropMatrix)
         }
