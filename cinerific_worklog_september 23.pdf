@@ -1,0 +1,1310 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+2 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+3 0 obj
+<< /Type /Pages /Count 4 /Kids [5 0 R 7 0 R 9 0 R 11 0 R] >>
+endobj
+4 0 obj
+<< /Length 8512 >>
+stream
+BT
+/F2 15 Tf
+48 748 Td
+(Cinerific Android App Work Log - September 23, 2026 \(U.S. EST\)) Tj
+ET
+BT
+/F1 8.25 Tf
+42 721 Td
+(Compiled summary for Wednesday, September 23, 2026 \(U.S. Eastern Time\) - focus: continuing the) Tj
+ET
+BT
+/F1 8.25 Tf
+42 711.8 Td
+(  post-September-21 portrait and playback pass by reviewing the current project snapshot and every prior) Tj
+ET
+BT
+/F1 8.25 Tf
+42 702.5999999999999 Td
+(  Cinerific worklog, booting and validating the standalone Standard tablet AVD and connected Samsung phone,) Tj
+ET
+BT
+/F1 8.25 Tf
+42 693.3999999999999 Td
+(  redesigning the logged-in portrait navigation for readable scale and crisp high-resolution artwork, adding) Tj
+ET
+BT
+/F1 8.25 Tf
+42 684.1999999999998 Td
+(  bidirectional video-reel swiping without exposing playback controls, synchronizing reel titles to settled) Tj
+ET
+BT
+/F1 8.25 Tf
+42 674.9999999999998 Td
+(  playback, refining portrait title and logo placement, matching phone title-card proportions to tablets,) Tj
+ET
+BT
+/F1 8.25 Tf
+42 665.7999999999997 Td
+(  protecting destination headers from the phone status toolbar, and introducing a reversible full-screen) Tj
+ET
+BT
+/F1 8.25 Tf
+42 656.5999999999997 Td
+(  portrait reel experiment with subject-aware framing and unchanged scrollable genre rows.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 644.8999999999996 Td
+(Generated in continuity with the established Cinerific worklog cadence from July 12 through September 21) Tj
+ET
+BT
+/F1 8.25 Tf
+42 635.6999999999996 Td
+(  Part 2: compact opening summary, source-material review, baseline state, goals, themed work-completed) Tj
+ET
+BT
+/F1 8.25 Tf
+42 626.4999999999995 Td
+(  sections, validation, files touched, follow-up context, and output-artifact close. No September 23 worklog) Tj
+ET
+BT
+/F1 8.25 Tf
+42 617.2999999999995 Td
+(  existed before this artifact, so it uses the first-log-of-day filename without a part suffix. Eastern Time) Tj
+ET
+BT
+/F1 8.25 Tf
+42 608.0999999999995 Td
+(  was verified from the host as Wednesday, September 23, 2026 at 10:53 PM EDT, UTC-04:00. The title retains) Tj
+ET
+BT
+/F1 8.25 Tf
+42 598.8999999999994 Td
+(  the repository's established U.S. EST label while the body records the seasonally accurate EDT verification.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 589.6999999999994 Td
+(  This artifact covers commits 46fb0c7, 28ceaa7, 5abc024, and 465570a on main, plus the refreshed project) Tj
+ET
+BT
+/F1 8.25 Tf
+42 580.4999999999993 Td
+(  snapshot produced during this documentation pass.) Tj
+ET
+BT
+/F2 10 Tf
+42 561.7999999999993 Td
+(Source Materials Reviewed) Tj
+ET
+BT
+/F1 8.25 Tf
+42 548.7999999999993 Td
+(- Reviewed every pre-existing Cinerific worklog PDF at the repository root: July 12, July 14, July 15 Part) Tj
+ET
+BT
+/F1 8.25 Tf
+42 539.5999999999992 Td
+(  1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, July 25, July 27, July 28) Tj
+ET
+BT
+/F1 8.25 Tf
+42 530.3999999999992 Td
+(  Part 1, July 28 Part 2, July 29, August 1, August 3, August 4, August 5, September 19, September 21, and) Tj
+ET
+BT
+/F1 8.25 Tf
+42 521.1999999999991 Td
+(  September 21 Part 2.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 509.49999999999915 Td
+(- Converted all twenty-three earlier PDFs with pdftotext and inspected their title cadence,) Tj
+ET
+BT
+/F1 8.25 Tf
+42 500.29999999999916 Td
+(  opening-summary density, source-review language, baseline and goals sections, themed work-completed) Tj
+ET
+BT
+/F1 8.25 Tf
+42 491.09999999999917 Td
+(  sections, validation phrasing, file inventories, follow-up closes, and output-artifact wording.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 479.3999999999992 Td
+(- Ran pdfinfo and pdffonts across the worklog set, using September 21 Part 2 as the closest template, to) Tj
+ET
+BT
+/F1 8.25 Tf
+42 470.1999999999992 Td
+(  preserve four U.S. Letter pages, Helvetica body type, PDF 1.4 compatibility, text extraction, Codex) Tj
+ET
+BT
+/F1 8.25 Tf
+42 460.9999999999992 Td
+(  metadata, and right-aligned footer treatment.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 449.2999999999992 Td
+(- Ran ./read_project.sh and reviewed the refreshed cinerific_PROJECT_SNAPSHOT.txt for the current source) Tj
+ET
+BT
+/F1 8.25 Tf
+42 440.0999999999992 Td
+(  tree, Kotlin implementation, drawable inventory, launcher and emulator files, worklog inventory, and) Tj
+ET
+BT
+/F1 8.25 Tf
+42 430.89999999999924 Td
+(  September 23 timestamp.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 419.19999999999925 Td
+(- Reviewed git history, commit messages, stats, and Kotlin diffs for all four September 23 commits, then) Tj
+ET
+BT
+/F1 8.25 Tf
+42 409.99999999999926 Td
+(  checked current branch and working-tree state before producing this artifact.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 398.2999999999993 Td
+(- Reviewed CinerificHomeScreen.kt, HeroPresentationTextAnimation.kt, CinerificRightSideNavBar.kt, and) Tj
+ET
+BT
+/F1 8.25 Tf
+42 389.0999999999993 Td
+(  CinerificDestinationScreen.kt around navigation geometry, reel state, video transforms, portrait) Tj
+ET
+BT
+/F1 8.25 Tf
+42 379.8999999999993 Td
+(  overlays, responsive card sizing, destination headers, and scroll behavior.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 368.1999999999993 Td
+(- Reviewed all four repository hero MP4s and representative decoded frames, including source resolution,) Tj
+ET
+BT
+/F1 8.25 Tf
+42 358.9999999999993 Td
+(  aspect ratio, principal subject placement, and the limitations of enlarging landscape footage into tall) Tj
+ET
+BT
+/F1 8.25 Tf
+42 349.79999999999933 Td
+(  portrait viewports.) Tj
+ET
+BT
+/F2 10 Tf
+42 331.09999999999934 Td
+(Baseline Status Before September 23 Work) Tj
+ET
+BT
+/F1 8.25 Tf
+42 318.09999999999934 Td
+(- Cinerific entered September 23 with the dedicated portrait intro, high-resolution profile avatars,) Tj
+ET
+BT
+/F1 8.25 Tf
+42 308.89999999999935 Td
+(  responsive S21-derived intro scaling, profile slide-and-fade motion, stable cold-launch timing, and the) Tj
+ET
+BT
+/F1 8.25 Tf
+42 299.69999999999936 Td
+(  low-load Standard tablet QA environment completed on September 21.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 287.9999999999994 Td
+(- The logged-in bottom navigation remained too small on portrait phones, with undersized labels and icons,) Tj
+ET
+BT
+/F1 8.25 Tf
+42 278.7999999999994 Td
+(  uneven visual alignment, and visibly soft legacy raster assets.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 267.0999999999994 Td
+(- Home video reels advanced automatically but did not yet offer deliberate bidirectional card swiping, and) Tj
+ET
+BT
+/F1 8.25 Tf
+42 257.8999999999994 Td
+(  rapidly queued changes could let title artwork advance ahead of the video that had actually settled.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 246.19999999999942 Td
+(- Portrait reels still exposed small description and genre text, while phone title and logo sizing) Tj
+ET
+BT
+/F1 8.25 Tf
+42 236.99999999999943 Td
+(  required additional safe-area and clipping work.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 225.29999999999944 Td
+(- Phone home cards were sized from visible-count arithmetic rather than the tablet's genre-label-to-card) Tj
+ET
+BT
+/F1 8.25 Tf
+42 216.09999999999945 Td
+(  proportion, and destination headings could rise into the native phone toolbar.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 204.39999999999947 Td
+(- Portrait reel height occupied only part of the viewport; genre rows were immediately visible beneath it) Tj
+ET
+BT
+/F1 8.25 Tf
+42 195.19999999999948 Td
+(  rather than reached by scrolling from a full-screen playback presentation.) Tj
+ET
+BT
+/F2 10 Tf
+42 176.4999999999995 Td
+(Main Goals for September 23) Tj
+ET
+BT
+/F1 8.25 Tf
+42 163.4999999999995 Td
+(- Make logged-in portrait navigation legible, aligned, and crisp on both phones and large tablets.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 151.7999999999995 Td
+(- Add card-local horizontal reel navigation while preserving vertical page scrolling, tap-to-open playback) Tj
+ET
+BT
+/F1 8.25 Tf
+42 142.5999999999995 Td
+(  controls, automatic playback, and established transition effects.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 130.89999999999952 Td
+(- Keep title artwork synchronized with the video that has actually settled and restore correct portrait) Tj
+ET
+BT
+/F1 8.25 Tf
+42 121.69999999999952 Td
+(  and landscape presentation after orientation changes.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 109.99999999999952 Td
+(- Match phone card proportions to tablets without changing genre text sizes, and protect destination) Tj
+ET
+BT
+/F1 8.25 Tf
+42 100.79999999999951 Td
+(  headers from system UI.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 89.09999999999951 Td
+(- Test a reversible full-screen portrait reel that preserves overlay placement and leaves the existing) Tj
+ET
+BT
+/F1 8.25 Tf
+42 79.89999999999951 Td
+(  genre rows available below it.) Tj
+ET
+BT
+/F1 8 Tf
+300.7 24 Td
+(Cinerific Work Log - September 23, 2026 \(U.S. EST\) Page 1) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 3 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 7529 >>
+stream
+BT
+/F2 10 Tf
+42 741 Td
+(Work Completed - Portrait Navigation Scale and Alignment) Tj
+ET
+BT
+/F1 8.25 Tf
+42 728 Td
+(- Introduced a portrait-specific navigation scale derived from a 360 dp reference width and clamped it) Tj
+ET
+BT
+/F1 8.25 Tf
+42 718.8 Td
+(  between phone and tablet limits, separating portrait sizing from the pre-existing landscape rail) Tj
+ET
+BT
+/F1 8.25 Tf
+42 709.5999999999999 Td
+(  geometry.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 697.8999999999999 Td
+(- Iteratively reduced the initially oversized portrait bar until its overall height, icon slots, and) Tj
+ET
+BT
+/F1 8.25 Tf
+42 688.6999999999998 Td
+(  labels matched the accepted phone and tablet balance.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 676.9999999999998 Td
+(- Reworked the five-item row around stable item widths and icon slots so dynamic scaling no longer changed) Tj
+ET
+BT
+/F1 8.25 Tf
+42 667.7999999999997 Td
+(  the navigation layout footprint.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 656.0999999999997 Td
+(- Aligned Movies, Shows, and Favorites vertically to the Home icon while enlarging those three featured) Tj
+ET
+BT
+/F1 8.25 Tf
+42 646.8999999999996 Td
+(  symbols independently of their labels.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 635.1999999999996 Td
+(- Moved all five labels downward toward the screen edge without moving their icons, preserving a) Tj
+ET
+BT
+/F1 8.25 Tf
+42 625.9999999999995 Td
+(  consistent text baseline and improving separation between symbol and label.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 614.2999999999995 Td
+(- Kept Home, Movies, Shows, Favorites, and Settings hit areas and destination routing unchanged throughout) Tj
+ET
+BT
+/F1 8.25 Tf
+42 605.0999999999995 Td
+(  the visual revisions.) Tj
+ET
+BT
+/F2 10 Tf
+42 586.3999999999994 Td
+(Work Completed - High-Resolution Navigation Artwork) Tj
+ET
+BT
+/F1 8.25 Tf
+42 573.3999999999994 Td
+(- Searched the repository for higher-resolution navigation artwork and confirmed the active assets were) Tj
+ET
+BT
+/F1 8.25 Tf
+42 564.1999999999994 Td
+(  tiny raster files that became visibly blurred when enlarged.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 552.4999999999993 Td
+(- Used the supplied Cinerific Figma design references to recover cleaner source artwork for all five) Tj
+ET
+BT
+/F1 8.25 Tf
+42 543.2999999999993 Td
+(  navigation destinations.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 531.5999999999992 Td
+(- Replaced nav_icon_home.png, nav_icon_movies.png, nav_icon_shows.png, nav_icon_favorites.png, and) Tj
+ET
+BT
+/F1 8.25 Tf
+42 522.3999999999992 Td
+(  nav_icon_settings.png with substantially larger drawable-nodpi exports suitable for phone and tablet) Tj
+ET
+BT
+/F1 8.25 Tf
+42 513.1999999999991 Td
+(  rendering.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 501.49999999999915 Td
+(- Identified the Favorites star's residual grain as overlapping edge treatment in the source artwork) Tj
+ET
+BT
+/F1 8.25 Tf
+42 492.29999999999916 Td
+(  rather than Android scaling alone.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 480.59999999999917 Td
+(- Simplified and re-exported the Favorites star so its outline reads cleanly at the enlarged navigation) Tj
+ET
+BT
+/F1 8.25 Tf
+42 471.3999999999992 Td
+(  size without the prior noisy double-edge effect.) Tj
+ET
+BT
+/F2 10 Tf
+42 452.6999999999992 Td
+(Work Completed - Reel Swipe Interaction) Tj
+ET
+BT
+/F1 8.25 Tf
+42 439.6999999999992 Td
+(- Added horizontal gesture recognition directly to the currently displayed video reel card rather than) Tj
+ET
+BT
+/F1 8.25 Tf
+42 430.4999999999992 Td
+(  attaching a swipe listener to the whole screen.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 418.7999999999992 Td
+(- Separated horizontal reel gestures from vertical page movement using touch-slop and axis-intent checks,) Tj
+ET
+BT
+/F1 8.25 Tf
+42 409.5999999999992 Td
+(  allowing the parent home page to continue scrolling normally.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 397.89999999999924 Td
+(- Added cyclic left and right reel selection with a 48 dp commit threshold and preserved tap behavior for) Tj
+ET
+BT
+/F1 8.25 Tf
+42 388.69999999999925 Td
+(  opening the currently playing program.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 376.99999999999926 Td
+(- Kept the forward, play, and back playback controls exclusive to tapping the active reel; swiping now) Tj
+ET
+BT
+/F1 8.25 Tf
+42 367.7999999999993 Td
+(  changes and plays the requested reel without surfacing those controls.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 356.0999999999993 Td
+(- Stored requested and displayed reel indices separately with saveable state so queued user intent no) Tj
+ET
+BT
+/F1 8.25 Tf
+42 346.8999999999993 Td
+(  longer masquerades as completed playback.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 335.1999999999993 Td
+(- Updated visible title artwork only from the player's settled-reel callback, preventing rapid consecutive) Tj
+ET
+BT
+/F1 8.25 Tf
+42 325.9999999999993 Td
+(  swipes from changing titles while the previous video remained onscreen.) Tj
+ET
+BT
+/F2 10 Tf
+42 307.29999999999933 Td
+(Work Completed - Reel Transition and Playback Polish) Tj
+ET
+BT
+/F1 8.25 Tf
+42 294.29999999999933 Td
+(- Extended the native looping video view to animate incoming reels from either horizontal direction while) Tj
+ET
+BT
+/F1 8.25 Tf
+42 285.09999999999934 Td
+(  retaining automatic advancement and preload behavior.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 273.39999999999935 Td
+(- Made the incoming edge blend follow swipe direction and progressively shrink with remaining travel) Tj
+ET
+BT
+/F1 8.25 Tf
+42 264.19999999999936 Td
+(  instead of snapping a fixed dark gradient into place.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 252.49999999999937 Td
+(- Reset edge-mask direction and width after every completed transition so later automatic or) Tj
+ET
+BT
+/F1 8.25 Tf
+42 243.2999999999994 Td
+(  user-requested changes begin from a clean visual state.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 231.5999999999994 Td
+(- Queued fast swipe requests with their intended direction and resumed them only after the active) Tj
+ET
+BT
+/F1 8.25 Tf
+42 222.3999999999994 Td
+(  animation settled, keeping video, title, and transition state coordinated.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 210.69999999999942 Td
+(- Preserved MediaPlayer preparation, looping sequence, muted playback, TextureView reuse, and the existing) Tj
+ET
+BT
+/F1 8.25 Tf
+42 201.49999999999943 Td
+(  seven-hundred-millisecond decelerated slide timing.) Tj
+ET
+BT
+/F2 10 Tf
+42 182.79999999999944 Td
+(Work Completed - Portrait Reel Text and Logo) Tj
+ET
+BT
+/F1 8.25 Tf
+42 169.79999999999944 Td
+(- Removed the small description and genre snippets from portrait reel overlays while retaining the full) Tj
+ET
+BT
+/F1 8.25 Tf
+42 160.59999999999945 Td
+(  presentation in landscape.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 148.89999999999947 Td
+(- Moved portrait title bands into a bottom-oriented position and added per-presentation lift multipliers) Tj
+ET
+BT
+/F1 8.25 Tf
+42 139.69999999999948 Td
+(  so Into The Wild and the two-line Light As Air artwork align visually with the other titles.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 127.99999999999949 Td
+(- Increased phone portrait title artwork and the Cinerific logo through a shared 1.44 visual scale while) Tj
+ET
+BT
+/F1 8.25 Tf
+42 118.79999999999949 Td
+(  preserving their established bottom and top edge anchors.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 107.09999999999948 Td
+(- Offset the phone portrait logo below the status toolbar and recalculated scaled title clipping from the) Tj
+ET
+BT
+/F1 8.25 Tf
+42 97.89999999999948 Td
+(  band's bottom edge, eliminating invisible-boundary clipping after enlargement.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 86.19999999999948 Td
+(- Kept tablet portrait sizing and all landscape title, description, genre, and logo behavior on their) Tj
+ET
+BT
+/F1 8.25 Tf
+42 76.99999999999947 Td
+(  existing paths.) Tj
+ET
+BT
+/F1 8 Tf
+300.7 24 Td
+(Cinerific Work Log - September 23, 2026 \(U.S. EST\) Page 2) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 3 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 7684 >>
+stream
+BT
+/F2 10 Tf
+42 741 Td
+(Work Completed - Responsive Home Cards) Tj
+ET
+BT
+/F1 8.25 Tf
+42 728 Td
+(- Replaced phone portrait visible-card-count arithmetic with explicit card-width-to-genre-text ratios) Tj
+ET
+BT
+/F1 8.25 Tf
+42 718.8 Td
+(  based on the accepted tablet composition.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 707.0999999999999 Td
+(- Derived portrait and landscape card widths from the unchanged 36 sp genre heading size, using separate) Tj
+ET
+BT
+/F1 8.25 Tf
+42 697.8999999999999 Td
+(  6.9 and 8.34 proportional factors.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 686.1999999999998 Td
+(- Preserved title-card aspect ratio, corner treatment, gaps, selection stroke, horizontal scrolling,) Tj
+ET
+BT
+/F1 8.25 Tf
+42 676.9999999999998 Td
+(  catalog routing, and every existing genre row behavior.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 665.2999999999997 Td
+(- Verified that genre heading sizes did not change on phones; only the card dimensions moved into the) Tj
+ET
+BT
+/F1 8.25 Tf
+42 656.0999999999997 Td
+(  tablet-derived proportional system.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 644.3999999999996 Td
+(- Kept tablet portrait and landscape results visually stable while bringing both phone orientations into) Tj
+ET
+BT
+/F1 8.25 Tf
+42 635.1999999999996 Td
+(  the same proportional rule.) Tj
+ET
+BT
+/F2 10 Tf
+42 616.4999999999995 Td
+(Work Completed - Destination Header Protection) Tj
+ET
+BT
+/F1 8.25 Tf
+42 603.4999999999995 Td
+(- Added a compact-phone portrait-only 28 dp allowance to the shared destination top-bar height) Tj
+ET
+BT
+/F1 8.25 Tf
+42 594.2999999999995 Td
+(  calculation.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 582.5999999999995 Td
+(- Moved Movies, Shows, Favorites, and Settings headings below the native status toolbar while retaining) Tj
+ET
+BT
+/F1 8.25 Tf
+42 573.3999999999994 Td
+(  typography, horizontal position, and bottom alignment.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 561.6999999999994 Td
+(- Applied the gap through the shared destination geometry so body content follows the heading naturally) Tj
+ET
+BT
+/F1 8.25 Tf
+42 552.4999999999993 Td
+(  rather than overlapping or receiving one-off offsets.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 540.7999999999993 Td
+(- Left Home, tablets, and every landscape destination layout unchanged through the 600 dp phone) Tj
+ET
+BT
+/F1 8.25 Tf
+42 531.5999999999992 Td
+(  breakpoint.) Tj
+ET
+BT
+/F2 10 Tf
+42 512.8999999999992 Td
+(Work Completed - Full-Screen Portrait Reel Experiment) Tj
+ET
+BT
+/F1 8.25 Tf
+42 499.8999999999992 Td
+(- Added ENABLE_PORTRAIT_FULLSCREEN_HERO_EXPERIMENT as a single reversible switch while retaining the prior) Tj
+ET
+BT
+/F1 8.25 Tf
+42 490.6999999999992 Td
+(  natural and 48-percent portrait height calculation in the disabled branch.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 478.9999999999992 Td
+(- Expanded phone and tablet portrait reels to the complete usable viewport above Cinerific's persistent) Tj
+ET
+BT
+/F1 8.25 Tf
+42 469.7999999999992 Td
+(  bottom navigation instead of drawing behind the navigation and obscuring title artwork.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 458.0999999999992 Td
+(- Preserved the Cinerific logo's top anchor and the title stack's bottom anchor, allowing their) Tj
+ET
+BT
+/F1 8.25 Tf
+42 448.89999999999924 Td
+(  established relative placement to scale naturally with the taller reel.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 437.19999999999925 Td
+(- Kept the home Column vertically scrollable so users can move past the full-screen reel into the) Tj
+ET
+BT
+/F1 8.25 Tf
+42 427.99999999999926 Td
+(  unchanged genre headings and title-card carousels below.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 416.2999999999993 Td
+(- Left landscape reel height calculations untouched and preserved horizontal reel gestures, automatic) Tj
+ET
+BT
+/F1 8.25 Tf
+42 407.0999999999993 Td
+(  playback, title synchronization, edge blending, tap routing, and genre-row selection behavior.) Tj
+ET
+BT
+/F2 10 Tf
+42 388.3999999999993 Td
+(Work Completed - Subject-Aware Portrait Framing) Tj
+ET
+BT
+/F1 8.25 Tf
+42 375.3999999999993 Td
+(- Inspected representative source frames for Light As Air, Infatuation, Into The Wild, and Morbid) Tj
+ET
+BT
+/F1 8.25 Tf
+42 366.1999999999993 Td
+(  Temptations to identify the airplane, central character, frog, and hand as principal focal subjects.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 354.4999999999993 Td
+(- Replaced the universal center-crop transform with a portrait-only focal transform while retaining exact) Tj
+ET
+BT
+/F1 8.25 Tf
+42 345.29999999999933 Td
+(  center crop in landscape.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 333.59999999999934 Td
+(- Assigned per-reel horizontal focal fractions and clamped translation against both image edges so subject) Tj
+ET
+BT
+/F1 8.25 Tf
+42 324.39999999999935 Td
+(  positioning cannot reveal unfilled video space.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 312.69999999999936 Td
+(- Adjusted Light As Air back to a centered motion envelope after live playback showed that the moving) Tj
+ET
+BT
+/F1 8.25 Tf
+42 303.4999999999994 Td
+(  paraglider crosses more of the frame than its static thumbnail suggested.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 291.7999999999994 Td
+(- Confirmed that focal positioning improves subject retention but cannot recover scenery absent from the) Tj
+ET
+BT
+/F1 8.25 Tf
+42 282.5999999999994 Td
+(  narrow portrait slice.) Tj
+ET
+BT
+/F2 10 Tf
+42 263.8999999999994 Td
+(Source Resolution and Framing Findings) Tj
+ET
+BT
+/F1 8.25 Tf
+42 250.8999999999994 Td
+(- Verified the repository videos as H.264 landscape files: Light As Air, Into The Wild, and Morbid) Tj
+ET
+BT
+/F1 8.25 Tf
+42 241.69999999999942 Td
+(  Temptations are 1280 by 720; Infatuation is 1280 by 676; each runs for eight seconds.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 229.99999999999943 Td
+(- Documented that filling a tall portrait viewport requires roughly 2.4-times magnification on the phone) Tj
+ET
+BT
+/F1 8.25 Tf
+42 220.79999999999944 Td
+(  and retains only about 35 to 40 percent of the source width.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 209.09999999999945 Td
+(- Explained that focal cropping can choose which content survives but cannot simultaneously retain the) Tj
+ET
+BT
+/F1 8.25 Tf
+42 199.89999999999947 Td
+(  full landscape composition and avoid enlargement.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 188.19999999999948 Td
+(- Identified 1080 by 1920 portrait masters as the practical minimum for a later replacement, with 1440 by) Tj
+ET
+BT
+/F1 8.25 Tf
+42 178.9999999999995 Td
+(  2560 or larger preferred for large-tablet clarity.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 167.2999999999995 Td
+(- Kept the current experiment at the user's request while leaving alternate portrait video masters as the) Tj
+ET
+BT
+/F1 8.25 Tf
+42 158.0999999999995 Td
+(  correct future path for wider framing and reduced grain.) Tj
+ET
+BT
+/F2 10 Tf
+42 139.39999999999952 Td
+(Work Completed - Device and Orientation QA) Tj
+ET
+BT
+/F1 8.25 Tf
+42 126.39999999999952 Td
+(- Built, installed, and relaunched the same debug APK repeatedly on Samsung SM-G990U R5CRC33MGNZ and the) Tj
+ET
+BT
+/F1 8.25 Tf
+42 117.19999999999952 Td
+(  Cinerific Standard tablet AVD at emulator-5554.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 105.49999999999952 Td
+(- Validated portrait reel framing, title visibility, logo clearance, navigation overlap, vertical) Tj
+ET
+BT
+/F1 8.25 Tf
+42 96.29999999999951 Td
+(  scrolling, and subject placement on the physical phone.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 84.59999999999951 Td
+(- Recovered the tablet AVD from a temporary Android system-not-responding state, restored automatic) Tj
+ET
+BT
+/F1 8.25 Tf
+42 75.39999999999951 Td
+(  rotation, rebooted it, reinstalled the APK, and completed the portrait check.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 63.699999999999505 Td
+(- Confirmed the final tablet portrait reel filled the usable screen above navigation with the full title) Tj
+ET
+BT
+/F1 8.25 Tf
+42 54.4999999999995 Td
+(  visible and the airplane retained in frame.) Tj
+ET
+BT
+/F1 8 Tf
+300.7 24 Td
+(Cinerific Work Log - September 23, 2026 \(U.S. EST\) Page 3) Tj
+ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 3 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Length 7185 >>
+stream
+BT
+/F2 10 Tf
+42 741 Td
+(Validation and Checks Performed) Tj
+ET
+BT
+/F1 8.25 Tf
+42 728 Td
+(- Verified host Eastern Time with TZ=America/New_York; the system reported Wednesday, September 23, 2026) Tj
+ET
+BT
+/F1 8.25 Tf
+42 718.8 Td
+(  at 10:53 PM EDT, UTC-04:00.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 707.0999999999999 Td
+(- Used pdftotext on all twenty-three earlier worklogs and pdfinfo/pdffonts on the latest artifact before) Tj
+ET
+BT
+/F1 8.25 Tf
+42 697.8999999999999 Td
+(  generating this document.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 686.1999999999998 Td
+(- Ran ./gradlew :app:assembleDebug throughout the navigation, reel, card, header, and full-screen) Tj
+ET
+BT
+/F1 8.25 Tf
+42 676.9999999999998 Td
+(  experiment passes; all final builds reported BUILD SUCCESSFUL.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 665.2999999999997 Td
+(- Ran git diff --check after implementation passes without whitespace errors.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 653.5999999999997 Td
+(- Verified commits 46fb0c7, 28ceaa7, 5abc024, and 465570a and reviewed their complete file stats and) Tj
+ET
+BT
+/F1 8.25 Tf
+42 644.3999999999996 Td
+(  Kotlin changes.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 632.6999999999996 Td
+(- Used adb device inventories, installs, launches, orientation controls, input gestures, screen captures,) Tj
+ET
+BT
+/F1 8.25 Tf
+42 623.4999999999995 Td
+(  window checks, and app-state resets across the phone and tablet AVD.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 611.7999999999995 Td
+(- Visually inspected all five navigation items, every destination header, home card proportions, all four) Tj
+ET
+BT
+/F1 8.25 Tf
+42 602.5999999999995 Td
+(  reel subjects, horizontal transitions, title synchronization, and vertical genre-row access.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 590.8999999999994 Td
+(- Used macOS metadata and Quick Look decoding to verify video dimensions, duration, codec, and) Tj
+ET
+BT
+/F1 8.25 Tf
+42 581.6999999999994 Td
+(  representative source framing.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 569.9999999999993 Td
+(- Regenerated cinerific_PROJECT_SNAPSHOT.txt with ./read_project.sh after the four source commits so the) Tj
+ET
+BT
+/F1 8.25 Tf
+42 560.7999999999993 Td
+(  project record reflects the latest source and worklog inventory.) Tj
+ET
+BT
+/F2 10 Tf
+42 542.0999999999992 Td
+(Files Touched During September 23) Tj
+ET
+BT
+/F1 8.25 Tf
+42 529.0999999999992 Td
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificRightSideNavBar.kt: added portrait-specific) Tj
+ET
+BT
+/F1 8.25 Tf
+42 519.8999999999992 Td
+(  navigation scaling, stable item and icon slots, featured-icon enlargement, vertical alignment, label) Tj
+ET
+BT
+/F1 8.25 Tf
+42 510.6999999999992 Td
+(  sizing, and bottom placement.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 498.9999999999992 Td
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificHomeScreen.kt: added reel-local bidirectional) Tj
+ET
+BT
+/F1 8.25 Tf
+42 489.7999999999992 Td
+(  gestures, requested-versus-settled state, directional transitions, responsive card proportions,) Tj
+ET
+BT
+/F1 8.25 Tf
+42 480.5999999999992 Td
+(  full-screen portrait sizing, reversible experiment control, and subject-aware video transforms.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 468.89999999999924 Td
+(- app/src/main/java/com/prahlin/cinerific/ui/HeroPresentationTextAnimation.kt: added portrait title-only) Tj
+ET
+BT
+/F1 8.25 Tf
+42 459.69999999999925 Td
+(  rendering, per-title lift, visual scaling, and bottom-preserving band clipping.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 447.99999999999926 Td
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt: added the phone portrait) Tj
+ET
+BT
+/F1 8.25 Tf
+42 438.7999999999993 Td
+(  header clearance shared by Movies, Shows, Favorites, and Settings.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 427.0999999999993 Td
+(- app/src/main/res/drawable-nodpi/nav_icon_home.png, nav_icon_movies.png, nav_icon_shows.png,) Tj
+ET
+BT
+/F1 8.25 Tf
+42 417.8999999999993 Td
+(  nav_icon_favorites.png, and nav_icon_settings.png: replaced legacy low-resolution navigation graphics) Tj
+ET
+BT
+/F1 8.25 Tf
+42 408.6999999999993 Td
+(  with high-resolution Figma-derived artwork.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 396.9999999999993 Td
+(- cinerific_PROJECT_SNAPSHOT.txt: refreshed after the source work and again during this documentation) Tj
+ET
+BT
+/F1 8.25 Tf
+42 387.79999999999933 Td
+(  pass.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 376.09999999999934 Td
+(- cinerific_worklog_september 23.pdf: added this first and latest Eastern-Time worklog for September 23.) Tj
+ET
+BT
+/F2 10 Tf
+42 357.39999999999935 Td
+(Follow-Up Context) Tj
+ET
+BT
+/F1 8.25 Tf
+42 344.39999999999935 Td
+(- The full-screen portrait reel remains intentionally experimental. Setting) Tj
+ET
+BT
+/F1 8.25 Tf
+42 335.19999999999936 Td
+(  ENABLE_PORTRAIT_FULLSCREEN_HERO_EXPERIMENT to false restores the prior portrait height calculation) Tj
+ET
+BT
+/F1 8.25 Tf
+42 325.9999999999994 Td
+(  without removing the completed swipe and playback work.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 314.2999999999994 Td
+(- Current portrait focal points are static per reel. They follow each subject's useful motion envelope but) Tj
+ET
+BT
+/F1 8.25 Tf
+42 305.0999999999994 Td
+(  do not perform frame-by-frame object tracking.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 293.3999999999994 Td
+(- The 1280-pixel-wide landscape videos are the limiting factor for portrait image quality and retained) Tj
+ET
+BT
+/F1 8.25 Tf
+42 284.1999999999994 Td
+(  visual area; crop math alone cannot produce a wider, sharper portrait image.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 272.49999999999943 Td
+(- Future replacement footage should use portrait or open-gate masters with each principal subject framed) Tj
+ET
+BT
+/F1 8.25 Tf
+42 263.29999999999944 Td
+(  inside a common safe area, preferably at 1440 by 2560 or higher for large tablets.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 251.59999999999945 Td
+(- Landscape video presentation remains centered and unchanged, and portrait genre/title cards retain the) Tj
+ET
+BT
+/F1 8.25 Tf
+42 242.39999999999947 Td
+(  proportional and interaction rules approved earlier in the day.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 230.69999999999948 Td
+(- The standalone AVD returned to automatic rotation after recovery and remained available alongside the) Tj
+ET
+BT
+/F1 8.25 Tf
+42 221.4999999999995 Td
+(  USB Samsung phone.) Tj
+ET
+BT
+/F2 10 Tf
+42 202.7999999999995 Td
+(Output Artifact) Tj
+ET
+BT
+/F1 8.25 Tf
+42 189.7999999999995 Td
+(- Generated cinerific_worklog_september 23.pdf at the repository root using the first-log-of-the-day) Tj
+ET
+BT
+/F1 8.25 Tf
+42 180.5999999999995 Td
+(  no-part filename convention.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 168.89999999999952 Td
+(- Preserved the established four-page U.S. Letter layout, Helvetica text, PDF 1.4 compatibility, Codex) Tj
+ET
+BT
+/F1 8.25 Tf
+42 159.69999999999953 Td
+(  metadata, right-aligned page footers, and plain-text-readable structure.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 147.99999999999955 Td
+(- Used the verified September 23, 2026 U.S. Eastern date and documented the actual EDT offset while) Tj
+ET
+BT
+/F1 8.25 Tf
+42 138.79999999999956 Td
+(  retaining the historical U.S. EST title label.) Tj
+ET
+BT
+/F1 8.25 Tf
+42 127.09999999999957 Td
+(- Recorded main through 465570a plus the refreshed project snapshot; the artifact is ready for repository) Tj
+ET
+BT
+/F1 8.25 Tf
+42 117.89999999999957 Td
+(  review and commit.) Tj
+ET
+BT
+/F1 8 Tf
+300.7 24 Td
+(Cinerific Work Log - September 23, 2026 \(U.S. EST\) Page 4) Tj
+ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 3 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 10 0 R >>
+endobj
+12 0 obj
+<< /Type /Catalog /Pages 3 0 R >>
+endobj
+13 0 obj
+<< /Title (Cinerific Android App Work Log - September 23, 2026 \(U.S. EST\)) /Subject (Cinerific Android App daily project work log for September 23, 2026) /Author (Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260923230142-04'00') /ModDate (D:20260923230142-04'00') >>
+endobj
+xref
+0 14
+0000000000 65535 f 
+0000000015 00000 n 
+0000000112 00000 n 
+0000000214 00000 n 
+0000000290 00000 n 
+0000008853 00000 n 
+0000008989 00000 n 
+0000016569 00000 n 
+0000016705 00000 n 
+0000024440 00000 n 
+0000024576 00000 n 
+0000031813 00000 n 
+0000031951 00000 n 
+0000032001 00000 n 
+trailer
+<< /Size 14 /Root 12 0 R /Info 13 0 R >>
+startxref
+32364
+%%EOF

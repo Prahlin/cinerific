@@ -1,5 +1,5 @@
 Cinerific Android PROJECT SNAPSHOT
-Generated: Wed Sep 23 18:25:53 EDT 2026
+Generated: Wed Sep 23 22:54:35 EDT 2026
 Project directory: /Users/prahlin/gh/cinerific
 
 IMPORTANT INSTRUCTIONS FOR CHATGPT & CODEX:
@@ -9306,11 +9306,11 @@ app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_5.png | 
 app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_6.png | 20908 bytes | modified 2026-07-22 20:05:30
 app/src/main/res/drawable-nodpi/morbid_temptations_presentation_variant_7.png | 3077 bytes | modified 2026-07-22 20:05:30
 app/src/main/res/drawable-nodpi/morbid_temptations_title_card.png | 306241 bytes | modified 2026-07-29 19:57:44
-app/src/main/res/drawable-nodpi/nav_icon_favorites.png | 483 bytes | modified 2026-07-16 20:04:02
-app/src/main/res/drawable-nodpi/nav_icon_home.png | 321 bytes | modified 2026-07-16 20:04:02
-app/src/main/res/drawable-nodpi/nav_icon_movies.png | 290 bytes | modified 2026-07-16 20:04:02
-app/src/main/res/drawable-nodpi/nav_icon_settings.png | 433 bytes | modified 2026-07-16 20:04:02
-app/src/main/res/drawable-nodpi/nav_icon_shows.png | 582 bytes | modified 2026-07-16 20:04:02
+app/src/main/res/drawable-nodpi/nav_icon_favorites.png | 36663 bytes | modified 2026-09-23 19:47:31
+app/src/main/res/drawable-nodpi/nav_icon_home.png | 22330 bytes | modified 2026-09-23 19:42:47
+app/src/main/res/drawable-nodpi/nav_icon_movies.png | 11781 bytes | modified 2026-09-23 19:42:47
+app/src/main/res/drawable-nodpi/nav_icon_settings.png | 29319 bytes | modified 2026-09-23 19:42:47
+app/src/main/res/drawable-nodpi/nav_icon_shows.png | 44339 bytes | modified 2026-09-23 19:42:47
 app/src/main/res/drawable-nodpi/no_trespassing_card.webp | 177684 bytes | modified 2026-07-21 18:46:06
 app/src/main/res/drawable-nodpi/no_trespassing_hero.webp | 450690 bytes | modified 2026-07-21 18:46:06
 app/src/main/res/drawable-nodpi/one_last_breath_card.webp | 160802 bytes | modified 2026-07-21 18:23:35
