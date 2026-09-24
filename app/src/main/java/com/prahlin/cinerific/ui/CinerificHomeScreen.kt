@@ -92,14 +92,14 @@ import kotlin.math.max
 private const val HOME_FRAME_WIDTH = 1194f
 private const val HERO_REEL_VIEWPORT_ASPECT = 1194f / 834f
 private const val CARD_ASPECT = 350f / 263f
-private const val CARD_SCALE = 0.8f
 private const val CARD_CORNER_RADIUS_DP = 22f
 private const val SELECTED_CARD_CLEAR_STROKE_PX = 10f
 private const val SELECTED_CARD_OUTER_STROKE_PX = 3f
 private const val HOME_ROW_HEADER_HEIGHT_DP = 48f
 private const val HOME_ROW_CARDS_TOP_PADDING_DP = 20f
 private const val PORTRAIT_HERO_HEIGHT_FRACTION = 0.48f
-private const val PORTRAIT_CARD_VISIBLE_COUNT = 2.75f
+private const val PORTRAIT_CARD_WIDTH_TO_GENRE_TEXT_RATIO = 6.9f
+private const val LANDSCAPE_CARD_WIDTH_TO_GENRE_TEXT_RATIO = 8.34f
 private const val PORTRAIT_BOTTOM_NAV_CLEARANCE = 118f
 private const val HOME_HERO_SWIPE_THRESHOLD_DP = 48f
 private const val PHONE_PORTRAIT_HERO_ART_SCALE = 1.44f
@@ -131,15 +131,9 @@ internal fun CinerificHomeScreen(
         val selectedCardOuterStroke = figmaDp(SELECTED_CARD_OUTER_STROKE_PX, scale)
         val selectionStrokeAlpha = rememberCinerificSelectionStrokeAlpha()
         val cardWidth = if (isPortrait) {
-            val availableWidth = (
-                maxWidth.value -
-                    horizontalPadding.value -
-                    endPadding.value -
-                    cardGap.value * (PORTRAIT_CARD_VISIBLE_COUNT - 1f)
-                ).coerceAtLeast(0f)
-            (availableWidth / PORTRAIT_CARD_VISIBLE_COUNT).dp
+            with(density) { 36.sp.toDp() } * PORTRAIT_CARD_WIDTH_TO_GENRE_TEXT_RATIO
         } else {
-            figmaDp(350f, scale) * CARD_SCALE
+            with(density) { 36.sp.toDp() } * LANDSCAPE_CARD_WIDTH_TO_GENRE_TEXT_RATIO
         }
         val cardHeight = cardWidth / CARD_ASPECT
         val interStackGap = if (isPortrait) 58.dp else 80.dp

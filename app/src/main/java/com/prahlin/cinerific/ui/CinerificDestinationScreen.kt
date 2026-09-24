@@ -115,6 +115,7 @@ import kotlin.math.sqrt
 private const val DESTINATION_FRAME_WIDTH = 1194f
 private const val DESTINATION_TOP_BAR_TITLE_BOTTOM = 18f
 private const val DESTINATION_PORTRAIT_TOP_BAR_HEIGHT_MULTIPLIER = 1.2f
+private val DESTINATION_PHONE_PORTRAIT_HEADER_GAP = 28.dp
 private const val DESTINATION_CARD_ASPECT = 350f / 263f
 private const val DESTINATION_CARD_SCALE = 0.8f
 private const val DESTINATION_LIST_IMAGE_WIDTH = 300f
@@ -3357,7 +3358,12 @@ private fun destinationTopBarHeight(
 ): Dp {
     val baseHeight = cinerificTopRailHeight(viewportWidth, viewportHeight, statusBarTop)
     return if (viewportHeight > viewportWidth) {
-        baseHeight * DESTINATION_PORTRAIT_TOP_BAR_HEIGHT_MULTIPLIER
+        val phoneHeaderGap = if (viewportWidth < 600.dp) {
+            DESTINATION_PHONE_PORTRAIT_HEADER_GAP
+        } else {
+            0.dp
+        }
+        baseHeight * DESTINATION_PORTRAIT_TOP_BAR_HEIGHT_MULTIPLIER + phoneHeaderGap
     } else {
         baseHeight
     }
