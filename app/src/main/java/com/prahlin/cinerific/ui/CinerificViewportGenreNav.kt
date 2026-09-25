@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 internal fun CinerificViewportGenreNav(
     selectedGenre: ViewportGenre,
     scale: Float,
+    textScale: Float = 1f,
     onGenreSelected: (ViewportGenre) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -43,6 +44,7 @@ internal fun CinerificViewportGenreNav(
             width = GENRE_ALL_CHIP_SIZE,
             height = GENRE_ALL_CHIP_SIZE,
             scale = scale,
+            textScale = textScale,
             onClick = onGenreSelected
         )
         GenreChip(
@@ -51,6 +53,7 @@ internal fun CinerificViewportGenreNav(
             x = 43.59f,
             y = 2.78f,
             scale = scale,
+            textScale = textScale,
             onClick = onGenreSelected
         )
         GenreChip(
@@ -59,6 +62,7 @@ internal fun CinerificViewportGenreNav(
             x = 85.33f,
             y = 2.78f,
             scale = scale,
+            textScale = textScale,
             onClick = onGenreSelected
         )
         GenreChip(
@@ -67,6 +71,7 @@ internal fun CinerificViewportGenreNav(
             x = 127.07f,
             y = 2.78f,
             scale = scale,
+            textScale = textScale,
             onClick = onGenreSelected
         )
         GenreChip(
@@ -75,6 +80,7 @@ internal fun CinerificViewportGenreNav(
             x = 1.86f,
             y = 44.52f,
             scale = scale,
+            textScale = textScale,
             onClick = onGenreSelected
         )
         GenreChip(
@@ -83,6 +89,7 @@ internal fun CinerificViewportGenreNav(
             x = 43.59f,
             y = 44.52f,
             scale = scale,
+            textScale = textScale,
             onClick = onGenreSelected
         )
         GenreChip(
@@ -91,6 +98,7 @@ internal fun CinerificViewportGenreNav(
             x = 85.33f,
             y = 44.52f,
             scale = scale,
+            textScale = textScale,
             onClick = onGenreSelected
         )
         GenreChip(
@@ -99,6 +107,7 @@ internal fun CinerificViewportGenreNav(
             x = 127.07f,
             y = 44.52f,
             scale = scale,
+            textScale = textScale,
             onClick = onGenreSelected
         )
     }
@@ -113,6 +122,7 @@ private fun GenreChip(
     width: Float = GENRE_TEXT_CHIP_SIZE,
     height: Float = GENRE_TEXT_CHIP_SIZE,
     scale: Float,
+    textScale: Float,
     onClick: (ViewportGenre) -> Unit
 ) {
     val shape = RoundedCornerShape(viewportDp(2.707f, scale))
@@ -135,9 +145,9 @@ private fun GenreChip(
             Text(
                 text = stringResource(genre.compactLabelResId ?: genre.displayNameResId),
                 color = ink,
-                fontSize = 11.sp,
+                fontSize = (11f * textScale).sp,
                 fontWeight = FontWeight.Black,
-                lineHeight = 11.sp,
+                lineHeight = (11f * textScale).sp,
                 letterSpacing = 0.sp,
                 maxLines = 1,
                 textAlign = TextAlign.Center

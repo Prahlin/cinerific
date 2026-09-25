@@ -49,6 +49,9 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.lerp as lerpColor
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalContext
@@ -78,6 +81,7 @@ private const val FINAL_SETTLE_START_MS = LOGO_ENTRY_END_MS
 private const val FINAL_SETTLE_END_MS = 4812
 private const val BOOT_ANIMATION_MS = FINAL_SETTLE_END_MS
 private const val AUTO_LOGOUT_TIMEOUT_MS = 10_000L
+private const val PORTRAIT_BOTTOM_NAV_SCROLL_MULTIPLIER = 2f
 private const val FAVORITES_FULL_PROMPT_X = 977f
 private const val FAVORITES_FULL_PROMPT_Y = 92f
 private const val FAVORITES_FULL_PROMPT_WIDTH = 95f
@@ -219,6 +223,58 @@ private fun CinerificMainExperience(
     var autoLogoutEnabled by rememberSaveable { mutableStateOf(false) }
     var userInitiatedPlaybackActive by remember { mutableStateOf(false) }
     var lastInteractionMillis by remember { mutableStateOf(SystemClock.uptimeMillis()) }
+    var primaryDestinationCanScroll by remember(destination) { mutableStateOf<Boolean?>(null) }
+    var portraitBottomNavHiddenFraction by remember(signInSessionId) { mutableFloatStateOf(1f) }
+    var portraitBottomNavHeightPx by remember { mutableFloatStateOf(1f) }
+    val configuration = LocalConfiguration.current
+    val isPortrait = configuration.screenHeightDp > configuration.screenWidthDp
+    val usesScrollLinkedPortraitBottomNav = destination in setOf(
+        CinerificDestination.Home,
+        CinerificDestination.Movies,
+        CinerificDestination.Shows,
+        CinerificDestination.Favorites,
+        CinerificDestination.Settings
+    )
+    val portraitBottomNavScrollConnection = remember(
+        isPortrait,
+        destination,
+        primaryDestinationCanScroll,
+        portraitBottomNavHeightPx
+    ) {
+        object : NestedScrollConnection {
+            override fun onPostScroll(
+                consumed: Offset,
+                available: Offset,
+                source: NestedScrollSource
+            ): Offset {
+                if (
+                    isPortrait &&
+                    usesScrollLinkedPortraitBottomNav &&
+                    primaryDestinationCanScroll == true &&
+                    consumed.y != 0f
+                ) {
+                    portraitBottomNavHiddenFraction = (
+                        portraitBottomNavHiddenFraction +
+                            consumed.y * PORTRAIT_BOTTOM_NAV_SCROLL_MULTIPLIER /
+                            portraitBottomNavHeightPx
+                        ).coerceIn(0f, 1f)
+                }
+                return Offset.Zero
+            }
+        }
+    }
+
+    LaunchedEffect(destination, isPortrait, primaryDestinationCanScroll) {
+        portraitBottomNavHiddenFraction = if (
+            isPortrait &&
+            usesScrollLinkedPortraitBottomNav &&
+            primaryDestinationCanScroll != false
+        ) {
+            1f
+        } else {
+            0f
+        }
+    }
     val playbackSessionController = remember(userInitiatedPlaybackActive) {
         CinerificPlaybackSessionController(
             isUserInitiatedPlaybackActive = userInitiatedPlaybackActive,
@@ -302,6 +358,7 @@ private fun CinerificMainExperience(
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .nestedScroll(portraitBottomNavScrollConnection)
                 .pointerInput(Unit) {
                     awaitPointerEventScope {
                         while (true) {
@@ -315,6 +372,7 @@ private fun CinerificMainExperience(
                 CinerificDestination.Home -> CinerificHomeScreen(
                     onProgramSelected = ::showProgramDetails,
                     onCatalogSelected = ::showCatalog,
+                    onVerticalScrollabilityChanged = { primaryDestinationCanScroll = it },
                     modifier = Modifier.fillMaxSize()
                 )
                 CinerificDestination.Movies,
@@ -337,6 +395,7 @@ private fun CinerificMainExperience(
                     onProgramRated = ::rateProgram,
                     onProgramSelected = ::showProgramDetails,
                     catalogRoute = catalogRoute?.takeIf { it.destination == destination },
+                    onVerticalScrollabilityChanged = { primaryDestinationCanScroll = it },
                     modifier = Modifier.fillMaxSize()
                 )
                 CinerificDestination.ProgramDetails -> CinerificProgramDetailsScreen(
@@ -352,6 +411,10 @@ private fun CinerificMainExperience(
 
             CinerificRightSideNavBar(
                 currentDestination = destination,
+                portraitHiddenFraction = portraitBottomNavHiddenFraction,
+                onPortraitBarHeightChanged = { heightPx ->
+                    portraitBottomNavHeightPx = heightPx.coerceAtLeast(1f)
+                },
                 onDestinationSelected = {
                     clearCatalogRoute()
                     destination = it

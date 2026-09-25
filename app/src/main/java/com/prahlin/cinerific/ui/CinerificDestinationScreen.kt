@@ -125,6 +125,7 @@ private const val DESTINATION_LIST_TEXT_COLUMN_HEIGHT = 222f
 private const val DESTINATION_LIST_CARD_CLEAR_STROKE_PX = 20f
 private const val DESTINATION_LIST_CARD_OUTER_STROKE_PX = 3f
 private const val DESTINATION_LIST_CARD_CORNER_RADIUS = 15f
+private const val DESTINATION_LIST_REFERENCE_WIDTH = DESTINATION_FRAME_WIDTH - 50f - 150f
 private const val DESTINATION_LIST_VERTICAL_SNAP_MS = 150
 private const val DESTINATION_LIST_VERTICAL_SNAP_VELOCITY_STRIDE_FRACTION = 0.62f
 private const val DESTINATION_LIST_META_ROW_HEIGHT = 76f
@@ -301,6 +302,7 @@ internal fun CinerificDestinationScreen(
     onProgramRated: (String, Int) -> Unit = { _, _ -> },
     onProgramSelected: (String) -> Unit = {},
     catalogRoute: CinerificCatalogRoute? = null,
+    onVerticalScrollabilityChanged: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     when (destination) {
@@ -311,6 +313,7 @@ internal fun CinerificDestinationScreen(
             showViewportNav = true,
             isShows = false,
             onProgramSelected = onProgramSelected,
+            onVerticalScrollabilityChanged = onVerticalScrollabilityChanged,
             initialGenre = catalogRoute?.genre ?: ViewportGenre.All,
             initialMode = catalogRoute?.mode ?: ViewportMode.CollageLarge,
             modifier = modifier
@@ -322,6 +325,7 @@ internal fun CinerificDestinationScreen(
             showViewportNav = true,
             isShows = true,
             onProgramSelected = onProgramSelected,
+            onVerticalScrollabilityChanged = onVerticalScrollabilityChanged,
             initialGenre = catalogRoute?.genre ?: ViewportGenre.All,
             initialMode = catalogRoute?.mode ?: ViewportMode.CollageLarge,
             modifier = modifier
@@ -330,6 +334,7 @@ internal fun CinerificDestinationScreen(
             favoriteProgramTitles = favoriteProgramTitles,
             onFavoriteToggled = onFavoriteToggled,
             onProgramSelected = onProgramSelected,
+            onVerticalScrollabilityChanged = onVerticalScrollabilityChanged,
             modifier = modifier
         )
         CinerificDestination.Settings -> CinerificSettingsScreen(
@@ -339,6 +344,7 @@ internal fun CinerificDestinationScreen(
             autoLogoutEnabled = autoLogoutEnabled,
             onAutoLogoutEnabledChange = onAutoLogoutEnabledChange,
             onSignOut = onSignOut,
+            onVerticalScrollabilityChanged = onVerticalScrollabilityChanged,
             modifier = modifier
         )
         CinerificDestination.Home -> CinerificHomeScreen(
@@ -365,6 +371,7 @@ private fun CinerificCatalogScreen(
     showViewportNav: Boolean,
     isShows: Boolean,
     onProgramSelected: (String) -> Unit,
+    onVerticalScrollabilityChanged: (Boolean) -> Unit,
     initialGenre: ViewportGenre = ViewportGenre.All,
     initialMode: ViewportMode = ViewportMode.CollageLarge,
     modifier: Modifier = Modifier
@@ -376,23 +383,30 @@ private fun CinerificCatalogScreen(
     ) {
         val scale = maxWidth.value / DESTINATION_FRAME_WIDTH
         val density = LocalDensity.current
+        val isPortrait = maxHeight > maxWidth
         val horizontalPadding = destinationDp(50f, scale)
         val rightPadding = destinationDp(150f, scale)
+        val listRightPadding = if (isPortrait) horizontalPadding else rightPadding
+        val listScale = if (isPortrait) {
+            ((maxWidth - horizontalPadding - listRightPadding).value / DESTINATION_LIST_REFERENCE_WIDTH)
+                .coerceAtLeast(0.01f)
+        } else {
+            scale
+        }
         val navScale = cinerificNavScale(maxWidth, maxHeight)
         val titleBottomPadding = destinationDp(DESTINATION_TOP_BAR_TITLE_BOTTOM, navScale)
         val statusBarTop = with(density) { WindowInsets.statusBars.getTop(this).toDp() }
         val topBarHeight = destinationTopBarHeight(maxWidth, maxHeight, statusBarTop)
-        val cardWidth = destinationDp(350f, scale) * DESTINATION_CARD_SCALE
+        val cardWidth = cinerificLargeTitleCardWidth(density, isPortrait)
         val cardHeight = cardWidth / DESTINATION_CARD_ASPECT
-        val cardGap = destinationDp(50f, scale)
-        val contentColumnCount = (
-            (maxWidth.value - horizontalPadding.value - rightPadding.value + cardGap.value) /
-                (cardWidth.value + cardGap.value)
-            ).toInt().coerceAtLeast(1)
+        val cardGap = destinationDp(if (isPortrait) 42f else 50f, scale)
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
         var selectedGenre by rememberSaveable(titleResId, initialGenre) { mutableStateOf(initialGenre) }
         var selectedMode by rememberSaveable(titleResId, initialMode) { mutableStateOf(initialMode) }
         val scrollState = rememberScrollState()
+        LaunchedEffect(scrollState.maxValue) {
+            onVerticalScrollabilityChanged(scrollState.maxValue > 0)
+        }
         val title = stringResource(titleResId)
         val description = stringResource(descriptionResId)
         val visibleRows = if (!showViewportNav || selectedGenre == ViewportGenre.All) {
@@ -455,6 +469,7 @@ private fun CinerificCatalogScreen(
                     onGenreSelected = { selectedGenre = it },
                     onModeSelected = { selectedMode = it },
                     scale = navScale,
+                    isPortrait = isPortrait,
                     horizontalPadding = horizontalPadding,
                     rightPadding = rightPadding
                 )
@@ -471,7 +486,6 @@ private fun CinerificCatalogScreen(
                             cardWidth = cardWidth,
                             cardHeight = cardHeight,
                             cardGap = cardGap,
-                            columnCount = contentColumnCount,
                             onProgramSelected = onProgramSelected,
                             topPadding = destinationSectionTopPadding(index = index, showViewportNav = showViewportNav)
                         )
@@ -497,8 +511,8 @@ private fun CinerificCatalogScreen(
                             title = stringResource(row.titleResId),
                             programs = programs,
                             horizontalPadding = horizontalPadding,
-                            rightPadding = rightPadding,
-                            scale = scale,
+                            rightPadding = listRightPadding,
+                            scale = listScale,
                             selectedProgramTitle = selectedListProgramTitle,
                             selectionStrokeAlpha = selectionStrokeAlpha,
                             onProgramCenterChanged = { programTitle, centerY ->
@@ -532,6 +546,7 @@ private fun DestinationViewportHeader(
     onGenreSelected: (ViewportGenre) -> Unit,
     onModeSelected: (ViewportMode) -> Unit,
     scale: Float,
+    isPortrait: Boolean,
     horizontalPadding: Dp,
     rightPadding: Dp
 ) {
@@ -560,7 +575,8 @@ private fun DestinationViewportHeader(
             onGenreSelected = onGenreSelected,
             onModeSelected = onModeSelected,
             scale = scale,
-            modifier = Modifier.width(destinationDp(401f, scale))
+            isPortrait = isPortrait,
+            modifier = Modifier.width(destinationDp(VIEWPORT_NAV_BAR_WIDTH, scale))
         )
     }
 }
@@ -574,7 +590,6 @@ private fun DestinationProgramRow(
     cardWidth: Dp,
     cardHeight: Dp,
     cardGap: Dp,
-    columnCount: Int,
     onProgramSelected: (String) -> Unit,
     topPadding: Dp
 ) {
@@ -589,25 +604,21 @@ private fun DestinationProgramRow(
             rightPadding = rightPadding
         )
 
-        Column(
+        CinerificCircularCardRow(
+            itemCount = programs.size,
+            selected = false,
+            itemSpacing = cardGap,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = horizontalPadding, end = rightPadding)
                 .padding(top = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(cardGap)
-        ) {
-            programs.chunked(columnCount).forEach { rowPrograms ->
-                Row(horizontalArrangement = Arrangement.spacedBy(cardGap)) {
-                    rowPrograms.forEach { program ->
-                        DestinationProgramCard(
-                            program = program,
-                            width = cardWidth,
-                            height = cardHeight,
-                            onProgramSelected = onProgramSelected
-                        )
-                    }
-                }
-            }
+            contentPadding = PaddingValues(start = horizontalPadding, end = rightPadding)
+        ) { programIndex, _ ->
+            DestinationProgramCard(
+                program = programs[programIndex],
+                width = cardWidth,
+                height = cardHeight,
+                onProgramSelected = onProgramSelected
+            )
         }
     }
 }
@@ -622,7 +633,7 @@ private fun DestinationSectionHeader(
         text = title,
         color = DestinationText,
         fontFamily = CinerificAppTextFontFamily,
-        fontSize = 36.sp,
+        fontSize = CINERIFIC_GENRE_HEADER_FONT_SIZE_SP.sp,
         fontWeight = FontWeight.Black,
         letterSpacing = 0.sp,
         modifier = Modifier.padding(start = horizontalPadding, end = rightPadding)
@@ -1335,6 +1346,7 @@ internal fun CinerificProgramDetailsScreen(
                 )
                 SinkOrSwimLibraryRows(
                     scale = scale,
+                    isPortrait = isPortrait,
                     viewportHeight = viewportHeight,
                     onProgramSelected = onProgramSelected
                 )
@@ -1692,12 +1704,17 @@ private fun HeroImageControlButton(
 @Composable
 private fun SinkOrSwimLibraryRows(
     scale: Float,
+    isPortrait: Boolean,
     viewportHeight: Dp,
     onProgramSelected: (String) -> Unit
 ) {
     val density = LocalDensity.current
     val horizontalPadding = destinationDp(DETAIL_LIBRARY_HORIZONTAL_PADDING, scale)
-    val cardWidth = destinationDp(350f, scale) * DESTINATION_CARD_SCALE
+    val cardWidth = if (isPortrait) {
+        cinerificLargeTitleCardWidth(density, isPortrait = true)
+    } else {
+        destinationDp(350f, scale) * DESTINATION_CARD_SCALE
+    }
     val cardHeight = cardWidth / DESTINATION_CARD_ASPECT
     val cardGap = destinationDp(50f, scale)
     val selectedCardClearStroke = destinationDp(DETAIL_LIBRARY_SELECTED_CARD_CLEAR_STROKE_PX, scale)
@@ -2218,6 +2235,7 @@ private fun CinerificSettingsScreen(
     autoLogoutEnabled: Boolean,
     onAutoLogoutEnabledChange: (Boolean) -> Unit,
     onSignOut: () -> Unit,
+    onVerticalScrollabilityChanged: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     BoxWithConstraints(
@@ -2236,6 +2254,9 @@ private fun CinerificSettingsScreen(
         val topBarHeight = destinationTopBarHeight(maxWidth, maxHeight, statusBarTop)
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
         val settingsScrollState = rememberScrollState()
+        LaunchedEffect(settingsScrollState.maxValue) {
+            onVerticalScrollabilityChanged(settingsScrollState.maxValue > 0)
+        }
         var bottomToggleCenterY by remember { mutableStateOf<Float?>(null) }
         var signOutCenterY by remember { mutableStateOf<Float?>(null) }
         var bottomAlignmentSpacerPx by remember { mutableStateOf(0f) }
@@ -2418,6 +2439,7 @@ private fun CinerificFavoritesScreen(
     favoriteProgramTitles: List<String>,
     onFavoriteToggled: (String) -> Unit,
     onProgramSelected: (String) -> Unit,
+    onVerticalScrollabilityChanged: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     BoxWithConstraints(
@@ -2434,6 +2456,10 @@ private fun CinerificFavoritesScreen(
         val statusBarTop = with(density) { WindowInsets.statusBars.getTop(this).toDp() }
         val topBarHeight = destinationTopBarHeight(maxWidth, maxHeight, statusBarTop)
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
+        val favoritesScrollState = rememberScrollState()
+        LaunchedEffect(favoritesScrollState.maxValue) {
+            onVerticalScrollabilityChanged(favoritesScrollState.maxValue > 0)
+        }
         val favoritePrograms = remember(favoriteProgramTitles) {
             favoriteProgramSpecs(favoriteProgramTitles)
         }
@@ -2447,7 +2473,7 @@ private fun CinerificFavoritesScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(favoritesScrollState)
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(DestinationTop, DestinationMid, DestinationBottom)

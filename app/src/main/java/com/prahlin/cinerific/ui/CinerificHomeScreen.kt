@@ -53,6 +53,7 @@ import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -99,8 +100,6 @@ private const val HOME_ROW_HEADER_HEIGHT_DP = 48f
 private const val HOME_ROW_CARDS_TOP_PADDING_DP = 20f
 private const val ENABLE_PORTRAIT_FULLSCREEN_HERO_EXPERIMENT = true
 private const val PORTRAIT_HERO_HEIGHT_FRACTION = 0.48f
-private const val PORTRAIT_CARD_WIDTH_TO_GENRE_TEXT_RATIO = 6.9f
-private const val LANDSCAPE_CARD_WIDTH_TO_GENRE_TEXT_RATIO = 8.34f
 private const val PORTRAIT_BOTTOM_NAV_CLEARANCE = 118f
 private const val HOME_HERO_SWIPE_THRESHOLD_DP = 48f
 private const val PHONE_PORTRAIT_HERO_ART_SCALE = 1.44f
@@ -116,6 +115,7 @@ private val HomeSelectedCardStroke = Color(0xFFE7E7E7)
 internal fun CinerificHomeScreen(
     onProgramSelected: (String) -> Unit = {},
     onCatalogSelected: (CinerificCatalogRoute) -> Unit = {},
+    onVerticalScrollabilityChanged: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     BoxWithConstraints(
@@ -132,11 +132,7 @@ internal fun CinerificHomeScreen(
         val selectedCardClearStroke = figmaDp(SELECTED_CARD_CLEAR_STROKE_PX, scale)
         val selectedCardOuterStroke = figmaDp(SELECTED_CARD_OUTER_STROKE_PX, scale)
         val selectionStrokeAlpha = rememberCinerificSelectionStrokeAlpha()
-        val cardWidth = if (isPortrait) {
-            with(density) { 36.sp.toDp() } * PORTRAIT_CARD_WIDTH_TO_GENRE_TEXT_RATIO
-        } else {
-            with(density) { 36.sp.toDp() } * LANDSCAPE_CARD_WIDTH_TO_GENRE_TEXT_RATIO
-        }
+        val cardWidth = cinerificLargeTitleCardWidth(density, isPortrait)
         val cardHeight = cardWidth / CARD_ASPECT
         val interStackGap = if (isPortrait) 58.dp else 80.dp
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
@@ -148,13 +144,10 @@ internal fun CinerificHomeScreen(
         }
         val naturalHeroHeight = (maxWidth.value / HERO_REEL_VIEWPORT_ASPECT).dp
         val visibleHeroHeight = (maxHeight - bottomSystemPadding).coerceAtLeast(0.dp)
-        val portraitFullscreenHeroHeight = (
-            visibleHeroHeight - cinerificPortraitBottomNavContentHeight(maxWidth, maxHeight)
-            ).coerceAtLeast(0.dp)
         val portraitHeroHeight = visibleHeroHeight * PORTRAIT_HERO_HEIGHT_FRACTION
         val heroHeight = if (isPortrait) {
             if (ENABLE_PORTRAIT_FULLSCREEN_HERO_EXPERIMENT) {
-                portraitFullscreenHeroHeight
+                visibleHeroHeight
             } else {
                 minOf(maxOf(naturalHeroHeight, portraitHeroHeight), visibleHeroHeight)
             }
@@ -162,6 +155,9 @@ internal fun CinerificHomeScreen(
             minOf(naturalHeroHeight, visibleHeroHeight)
         }
         val scrollState = rememberScrollState()
+        LaunchedEffect(scrollState.maxValue) {
+            onVerticalScrollabilityChanged(scrollState.maxValue > 0)
+        }
         var requestedReelIndex by rememberSaveable { mutableStateOf(0) }
         var displayedReelIndex by rememberSaveable { mutableStateOf(0) }
         val selectedCarouselIndex = homeSelectedCarouselIndex(
@@ -404,7 +400,7 @@ private fun HomeProgramRow(
                 text = title,
                 color = HomeText,
                 fontFamily = CinerificAppTextFontFamily,
-                fontSize = 36.sp,
+                fontSize = CINERIFIC_GENRE_HEADER_FONT_SIZE_SP.sp,
                 fontWeight = FontWeight.Black,
                 letterSpacing = 0.sp
             )

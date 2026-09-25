@@ -115,6 +115,8 @@ private data class NavIconAsset(
 @Composable
 internal fun CinerificRightSideNavBar(
     currentDestination: CinerificDestination,
+    portraitHiddenFraction: Float = 0f,
+    onPortraitBarHeightChanged: (Float) -> Unit = {},
     onDestinationSelected: (CinerificDestination) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -131,12 +133,22 @@ internal fun CinerificRightSideNavBar(
 
         if (isPortrait) {
             val portraitScale = cinerificPortraitNavScale(maxWidth)
+            val portraitBarHeight =
+                navDp(PORTRAIT_NAV_BAR_HEIGHT, portraitScale) + navigationBarBottom
+            val portraitBarHeightPx = with(density) { portraitBarHeight.toPx() }
+            LaunchedEffect(portraitBarHeightPx) {
+                onPortraitBarHeightChanged(portraitBarHeightPx)
+            }
             CinerificBottomNavBar(
                 visualDestination = visualDestination,
                 navigationBarBottom = navigationBarBottom,
                 scale = portraitScale,
                 onDestinationSelected = onDestinationSelected,
-                modifier = Modifier.align(Alignment.BottomCenter)
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .graphicsLayer {
+                        translationY = portraitBarHeightPx * portraitHiddenFraction.coerceIn(0f, 1f)
+                    }
             )
             return@BoxWithConstraints
         }

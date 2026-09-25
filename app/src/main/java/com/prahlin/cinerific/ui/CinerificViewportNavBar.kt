@@ -1,6 +1,7 @@
 package com.prahlin.cinerific.ui
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,8 +39,42 @@ internal fun CinerificViewportNavBar(
     onGenreSelected: (ViewportGenre) -> Unit,
     onModeSelected: (ViewportMode) -> Unit,
     scale: Float,
+    isPortrait: Boolean = false,
     modifier: Modifier = Modifier
 ) {
+    if (isPortrait) {
+        val portraitGenreScale = scale * 2f * MODE_GROUP_WIDTH / GENRE_GROUP_WIDTH
+        val portraitModeScale = scale * 2f * MODE_GROUP_WIDTH / MODE_BUTTON_ROW_VISUAL_WIDTH
+        val groupGap = viewportDp(
+            VIEWPORT_NAV_BAR_WIDTH - GENRE_GROUP_WIDTH - MODE_GROUP_WIDTH,
+            scale
+        )
+        Column(
+            modifier = modifier.height(
+                viewportDp(GENRE_GROUP_HEIGHT, portraitGenreScale) +
+                    groupGap +
+                    viewportDp(MODE_GROUP_HEIGHT, portraitModeScale)
+            ),
+            horizontalAlignment = Alignment.End
+        ) {
+            CinerificViewportGenreNav(
+                selectedGenre = selectedGenre,
+                scale = portraitGenreScale,
+                textScale = portraitGenreScale,
+                onGenreSelected = onGenreSelected
+            )
+
+            Spacer(modifier = Modifier.height(groupGap))
+
+            CinerificViewportModeNav(
+                selectedMode = selectedMode,
+                scale = portraitModeScale,
+                onModeSelected = onModeSelected
+            )
+        }
+        return
+    }
+
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -61,3 +96,6 @@ internal fun CinerificViewportNavBar(
         )
     }
 }
+
+internal const val VIEWPORT_NAV_BAR_WIDTH = 401f
+private const val MODE_BUTTON_ROW_VISUAL_WIDTH = 180.692f
