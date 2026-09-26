@@ -1,0 +1,770 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R 11 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 5234 >>
+stream
+BT
+/F1 14 Tf
+52 756 Td
+(Cinerific Android App Work Log - September 24, 2026 \(U.S. EST\)) Tj
+ET
+BT
+/F1 7.5 Tf
+7.4 TL
+52 732 Td
+(Compiled summary for Thursday, September 24, 2026 \(U.S. Eastern Time\) - focus: continuing the) Tj
+T*
+(post-September-23 portrait presentation pass by reviewing the current project snapshot and every) Tj
+T*
+(prior Cinerific worklog, making the portrait bottom navigation respond directly to vertical) Tj
+T*
+(scroll,) Tj
+T*
+(keeping navigation available when a destination cannot scroll, expanding the Home reel through) Tj
+T*
+(the) Tj
+T*
+(newly available viewport, standardizing Movies and Shows card proportions and horizontal) Tj
+T*
+(browsing,) Tj
+T*
+(rebuilding their portrait genre and view controls, enlarging detailed-list content with) Tj
+T*
+(symmetric) Tj
+T*
+(margins, matching Home detail-library cards to reel-state cards, validating the same APK on the) Tj
+T*
+(USB) Tj
+T*
+(Samsung phone and Standard tablet emulator, committing the completed source work as 3188bd3,) Tj
+T*
+(refreshing the project snapshot, and generating this latest Cinerific PDF worklog artifact.) Tj
+T*
+() Tj
+T*
+(Generated in continuity with the established Cinerific worklog cadence from July 12 through) Tj
+T*
+(September 23: compact opening summary, source-material review, baseline state, goals, themed) Tj
+T*
+(work-completed sections, validation, files touched, follow-up context, and output-artifact) Tj
+T*
+(close.) Tj
+T*
+(No September 24 Part 1 PDF existed in the repository, so this artifact follows the) Tj
+T*
+(first-log-of-the-) Tj
+T*
+(day no-part filename convention. Eastern Time was verified from the host as Thursday, September) Tj
+T*
+(24,) Tj
+T*
+(2026 at 8:31 PM EDT, UTC-04:00. The title retains the historical U.S. EST label while the body) Tj
+T*
+(records the seasonally accurate EDT verification. This artifact records main through HEAD) Tj
+T*
+(3188bd3,) Tj
+T*
+(Improved portrait navigation and catalog presentation.) Tj
+T*
+() Tj
+T*
+(Source Materials Reviewed) Tj
+T*
+(- Reviewed every pre-existing Cinerific worklog PDF at the repository root: July 12, July 14,) Tj
+T*
+(  July) Tj
+T*
+(  15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, July 25,) Tj
+T*
+(  July) Tj
+T*
+(  27, July 28 Part 1, July 28 Part 2, July 29, August 1, August 3, August 4, August 5, September) Tj
+T*
+(  19,) Tj
+T*
+(  September 21, September 21 Part 2, and September 23.) Tj
+T*
+(- Converted all prior PDFs with pdftotext and compared title cadence, opening-summary density,) Tj
+T*
+(  baseline and goals sections, themed completion sections, validation language, file) Tj
+T*
+(  inventories,) Tj
+T*
+(  follow-up notes, output-artifact wording, and same-day part naming.) Tj
+T*
+(- Ran pdfinfo across the worklog set to preserve the four-page U.S. Letter geometry, Helvetica) Tj
+T*
+(  typography, PDF 1.4 compatibility, extractable text, Codex metadata, and right-aligned) Tj
+T*
+(  footers.) Tj
+T*
+(- Reviewed cinerific_PROJECT_SNAPSHOT.txt, read_project.sh output, repository status, commit) Tj
+T*
+(  history,) Tj
+T*
+(  commit 3188bd3, and the complete source diff since the September 23 worklog.) Tj
+T*
+(- Reviewed CinerificApp.kt, CinerificHomeScreen.kt, CinerificDestinationScreen.kt,) Tj
+T*
+(  CinerificRightSideNavBar.kt, CinerificViewportGenreNav.kt, CinerificViewportNavBar.kt, and the) Tj
+T*
+(  new) Tj
+T*
+(  CinerificContentSizing.kt shared sizing helper.) Tj
+T*
+(- Reviewed runtime evidence from Samsung SM-G990U R5CRC33MGNZ and emulator-5554, including) Tj
+T*
+(  builds,) Tj
+T*
+(  streamed installs, launches, portrait screenshots, scrolling, mode changes, and card geometry.) Tj
+T*
+() Tj
+T*
+(Baseline Status Before September 24 Work) Tj
+T*
+(- The September 23 pass had established responsive portrait navigation sizing, high-resolution) Tj
+T*
+(  nav) Tj
+T*
+(  artwork, bidirectional Home reel swiping, synchronized reel titles, full-screen portrait) Tj
+T*
+(  video,) Tj
+T*
+(  subject-aware cropping, proportional Home cards, and protected destination headers.) Tj
+T*
+(- The portrait bottom navigation remained visible at the top of primary destinations and) Tj
+T*
+(  occupied) Tj
+T*
+(  viewport height even before a user began scrolling.) Tj
+T*
+(- Home reel sizing still reserved space for that always-visible bottom bar, preventing playback) Tj
+T*
+(  from) Tj
+T*
+(  filling the complete visible portrait screen.) Tj
+T*
+(- Movies and Shows still used smaller large-view cards and a vertically chunked layout rather) Tj
+T*
+(  than) Tj
+T*
+(  the Home screen's larger horizontal carousel behavior.) Tj
+T*
+(- Their genre and view control groups remained horizontally arranged and undersized in portrait,) Tj
+T*
+(  with tablet genre abbreviations carrying excessive internal padding.) Tj
+T*
+(- Detailed-list cards retained a 50-unit left inset and 150-unit right inset, producing an) Tj
+T*
+(  asymmetric selection outline and under-scaled image, text, metadata, and rating content.) Tj
+T*
+(- Program-detail library rows opened from Home used a separate 80-percent card scale and) Tj
+T*
+(  therefore) Tj
+T*
+(  did not match the card size visible beneath an actively playing Home reel.) Tj
+ET
+BT
+/F1 8 Tf
+1 0 0 1 0 28 Tm
+314.0 0 Td
+(Cinerific Work Log - September 24, 2026 \(U.S. EST\) Page 1) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 5439 >>
+stream
+BT
+/F1 14 Tf
+52 756 Td
+(Cinerific Android App Work Log - September 24, 2026 \(U.S. EST\)) Tj
+ET
+BT
+/F1 7.5 Tf
+7.4 TL
+52 732 Td
+(Main Goals for September 24) Tj
+T*
+(- Hide the portrait bottom navigation at the top of Home and the four primary destination) Tj
+T*
+(  screens,) Tj
+T*
+(  reveal it in direct proportion to downward content travel, and hide it with upward travel.) Tj
+T*
+(- Keep the bottom navigation fixed and immediately usable whenever a destination lacks enough) Tj
+T*
+(  content to scroll.) Tj
+T*
+(- Let Home video reels occupy the complete visible portrait viewport while preserving the) Tj
+T*
+(  approved) Tj
+T*
+(  logo-to-top and title-to-bottom relationships.) Tj
+T*
+(- Bring Movies and Shows large-view genre cards to the Home screen's proportions and horizontal,) Tj
+T*
+(  bidirectional carousel interaction.) Tj
+T*
+(- Recompose the Movies and Shows portrait genre/view controls as a larger vertical stack with) Tj
+T*
+(  equal) Tj
+T*
+(  visual widths, correct right alignment, and readable phone/tablet genre abbreviations.) Tj
+T*
+(- Scale the rightmost detailed View mode as one responsive card system until its blinking) Tj
+T*
+(  outline) Tj
+T*
+(  has equal left and right margins on phones and tablets.) Tj
+T*
+(- Make program-detail library cards reached from Home match the normal Home reel-state cards.) Tj
+T*
+(- Preserve landscape layouts and avoid extending portrait-only behavior into detail destinations) Tj
+T*
+(  or) Tj
+T*
+(  unrelated screens.) Tj
+T*
+() Tj
+T*
+(Work Completed - Scroll-Linked Portrait Navigation) Tj
+T*
+(- Added a nested-scroll connection at the main experience level for Home, Movies, Shows,) Tj
+T*
+(  Favorites,) Tj
+T*
+(  and Settings in portrait orientation.) Tj
+T*
+(- Tracked each primary destination's vertical scrollability and measured the rendered bottom-nav) Tj
+T*
+(  height so navigation translation is based on actual consumed scroll distance.) Tj
+T*
+(- Initialized the bar fully below the viewport at the top of scrollable portrait destinations.) Tj
+T*
+(- Applied a responsive hidden fraction to the bottom navigation's vertical translation,) Tj
+T*
+(  producing) Tj
+T*
+(  a continuous slide up during downward browsing and a continuous slide down during upward) Tj
+T*
+(  browsing.) Tj
+T*
+(- Increased scroll response so navigation appears promptly when Home reel content begins moving) Tj
+T*
+(  and) Tj
+T*
+(  reverses promptly when the user returns toward the top.) Tj
+T*
+(- Reported scrollability from Home, Movies, Shows, Favorites, and Settings through one shared) Tj
+T*
+(  app-) Tj
+T*
+(  level callback.) Tj
+T*
+(- Kept the bar fully visible and fixed when the current screen cannot scroll, ensuring) Tj
+T*
+(  navigation) Tj
+T*
+(  remains available with sparse genre results, favorites, or settings content.) Tj
+T*
+(- Limited the behavior to the five requested primary destinations; program-detail screens) Tj
+T*
+(  retained) Tj
+T*
+(  their existing navigation treatment.) Tj
+T*
+() Tj
+T*
+(Work Completed - Home Reel and Card Consistency) Tj
+T*
+(- Removed the portrait bottom-nav height reservation from the experimental full-screen Home) Tj
+T*
+(  hero.) Tj
+T*
+(- Expanded the video reel to the complete visible screen above the Android navigation inset) Tj
+T*
+(  without) Tj
+T*
+(  allowing it to exceed the visible portrait viewport.) Tj
+T*
+(- Preserved the existing phone logo top offset, portrait logo scale, title artwork scale, and) Tj
+T*
+(  lower) Tj
+T*
+(  title anchoring while the hero gained height.) Tj
+T*
+(- Kept reel swiping, requested-versus-settled playback state, subject-aware focal transforms,) Tj
+T*
+(  and) Tj
+T*
+(  genre-row vertical access unchanged.) Tj
+T*
+(- Extracted the accepted title-card-to-genre-header relationship into CinerificContentSizing.kt) Tj
+T*
+(  so) Tj
+T*
+(  Home and destination surfaces can share one responsive large-card rule.) Tj
+T*
+(- Reused the shared portrait large-card width in program-detail library rows opened from Home.) Tj
+T*
+(- Removed the detail-state 80-percent portrait card reduction while retaining its established) Tj
+T*
+(  landscape calculation.) Tj
+T*
+(- Verified that Action, Drama, Documentary, Horror, and other detail-library rows now display) Tj
+T*
+(  the) Tj
+T*
+(  same logical card width as Crime, Thriller, and other rows beneath a playing Home reel.) Tj
+T*
+() Tj
+T*
+(Work Completed - Movies and Shows Large View) Tj
+T*
+(- Replaced the Movies and Shows large-view fixed vertical card grid with the shared circular) Tj
+T*
+(  horizontal carousel used by Home.) Tj
+T*
+(- Enabled bidirectional fling/swipe browsing for each genre row while preserving repeated) Tj
+T*
+(  carousel) Tj
+T*
+(  continuity and existing card tap behavior.) Tj
+T*
+(- Applied the shared Home card-width rule to Movies and Shows, keeping genre header text at its) Tj
+T*
+(  established size while enlarging the associated cards on both portrait form factors.) Tj
+T*
+(- Matched portrait card spacing to Home and retained the established landscape spacing.) Tj
+T*
+(- Kept the changes on the leftmost large-card View mode; the center compact mode and rightmost) Tj
+T*
+(  detailed mode retained their distinct purposes and interaction patterns.) Tj
+T*
+(- Preserved Movies and Shows filtering, route initialization, section headings, program data,) Tj
+T*
+(  and) Tj
+T*
+(  detail navigation while changing presentation geometry.) Tj
+ET
+BT
+/F1 8 Tf
+1 0 0 1 0 28 Tm
+314.0 0 Td
+(Cinerific Work Log - September 24, 2026 \(U.S. EST\) Page 2) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 4794 >>
+stream
+BT
+/F1 14 Tf
+52 756 Td
+(Cinerific Android App Work Log - September 24, 2026 \(U.S. EST\)) Tj
+ET
+BT
+/F1 7.5 Tf
+7.4 TL
+52 732 Td
+(Work Completed - Portrait Genre and View Controls) Tj
+T*
+(- Added a portrait-specific composition for the Movies and Shows viewport controls while leaving) Tj
+T*
+(  the) Tj
+T*
+(  existing landscape Row implementation unchanged.) Tj
+T*
+(- Reoriented the genre selector above the view selector and retained their established) Tj
+T*
+(  inter-group) Tj
+T*
+(  distance.) Tj
+T*
+(- Doubled the initial control treatment, then scaled the genre group to the accepted size and) Tj
+T*
+(  enlarged the view group until both groups shared the same visual width.) Tj
+T*
+(- Used the view group's right edge as the horizontal anchor and maintained the protected gap) Tj
+T*
+(  below) Tj
+T*
+(  the destination top banner.) Tj
+T*
+(- Preserved the official Figma-style grid of All, ACT, COM, CRI, DOC, DRA, HOR, and THR controls) Tj
+T*
+(  instead of allowing compressed single-letter labels.) Tj
+T*
+(- Added an independent genre text scale so tablet abbreviations fill their button boxes with the) Tj
+T*
+(  same visual confidence as the phone version.) Tj
+T*
+(- Kept each genre and view button actionable, retained selected-state artwork, and preserved the) Tj
+T*
+(  existing mode and genre state model.) Tj
+T*
+() Tj
+T*
+(Work Completed - Detailed List Scaling) Tj
+T*
+(- Scoped the final sizing correction to portrait Movies and Shows when the rightmost detailed) Tj
+T*
+(  View) Tj
+T*
+(  button is active.) Tj
+T*
+(- Replaced the detailed card's asymmetric portrait end inset with the same inset used on the) Tj
+T*
+(  left.) Tj
+T*
+(- Derived a dedicated list scale from the newly available content width and the original list) Tj
+T*
+(  design reference instead of scaling from the entire 1194-unit frame.) Tj
+T*
+(- Enlarged each detailed card as one proportional unit, including title artwork, program title,) Tj
+T*
+(  year, synopsis, runtime, genre, director, producer, rating stars, internal gaps, and corner) Tj
+T*
+(  radii.) Tj
+T*
+(- Scaled the blinking selection outline and its clear/outer strokes with the same responsive) Tj
+T*
+(  factor.) Tj
+T*
+(- Achieved equal visible left and right outline margins on the 1080-pixel-wide Samsung phone and) Tj
+T*
+(  800-pixel-wide tablet viewport.) Tj
+T*
+(- Preserved vertical snapping, selected-card detection, card-center measurement, program taps,) Tj
+T*
+(  and) Tj
+T*
+(  landscape list geometry.) Tj
+T*
+() Tj
+T*
+(Work Completed - Shared Sizing and Screen Boundaries) Tj
+T*
+(- Added CinerificContentSizing.kt with a shared 36sp genre-header standard and) Tj
+T*
+(  portrait/landscape) Tj
+T*
+(  title-card ratios.) Tj
+T*
+(- Updated Home and destination genre headings to consume the same shared font-size constant.) Tj
+T*
+(- Kept the Home/default screen's accepted genre-name-to-card relationship as the source of truth) Tj
+T*
+(  for) Tj
+T*
+(  Movies, Shows, and portrait detail-library rows.) Tj
+T*
+(- Limited the stacked viewport controls to Movies and Shows because those are the only) Tj
+T*
+(  destinations) Tj
+T*
+(  exposing the genre/view selector.) Tj
+T*
+(- Limited the enlarged horizontal catalog cards to the leftmost large-card view and the) Tj
+T*
+(  symmetric) Tj
+T*
+(  detailed stack to the rightmost view.) Tj
+T*
+(- Preserved Favorites, Settings, program-detail presentation, and landscape behavior except) Tj
+T*
+(  where) Tj
+T*
+(  they intentionally participate in primary-screen scrollability reporting.) Tj
+T*
+() Tj
+T*
+(Work Completed - Device Deployment and Runtime QA) Tj
+T*
+(- Kept the Cinerific Standard tablet emulator available after recovering it from an earlier) Tj
+T*
+(  crash.) Tj
+T*
+(- Confirmed both emulator-5554 and USB Samsung SM-G990U R5CRC33MGNZ were online before) Tj
+T*
+(  deployment.) Tj
+T*
+(- Built one debug APK and installed the same artifact on the phone and tablet throughout the) Tj
+T*
+(  pass.) Tj
+T*
+(- Repeatedly relaunched the app, selected the Steve profile, exposed the Home bottom navigation) Tj
+T*
+(  by) Tj
+T*
+(  scrolling, entered Movies, changed view modes, and inspected final card and control geometry.) Tj
+T*
+(- Verified full-height Home video presentation and the nav bar's scroll-linked entry/exit) Tj
+T*
+(  behavior) Tj
+T*
+(  on both portrait targets.) Tj
+T*
+(- Verified no-scroll navigation fallback where content height did not exceed the viewport.) Tj
+T*
+(- Verified Movies and Shows shared the updated code paths rather than carrying device-specific) Tj
+T*
+(  or) Tj
+T*
+(  destination-specific duplicate sizing.) Tj
+T*
+(- Confirmed the persistent unrelated phone picture-in-picture overlay did not alter app layout) Tj
+T*
+(  measurements or the tablet comparison.) Tj
+ET
+BT
+/F1 8 Tf
+1 0 0 1 0 28 Tm
+314.0 0 Td
+(Cinerific Work Log - September 24, 2026 \(U.S. EST\) Page 3) Tj
+ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Length 5656 >>
+stream
+BT
+/F1 14 Tf
+52 756 Td
+(Cinerific Android App Work Log - September 24, 2026 \(U.S. EST\)) Tj
+ET
+BT
+/F1 7.5 Tf
+7.4 TL
+52 732 Td
+(Validation and Checks Performed) Tj
+T*
+(- Ran ./gradlew :app:assembleDebug after the completed source passes; the final build reported) Tj
+T*
+(  BUILD) Tj
+T*
+(  SUCCESSFUL with no Kotlin compilation errors.) Tj
+T*
+(- Ran git diff --check without whitespace errors before the commit and documentation pass.) Tj
+T*
+(- Installed app/build/outputs/apk/debug/app-debug.apk with adb install -r on both connected) Tj
+T*
+(  Android) Tj
+T*
+(  targets and confirmed successful streamed installs.) Tj
+T*
+(- Used adb launches, input taps, directional swipes, mode changes, and screencaps to exercise) Tj
+T*
+(  Home,) Tj
+T*
+(  Movies, the detailed list, and program-detail library rows.) Tj
+T*
+(- Visually checked the 1080 by 2340 Samsung phone and 800 by 1280 tablet emulator in portrait.) Tj
+T*
+(- Confirmed the selected detailed-list outline had equal left/right margins and that all) Tj
+T*
+(  internal) Tj
+T*
+(  content scaled proportionally without text overlap.) Tj
+T*
+(- Confirmed detail-library cards measured approximately 248dp wide on both form factors,) Tj
+T*
+(  matching) Tj
+T*
+(  the shared Home portrait sizing rule.) Tj
+T*
+(- Confirmed landscape branches remained on their prior calculations through explicit isPortrait) Tj
+T*
+(  conditions.) Tj
+T*
+(- Verified commit 3188bd3 contained 214 insertions and 46 deletions across the seven Kotlin) Tj
+T*
+(  source) Tj
+T*
+(  files plus the refreshed project snapshot.) Tj
+T*
+(- Verified U.S. Eastern Time directly with TZ=America/New_York before generating this artifact.) Tj
+T*
+(- Re-read all pre-existing PDFs and checked this output with pdfinfo, pdffonts, pdftotext, page) Tj
+T*
+(  rendering, and image inspection for four-page count, clipping, wrapping, metadata, and) Tj
+T*
+(  footers.) Tj
+T*
+() Tj
+T*
+(Files Touched During September 24) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt: added primary-destination) Tj
+T*
+(  scrollability state, nested-scroll tracking, responsive nav hidden fraction, and bottom-bar) Tj
+T*
+(  height) Tj
+T*
+(  coordination.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificRightSideNavBar.kt: measured portrait bar) Tj
+T*
+(  height and translated the bottom navigation from the app-level scroll fraction.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificHomeScreen.kt: reported scrollability,) Tj
+T*
+(  expanded) Tj
+T*
+(  portrait reel height, and adopted shared genre/card sizing constants.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificContentSizing.kt: added shared) Tj
+T*
+(  genre-header and) Tj
+T*
+(  responsive large-title-card sizing rules.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt: reported destination) Tj
+T*
+(  scrollability, standardized large carousels, added symmetric detailed-list scaling, reused) Tj
+T*
+(  shared) Tj
+T*
+(  portrait card sizing in detail rows, and connected portrait viewport controls.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificViewportNavBar.kt: added the portrait) Tj
+T*
+(  vertical) Tj
+T*
+(  genre/view composition and matched visual group widths.) Tj
+T*
+(- app/src/main/java/com/prahlin/cinerific/ui/CinerificViewportGenreNav.kt: added responsive) Tj
+T*
+(  genre) Tj
+T*
+(  abbreviation scaling for phone and tablet controls.) Tj
+T*
+(- cinerific_PROJECT_SNAPSHOT.txt: refreshed by commit 3188bd3 with the latest source state and) Tj
+T*
+(  September 24 timestamp.) Tj
+T*
+(- cinerific_worklog_september 24.pdf: added this first and latest Eastern-Time worklog for) Tj
+T*
+(  September) Tj
+T*
+(  24 using the established no-part filename convention.) Tj
+T*
+() Tj
+T*
+(Follow-Up Context) Tj
+T*
+(- Portrait bottom navigation motion is driven by consumed vertical scroll and intentionally uses) Tj
+T*
+(  a) Tj
+T*
+(  two-times response multiplier. Future tuning should adjust that shared multiplier rather than) Tj
+T*
+(  add) Tj
+T*
+(  per-screen animation timings.) Tj
+T*
+(- A primary destination with no vertical overflow deliberately keeps navigation visible; this is) Tj
+T*
+(  a) Tj
+T*
+(  usability fallback, not a failure of the hidden-at-top behavior.) Tj
+T*
+(- The shared large-card helper now defines the accepted Home relationship. Future Movies, Shows,) Tj
+T*
+(  or) Tj
+T*
+(  Home detail-card changes should preserve that common source unless a mode is explicitly) Tj
+T*
+(  distinct.) Tj
+T*
+(- The center compact view remains available for later measurements and was not resized during) Tj
+T*
+(  this) Tj
+T*
+(  pass.) Tj
+T*
+(- The rightmost detailed view now owns a portrait-specific scale while landscape remains tied to) Tj
+T*
+(  the) Tj
+T*
+(  original design frame.) Tj
+T*
+(- Both the USB phone and tablet emulator were left with the committed debug APK installed.) Tj
+T*
+() Tj
+T*
+(Output Artifact) Tj
+T*
+(- Generated cinerific_worklog_september 24.pdf at the repository root using the) Tj
+T*
+(  first-log-of-the-day) Tj
+T*
+(  no-part filename convention.) Tj
+T*
+(- Preserved the established four-page U.S. Letter layout, Helvetica text, PDF 1.4 compatibility,) Tj
+T*
+(  Codex metadata, right-aligned page footers, and plain-text-readable structure.) Tj
+T*
+(- Used the verified September 24, 2026 U.S. Eastern date and documented the actual EDT offset) Tj
+T*
+(  while) Tj
+T*
+(  retaining the historical U.S. EST title label.) Tj
+T*
+(- Recorded main through 3188bd3 and the refreshed project snapshot; the artifact is ready for) Tj
+T*
+(  repository review and commit.) Tj
+ET
+BT
+/F1 8 Tf
+1 0 0 1 0 28 Tm
+314.0 0 Td
+(Cinerific Work Log - September 24, 2026 \(U.S. EST\) Page 4) Tj
+ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 10 0 R >>
+endobj
+12 0 obj
+<< /Title (Cinerific Android App Work Log - September 24, 2026 \(U.S. EST\)) /Author (OpenAI Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260924203140-04'00') >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000140 00000 n 
+0000000210 00000 n 
+0000005495 00000 n 
+0000005621 00000 n 
+0000011111 00000 n 
+0000011237 00000 n 
+0000016082 00000 n 
+0000016208 00000 n 
+0000021916 00000 n 
+0000022044 00000 n 
+trailer
+<< /Size 13 /Root 1 0 R /Info 12 0 R >>
+startxref
+22300
+%%EOF
