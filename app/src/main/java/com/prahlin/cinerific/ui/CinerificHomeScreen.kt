@@ -102,7 +102,7 @@ private const val ENABLE_PORTRAIT_FULLSCREEN_HERO_EXPERIMENT = true
 private const val PORTRAIT_HERO_HEIGHT_FRACTION = 0.48f
 private const val PORTRAIT_BOTTOM_NAV_CLEARANCE = 118f
 private const val HOME_HERO_SWIPE_THRESHOLD_DP = 48f
-private const val PHONE_PORTRAIT_HERO_ART_SCALE = 1.44f
+internal const val PHONE_PORTRAIT_HERO_ART_SCALE = 1.44f
 private val HERO_REEL_PORTRAIT_FOCAL_X = floatArrayOf(0.50f, 0.48f, 0.63f, 0.56f)
 
 private val HomeBackgroundTop = Color(0xFF080007)

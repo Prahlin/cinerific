@@ -208,6 +208,8 @@ private const val DETAIL_TRANSPORT_X = 423f
 private const val DETAIL_TRANSPORT_GAP = 50f
 private const val DETAIL_SIDE_CONTROL_SIZE = 74f
 private const val DETAIL_PLAY_CONTROL_SIZE = 100f
+private const val DETAIL_PHONE_PORTRAIT_TRANSPORT_SCALE = 1.5f
+private val DETAIL_PHONE_PORTRAIT_LOGO_TOP_GAP = (-2).dp
 private const val FAVORITE_BURST_PADDING = 22f
 private const val FAVORITE_BURST_STROKE = 2.4f
 private const val FAVORITE_BURST_DURATION_MS = 240
@@ -217,8 +219,6 @@ private const val DETAIL_PLAY_LOADING_FEEDBACK_MS = 900L
 private const val DETAIL_HERO_LOGO_WIDTH = 300f
 private const val DETAIL_HERO_LOGO_HEIGHT = 214f
 internal const val DETAIL_HERO_LOGO_CENTER_Y = DETAIL_HERO_LOGO_HEIGHT / 2f
-private const val DETAIL_FAVORITE_LOGO_CENTERED_Y =
-    DETAIL_HERO_LOGO_CENTER_Y - DETAIL_FAVORITE_HEIGHT / 2f
 private const val DETAIL_INFO_PANEL_BOTTOM_PADDING = 56f
 private const val DETAIL_INFO_PANEL_MIN_HEIGHT = 465f
 private const val DETAIL_INFO_PANEL_BACKGROUND_ALPHA = 0.25f
@@ -1285,12 +1285,14 @@ internal fun CinerificProgramDetailsScreen(
         val scale = maxWidth.value / DESTINATION_FRAME_WIDTH
         val viewportHeight = maxHeight
         val density = LocalDensity.current
+        val topSystemPadding = with(density) { WindowInsets.statusBars.getTop(this).toDp() }
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
         val naturalHeroHeight = (maxWidth.value / DETAIL_HERO_ASPECT).dp
         val visibleHeroHeight = (maxHeight - bottomSystemPadding).coerceAtLeast(0.dp)
         val heroHeight = minOf(naturalHeroHeight, visibleHeroHeight)
         val infoPanelScale = (heroHeight.value / DETAIL_HERO_DESIGN_HEIGHT).coerceAtLeast(0.01f)
         val isPortrait = maxHeight > maxWidth
+        val isPortraitPhone = isPortrait && maxWidth < 600.dp
         val program = detailProgramSpec(programTitle) ?: detailProgramSpec(SINK_OR_SWIM_TITLE)!!
         val title = stringResource(program.titleResId)
         val details = programDetails(
@@ -1320,6 +1322,10 @@ internal fun CinerificProgramDetailsScreen(
         val userRating = userProgramRatings[program.title]
         val selectedRating = userRating ?: details.rating
         val userHasRated = userRating != null
+        var ratingSelectionStarted by rememberSaveable(program.title) {
+            mutableStateOf(userHasRated)
+        }
+        val isAwaitingRatingSelection = ratingSelectionStarted && !userHasRated
         val detailScrollState = rememberScrollState()
 
         LaunchedEffect(program.title) {
@@ -1358,6 +1364,12 @@ internal fun CinerificProgramDetailsScreen(
                 contentDescription = title,
                 scale = scale,
                 isPortrait = isPortrait,
+                isPortraitPhone = isPortraitPhone,
+                phonePortraitLogoTopOffset = if (isPortraitPhone) {
+                    topSystemPadding + DETAIL_PHONE_PORTRAIT_LOGO_TOP_GAP
+                } else {
+                    0.dp
+                },
                 preserveBottomTitle = detailHeroPreservesBottomTitle(program.title),
                 isFavorited = isFavorited,
                 playLoading = playLoading,
@@ -1388,13 +1400,19 @@ internal fun CinerificProgramDetailsScreen(
                     synopsis = synopsis,
                     director = details.director,
                     producer = details.producer,
-                    rating = selectedRating,
+                    rating = if (isAwaitingRatingSelection) 0 else selectedRating,
                     userHasRated = userHasRated,
-                    onRatingSelected = {
-                        onProgramRated(program.title, it)
+                    showHollowStars = isAwaitingRatingSelection,
+                    onRatingSelected = { rating ->
+                        if (ratingSelectionStarted) {
+                            onProgramRated(program.title, rating)
+                        } else {
+                            ratingSelectionStarted = true
+                        }
                     },
                     scale = scale,
-                    infoScale = infoPanelScale
+                    infoScale = infoPanelScale,
+                    isPortraitPhone = isPortraitPhone
                 )
                 SinkOrSwimLibraryRows(
                     scale = scale,
@@ -1416,6 +1434,8 @@ private fun ProgramDetailRevealImage(
     contentDescription: String,
     scale: Float,
     isPortrait: Boolean,
+    isPortraitPhone: Boolean,
+    phonePortraitLogoTopOffset: Dp,
     preserveBottomTitle: Boolean,
     isFavorited: Boolean,
     playLoading: Boolean,
@@ -1425,6 +1445,7 @@ private fun ProgramDetailRevealImage(
     onNext: () -> Unit
 ) {
     val heroFullyVisible = revealProgress >= 0.999f
+    val heroChromeScale = if (isPortraitPhone) PHONE_PORTRAIT_HERO_ART_SCALE else 1f
     val loadingScrimAlpha = (1f - revealProgress) * DETAIL_LOADING_SCRIM_MAX_ALPHA
     val spinnerHeight = DETAIL_LOADING_SPINNER_WIDTH *
         CINERIFIC_LOADING_SPINNER_CANVAS_HEIGHT /
@@ -1474,16 +1495,27 @@ private fun ProgramDetailRevealImage(
                     isFavorited = isFavorited,
                     onFavoriteToggled = onFavoriteToggled,
                     scale = scale,
-                    centerVerticallyOnLogo = isPortrait
+                    centerVerticallyOnLogo = isPortrait,
+                    sizeMultiplier = heroChromeScale,
+                    logoTopOffset = phonePortraitLogoTopOffset
                 )
                 HeroTransportControls(
                     scale = scale,
+                    sizeMultiplier = if (isPortraitPhone) {
+                        DETAIL_PHONE_PORTRAIT_TRANSPORT_SCALE
+                    } else {
+                        1f
+                    },
                     onPrevious = onPrevious,
                     onPlay = onPlay,
                     onNext = onNext,
-                    modifier = Modifier
-                        .align(Alignment.CenterStart)
-                        .offset(x = destinationDp(DETAIL_TRANSPORT_X, scale))
+                    modifier = if (isPortraitPhone) {
+                        Modifier.align(Alignment.Center)
+                    } else {
+                        Modifier
+                            .align(Alignment.CenterStart)
+                            .offset(x = destinationDp(DETAIL_TRANSPORT_X, scale))
+                    }
                 )
             }
         } else {
@@ -1501,6 +1533,8 @@ private fun ProgramDetailRevealImage(
         }
         DetailHeroLogo(
             scale = scale,
+            topOffset = phonePortraitLogoTopOffset,
+            sizeMultiplier = heroChromeScale,
             modifier = Modifier.align(Alignment.TopStart)
         )
     }
@@ -1509,14 +1543,17 @@ private fun ProgramDetailRevealImage(
 @Composable
 private fun DetailHeroLogo(
     scale: Float,
+    topOffset: Dp,
+    sizeMultiplier: Float,
     modifier: Modifier = Modifier
 ) {
     Image(
         painter = painterResource(R.drawable.logo_simple_large),
         contentDescription = null,
         modifier = modifier
-            .width(destinationDp(DETAIL_HERO_LOGO_WIDTH, scale))
-            .height(destinationDp(DETAIL_HERO_LOGO_HEIGHT, scale)),
+            .offset(y = topOffset)
+            .width(destinationDp(DETAIL_HERO_LOGO_WIDTH * sizeMultiplier, scale))
+            .height(destinationDp(DETAIL_HERO_LOGO_HEIGHT * sizeMultiplier, scale)),
         contentScale = ContentScale.FillBounds
     )
 }
@@ -1527,6 +1564,8 @@ private fun HeroFavoriteToggleButton(
     onFavoriteToggled: () -> Unit,
     scale: Float,
     centerVerticallyOnLogo: Boolean,
+    sizeMultiplier: Float,
+    logoTopOffset: Dp,
     modifier: Modifier = Modifier
 ) {
     val favoriteBounceScale = remember { Animatable(1f) }
@@ -1578,20 +1617,26 @@ private fun HeroFavoriteToggleButton(
         previousIsFavorited = isFavorited
     }
 
-    val controlWidth = destinationDp(DETAIL_FAVORITE_WIDTH, scale)
-    val controlHeight = destinationDp(DETAIL_FAVORITE_HEIGHT, scale)
-    val burstPadding = destinationDp(FAVORITE_BURST_PADDING, scale)
-    val favoriteY = if (centerVerticallyOnLogo) {
-        DETAIL_FAVORITE_LOGO_CENTERED_Y
+    val scaledFavoriteWidth = DETAIL_FAVORITE_WIDTH * sizeMultiplier
+    val scaledFavoriteHeight = DETAIL_FAVORITE_HEIGHT * sizeMultiplier
+    val controlWidth = destinationDp(scaledFavoriteWidth, scale)
+    val controlHeight = destinationDp(scaledFavoriteHeight, scale)
+    val burstPadding = destinationDp(FAVORITE_BURST_PADDING * sizeMultiplier, scale)
+    val favoriteX = DETAIL_FAVORITE_X + DETAIL_FAVORITE_WIDTH - scaledFavoriteWidth
+    val favoriteTop = if (centerVerticallyOnLogo) {
+        logoTopOffset + destinationDp(
+            (DETAIL_HERO_LOGO_HEIGHT * sizeMultiplier - scaledFavoriteHeight) / 2f,
+            scale
+        )
     } else {
-        DETAIL_FAVORITE_Y
+        destinationDp(DETAIL_FAVORITE_Y, scale)
     }
 
     Box(
         modifier = modifier
             .offset(
-                x = destinationDp(DETAIL_FAVORITE_X - FAVORITE_BURST_PADDING, scale),
-                y = destinationDp(favoriteY - FAVORITE_BURST_PADDING, scale)
+                x = destinationDp(favoriteX, scale) - burstPadding,
+                y = favoriteTop - burstPadding
             )
             .width(controlWidth + burstPadding + burstPadding)
             .height(controlHeight + burstPadding + burstPadding)
@@ -1670,46 +1715,49 @@ private fun FavoriteStarBurstLines(
 @Composable
 private fun HeroTransportControls(
     scale: Float,
+    sizeMultiplier: Float,
     onPrevious: () -> Unit,
     onPlay: () -> Unit,
     onNext: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val sideControlSize = DETAIL_SIDE_CONTROL_SIZE * sizeMultiplier
+    val playControlSize = DETAIL_PLAY_CONTROL_SIZE * sizeMultiplier
     Row(
         modifier = modifier
             .width(
                 destinationDp(
-                    DETAIL_SIDE_CONTROL_SIZE +
+                    sideControlSize +
                         DETAIL_TRANSPORT_GAP +
-                        DETAIL_PLAY_CONTROL_SIZE +
+                        playControlSize +
                         DETAIL_TRANSPORT_GAP +
-                        DETAIL_SIDE_CONTROL_SIZE,
+                        sideControlSize,
                     scale
                 )
             )
-            .height(destinationDp(DETAIL_PLAY_CONTROL_SIZE, scale)),
+            .height(destinationDp(playControlSize, scale)),
         horizontalArrangement = Arrangement.spacedBy(destinationDp(DETAIL_TRANSPORT_GAP, scale)),
         verticalAlignment = Alignment.CenterVertically
     ) {
         HeroImageControlButton(
             drawableId = R.drawable.hero_control_prev,
             contentDescription = "Previous title",
-            width = destinationDp(DETAIL_SIDE_CONTROL_SIZE, scale),
-            height = destinationDp(DETAIL_SIDE_CONTROL_SIZE, scale),
+            width = destinationDp(sideControlSize, scale),
+            height = destinationDp(sideControlSize, scale),
             onClick = onPrevious
         )
         HeroImageControlButton(
             drawableId = R.drawable.hero_control_play,
             contentDescription = "Play title",
-            width = destinationDp(DETAIL_PLAY_CONTROL_SIZE, scale),
-            height = destinationDp(DETAIL_PLAY_CONTROL_SIZE, scale),
+            width = destinationDp(playControlSize, scale),
+            height = destinationDp(playControlSize, scale),
             onClick = onPlay
         )
         HeroImageControlButton(
             drawableId = R.drawable.hero_control_next,
             contentDescription = "Next title",
-            width = destinationDp(DETAIL_SIDE_CONTROL_SIZE, scale),
-            height = destinationDp(DETAIL_SIDE_CONTROL_SIZE, scale),
+            width = destinationDp(sideControlSize, scale),
+            height = destinationDp(sideControlSize, scale),
             onClick = onNext
         )
     }
@@ -1918,10 +1966,31 @@ private fun SinkOrSwimInfoPanel(
     producer: String,
     rating: Int,
     userHasRated: Boolean,
+    showHollowStars: Boolean,
     onRatingSelected: (Int) -> Unit,
     scale: Float,
-    infoScale: Float
+    infoScale: Float,
+    isPortraitPhone: Boolean
 ) {
+    if (isPortraitPhone) {
+        SinkOrSwimPhonePortraitInfoPanel(
+            title = title,
+            year = year,
+            runtime = runtime,
+            genre = genre,
+            synopsis = synopsis,
+            director = director,
+            producer = producer,
+            rating = rating,
+            userHasRated = userHasRated,
+            showHollowStars = showHollowStars,
+            onRatingSelected = onRatingSelected,
+            scale = scale,
+            infoScale = infoScale
+        )
+        return
+    }
+
     val panelHorizontalPadding = destinationDp(DETAIL_LIBRARY_HORIZONTAL_PADDING, scale)
     val panelBottomPadding = destinationDp(DETAIL_INFO_PANEL_BOTTOM_PADDING, infoScale)
     var metaGroupStartX by remember { mutableStateOf(0f) }
@@ -2071,6 +2140,7 @@ private fun SinkOrSwimInfoPanel(
                         rating = rating,
                         scale = infoScale,
                         userHasRated = userHasRated,
+                        showHollowStars = showHollowStars,
                         onRatingSelected = onRatingSelected,
                         modifier = Modifier
                             .offset {
@@ -2083,6 +2153,126 @@ private fun SinkOrSwimInfoPanel(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun SinkOrSwimPhonePortraitInfoPanel(
+    title: String,
+    year: String,
+    runtime: String,
+    genre: String,
+    synopsis: String,
+    director: String,
+    producer: String,
+    rating: Int,
+    userHasRated: Boolean,
+    showHollowStars: Boolean,
+    onRatingSelected: (Int) -> Unit,
+    scale: Float,
+    infoScale: Float
+) {
+    val panelHorizontalPadding = destinationDp(DETAIL_LIBRARY_HORIZONTAL_PADDING, scale)
+    val enlargedTextScale = infoScale * 1.5f
+    val enlargedRatingScale = infoScale * 2f
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .drawBehind {
+                drawRect(
+                    brush = Brush.verticalGradient(
+                        colorStops = arrayOf(
+                            0f to DetailInfoPanelBackgroundFill,
+                            DETAIL_INFO_PANEL_BACKGROUND_FADE_START to DetailInfoPanelBackgroundFill,
+                            1f to DetailInfoPanelBackgroundTransparent
+                        ),
+                        startY = 0f,
+                        endY = size.height
+                    )
+                )
+            }
+            .padding(
+                start = panelHorizontalPadding,
+                top = destinationDp(48f, infoScale),
+                end = panelHorizontalPadding,
+                bottom = destinationDp(DETAIL_INFO_PANEL_BOTTOM_PADDING, infoScale)
+            ),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = buildAnnotatedString {
+                withStyle(SpanStyle(fontWeight = FontWeight.Black)) {
+                    append(title.uppercase())
+                }
+                append(" ")
+                withStyle(SpanStyle(fontWeight = FontWeight.Normal)) {
+                    append("($year)")
+                }
+            },
+            color = DestinationText,
+            fontFamily = CinerificAppTextFontFamily,
+            fontSize = destinationSp(DETAIL_INFO_PANEL_TITLE_FONT_SIZE, infoScale),
+            lineHeight = destinationSp(DETAIL_INFO_PANEL_TITLE_LINE_HEIGHT, infoScale),
+            letterSpacing = DESTINATION_CARD_TITLE_LETTER_SPACING.sp,
+            textAlign = TextAlign.Center
+        )
+
+        Spacer(modifier = Modifier.height(destinationDp(28f, infoScale)))
+
+        Text(
+            text = synopsis,
+            color = DestinationText.copy(alpha = 0.82f),
+            fontFamily = CinerificAppTextFontFamily,
+            fontSize = destinationSp(DETAIL_INFO_PANEL_SYNOPSIS_FONT_SIZE, enlargedTextScale),
+            lineHeight = destinationSp(DETAIL_INFO_PANEL_SYNOPSIS_LINE_HEIGHT, enlargedTextScale),
+            letterSpacing = 0.sp,
+            textAlign = TextAlign.Start,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(destinationDp(34f, infoScale)))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.Top
+        ) {
+            Column(
+                modifier = Modifier.weight(DETAIL_INFO_PANEL_RUNTIME_GENRE_COLUMN_WEIGHT),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(destinationDp(18f, infoScale))
+            ) {
+                SinkOrSwimPanelText(text = runtime, scale = enlargedTextScale)
+                SinkOrSwimPanelText(text = genre, scale = enlargedTextScale)
+            }
+
+            Spacer(modifier = Modifier.weight(DETAIL_INFO_PANEL_META_TO_CREW_GUTTER_WEIGHT))
+
+            Column(
+                modifier = Modifier.weight(DETAIL_INFO_PANEL_CREW_COLUMN_WEIGHT),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(destinationDp(18f, infoScale))
+            ) {
+                SinkOrSwimPanelText(
+                    text = stringResource(R.string.program_meta_director, director),
+                    scale = enlargedTextScale
+                )
+                SinkOrSwimPanelText(
+                    text = stringResource(R.string.program_meta_producer, producer),
+                    scale = enlargedTextScale
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(destinationDp(34f, infoScale)))
+
+        SinkOrSwimRatingStars(
+            rating = rating,
+            scale = enlargedRatingScale,
+            userHasRated = userHasRated,
+            showHollowStars = showHollowStars,
+            onRatingSelected = onRatingSelected
+        )
     }
 }
 
@@ -2113,6 +2303,7 @@ private fun SinkOrSwimRatingStars(
     rating: Int,
     scale: Float,
     userHasRated: Boolean,
+    showHollowStars: Boolean,
     onRatingSelected: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -2132,6 +2323,7 @@ private fun SinkOrSwimRatingStars(
                 filled = index < rating,
                 scale = scale,
                 outlined = !userHasRated,
+                hollow = showHollowStars,
                 modifier = Modifier
                     .semantics { contentDescription = "Set rating to $starRating stars" }
                     .clickable(
@@ -2151,6 +2343,7 @@ private fun SinkOrSwimRatingStar(
     filled: Boolean,
     scale: Float,
     outlined: Boolean,
+    hollow: Boolean,
     modifier: Modifier = Modifier
 ) {
     val fillColor = if (filled) Color(0xFFFFC91B) else Color(0xFFC9C4CC)
@@ -2168,6 +2361,18 @@ private fun SinkOrSwimRatingStar(
         val grayStroke = destinationDp(DETAIL_INFO_PANEL_RATING_STAR_GRAY_STROKE, scale).toPx()
         val center = Offset(size.width / 2f, size.height / 2f)
         val starPath = cinerificRatingStarPath(center = center, outerRadius = starRadius)
+
+        if (hollow) {
+            drawPath(
+                path = starPath,
+                color = strokeColor,
+                style = Stroke(
+                    width = grayStroke * 2f,
+                    join = StrokeJoin.Round
+                )
+            )
+            return@Canvas
+        }
 
         if (outlined) {
             drawPath(
