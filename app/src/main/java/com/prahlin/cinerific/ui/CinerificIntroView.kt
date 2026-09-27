@@ -436,6 +436,12 @@ internal class CinerificIntroView(context: Context) : View(context) {
         postInvalidateOnAnimation()
     }
 
+    fun handleSystemBack(): Boolean {
+        if (activeMockFlow == null || mockSignInTransitionTargetProgress <= 0f) return false
+        closeMockSignInScreen()
+        return true
+    }
+
     fun restoreIntroSnapshot(snapshot: CinerificIntroSnapshot) {
         if (appliedIntroSnapshot == snapshot) return
 

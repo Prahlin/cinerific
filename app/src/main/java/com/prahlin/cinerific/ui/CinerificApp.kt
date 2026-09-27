@@ -3,6 +3,7 @@ package com.prahlin.cinerific.ui
 import android.graphics.BitmapFactory
 import android.os.SystemClock
 import androidx.annotation.DrawableRes
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -10,13 +11,23 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Composable
@@ -25,8 +36,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameMillis
 import androidx.compose.ui.geometry.CornerRadius
@@ -66,6 +79,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.prahlin.cinerific.R
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.math.PI
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -81,6 +95,7 @@ private const val FINAL_SETTLE_START_MS = LOGO_ENTRY_END_MS
 private const val FINAL_SETTLE_END_MS = 4812
 private const val BOOT_ANIMATION_MS = FINAL_SETTLE_END_MS
 private const val AUTO_LOGOUT_TIMEOUT_MS = 10_000L
+private const val SIGN_OUT_LOADING_MS = 2_000L
 private const val PORTRAIT_BOTTOM_NAV_SCROLL_MULTIPLIER = 2f
 private const val FAVORITES_FULL_PROMPT_X = 977f
 private const val FAVORITES_FULL_PROMPT_Y = 92f
@@ -133,6 +148,20 @@ fun CinerificApp() {
     var introSnapshot by rememberSaveable(stateSaver = CinerificIntroSnapshotSaver) {
         mutableStateOf(CinerificIntroSnapshot())
     }
+    var introView by remember { mutableStateOf<CinerificIntroView?>(null) }
+    var welcomeInputBlockedUntilMillis by remember { mutableStateOf(0L) }
+
+    fun selectProfile(profile: CinerificProfile) {
+        if (SystemClock.uptimeMillis() < welcomeInputBlockedUntilMillis) return
+        introSnapshot = CinerificIntroSnapshot()
+        signedInProfile = profile
+        signInSessionId += 1
+        showHome = true
+    }
+
+    BackHandler(enabled = !showHome && introSnapshot.activeFlowName.isNotBlank()) {
+        introView?.handleSystemBack()
+    }
 
     if (showHome) {
         CinerificLocalizedResources(selectedLanguage) {
@@ -142,6 +171,7 @@ fun CinerificApp() {
                 selectedLanguage = selectedLanguage,
                 onLanguageSelected = { selectedLanguage = it },
                 onSignOut = {
+                    welcomeInputBlockedUntilMillis = SystemClock.uptimeMillis() + 500L
                     signedInProfile = CinerificProfile.Guest
                     introSnapshot = CinerificIntroSnapshot()
                     showHome = false
@@ -153,18 +183,14 @@ fun CinerificApp() {
             modifier = Modifier.fillMaxSize(),
             factory = { context ->
                 CinerificIntroView(context).apply {
+                    introView = this
                     onIntroSnapshotChanged = { snapshot ->
                         if (introSnapshot != snapshot) {
                             introSnapshot = snapshot
                         }
                     }
                     restoreIntroSnapshot(introSnapshot)
-                    onAvatarSelected = { profile ->
-                        introSnapshot = CinerificIntroSnapshot()
-                        signedInProfile = profile
-                        signInSessionId += 1
-                        showHome = true
-                    }
+                    onAvatarSelected = ::selectProfile
                 }
             },
             update = { view ->
@@ -174,12 +200,7 @@ fun CinerificApp() {
                     }
                 }
                 view.restoreIntroSnapshot(introSnapshot)
-                view.onAvatarSelected = { profile ->
-                    introSnapshot = CinerificIntroSnapshot()
-                    signedInProfile = profile
-                    signInSessionId += 1
-                    showHome = true
-                }
+                view.onAvatarSelected = ::selectProfile
             }
         )
     }
@@ -213,6 +234,9 @@ private fun CinerificMainExperience(
     onSignOut: () -> Unit
 ) {
     var destination by rememberSaveable(signInSessionId) { mutableStateOf(CinerificDestination.Home) }
+    var detailOriginDestination by rememberSaveable(signInSessionId) {
+        mutableStateOf(CinerificDestination.Home)
+    }
     var selectedProgramTitle by rememberSaveable(signInSessionId) { mutableStateOf("Sink or Swim") }
     var favoriteProgramTitles by rememberSaveable { mutableStateOf(emptyList<String>()) }
     var userProgramRatings by rememberSaveable { mutableStateOf(emptyMap<String, Int>()) }
@@ -226,6 +250,10 @@ private fun CinerificMainExperience(
     var primaryDestinationCanScroll by remember(destination) { mutableStateOf<Boolean?>(null) }
     var portraitBottomNavHiddenFraction by remember(signInSessionId) { mutableFloatStateOf(1f) }
     var portraitBottomNavHeightPx by remember { mutableFloatStateOf(1f) }
+    var showSignOutConfirmation by rememberSaveable(signInSessionId) { mutableStateOf(false) }
+    var signOutInProgress by remember(signInSessionId) { mutableStateOf(false) }
+    val destinationStateHolder = rememberSaveableStateHolder()
+    val scope = rememberCoroutineScope()
     val configuration = LocalConfiguration.current
     val isPortrait = configuration.screenHeightDp > configuration.screenWidthDp
     val usesScrollLinkedPortraitBottomNav = destination in setOf(
@@ -319,7 +347,9 @@ private fun CinerificMainExperience(
     }
 
     fun showProgramDetails(title: String) {
-        clearCatalogRoute()
+        if (destination != CinerificDestination.ProgramDetails) {
+            detailOriginDestination = destination
+        }
         selectedProgramTitle = title
         destination = CinerificDestination.ProgramDetails
     }
@@ -354,6 +384,21 @@ private fun CinerificMainExperience(
         favoriteProgramTitles = favoriteProgramTitles + title
     }
 
+    BackHandler {
+        when {
+            signOutInProgress -> Unit
+            showSignOutConfirmation -> showSignOutConfirmation = false
+            destination == CinerificDestination.ProgramDetails -> {
+                destination = detailOriginDestination
+            }
+            destination != CinerificDestination.Home -> {
+                clearCatalogRoute()
+                destination = CinerificDestination.Home
+            }
+            else -> showSignOutConfirmation = true
+        }
+    }
+
     CompositionLocalProvider(LocalCinerificPlaybackSessionController provides playbackSessionController) {
         Box(
             modifier = Modifier
@@ -368,45 +413,47 @@ private fun CinerificMainExperience(
                     }
                 }
         ) {
-            when (destination) {
-                CinerificDestination.Home -> CinerificHomeScreen(
-                    onProgramSelected = ::showProgramDetails,
-                    onCatalogSelected = ::showCatalog,
-                    onVerticalScrollabilityChanged = { primaryDestinationCanScroll = it },
-                    modifier = Modifier.fillMaxSize()
-                )
-                CinerificDestination.Movies,
-                CinerificDestination.Shows,
-                CinerificDestination.Favorites,
-                CinerificDestination.Settings -> CinerificDestinationScreen(
-                    destination = destination,
-                    signedInProfile = signedInProfile,
-                    selectedLanguage = selectedLanguage,
-                    onLanguageSelected = onLanguageSelected,
-                    autoLogoutEnabled = autoLogoutEnabled,
-                    onAutoLogoutEnabledChange = { enabled ->
-                        autoLogoutEnabled = enabled
-                        lastInteractionMillis = SystemClock.uptimeMillis()
-                    },
-                    onSignOut = onSignOut,
-                    favoriteProgramTitles = favoriteProgramTitles,
-                    onFavoriteToggled = ::toggleFavoriteProgram,
-                    userProgramRatings = userProgramRatings,
-                    onProgramRated = ::rateProgram,
-                    onProgramSelected = ::showProgramDetails,
-                    catalogRoute = catalogRoute?.takeIf { it.destination == destination },
-                    onVerticalScrollabilityChanged = { primaryDestinationCanScroll = it },
-                    modifier = Modifier.fillMaxSize()
-                )
-                CinerificDestination.ProgramDetails -> CinerificProgramDetailsScreen(
-                    programTitle = selectedProgramTitle,
-                    favoriteProgramTitles = favoriteProgramTitles,
-                    onFavoriteToggled = ::toggleFavoriteProgram,
-                    userProgramRatings = userProgramRatings,
-                    onProgramRated = ::rateProgram,
-                    onProgramSelected = ::showProgramDetails,
-                    modifier = Modifier.fillMaxSize()
-                )
+            destinationStateHolder.SaveableStateProvider(destination) {
+                when (destination) {
+                    CinerificDestination.Home -> CinerificHomeScreen(
+                        onProgramSelected = ::showProgramDetails,
+                        onCatalogSelected = ::showCatalog,
+                        onVerticalScrollabilityChanged = { primaryDestinationCanScroll = it },
+                        modifier = Modifier.fillMaxSize()
+                    )
+                    CinerificDestination.Movies,
+                    CinerificDestination.Shows,
+                    CinerificDestination.Favorites,
+                    CinerificDestination.Settings -> CinerificDestinationScreen(
+                        destination = destination,
+                        signedInProfile = signedInProfile,
+                        selectedLanguage = selectedLanguage,
+                        onLanguageSelected = onLanguageSelected,
+                        autoLogoutEnabled = autoLogoutEnabled,
+                        onAutoLogoutEnabledChange = { enabled ->
+                            autoLogoutEnabled = enabled
+                            lastInteractionMillis = SystemClock.uptimeMillis()
+                        },
+                        onSignOut = onSignOut,
+                        favoriteProgramTitles = favoriteProgramTitles,
+                        onFavoriteToggled = ::toggleFavoriteProgram,
+                        userProgramRatings = userProgramRatings,
+                        onProgramRated = ::rateProgram,
+                        onProgramSelected = ::showProgramDetails,
+                        catalogRoute = catalogRoute?.takeIf { it.destination == destination },
+                        onVerticalScrollabilityChanged = { primaryDestinationCanScroll = it },
+                        modifier = Modifier.fillMaxSize()
+                    )
+                    CinerificDestination.ProgramDetails -> CinerificProgramDetailsScreen(
+                        programTitle = selectedProgramTitle,
+                        favoriteProgramTitles = favoriteProgramTitles,
+                        onFavoriteToggled = ::toggleFavoriteProgram,
+                        userProgramRatings = userProgramRatings,
+                        onProgramRated = ::rateProgram,
+                        onProgramSelected = ::showProgramDetails,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
             }
 
             CinerificRightSideNavBar(
@@ -428,7 +475,158 @@ private fun CinerificMainExperience(
                 suppressed = userInitiatedPlaybackActive,
                 modifier = Modifier.fillMaxSize()
             )
+
+            if (showSignOutConfirmation) {
+                SignOutConfirmationOverlay(
+                    onConfirm = {
+                        showSignOutConfirmation = false
+                        signOutInProgress = true
+                        scope.launch {
+                            delay(SIGN_OUT_LOADING_MS)
+                            onSignOut()
+                        }
+                    },
+                    onDismiss = { showSignOutConfirmation = false },
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+
+            if (signOutInProgress) {
+                SignOutLoadingOverlay(modifier = Modifier.fillMaxSize())
+            }
         }
+    }
+}
+
+@Composable
+private fun SignOutLoadingOverlay(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .background(Color.Black.copy(alpha = 0.72f))
+            .clickable(onClick = {}),
+        contentAlignment = Alignment.Center
+    ) {
+        CinerificLoadingSpinner(
+            modifier = Modifier.requiredSize(
+                width = 150.dp,
+                height = 150.dp *
+                    CINERIFIC_LOADING_SPINNER_CANVAS_HEIGHT /
+                    CINERIFIC_LOADING_SPINNER_CANVAS_WIDTH
+            )
+        )
+    }
+}
+
+@Composable
+private fun SignOutConfirmationOverlay(
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val frameShape = RoundedCornerShape(15.dp)
+    val panelShape = RoundedCornerShape(8.dp)
+    val frameStrokeWidth = 2.dp
+    val frameClearSpace = frameStrokeWidth * (10f / 3f)
+    val selectionStrokeAlpha = rememberCinerificSelectionStrokeAlpha()
+    val selectionStrokeColor = lerpColor(
+        Color(0xFFC86BE0),
+        Color(0xFFE7E7E7),
+        ((selectionStrokeAlpha - 0.5f) / 0.17f).coerceIn(0f, 1f)
+    )
+
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.72f))
+                .clickable(onClick = {})
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(0.84f)
+                .widthIn(max = 420.dp)
+                .border(
+                    frameStrokeWidth,
+                    selectionStrokeColor,
+                    frameShape
+                )
+                .padding(frameClearSpace)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(panelShape)
+                    .background(Color(0xFF252126))
+                    .padding(horizontal = 24.dp, vertical = 22.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
+                Text(
+                    text = "Sign out from\nCinerific?",
+                    color = Color.White,
+                    fontFamily = CinerificAppTextFontFamily,
+                    fontSize = 26.sp,
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 34.sp,
+                    letterSpacing = 0.55.sp,
+                    textAlign = TextAlign.Center
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(14.dp)
+                ) {
+                    SignOutConfirmationButton(
+                        label = "Yes",
+                        backgroundColor = ColorFrame2Background,
+                        contentColor = Color.White,
+                        borderColor = Color(0xFFC86BE0),
+                        onClick = onConfirm,
+                        modifier = Modifier.weight(1f)
+                    )
+                    SignOutConfirmationButton(
+                        label = "No",
+                        backgroundColor = Color(0xFF3A343C),
+                        contentColor = Color.White,
+                        borderColor = Color.White.copy(alpha = 0.72f),
+                        onClick = onDismiss,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SignOutConfirmationButton(
+    label: String,
+    backgroundColor: Color,
+    contentColor: Color,
+    borderColor: Color,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val shape = RoundedCornerShape(6.dp)
+    Box(
+        modifier = modifier
+            .height(52.dp)
+            .clip(shape)
+            .background(backgroundColor)
+            .border(1.dp, borderColor, shape)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = label,
+            color = contentColor,
+            fontFamily = CinerificAppTextFontFamily,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Black,
+            letterSpacing = 0.55.sp
+        )
     }
 }
 
