@@ -1,0 +1,341 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R 11 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Title (Cinerific Android App Work Log - September 27, 2026 \(U.S. EST\)) /Author (OpenAI Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260927164710-04'00') >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 9224 >>
+stream
+BT /F1 14.00 Tf 1 0 0 1 52.00 755.00 Tm (Cinerific Android App Work Log - September 27, 2026 \(U.S. EST\)) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 730.00 Tm (Compiled summary for Sunday, September 27, 2026 \(U.S. Eastern Time\) - focus: rebuilding the four) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 721.15 Tm (Welcome profile illustrations and name tags at production resolution, adding stronger but) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 712.30 Tm (controlled character gradients and refined bubble depth, converting portrait Create Account, Sign) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 703.45 Tm (In, and Forgot Password into vertically ordered scrollable compositions without disturbing the) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 694.60 Tm (original Welcome screen, keeping the red-star sign-out animation continuous through the final) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 685.75 Tm (screen swap, and refining phone-portrait program details with playback-matched chrome, responsive) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 676.90 Tm (controls, larger information content, and a deliberate two-step rating interaction. Generated) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 668.05 Tm (after reviewing every prior Cinerific PDF worklog, the September 26 baseline, all five September) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 659.20 Tm (27 commits, the clean repository state, build/install output, and runtime checks from the) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 650.35 Tm (connected Samsung phone and tablet emulator.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 639.70 Tm (Generated in continuity with the established Cinerific worklog cadence from July 12 through) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 630.85 Tm (September 26: compact opening summary, source-material review, baseline state, goals, themed) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 622.00 Tm (work-completed sections, validation, files touched, follow-up context, and output-artifact close.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 613.15 Tm (No September 27 PDF existed before this generation pass, so this artifact uses the) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 604.30 Tm (first-log-of-the-day no-part filename. Eastern Time was verified live as Sunday, September 27,) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 595.45 Tm (2026 at 4:47 PM EDT, UTC-04:00. The title retains the historical U.S. EST label while the body) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 586.60 Tm (records the seasonally accurate EDT offset. This artifact records main through HEAD 9d450e8,) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 577.75 Tm (Refined Phone-Portrait Program Details.) Tj ET
+BT /F1 9.50 Tf 1 0 0 1 52.00 563.10 Tm (Source Materials Reviewed) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 550.90 Tm (- Reviewed every pre-existing Cinerific worklog PDF at the repository root: July 12, July 14,) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 542.05 Tm (  July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July 23, July 24, July) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 533.20 Tm (  25, July 27, July 28 Part 1, July 28 Part 2, July 29, August 1, August 3, August 4, August 5,) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 524.35 Tm (  September 19, September 21, September 21 Part 2, September 23, September 24, and September 26.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 513.70 Tm (- Converted the complete 26-PDF corpus with pdftotext and compared title cadence,) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 504.85 Tm (  opening-summary density, section ordering, technical bullet style, validation language, file) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 496.00 Tm (  inventories, follow-up notes, output-artifact wording, and same-day Part naming.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 485.35 Tm (- Ran pdfinfo across all earlier artifacts and confirmed the established four-page U.S. Letter) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 476.50 Tm (  geometry. Reviewed the latest artifact's Helvetica typography, PDF 1.4 compatibility, OpenAI) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 467.65 Tm (  Codex metadata, extractable text, and right-aligned page footers.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 457.00 Tm (- Reviewed read_project.sh, cinerific_PROJECT_SNAPSHOT.txt, Git status, recent history, the five) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 448.15 Tm (  September 27 commit messages, file inventories, and the complete source delta from worklog) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 439.30 Tm (  commit 1fe2d72 through HEAD 9d450e8.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 428.65 Tm (- Reviewed September 27 changes in CinerificIntroView.kt, CinerificApp.kt,) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 419.80 Tm (  CinerificDestinationScreen.kt, CinerificHomeScreen.kt, all eight updated avatar/name PNG) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 410.95 Tm (  assets, and the refreshed project snapshot.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 400.30 Tm (- Reviewed runtime work from Samsung SM-G990U R5CRC33MGNZ and emulator-5554, including portrait) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 391.45 Tm (  authentication transitions, scrolling, keyboard focus, sign-out loading, detail-card entry,) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 382.60 Tm (  star interaction, Gradle builds, streamed installs, relaunches, and phone/tablet screenshots.) Tj ET
+BT /F1 9.50 Tf 1 0 0 1 52.00 367.95 Tm (Baseline Status Before September 27 Work) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 355.75 Tm (- The September 26 baseline had completed phone-portrait catalog scaling, horizontal middle-card) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 346.90 Tm (  browsing, destination-aware Back handling, state restoration, the guarded Home sign-out) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 338.05 Tm (  prompt, and a two-second red-star loading transition.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 327.40 Tm (- Welcome profile bubbles and name art still used lower-resolution or softer-edged exports.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 318.55 Tm (  Their ring strokes, inner/outer black depth, character surfaces, and bright hair-to-stroke) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 309.70 Tm (  transitions did not yet hold up consistently across phone and tablet densities.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 299.05 Tm (- The portrait authentication action screens inherited landscape-oriented horizontal groupings) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 290.20 Tm (  and moved or resized the logo during transitions. Create Account, Sign In, and recovery) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 281.35 Tm (  content needed dedicated narrow-screen ordering without changing the settled Welcome) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 272.50 Tm (  composition.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 261.85 Tm (- The sign-out spinner could visibly stop while the signed-in tree was removed and Welcome was) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 253.00 Tm (  reconstructed, creating a brief frozen transition immediately before the final screen) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 244.15 Tm (  appeared.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 233.50 Tm (- Phone-portrait program details still used the general hero/control and information-panel) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 224.65 Tm (  geometry. The logo could crowd system chrome, transport controls were undersized and offset) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 215.80 Tm (  from the true screen center, and the desktop-style information row did not use the available) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 206.95 Tm (  vertical scroll model.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 196.30 Tm (- The rating stack immediately committed the first tapped star. It did not provide a separate) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 187.45 Tm (  empty/unrated state before accepting the user's chosen yellow-star count.) Tj ET
+BT /F1 9.50 Tf 1 0 0 1 52.00 172.80 Tm (Main Goals for September 27) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 160.60 Tm (- Make all four Welcome identities crisp at every supported density while preserving their) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 151.75 Tm (  established shapes, placement, alignment, and profile meaning.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 141.10 Tm (- Add noticeable diagonal tonal depth to hair, face, and body regions, refine the black bubble) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 132.25 Tm (  fade and gray stroke, and keep difficult bright hair edges visually integrated.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 121.60 Tm (- Give each portrait authentication action a purpose-built vertical flow with stable Welcome) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 112.75 Tm (  branding, larger controls, reliable scrolling, and no unrelated action links inside the active) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 103.90 Tm (  panel.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 93.25 Tm (- Keep the shared sign-out spinner animating without interruption until the app has visibly) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 84.40 Tm (  returned to Welcome.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 73.75 Tm (- Refine phone-only portrait details while preserving tablet and landscape layouts: protect the) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 64.90 Tm (  logo, center and enlarge transport controls, reorder content vertically, retain useful) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 56.05 Tm (  internal metadata pairing, and make rating intent explicit.) Tj ET
+BT /F1 7.00 Tf 1 0 0 1 364.49 26.00 Tm (Cinerific Work Log - September 27, 2026 \(U.S. EST\) Page 1) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 8338 >>
+stream
+BT /F1 14.00 Tf 1 0 0 1 52.00 755.00 Tm (Cinerific Android App Work Log - September 27, 2026 \(U.S. EST\)) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 730.00 Tm (- Continue deploying accepted changes to both the connected USB phone and tablet emulator and) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 721.15 Tm (  verify responsive boundaries after each major pass.) Tj ET
+BT /F1 9.50 Tf 1 0 0 1 52.00 706.50 Tm (Work Completed - Avatar and Name Artwork) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 694.30 Tm (- Replaced Steve, Martin, Janny, and Guest bubble assets with high-resolution, Figma-aligned) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 685.45 Tm (  artwork while preserving each character's silhouette, facial construction, clothing geometry,) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 676.60 Tm (  and established Welcome placement.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 665.95 Tm (- Rebuilt all four name-tag PNGs from the supplied Figma reference so the marquee letter shapes,) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 657.10 Tm (  bulb details, black surround, and gray edging render crisply rather than scaling a soft raster) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 648.25 Tm (  source.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 637.60 Tm (- Refined the circular bubble treatment with cleaner antialiasing, a slightly thicker gray edge,) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 628.75 Tm (  and smoother black or blackish depth on both the inner and outer sides of the ring.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 618.10 Tm (- Added diagonal dark-to-light gradients across hair, face, and body colors. Increased contrast) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 609.25 Tm (  through successive review passes so the depth remained visible on-device instead of reading as) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 600.40 Tm (  a nearly flat fill.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 589.75 Tm (- Tuned Janny and Guest first, strengthened Martin's yellow body range, strengthened Steve's) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 580.90 Tm (  green body range, and softened Steve's bright hair endpoint so it blended naturally against) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 572.05 Tm (  the gray outline.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 561.40 Tm (- Applied the artwork globally to phone and tablet, portrait and landscape Welcome presentations) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 552.55 Tm (  without changing bubble size, name alignment, profile hit targets, or transition geometry.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 541.90 Tm (- Refreshed cinerific_PROJECT_SNAPSHOT.txt after the accepted asset pass so the repository) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 533.05 Tm (  inventory records the new PNG sizes and current worklog set.) Tj ET
+BT /F1 9.50 Tf 1 0 0 1 52.00 518.40 Tm (Work Completed - Portrait Account Creation) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 506.20 Tm (- Kept the original Welcome screen visually unchanged and scoped the new behavior to the) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 497.35 Tm (  slide-in Create My Account action shown after the user taps that option.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 486.70 Tm (- Stopped repositioning or resizing the logo during the portrait transition and matched the) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 477.85 Tm (  active Create My Account and Forgot Password heading typography to the portrait Welcome) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 469.00 Tm (  actions.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 458.35 Tm (- Reorganized portrait account creation into three top-to-bottom groups for form identity) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 449.50 Tm (  fields, membership/payment fields, and avatar selection rather than reusing the wide) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 440.65 Tm (  three-column composition.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 430.00 Tm (- Enlarged form fields, dropdowns, labels, and avatar assets together until the account-creation) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 421.15 Tm (  avatar bubbles matched the Welcome-screen bubble size.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 410.50 Tm (- Allowed the longer composition to scroll vertically, accepting that the complete form can) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 401.65 Tm (  extend below one viewport while preserving clear field order and comfortable touch targets.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 391.00 Tm (- Adjusted pointer-coordinate mapping for the scaled and scrolled portrait panel so text fields,) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 382.15 Tm (  dropdowns, membership choices, and avatar controls remain aligned with their visible) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 373.30 Tm (  locations.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 362.65 Tm (- Removed Sign In and Forgot Password actions from the portrait Create Account panel while) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 353.80 Tm (  retaining the fixed bottom Back control and the established landscape implementation.) Tj ET
+BT /F1 9.50 Tf 1 0 0 1 52.00 339.15 Tm (Work Completed - Portrait Sign In and Recovery) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 326.95 Tm (- Applied the same portrait-first vertical principle to Sign In, placing the enlarged) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 318.10 Tm (  credentials and Remember Me control beneath the fixed logo rather than preserving the wide) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 309.25 Tm (  horizontal relationship.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 298.60 Tm (- Converted Forgot Password into a clear vertical story: explanatory copy first, then the) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 289.75 Tm (  recovery selector, email field, submit action, and help text beneath it.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 279.10 Tm (- Increased portrait field and control scale consistently with Create Account while retaining) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 270.25 Tm (  native field behavior, password masking, selected states, validation messaging, and keyboard) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 261.40 Tm (  interaction.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 250.75 Tm (- Introduced shared portrait scrolling and viewport clipping for Create Account and Forgot) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 241.90 Tm (  Password so off-screen content can be reached without drawing over system or fixed navigation) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 233.05 Tm (  areas.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 222.40 Tm (- Stabilized scroll and touch behavior during keyboard focus and retained the fixed bottom Back) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 213.55 Tm (  controls as the only navigation affordance needed inside those active portrait panels.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 202.90 Tm (- Removed Create My Account, Sign In, Forgot Password, and other unrelated cross-links from the) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 194.05 Tm (  active portrait Sign In or recovery screens as applicable, reducing duplicate actions and) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 185.20 Tm (  visual noise.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 174.55 Tm (- Left the landscape authentication layouts intact, keeping the portrait specialization bounded) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 165.70 Tm (  to phone/tablet narrow orientation rather than changing the established wide-screen) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 156.85 Tm (  compositions.) Tj ET
+BT /F1 9.50 Tf 1 0 0 1 52.00 142.20 Tm (Work Completed - Continuous Sign-Out Loading) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 130.00 Tm (- Hoisted sign-out progress state and its blocking spinner overlay to the application root) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 121.15 Tm (  instead of tying animation lifetime to the signed-in destination tree being removed.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 110.50 Tm (- Kept the Welcome layer pre-rendered behind the signed-in experience so the final state can be) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 101.65 Tm (  revealed without reconstructing the intro surface during the most visible portion of the) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 92.80 Tm (  transition.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 82.15 Tm (- Started the existing red-star spinner immediately after Yes is chosen in the Home sign-out) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 73.30 Tm (  confirmation and allowed it to keep rotating throughout the configured loading interval and) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 64.45 Tm (  final screen swap.) Tj ET
+BT /F1 7.00 Tf 1 0 0 1 364.49 26.00 Tm (Cinerific Work Log - September 27, 2026 \(U.S. EST\) Page 2) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 10 0 R >>
+endobj
+10 0 obj
+<< /Length 8485 >>
+stream
+BT /F1 14.00 Tf 1 0 0 1 52.00 755.00 Tm (Cinerific Android App Work Log - September 27, 2026 \(U.S. EST\)) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 730.00 Tm (- Cleared the loading state only after Welcome became the visible state, eliminating the) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 721.15 Tm (  frozen-frame gap that previously appeared just before the screen snapped back.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 710.50 Tm (- Preserved the modal's input blocking, dim background, two-second product timing,) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 701.65 Tm (  profile-selection guard, and the same layered Cinerific spinner art rather than introducing a) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 692.80 Tm (  second loading treatment.) Tj ET
+BT /F1 9.50 Tf 1 0 0 1 52.00 678.15 Tm (Work Completed - Phone-Portrait Detail Hero) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 665.95 Tm (- Added a dedicated less-than-600dp portrait-phone branch for opened program details, leaving) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 657.10 Tm (  portrait tablets and all landscape presentations on their previous geometry.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 646.45 Tm (- Moved the Cinerific hero logo below protected system chrome, then matched its final phone size) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 637.60 Tm (  and top inset exactly to the full-screen Home video playback overlay: the shared 1.44 scale) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 628.75 Tm (  and status-bar inset minus 2dp.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 618.10 Tm (- Raised previous, play, and next controls to 150 percent of their former phone size and) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 609.25 Tm (  centered the complete transport row from the available hero width instead of applying a fixed) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 600.40 Tm (  design-space x offset.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 589.75 Tm (- Kept control spacing, button artwork, roles, press feedback, loading behavior, adjacent-title) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 580.90 Tm (  routing, and the hero's responsive image treatment intact while changing only the requested) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 572.05 Tm (  phone presentation.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 561.40 Tm (- Scaled the favorite/unfavorite star by the same 1.44 proportion as the logo, preserved its) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 552.55 Tm (  top-right margin, enlarged its burst envelope consistently, and aligned its visual center to) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 543.70 Tm (  the logo's vertical center.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 533.05 Tm (- Shared the phone portrait hero-art multiplier with CinerificHomeScreen.kt so detail and) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 524.20 Tm (  playback chrome now derive from one accepted measurement rather than duplicated) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 515.35 Tm (  approximations.) Tj ET
+BT /F1 9.50 Tf 1 0 0 1 52.00 500.70 Tm (Work Completed - Detail Information and Rating) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 488.50 Tm (- Rebuilt the phone-portrait information panel as three vertically ordered groups: title and) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 479.65 Tm (  description, metadata snippets, then the rating stack. The parent detail screen remains) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 470.80 Tm (  scrollable when the larger content exceeds one viewport.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 460.15 Tm (- Increased the description and metadata typography by 50 percent and doubled the rating-star) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 451.30 Tm (  scale, improving legibility and touch confidence on narrow phones.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 440.65 Tm (- After review, restored the metadata group's prior internal two-column logic: runtime and genre) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 431.80 Tm (  remain paired on the left while director and producer remain paired on the right. Only the) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 422.95 Tm (  relationship among the larger groups became vertical.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 412.30 Tm (- Kept the title treatment, background fade, library rows, navigation bar behavior, card) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 403.45 Tm (  selection, and non-phone information panel unchanged.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 392.80 Tm (- Changed rating input into a two-step state. The first tap now removes the faint default score) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 383.95 Tm (  and presents five genuinely hollow stars without writing a user rating.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 373.30 Tm (- Made the next star tap commit the selected value and fill exactly that many yellow stars;) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 364.45 Tm (  later taps continue to update the stored per-program rating normally.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 353.80 Tm (- Verified the interaction visually on the USB phone from preview score to hollow unrated stack) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 344.95 Tm (  to a committed three-star yellow result.) Tj ET
+BT /F1 9.50 Tf 1 0 0 1 52.00 330.30 Tm (Work Completed - Device Deployment and Runtime QA) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 318.10 Tm (- Built, installed, and relaunched the app repeatedly on Samsung SM-G990U serial R5CRC33MGNZ and) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 309.25 Tm (  the available tablet emulator as portrait changes were accepted.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 298.60 Tm (- Checked Welcome artwork at phone and tablet densities, portrait authentication scroll) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 289.75 Tm (  behavior, field hit alignment, keyboard-sensitive states, and the uninterrupted sign-out) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 280.90 Tm (  return.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 270.25 Tm (- Opened multiple program details from Home rows, allowed hero reveals to settle, and compared) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 261.40 Tm (  phone control centering, information ordering, metadata pairing, star sizing, and logo/star) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 252.55 Tm (  alignment in captured screenshots.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 241.90 Tm (- Compared the final detail logo against the full-screen playback overlay and confirmed matching) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 233.05 Tm (  footprint and top inset on the phone; confirmed the enlarged favorite control shares the logo) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 224.20 Tm (  centerline and preserves its right margin.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 213.55 Tm (- Kept tablet portrait behavior on the established smaller logo, controls, and three-column) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 204.70 Tm (  information panel, confirming the phone-specific branch did not leak into the larger-width) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 195.85 Tm (  layout.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 185.20 Tm (- Maintained device-independent responsive thresholds and did not add Samsung-model-specific) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 176.35 Tm (  coordinates or asset variants.) Tj ET
+BT /F1 9.50 Tf 1 0 0 1 52.00 161.70 Tm (Validation and Checks Performed) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 149.50 Tm (- Ran ./gradlew :app:assembleDebug throughout the authentication, sign-out, and detail-screen) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 140.65 Tm (  passes. Final reported builds completed successfully without Kotlin compilation or Android) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 131.80 Tm (  resource errors.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 121.15 Tm (- Ran git diff --check during implementation without whitespace errors. Confirmed the source) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 112.30 Tm (  tree was clean at HEAD 9d450e8 before this documentation pass; only temporary) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 103.45 Tm (  extraction/rendering material was created while studying the worklogs.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 92.80 Tm (- Confirmed successful streamed APK installs and Activity launches on both R5CRC33MGNZ and) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 83.95 Tm (  emulator-5554 after accepted changes.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 73.30 Tm (- Verified commit 05a0bc5 updated all eight profile/name PNGs and the project snapshot; b55d90b) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 64.45 Tm (  and f6e9c80 updated CinerificIntroView.kt; ab559e0 updated CinerificApp.kt; and 9d450e8) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 55.60 Tm (  updated CinerificDestinationScreen.kt plus the shared Home hero scale.) Tj ET
+BT /F1 7.00 Tf 1 0 0 1 364.49 26.00 Tm (Cinerific Work Log - September 27, 2026 \(U.S. EST\) Page 3) Tj ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 12 0 R >>
+endobj
+12 0 obj
+<< /Length 7293 >>
+stream
+BT /F1 14.00 Tf 1 0 0 1 52.00 755.00 Tm (Cinerific Android App Work Log - September 27, 2026 \(U.S. EST\)) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 730.00 Tm (- Measured the implementation delta from September 26 worklog commit 1fe2d72 through HEAD as 859) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 721.15 Tm (  Kotlin insertions and 166 Kotlin deletions across four source files, plus eight binary asset) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 712.30 Tm (  replacements and the mechanically refreshed snapshot.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 701.65 Tm (- Verified U.S. Eastern Time live as Sunday, September 27, 2026 at 4:47 PM EDT with UTC offset) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 692.80 Tm (  -04:00 before choosing the filename and report date.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 682.15 Tm (- Checked this output with pdfinfo, pdffonts, pdftotext, page rendering, and image inspection) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 673.30 Tm (  for four-page count, U.S. Letter geometry, clipping, wrapping, metadata, footer placement, and) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 664.45 Tm (  readable extracted text.) Tj ET
+BT /F1 9.50 Tf 1 0 0 1 52.00 649.80 Tm (Files Touched During September 27) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 637.60 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt: added dedicated portrait) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 628.75 Tm (  Create Account, Sign In, and Forgot Password composition, scrolling, scaling, touch mapping,) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 619.90 Tm (  link removal, and keyboard-stable behavior.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 609.25 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt: hoisted sign-out loading,) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 600.40 Tm (  pre-rendered Welcome behind the signed-in experience, and kept spinner state alive through the) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 591.55 Tm (  final screen transition.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 580.90 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt: added phone-detail) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 572.05 Tm (  hero chrome, centered enlarged controls, vertical information grouping, enlarged text/stars,) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 563.20 Tm (  paired metadata, two-step ratings, and aligned favorite sizing.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 552.55 Tm (- app/src/main/java/com/prahlin/cinerific/ui/CinerificHomeScreen.kt: exposed the accepted) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 543.70 Tm (  phone-portrait hero-art scale for exact reuse by program details.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 533.05 Tm (- app/src/main/res/drawable-nodpi/{steve,martin,janny,guest}_avatar_bubble_edge50_body0_test.png:) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 524.20 Tm (  replaced all four profile bubbles with crisp gradient and refined-ring artwork.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 513.55 Tm (- app/src/main/res/drawable-nodpi/{steve,martin,janny,guest}_name.png: replaced all four name) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 504.70 Tm (  tags with sharper Figma-aligned exports.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 494.05 Tm (- cinerific_PROJECT_SNAPSHOT.txt: refreshed with the accepted asset state and current repository) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 485.20 Tm (  inventory.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 474.55 Tm (- cinerific_worklog_september 27.pdf: added this first and latest Eastern-Time worklog for) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 465.70 Tm (  September 27 using the established no-part filename convention.) Tj ET
+BT /F1 9.50 Tf 1 0 0 1 52.00 451.05 Tm (Follow-Up Context) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 438.85 Tm (- The original Welcome composition remains the baseline. Portrait authentication specialization) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 430.00 Tm (  begins only after an action is selected; future changes should not move or rescale settled) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 421.15 Tm (  Welcome assets unintentionally.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 410.50 Tm (- The new high-resolution avatars and name tags are shared across phone, tablet, portrait, and) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 401.65 Tm (  landscape. Preserve their geometry and tune the source assets rather than compensating with) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 392.80 Tm (  per-device raster scaling.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 382.15 Tm (- Portrait Create Account, Sign In, and recovery intentionally favor vertical reading and) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 373.30 Tm (  scrolling. Additional fields should join those ordered groups and use the existing transformed) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 364.45 Tm (  touch-coordinate path.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 353.80 Tm (- Sign-out loading now depends on root-level overlay lifetime and a pre-rendered Welcome layer.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 344.95 Tm (  Future navigation refactors should preserve that ownership so the red-star animation cannot) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 336.10 Tm (  freeze during tree replacement.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 325.45 Tm (- Phone detail chrome uses the same 1.44 hero-art scale as full-screen playback and a) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 316.60 Tm (  status-inset-minus-2dp top relationship. Future tuning should change the shared measurement) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 307.75 Tm (  rather than allowing Home and details to drift.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 297.10 Tm (- The first detail-star tap is intentionally an activation/reset step, not a rating. Only a) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 288.25 Tm (  subsequent star tap writes yellow-star state; accessibility or analytics additions should) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 279.40 Tm (  preserve that two-step intent.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 268.75 Tm (- Tablet and landscape detail layouts were deliberately left unchanged. Any later request to) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 259.90 Tm (  scale those modes should be handled through their own responsive branch rather than broadening) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 251.05 Tm (  the phone threshold.) Tj ET
+BT /F1 9.50 Tf 1 0 0 1 52.00 236.40 Tm (Output Artifact) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 224.20 Tm (- Generated cinerific_worklog_september 27.pdf at the repository root using the) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 215.35 Tm (  first-log-of-the-day no-part filename convention.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 204.70 Tm (- Preserved the established four-page U.S. Letter layout, Helvetica text, PDF 1.4 compatibility,) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 195.85 Tm (  OpenAI Codex metadata, right-aligned page footers, and plain-text-readable structure.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 185.20 Tm (- Used the verified September 27, 2026 U.S. Eastern date and documented the actual EDT offset) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 176.35 Tm (  while retaining the historical U.S. EST title label.) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 165.70 Tm (- Recorded main through 9d450e8 and the clean committed implementation state; this PDF is the) Tj ET
+BT /F1 7.45 Tf 1 0 0 1 52.00 156.85 Tm (  only intended new repository artifact created by the documentation pass.) Tj ET
+BT /F1 7.00 Tf 1 0 0 1 364.49 26.00 Tm (Cinerific Work Log - September 27, 2026 \(U.S. EST\) Page 4) Tj ET
+endstream
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000140 00000 n 
+0000000237 00000 n 
+0000000492 00000 n 
+0000000618 00000 n 
+0000009893 00000 n 
+0000010019 00000 n 
+0000018408 00000 n 
+0000018535 00000 n 
+0000027072 00000 n 
+0000027200 00000 n 
+trailer
+<< /Size 13 /Root 1 0 R /Info 4 0 R >>
+startxref
+34545
+%%EOF
