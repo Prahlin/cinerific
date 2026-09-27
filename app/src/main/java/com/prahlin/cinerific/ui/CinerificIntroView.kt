@@ -230,6 +230,7 @@ private const val MOCK_FORGOT_PASSWORD_BUTTON_TOP_GAP = 26f
 private const val MOCK_FORGOT_PASSWORD_BUTTON_HEIGHT = 54f
 private const val MOCK_FORGOT_PASSWORD_BUTTON_RADIUS = 10f
 private const val MOCK_FORGOT_PASSWORD_HELP_TOP_GAP = 16f
+private const val MOCK_FORGOT_PASSWORD_PORTRAIT_SECTION_GAP = 36f
 private const val MOCK_REMEMBER_ME_TEXT = "Remember me"
 private const val MOCK_REMEMBER_ME_TOP_GAP = 24f
 private const val MOCK_REMEMBER_ME_BOX_SIZE = 22f
@@ -396,10 +397,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private var mockDropdownScrollMoved = false
     private var mockTouchDownX = 0f
     private var mockTouchDownY = 0f
-    private var portraitCreateScrollY = 0f
-    private var portraitCreateScrollStartY = 0f
-    private var portraitCreateScrollStartOffset = 0f
-    private var portraitCreateScrollMoved = false
+    private var portraitAuthScrollY = 0f
+    private var portraitAuthScrollStartY = 0f
+    private var portraitAuthScrollStartOffset = 0f
+    private var portraitAuthScrollMoved = false
     private var mockDragReturnInProgress = false
     private var focusedMockField: MockSignInField? = null
     private var mockInputDimProgress = 0f
@@ -661,10 +662,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 ACCOUNT_PROMPT_SIGN_IN_CENTER_X,
                 mockBackChevronRowTopY(),
                 stage.left,
-                if (
-                    isPortraitIntroLayout() &&
-                    activeMockFlow == MockAccountFlow.CreateAccount
-                ) {
+                if (usesPortraitStackedAuthLayout()) {
                     stage.top
                 } else {
                     accountPromptStageTop(stage.scale)
@@ -712,9 +710,9 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 if (mockSignInStartMillis != null) {
                     mockDragReturnInProgress = false
                     mockDropdownScrollMoved = false
-                    portraitCreateScrollStartY = event.y
-                    portraitCreateScrollStartOffset = portraitCreateScrollY
-                    portraitCreateScrollMoved = false
+                    portraitAuthScrollStartY = event.y
+                    portraitAuthScrollStartOffset = portraitAuthScrollY
+                    portraitAuthScrollMoved = false
                     if (isMockFlowSwitchAnimating()) {
                         return true
                     }
@@ -836,7 +834,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             }
             MotionEvent.ACTION_MOVE -> {
                 if (mockSignInStartMillis != null) {
-                    if (updatePortraitCreateScroll(event)) {
+                    if (updatePortraitAuthScroll(event)) {
                         return true
                     }
                     if (updateMockCreateAvatarDrag(event)) {
@@ -869,8 +867,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     pressedAvatarProfile != null
             }
             MotionEvent.ACTION_UP -> {
-                if (portraitCreateScrollMoved) {
-                    portraitCreateScrollMoved = false
+                if (portraitAuthScrollMoved) {
+                    portraitAuthScrollMoved = false
                     pressedMockField = null
                     pressedMockDropdown = null
                     pressedMockDropdownOption = null
@@ -1115,7 +1113,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 activeMockDropdownScroll = null
                 mockDropdownScrollMoved = false
                 mockDragReturnInProgress = false
-                portraitCreateScrollMoved = false
+                portraitAuthScrollMoved = false
                 portraitProfileSwipeMoved = false
                 portraitProfileDragDeltaX = 0f
                 false
@@ -1387,11 +1385,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
         yOffset: Float,
         alpha: Float
     ) {
-        if (
-            isPortraitIntroLayout() &&
-            mockSignInStartMillis != null &&
-            (activeMockFlow == MockAccountFlow.CreateAccount ||
-                outgoingMockFlow == MockAccountFlow.CreateAccount)
+        if (usesPortraitStackedAuthLayout(activeMockFlow) ||
+            usesPortraitStackedAuthLayout(outgoingMockFlow)
         ) {
             return
         }
@@ -1492,34 +1487,39 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val yOffset = MOCK_FORM_ENTRY_Y * (1f - alpha)
         val fieldFillAlpha = (alpha * 26f).roundToInt()
         val fieldStrokeAlpha = (alpha * 185f).roundToInt()
-        val fieldX = mockFormX()
+        val baseStage = StageMetrics(stageLeft, stageTop, stageScale)
         val usernameY = mockPrimaryFormY() + yOffset
         val passwordY = usernameY + MOCK_FORM_FIELD_HEIGHT + MOCK_FORM_FIELD_GAP
+        val focusShiftY = mockFormFocusShiftY(formFocusMotion)
+        val contentStage = mockSignInContentStageMetrics(baseStage, yOffset, focusShiftY)
+        val contentLeft = contentStage.left
+        val contentTop = contentStage.top
+        val contentScale = contentStage.scale
+        val fieldX = mockFormX()
 
         formFieldFillPaint.color = Color.argb(fieldFillAlpha, 255, 255, 255)
         formFieldStrokePaint.color = Color.argb(fieldStrokeAlpha, 255, 255, 255)
-        formFieldStrokePaint.strokeWidth = MOCK_FORM_FIELD_STROKE_WIDTH * stageScale
-        formCaretPaint.strokeWidth = 1.45f * stageScale
+        formFieldStrokePaint.strokeWidth = MOCK_FORM_FIELD_STROKE_WIDTH * contentScale
+        formCaretPaint.strokeWidth = 1.45f * contentScale
 
-        val focusShiftY = mockFormFocusShiftY(formFocusMotion)
         val rememberMeY = passwordY + MOCK_FORM_FIELD_HEIGHT + MOCK_REMEMBER_ME_TOP_GAP + focusShiftY
         drawMockSignInTitle(canvas, usernameY + focusShiftY, stageLeft, stageTop, stageScale, alpha)
-        drawMockSignInField(canvas, MockSignInField.Username, fieldX, usernameY + focusShiftY, stageLeft, stageTop, stageScale, alpha)
-        drawMockSignInField(canvas, MockSignInField.Password, fieldX, passwordY + focusShiftY, stageLeft, stageTop, stageScale, alpha)
+        drawMockSignInField(canvas, MockSignInField.Username, fieldX, usernameY + focusShiftY, contentLeft, contentTop, contentScale, alpha)
+        drawMockSignInField(canvas, MockSignInField.Password, fieldX, passwordY + focusShiftY, contentLeft, contentTop, contentScale, alpha)
         drawRememberMeCheckbox(
             canvas,
             fieldX,
             rememberMeY,
-            stageLeft,
-            stageTop,
-            stageScale,
+            contentLeft,
+            contentTop,
+            contentScale,
             alpha
         )
         drawMockInputDimOverlayAndActiveControl(
             canvas,
-            stageLeft,
-            stageTop,
-            stageScale,
+            contentLeft,
+            contentTop,
+            contentScale,
             alpha,
             yOffset,
             focusShiftY
@@ -1556,7 +1556,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
         val firstFieldY = mockPrimaryFormY() + yOffset + focusShiftY
         val titleFieldY = firstFieldY - if (isPortraitIntroLayout()) {
-            portraitCreateScrollY / stageScale
+            portraitAuthScrollY / stageScale
         } else {
             0f
         }
@@ -1564,9 +1564,9 @@ internal class CinerificIntroView(context: Context) : View(context) {
             canvas.save()
             canvas.clipRect(
                 0f,
-                portraitCreateViewportTopPx(baseStage),
+                portraitAuthViewportTopPx(baseStage),
                 width.toFloat(),
-                portraitCreateViewportBottomPx(baseStage)
+                portraitAuthViewportBottomPx(baseStage)
             )
         }
         drawMockCreateAccountTitle(canvas, titleFieldY, stageLeft, stageTop, stageScale, alpha)
@@ -1646,39 +1646,60 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val yOffset = MOCK_FORM_ENTRY_Y * (1f - alpha)
         val fieldFillAlpha = (alpha * 26f).roundToInt()
         val fieldStrokeAlpha = (alpha * 185f).roundToInt()
+        val baseStage = StageMetrics(stageLeft, stageTop, stageScale)
+        val focusShiftY = mockFormFocusShiftY(formFocusMotion)
+        val contentStage = mockForgotPasswordContentStageMetrics(baseStage, yOffset, focusShiftY)
+        val contentLeft = contentStage.left
+        val contentTop = contentStage.top
+        val contentScale = contentStage.scale
         val fieldX = mockForgotPasswordFormX()
         val copyX = mockForgotPasswordCopyX()
+        val copyWidth = mockForgotPasswordCopyWidth()
         val formWidth = mockForgotPasswordFormWidth()
-        val focusShiftY = mockFormFocusShiftY(formFocusMotion)
         val formTopY = mockPrimaryFormY() + yOffset + focusShiftY
+        val titleFormTopY = formTopY - if (isPortraitIntroLayout()) {
+            portraitAuthScrollY / stageScale
+        } else {
+            0f
+        }
+        val selectorY = mockForgotRecoverySelectorY(yOffset, focusShiftY)
         val emailY = mockForgotPasswordFieldY(yOffset, focusShiftY)
         val buttonY = mockForgotPasswordButtonY(yOffset, focusShiftY)
         val helpTopY = buttonY + MOCK_FORGOT_PASSWORD_BUTTON_HEIGHT + MOCK_FORGOT_PASSWORD_HELP_TOP_GAP
 
         formFieldFillPaint.color = Color.argb(fieldFillAlpha, 255, 255, 255)
         formFieldStrokePaint.color = Color.argb(fieldStrokeAlpha, 255, 255, 255)
-        formFieldStrokePaint.strokeWidth = MOCK_FORM_FIELD_STROKE_WIDTH * stageScale
-        formCaretPaint.strokeWidth = 1.45f * stageScale
+        formFieldStrokePaint.strokeWidth = MOCK_FORM_FIELD_STROKE_WIDTH * contentScale
+        formCaretPaint.strokeWidth = 1.45f * contentScale
 
-        drawMockForgotPasswordTitle(canvas, formTopY, stageLeft, stageTop, stageScale, alpha)
+        if (isPortraitIntroLayout()) {
+            canvas.save()
+            canvas.clipRect(
+                0f,
+                portraitAuthViewportTopPx(baseStage),
+                width.toFloat(),
+                portraitAuthViewportBottomPx(baseStage)
+            )
+        }
+        drawMockForgotPasswordTitle(canvas, titleFormTopY, stageLeft, stageTop, stageScale, alpha)
         drawMockForgotPasswordBodyParagraph(
             canvas,
             mockForgotPasswordBodyText(),
-            copyX + MOCK_FORGOT_PASSWORD_COPY_WIDTH / 2f,
+            copyX + copyWidth / 2f,
             formTopY + MOCK_FORGOT_PASSWORD_BODY_TOP_GAP,
-            MOCK_FORGOT_PASSWORD_COPY_WIDTH,
-            stageLeft,
-            stageTop,
-            stageScale,
+            copyWidth,
+            contentLeft,
+            contentTop,
+            contentScale,
             alpha
         )
         drawMockForgotRecoverySelector(
             canvas,
             fieldX,
-            mockForgotRecoverySelectorY(yOffset, focusShiftY),
-            stageLeft,
-            stageTop,
-            stageScale,
+            selectorY,
+            contentLeft,
+            contentTop,
+            contentScale,
             alpha,
             formWidth
         )
@@ -1687,9 +1708,9 @@ internal class CinerificIntroView(context: Context) : View(context) {
             MockSignInField.Email,
             fieldX,
             emailY,
-            stageLeft,
-            stageTop,
-            stageScale,
+            contentLeft,
+            contentTop,
+            contentScale,
             alpha,
             formWidth
         )
@@ -1697,9 +1718,9 @@ internal class CinerificIntroView(context: Context) : View(context) {
             canvas,
             fieldX,
             buttonY,
-            stageLeft,
-            stageTop,
-            stageScale,
+            contentLeft,
+            contentTop,
+            contentScale,
             alpha,
             formWidth
         )
@@ -1709,22 +1730,25 @@ internal class CinerificIntroView(context: Context) : View(context) {
             fieldX + formWidth / 2f,
             helpTopY,
             formWidth,
-            stageLeft,
-            stageTop,
-            stageScale,
+            contentLeft,
+            contentTop,
+            contentScale,
             alpha,
             MOCK_FORGOT_PASSWORD_HELP_TEXT_SIZE,
             MOCK_FORGOT_PASSWORD_HELP_LINE_HEIGHT
         )
         drawMockInputDimOverlayAndActiveControl(
             canvas,
-            stageLeft,
-            stageTop,
-            stageScale,
+            contentLeft,
+            contentTop,
+            contentScale,
             alpha,
             yOffset,
             focusShiftY
         )
+        if (isPortraitIntroLayout()) {
+            canvas.restore()
+        }
 
         formLabelPaint.alpha = 255
         formInputPaint.alpha = 255
@@ -3073,6 +3097,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun accountPromptCanOpen(flow: MockAccountFlow): Boolean {
         if (!isFinalFrameSettled() || isMockSignInClosing() || isMockFlowSwitchAnimating()) return false
+        if (usesPortraitStackedAuthLayout()) return false
         return mockSignInStartMillis == null || activeMockFlow != flow
     }
 
@@ -3087,14 +3112,21 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val progress = FastOutSlowInEasing.transform(mockSignInProgress())
         val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
         val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
-        if (
-            activeMockFlow == MockAccountFlow.CreateAccount &&
-            !portraitCreatePointerInViewport(y, baseStage)
+        if (activeMockFlow in listOf(
+                MockAccountFlow.CreateAccount,
+                MockAccountFlow.ForgotPassword
+            ) &&
+            !portraitAuthPointerInViewport(y, baseStage)
         ) return null
-        val stage = if (activeMockFlow == MockAccountFlow.CreateAccount) {
-            mockCreateContentStageMetrics(baseStage, yOffset, focusShiftY)
-        } else {
-            baseStage
+        val stage = when (activeMockFlow) {
+            MockAccountFlow.CreateAccount -> mockCreateContentStageMetrics(baseStage, yOffset, focusShiftY)
+            MockAccountFlow.SignIn -> mockSignInContentStageMetrics(baseStage, yOffset, focusShiftY)
+            MockAccountFlow.ForgotPassword -> mockForgotPasswordContentStageMetrics(
+                baseStage,
+                yOffset,
+                focusShiftY
+            )
+            else -> baseStage
         }
         return activeMockFields().firstOrNull { field ->
             val fieldX = mockActiveFieldX(field)
@@ -3106,10 +3138,12 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private fun mockForgotRecoveryTargetHit(x: Float, y: Float): MockForgotRecoveryTarget? {
         if (mockSignInStartMillis == null || activeMockFlow != MockAccountFlow.ForgotPassword) return null
 
-        val stage = currentStageMetrics() ?: return null
+        val baseStage = currentStageMetrics() ?: return null
         val progress = FastOutSlowInEasing.transform(mockSignInProgress())
         val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
         val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
+        if (!portraitAuthPointerInViewport(y, baseStage)) return null
+        val stage = mockForgotPasswordContentStageMetrics(baseStage, yOffset, focusShiftY)
         val selectorY = mockForgotRecoverySelectorY(yOffset, focusShiftY)
         return MockForgotRecoveryTarget.values().firstOrNull { target ->
             mockForgotRecoveryTargetContains(x, y, target, selectorY, stage)
@@ -3126,10 +3160,12 @@ internal class CinerificIntroView(context: Context) : View(context) {
             return false
         }
 
-        val stage = currentStageMetrics() ?: return false
+        val baseStage = currentStageMetrics() ?: return false
         val progress = FastOutSlowInEasing.transform(mockSignInProgress())
         val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
         val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
+        if (!portraitAuthPointerInViewport(y, baseStage)) return false
+        val stage = mockForgotPasswordContentStageMetrics(baseStage, yOffset, focusShiftY)
         return mockForgotPasswordButtonContains(
             x,
             y,
@@ -3143,10 +3179,11 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private fun mockRememberMeHit(x: Float, y: Float): Boolean {
         if (mockSignInStartMillis == null || activeMockFlow != MockAccountFlow.SignIn) return false
 
-        val stage = currentStageMetrics() ?: return false
+        val baseStage = currentStageMetrics() ?: return false
         val progress = FastOutSlowInEasing.transform(mockSignInProgress())
         val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
         val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
+        val stage = mockSignInContentStageMetrics(baseStage, yOffset, focusShiftY)
         val fieldX = mockFormX()
         val usernameY = mockPrimaryFormY() + yOffset + focusShiftY
         val passwordY = usernameY + MOCK_FORM_FIELD_HEIGHT + MOCK_FORM_FIELD_GAP
@@ -3161,7 +3198,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val progress = FastOutSlowInEasing.transform(mockSignInProgress())
         val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
         val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
-        if (!portraitCreatePointerInViewport(y, baseStage)) return null
+        if (!portraitAuthPointerInViewport(y, baseStage)) return null
         val stage = mockCreateContentStageMetrics(baseStage, yOffset, focusShiftY)
         return MockDropdown.values().firstOrNull { dropdown ->
             mockSignInFieldContains(
@@ -3182,7 +3219,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val progress = FastOutSlowInEasing.transform(mockSignInProgress())
         val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
         val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
-        if (!portraitCreatePointerInViewport(y, baseStage)) return null
+        if (!portraitAuthPointerInViewport(y, baseStage)) return null
         val stage = mockCreateContentStageMetrics(baseStage, yOffset, focusShiftY)
         val columnX = mockCreateAvatarColumnX()
         val firstFieldY = mockCreateAvatarSectionY(yOffset, focusShiftY)
@@ -3199,7 +3236,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val progress = FastOutSlowInEasing.transform(mockSignInProgress())
         val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
         val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
-        if (!portraitCreatePointerInViewport(y, baseStage)) return false
+        if (!portraitAuthPointerInViewport(y, baseStage)) return false
         val stage = mockCreateContentStageMetrics(baseStage, yOffset, focusShiftY)
         val columnX = mockCreateAvatarColumnX()
         val firstFieldY = mockCreateAvatarSectionY(yOffset, focusShiftY)
@@ -3251,7 +3288,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val progress = FastOutSlowInEasing.transform(mockSignInProgress())
         val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
         val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
-        if (!portraitCreatePointerInViewport(pointerY, baseStage)) return null
+        if (!portraitAuthPointerInViewport(pointerY, baseStage)) return null
         val stage = mockCreateContentStageMetrics(baseStage, yOffset, focusShiftY)
         val dropdownX = mockDropdownX(dropdown)
         val yStart = mockDropdownOptionsY(dropdown, yOffset, focusShiftY)
@@ -3287,7 +3324,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val progress = FastOutSlowInEasing.transform(mockSignInProgress())
         val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
         val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
-        if (!portraitCreatePointerInViewport(pointerY, baseStage)) return null
+        if (!portraitAuthPointerInViewport(pointerY, baseStage)) return null
         val stage = mockCreateContentStageMetrics(baseStage, yOffset, focusShiftY)
         val dropdownX = mockDropdownX(dropdown)
         val yStart = mockDropdownOptionsY(dropdown, yOffset, focusShiftY)
@@ -3322,20 +3359,23 @@ internal class CinerificIntroView(context: Context) : View(context) {
         return true
     }
 
-    private fun updatePortraitCreateScroll(event: MotionEvent): Boolean {
+    private fun updatePortraitAuthScroll(event: MotionEvent): Boolean {
         if (
             !isPortraitIntroLayout() ||
-            activeMockFlow != MockAccountFlow.CreateAccount ||
+            activeMockFlow !in listOf(
+                MockAccountFlow.CreateAccount,
+                MockAccountFlow.ForgotPassword
+            ) ||
             activeMockDropdownScroll != null
         ) {
             return false
         }
 
         val deltaX = event.x - mockTouchDownX
-        val deltaY = event.y - portraitCreateScrollStartY
-        if (!portraitCreateScrollMoved) {
+        val deltaY = event.y - portraitAuthScrollStartY
+        if (!portraitAuthScrollMoved) {
             if (abs(deltaY) <= touchSlop || abs(deltaY) <= abs(deltaX)) return false
-            portraitCreateScrollMoved = true
+            portraitAuthScrollMoved = true
             pressedMockField = null
             pressedMockDropdown = null
             pressedMockDropdownOption = null
@@ -3350,8 +3390,11 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val progress = FastOutSlowInEasing.transform(mockSignInProgress())
         val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
         val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
-        val maxScrollY = portraitCreateMaxScrollY(stage, yOffset, focusShiftY)
-        portraitCreateScrollY = (portraitCreateScrollStartOffset - deltaY).coerceIn(0f, maxScrollY)
+        val maxScrollY = when (activeMockFlow) {
+            MockAccountFlow.ForgotPassword -> portraitForgotPasswordMaxScrollY(stage, yOffset, focusShiftY)
+            else -> portraitCreateMaxScrollY(stage, yOffset, focusShiftY)
+        }
+        portraitAuthScrollY = (portraitAuthScrollStartOffset - deltaY).coerceIn(0f, maxScrollY)
         postInvalidateOnAnimation()
         return true
     }
@@ -3473,10 +3516,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val hitHalfWidth = MOCK_BACK_CHEVRON_HIT_WIDTH * stage.scale / 2f
         val left = center - hitHalfWidth
         val right = center + hitHalfWidth
-        val backStageTop = if (
-            isPortraitIntroLayout() &&
-            activeMockFlow == MockAccountFlow.CreateAccount
-        ) {
+        val backStageTop = if (usesPortraitStackedAuthLayout()) {
             stage.top
         } else {
             accountPromptStageTop(stage.scale)
@@ -3615,19 +3655,67 @@ internal class CinerificIntroView(context: Context) : View(context) {
         return PORTRAIT_PROFILE_SCALE / MOCK_CREATE_AVATAR_STACK_SCALE
     }
 
-    private fun portraitCreateViewportTopPx(stage: StageMetrics): Float {
+    private fun usesPortraitStackedAuthLayout(flow: MockAccountFlow? = activeMockFlow): Boolean {
+        return isPortraitIntroLayout() &&
+            mockSignInStartMillis != null &&
+            flow in listOf(
+                MockAccountFlow.SignIn,
+                MockAccountFlow.CreateAccount,
+                MockAccountFlow.ForgotPassword
+            )
+    }
+
+    private fun mockSignInContentStageMetrics(
+        stage: StageMetrics,
+        yOffset: Float,
+        focusShiftY: Float
+    ): StageMetrics {
+        if (!usesPortraitStackedAuthLayout(MockAccountFlow.SignIn) ||
+            activeMockFlow != MockAccountFlow.SignIn
+        ) return stage
+
+        val contentScale = stage.scale * portraitCreateContentScale()
+        val centerX = stage.left + FIGMA_FRAME_WIDTH * stage.scale / 2f
+        val firstFieldY = mockPrimaryFormY() + yOffset + focusShiftY
+        val firstFieldTop = stage.top + firstFieldY * stage.scale
+        return StageMetrics(
+            left = centerX - FIGMA_FRAME_WIDTH * contentScale / 2f,
+            top = firstFieldTop - firstFieldY * contentScale,
+            scale = contentScale
+        )
+    }
+
+    private fun mockForgotPasswordContentStageMetrics(
+        stage: StageMetrics,
+        yOffset: Float,
+        focusShiftY: Float
+    ): StageMetrics {
+        if (!isPortraitIntroLayout() || activeMockFlow != MockAccountFlow.ForgotPassword) return stage
+
+        val contentScale = stage.scale * portraitCreateContentScale()
+        val centerX = stage.left + FIGMA_FRAME_WIDTH * stage.scale / 2f
+        val formTopY = mockPrimaryFormY() + yOffset + focusShiftY
+        val formTop = stage.top + formTopY * stage.scale - portraitAuthScrollY
+        return StageMetrics(
+            left = centerX - FIGMA_FRAME_WIDTH * contentScale / 2f,
+            top = formTop - formTopY * contentScale,
+            scale = contentScale
+        )
+    }
+
+    private fun portraitAuthViewportTopPx(stage: StageMetrics): Float {
         return stage.top +
             (portraitLogoVisibleBottom() + MOCK_CREATE_PORTRAIT_VIEWPORT_GAP) * stage.scale
     }
 
-    private fun portraitCreateViewportBottomPx(stage: StageMetrics): Float {
+    private fun portraitAuthViewportBottomPx(stage: StageMetrics): Float {
         return height - systemBarInsetBottomPx -
             MOCK_CREATE_PORTRAIT_VIEWPORT_BOTTOM_RESERVE * stage.scale
     }
 
-    private fun portraitCreatePointerInViewport(y: Float, stage: StageMetrics): Boolean {
+    private fun portraitAuthPointerInViewport(y: Float, stage: StageMetrics): Boolean {
         return !isPortraitIntroLayout() ||
-            y in portraitCreateViewportTopPx(stage)..portraitCreateViewportBottomPx(stage)
+            y in portraitAuthViewportTopPx(stage)..portraitAuthViewportBottomPx(stage)
     }
 
     private fun mockCreateContentStageMetrics(
@@ -3640,7 +3728,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val contentScale = stage.scale * portraitCreateContentScale()
         val centerX = stage.left + FIGMA_FRAME_WIDTH * stage.scale / 2f
         val firstFieldY = mockPrimaryFormY() + yOffset + focusShiftY
-        val firstFieldTop = stage.top + firstFieldY * stage.scale - portraitCreateScrollY
+        val firstFieldTop = stage.top + firstFieldY * stage.scale - portraitAuthScrollY
         return StageMetrics(
             left = centerX - FIGMA_FRAME_WIDTH * contentScale / 2f,
             top = firstFieldTop - firstFieldY * contentScale,
@@ -3661,8 +3749,21 @@ internal class CinerificIntroView(context: Context) : View(context) {
             avatarSectionY
         ).let { it.y + it.h }
         val contentBottom = contentStage.top + avatarBottomY * contentStage.scale +
-            MOCK_CREATE_PORTRAIT_CONTENT_BOTTOM_GAP * stage.scale + portraitCreateScrollY
-        return (contentBottom - portraitCreateViewportBottomPx(stage)).coerceAtLeast(0f)
+            MOCK_CREATE_PORTRAIT_CONTENT_BOTTOM_GAP * stage.scale + portraitAuthScrollY
+        return (contentBottom - portraitAuthViewportBottomPx(stage)).coerceAtLeast(0f)
+    }
+
+    private fun portraitForgotPasswordMaxScrollY(
+        stage: StageMetrics,
+        yOffset: Float,
+        focusShiftY: Float
+    ): Float {
+        if (!isPortraitIntroLayout()) return 0f
+        val contentStage = mockForgotPasswordContentStageMetrics(stage, yOffset, focusShiftY)
+        val helpBottomY = mockForgotPasswordHelpBottomY(yOffset, focusShiftY)
+        val contentBottom = contentStage.top + helpBottomY * contentStage.scale +
+            MOCK_CREATE_PORTRAIT_CONTENT_BOTTOM_GAP * stage.scale + portraitAuthScrollY
+        return (contentBottom - portraitAuthViewportBottomPx(stage)).coerceAtLeast(0f)
     }
 
     private fun mockCreateSecondSectionY(yOffset: Float, focusShiftY: Float): Float {
@@ -3693,29 +3794,106 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun mockForgotPasswordFormX(): Float {
-        return mockForgotPasswordCopyX() + MOCK_FORGOT_PASSWORD_COPY_WIDTH + MOCK_FORGOT_PASSWORD_STACK_GAP
+        return if (isPortraitIntroLayout()) {
+            mockCreatePortraitColumnX()
+        } else {
+            mockForgotPasswordCopyX() + MOCK_FORGOT_PASSWORD_COPY_WIDTH + MOCK_FORGOT_PASSWORD_STACK_GAP
+        }
     }
 
     private fun mockForgotPasswordFormWidth(): Float {
-        return MOCK_FORGOT_PASSWORD_FORM_WIDTH
+        return if (isPortraitIntroLayout()) MOCK_FORM_WIDTH else MOCK_FORGOT_PASSWORD_FORM_WIDTH
     }
 
     private fun mockForgotPasswordCopyX(): Float {
-        return (FIGMA_FRAME_WIDTH - MOCK_FORGOT_PASSWORD_USABLE_WIDTH) / 2f
+        return if (isPortraitIntroLayout()) {
+            mockCreatePortraitColumnX()
+        } else {
+            (FIGMA_FRAME_WIDTH - MOCK_FORGOT_PASSWORD_USABLE_WIDTH) / 2f
+        }
+    }
+
+    private fun mockForgotPasswordCopyWidth(): Float {
+        return if (isPortraitIntroLayout()) MOCK_FORM_WIDTH else MOCK_FORGOT_PASSWORD_COPY_WIDTH
     }
 
     private fun mockForgotPasswordFieldY(yOffset: Float, focusShiftY: Float): Float {
-        return mockPrimaryFormY() + yOffset + focusShiftY + MOCK_FORGOT_PASSWORD_FIELD_OFFSET_Y
+        return if (isPortraitIntroLayout()) {
+            mockForgotRecoverySelectorY(yOffset, focusShiftY) +
+                MOCK_FORGOT_PASSWORD_SELECTOR_BOX_HEIGHT + MOCK_FORM_FIELD_GAP
+        } else {
+            mockPrimaryFormY() + yOffset + focusShiftY + MOCK_FORGOT_PASSWORD_FIELD_OFFSET_Y
+        }
     }
 
     private fun mockForgotRecoverySelectorY(yOffset: Float, focusShiftY: Float): Float {
-        return mockPrimaryFormY() + yOffset + focusShiftY + MOCK_FORGOT_PASSWORD_SELECTOR_TOP_GAP
+        val formTopY = mockPrimaryFormY() + yOffset + focusShiftY
+        return if (isPortraitIntroLayout()) {
+            mockForgotPasswordBodyBottomY(formTopY) + MOCK_FORGOT_PASSWORD_PORTRAIT_SECTION_GAP
+        } else {
+            formTopY + MOCK_FORGOT_PASSWORD_SELECTOR_TOP_GAP
+        }
     }
 
     private fun mockForgotPasswordButtonY(yOffset: Float, focusShiftY: Float): Float {
         return mockForgotPasswordFieldY(yOffset, focusShiftY) +
             MOCK_FORM_FIELD_HEIGHT +
             MOCK_FORGOT_PASSWORD_BUTTON_TOP_GAP
+    }
+
+    private fun mockForgotPasswordBodyBottomY(formTopY: Float): Float {
+        val paragraphs = mockForgotPasswordBodyText().split(Regex("\\n\\s*\\n"))
+        val copyWidth = mockForgotPasswordCopyWidth()
+        var bottomY = mockParagraphBottomY(
+            paragraphs.firstOrNull().orEmpty(),
+            formTopY + MOCK_FORGOT_PASSWORD_BODY_TOP_GAP,
+            copyWidth,
+            MOCK_FORGOT_PASSWORD_BODY_LEAD_TEXT_SIZE,
+            MOCK_FORGOT_PASSWORD_BODY_LEAD_LINE_HEIGHT
+        )
+        paragraphs.getOrNull(1)?.let { middleText ->
+            bottomY = mockParagraphBottomY(
+                middleText,
+                bottomY + MOCK_FORGOT_PASSWORD_BODY_LINE_HEIGHT,
+                copyWidth,
+                MOCK_FORGOT_PASSWORD_BODY_MIDDLE_TEXT_SIZE,
+                MOCK_FORGOT_PASSWORD_BODY_MIDDLE_LINE_HEIGHT
+            )
+        }
+        val bottomText = paragraphs.drop(2).joinToString("\n\n")
+        if (bottomText.isNotEmpty()) {
+            bottomY = mockParagraphBottomY(
+                bottomText,
+                bottomY + MOCK_FORGOT_PASSWORD_BODY_LINE_HEIGHT,
+                copyWidth,
+                MOCK_FORGOT_PASSWORD_BODY_MIDDLE_TEXT_SIZE,
+                MOCK_FORGOT_PASSWORD_BODY_MIDDLE_LINE_HEIGHT
+            )
+        }
+        return bottomY
+    }
+
+    private fun mockForgotPasswordHelpBottomY(yOffset: Float, focusShiftY: Float): Float {
+        val helpTopY = mockForgotPasswordButtonY(yOffset, focusShiftY) +
+            MOCK_FORGOT_PASSWORD_BUTTON_HEIGHT + MOCK_FORGOT_PASSWORD_HELP_TOP_GAP
+        return mockParagraphBottomY(
+            mockForgotPasswordHelpText(),
+            helpTopY,
+            mockForgotPasswordFormWidth(),
+            MOCK_FORGOT_PASSWORD_HELP_TEXT_SIZE,
+            MOCK_FORGOT_PASSWORD_HELP_LINE_HEIGHT
+        )
+    }
+
+    private fun mockParagraphBottomY(
+        text: String,
+        topY: Float,
+        maxWidth: Float,
+        textSize: Float,
+        lineHeight: Float
+    ): Float {
+        formInputPaint.textSize = textSize
+        return topY + wrappedTextLines(text, maxWidth, formInputPaint).size * lineHeight
     }
 
     private fun mockForgotRecoverySelectorLayout(
@@ -3829,7 +4007,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun mockBackChevronRowTopY(): Float {
-        if (isPortraitIntroLayout() && activeMockFlow == MockAccountFlow.CreateAccount) {
+        if (usesPortraitStackedAuthLayout()) {
             return portraitSafeBottom() - MOCK_CREATE_PORTRAIT_VIEWPORT_BOTTOM_RESERVE + 26f
         }
         return ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + signInAccountPromptExtraShiftY() +
@@ -4439,6 +4617,11 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun mockFormFocusShiftY(formFocusMotion: Float): Float {
         if (width > height) return 0f
+        if (
+            activeMockFlow == MockAccountFlow.SignIn ||
+            activeMockFlow == MockAccountFlow.CreateAccount ||
+            activeMockFlow == MockAccountFlow.ForgotPassword
+        ) return 0f
         return MOCK_FORM_FOCUS_SHIFT_Y * formFocusMotion.coerceIn(0f, 1f)
     }
 
@@ -4898,8 +5081,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
         expandedMockDropdown = null
         activeMockDropdownScroll = null
         mockDropdownScrollMoved = false
-        portraitCreateScrollY = 0f
-        portraitCreateScrollMoved = false
+        portraitAuthScrollY = 0f
+        portraitAuthScrollMoved = false
         pressedMockField = null
         pressedRememberMe = false
         pressedBackChevron = false
@@ -4943,8 +5126,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private fun openMockCreateAccountScreen() {
         if (mockSignInStartMillis != null && mockSignInTransitionTargetProgress == 1f) return
         val currentProgress = mockSignInProgress()
-        portraitCreateScrollY = 0f
-        portraitCreateScrollMoved = false
+        portraitAuthScrollY = 0f
+        portraitAuthScrollMoved = false
         activeMockFlow = MockAccountFlow.CreateAccount
         mockSignInStartMillis = SystemClock.uptimeMillis()
         mockSignInTransitionStartProgress = currentProgress
@@ -4956,6 +5139,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private fun openMockForgotPasswordScreen() {
         if (mockSignInStartMillis != null && mockSignInTransitionTargetProgress == 1f) return
         val currentProgress = mockSignInProgress()
+        portraitAuthScrollY = 0f
+        portraitAuthScrollMoved = false
         activeMockFlow = MockAccountFlow.ForgotPassword
         forgotRecoveryTarget = MockForgotRecoveryTarget.Password
         emailText = ""
@@ -4980,8 +5165,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
         pressedForgotPasswordSubmit = false
         activeMockDropdownScroll = null
         mockDropdownScrollMoved = false
-        portraitCreateScrollY = 0f
-        portraitCreateScrollMoved = false
+        portraitAuthScrollY = 0f
+        portraitAuthScrollMoved = false
         activeComposingText = ""
         mockInputDimAwaitingField = null
         usernameText = ""
