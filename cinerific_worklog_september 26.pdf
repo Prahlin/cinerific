@@ -1,0 +1,348 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R 11 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Title (Cinerific Android App Work Log - September 26, 2026 \(U.S. EST\)) /Author (OpenAI Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260926215202-04'00') >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 7856 >>
+stream
+BT /F1 14.00 Tf 52.00 754.00 Td (Cinerific Android App Work Log - September 26, 2026 \(U.S. EST\)) Tj ET
+BT /F1 7.50 Tf 52.00 728.00 Td (Compiled summary for Saturday, September 26, 2026 \(U.S. Eastern Time\) - focus:) Tj ET
+BT /F1 7.50 Tf 52.00 718.85 Td (continuing the portrait-phone Movies and Shows refinement pass, enlarging genre and view) Tj ET
+BT /F1 7.50 Tf 52.00 709.70 Td (controls without crossing their protected margins, progressively rescaling detailed List) Tj ET
+BT /F1 7.50 Tf 52.00 700.55 Td (cards and their complete internal content, rebuilding center View mode as an) Tj ET
+BT /F1 7.50 Tf 52.00 691.40 Td (intermediate-size horizontal carousel, standardizing title letter spacing across catalog) Tj ET
+BT /F1 7.50 Tf 52.00 682.25 Td (and detail surfaces, replacing Android's activity-closing Back behavior with) Tj ET
+BT /F1 7.50 Tf 52.00 673.10 Td (destination-aware navigation, preserving screen state, and adding a deliberate Home) Tj ET
+BT /F1 7.50 Tf 52.00 663.95 Td (sign-out confirmation with Cinerific focus styling and a two-second red-star loading) Tj ET
+BT /F1 7.50 Tf 52.00 654.80 Td (transition. Generated after reviewing every prior Cinerific PDF worklog, the September) Tj ET
+BT /F1 7.50 Tf 52.00 645.65 Td (24 baseline, commits 49e40e4 and 4a8332e, the current clean repository state,) Tj ET
+BT /F1 7.50 Tf 52.00 636.50 Td (build/install output, and runtime checks from the connected Samsung phone and available) Tj ET
+BT /F1 7.50 Tf 52.00 627.35 Td (tablet emulator.) Tj ET
+BT /F1 7.50 Tf 52.00 618.20 Td (Generated in continuity with the established Cinerific worklog cadence from July 12) Tj ET
+BT /F1 7.50 Tf 52.00 609.05 Td (through September 24: compact opening summary, source-material review, baseline state,) Tj ET
+BT /F1 7.50 Tf 52.00 599.90 Td (goals, themed work-completed sections, validation, files touched, follow-up context, and) Tj ET
+BT /F1 7.50 Tf 52.00 590.75 Td (output-artifact close. No September 26 PDF existed before this generation pass, so this) Tj ET
+BT /F1 7.50 Tf 52.00 581.60 Td (artifact uses the first-log-of-the-day no-part filename. Eastern Time was verified from) Tj ET
+BT /F1 7.50 Tf 52.00 572.45 Td (the host as Saturday, September 26, 2026 at 9:52 PM EDT, UTC-04:00. The title retains) Tj ET
+BT /F1 7.50 Tf 52.00 563.30 Td (the historical U.S. EST label while the body records the seasonally accurate EDT offset.) Tj ET
+BT /F1 7.50 Tf 52.00 554.15 Td (This artifact records main through HEAD 4a8332e, Improved Back navigation and sign-out) Tj ET
+BT /F1 7.50 Tf 52.00 545.00 Td (experience.) Tj ET
+BT /F1 7.50 Tf 52.00 535.85 Td () Tj ET
+BT /F1 9.20 Tf 52.00 526.70 Td (Source Materials Reviewed) Tj ET
+BT /F1 7.50 Tf 52.00 517.55 Td (- Reviewed every pre-existing Cinerific worklog PDF at the repository root: July 12,) Tj ET
+BT /F1 7.50 Tf 52.00 508.40 Td (  July 14, July 15 Part 1, July 15, July 16, July 18, July 19, July 20, July 22, July) Tj ET
+BT /F1 7.50 Tf 52.00 499.25 Td (  23, July 24, July 25, July 27, July 28 Part 1, July 28 Part 2, July 29, August 1,) Tj ET
+BT /F1 7.50 Tf 52.00 490.10 Td (  August 3, August 4, August 5, September 19, September 21, September 21 Part 2,) Tj ET
+BT /F1 7.50 Tf 52.00 480.95 Td (  September 23, and September 24.) Tj ET
+BT /F1 7.50 Tf 52.00 471.80 Td (- Converted the complete corpus with pdftotext and compared title cadence,) Tj ET
+BT /F1 7.50 Tf 52.00 462.65 Td (  opening-summary density, section order, technical bullet style, validation language,) Tj ET
+BT /F1 7.50 Tf 52.00 453.50 Td (  file inventories, follow-up notes, output-artifact wording, and same-day Part) Tj ET
+BT /F1 7.50 Tf 52.00 444.35 Td (  naming.) Tj ET
+BT /F1 7.50 Tf 52.00 435.20 Td (- Ran pdfinfo across all 25 prior PDFs and confirmed the established four-page U.S.) Tj ET
+BT /F1 7.50 Tf 52.00 426.05 Td (  Letter geometry. Reviewed the latest artifact's Helvetica typography, PDF 1.4) Tj ET
+BT /F1 7.50 Tf 52.00 416.90 Td (  compatibility, Codex author/creator metadata, extractable text, and right-aligned) Tj ET
+BT /F1 7.50 Tf 52.00 407.75 Td (  page footers.) Tj ET
+BT /F1 7.50 Tf 52.00 398.60 Td (- Reviewed cinerific_PROJECT_SNAPSHOT.txt, read_project.sh context, Git status, recent) Tj ET
+BT /F1 7.50 Tf 52.00 389.45 Td (  commit history, commit messages, and the complete source delta from the September 24) Tj ET
+BT /F1 7.50 Tf 52.00 380.30 Td (  implementation baseline at 3188bd3 through HEAD 4a8332e.) Tj ET
+BT /F1 7.50 Tf 52.00 371.15 Td (- Reviewed the September 26 changes in CinerificDestinationScreen.kt,) Tj ET
+BT /F1 7.50 Tf 52.00 362.00 Td (  CinerificViewportNavBar.kt, CinerificApp.kt, and CinerificIntroView.kt, plus the) Tj ET
+BT /F1 7.50 Tf 52.00 352.85 Td (  refreshed project snapshot committed with the catalog-layout pass.) Tj ET
+BT /F1 7.50 Tf 52.00 343.70 Td (- Reviewed runtime work from Samsung SM-G990U R5CRC33MGNZ and the available Standard) Tj ET
+BT /F1 7.50 Tf 52.00 334.55 Td (  tablet emulator, including app startup, portrait navigation, catalog mode changes,) Tj ET
+BT /F1 7.50 Tf 52.00 325.40 Td (  card taps, Android Back actions, sign-out confirmation behavior, Gradle builds,) Tj ET
+BT /F1 7.50 Tf 52.00 316.25 Td (  streamed installs, and relaunches.) Tj ET
+BT /F1 7.50 Tf 52.00 307.10 Td () Tj ET
+BT /F1 9.20 Tf 52.00 297.95 Td (Baseline Status Before September 26 Work) Tj ET
+BT /F1 7.50 Tf 52.00 288.80 Td (- The September 24 pass had already made portrait primary navigation scroll-linked,) Tj ET
+BT /F1 7.50 Tf 52.00 279.65 Td (  expanded the Home reel through the available viewport, standardized large-card) Tj ET
+BT /F1 7.50 Tf 52.00 270.50 Td (  sizing, converted the leftmost Movies and Shows mode to circular horizontal) Tj ET
+BT /F1 7.50 Tf 52.00 261.35 Td (  browsing, stacked the portrait selectors, and symmetrically scaled the detailed List) Tj ET
+BT /F1 7.50 Tf 52.00 252.20 Td (  mode.) Tj ET
+BT /F1 7.50 Tf 52.00 243.05 Td (- Movies and Shows portrait controls were functional but still visually undersized on) Tj ET
+BT /F1 7.50 Tf 52.00 233.90 Td (  the phone relative to the recently enlarged catalog content and the protected) Tj ET
+BT /F1 7.50 Tf 52.00 224.75 Td (  top/right screen relationships.) Tj ET
+BT /F1 7.50 Tf 52.00 215.60 Td (- The rightmost List mode still presented a long rectangular selected cell. Its title) Tj ET
+BT /F1 7.50 Tf 52.00 206.45 Td (  art, text, metadata, description, rating stars, internal gaps, and blinking frame) Tj ET
+BT /F1 7.50 Tf 52.00 197.30 Td (  needed to grow together before the selected unit approached the requested squarer) Tj ET
+BT /F1 7.50 Tf 52.00 188.15 Td (  visual balance.) Tj ET
+BT /F1 7.50 Tf 52.00 179.00 Td (- After those increases, List content spacing no longer read as one consistent system.) Tj ET
+BT /F1 7.50 Tf 52.00 169.85 Td (  Image-to-text spacing and the gaps among title, description, metadata, and rating) Tj ET
+BT /F1 7.50 Tf 52.00 160.70 Td (  content could crowd the blinking selection frame.) Tj ET
+BT /F1 7.50 Tf 52.00 151.55 Td (- The center View mode remained a smaller multi-row arrangement. It did not occupy the) Tj ET
+BT /F1 7.50 Tf 52.00 142.40 Td (  intended midpoint between the leftmost large cards and rightmost detailed cards, and) Tj ET
+BT /F1 7.50 Tf 52.00 133.25 Td (  it still favored vertical grouping instead of the established bidirectional) Tj ET
+BT /F1 7.50 Tf 52.00 124.10 Td (  horizontal swipe interaction.) Tj ET
+BT /F1 7.50 Tf 52.00 114.95 Td (- Android system Back could fall through to Activity closure because the main Compose) Tj ET
+BT /F1 7.50 Tf 52.00 105.80 Td (  experience had no destination-aware BackHandler. Returning from a detail screen also) Tj ET
+BT /F1 7.50 Tf 52.00 96.65 Td (  discarded the originating catalog context rather than restoring it deliberately.) Tj ET
+BT /F1 7.50 Tf 350.52 26.00 Td (Cinerific Work Log - September 26, 2026 \(U.S. EST\) Page 1) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 7763 >>
+stream
+BT /F1 14.00 Tf 52.00 754.00 Td (Cinerific Android App Work Log - September 26, 2026 \(U.S. EST\)) Tj ET
+BT /F1 7.50 Tf 52.00 728.00 Td (- Home had no guarded sign-out confirmation. A Back press from the default screen) Tj ET
+BT /F1 7.50 Tf 52.00 718.85 Td (  could not offer a reversible Yes/No choice, preserve the current Home state on) Tj ET
+BT /F1 7.50 Tf 52.00 709.70 Td (  cancellation, or communicate confirmed sign-out progress before returning to) Tj ET
+BT /F1 7.50 Tf 52.00 700.55 Td (  Welcome.) Tj ET
+BT /F1 7.50 Tf 52.00 691.40 Td () Tj ET
+BT /F1 9.20 Tf 52.00 682.25 Td (Main Goals for September 26) Tj ET
+BT /F1 7.50 Tf 52.00 673.10 Td (- Keep all visual tuning scoped to portrait phone presentation until the user) Tj ET
+BT /F1 7.50 Tf 52.00 663.95 Td (  explicitly reopens tablet or landscape design work.) Tj ET
+BT /F1 7.50 Tf 52.00 654.80 Td (- Increase the Movies and Shows genre/view selector scale while retaining the parent) Tj ET
+BT /F1 7.50 Tf 52.00 645.65 Td (  screen's established top and right margins.) Tj ET
+BT /F1 7.50 Tf 52.00 636.50 Td (- Enlarge the complete List card system, including its animated selection frame, then) Tj ET
+BT /F1 7.50 Tf 52.00 627.35 Td (  normalize internal padding so every content region remains readable and uncrowded.) Tj ET
+BT /F1 7.50 Tf 52.00 618.20 Td (- Make the middle View mode the visual midpoint between large cards and List artwork) Tj ET
+BT /F1 7.50 Tf 52.00 609.05 Td (  and give it the same bidirectional horizontal browsing model used by Home and the) Tj ET
+BT /F1 7.50 Tf 52.00 599.90 Td (  leftmost catalog mode.) Tj ET
+BT /F1 7.50 Tf 52.00 590.75 Td (- Apply a subtle, consistent title-letter-spacing treatment across middle cards, List) Tj ET
+BT /F1 7.50 Tf 52.00 581.60 Td (  titles, and title information shown after a card opens in the hero/detail surface.) Tj ET
+BT /F1 7.50 Tf 52.00 572.45 Td (- Replace activity-closing Back behavior with predictable in-app navigation and state) Tj ET
+BT /F1 7.50 Tf 52.00 563.30 Td (  restoration across detail, catalog, favorites, settings, authentication, and Home) Tj ET
+BT /F1 7.50 Tf 52.00 554.15 Td (  states.) Tj ET
+BT /F1 7.50 Tf 52.00 545.00 Td (- Add a high-visibility Home sign-out prompt whose focus treatment belongs to the) Tj ET
+BT /F1 7.50 Tf 52.00 535.85 Td (  Cinerific visual system, then show the existing red-star spinner for exactly two) Tj ET
+BT /F1 7.50 Tf 52.00 526.70 Td (  seconds before returning to Welcome.) Tj ET
+BT /F1 7.50 Tf 52.00 517.55 Td () Tj ET
+BT /F1 9.20 Tf 52.00 508.40 Td (Work Completed - Portrait Catalog Controls) Tj ET
+BT /F1 7.50 Tf 52.00 499.25 Td (- Added a phone-portrait viewport navigation multiplier and applied it to both the) Tj ET
+BT /F1 7.50 Tf 52.00 490.10 Td (  genre selector and the three-button View selector on Movies and Shows.) Tj ET
+BT /F1 7.50 Tf 52.00 480.95 Td (- Raised the accepted selector treatment cumulatively to 1.26 times the September 24) Tj ET
+BT /F1 7.50 Tf 52.00 471.80 Td (  size while expanding the hosting width from the same multiplier so the buttons did) Tj ET
+BT /F1 7.50 Tf 52.00 462.65 Td (  not clip or invade the protected right edge.) Tj ET
+BT /F1 7.50 Tf 52.00 453.50 Td (- Preserved the stacked portrait composition, destination banner clearance,) Tj ET
+BT /F1 7.50 Tf 52.00 444.35 Td (  selected-state art, genre abbreviations, and all tap targets while leaving tablet) Tj ET
+BT /F1 7.50 Tf 52.00 435.20 Td (  and landscape calculations on their existing branches.) Tj ET
+BT /F1 7.50 Tf 52.00 426.05 Td (- Kept Movies and Shows on one shared implementation so control geometry and) Tj ET
+BT /F1 7.50 Tf 52.00 416.90 Td (  interaction did not diverge between the two destination screens.) Tj ET
+BT /F1 7.50 Tf 52.00 407.75 Td () Tj ET
+BT /F1 9.20 Tf 52.00 398.60 Td (Work Completed - Detailed List Scale and Spacing) Tj ET
+BT /F1 7.50 Tf 52.00 389.45 Td (- Progressively enlarged portrait-phone List content through the requested 10 percent,) Tj ET
+BT /F1 7.50 Tf 52.00 380.30 Td (  10 percent, 5 percent, and final 5 percent passes, resulting in a dedicated 1.334025) Tj ET
+BT /F1 7.50 Tf 52.00 371.15 Td (  scale multiplier over the prior phone baseline.) Tj ET
+BT /F1 7.50 Tf 52.00 362.00 Td (- Scaled artwork, program titles, synopsis text, year/runtime/genre/crew metadata,) Tj ET
+BT /F1 7.50 Tf 52.00 352.85 Td (  star stacks, vertical rhythm, corner radii, clear stroke, outer stroke, and blinking) Tj ET
+BT /F1 7.50 Tf 52.00 343.70 Td (  selection bounds as one responsive asset rather than adjusting isolated labels.) Tj ET
+BT /F1 7.50 Tf 52.00 334.55 Td (- Added a separate 0.97 horizontal width multiplier to keep synopsis and metadata) Tj ET
+BT /F1 7.50 Tf 52.00 325.40 Td (  columns inside the available content width while retaining the newly increased) Tj ET
+BT /F1 7.50 Tf 52.00 316.25 Td (  vertical and typographic scale.) Tj ET
+BT /F1 7.50 Tf 52.00 307.10 Td (- Replaced the older one-off title start padding, vertical text gap, and metadata) Tj ET
+BT /F1 7.50 Tf 52.00 297.95 Td (  column gap with the selected card's clear-stroke value as a shared cell-padding) Tj ET
+BT /F1 7.50 Tf 52.00 288.80 Td (  unit.) Tj ET
+BT /F1 7.50 Tf 52.00 279.65 Td (- Made the title-art-to-selection-frame margin the same logical spacing used among) Tj ET
+BT /F1 7.50 Tf 52.00 270.50 Td (  image, text, description, metadata, and rating regions, reducing crowding while) Tj ET
+BT /F1 7.50 Tf 52.00 261.35 Td (  keeping the enlarged card visually coherent.) Tj ET
+BT /F1 7.50 Tf 52.00 252.20 Td (- Preserved center detection, vertical snapping, blinking selection animation, card) Tj ET
+BT /F1 7.50 Tf 52.00 243.05 Td (  tap routing, and symmetric screen margins throughout the scaling passes.) Tj ET
+BT /F1 7.50 Tf 52.00 233.90 Td () Tj ET
+BT /F1 9.20 Tf 52.00 224.75 Td (Work Completed - Middle View and Typography) Tj ET
+BT /F1 7.50 Tf 52.00 215.60 Td (- Calculated the portrait-phone middle card width as the midpoint between the shared) Tj ET
+BT /F1 7.50 Tf 52.00 206.45 Td (  large-card width and the enlarged List artwork width, giving the center mode a clear) Tj ET
+BT /F1 7.50 Tf 52.00 197.30 Td (  intermediate hierarchy.) Tj ET
+BT /F1 7.50 Tf 52.00 188.15 Td (- Replaced the center mode's portrait multi-row vertical grouping with) Tj ET
+BT /F1 7.50 Tf 52.00 179.00 Td (  CinerificCircularCardRow, enabling continuous bidirectional horizontal swiping and) Tj ET
+BT /F1 7.50 Tf 52.00 169.85 Td (  the same familiar snap behavior used by Home and the leftmost Movies/Shows mode.) Tj ET
+BT /F1 7.50 Tf 52.00 160.70 Td (- Retained the existing non-phone composition for tablet and landscape so this) Tj ET
+BT /F1 7.50 Tf 52.00 151.55 Td (  requested portrait-phone pass did not alter unrelated layouts.) Tj ET
+BT /F1 7.50 Tf 52.00 142.40 Td (- Introduced a shared 0.55sp destination title letter-spacing value after small visual) Tj ET
+BT /F1 7.50 Tf 52.00 133.25 Td (  tuning passes and applied it to middle-view card titles and rightmost List titles on) Tj ET
+BT /F1 7.50 Tf 52.00 124.10 Td (  both Movies and Shows.) Tj ET
+BT /F1 7.50 Tf 52.00 114.95 Td (- Extended the same letter-spacing principle to the program title in the hero/detail) Tj ET
+BT /F1 7.50 Tf 52.00 105.80 Td (  information panel shown after a catalog card is tapped, aligning browsing and) Tj ET
+BT /F1 7.50 Tf 52.00 96.65 Td (  opened-card typography.) Tj ET
+BT /F1 7.50 Tf 52.00 87.50 Td (- Preserved the bundled Cinerific typeface, title weights, line heights, descriptions,) Tj ET
+BT /F1 7.50 Tf 52.00 78.35 Td (  star ratings, and content semantics while changing only the requested tracking and) Tj ET
+BT /F1 7.50 Tf 52.00 69.20 Td (  layout behavior.) Tj ET
+BT /F1 7.50 Tf 350.52 26.00 Td (Cinerific Work Log - September 26, 2026 \(U.S. EST\) Page 2) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 10 0 R >>
+endobj
+10 0 obj
+<< /Length 7513 >>
+stream
+BT /F1 14.00 Tf 52.00 754.00 Td (Cinerific Android App Work Log - September 26, 2026 \(U.S. EST\)) Tj ET
+BT /F1 9.20 Tf 52.00 728.00 Td (Work Completed - Android Back Navigation and State) Tj ET
+BT /F1 7.50 Tf 52.00 718.85 Td (- Added Compose BackHandler ownership to the main experience so system Back no longer) Tj ET
+BT /F1 7.50 Tf 52.00 709.70 Td (  exits the Activity from ordinary in-app destinations.) Tj ET
+BT /F1 7.50 Tf 52.00 700.55 Td (- Tracked the destination from which a program detail screen was opened and returned) Tj ET
+BT /F1 7.50 Tf 52.00 691.40 Td (  Back to that origin, including Movies, Shows, Favorites, Settings, or Home as) Tj ET
+BT /F1 7.50 Tf 52.00 682.25 Td (  applicable.) Tj ET
+BT /F1 7.50 Tf 52.00 673.10 Td (- Returned Back from non-detail primary destinations to Home after clearing any) Tj ET
+BT /F1 7.50 Tf 52.00 663.95 Td (  transient catalog route, creating a predictable navigation ladder before sign-out is) Tj ET
+BT /F1 7.50 Tf 52.00 654.80 Td (  offered.) Tj ET
+BT /F1 7.50 Tf 52.00 645.65 Td (- Wrapped destinations in a saveable state holder so catalog mode, genre, scroll) Tj ET
+BT /F1 7.50 Tf 52.00 636.50 Td (  position, Home state, and other remembered screen context survive detail navigation) Tj ET
+BT /F1 7.50 Tf 52.00 627.35 Td (  and restoration.) Tj ET
+BT /F1 7.50 Tf 52.00 618.20 Td (- Exposed handleSystemBack from CinerificIntroView and routed Back through active) Tj ET
+BT /F1 7.50 Tf 52.00 609.05 Td (  sign-in, account creation, and recovery subflows so those native intro surfaces) Tj ET
+BT /F1 7.50 Tf 52.00 599.90 Td (  close internally rather than closing the app.) Tj ET
+BT /F1 7.50 Tf 52.00 590.75 Td (- Centralized profile selection and added a short Welcome input guard after sign-out) Tj ET
+BT /F1 7.50 Tf 52.00 581.60 Td (  to prevent the confirmation tap from carrying through and immediately selecting an) Tj ET
+BT /F1 7.50 Tf 52.00 572.45 Td (  avatar beneath the returning screen.) Tj ET
+BT /F1 7.50 Tf 52.00 563.30 Td () Tj ET
+BT /F1 9.20 Tf 52.00 554.15 Td (Work Completed - Home Sign-Out Experience) Tj ET
+BT /F1 7.50 Tf 52.00 545.00 Td (- Changed Back on Home/default into a dimmed, modal confirmation reading 'Sign out) Tj ET
+BT /F1 7.50 Tf 52.00 535.85 Td (  from' and 'Cinerific?' on separate lines, with both choices implemented as real) Tj ET
+BT /F1 7.50 Tf 52.00 526.70 Td (  actions.) Tj ET
+BT /F1 7.50 Tf 52.00 517.55 Td (- Placed Yes on the left and No on the right. Styled the active Yes control with the) Tj ET
+BT /F1 7.50 Tf 52.00 508.40 Td (  app's purple fill and kept No as the dismissive dark-gray action.) Tj ET
+BT /F1 7.50 Tf 52.00 499.25 Td (- Made No and system Back dismiss the prompt and reveal the exact pre-existing Home) Tj ET
+BT /F1 7.50 Tf 52.00 490.10 Td (  state; background taps are consumed so the modal cannot accidentally activate) Tj ET
+BT /F1 7.50 Tf 52.00 480.95 Td (  content beneath it.) Tj ET
+BT /F1 7.50 Tf 52.00 471.80 Td (- Replaced the popup's initial static white outline with the same 420-millisecond) Tj ET
+BT /F1 7.50 Tf 52.00 462.65 Td (  reverse pulse cadence used by focused title cards, interpolating from bright) Tj ET
+BT /F1 7.50 Tf 52.00 453.50 Td (  Cinerific purple #C86BE0 to soft white #E7E7E7.) Tj ET
+BT /F1 7.50 Tf 52.00 444.35 Td (- Added a transparent clear space between the gray panel and animated outer frame) Tj ET
+BT /F1 7.50 Tf 52.00 435.20 Td (  using the Home title-card 10:3 clear-gap-to-stroke ratio. The inner panel, message,) Tj ET
+BT /F1 7.50 Tf 52.00 426.05 Td (  and controls scale within that protected frame.) Tj ET
+BT /F1 7.50 Tf 52.00 416.90 Td (- Changed confirmed sign-out into a dedicated progress state: the dialog disappears,) Tj ET
+BT /F1 7.50 Tf 52.00 407.75 Td (  the 72-percent black dim layer remains, Back and pointer input are blocked, and the) Tj ET
+BT /F1 7.50 Tf 52.00 398.60 Td (  existing layered red-star Cinerific loading spinner appears centered.) Tj ET
+BT /F1 7.50 Tf 52.00 389.45 Td (- Held the spinner state for exactly 2,000 milliseconds before invoking the) Tj ET
+BT /F1 7.50 Tf 52.00 380.30 Td (  established sign-out path and returning to the settled Welcome screen.) Tj ET
+BT /F1 7.50 Tf 52.00 371.15 Td () Tj ET
+BT /F1 9.20 Tf 52.00 362.00 Td (Work Completed - Device Deployment and Runtime QA) Tj ET
+BT /F1 7.50 Tf 52.00 352.85 Td (- Started the app on the connected USB Samsung phone and kept the available tablet) Tj ET
+BT /F1 7.50 Tf 52.00 343.70 Td (  emulator in the runtime environment at the beginning of the session.) Tj ET
+BT /F1 7.50 Tf 52.00 334.55 Td (- Restricted the active visual iteration and final catalog tuning to phone portrait,) Tj ET
+BT /F1 7.50 Tf 52.00 325.40 Td (  as requested, even though the shared implementation continued to support both Movies) Tj ET
+BT /F1 7.50 Tf 52.00 316.25 Td (  and Shows.) Tj ET
+BT /F1 7.50 Tf 52.00 307.10 Td (- Repeatedly assembled the debug APK, streamed it to Samsung SM-G990U R5CRC33MGNZ with) Tj ET
+BT /F1 7.50 Tf 52.00 297.95 Td (  adb install -r, force-stopped the prior process, and relaunched) Tj ET
+BT /F1 7.50 Tf 52.00 288.80 Td (  com.prahlin.cinerific/.MainActivity after accepted changes.) Tj ET
+BT /F1 7.50 Tf 52.00 279.65 Td (- Exercised Movies and Shows selector sizing, all three view modes, horizontal) Tj ET
+BT /F1 7.50 Tf 52.00 270.50 Td (  middle-card swiping, List card scale and padding, title tracking, detail opening,) Tj ET
+BT /F1 7.50 Tf 52.00 261.35 Td (  detail Back restoration, primary-destination Back, Home prompt cancellation, and) Tj ET
+BT /F1 7.50 Tf 52.00 252.20 Td (  confirmed sign-out.) Tj ET
+BT /F1 7.50 Tf 52.00 243.05 Td (- Verified the two-second spinner uses the project's existing red-star, wheel, and) Tj ET
+BT /F1 7.50 Tf 52.00 233.90 Td (  mini-star layers rather than introducing a separate loading asset or animation) Tj ET
+BT /F1 7.50 Tf 52.00 224.75 Td (  language.) Tj ET
+BT /F1 7.50 Tf 52.00 215.60 Td (- Kept the final source commits device-independent and did not add) Tj ET
+BT /F1 7.50 Tf 52.00 206.45 Td (  phone-model-specific layout branches beyond the existing responsive less-than-600dp) Tj ET
+BT /F1 7.50 Tf 52.00 197.30 Td (  portrait classification.) Tj ET
+BT /F1 7.50 Tf 52.00 188.15 Td () Tj ET
+BT /F1 9.20 Tf 52.00 179.00 Td (Validation and Checks Performed) Tj ET
+BT /F1 7.50 Tf 52.00 169.85 Td (- Ran ./gradlew :app:assembleDebug throughout both implementation groups. Final) Tj ET
+BT /F1 7.50 Tf 52.00 160.70 Td (  reported builds completed successfully without Kotlin compilation or Android) Tj ET
+BT /F1 7.50 Tf 52.00 151.55 Td (  resource errors.) Tj ET
+BT /F1 7.50 Tf 52.00 142.40 Td (- Ran git diff --check during the implementation passes without whitespace errors, and) Tj ET
+BT /F1 7.50 Tf 52.00 133.25 Td (  confirmed the repository was clean on main tracking origin/main before generating) Tj ET
+BT /F1 7.50 Tf 52.00 124.10 Td (  this artifact.) Tj ET
+BT /F1 7.50 Tf 52.00 114.95 Td (- Confirmed successful streamed debug APK installs and Activity launches on USB serial) Tj ET
+BT /F1 7.50 Tf 52.00 105.80 Td (  R5CRC33MGNZ after the final sign-out visual and spinner changes.) Tj ET
+BT /F1 7.50 Tf 52.00 96.65 Td (- Verified commit 49e40e4, Refined portrait Movies and Shows browsing layouts, changed) Tj ET
+BT /F1 7.50 Tf 52.00 87.50 Td (  CinerificDestinationScreen.kt, CinerificViewportNavBar.kt, and) Tj ET
+BT /F1 7.50 Tf 52.00 78.35 Td (  cinerific_PROJECT_SNAPSHOT.txt.) Tj ET
+BT /F1 7.50 Tf 350.52 26.00 Td (Cinerific Work Log - September 26, 2026 \(U.S. EST\) Page 3) Tj ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 12 0 R >>
+endobj
+12 0 obj
+<< /Length 6298 >>
+stream
+BT /F1 14.00 Tf 52.00 754.00 Td (Cinerific Android App Work Log - September 26, 2026 \(U.S. EST\)) Tj ET
+BT /F1 7.50 Tf 52.00 728.00 Td (- Verified commit 4a8332e, Improved Back navigation and sign-out experience, changed) Tj ET
+BT /F1 7.50 Tf 52.00 718.85 Td (  CinerificApp.kt and CinerificIntroView.kt and is the current HEAD.) Tj ET
+BT /F1 7.50 Tf 52.00 709.70 Td (- Measured the combined source delta from the September 24 implementation baseline as) Tj ET
+BT /F1 7.50 Tf 52.00 700.55 Td (  345 insertions and 86 deletions across four Kotlin files, excluding the refreshed) Tj ET
+BT /F1 7.50 Tf 52.00 691.40 Td (  snapshot and prior worklog artifact.) Tj ET
+BT /F1 7.50 Tf 52.00 682.25 Td (- Verified U.S. Eastern Time directly from the host as Saturday, September 26, 2026 at) Tj ET
+BT /F1 7.50 Tf 52.00 673.10 Td (  9:52 PM EDT with UTC offset -04:00 before choosing the filename and report date.) Tj ET
+BT /F1 7.50 Tf 52.00 663.95 Td (- Re-read all pre-existing PDFs and checked this output with pdfinfo, pdffonts,) Tj ET
+BT /F1 7.50 Tf 52.00 654.80 Td (  pdftotext, page rendering, and image inspection for four-page count, clipping,) Tj ET
+BT /F1 7.50 Tf 52.00 645.65 Td (  wrapping, metadata, and footers.) Tj ET
+BT /F1 7.50 Tf 52.00 636.50 Td () Tj ET
+BT /F1 9.20 Tf 52.00 627.35 Td (Files Touched During September 26) Tj ET
+BT /F1 7.50 Tf 52.00 618.20 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt: enlarged) Tj ET
+BT /F1 7.50 Tf 52.00 609.05 Td (  phone-portrait selector and List systems, normalized List padding, resized middle) Tj ET
+BT /F1 7.50 Tf 52.00 599.90 Td (  cards, added horizontal circular browsing, and standardized destination title) Tj ET
+BT /F1 7.50 Tf 52.00 590.75 Td (  tracking.) Tj ET
+BT /F1 7.50 Tf 52.00 581.60 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificViewportNavBar.kt: accepted and) Tj ET
+BT /F1 7.50 Tf 52.00 572.45 Td (  applied the phone-portrait navigation scale multiplier to genre and View controls.) Tj ET
+BT /F1 7.50 Tf 52.00 563.30 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt: added destination-aware) Tj ET
+BT /F1 7.50 Tf 52.00 554.15 Td (  Back handling, saveable destination state, origin restoration, the Home sign-out) Tj ET
+BT /F1 7.50 Tf 52.00 545.00 Td (  modal, animated focus frame, transparent frame gap, and two-second sign-out spinner) Tj ET
+BT /F1 7.50 Tf 52.00 535.85 Td (  overlay.) Tj ET
+BT /F1 7.50 Tf 52.00 526.70 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt: exposed native) Tj ET
+BT /F1 7.50 Tf 52.00 517.55 Td (  intro-flow Back handling for active authentication screens.) Tj ET
+BT /F1 7.50 Tf 52.00 508.40 Td (- cinerific_PROJECT_SNAPSHOT.txt: refreshed with the catalog-layout commit's September) Tj ET
+BT /F1 7.50 Tf 52.00 499.25 Td (  26 source state.) Tj ET
+BT /F1 7.50 Tf 52.00 490.10 Td (- cinerific_worklog_september 26.pdf: added this first and latest Eastern-Time worklog) Tj ET
+BT /F1 7.50 Tf 52.00 480.95 Td (  for September 26 using the established no-part filename convention.) Tj ET
+BT /F1 7.50 Tf 52.00 471.80 Td () Tj ET
+BT /F1 9.20 Tf 52.00 462.65 Td (Follow-Up Context) Tj ET
+BT /F1 7.50 Tf 52.00 453.50 Td (- Phone portrait remains the active design scope until the user explicitly asks to) Tj ET
+BT /F1 7.50 Tf 52.00 444.35 Td (  resume tablet or landscape tuning.) Tj ET
+BT /F1 7.50 Tf 52.00 435.20 Td (- The 1.26 selector multiplier, 1.334025 List scale, 0.97 List horizontal multiplier,) Tj ET
+BT /F1 7.50 Tf 52.00 426.05 Td (  and 0.55sp title tracking now encode the accepted phone-portrait relationships and) Tj ET
+BT /F1 7.50 Tf 52.00 416.90 Td (  should be adjusted centrally if future visual review requests another pass.) Tj ET
+BT /F1 7.50 Tf 52.00 407.75 Td (- The center View mode intentionally shares the project's circular horizontal row) Tj ET
+BT /F1 7.50 Tf 52.00 398.60 Td (  engine; future changes should preserve bidirectional browsing and avoid restoring) Tj ET
+BT /F1 7.50 Tf 52.00 389.45 Td (  vertical-only grouping on phone portrait.) Tj ET
+BT /F1 7.50 Tf 52.00 380.30 Td (- Destination state preservation now underpins Back behavior. New detail entry points) Tj ET
+BT /F1 7.50 Tf 52.00 371.15 Td (  should set or respect the origin destination so Back continues to restore the) Tj ET
+BT /F1 7.50 Tf 52.00 362.00 Td (  correct screen and remembered context.) Tj ET
+BT /F1 7.50 Tf 52.00 352.85 Td (- The Home sign-out modal deliberately separates cancellation from confirmation,) Tj ET
+BT /F1 7.50 Tf 52.00 343.70 Td (  blocks the underlying UI, and uses the title-card clear-frame ratio. Future modal) Tj ET
+BT /F1 7.50 Tf 52.00 334.55 Td (  styling should reuse that visual logic rather than introducing an unrelated alert) Tj ET
+BT /F1 7.50 Tf 52.00 325.40 Td (  treatment.) Tj ET
+BT /F1 7.50 Tf 52.00 316.25 Td (- The two-second sign-out delay is an explicit product timing choice. The existing) Tj ET
+BT /F1 7.50 Tf 52.00 307.10 Td (  CinerificLoadingSpinner remains the shared loading animation and should stay) Tj ET
+BT /F1 7.50 Tf 52.00 297.95 Td (  centered within the dimmed blocking overlay.) Tj ET
+BT /F1 7.50 Tf 52.00 288.80 Td () Tj ET
+BT /F1 9.20 Tf 52.00 279.65 Td (Output Artifact) Tj ET
+BT /F1 7.50 Tf 52.00 270.50 Td (- Generated cinerific_worklog_september 26.pdf at the repository root using the) Tj ET
+BT /F1 7.50 Tf 52.00 261.35 Td (  first-log-of-the-day no-part filename convention.) Tj ET
+BT /F1 7.50 Tf 52.00 252.20 Td (- Preserved the established four-page U.S. Letter layout, Helvetica text, PDF 1.4) Tj ET
+BT /F1 7.50 Tf 52.00 243.05 Td (  compatibility, OpenAI Codex metadata, right-aligned page footers, and) Tj ET
+BT /F1 7.50 Tf 52.00 233.90 Td (  plain-text-readable structure.) Tj ET
+BT /F1 7.50 Tf 52.00 224.75 Td (- Used the verified September 26, 2026 U.S. Eastern date and documented the actual EDT) Tj ET
+BT /F1 7.50 Tf 52.00 215.60 Td (  offset while retaining the historical U.S. EST title label.) Tj ET
+BT /F1 7.50 Tf 52.00 206.45 Td (- Recorded main through 4a8332e and the clean committed implementation state; this PDF) Tj ET
+BT /F1 7.50 Tf 52.00 197.30 Td (  is the only new working-tree artifact created by the documentation pass.) Tj ET
+BT /F1 7.50 Tf 350.52 26.00 Td (Cinerific Work Log - September 26, 2026 \(U.S. EST\) Page 4) Tj ET
+endstream
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000140 00000 n 
+0000000237 00000 n 
+0000000492 00000 n 
+0000000618 00000 n 
+0000008525 00000 n 
+0000008651 00000 n 
+0000016465 00000 n 
+0000016592 00000 n 
+0000024157 00000 n 
+0000024285 00000 n 
+trailer
+<< /Size 13 /Root 1 0 R /Info 4 0 R >>
+startxref
+30635
+%%EOF
