@@ -39,12 +39,15 @@ internal fun CinerificViewportNavBar(
     onGenreSelected: (ViewportGenre) -> Unit,
     onModeSelected: (ViewportMode) -> Unit,
     scale: Float,
+    portraitScaleMultiplier: Float = 1f,
     isPortrait: Boolean = false,
     modifier: Modifier = Modifier
 ) {
     if (isPortrait) {
-        val portraitGenreScale = scale * 2f * MODE_GROUP_WIDTH / GENRE_GROUP_WIDTH
-        val portraitModeScale = scale * 2f * MODE_GROUP_WIDTH / MODE_BUTTON_ROW_VISUAL_WIDTH
+        val portraitGenreScale =
+            scale * 2f * MODE_GROUP_WIDTH / GENRE_GROUP_WIDTH * portraitScaleMultiplier
+        val portraitModeScale =
+            scale * 2f * MODE_GROUP_WIDTH / MODE_BUTTON_ROW_VISUAL_WIDTH * portraitScaleMultiplier
         val groupGap = viewportDp(
             VIEWPORT_NAV_BAR_WIDTH - GENRE_GROUP_WIDTH - MODE_GROUP_WIDTH,
             scale

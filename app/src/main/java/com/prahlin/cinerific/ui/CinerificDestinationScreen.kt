@@ -120,7 +120,6 @@ private const val DESTINATION_CARD_ASPECT = 350f / 263f
 private const val DESTINATION_CARD_SCALE = 0.8f
 private const val DESTINATION_LIST_IMAGE_WIDTH = 300f
 private const val DESTINATION_LIST_IMAGE_HEIGHT = 225f
-private const val DESTINATION_LIST_TEXT_START_PADDING = 50f
 private const val DESTINATION_LIST_TEXT_COLUMN_HEIGHT = 222f
 private const val DESTINATION_LIST_CARD_CLEAR_STROKE_PX = 20f
 private const val DESTINATION_LIST_CARD_OUTER_STROKE_PX = 3f
@@ -145,11 +144,13 @@ private const val DESTINATION_LIST_SYNOPSIS_LINE_HEIGHT = 24f
 private const val DESTINATION_LIST_SYNOPSIS_MIN_FONT_SIZE = 7.5f
 private const val DESTINATION_LIST_META_RUNTIME_WIDTH = 71f
 private const val DESTINATION_LIST_META_CREW_WIDTH = 156f
-private const val DESTINATION_LIST_META_COLUMN_GAP = 37f
 private const val DESTINATION_LIST_META_COLUMN_VERTICAL_GAP = 25f
 private const val DESTINATION_LIST_META_FONT_SIZE = 16f
 private const val DESTINATION_LIST_META_LINE_HEIGHT = 24f
 private const val DESTINATION_LIST_META_MIN_FONT_SIZE = 6.5f
+private const val DESTINATION_CARD_TITLE_LETTER_SPACING = 0.55f
+private const val DESTINATION_PHONE_PORTRAIT_LIST_SCALE_MULTIPLIER = 1.334025f
+private const val DESTINATION_PHONE_PORTRAIT_LIST_HORIZONTAL_WIDTH_MULTIPLIER = 0.97f
 private const val DETAIL_HERO_DESIGN_WIDTH = 1194f
 private const val DETAIL_HERO_DESIGN_HEIGHT = 834f
 private const val DETAIL_HERO_ASPECT = DETAIL_HERO_DESIGN_WIDTH / DETAIL_HERO_DESIGN_HEIGHT
@@ -384,14 +385,26 @@ private fun CinerificCatalogScreen(
         val scale = maxWidth.value / DESTINATION_FRAME_WIDTH
         val density = LocalDensity.current
         val isPortrait = maxHeight > maxWidth
+        val viewportNavScaleMultiplier = if (isPortrait && maxWidth < 600.dp) 1.26f else 1f
         val horizontalPadding = destinationDp(50f, scale)
         val rightPadding = destinationDp(150f, scale)
         val listRightPadding = if (isPortrait) horizontalPadding else rightPadding
-        val listScale = if (isPortrait) {
+        val listBaseScale = if (isPortrait) {
             ((maxWidth - horizontalPadding - listRightPadding).value / DESTINATION_LIST_REFERENCE_WIDTH)
                 .coerceAtLeast(0.01f)
         } else {
             scale
+        }
+        val isPortraitPhone = isPortrait && maxWidth < 600.dp
+        val listScale = listBaseScale * if (isPortraitPhone) {
+            DESTINATION_PHONE_PORTRAIT_LIST_SCALE_MULTIPLIER
+        } else {
+            1f
+        }
+        val listHorizontalWidthScale = listBaseScale * if (isPortraitPhone) {
+            DESTINATION_PHONE_PORTRAIT_LIST_HORIZONTAL_WIDTH_MULTIPLIER
+        } else {
+            1f
         }
         val navScale = cinerificNavScale(maxWidth, maxHeight)
         val titleBottomPadding = destinationDp(DESTINATION_TOP_BAR_TITLE_BOTTOM, navScale)
@@ -399,6 +412,11 @@ private fun CinerificCatalogScreen(
         val topBarHeight = destinationTopBarHeight(maxWidth, maxHeight, statusBarTop)
         val cardWidth = cinerificLargeTitleCardWidth(density, isPortrait)
         val cardHeight = cardWidth / DESTINATION_CARD_ASPECT
+        val smallCollagePortraitPhoneCardWidth = if (isPortraitPhone) {
+            (cardWidth + destinationDp(DESTINATION_LIST_IMAGE_WIDTH, listScale)) / 2f
+        } else {
+            null
+        }
         val cardGap = destinationDp(if (isPortrait) 42f else 50f, scale)
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
         var selectedGenre by rememberSaveable(titleResId, initialGenre) { mutableStateOf(initialGenre) }
@@ -469,6 +487,7 @@ private fun CinerificCatalogScreen(
                     onGenreSelected = { selectedGenre = it },
                     onModeSelected = { selectedMode = it },
                     scale = navScale,
+                    navScaleMultiplier = viewportNavScaleMultiplier,
                     isPortrait = isPortrait,
                     horizontalPadding = horizontalPadding,
                     rightPadding = rightPadding
@@ -499,6 +518,7 @@ private fun CinerificCatalogScreen(
                             horizontalPadding = horizontalPadding,
                             rightPadding = rightPadding,
                             scale = scale,
+                            portraitPhoneCardWidth = smallCollagePortraitPhoneCardWidth,
                             onProgramSelected = onProgramSelected,
                             topPadding = destinationSectionTopPadding(index = index, showViewportNav = showViewportNav)
                         )
@@ -513,6 +533,7 @@ private fun CinerificCatalogScreen(
                             horizontalPadding = horizontalPadding,
                             rightPadding = listRightPadding,
                             scale = listScale,
+                            horizontalWidthScale = listHorizontalWidthScale,
                             selectedProgramTitle = selectedListProgramTitle,
                             selectionStrokeAlpha = selectionStrokeAlpha,
                             onProgramCenterChanged = { programTitle, centerY ->
@@ -546,6 +567,7 @@ private fun DestinationViewportHeader(
     onGenreSelected: (ViewportGenre) -> Unit,
     onModeSelected: (ViewportMode) -> Unit,
     scale: Float,
+    navScaleMultiplier: Float,
     isPortrait: Boolean,
     horizontalPadding: Dp,
     rightPadding: Dp
@@ -575,8 +597,11 @@ private fun DestinationViewportHeader(
             onGenreSelected = onGenreSelected,
             onModeSelected = onModeSelected,
             scale = scale,
+            portraitScaleMultiplier = navScaleMultiplier,
             isPortrait = isPortrait,
-            modifier = Modifier.width(destinationDp(VIEWPORT_NAV_BAR_WIDTH, scale))
+            modifier = Modifier.width(
+                destinationDp(VIEWPORT_NAV_BAR_WIDTH * navScaleMultiplier, scale)
+            )
         )
     }
 }
@@ -647,11 +672,12 @@ private fun DestinationProgramSmallCollage(
     horizontalPadding: Dp,
     rightPadding: Dp,
     scale: Float,
+    portraitPhoneCardWidth: Dp?,
     onProgramSelected: (String) -> Unit,
     topPadding: Dp
 ) {
-    val itemWidth = destinationDp(200f, scale)
-    val cardHeight = destinationDp(150.4f, scale)
+    val itemWidth = portraitPhoneCardWidth ?: destinationDp(200f, scale)
+    val cardHeight = itemWidth / (200f / 150.4f)
     val horizontalCardGap = destinationDp(59f, scale)
     val verticalCardGap = destinationDp(50f, scale)
     val columnCount = 4
@@ -667,23 +693,43 @@ private fun DestinationProgramSmallCollage(
             rightPadding = rightPadding
         )
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = horizontalPadding, end = rightPadding)
-                .padding(top = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(verticalCardGap)
-        ) {
-            programs.chunked(columnCount).forEach { rowPrograms ->
-                Row(horizontalArrangement = Arrangement.spacedBy(horizontalCardGap)) {
-                    rowPrograms.forEach { program ->
-                        DestinationSmallCollageCard(
-                            program = program,
-                            width = itemWidth,
-                            cardHeight = cardHeight,
-                            scale = scale,
-                            onProgramSelected = onProgramSelected
-                        )
+        if (portraitPhoneCardWidth != null) {
+            CinerificCircularCardRow(
+                itemCount = programs.size,
+                selected = false,
+                itemSpacing = horizontalCardGap,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp),
+                contentPadding = PaddingValues(start = horizontalPadding, end = rightPadding)
+            ) { programIndex, _ ->
+                DestinationSmallCollageCard(
+                    program = programs[programIndex],
+                    width = itemWidth,
+                    cardHeight = cardHeight,
+                    scale = scale,
+                    onProgramSelected = onProgramSelected
+                )
+            }
+        } else {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = horizontalPadding, end = rightPadding)
+                    .padding(top = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(verticalCardGap)
+            ) {
+                programs.chunked(columnCount).forEach { rowPrograms ->
+                    Row(horizontalArrangement = Arrangement.spacedBy(horizontalCardGap)) {
+                        rowPrograms.forEach { program ->
+                            DestinationSmallCollageCard(
+                                program = program,
+                                width = itemWidth,
+                                cardHeight = cardHeight,
+                                scale = scale,
+                                onProgramSelected = onProgramSelected
+                            )
+                        }
                     }
                 }
             }
@@ -733,7 +779,7 @@ private fun DestinationSmallCollageCard(
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             lineHeight = 30.sp,
-            letterSpacing = 0.sp,
+            letterSpacing = DESTINATION_CARD_TITLE_LETTER_SPACING.sp,
             textAlign = TextAlign.Center,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
@@ -749,6 +795,7 @@ private fun DestinationProgramList(
     horizontalPadding: Dp,
     rightPadding: Dp,
     scale: Float,
+    horizontalWidthScale: Float,
     selectedProgramTitle: String?,
     selectionStrokeAlpha: Float,
     onProgramCenterChanged: (String, Float) -> Unit,
@@ -777,6 +824,7 @@ private fun DestinationProgramList(
                 DestinationProgramListItem(
                     program = program,
                     scale = scale,
+                    horizontalWidthScale = horizontalWidthScale,
                     selected = program.title == selectedProgramTitle,
                     selectionStrokeAlpha = selectionStrokeAlpha,
                     onCenterChanged = { centerY ->
@@ -793,12 +841,14 @@ private fun DestinationProgramList(
 private fun DestinationProgramListItem(
     program: DestinationProgramSpec,
     scale: Float,
+    horizontalWidthScale: Float,
     selected: Boolean,
     selectionStrokeAlpha: Float,
     onCenterChanged: (Float) -> Unit,
     onProgramSelected: (String) -> Unit
 ) {
     val imageShape = RoundedCornerShape(destinationDp(15f, scale))
+    val cellPadding = destinationDp(DESTINATION_LIST_CARD_CLEAR_STROKE_PX, scale)
     val title = stringResource(program.titleResId)
     val genre = stringResource(program.metadataGenreResId)
     val synopsis = program.synopsisResId?.let { stringResource(it) } ?: stringResource(
@@ -845,8 +895,8 @@ private fun DestinationProgramListItem(
             modifier = Modifier
                 .weight(1f)
                 .heightIn(min = destinationDp(DESTINATION_LIST_TEXT_COLUMN_HEIGHT, scale))
-                .padding(start = destinationDp(DESTINATION_LIST_TEXT_START_PADDING, scale)),
-            verticalArrangement = Arrangement.spacedBy(destinationDp(DESTINATION_LIST_TEXT_VERTICAL_GAP, scale))
+                .padding(start = cellPadding),
+            verticalArrangement = Arrangement.spacedBy(cellPadding)
         ) {
             DestinationListTitleText(
                 title = title,
@@ -856,24 +906,26 @@ private fun DestinationProgramListItem(
             )
             Row(
                 modifier = Modifier.heightIn(min = destinationDp(DESTINATION_LIST_META_ROW_HEIGHT, scale)),
-                horizontalArrangement = Arrangement.spacedBy(destinationDp(DESTINATION_LIST_META_COLUMN_GAP, scale)),
+                horizontalArrangement = Arrangement.spacedBy(cellPadding),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 DestinationListSynopsisText(
                     text = synopsis,
                     scale = scale,
-                    modifier = Modifier.width(destinationDp(DESTINATION_LIST_SYNOPSIS_WIDTH, scale))
+                    modifier = Modifier.width(
+                        destinationDp(DESTINATION_LIST_SYNOPSIS_WIDTH, horizontalWidthScale)
+                    )
                 )
                 DestinationListMetaColumn(
                     top = program.runtime,
                     bottom = genre,
-                    width = destinationDp(DESTINATION_LIST_META_RUNTIME_WIDTH, scale),
+                    width = destinationDp(DESTINATION_LIST_META_RUNTIME_WIDTH, horizontalWidthScale),
                     scale = scale
                 )
                 DestinationListMetaColumn(
                     top = stringResource(R.string.program_meta_director, program.director),
                     bottom = stringResource(R.string.program_meta_producer, program.producer),
-                    width = destinationDp(DESTINATION_LIST_META_CREW_WIDTH, scale),
+                    width = destinationDp(DESTINATION_LIST_META_CREW_WIDTH, horizontalWidthScale),
                     scale = scale
                 )
             }
@@ -1029,7 +1081,7 @@ private fun DestinationListTitleText(
             fontFamily = CinerificAppTextFontFamily,
             fontSize = fittedFontSize.sp,
             lineHeight = destinationListTitleLineHeight(fittedFontSize).sp,
-            letterSpacing = 0.sp,
+            letterSpacing = DESTINATION_CARD_TITLE_LETTER_SPACING.sp,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             softWrap = false
@@ -1929,7 +1981,7 @@ private fun SinkOrSwimInfoPanel(
             fontFamily = CinerificAppTextFontFamily,
             fontSize = destinationSp(DETAIL_INFO_PANEL_TITLE_FONT_SIZE, infoScale),
             lineHeight = destinationSp(DETAIL_INFO_PANEL_TITLE_LINE_HEIGHT, infoScale),
-            letterSpacing = 0.sp,
+            letterSpacing = DESTINATION_CARD_TITLE_LETTER_SPACING.sp,
             textAlign = TextAlign.Center
         )
 

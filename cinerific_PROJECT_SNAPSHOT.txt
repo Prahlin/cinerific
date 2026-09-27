@@ -1,5 +1,5 @@
 Cinerific Android PROJECT SNAPSHOT
-Generated: Thu Sep 24 17:40:37 EDT 2026
+Generated: Sat Sep 26 18:09:16 EDT 2026
 Project directory: /Users/prahlin/gh/cinerific
 
 IMPORTANT INSTRUCTIONS FOR CHATGPT & CODEX:
@@ -1319,6 +1319,7 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificChrome.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificCircularCardCarousel.kt
+/Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificContentSizing.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificHomeScreen.kt
 /Users/prahlin/gh/cinerific/app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt
@@ -1579,6 +1580,7 @@ PROJECT FILE TREE
 /Users/prahlin/gh/cinerific/cinerific_worklog_september 21 part 2.pdf
 /Users/prahlin/gh/cinerific/cinerific_worklog_september 21.pdf
 /Users/prahlin/gh/cinerific/cinerific_worklog_september 23.pdf
+/Users/prahlin/gh/cinerific/cinerific_worklog_september 24.pdf
 /Users/prahlin/gh/cinerific/emulator
 /Users/prahlin/gh/cinerific/emulator/skins
 /Users/prahlin/gh/cinerific/emulator/skins/cinerific_pixel_tablet_1280
@@ -1926,1165 +1928,1228 @@ FILE: app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt
     49	import androidx.compose.ui.graphics.lerp as lerpColor
     50	import androidx.compose.ui.input.pointer.PointerEventPass
     51	import androidx.compose.ui.input.pointer.pointerInput
-    52	import androidx.compose.ui.layout.ContentScale
-    53	import androidx.compose.ui.platform.LocalDensity
-    54	import androidx.compose.ui.platform.LocalContext
-    55	import androidx.compose.ui.platform.LocalConfiguration
-    56	import androidx.compose.ui.res.painterResource
-    57	import androidx.compose.ui.text.font.FontWeight
-    58	import androidx.compose.ui.text.style.TextAlign
-    59	import androidx.compose.ui.unit.dp
-    60	import androidx.compose.ui.unit.IntOffset
-    61	import androidx.compose.ui.unit.IntSize
-    62	import androidx.compose.ui.unit.sp
-    63	import androidx.compose.ui.viewinterop.AndroidView
-    64	import com.prahlin.cinerific.R
-    65	import kotlinx.coroutines.delay
-    66	import kotlin.math.PI
-    67	import kotlin.math.min
-    68	import kotlin.math.roundToInt
-    69	import kotlin.math.sin
-    70	
-    71	private const val FIGMA_FRAME_WIDTH = 1194f
-    72	private const val FIGMA_FRAME_HEIGHT = 834f
-    73	private const val SCREEN_BLACK_HOLD_MS = 1000
-    74	private const val SCREEN_PINK_MS = 1000
-    75	private const val LOGO_ENTRY_START_MS = 250
-    76	private const val LOGO_ENTRY_END_MS = 1687
-    77	private const val FINAL_SETTLE_START_MS = LOGO_ENTRY_END_MS
-    78	private const val FINAL_SETTLE_END_MS = 4812
-    79	private const val BOOT_ANIMATION_MS = FINAL_SETTLE_END_MS
-    80	private const val AUTO_LOGOUT_TIMEOUT_MS = 10_000L
-    81	private const val FAVORITES_FULL_PROMPT_X = 977f
-    82	private const val FAVORITES_FULL_PROMPT_Y = 92f
-    83	private const val FAVORITES_FULL_PROMPT_WIDTH = 95f
-    84	private const val FAVORITES_FULL_PROMPT_HEIGHT = 139.25f
-    85	private const val FAVORITES_FULL_PROMPT_BOX_TOP = 20f
-    86	private const val FAVORITES_FULL_PROMPT_BOX_HEIGHT = 119f
-    87	private const val FAVORITES_FULL_PROMPT_RADIUS = 20f
-    88	private const val FAVORITES_FULL_PROMPT_STROKE = 3f
-    89	private const val FAVORITES_FULL_PROMPT_TEXT_X = 13.5f
-    90	private const val FAVORITES_FULL_PROMPT_TEXT_Y = 37f
-    91	private const val FAVORITES_FULL_PROMPT_TEXT_WIDTH = 68f
-    92	private const val FAVORITES_FULL_PROMPT_TEXT_HEIGHT = 84f
-    93	private const val FAVORITES_FULL_PROMPT_VISIBLE_MS = 2200L
-    94	private const val SIGN_IN_AVATAR_SIZE = 176f
-    95	private const val SIGN_IN_PORTRAIT_STACK_SHIFT_Y = -51f
-    96	private const val SIGN_IN_LANDSCAPE_STACK_SHIFT_Y = -61f
-    97	private const val SIGN_IN_NAME_TOP = 655f
-    98	private const val SIGN_IN_LANDSCAPE_ACCOUNT_PROMPT_EXTRA_SHIFT_Y = -36f
-    99	private const val ACCOUNT_PROMPT_CREATE_TEXT = "Create Account"
-   100	private const val ACCOUNT_PROMPT_SIGN_IN_TEXT = "Sign In"
-   101	private const val ACCOUNT_PROMPT_FORGOT_TEXT = "Forgot Password"
-   102	private const val ACCOUNT_PROMPT_LEFT_ANCHOR_X = 152f
-   103	private const val ACCOUNT_PROMPT_SIGN_IN_CENTER_X = 597f
-   104	private const val ACCOUNT_PROMPT_RIGHT_ANCHOR_X = 1042f
-   105	private const val ACCOUNT_PROMPT_WIDTH = 300f
-   106	private const val ACCOUNT_PROMPT_TOP = 770f
-   107	private const val ACCOUNT_PROMPT_HEIGHT = 45f
-   108	private const val ACCOUNT_PROMPT_TEXT_SIZE = 30f
-   109	private const val ACCOUNT_PROMPT_LANDSCAPE_TEXT_SIZE = 24.3f
-   110	private const val ACCOUNT_PROMPT_SECONDARY_TEXT_SCALE = 1f
-   111	private const val ACCOUNT_PROMPT_LINE_HEIGHT = 38f
-   112	
-   113	private val ColorFrame1Background = Color(0xFF000000)
-   114	private val ColorFrame2Background = Color(0xFF600878)
-   115	private val ColorFrame3Background = Color(0xFF1F1F1F)
-   116	private val ColorFrame4Background = Color(0xFF1F1F1F)
-   117	private val ColorIntroGradientTop = Color(0xFF050006)
-   118	private val ColorIntroGradientCenter = Color(0xFF600878)
-   119	private val ColorIntroGradientBottom = Color(0xFF100114)
-   120	private val ColorFavoritesFullPromptFill = Color(0xFF303030)
-   121	private val ColorFavoritesFullPromptAccent = Color(0xFF858585)
-   122	
-   123	@Composable
-   124	fun CinerificApp() {
-   125	    var showHome by rememberSaveable { mutableStateOf(false) }
-   126	    var signedInProfile by rememberSaveable { mutableStateOf(CinerificProfile.Guest) }
-   127	    var signInSessionId by rememberSaveable { mutableStateOf(0) }
-   128	    var selectedLanguage by rememberSaveable { mutableStateOf(CinerificLanguage.English) }
-   129	    var introSnapshot by rememberSaveable(stateSaver = CinerificIntroSnapshotSaver) {
-   130	        mutableStateOf(CinerificIntroSnapshot())
-   131	    }
-   132	
-   133	    if (showHome) {
-   134	        CinerificLocalizedResources(selectedLanguage) {
-   135	            CinerificMainExperience(
-   136	                signInSessionId = signInSessionId,
-   137	                signedInProfile = signedInProfile,
-   138	                selectedLanguage = selectedLanguage,
-   139	                onLanguageSelected = { selectedLanguage = it },
-   140	                onSignOut = {
-   141	                    signedInProfile = CinerificProfile.Guest
-   142	                    introSnapshot = CinerificIntroSnapshot()
-   143	                    showHome = false
-   144	                }
-   145	            )
-   146	        }
-   147	    } else {
-   148	        AndroidView(
-   149	            modifier = Modifier.fillMaxSize(),
-   150	            factory = { context ->
-   151	                CinerificIntroView(context).apply {
-   152	                    onIntroSnapshotChanged = { snapshot ->
-   153	                        if (introSnapshot != snapshot) {
-   154	                            introSnapshot = snapshot
-   155	                        }
-   156	                    }
-   157	                    restoreIntroSnapshot(introSnapshot)
-   158	                    onAvatarSelected = { profile ->
-   159	                        introSnapshot = CinerificIntroSnapshot()
-   160	                        signedInProfile = profile
-   161	                        signInSessionId += 1
-   162	                        showHome = true
-   163	                    }
-   164	                }
-   165	            },
-   166	            update = { view ->
-   167	                view.onIntroSnapshotChanged = { snapshot ->
-   168	                    if (introSnapshot != snapshot) {
-   169	                        introSnapshot = snapshot
-   170	                    }
-   171	                }
-   172	                view.restoreIntroSnapshot(introSnapshot)
-   173	                view.onAvatarSelected = { profile ->
-   174	                    introSnapshot = CinerificIntroSnapshot()
-   175	                    signedInProfile = profile
-   176	                    signInSessionId += 1
-   177	                    showHome = true
-   178	                }
-   179	            }
-   180	        )
-   181	    }
-   182	}
-   183	
-   184	internal enum class CinerificDestination {
-   185	    Home,
-   186	    Movies,
-   187	    Shows,
-   188	    Favorites,
-   189	    Settings,
-   190	    ProgramDetails
-   191	}
-   192	
-   193	internal enum class CinerificProfile(
-   194	    @DrawableRes val avatarResId: Int,
-   195	    @DrawableRes val nameResId: Int
-   196	) {
-   197	    Steve(R.drawable.steve_avatar_bubble_edge50_body0_test, R.drawable.steve_name),
-   198	    Martin(R.drawable.martin_avatar_bubble_edge50_body0_test, R.drawable.martin_name),
-   199	    Janny(R.drawable.janny_avatar_bubble_edge50_body0_test, R.drawable.janny_name),
-   200	    Guest(R.drawable.guest_avatar_bubble_edge50_body0_test, R.drawable.guest_name)
-   201	}
-   202	
-   203	@Composable
-   204	private fun CinerificMainExperience(
-   205	    signInSessionId: Int,
-   206	    signedInProfile: CinerificProfile,
-   207	    selectedLanguage: CinerificLanguage,
-   208	    onLanguageSelected: (CinerificLanguage) -> Unit,
-   209	    onSignOut: () -> Unit
-   210	) {
-   211	    var destination by rememberSaveable(signInSessionId) { mutableStateOf(CinerificDestination.Home) }
-   212	    var selectedProgramTitle by rememberSaveable(signInSessionId) { mutableStateOf("Sink or Swim") }
-   213	    var favoriteProgramTitles by rememberSaveable { mutableStateOf(emptyList<String>()) }
-   214	    var userProgramRatings by rememberSaveable { mutableStateOf(emptyMap<String, Int>()) }
-   215	    var catalogRouteDestinationName by rememberSaveable(signInSessionId) { mutableStateOf("") }
-   216	    var catalogRouteGenreName by rememberSaveable(signInSessionId) { mutableStateOf("") }
-   217	    var catalogRouteModeName by rememberSaveable(signInSessionId) { mutableStateOf("") }
-   218	    var favoritesFullPromptRequestId by remember { mutableStateOf(0) }
-   219	    var autoLogoutEnabled by rememberSaveable { mutableStateOf(false) }
-   220	    var userInitiatedPlaybackActive by remember { mutableStateOf(false) }
-   221	    var lastInteractionMillis by remember { mutableStateOf(SystemClock.uptimeMillis()) }
-   222	    val playbackSessionController = remember(userInitiatedPlaybackActive) {
-   223	        CinerificPlaybackSessionController(
-   224	            isUserInitiatedPlaybackActive = userInitiatedPlaybackActive,
-   225	            onUserInitiatedPlaybackStarted = {
-   226	                userInitiatedPlaybackActive = true
-   227	            },
-   228	            finishUserInitiatedPlayback = {
-   229	                userInitiatedPlaybackActive = false
-   230	                lastInteractionMillis = SystemClock.uptimeMillis()
-   231	            }
-   232	        )
-   233	    }
-   234	    val catalogRoute = remember(
-   235	        catalogRouteDestinationName,
-   236	        catalogRouteGenreName,
-   237	        catalogRouteModeName
-   238	    ) {
-   239	        cinerificSavedCatalogRoute(
-   240	            destinationName = catalogRouteDestinationName,
-   241	            genreName = catalogRouteGenreName,
-   242	            modeName = catalogRouteModeName
-   243	        )
-   244	    }
-   245	
-   246	    fun clearCatalogRoute() {
-   247	        catalogRouteDestinationName = ""
-   248	        catalogRouteGenreName = ""
-   249	        catalogRouteModeName = ""
-   250	    }
-   251	
-   252	    LaunchedEffect(autoLogoutEnabled, userInitiatedPlaybackActive, lastInteractionMillis) {
-   253	        if (!autoLogoutEnabled || userInitiatedPlaybackActive) return@LaunchedEffect
-   254	        delay(AUTO_LOGOUT_TIMEOUT_MS)
-   255	        val inactiveForMillis = SystemClock.uptimeMillis() - lastInteractionMillis
-   256	        if (
-   257	            autoLogoutEnabled &&
-   258	            !userInitiatedPlaybackActive &&
-   259	            inactiveForMillis >= AUTO_LOGOUT_TIMEOUT_MS
-   260	        ) {
-   261	            onSignOut()
-   262	        }
-   263	    }
-   264	
-   265	    fun showProgramDetails(title: String) {
-   266	        clearCatalogRoute()
-   267	        selectedProgramTitle = title
-   268	        destination = CinerificDestination.ProgramDetails
-   269	    }
-   270	
-   271	    fun showCatalog(route: CinerificCatalogRoute) {
-   272	        catalogRouteDestinationName = route.destination.name
-   273	        catalogRouteGenreName = route.genre.name
-   274	        catalogRouteModeName = route.mode.name
-   275	        destination = route.destination
-   276	    }
-   277	
-   278	    fun rateProgram(title: String, rating: Int) {
-   279	        userProgramRatings = userProgramRatings + (title to rating.coerceIn(1, 5))
-   280	    }
-   281	
-   282	    fun toggleFavoriteProgram(title: String) {
-   283	        if (title in favoriteProgramTitles) {
-   284	            favoriteProgramTitles = favoriteProgramTitles - title
-   285	            return
-   286	        }
-   287	
-   288	        val isShow = cinerificProgramIsShow(title)
-   289	        val filledSlots = cinerificFilledFavoritePlaceholderCount(
-   290	            titles = favoriteProgramTitles,
-   291	            isShow = isShow
-   292	        )
-   293	        if (filledSlots >= CINERIFIC_FAVORITES_CAPACITY) {
-   294	            favoritesFullPromptRequestId += 1
-   295	            return
-   296	        }
-   297	
-   298	        favoriteProgramTitles = favoriteProgramTitles + title
-   299	    }
-   300	
-   301	    CompositionLocalProvider(LocalCinerificPlaybackSessionController provides playbackSessionController) {
-   302	        Box(
-   303	            modifier = Modifier
-   304	                .fillMaxSize()
-   305	                .pointerInput(Unit) {
-   306	                    awaitPointerEventScope {
-   307	                        while (true) {
-   308	                            awaitPointerEvent(PointerEventPass.Initial)
-   309	                            lastInteractionMillis = SystemClock.uptimeMillis()
-   310	                        }
-   311	                    }
-   312	                }
-   313	        ) {
-   314	            when (destination) {
-   315	                CinerificDestination.Home -> CinerificHomeScreen(
-   316	                    onProgramSelected = ::showProgramDetails,
-   317	                    onCatalogSelected = ::showCatalog,
-   318	                    modifier = Modifier.fillMaxSize()
-   319	                )
-   320	                CinerificDestination.Movies,
-   321	                CinerificDestination.Shows,
-   322	                CinerificDestination.Favorites,
-   323	                CinerificDestination.Settings -> CinerificDestinationScreen(
-   324	                    destination = destination,
-   325	                    signedInProfile = signedInProfile,
-   326	                    selectedLanguage = selectedLanguage,
-   327	                    onLanguageSelected = onLanguageSelected,
-   328	                    autoLogoutEnabled = autoLogoutEnabled,
-   329	                    onAutoLogoutEnabledChange = { enabled ->
-   330	                        autoLogoutEnabled = enabled
-   331	                        lastInteractionMillis = SystemClock.uptimeMillis()
-   332	                    },
-   333	                    onSignOut = onSignOut,
-   334	                    favoriteProgramTitles = favoriteProgramTitles,
-   335	                    onFavoriteToggled = ::toggleFavoriteProgram,
-   336	                    userProgramRatings = userProgramRatings,
-   337	                    onProgramRated = ::rateProgram,
-   338	                    onProgramSelected = ::showProgramDetails,
-   339	                    catalogRoute = catalogRoute?.takeIf { it.destination == destination },
-   340	                    modifier = Modifier.fillMaxSize()
-   341	                )
-   342	                CinerificDestination.ProgramDetails -> CinerificProgramDetailsScreen(
-   343	                    programTitle = selectedProgramTitle,
-   344	                    favoriteProgramTitles = favoriteProgramTitles,
-   345	                    onFavoriteToggled = ::toggleFavoriteProgram,
-   346	                    userProgramRatings = userProgramRatings,
-   347	                    onProgramRated = ::rateProgram,
-   348	                    onProgramSelected = ::showProgramDetails,
-   349	                    modifier = Modifier.fillMaxSize()
-   350	                )
-   351	            }
-   352	
-   353	            CinerificRightSideNavBar(
-   354	                currentDestination = destination,
-   355	                onDestinationSelected = {
-   356	                    clearCatalogRoute()
-   357	                    destination = it
-   358	                },
-   359	                modifier = Modifier.fillMaxSize()
-   360	            )
-   361	
-   362	            FavoritesFullPromptOverlay(
-   363	                requestId = favoritesFullPromptRequestId,
-   364	                currentDestination = destination,
-   365	                suppressed = userInitiatedPlaybackActive,
-   366	                modifier = Modifier.fillMaxSize()
-   367	            )
-   368	        }
-   369	    }
-   370	}
-   371	
-   372	private fun cinerificSavedCatalogRoute(
-   373	    destinationName: String,
-   374	    genreName: String,
-   375	    modeName: String
-   376	): CinerificCatalogRoute? {
-   377	    if (destinationName.isBlank() || genreName.isBlank() || modeName.isBlank()) return null
-   378	
-   379	    val destination = CinerificDestination.values().firstOrNull { it.name == destinationName } ?: return null
-   380	    val genre = ViewportGenre.values().firstOrNull { it.name == genreName } ?: return null
-   381	    val mode = ViewportMode.values().firstOrNull { it.name == modeName } ?: return null
-   382	
-   383	    return CinerificCatalogRoute(
-   384	        destination = destination,
-   385	        genre = genre,
-   386	        mode = mode
-   387	    )
-   388	}
-   389	
-   390	@Composable
-   391	private fun FavoritesFullPromptOverlay(
-   392	    requestId: Int,
-   393	    currentDestination: CinerificDestination,
-   394	    suppressed: Boolean,
-   395	    modifier: Modifier = Modifier
-   396	) {
-   397	    var visible by remember { mutableStateOf(false) }
-   398	
-   399	    LaunchedEffect(requestId, suppressed) {
-   400	        if (suppressed) {
-   401	            visible = false
-   402	            return@LaunchedEffect
-   403	        }
-   404	        if (requestId == 0) {
-   405	            visible = false
-   406	            return@LaunchedEffect
-   407	        }
-   408	        visible = true
-   409	        delay(FAVORITES_FULL_PROMPT_VISIBLE_MS)
-   410	        visible = false
-   411	    }
-   412	
-   413	    val alpha by animateFloatAsState(
-   414	        targetValue = if (visible) 1f else 0f,
-   415	        animationSpec = tween(durationMillis = if (visible) 140 else 190),
-   416	        label = "favorites-full-prompt-alpha"
-   417	    )
-   418	    val promptScale by animateFloatAsState(
-   419	        targetValue = if (visible) 1f else 0.94f,
-   420	        animationSpec = tween(durationMillis = if (visible) 140 else 190),
-   421	        label = "favorites-full-prompt-scale"
-   422	    )
-   423	
-   424	    if (suppressed || requestId == 0 || (!visible && alpha <= 0.01f)) return
-   425	
-   426	    BoxWithConstraints(modifier = modifier) {
-   427	        val stageScale = maxWidth.value / FIGMA_FRAME_WIDTH
-   428	        val isPortraitDetail = currentDestination == CinerificDestination.ProgramDetails &&
-   429	            maxHeight > maxWidth
-   430	        val promptY = if (isPortraitDetail) {
-   431	            DETAIL_HERO_LOGO_CENTER_Y - FAVORITES_FULL_PROMPT_HEIGHT / 2f
-   432	        } else {
-   433	            FAVORITES_FULL_PROMPT_Y
-   434	        }
-   435	        FavoritesFullPromptBubble(
-   436	            stageScale = stageScale,
-   437	            modifier = Modifier
-   438	                .absoluteOffset(
-   439	                    x = (FAVORITES_FULL_PROMPT_X * stageScale).dp,
-   440	                    y = (promptY * stageScale).dp
-   441	                )
-   442	                .graphicsLayer {
-   443	                    this.alpha = alpha
-   444	                    scaleX = promptScale
-   445	                    scaleY = promptScale
-   446	                    transformOrigin = TransformOrigin(0.5f, 0f)
-   447	                }
-   448	        )
-   449	    }
-   450	}
-   451	
-   452	@Composable
-   453	private fun FavoritesFullPromptBubble(
-   454	    stageScale: Float,
-   455	    modifier: Modifier = Modifier
-   456	) {
-   457	    Box(
-   458	        modifier = modifier.requiredSize(
-   459	            width = (FAVORITES_FULL_PROMPT_WIDTH * stageScale).dp,
-   460	            height = (FAVORITES_FULL_PROMPT_HEIGHT * stageScale).dp
-   461	        )
-   462	    ) {
-   463	        Canvas(modifier = Modifier.fillMaxSize()) {
-   464	            val xScale = size.width / FAVORITES_FULL_PROMPT_WIDTH
-   465	            val yScale = size.height / FAVORITES_FULL_PROMPT_HEIGHT
-   466	            val pointer = Path().apply {
-   467	                moveTo(47.5f * xScale, 0f)
-   468	                lineTo(63f * xScale, FAVORITES_FULL_PROMPT_BOX_TOP * yScale)
-   469	                lineTo(32f * xScale, FAVORITES_FULL_PROMPT_BOX_TOP * yScale)
-   470	                close()
-   471	            }
-   472	            drawPath(pointer, ColorFavoritesFullPromptAccent)
-   473	            drawRoundRect(
-   474	                color = ColorFavoritesFullPromptFill,
-   475	                topLeft = Offset(0f, FAVORITES_FULL_PROMPT_BOX_TOP * yScale),
-   476	                size = Size(
-   477	                    width = FAVORITES_FULL_PROMPT_WIDTH * xScale,
-   478	                    height = FAVORITES_FULL_PROMPT_BOX_HEIGHT * yScale
-   479	                ),
-   480	                cornerRadius = CornerRadius(
-   481	                    x = FAVORITES_FULL_PROMPT_RADIUS * xScale,
-   482	                    y = FAVORITES_FULL_PROMPT_RADIUS * yScale
-   483	                )
-   484	            )
-   485	            drawRoundRect(
-   486	                color = ColorFavoritesFullPromptAccent,
-   487	                topLeft = Offset(
-   488	                    x = FAVORITES_FULL_PROMPT_STROKE * xScale / 2f,
-   489	                    y = FAVORITES_FULL_PROMPT_BOX_TOP * yScale +
-   490	                        FAVORITES_FULL_PROMPT_STROKE * yScale / 2f
-   491	                ),
-   492	                size = Size(
-   493	                    width = (FAVORITES_FULL_PROMPT_WIDTH - FAVORITES_FULL_PROMPT_STROKE) * xScale,
-   494	                    height = (FAVORITES_FULL_PROMPT_BOX_HEIGHT - FAVORITES_FULL_PROMPT_STROKE) * yScale
-   495	                ),
-   496	                cornerRadius = CornerRadius(
-   497	                    x = FAVORITES_FULL_PROMPT_RADIUS * xScale,
-   498	                    y = FAVORITES_FULL_PROMPT_RADIUS * yScale
-   499	                ),
-   500	                style = Stroke(width = FAVORITES_FULL_PROMPT_STROKE * min(xScale, yScale))
-   501	            )
-   502	        }
-   503	        Text(
-   504	            text = "You've\nfilled\nup on\nfavorites!",
-   505	            color = ColorFavoritesFullPromptAccent,
-   506	            fontFamily = CinerificAppTextFontFamily,
-   507	            fontSize = (14f * stageScale).sp,
-   508	            fontWeight = FontWeight.Black,
-   509	            lineHeight = (21.252f * stageScale).sp,
-   510	            textAlign = TextAlign.Center,
-   511	            modifier = Modifier
-   512	                .absoluteOffset(
-   513	                    x = (FAVORITES_FULL_PROMPT_TEXT_X * stageScale).dp,
-   514	                    y = (FAVORITES_FULL_PROMPT_TEXT_Y * stageScale).dp
-   515	                )
-   516	                .requiredSize(
-   517	                    width = (FAVORITES_FULL_PROMPT_TEXT_WIDTH * stageScale).dp,
-   518	                    height = (FAVORITES_FULL_PROMPT_TEXT_HEIGHT * stageScale).dp
-   519	                )
-   520	        )
-   521	    }
-   522	}
-   523	
-   524	@Composable
-   525	private fun BootIntroFromFigma(progress: Float) {
-   526	    val p = progress.coerceIn(0f, 1f)
-   527	    val images = rememberIntroImages()
-   528	    val blackToPurple = linearSegmentMs(
-   529	        p,
-   530	        SCREEN_BLACK_HOLD_MS,
-   531	        SCREEN_BLACK_HOLD_MS + SCREEN_PINK_MS
-   532	    )
-   533	    val purpleToSettle = easedSegmentMs(p, 2500, 3900)
-   534	    val background = introBackgroundBrush(
-   535	        solidProgress = blackToPurple,
-   536	        gradientProgress = purpleToSettle
-   537	    )
-   538	    val logoAlpha = linearSegmentMs(p, 90, LOGO_ENTRY_START_MS)
-   539	    val logoEntryProgress = bouncySegmentMs(p, LOGO_ENTRY_START_MS, LOGO_ENTRY_END_MS)
-   540	    val logoFinalProgress = easedSegmentMs(p, FINAL_SETTLE_START_MS, FINAL_SETTLE_END_MS)
-   541	    val avatarSettleAlpha = easedSegmentMs(p, 2300, FINAL_SETTLE_END_MS)
-   542	    val avatarYOffset = lerpFloat(56f, 0f, avatarSettleAlpha)
-   543	
-   544	    Canvas(modifier = Modifier.fillMaxSize()) {
-   545	        val stageScale = min(size.width / FIGMA_FRAME_WIDTH, size.height / FIGMA_FRAME_HEIGHT)
-   546	        val stageLeft = (size.width - FIGMA_FRAME_WIDTH * stageScale) / 2f
-   547	        val stageTop = (size.height - FIGMA_FRAME_HEIGHT * stageScale) / 2f
-   548	        val stackShiftY = signInStackShiftY(size.width > size.height)
-   549	
-   550	        drawRect(brush = background, size = size)
-   551	
-   552	        if (logoAlpha > 0.01f) {
-   553	            val baseBounds = FigmaBounds(x = 222f, y = 150f, w = 750f, h = 535f)
-   554	            val simpleEntry = lerpBounds(
-   555	                start = FigmaBounds(x = 447f, y = -417f, w = 300f, h = 214f),
-   556	                end = baseBounds,
-   557	                amount = logoEntryProgress
-   558	            )
-   559	            val eyesEntry = lerpBounds(
-   560	                start = FigmaBounds(x = 453f, y = 1037f, w = 300f, h = 214f),
-   561	                end = baseBounds,
-   562	                amount = logoEntryProgress
-   563	            )
-   564	            val finalBounds = FigmaBounds(x = 297f, y = 11f, w = 600f, h = 428f)
-   565	
-   566	            drawFigmaImage(
-   567	                image = images.logoSimple,
-   568	                bounds = lerpBounds(simpleEntry, finalBounds, logoFinalProgress),
-   569	                stageLeft = stageLeft,
-   570	                stageTop = stageTop,
-   571	                stageScale = stageScale,
-   572	                alpha = logoAlpha
-   573	            )
-   574	            drawFigmaImage(
-   575	                image = images.logoEyes,
-   576	                bounds = lerpBounds(eyesEntry, finalBounds, logoFinalProgress),
-   577	                stageLeft = stageLeft,
-   578	                stageTop = stageTop,
-   579	                stageScale = stageScale,
-   580	                alpha = logoAlpha
-   581	            )
-   582	        }
-   583	
-   584	        if (avatarSettleAlpha > 0.01f) {
-   585	            val y = avatarYOffset
-   586	            drawFigmaImage(images.steveAvatar, FigmaBounds(152f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
-   587	            drawFigmaImage(images.martinAvatar, FigmaBounds(390f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
-   588	            drawFigmaImage(images.jannyAvatar, FigmaBounds(628f, 454f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
-   589	            drawFigmaImage(images.guestAvatar, FigmaBounds(866f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
-   590	
-   591	            drawFigmaImage(images.steveName, FigmaBounds(130f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
-   592	            drawFigmaImage(images.martinName, FigmaBounds(368f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
-   593	            drawFigmaImage(images.jannyName, FigmaBounds(606f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
-   594	            drawFigmaImage(images.guestName, FigmaBounds(854f, SIGN_IN_NAME_TOP + stackShiftY + y, 200f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
-   595	        }
-   596	    }
-   597	}
-   598	
-   599	@Composable
-   600	private fun IntroFrame1FromFigma() {
-   601	    // Node 474:7309 has only a pure black fill.
-   602	    FigmaStage(background = solidBrush(ColorFrame1Background)) { }
-   603	}
-   604	
-   605	@Composable
-   606	private fun IntroFrame2FromFigma() {
-   607	    // Node 474:7311 with Logo Slide 1 instance 478:6917.
-   608	    val slideYOffset = remember { Animatable(-417f) }
-   609	
-   610	    LaunchedEffect(Unit) {
-   611	        slideYOffset.snapTo(-417f)
-   612	        slideYOffset.animateTo(
-   613	            targetValue = 0f,
-   614	            animationSpec = tween(durationMillis = 1800, easing = FastOutSlowInEasing)
-   615	        )
-   616	    }
-   617	
-   618	    FigmaStage(background = solidBrush(ColorFrame2Background)) { scale ->
-   619	        LogoSlide1Layer(scale = scale, yOffset = slideYOffset.value)
-   620	    }
-   621	}
-   622	
-   623	@Composable
-   624	private fun IntroFrame3FromFigma() {
-   625	    // Node 476:6937 with PROMO background1 2 (793:7049) and Logo Slide 2 (478:6970).
-   626	    FigmaStage(background = solidBrush(ColorFrame3Background)) { scale ->
-   627	        PromoBackgroundLayer(
-   628	            scale = scale,
-   629	            darkOverlay = 0f,
-   630	            backgroundResId = R.drawable.promo_background
-   631	        )
-   632	        LogoSlide2Layer(
-   633	            scale = scale,
-   634	            logoResId = R.drawable.logo_simple_large,
-   635	            eyesResId = R.drawable.logo_eyes_large
-   636	        )
-   637	    }
-   638	}
-   639	
-   640	@Composable
-   641	private fun SignInFrameFromFigma() {
-   642	    // Node 478:6975 + Star Overlay 482:7696.
-   643	    FigmaStage(background = solidBrush(ColorFrame4Background)) { scale ->
-   644	        PromoBackgroundLayer(
-   645	            scale = scale,
-   646	            darkOverlay = 0.5f,
-   647	            backgroundResId = R.drawable.promo_background_signin
-   648	        )
-   649	        LogoSlide2Layer(
-   650	            scale = scale,
-   651	            logoResId = R.drawable.logo_simple_signin,
-   652	            eyesResId = R.drawable.logo_eyes_signin
-   653	        )
-   654	
-   655	        // Node 480:7611 (Ellipse 43) x:894 y:266 size:200x200.
-   656	        Box(
-   657	            modifier = Modifier
-   658	                .absoluteOffset(x = figma(894f, scale), y = figma(266f, scale))
-   659	                .requiredSize(figma(200f, scale), figma(200f, scale))
-   660	                .clip(CircleShape)
-   661	                .background(
-   662	                    Brush.radialGradient(
-   663	                        colors = listOf(Color(0xFFE8E8E8), Color(0xFF8A8A8A), Color(0xFF1D1D1D))
-   664	                    )
-   665	                )
-   666	        )
+    52	import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+    53	import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+    54	import androidx.compose.ui.input.nestedscroll.nestedScroll
+    55	import androidx.compose.ui.layout.ContentScale
+    56	import androidx.compose.ui.platform.LocalDensity
+    57	import androidx.compose.ui.platform.LocalContext
+    58	import androidx.compose.ui.platform.LocalConfiguration
+    59	import androidx.compose.ui.res.painterResource
+    60	import androidx.compose.ui.text.font.FontWeight
+    61	import androidx.compose.ui.text.style.TextAlign
+    62	import androidx.compose.ui.unit.dp
+    63	import androidx.compose.ui.unit.IntOffset
+    64	import androidx.compose.ui.unit.IntSize
+    65	import androidx.compose.ui.unit.sp
+    66	import androidx.compose.ui.viewinterop.AndroidView
+    67	import com.prahlin.cinerific.R
+    68	import kotlinx.coroutines.delay
+    69	import kotlin.math.PI
+    70	import kotlin.math.min
+    71	import kotlin.math.roundToInt
+    72	import kotlin.math.sin
+    73	
+    74	private const val FIGMA_FRAME_WIDTH = 1194f
+    75	private const val FIGMA_FRAME_HEIGHT = 834f
+    76	private const val SCREEN_BLACK_HOLD_MS = 1000
+    77	private const val SCREEN_PINK_MS = 1000
+    78	private const val LOGO_ENTRY_START_MS = 250
+    79	private const val LOGO_ENTRY_END_MS = 1687
+    80	private const val FINAL_SETTLE_START_MS = LOGO_ENTRY_END_MS
+    81	private const val FINAL_SETTLE_END_MS = 4812
+    82	private const val BOOT_ANIMATION_MS = FINAL_SETTLE_END_MS
+    83	private const val AUTO_LOGOUT_TIMEOUT_MS = 10_000L
+    84	private const val PORTRAIT_BOTTOM_NAV_SCROLL_MULTIPLIER = 2f
+    85	private const val FAVORITES_FULL_PROMPT_X = 977f
+    86	private const val FAVORITES_FULL_PROMPT_Y = 92f
+    87	private const val FAVORITES_FULL_PROMPT_WIDTH = 95f
+    88	private const val FAVORITES_FULL_PROMPT_HEIGHT = 139.25f
+    89	private const val FAVORITES_FULL_PROMPT_BOX_TOP = 20f
+    90	private const val FAVORITES_FULL_PROMPT_BOX_HEIGHT = 119f
+    91	private const val FAVORITES_FULL_PROMPT_RADIUS = 20f
+    92	private const val FAVORITES_FULL_PROMPT_STROKE = 3f
+    93	private const val FAVORITES_FULL_PROMPT_TEXT_X = 13.5f
+    94	private const val FAVORITES_FULL_PROMPT_TEXT_Y = 37f
+    95	private const val FAVORITES_FULL_PROMPT_TEXT_WIDTH = 68f
+    96	private const val FAVORITES_FULL_PROMPT_TEXT_HEIGHT = 84f
+    97	private const val FAVORITES_FULL_PROMPT_VISIBLE_MS = 2200L
+    98	private const val SIGN_IN_AVATAR_SIZE = 176f
+    99	private const val SIGN_IN_PORTRAIT_STACK_SHIFT_Y = -51f
+   100	private const val SIGN_IN_LANDSCAPE_STACK_SHIFT_Y = -61f
+   101	private const val SIGN_IN_NAME_TOP = 655f
+   102	private const val SIGN_IN_LANDSCAPE_ACCOUNT_PROMPT_EXTRA_SHIFT_Y = -36f
+   103	private const val ACCOUNT_PROMPT_CREATE_TEXT = "Create Account"
+   104	private const val ACCOUNT_PROMPT_SIGN_IN_TEXT = "Sign In"
+   105	private const val ACCOUNT_PROMPT_FORGOT_TEXT = "Forgot Password"
+   106	private const val ACCOUNT_PROMPT_LEFT_ANCHOR_X = 152f
+   107	private const val ACCOUNT_PROMPT_SIGN_IN_CENTER_X = 597f
+   108	private const val ACCOUNT_PROMPT_RIGHT_ANCHOR_X = 1042f
+   109	private const val ACCOUNT_PROMPT_WIDTH = 300f
+   110	private const val ACCOUNT_PROMPT_TOP = 770f
+   111	private const val ACCOUNT_PROMPT_HEIGHT = 45f
+   112	private const val ACCOUNT_PROMPT_TEXT_SIZE = 30f
+   113	private const val ACCOUNT_PROMPT_LANDSCAPE_TEXT_SIZE = 24.3f
+   114	private const val ACCOUNT_PROMPT_SECONDARY_TEXT_SCALE = 1f
+   115	private const val ACCOUNT_PROMPT_LINE_HEIGHT = 38f
+   116	
+   117	private val ColorFrame1Background = Color(0xFF000000)
+   118	private val ColorFrame2Background = Color(0xFF600878)
+   119	private val ColorFrame3Background = Color(0xFF1F1F1F)
+   120	private val ColorFrame4Background = Color(0xFF1F1F1F)
+   121	private val ColorIntroGradientTop = Color(0xFF050006)
+   122	private val ColorIntroGradientCenter = Color(0xFF600878)
+   123	private val ColorIntroGradientBottom = Color(0xFF100114)
+   124	private val ColorFavoritesFullPromptFill = Color(0xFF303030)
+   125	private val ColorFavoritesFullPromptAccent = Color(0xFF858585)
+   126	
+   127	@Composable
+   128	fun CinerificApp() {
+   129	    var showHome by rememberSaveable { mutableStateOf(false) }
+   130	    var signedInProfile by rememberSaveable { mutableStateOf(CinerificProfile.Guest) }
+   131	    var signInSessionId by rememberSaveable { mutableStateOf(0) }
+   132	    var selectedLanguage by rememberSaveable { mutableStateOf(CinerificLanguage.English) }
+   133	    var introSnapshot by rememberSaveable(stateSaver = CinerificIntroSnapshotSaver) {
+   134	        mutableStateOf(CinerificIntroSnapshot())
+   135	    }
+   136	
+   137	    if (showHome) {
+   138	        CinerificLocalizedResources(selectedLanguage) {
+   139	            CinerificMainExperience(
+   140	                signInSessionId = signInSessionId,
+   141	                signedInProfile = signedInProfile,
+   142	                selectedLanguage = selectedLanguage,
+   143	                onLanguageSelected = { selectedLanguage = it },
+   144	                onSignOut = {
+   145	                    signedInProfile = CinerificProfile.Guest
+   146	                    introSnapshot = CinerificIntroSnapshot()
+   147	                    showHome = false
+   148	                }
+   149	            )
+   150	        }
+   151	    } else {
+   152	        AndroidView(
+   153	            modifier = Modifier.fillMaxSize(),
+   154	            factory = { context ->
+   155	                CinerificIntroView(context).apply {
+   156	                    onIntroSnapshotChanged = { snapshot ->
+   157	                        if (introSnapshot != snapshot) {
+   158	                            introSnapshot = snapshot
+   159	                        }
+   160	                    }
+   161	                    restoreIntroSnapshot(introSnapshot)
+   162	                    onAvatarSelected = { profile ->
+   163	                        introSnapshot = CinerificIntroSnapshot()
+   164	                        signedInProfile = profile
+   165	                        signInSessionId += 1
+   166	                        showHome = true
+   167	                    }
+   168	                }
+   169	            },
+   170	            update = { view ->
+   171	                view.onIntroSnapshotChanged = { snapshot ->
+   172	                    if (introSnapshot != snapshot) {
+   173	                        introSnapshot = snapshot
+   174	                    }
+   175	                }
+   176	                view.restoreIntroSnapshot(introSnapshot)
+   177	                view.onAvatarSelected = { profile ->
+   178	                    introSnapshot = CinerificIntroSnapshot()
+   179	                    signedInProfile = profile
+   180	                    signInSessionId += 1
+   181	                    showHome = true
+   182	                }
+   183	            }
+   184	        )
+   185	    }
+   186	}
+   187	
+   188	internal enum class CinerificDestination {
+   189	    Home,
+   190	    Movies,
+   191	    Shows,
+   192	    Favorites,
+   193	    Settings,
+   194	    ProgramDetails
+   195	}
+   196	
+   197	internal enum class CinerificProfile(
+   198	    @DrawableRes val avatarResId: Int,
+   199	    @DrawableRes val nameResId: Int
+   200	) {
+   201	    Steve(R.drawable.steve_avatar_bubble_edge50_body0_test, R.drawable.steve_name),
+   202	    Martin(R.drawable.martin_avatar_bubble_edge50_body0_test, R.drawable.martin_name),
+   203	    Janny(R.drawable.janny_avatar_bubble_edge50_body0_test, R.drawable.janny_name),
+   204	    Guest(R.drawable.guest_avatar_bubble_edge50_body0_test, R.drawable.guest_name)
+   205	}
+   206	
+   207	@Composable
+   208	private fun CinerificMainExperience(
+   209	    signInSessionId: Int,
+   210	    signedInProfile: CinerificProfile,
+   211	    selectedLanguage: CinerificLanguage,
+   212	    onLanguageSelected: (CinerificLanguage) -> Unit,
+   213	    onSignOut: () -> Unit
+   214	) {
+   215	    var destination by rememberSaveable(signInSessionId) { mutableStateOf(CinerificDestination.Home) }
+   216	    var selectedProgramTitle by rememberSaveable(signInSessionId) { mutableStateOf("Sink or Swim") }
+   217	    var favoriteProgramTitles by rememberSaveable { mutableStateOf(emptyList<String>()) }
+   218	    var userProgramRatings by rememberSaveable { mutableStateOf(emptyMap<String, Int>()) }
+   219	    var catalogRouteDestinationName by rememberSaveable(signInSessionId) { mutableStateOf("") }
+   220	    var catalogRouteGenreName by rememberSaveable(signInSessionId) { mutableStateOf("") }
+   221	    var catalogRouteModeName by rememberSaveable(signInSessionId) { mutableStateOf("") }
+   222	    var favoritesFullPromptRequestId by remember { mutableStateOf(0) }
+   223	    var autoLogoutEnabled by rememberSaveable { mutableStateOf(false) }
+   224	    var userInitiatedPlaybackActive by remember { mutableStateOf(false) }
+   225	    var lastInteractionMillis by remember { mutableStateOf(SystemClock.uptimeMillis()) }
+   226	    var primaryDestinationCanScroll by remember(destination) { mutableStateOf<Boolean?>(null) }
+   227	    var portraitBottomNavHiddenFraction by remember(signInSessionId) { mutableFloatStateOf(1f) }
+   228	    var portraitBottomNavHeightPx by remember { mutableFloatStateOf(1f) }
+   229	    val configuration = LocalConfiguration.current
+   230	    val isPortrait = configuration.screenHeightDp > configuration.screenWidthDp
+   231	    val usesScrollLinkedPortraitBottomNav = destination in setOf(
+   232	        CinerificDestination.Home,
+   233	        CinerificDestination.Movies,
+   234	        CinerificDestination.Shows,
+   235	        CinerificDestination.Favorites,
+   236	        CinerificDestination.Settings
+   237	    )
+   238	    val portraitBottomNavScrollConnection = remember(
+   239	        isPortrait,
+   240	        destination,
+   241	        primaryDestinationCanScroll,
+   242	        portraitBottomNavHeightPx
+   243	    ) {
+   244	        object : NestedScrollConnection {
+   245	            override fun onPostScroll(
+   246	                consumed: Offset,
+   247	                available: Offset,
+   248	                source: NestedScrollSource
+   249	            ): Offset {
+   250	                if (
+   251	                    isPortrait &&
+   252	                    usesScrollLinkedPortraitBottomNav &&
+   253	                    primaryDestinationCanScroll == true &&
+   254	                    consumed.y != 0f
+   255	                ) {
+   256	                    portraitBottomNavHiddenFraction = (
+   257	                        portraitBottomNavHiddenFraction +
+   258	                            consumed.y * PORTRAIT_BOTTOM_NAV_SCROLL_MULTIPLIER /
+   259	                            portraitBottomNavHeightPx
+   260	                        ).coerceIn(0f, 1f)
+   261	                }
+   262	                return Offset.Zero
+   263	            }
+   264	        }
+   265	    }
+   266	
+   267	    LaunchedEffect(destination, isPortrait, primaryDestinationCanScroll) {
+   268	        portraitBottomNavHiddenFraction = if (
+   269	            isPortrait &&
+   270	            usesScrollLinkedPortraitBottomNav &&
+   271	            primaryDestinationCanScroll != false
+   272	        ) {
+   273	            1f
+   274	        } else {
+   275	            0f
+   276	        }
+   277	    }
+   278	    val playbackSessionController = remember(userInitiatedPlaybackActive) {
+   279	        CinerificPlaybackSessionController(
+   280	            isUserInitiatedPlaybackActive = userInitiatedPlaybackActive,
+   281	            onUserInitiatedPlaybackStarted = {
+   282	                userInitiatedPlaybackActive = true
+   283	            },
+   284	            finishUserInitiatedPlayback = {
+   285	                userInitiatedPlaybackActive = false
+   286	                lastInteractionMillis = SystemClock.uptimeMillis()
+   287	            }
+   288	        )
+   289	    }
+   290	    val catalogRoute = remember(
+   291	        catalogRouteDestinationName,
+   292	        catalogRouteGenreName,
+   293	        catalogRouteModeName
+   294	    ) {
+   295	        cinerificSavedCatalogRoute(
+   296	            destinationName = catalogRouteDestinationName,
+   297	            genreName = catalogRouteGenreName,
+   298	            modeName = catalogRouteModeName
+   299	        )
+   300	    }
+   301	
+   302	    fun clearCatalogRoute() {
+   303	        catalogRouteDestinationName = ""
+   304	        catalogRouteGenreName = ""
+   305	        catalogRouteModeName = ""
+   306	    }
+   307	
+   308	    LaunchedEffect(autoLogoutEnabled, userInitiatedPlaybackActive, lastInteractionMillis) {
+   309	        if (!autoLogoutEnabled || userInitiatedPlaybackActive) return@LaunchedEffect
+   310	        delay(AUTO_LOGOUT_TIMEOUT_MS)
+   311	        val inactiveForMillis = SystemClock.uptimeMillis() - lastInteractionMillis
+   312	        if (
+   313	            autoLogoutEnabled &&
+   314	            !userInitiatedPlaybackActive &&
+   315	            inactiveForMillis >= AUTO_LOGOUT_TIMEOUT_MS
+   316	        ) {
+   317	            onSignOut()
+   318	        }
+   319	    }
+   320	
+   321	    fun showProgramDetails(title: String) {
+   322	        clearCatalogRoute()
+   323	        selectedProgramTitle = title
+   324	        destination = CinerificDestination.ProgramDetails
+   325	    }
+   326	
+   327	    fun showCatalog(route: CinerificCatalogRoute) {
+   328	        catalogRouteDestinationName = route.destination.name
+   329	        catalogRouteGenreName = route.genre.name
+   330	        catalogRouteModeName = route.mode.name
+   331	        destination = route.destination
+   332	    }
+   333	
+   334	    fun rateProgram(title: String, rating: Int) {
+   335	        userProgramRatings = userProgramRatings + (title to rating.coerceIn(1, 5))
+   336	    }
+   337	
+   338	    fun toggleFavoriteProgram(title: String) {
+   339	        if (title in favoriteProgramTitles) {
+   340	            favoriteProgramTitles = favoriteProgramTitles - title
+   341	            return
+   342	        }
+   343	
+   344	        val isShow = cinerificProgramIsShow(title)
+   345	        val filledSlots = cinerificFilledFavoritePlaceholderCount(
+   346	            titles = favoriteProgramTitles,
+   347	            isShow = isShow
+   348	        )
+   349	        if (filledSlots >= CINERIFIC_FAVORITES_CAPACITY) {
+   350	            favoritesFullPromptRequestId += 1
+   351	            return
+   352	        }
+   353	
+   354	        favoriteProgramTitles = favoriteProgramTitles + title
+   355	    }
+   356	
+   357	    CompositionLocalProvider(LocalCinerificPlaybackSessionController provides playbackSessionController) {
+   358	        Box(
+   359	            modifier = Modifier
+   360	                .fillMaxSize()
+   361	                .nestedScroll(portraitBottomNavScrollConnection)
+   362	                .pointerInput(Unit) {
+   363	                    awaitPointerEventScope {
+   364	                        while (true) {
+   365	                            awaitPointerEvent(PointerEventPass.Initial)
+   366	                            lastInteractionMillis = SystemClock.uptimeMillis()
+   367	                        }
+   368	                    }
+   369	                }
+   370	        ) {
+   371	            when (destination) {
+   372	                CinerificDestination.Home -> CinerificHomeScreen(
+   373	                    onProgramSelected = ::showProgramDetails,
+   374	                    onCatalogSelected = ::showCatalog,
+   375	                    onVerticalScrollabilityChanged = { primaryDestinationCanScroll = it },
+   376	                    modifier = Modifier.fillMaxSize()
+   377	                )
+   378	                CinerificDestination.Movies,
+   379	                CinerificDestination.Shows,
+   380	                CinerificDestination.Favorites,
+   381	                CinerificDestination.Settings -> CinerificDestinationScreen(
+   382	                    destination = destination,
+   383	                    signedInProfile = signedInProfile,
+   384	                    selectedLanguage = selectedLanguage,
+   385	                    onLanguageSelected = onLanguageSelected,
+   386	                    autoLogoutEnabled = autoLogoutEnabled,
+   387	                    onAutoLogoutEnabledChange = { enabled ->
+   388	                        autoLogoutEnabled = enabled
+   389	                        lastInteractionMillis = SystemClock.uptimeMillis()
+   390	                    },
+   391	                    onSignOut = onSignOut,
+   392	                    favoriteProgramTitles = favoriteProgramTitles,
+   393	                    onFavoriteToggled = ::toggleFavoriteProgram,
+   394	                    userProgramRatings = userProgramRatings,
+   395	                    onProgramRated = ::rateProgram,
+   396	                    onProgramSelected = ::showProgramDetails,
+   397	                    catalogRoute = catalogRoute?.takeIf { it.destination == destination },
+   398	                    onVerticalScrollabilityChanged = { primaryDestinationCanScroll = it },
+   399	                    modifier = Modifier.fillMaxSize()
+   400	                )
+   401	                CinerificDestination.ProgramDetails -> CinerificProgramDetailsScreen(
+   402	                    programTitle = selectedProgramTitle,
+   403	                    favoriteProgramTitles = favoriteProgramTitles,
+   404	                    onFavoriteToggled = ::toggleFavoriteProgram,
+   405	                    userProgramRatings = userProgramRatings,
+   406	                    onProgramRated = ::rateProgram,
+   407	                    onProgramSelected = ::showProgramDetails,
+   408	                    modifier = Modifier.fillMaxSize()
+   409	                )
+   410	            }
+   411	
+   412	            CinerificRightSideNavBar(
+   413	                currentDestination = destination,
+   414	                portraitHiddenFraction = portraitBottomNavHiddenFraction,
+   415	                onPortraitBarHeightChanged = { heightPx ->
+   416	                    portraitBottomNavHeightPx = heightPx.coerceAtLeast(1f)
+   417	                },
+   418	                onDestinationSelected = {
+   419	                    clearCatalogRoute()
+   420	                    destination = it
+   421	                },
+   422	                modifier = Modifier.fillMaxSize()
+   423	            )
+   424	
+   425	            FavoritesFullPromptOverlay(
+   426	                requestId = favoritesFullPromptRequestId,
+   427	                currentDestination = destination,
+   428	                suppressed = userInitiatedPlaybackActive,
+   429	                modifier = Modifier.fillMaxSize()
+   430	            )
+   431	        }
+   432	    }
+   433	}
+   434	
+   435	private fun cinerificSavedCatalogRoute(
+   436	    destinationName: String,
+   437	    genreName: String,
+   438	    modeName: String
+   439	): CinerificCatalogRoute? {
+   440	    if (destinationName.isBlank() || genreName.isBlank() || modeName.isBlank()) return null
+   441	
+   442	    val destination = CinerificDestination.values().firstOrNull { it.name == destinationName } ?: return null
+   443	    val genre = ViewportGenre.values().firstOrNull { it.name == genreName } ?: return null
+   444	    val mode = ViewportMode.values().firstOrNull { it.name == modeName } ?: return null
+   445	
+   446	    return CinerificCatalogRoute(
+   447	        destination = destination,
+   448	        genre = genre,
+   449	        mode = mode
+   450	    )
+   451	}
+   452	
+   453	@Composable
+   454	private fun FavoritesFullPromptOverlay(
+   455	    requestId: Int,
+   456	    currentDestination: CinerificDestination,
+   457	    suppressed: Boolean,
+   458	    modifier: Modifier = Modifier
+   459	) {
+   460	    var visible by remember { mutableStateOf(false) }
+   461	
+   462	    LaunchedEffect(requestId, suppressed) {
+   463	        if (suppressed) {
+   464	            visible = false
+   465	            return@LaunchedEffect
+   466	        }
+   467	        if (requestId == 0) {
+   468	            visible = false
+   469	            return@LaunchedEffect
+   470	        }
+   471	        visible = true
+   472	        delay(FAVORITES_FULL_PROMPT_VISIBLE_MS)
+   473	        visible = false
+   474	    }
+   475	
+   476	    val alpha by animateFloatAsState(
+   477	        targetValue = if (visible) 1f else 0f,
+   478	        animationSpec = tween(durationMillis = if (visible) 140 else 190),
+   479	        label = "favorites-full-prompt-alpha"
+   480	    )
+   481	    val promptScale by animateFloatAsState(
+   482	        targetValue = if (visible) 1f else 0.94f,
+   483	        animationSpec = tween(durationMillis = if (visible) 140 else 190),
+   484	        label = "favorites-full-prompt-scale"
+   485	    )
+   486	
+   487	    if (suppressed || requestId == 0 || (!visible && alpha <= 0.01f)) return
+   488	
+   489	    BoxWithConstraints(modifier = modifier) {
+   490	        val stageScale = maxWidth.value / FIGMA_FRAME_WIDTH
+   491	        val isPortraitDetail = currentDestination == CinerificDestination.ProgramDetails &&
+   492	            maxHeight > maxWidth
+   493	        val promptY = if (isPortraitDetail) {
+   494	            DETAIL_HERO_LOGO_CENTER_Y - FAVORITES_FULL_PROMPT_HEIGHT / 2f
+   495	        } else {
+   496	            FAVORITES_FULL_PROMPT_Y
+   497	        }
+   498	        FavoritesFullPromptBubble(
+   499	            stageScale = stageScale,
+   500	            modifier = Modifier
+   501	                .absoluteOffset(
+   502	                    x = (FAVORITES_FULL_PROMPT_X * stageScale).dp,
+   503	                    y = (promptY * stageScale).dp
+   504	                )
+   505	                .graphicsLayer {
+   506	                    this.alpha = alpha
+   507	                    scaleX = promptScale
+   508	                    scaleY = promptScale
+   509	                    transformOrigin = TransformOrigin(0.5f, 0f)
+   510	                }
+   511	        )
+   512	    }
+   513	}
+   514	
+   515	@Composable
+   516	private fun FavoritesFullPromptBubble(
+   517	    stageScale: Float,
+   518	    modifier: Modifier = Modifier
+   519	) {
+   520	    Box(
+   521	        modifier = modifier.requiredSize(
+   522	            width = (FAVORITES_FULL_PROMPT_WIDTH * stageScale).dp,
+   523	            height = (FAVORITES_FULL_PROMPT_HEIGHT * stageScale).dp
+   524	        )
+   525	    ) {
+   526	        Canvas(modifier = Modifier.fillMaxSize()) {
+   527	            val xScale = size.width / FAVORITES_FULL_PROMPT_WIDTH
+   528	            val yScale = size.height / FAVORITES_FULL_PROMPT_HEIGHT
+   529	            val pointer = Path().apply {
+   530	                moveTo(47.5f * xScale, 0f)
+   531	                lineTo(63f * xScale, FAVORITES_FULL_PROMPT_BOX_TOP * yScale)
+   532	                lineTo(32f * xScale, FAVORITES_FULL_PROMPT_BOX_TOP * yScale)
+   533	                close()
+   534	            }
+   535	            drawPath(pointer, ColorFavoritesFullPromptAccent)
+   536	            drawRoundRect(
+   537	                color = ColorFavoritesFullPromptFill,
+   538	                topLeft = Offset(0f, FAVORITES_FULL_PROMPT_BOX_TOP * yScale),
+   539	                size = Size(
+   540	                    width = FAVORITES_FULL_PROMPT_WIDTH * xScale,
+   541	                    height = FAVORITES_FULL_PROMPT_BOX_HEIGHT * yScale
+   542	                ),
+   543	                cornerRadius = CornerRadius(
+   544	                    x = FAVORITES_FULL_PROMPT_RADIUS * xScale,
+   545	                    y = FAVORITES_FULL_PROMPT_RADIUS * yScale
+   546	                )
+   547	            )
+   548	            drawRoundRect(
+   549	                color = ColorFavoritesFullPromptAccent,
+   550	                topLeft = Offset(
+   551	                    x = FAVORITES_FULL_PROMPT_STROKE * xScale / 2f,
+   552	                    y = FAVORITES_FULL_PROMPT_BOX_TOP * yScale +
+   553	                        FAVORITES_FULL_PROMPT_STROKE * yScale / 2f
+   554	                ),
+   555	                size = Size(
+   556	                    width = (FAVORITES_FULL_PROMPT_WIDTH - FAVORITES_FULL_PROMPT_STROKE) * xScale,
+   557	                    height = (FAVORITES_FULL_PROMPT_BOX_HEIGHT - FAVORITES_FULL_PROMPT_STROKE) * yScale
+   558	                ),
+   559	                cornerRadius = CornerRadius(
+   560	                    x = FAVORITES_FULL_PROMPT_RADIUS * xScale,
+   561	                    y = FAVORITES_FULL_PROMPT_RADIUS * yScale
+   562	                ),
+   563	                style = Stroke(width = FAVORITES_FULL_PROMPT_STROKE * min(xScale, yScale))
+   564	            )
+   565	        }
+   566	        Text(
+   567	            text = "You've\nfilled\nup on\nfavorites!",
+   568	            color = ColorFavoritesFullPromptAccent,
+   569	            fontFamily = CinerificAppTextFontFamily,
+   570	            fontSize = (14f * stageScale).sp,
+   571	            fontWeight = FontWeight.Black,
+   572	            lineHeight = (21.252f * stageScale).sp,
+   573	            textAlign = TextAlign.Center,
+   574	            modifier = Modifier
+   575	                .absoluteOffset(
+   576	                    x = (FAVORITES_FULL_PROMPT_TEXT_X * stageScale).dp,
+   577	                    y = (FAVORITES_FULL_PROMPT_TEXT_Y * stageScale).dp
+   578	                )
+   579	                .requiredSize(
+   580	                    width = (FAVORITES_FULL_PROMPT_TEXT_WIDTH * stageScale).dp,
+   581	                    height = (FAVORITES_FULL_PROMPT_TEXT_HEIGHT * stageScale).dp
+   582	                )
+   583	        )
+   584	    }
+   585	}
+   586	
+   587	@Composable
+   588	private fun BootIntroFromFigma(progress: Float) {
+   589	    val p = progress.coerceIn(0f, 1f)
+   590	    val images = rememberIntroImages()
+   591	    val blackToPurple = linearSegmentMs(
+   592	        p,
+   593	        SCREEN_BLACK_HOLD_MS,
+   594	        SCREEN_BLACK_HOLD_MS + SCREEN_PINK_MS
+   595	    )
+   596	    val purpleToSettle = easedSegmentMs(p, 2500, 3900)
+   597	    val background = introBackgroundBrush(
+   598	        solidProgress = blackToPurple,
+   599	        gradientProgress = purpleToSettle
+   600	    )
+   601	    val logoAlpha = linearSegmentMs(p, 90, LOGO_ENTRY_START_MS)
+   602	    val logoEntryProgress = bouncySegmentMs(p, LOGO_ENTRY_START_MS, LOGO_ENTRY_END_MS)
+   603	    val logoFinalProgress = easedSegmentMs(p, FINAL_SETTLE_START_MS, FINAL_SETTLE_END_MS)
+   604	    val avatarSettleAlpha = easedSegmentMs(p, 2300, FINAL_SETTLE_END_MS)
+   605	    val avatarYOffset = lerpFloat(56f, 0f, avatarSettleAlpha)
+   606	
+   607	    Canvas(modifier = Modifier.fillMaxSize()) {
+   608	        val stageScale = min(size.width / FIGMA_FRAME_WIDTH, size.height / FIGMA_FRAME_HEIGHT)
+   609	        val stageLeft = (size.width - FIGMA_FRAME_WIDTH * stageScale) / 2f
+   610	        val stageTop = (size.height - FIGMA_FRAME_HEIGHT * stageScale) / 2f
+   611	        val stackShiftY = signInStackShiftY(size.width > size.height)
+   612	
+   613	        drawRect(brush = background, size = size)
+   614	
+   615	        if (logoAlpha > 0.01f) {
+   616	            val baseBounds = FigmaBounds(x = 222f, y = 150f, w = 750f, h = 535f)
+   617	            val simpleEntry = lerpBounds(
+   618	                start = FigmaBounds(x = 447f, y = -417f, w = 300f, h = 214f),
+   619	                end = baseBounds,
+   620	                amount = logoEntryProgress
+   621	            )
+   622	            val eyesEntry = lerpBounds(
+   623	                start = FigmaBounds(x = 453f, y = 1037f, w = 300f, h = 214f),
+   624	                end = baseBounds,
+   625	                amount = logoEntryProgress
+   626	            )
+   627	            val finalBounds = FigmaBounds(x = 297f, y = 11f, w = 600f, h = 428f)
+   628	
+   629	            drawFigmaImage(
+   630	                image = images.logoSimple,
+   631	                bounds = lerpBounds(simpleEntry, finalBounds, logoFinalProgress),
+   632	                stageLeft = stageLeft,
+   633	                stageTop = stageTop,
+   634	                stageScale = stageScale,
+   635	                alpha = logoAlpha
+   636	            )
+   637	            drawFigmaImage(
+   638	                image = images.logoEyes,
+   639	                bounds = lerpBounds(eyesEntry, finalBounds, logoFinalProgress),
+   640	                stageLeft = stageLeft,
+   641	                stageTop = stageTop,
+   642	                stageScale = stageScale,
+   643	                alpha = logoAlpha
+   644	            )
+   645	        }
+   646	
+   647	        if (avatarSettleAlpha > 0.01f) {
+   648	            val y = avatarYOffset
+   649	            drawFigmaImage(images.steveAvatar, FigmaBounds(152f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
+   650	            drawFigmaImage(images.martinAvatar, FigmaBounds(390f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
+   651	            drawFigmaImage(images.jannyAvatar, FigmaBounds(628f, 454f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
+   652	            drawFigmaImage(images.guestAvatar, FigmaBounds(866f, 450f + stackShiftY + y, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stageLeft, stageTop, stageScale, avatarSettleAlpha, clipCircle = true)
+   653	
+   654	            drawFigmaImage(images.steveName, FigmaBounds(130f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
+   655	            drawFigmaImage(images.martinName, FigmaBounds(368f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
+   656	            drawFigmaImage(images.jannyName, FigmaBounds(606f, SIGN_IN_NAME_TOP + stackShiftY + y, 220f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
+   657	            drawFigmaImage(images.guestName, FigmaBounds(854f, SIGN_IN_NAME_TOP + stackShiftY + y, 200f, 72f), stageLeft, stageTop, stageScale, avatarSettleAlpha)
+   658	        }
+   659	    }
+   660	}
+   661	
+   662	@Composable
+   663	private fun IntroFrame1FromFigma() {
+   664	    // Node 474:7309 has only a pure black fill.
+   665	    FigmaStage(background = solidBrush(ColorFrame1Background)) { }
+   666	}
    667	
-   668	        // Node 485:7113 loading spinner instance, rebuilt from centered standalone layers.
-   669	        val spinnerHeight = 300f *
-   670	            CINERIFIC_LOADING_SPINNER_CANVAS_HEIGHT /
-   671	            CINERIFIC_LOADING_SPINNER_CANVAS_WIDTH
-   672	        CinerificLoadingSpinner(
-   673	            modifier = Modifier
-   674	                .absoluteOffset(
-   675	                    x = figma(447f, scale),
-   676	                    y = figma(267f - (spinnerHeight - 300f) / 2f, scale)
-   677	                )
-   678	                .requiredSize(figma(300f, scale), figma(spinnerHeight, scale))
-   679	        )
-   680	    }
-   681	}
-   682	
-   683	@Composable
-   684	private fun LogoSlide1Layer(scale: Float, yOffset: Float, alpha: Float = 1f) {
-   685	    Box(
-   686	        modifier = Modifier
-   687	            .absoluteOffset(y = figma(yOffset, scale))
-   688	            .requiredSize(figma(1194f, scale), figma(1668f, scale))
-   689	            .graphicsLayer(alpha = alpha)
-   690	    ) {
-   691	        // Node I478:6917;478:6923 logo simple 1 at x:447 y:0 size:300x214.
-   692	        FigmaAssetImage(
-   693	            x = 447f,
-   694	            y = 0f,
-   695	            w = 300f,
-   696	            h = 214f,
-   697	            scale = scale,
-   698	            resId = R.drawable.logo_simple_intro2
+   668	@Composable
+   669	private fun IntroFrame2FromFigma() {
+   670	    // Node 474:7311 with Logo Slide 1 instance 478:6917.
+   671	    val slideYOffset = remember { Animatable(-417f) }
+   672	
+   673	    LaunchedEffect(Unit) {
+   674	        slideYOffset.snapTo(-417f)
+   675	        slideYOffset.animateTo(
+   676	            targetValue = 0f,
+   677	            animationSpec = tween(durationMillis = 1800, easing = FastOutSlowInEasing)
+   678	        )
+   679	    }
+   680	
+   681	    FigmaStage(background = solidBrush(ColorFrame2Background)) { scale ->
+   682	        LogoSlide1Layer(scale = scale, yOffset = slideYOffset.value)
+   683	    }
+   684	}
+   685	
+   686	@Composable
+   687	private fun IntroFrame3FromFigma() {
+   688	    // Node 476:6937 with PROMO background1 2 (793:7049) and Logo Slide 2 (478:6970).
+   689	    FigmaStage(background = solidBrush(ColorFrame3Background)) { scale ->
+   690	        PromoBackgroundLayer(
+   691	            scale = scale,
+   692	            darkOverlay = 0f,
+   693	            backgroundResId = R.drawable.promo_background
+   694	        )
+   695	        LogoSlide2Layer(
+   696	            scale = scale,
+   697	            logoResId = R.drawable.logo_simple_large,
+   698	            eyesResId = R.drawable.logo_eyes_large
    699	        )
-   700	
-   701	        // Node I478:6917;478:6925 logo eyes only 2 at x:453 y:1454 size:300x214.
-   702	        FigmaAssetImage(
-   703	            x = 453f,
-   704	            y = 1454f,
-   705	            w = 300f,
-   706	            h = 214f,
-   707	            scale = scale,
-   708	            resId = R.drawable.logo_eyes_intro2
-   709	        )
-   710	    }
-   711	}
-   712	
-   713	@Composable
-   714	private fun LogoSlide2Layer(
-   715	    scale: Float,
-   716	    @DrawableRes logoResId: Int,
-   717	    @DrawableRes eyesResId: Int,
-   718	    alpha: Float = 1f
-   719	) {
-   720	    Box(
-   721	        modifier = Modifier
-   722	            .requiredSize(figma(1194f, scale), figma(834f, scale))
-   723	            .graphicsLayer(alpha = alpha)
-   724	    ) {
-   725	        LogoDot(x = 427f, y = 516f, scale = scale, active = false)
-   726	        LogoDot(x = 507f, y = 516f, scale = scale, active = false)
-   727	        LogoDot(x = 587f, y = 516f, scale = scale, active = false)
-   728	        LogoDot(x = 667f, y = 516f, scale = scale, active = true)
-   729	
-   730	        // Visible logo bounds from the Figma instance in the 1194x834 frame.
-   731	        FigmaAssetImage(
-   732	            x = 222f,
-   733	            y = 150f,
-   734	            w = 750f,
-   735	            h = 535f,
-   736	            scale = scale,
-   737	            resId = logoResId
-   738	        )
-   739	
-   740	        // Eye layer sits on the same logo bounds.
-   741	        FigmaAssetImage(
-   742	            x = 222f,
-   743	            y = 150f,
-   744	            w = 750f,
-   745	            h = 535f,
-   746	            scale = scale,
-   747	            resId = eyesResId
-   748	        )
-   749	    }
-   750	}
-   751	
-   752	private data class FigmaBounds(
-   753	    val x: Float,
-   754	    val y: Float,
-   755	    val w: Float,
-   756	    val h: Float
-   757	)
-   758	
-   759	private data class IntroImages(
-   760	    val logoSimple: ImageBitmap,
-   761	    val logoEyes: ImageBitmap,
-   762	    val steveAvatar: ImageBitmap,
-   763	    val martinAvatar: ImageBitmap,
-   764	    val jannyAvatar: ImageBitmap,
-   765	    val guestAvatar: ImageBitmap,
-   766	    val steveName: ImageBitmap,
-   767	    val martinName: ImageBitmap,
-   768	    val jannyName: ImageBitmap,
-   769	    val guestName: ImageBitmap
-   770	)
-   771	
-   772	@Composable
-   773	private fun rememberIntroImages(): IntroImages {
-   774	    val resources = LocalContext.current.resources
-   775	    return remember(resources) {
-   776	        IntroImages(
-   777	            logoSimple = BitmapFactory.decodeResource(resources, R.drawable.logo_simple_large).asImageBitmap(),
-   778	            logoEyes = BitmapFactory.decodeResource(resources, R.drawable.logo_eyes_large).asImageBitmap(),
-   779	            steveAvatar = BitmapFactory.decodeResource(resources, R.drawable.steve_avatar_bubble_edge50_body0_test).asImageBitmap(),
-   780	            martinAvatar = BitmapFactory.decodeResource(resources, R.drawable.martin_avatar_bubble_edge50_body0_test).asImageBitmap(),
-   781	            jannyAvatar = BitmapFactory.decodeResource(resources, R.drawable.janny_avatar_bubble_edge50_body0_test).asImageBitmap(),
-   782	            guestAvatar = BitmapFactory.decodeResource(resources, R.drawable.guest_avatar_bubble_edge50_body0_test).asImageBitmap(),
-   783	            steveName = BitmapFactory.decodeResource(resources, R.drawable.steve_name).asImageBitmap(),
-   784	            martinName = BitmapFactory.decodeResource(resources, R.drawable.martin_name).asImageBitmap(),
-   785	            jannyName = BitmapFactory.decodeResource(resources, R.drawable.janny_name).asImageBitmap(),
-   786	            guestName = BitmapFactory.decodeResource(resources, R.drawable.guest_name).asImageBitmap()
-   787	        )
-   788	    }
-   789	}
-   790	
-   791	private fun DrawScope.drawFigmaImage(
-   792	    image: ImageBitmap,
-   793	    bounds: FigmaBounds,
-   794	    stageLeft: Float,
-   795	    stageTop: Float,
-   796	    stageScale: Float,
-   797	    alpha: Float = 1f,
-   798	    clipCircle: Boolean = false
-   799	) {
-   800	    val left = stageLeft + bounds.x * stageScale
-   801	    val top = stageTop + bounds.y * stageScale
-   802	    val width = bounds.w * stageScale
-   803	    val height = bounds.h * stageScale
-   804	
-   805	    if (clipCircle) {
-   806	        val clip = Path().apply {
-   807	            addOval(Rect(left, top, left + width, top + height))
-   808	        }
-   809	        clipPath(clip) {
-   810	            drawImageBitmap(image, left, top, width, height, alpha)
-   811	        }
-   812	    } else {
-   813	        drawImageBitmap(image, left, top, width, height, alpha)
-   814	    }
-   815	}
-   816	
-   817	private fun DrawScope.drawImageBitmap(
-   818	    image: ImageBitmap,
-   819	    left: Float,
-   820	    top: Float,
-   821	    width: Float,
-   822	    height: Float,
-   823	    alpha: Float
-   824	) {
-   825	    drawImage(
-   826	        image = image,
-   827	        dstOffset = IntOffset(left.roundToInt(), top.roundToInt()),
-   828	        dstSize = IntSize(width.roundToInt(), height.roundToInt()),
-   829	        alpha = alpha.coerceIn(0f, 1f)
-   830	    )
-   831	}
-   832	
-   833	@Composable
-   834	private fun SettlingLogoLayer(
-   835	    scale: Float,
-   836	    entryProgress: Float,
-   837	    finalProgress: Float,
-   838	    alpha: Float
-   839	) {
-   840	    val baseBounds = FigmaBounds(x = 222f, y = 150f, w = 750f, h = 535f)
-   841	    val simpleEntry = lerpBounds(
-   842	        start = FigmaBounds(x = 447f, y = 1037f, w = 300f, h = 214f),
-   843	        end = baseBounds,
-   844	        amount = entryProgress
-   845	    )
-   846	    val eyesEntry = lerpBounds(
-   847	        start = FigmaBounds(x = 453f, y = -417f, w = 300f, h = 214f),
-   848	        end = baseBounds,
-   849	        amount = entryProgress
-   850	    )
-   851	    val finalBounds = FigmaBounds(x = 297f, y = 11f, w = 600f, h = 428f)
-   852	    val simpleBounds = lerpBounds(simpleEntry, finalBounds, finalProgress)
-   853	    val eyesBounds = lerpBounds(eyesEntry, finalBounds, finalProgress)
-   854	
-   855	    TransformedFigmaAssetImage(
-   856	        base = baseBounds,
-   857	        target = simpleBounds,
-   858	        scale = scale,
-   859	        resId = R.drawable.logo_simple_large,
-   860	        alpha = alpha
-   861	    )
-   862	    TransformedFigmaAssetImage(
-   863	        base = baseBounds,
-   864	        target = eyesBounds,
-   865	        scale = scale,
-   866	        resId = R.drawable.logo_eyes_large,
-   867	        alpha = alpha
-   868	    )
-   869	}
-   870	
-   871	@Composable
-   872	private fun AvatarSelectionLayer(scale: Float, alpha: Float, yOffset: Float) {
-   873	    val density = LocalDensity.current.density
-   874	    val configuration = LocalConfiguration.current
-   875	    val isLandscape = configuration.screenWidthDp > configuration.screenHeightDp
-   876	    val stackShiftY = signInStackShiftY(isLandscape)
-   877	    val accountPromptExtraShiftY = signInAccountPromptExtraShiftY(isLandscape)
-   878	    val accountPromptTextSize = signInAccountPromptTextSize(isLandscape)
-   879	    val accountPromptSecondaryTextSize = accountPromptTextSize * ACCOUNT_PROMPT_SECONDARY_TEXT_SCALE
-   880	    Box(
-   881	        modifier = Modifier
-   882	            .requiredSize(figma(1194f, scale), figma(834f, scale))
-   883	            .graphicsLayer {
-   884	                this.alpha = alpha
-   885	                translationY = yOffset * scale * density
-   886	            }
-   887	    ) {
-   888	        // Figma Logo Slide 2, Property 1=Variant2, constrained inside Sign-in Frame.
-   889	        FigmaAvatarImage(x = 152f, y = 450f + stackShiftY, w = SIGN_IN_AVATAR_SIZE, h = SIGN_IN_AVATAR_SIZE, scale = scale, resId = R.drawable.steve_avatar_bubble_edge50_body0_test)
-   890	        FigmaAvatarImage(x = 390f, y = 450f + stackShiftY, w = SIGN_IN_AVATAR_SIZE, h = SIGN_IN_AVATAR_SIZE, scale = scale, resId = R.drawable.martin_avatar_bubble_edge50_body0_test)
-   891	        FigmaAvatarImage(x = 628f, y = 454f + stackShiftY, w = SIGN_IN_AVATAR_SIZE, h = SIGN_IN_AVATAR_SIZE, scale = scale, resId = R.drawable.janny_avatar_bubble_edge50_body0_test)
-   892	        FigmaAvatarImage(x = 866f, y = 450f + stackShiftY, w = SIGN_IN_AVATAR_SIZE, h = SIGN_IN_AVATAR_SIZE, scale = scale, resId = R.drawable.guest_avatar_bubble_edge50_body0_test)
-   893	
-   894	        FigmaAssetImage(x = 130f, y = SIGN_IN_NAME_TOP + stackShiftY, w = 220f, h = 72f, scale = scale, resId = R.drawable.steve_name)
-   895	        FigmaAssetImage(x = 368f, y = SIGN_IN_NAME_TOP + stackShiftY, w = 220f, h = 72f, scale = scale, resId = R.drawable.martin_name)
-   896	        FigmaAssetImage(x = 606f, y = SIGN_IN_NAME_TOP + stackShiftY, w = 220f, h = 72f, scale = scale, resId = R.drawable.janny_name)
-   897	        FigmaAssetImage(x = 854f, y = SIGN_IN_NAME_TOP + stackShiftY, w = 200f, h = 72f, scale = scale, resId = R.drawable.guest_name)
-   898	        SignInPromptText(
-   899	            text = ACCOUNT_PROMPT_CREATE_TEXT,
-   900	            x = ACCOUNT_PROMPT_LEFT_ANCHOR_X,
-   901	            y = ACCOUNT_PROMPT_TOP + stackShiftY + accountPromptExtraShiftY,
-   902	            textSize = accountPromptSecondaryTextSize,
-   903	            textAlign = TextAlign.Left,
-   904	            fontWeight = FontWeight.Black,
-   905	            scale = scale
-   906	        )
-   907	        SignInPromptText(
-   908	            text = ACCOUNT_PROMPT_SIGN_IN_TEXT,
-   909	            x = ACCOUNT_PROMPT_SIGN_IN_CENTER_X - ACCOUNT_PROMPT_WIDTH / 2f,
-   910	            y = ACCOUNT_PROMPT_TOP + stackShiftY + accountPromptExtraShiftY,
-   911	            textSize = accountPromptTextSize,
-   912	            fontWeight = FontWeight.Black,
-   913	            scale = scale
-   914	        )
-   915	        SignInPromptText(
-   916	            text = ACCOUNT_PROMPT_FORGOT_TEXT,
-   917	            x = ACCOUNT_PROMPT_RIGHT_ANCHOR_X - ACCOUNT_PROMPT_WIDTH,
-   918	            y = ACCOUNT_PROMPT_TOP + stackShiftY + accountPromptExtraShiftY,
-   919	            textSize = accountPromptSecondaryTextSize,
-   920	            textAlign = TextAlign.Right,
-   921	            fontWeight = FontWeight.Black,
-   922	            scale = scale
-   923	        )
-   924	    }
-   925	}
-   926	
-   927	@Composable
-   928	private fun SignInPromptText(
-   929	    text: String,
-   930	    x: Float,
-   931	    y: Float,
-   932	    textSize: Float,
-   933	    fontWeight: FontWeight = FontWeight.SemiBold,
-   934	    textAlign: TextAlign = TextAlign.Center,
-   935	    scale: Float
-   936	) {
-   937	    val contentAlignment = when (textAlign) {
-   938	        TextAlign.Left -> Alignment.CenterStart
-   939	        TextAlign.Right -> Alignment.CenterEnd
-   940	        else -> Alignment.Center
-   941	    }
-   942	    Box(
-   943	        modifier = Modifier
-   944	            .absoluteOffset(
-   945	                x = figma(x, scale),
-   946	                y = figma(y, scale)
-   947	            )
-   948	            .requiredSize(
-   949	                width = figma(ACCOUNT_PROMPT_WIDTH, scale),
-   950	                height = figma(ACCOUNT_PROMPT_HEIGHT, scale)
-   951	            ),
-   952	        contentAlignment = contentAlignment
-   953	    ) {
-   954	        Text(
-   955	            text = text,
-   956	            color = Color.White,
-   957	            fontFamily = CinerificAppTextFontFamily,
-   958	            fontSize = (textSize * scale).sp,
-   959	            fontWeight = fontWeight,
-   960	            lineHeight = (ACCOUNT_PROMPT_LINE_HEIGHT * textSize / ACCOUNT_PROMPT_TEXT_SIZE * scale).sp,
-   961	            maxLines = 1,
-   962	            softWrap = false,
-   963	            textAlign = textAlign
-   964	        )
-   965	    }
-   966	}
-   967	
-   968	@Composable
-   969	private fun FigmaAvatarImage(
-   970	    x: Float,
-   971	    y: Float,
-   972	    w: Float,
-   973	    h: Float,
-   974	    scale: Float,
-   975	    @DrawableRes resId: Int
-   976	) {
-   977	    Image(
-   978	        painter = painterResource(id = resId),
-   979	        contentDescription = null,
-   980	        contentScale = ContentScale.FillBounds,
-   981	        modifier = Modifier
-   982	            .absoluteOffset(x = figma(x, scale), y = figma(y, scale))
-   983	            .requiredSize(figma(w, scale), figma(h, scale))
-   984	            .clip(CircleShape)
-   985	    )
-   986	}
-   987	
-   988	@Composable
-   989	private fun LogoDot(x: Float, y: Float, scale: Float, active: Boolean) {
-   990	    Box(
-   991	        modifier = Modifier
-   992	            .absoluteOffset(x = figma(x, scale), y = figma(y, scale))
-   993	            .requiredSize(figma(50.4f, scale), figma(50.4f, scale))
-   994	            .clip(CircleShape)
-   995	            .background(if (active) Color(0xFFE7E7E7) else Color(0xFF050505))
-   996	    )
-   997	}
-   998	
-   999	@Composable
-  1000	private fun PromoBackgroundLayer(
-  1001	    scale: Float,
-  1002	    darkOverlay: Float,
-  1003	    @DrawableRes backgroundResId: Int,
-  1004	    alpha: Float = 1f
-  1005	) {
-  1006	    // Nodes 793:7049 / 793:7050 at x:0 y:0 size:1584x1584.
-  1007	    FigmaAssetImage(
-  1008	        x = 0f,
-  1009	        y = 0f,
-  1010	        w = 1584f,
-  1011	        h = 1584f,
-  1012	        scale = scale,
-  1013	        resId = backgroundResId,
-  1014	        alpha = alpha
-  1015	    )
-  1016	
-  1017	    if (darkOverlay > 0f) {
-  1018	        Box(
-  1019	            modifier = Modifier
-  1020	                .absoluteOffset(x = figma(0f, scale), y = figma(0f, scale))
-  1021	                .requiredSize(figma(1584f, scale), figma(1584f, scale))
-  1022	                .graphicsLayer(alpha = alpha)
-  1023	                .background(Color.Black.copy(alpha = darkOverlay))
-  1024	        )
-  1025	    }
-  1026	}
-  1027	
-  1028	@Composable
-  1029	private fun TransformedFigmaAssetImage(
-  1030	    base: FigmaBounds,
-  1031	    target: FigmaBounds,
-  1032	    scale: Float,
-  1033	    @DrawableRes resId: Int,
-  1034	    alpha: Float = 1f
-  1035	) {
-  1036	    val density = LocalDensity.current.density
-  1037	    Image(
-  1038	        painter = painterResource(id = resId),
-  1039	        contentDescription = null,
-  1040	        contentScale = ContentScale.FillBounds,
-  1041	        modifier = Modifier
-  1042	            .absoluteOffset(x = figma(base.x, scale), y = figma(base.y, scale))
-  1043	            .requiredSize(figma(base.w, scale), figma(base.h, scale))
-  1044	            .graphicsLayer {
-  1045	                this.alpha = alpha
-  1046	                transformOrigin = TransformOrigin(0f, 0f)
-  1047	                translationX = (target.x - base.x) * scale * density
-  1048	                translationY = (target.y - base.y) * scale * density
-  1049	                scaleX = target.w / base.w
-  1050	                scaleY = target.h / base.h
-  1051	            }
-  1052	    )
-  1053	}
-  1054	
-  1055	@Composable
-  1056	private fun FigmaAssetImage(
-  1057	    x: Float,
-  1058	    y: Float,
-  1059	    w: Float,
-  1060	    h: Float,
-  1061	    scale: Float,
-  1062	    @DrawableRes resId: Int,
-  1063	    alpha: Float = 1f
-  1064	) {
-  1065	    Image(
-  1066	        painter = painterResource(id = resId),
-  1067	        contentDescription = null,
-  1068	        contentScale = ContentScale.FillBounds,
-  1069	        modifier = Modifier
-  1070	            .absoluteOffset(x = figma(x, scale), y = figma(y, scale))
-  1071	            .requiredSize(figma(w, scale), figma(h, scale))
-  1072	            .graphicsLayer(alpha = alpha)
-  1073	    )
-  1074	}
-  1075	
-  1076	@Composable
-  1077	private fun FigmaStage(background: Brush, content: @Composable BoxWithConstraintsScope.(Float) -> Unit) {
-  1078	    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-  1079	        val outerMaxWidth = this.maxWidth
-  1080	        val outerMaxHeight = this.maxHeight
-  1081	        val scale = min(outerMaxWidth.value / FIGMA_FRAME_WIDTH, outerMaxHeight.value / FIGMA_FRAME_HEIGHT)
-  1082	        val stageWidth = figma(FIGMA_FRAME_WIDTH, scale)
-  1083	        val stageHeight = figma(FIGMA_FRAME_HEIGHT, scale)
-  1084	
-  1085	        Box(
-  1086	            modifier = Modifier
-  1087	                .fillMaxSize()
-  1088	                .background(background)
-  1089	        ) {
-  1090	            BoxWithConstraints(
-  1091	                modifier = Modifier
-  1092	                    .align(Alignment.Center)
-  1093	                    .requiredSize(stageWidth, stageHeight)
-  1094	            ) {
-  1095	                content(scale)
-  1096	            }
-  1097	        }
-  1098	    }
-  1099	}
-  1100	
-  1101	private fun figma(px: Float, scale: Float) = (px * scale).dp
-  1102	
-  1103	private fun signInStackShiftY(isLandscape: Boolean): Float {
-  1104	    return if (isLandscape) {
-  1105	        SIGN_IN_LANDSCAPE_STACK_SHIFT_Y
-  1106	    } else {
-  1107	        SIGN_IN_PORTRAIT_STACK_SHIFT_Y
-  1108	    }
-  1109	}
-  1110	
-  1111	private fun signInAccountPromptExtraShiftY(isLandscape: Boolean): Float {
-  1112	    return if (isLandscape) SIGN_IN_LANDSCAPE_ACCOUNT_PROMPT_EXTRA_SHIFT_Y else 0f
-  1113	}
-  1114	
-  1115	private fun signInAccountPromptTextSize(isLandscape: Boolean): Float {
-  1116	    return if (isLandscape) ACCOUNT_PROMPT_LANDSCAPE_TEXT_SIZE else ACCOUNT_PROMPT_TEXT_SIZE
-  1117	}
-  1118	
-  1119	private fun introBackgroundBrush(solidProgress: Float, gradientProgress: Float): Brush {
-  1120	    val solid = lerpColor(ColorFrame1Background, ColorFrame2Background, solidProgress)
-  1121	    return Brush.verticalGradient(
-  1122	        colors = listOf(
-  1123	            lerpColor(solid, ColorIntroGradientTop, gradientProgress),
-  1124	            lerpColor(solid, ColorIntroGradientCenter, gradientProgress),
-  1125	            lerpColor(solid, ColorIntroGradientBottom, gradientProgress)
-  1126	        )
-  1127	    )
-  1128	}
-  1129	
-  1130	private fun solidBrush(color: Color): Brush = Brush.verticalGradient(
-  1131	    colors = listOf(color, color)
-  1132	)
-  1133	
-  1134	private fun bootProgressAt(bootStartMillis: Long): Float {
-  1135	    val elapsed = SystemClock.uptimeMillis() - bootStartMillis
-  1136	    return (elapsed / BOOT_ANIMATION_MS.toFloat()).coerceIn(0f, 1f)
+   700	    }
+   701	}
+   702	
+   703	@Composable
+   704	private fun SignInFrameFromFigma() {
+   705	    // Node 478:6975 + Star Overlay 482:7696.
+   706	    FigmaStage(background = solidBrush(ColorFrame4Background)) { scale ->
+   707	        PromoBackgroundLayer(
+   708	            scale = scale,
+   709	            darkOverlay = 0.5f,
+   710	            backgroundResId = R.drawable.promo_background_signin
+   711	        )
+   712	        LogoSlide2Layer(
+   713	            scale = scale,
+   714	            logoResId = R.drawable.logo_simple_signin,
+   715	            eyesResId = R.drawable.logo_eyes_signin
+   716	        )
+   717	
+   718	        // Node 480:7611 (Ellipse 43) x:894 y:266 size:200x200.
+   719	        Box(
+   720	            modifier = Modifier
+   721	                .absoluteOffset(x = figma(894f, scale), y = figma(266f, scale))
+   722	                .requiredSize(figma(200f, scale), figma(200f, scale))
+   723	                .clip(CircleShape)
+   724	                .background(
+   725	                    Brush.radialGradient(
+   726	                        colors = listOf(Color(0xFFE8E8E8), Color(0xFF8A8A8A), Color(0xFF1D1D1D))
+   727	                    )
+   728	                )
+   729	        )
+   730	
+   731	        // Node 485:7113 loading spinner instance, rebuilt from centered standalone layers.
+   732	        val spinnerHeight = 300f *
+   733	            CINERIFIC_LOADING_SPINNER_CANVAS_HEIGHT /
+   734	            CINERIFIC_LOADING_SPINNER_CANVAS_WIDTH
+   735	        CinerificLoadingSpinner(
+   736	            modifier = Modifier
+   737	                .absoluteOffset(
+   738	                    x = figma(447f, scale),
+   739	                    y = figma(267f - (spinnerHeight - 300f) / 2f, scale)
+   740	                )
+   741	                .requiredSize(figma(300f, scale), figma(spinnerHeight, scale))
+   742	        )
+   743	    }
+   744	}
+   745	
+   746	@Composable
+   747	private fun LogoSlide1Layer(scale: Float, yOffset: Float, alpha: Float = 1f) {
+   748	    Box(
+   749	        modifier = Modifier
+   750	            .absoluteOffset(y = figma(yOffset, scale))
+   751	            .requiredSize(figma(1194f, scale), figma(1668f, scale))
+   752	            .graphicsLayer(alpha = alpha)
+   753	    ) {
+   754	        // Node I478:6917;478:6923 logo simple 1 at x:447 y:0 size:300x214.
+   755	        FigmaAssetImage(
+   756	            x = 447f,
+   757	            y = 0f,
+   758	            w = 300f,
+   759	            h = 214f,
+   760	            scale = scale,
+   761	            resId = R.drawable.logo_simple_intro2
+   762	        )
+   763	
+   764	        // Node I478:6917;478:6925 logo eyes only 2 at x:453 y:1454 size:300x214.
+   765	        FigmaAssetImage(
+   766	            x = 453f,
+   767	            y = 1454f,
+   768	            w = 300f,
+   769	            h = 214f,
+   770	            scale = scale,
+   771	            resId = R.drawable.logo_eyes_intro2
+   772	        )
+   773	    }
+   774	}
+   775	
+   776	@Composable
+   777	private fun LogoSlide2Layer(
+   778	    scale: Float,
+   779	    @DrawableRes logoResId: Int,
+   780	    @DrawableRes eyesResId: Int,
+   781	    alpha: Float = 1f
+   782	) {
+   783	    Box(
+   784	        modifier = Modifier
+   785	            .requiredSize(figma(1194f, scale), figma(834f, scale))
+   786	            .graphicsLayer(alpha = alpha)
+   787	    ) {
+   788	        LogoDot(x = 427f, y = 516f, scale = scale, active = false)
+   789	        LogoDot(x = 507f, y = 516f, scale = scale, active = false)
+   790	        LogoDot(x = 587f, y = 516f, scale = scale, active = false)
+   791	        LogoDot(x = 667f, y = 516f, scale = scale, active = true)
+   792	
+   793	        // Visible logo bounds from the Figma instance in the 1194x834 frame.
+   794	        FigmaAssetImage(
+   795	            x = 222f,
+   796	            y = 150f,
+   797	            w = 750f,
+   798	            h = 535f,
+   799	            scale = scale,
+   800	            resId = logoResId
+   801	        )
+   802	
+   803	        // Eye layer sits on the same logo bounds.
+   804	        FigmaAssetImage(
+   805	            x = 222f,
+   806	            y = 150f,
+   807	            w = 750f,
+   808	            h = 535f,
+   809	            scale = scale,
+   810	            resId = eyesResId
+   811	        )
+   812	    }
+   813	}
+   814	
+   815	private data class FigmaBounds(
+   816	    val x: Float,
+   817	    val y: Float,
+   818	    val w: Float,
+   819	    val h: Float
+   820	)
+   821	
+   822	private data class IntroImages(
+   823	    val logoSimple: ImageBitmap,
+   824	    val logoEyes: ImageBitmap,
+   825	    val steveAvatar: ImageBitmap,
+   826	    val martinAvatar: ImageBitmap,
+   827	    val jannyAvatar: ImageBitmap,
+   828	    val guestAvatar: ImageBitmap,
+   829	    val steveName: ImageBitmap,
+   830	    val martinName: ImageBitmap,
+   831	    val jannyName: ImageBitmap,
+   832	    val guestName: ImageBitmap
+   833	)
+   834	
+   835	@Composable
+   836	private fun rememberIntroImages(): IntroImages {
+   837	    val resources = LocalContext.current.resources
+   838	    return remember(resources) {
+   839	        IntroImages(
+   840	            logoSimple = BitmapFactory.decodeResource(resources, R.drawable.logo_simple_large).asImageBitmap(),
+   841	            logoEyes = BitmapFactory.decodeResource(resources, R.drawable.logo_eyes_large).asImageBitmap(),
+   842	            steveAvatar = BitmapFactory.decodeResource(resources, R.drawable.steve_avatar_bubble_edge50_body0_test).asImageBitmap(),
+   843	            martinAvatar = BitmapFactory.decodeResource(resources, R.drawable.martin_avatar_bubble_edge50_body0_test).asImageBitmap(),
+   844	            jannyAvatar = BitmapFactory.decodeResource(resources, R.drawable.janny_avatar_bubble_edge50_body0_test).asImageBitmap(),
+   845	            guestAvatar = BitmapFactory.decodeResource(resources, R.drawable.guest_avatar_bubble_edge50_body0_test).asImageBitmap(),
+   846	            steveName = BitmapFactory.decodeResource(resources, R.drawable.steve_name).asImageBitmap(),
+   847	            martinName = BitmapFactory.decodeResource(resources, R.drawable.martin_name).asImageBitmap(),
+   848	            jannyName = BitmapFactory.decodeResource(resources, R.drawable.janny_name).asImageBitmap(),
+   849	            guestName = BitmapFactory.decodeResource(resources, R.drawable.guest_name).asImageBitmap()
+   850	        )
+   851	    }
+   852	}
+   853	
+   854	private fun DrawScope.drawFigmaImage(
+   855	    image: ImageBitmap,
+   856	    bounds: FigmaBounds,
+   857	    stageLeft: Float,
+   858	    stageTop: Float,
+   859	    stageScale: Float,
+   860	    alpha: Float = 1f,
+   861	    clipCircle: Boolean = false
+   862	) {
+   863	    val left = stageLeft + bounds.x * stageScale
+   864	    val top = stageTop + bounds.y * stageScale
+   865	    val width = bounds.w * stageScale
+   866	    val height = bounds.h * stageScale
+   867	
+   868	    if (clipCircle) {
+   869	        val clip = Path().apply {
+   870	            addOval(Rect(left, top, left + width, top + height))
+   871	        }
+   872	        clipPath(clip) {
+   873	            drawImageBitmap(image, left, top, width, height, alpha)
+   874	        }
+   875	    } else {
+   876	        drawImageBitmap(image, left, top, width, height, alpha)
+   877	    }
+   878	}
+   879	
+   880	private fun DrawScope.drawImageBitmap(
+   881	    image: ImageBitmap,
+   882	    left: Float,
+   883	    top: Float,
+   884	    width: Float,
+   885	    height: Float,
+   886	    alpha: Float
+   887	) {
+   888	    drawImage(
+   889	        image = image,
+   890	        dstOffset = IntOffset(left.roundToInt(), top.roundToInt()),
+   891	        dstSize = IntSize(width.roundToInt(), height.roundToInt()),
+   892	        alpha = alpha.coerceIn(0f, 1f)
+   893	    )
+   894	}
+   895	
+   896	@Composable
+   897	private fun SettlingLogoLayer(
+   898	    scale: Float,
+   899	    entryProgress: Float,
+   900	    finalProgress: Float,
+   901	    alpha: Float
+   902	) {
+   903	    val baseBounds = FigmaBounds(x = 222f, y = 150f, w = 750f, h = 535f)
+   904	    val simpleEntry = lerpBounds(
+   905	        start = FigmaBounds(x = 447f, y = 1037f, w = 300f, h = 214f),
+   906	        end = baseBounds,
+   907	        amount = entryProgress
+   908	    )
+   909	    val eyesEntry = lerpBounds(
+   910	        start = FigmaBounds(x = 453f, y = -417f, w = 300f, h = 214f),
+   911	        end = baseBounds,
+   912	        amount = entryProgress
+   913	    )
+   914	    val finalBounds = FigmaBounds(x = 297f, y = 11f, w = 600f, h = 428f)
+   915	    val simpleBounds = lerpBounds(simpleEntry, finalBounds, finalProgress)
+   916	    val eyesBounds = lerpBounds(eyesEntry, finalBounds, finalProgress)
+   917	
+   918	    TransformedFigmaAssetImage(
+   919	        base = baseBounds,
+   920	        target = simpleBounds,
+   921	        scale = scale,
+   922	        resId = R.drawable.logo_simple_large,
+   923	        alpha = alpha
+   924	    )
+   925	    TransformedFigmaAssetImage(
+   926	        base = baseBounds,
+   927	        target = eyesBounds,
+   928	        scale = scale,
+   929	        resId = R.drawable.logo_eyes_large,
+   930	        alpha = alpha
+   931	    )
+   932	}
+   933	
+   934	@Composable
+   935	private fun AvatarSelectionLayer(scale: Float, alpha: Float, yOffset: Float) {
+   936	    val density = LocalDensity.current.density
+   937	    val configuration = LocalConfiguration.current
+   938	    val isLandscape = configuration.screenWidthDp > configuration.screenHeightDp
+   939	    val stackShiftY = signInStackShiftY(isLandscape)
+   940	    val accountPromptExtraShiftY = signInAccountPromptExtraShiftY(isLandscape)
+   941	    val accountPromptTextSize = signInAccountPromptTextSize(isLandscape)
+   942	    val accountPromptSecondaryTextSize = accountPromptTextSize * ACCOUNT_PROMPT_SECONDARY_TEXT_SCALE
+   943	    Box(
+   944	        modifier = Modifier
+   945	            .requiredSize(figma(1194f, scale), figma(834f, scale))
+   946	            .graphicsLayer {
+   947	                this.alpha = alpha
+   948	                translationY = yOffset * scale * density
+   949	            }
+   950	    ) {
+   951	        // Figma Logo Slide 2, Property 1=Variant2, constrained inside Sign-in Frame.
+   952	        FigmaAvatarImage(x = 152f, y = 450f + stackShiftY, w = SIGN_IN_AVATAR_SIZE, h = SIGN_IN_AVATAR_SIZE, scale = scale, resId = R.drawable.steve_avatar_bubble_edge50_body0_test)
+   953	        FigmaAvatarImage(x = 390f, y = 450f + stackShiftY, w = SIGN_IN_AVATAR_SIZE, h = SIGN_IN_AVATAR_SIZE, scale = scale, resId = R.drawable.martin_avatar_bubble_edge50_body0_test)
+   954	        FigmaAvatarImage(x = 628f, y = 454f + stackShiftY, w = SIGN_IN_AVATAR_SIZE, h = SIGN_IN_AVATAR_SIZE, scale = scale, resId = R.drawable.janny_avatar_bubble_edge50_body0_test)
+   955	        FigmaAvatarImage(x = 866f, y = 450f + stackShiftY, w = SIGN_IN_AVATAR_SIZE, h = SIGN_IN_AVATAR_SIZE, scale = scale, resId = R.drawable.guest_avatar_bubble_edge50_body0_test)
+   956	
+   957	        FigmaAssetImage(x = 130f, y = SIGN_IN_NAME_TOP + stackShiftY, w = 220f, h = 72f, scale = scale, resId = R.drawable.steve_name)
+   958	        FigmaAssetImage(x = 368f, y = SIGN_IN_NAME_TOP + stackShiftY, w = 220f, h = 72f, scale = scale, resId = R.drawable.martin_name)
+   959	        FigmaAssetImage(x = 606f, y = SIGN_IN_NAME_TOP + stackShiftY, w = 220f, h = 72f, scale = scale, resId = R.drawable.janny_name)
+   960	        FigmaAssetImage(x = 854f, y = SIGN_IN_NAME_TOP + stackShiftY, w = 200f, h = 72f, scale = scale, resId = R.drawable.guest_name)
+   961	        SignInPromptText(
+   962	            text = ACCOUNT_PROMPT_CREATE_TEXT,
+   963	            x = ACCOUNT_PROMPT_LEFT_ANCHOR_X,
+   964	            y = ACCOUNT_PROMPT_TOP + stackShiftY + accountPromptExtraShiftY,
+   965	            textSize = accountPromptSecondaryTextSize,
+   966	            textAlign = TextAlign.Left,
+   967	            fontWeight = FontWeight.Black,
+   968	            scale = scale
+   969	        )
+   970	        SignInPromptText(
+   971	            text = ACCOUNT_PROMPT_SIGN_IN_TEXT,
+   972	            x = ACCOUNT_PROMPT_SIGN_IN_CENTER_X - ACCOUNT_PROMPT_WIDTH / 2f,
+   973	            y = ACCOUNT_PROMPT_TOP + stackShiftY + accountPromptExtraShiftY,
+   974	            textSize = accountPromptTextSize,
+   975	            fontWeight = FontWeight.Black,
+   976	            scale = scale
+   977	        )
+   978	        SignInPromptText(
+   979	            text = ACCOUNT_PROMPT_FORGOT_TEXT,
+   980	            x = ACCOUNT_PROMPT_RIGHT_ANCHOR_X - ACCOUNT_PROMPT_WIDTH,
+   981	            y = ACCOUNT_PROMPT_TOP + stackShiftY + accountPromptExtraShiftY,
+   982	            textSize = accountPromptSecondaryTextSize,
+   983	            textAlign = TextAlign.Right,
+   984	            fontWeight = FontWeight.Black,
+   985	            scale = scale
+   986	        )
+   987	    }
+   988	}
+   989	
+   990	@Composable
+   991	private fun SignInPromptText(
+   992	    text: String,
+   993	    x: Float,
+   994	    y: Float,
+   995	    textSize: Float,
+   996	    fontWeight: FontWeight = FontWeight.SemiBold,
+   997	    textAlign: TextAlign = TextAlign.Center,
+   998	    scale: Float
+   999	) {
+  1000	    val contentAlignment = when (textAlign) {
+  1001	        TextAlign.Left -> Alignment.CenterStart
+  1002	        TextAlign.Right -> Alignment.CenterEnd
+  1003	        else -> Alignment.Center
+  1004	    }
+  1005	    Box(
+  1006	        modifier = Modifier
+  1007	            .absoluteOffset(
+  1008	                x = figma(x, scale),
+  1009	                y = figma(y, scale)
+  1010	            )
+  1011	            .requiredSize(
+  1012	                width = figma(ACCOUNT_PROMPT_WIDTH, scale),
+  1013	                height = figma(ACCOUNT_PROMPT_HEIGHT, scale)
+  1014	            ),
+  1015	        contentAlignment = contentAlignment
+  1016	    ) {
+  1017	        Text(
+  1018	            text = text,
+  1019	            color = Color.White,
+  1020	            fontFamily = CinerificAppTextFontFamily,
+  1021	            fontSize = (textSize * scale).sp,
+  1022	            fontWeight = fontWeight,
+  1023	            lineHeight = (ACCOUNT_PROMPT_LINE_HEIGHT * textSize / ACCOUNT_PROMPT_TEXT_SIZE * scale).sp,
+  1024	            maxLines = 1,
+  1025	            softWrap = false,
+  1026	            textAlign = textAlign
+  1027	        )
+  1028	    }
+  1029	}
+  1030	
+  1031	@Composable
+  1032	private fun FigmaAvatarImage(
+  1033	    x: Float,
+  1034	    y: Float,
+  1035	    w: Float,
+  1036	    h: Float,
+  1037	    scale: Float,
+  1038	    @DrawableRes resId: Int
+  1039	) {
+  1040	    Image(
+  1041	        painter = painterResource(id = resId),
+  1042	        contentDescription = null,
+  1043	        contentScale = ContentScale.FillBounds,
+  1044	        modifier = Modifier
+  1045	            .absoluteOffset(x = figma(x, scale), y = figma(y, scale))
+  1046	            .requiredSize(figma(w, scale), figma(h, scale))
+  1047	            .clip(CircleShape)
+  1048	    )
+  1049	}
+  1050	
+  1051	@Composable
+  1052	private fun LogoDot(x: Float, y: Float, scale: Float, active: Boolean) {
+  1053	    Box(
+  1054	        modifier = Modifier
+  1055	            .absoluteOffset(x = figma(x, scale), y = figma(y, scale))
+  1056	            .requiredSize(figma(50.4f, scale), figma(50.4f, scale))
+  1057	            .clip(CircleShape)
+  1058	            .background(if (active) Color(0xFFE7E7E7) else Color(0xFF050505))
+  1059	    )
+  1060	}
+  1061	
+  1062	@Composable
+  1063	private fun PromoBackgroundLayer(
+  1064	    scale: Float,
+  1065	    darkOverlay: Float,
+  1066	    @DrawableRes backgroundResId: Int,
+  1067	    alpha: Float = 1f
+  1068	) {
+  1069	    // Nodes 793:7049 / 793:7050 at x:0 y:0 size:1584x1584.
+  1070	    FigmaAssetImage(
+  1071	        x = 0f,
+  1072	        y = 0f,
+  1073	        w = 1584f,
+  1074	        h = 1584f,
+  1075	        scale = scale,
+  1076	        resId = backgroundResId,
+  1077	        alpha = alpha
+  1078	    )
+  1079	
+  1080	    if (darkOverlay > 0f) {
+  1081	        Box(
+  1082	            modifier = Modifier
+  1083	                .absoluteOffset(x = figma(0f, scale), y = figma(0f, scale))
+  1084	                .requiredSize(figma(1584f, scale), figma(1584f, scale))
+  1085	                .graphicsLayer(alpha = alpha)
+  1086	                .background(Color.Black.copy(alpha = darkOverlay))
+  1087	        )
+  1088	    }
+  1089	}
+  1090	
+  1091	@Composable
+  1092	private fun TransformedFigmaAssetImage(
+  1093	    base: FigmaBounds,
+  1094	    target: FigmaBounds,
+  1095	    scale: Float,
+  1096	    @DrawableRes resId: Int,
+  1097	    alpha: Float = 1f
+  1098	) {
+  1099	    val density = LocalDensity.current.density
+  1100	    Image(
+  1101	        painter = painterResource(id = resId),
+  1102	        contentDescription = null,
+  1103	        contentScale = ContentScale.FillBounds,
+  1104	        modifier = Modifier
+  1105	            .absoluteOffset(x = figma(base.x, scale), y = figma(base.y, scale))
+  1106	            .requiredSize(figma(base.w, scale), figma(base.h, scale))
+  1107	            .graphicsLayer {
+  1108	                this.alpha = alpha
+  1109	                transformOrigin = TransformOrigin(0f, 0f)
+  1110	                translationX = (target.x - base.x) * scale * density
+  1111	                translationY = (target.y - base.y) * scale * density
+  1112	                scaleX = target.w / base.w
+  1113	                scaleY = target.h / base.h
+  1114	            }
+  1115	    )
+  1116	}
+  1117	
+  1118	@Composable
+  1119	private fun FigmaAssetImage(
+  1120	    x: Float,
+  1121	    y: Float,
+  1122	    w: Float,
+  1123	    h: Float,
+  1124	    scale: Float,
+  1125	    @DrawableRes resId: Int,
+  1126	    alpha: Float = 1f
+  1127	) {
+  1128	    Image(
+  1129	        painter = painterResource(id = resId),
+  1130	        contentDescription = null,
+  1131	        contentScale = ContentScale.FillBounds,
+  1132	        modifier = Modifier
+  1133	            .absoluteOffset(x = figma(x, scale), y = figma(y, scale))
+  1134	            .requiredSize(figma(w, scale), figma(h, scale))
+  1135	            .graphicsLayer(alpha = alpha)
+  1136	    )
   1137	}
   1138	
-  1139	private fun easedSegment(value: Float, start: Float, end: Float): Float {
-  1140	    val progress = ((value - start) / (end - start)).coerceIn(0f, 1f)
-  1141	    return FastOutSlowInEasing.transform(progress)
-  1142	}
-  1143	
-  1144	private fun linearSegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
-  1145	    val ms = progress.coerceIn(0f, 1f) * BOOT_ANIMATION_MS
-  1146	    return ((ms - startMs) / (endMs - startMs).toFloat()).coerceIn(0f, 1f)
-  1147	}
-  1148	
-  1149	private fun easedSegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
-  1150	    return FastOutSlowInEasing.transform(linearSegmentMs(progress, startMs, endMs))
-  1151	}
-  1152	
-  1153	private fun bouncySegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
-  1154	    return bouncyEasing(linearSegmentMs(progress, startMs, endMs))
-  1155	}
-  1156	
-  1157	private fun bouncyEasing(value: Float): Float {
-  1158	    val t = value.coerceIn(0f, 1f)
-  1159	    val base = FastOutSlowInEasing.transform(t)
-  1160	    val bounce = sin(t * PI.toFloat() * 4.5f) * (1f - t) * 0.13f
-  1161	    return base + bounce
+  1139	@Composable
+  1140	private fun FigmaStage(background: Brush, content: @Composable BoxWithConstraintsScope.(Float) -> Unit) {
+  1141	    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+  1142	        val outerMaxWidth = this.maxWidth
+  1143	        val outerMaxHeight = this.maxHeight
+  1144	        val scale = min(outerMaxWidth.value / FIGMA_FRAME_WIDTH, outerMaxHeight.value / FIGMA_FRAME_HEIGHT)
+  1145	        val stageWidth = figma(FIGMA_FRAME_WIDTH, scale)
+  1146	        val stageHeight = figma(FIGMA_FRAME_HEIGHT, scale)
+  1147	
+  1148	        Box(
+  1149	            modifier = Modifier
+  1150	                .fillMaxSize()
+  1151	                .background(background)
+  1152	        ) {
+  1153	            BoxWithConstraints(
+  1154	                modifier = Modifier
+  1155	                    .align(Alignment.Center)
+  1156	                    .requiredSize(stageWidth, stageHeight)
+  1157	            ) {
+  1158	                content(scale)
+  1159	            }
+  1160	        }
+  1161	    }
   1162	}
   1163	
-  1164	private fun lerpFloat(start: Float, end: Float, amount: Float) = start + (end - start) * amount
+  1164	private fun figma(px: Float, scale: Float) = (px * scale).dp
   1165	
-  1166	private fun lerpBounds(start: FigmaBounds, end: FigmaBounds, amount: Float) = FigmaBounds(
-  1167	    x = lerpFloat(start.x, end.x, amount),
-  1168	    y = lerpFloat(start.y, end.y, amount),
-  1169	    w = lerpFloat(start.w, end.w, amount),
-  1170	    h = lerpFloat(start.h, end.h, amount)
-  1171	)
-  1172	
-  1173	private val CinerificIntroSnapshotSaver = listSaver<CinerificIntroSnapshot, Any>(
-  1174	    save = { snapshot ->
-  1175	        listOf(
-  1176	            snapshot.activeFlowName,
-  1177	            snapshot.usernameText,
-  1178	            snapshot.passwordText,
-  1179	            snapshot.confirmPasswordText,
-  1180	            snapshot.emailText,
-  1181	            snapshot.monthText,
-  1182	            snapshot.dayText,
-  1183	            snapshot.yearText,
-  1184	            snapshot.subscriptionTierText,
-  1185	            snapshot.forgotRecoveryTargetName,
-  1186	            snapshot.forgotPasswordSubmissionStateName,
-  1187	            snapshot.rememberMeChecked,
-  1188	            snapshot.createAvatarIndex,
-  1189	            snapshot.portraitProfileIndex
-  1190	        )
-  1191	    },
-  1192	    restore = { values ->
-  1193	        CinerificIntroSnapshot(
-  1194	            activeFlowName = values.getOrNull(0) as? String ?: "",
-  1195	            usernameText = values.getOrNull(1) as? String ?: "",
-  1196	            passwordText = values.getOrNull(2) as? String ?: "",
-  1197	            confirmPasswordText = values.getOrNull(3) as? String ?: "",
-  1198	            emailText = values.getOrNull(4) as? String ?: "",
-  1199	            monthText = values.getOrNull(5) as? String ?: "Mon",
-  1200	            dayText = values.getOrNull(6) as? String ?: "Day",
-  1201	            yearText = values.getOrNull(7) as? String ?: "Year",
-  1202	            subscriptionTierText = values.getOrNull(8) as? String ?: "Subscription Tier",
-  1203	            forgotRecoveryTargetName = values.getOrNull(9) as? String ?: "Password",
-  1204	            forgotPasswordSubmissionStateName = values.getOrNull(10) as? String ?: "Idle",
-  1205	            rememberMeChecked = values.getOrNull(11) as? Boolean ?: false,
-  1206	            createAvatarIndex = values.getOrNull(12) as? Int ?: 0,
-  1207	            portraitProfileIndex = values.getOrNull(13) as? Int ?: 0
-  1208	        )
-  1209	    }
-  1210	)
+  1166	private fun signInStackShiftY(isLandscape: Boolean): Float {
+  1167	    return if (isLandscape) {
+  1168	        SIGN_IN_LANDSCAPE_STACK_SHIFT_Y
+  1169	    } else {
+  1170	        SIGN_IN_PORTRAIT_STACK_SHIFT_Y
+  1171	    }
+  1172	}
+  1173	
+  1174	private fun signInAccountPromptExtraShiftY(isLandscape: Boolean): Float {
+  1175	    return if (isLandscape) SIGN_IN_LANDSCAPE_ACCOUNT_PROMPT_EXTRA_SHIFT_Y else 0f
+  1176	}
+  1177	
+  1178	private fun signInAccountPromptTextSize(isLandscape: Boolean): Float {
+  1179	    return if (isLandscape) ACCOUNT_PROMPT_LANDSCAPE_TEXT_SIZE else ACCOUNT_PROMPT_TEXT_SIZE
+  1180	}
+  1181	
+  1182	private fun introBackgroundBrush(solidProgress: Float, gradientProgress: Float): Brush {
+  1183	    val solid = lerpColor(ColorFrame1Background, ColorFrame2Background, solidProgress)
+  1184	    return Brush.verticalGradient(
+  1185	        colors = listOf(
+  1186	            lerpColor(solid, ColorIntroGradientTop, gradientProgress),
+  1187	            lerpColor(solid, ColorIntroGradientCenter, gradientProgress),
+  1188	            lerpColor(solid, ColorIntroGradientBottom, gradientProgress)
+  1189	        )
+  1190	    )
+  1191	}
+  1192	
+  1193	private fun solidBrush(color: Color): Brush = Brush.verticalGradient(
+  1194	    colors = listOf(color, color)
+  1195	)
+  1196	
+  1197	private fun bootProgressAt(bootStartMillis: Long): Float {
+  1198	    val elapsed = SystemClock.uptimeMillis() - bootStartMillis
+  1199	    return (elapsed / BOOT_ANIMATION_MS.toFloat()).coerceIn(0f, 1f)
+  1200	}
+  1201	
+  1202	private fun easedSegment(value: Float, start: Float, end: Float): Float {
+  1203	    val progress = ((value - start) / (end - start)).coerceIn(0f, 1f)
+  1204	    return FastOutSlowInEasing.transform(progress)
+  1205	}
+  1206	
+  1207	private fun linearSegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
+  1208	    val ms = progress.coerceIn(0f, 1f) * BOOT_ANIMATION_MS
+  1209	    return ((ms - startMs) / (endMs - startMs).toFloat()).coerceIn(0f, 1f)
+  1210	}
+  1211	
+  1212	private fun easedSegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
+  1213	    return FastOutSlowInEasing.transform(linearSegmentMs(progress, startMs, endMs))
+  1214	}
+  1215	
+  1216	private fun bouncySegmentMs(progress: Float, startMs: Int, endMs: Int): Float {
+  1217	    return bouncyEasing(linearSegmentMs(progress, startMs, endMs))
+  1218	}
+  1219	
+  1220	private fun bouncyEasing(value: Float): Float {
+  1221	    val t = value.coerceIn(0f, 1f)
+  1222	    val base = FastOutSlowInEasing.transform(t)
+  1223	    val bounce = sin(t * PI.toFloat() * 4.5f) * (1f - t) * 0.13f
+  1224	    return base + bounce
+  1225	}
+  1226	
+  1227	private fun lerpFloat(start: Float, end: Float, amount: Float) = start + (end - start) * amount
+  1228	
+  1229	private fun lerpBounds(start: FigmaBounds, end: FigmaBounds, amount: Float) = FigmaBounds(
+  1230	    x = lerpFloat(start.x, end.x, amount),
+  1231	    y = lerpFloat(start.y, end.y, amount),
+  1232	    w = lerpFloat(start.w, end.w, amount),
+  1233	    h = lerpFloat(start.h, end.h, amount)
+  1234	)
+  1235	
+  1236	private val CinerificIntroSnapshotSaver = listSaver<CinerificIntroSnapshot, Any>(
+  1237	    save = { snapshot ->
+  1238	        listOf(
+  1239	            snapshot.activeFlowName,
+  1240	            snapshot.usernameText,
+  1241	            snapshot.passwordText,
+  1242	            snapshot.confirmPasswordText,
+  1243	            snapshot.emailText,
+  1244	            snapshot.monthText,
+  1245	            snapshot.dayText,
+  1246	            snapshot.yearText,
+  1247	            snapshot.subscriptionTierText,
+  1248	            snapshot.forgotRecoveryTargetName,
+  1249	            snapshot.forgotPasswordSubmissionStateName,
+  1250	            snapshot.rememberMeChecked,
+  1251	            snapshot.createAvatarIndex,
+  1252	            snapshot.portraitProfileIndex
+  1253	        )
+  1254	    },
+  1255	    restore = { values ->
+  1256	        CinerificIntroSnapshot(
+  1257	            activeFlowName = values.getOrNull(0) as? String ?: "",
+  1258	            usernameText = values.getOrNull(1) as? String ?: "",
+  1259	            passwordText = values.getOrNull(2) as? String ?: "",
+  1260	            confirmPasswordText = values.getOrNull(3) as? String ?: "",
+  1261	            emailText = values.getOrNull(4) as? String ?: "",
+  1262	            monthText = values.getOrNull(5) as? String ?: "Mon",
+  1263	            dayText = values.getOrNull(6) as? String ?: "Day",
+  1264	            yearText = values.getOrNull(7) as? String ?: "Year",
+  1265	            subscriptionTierText = values.getOrNull(8) as? String ?: "Subscription Tier",
+  1266	            forgotRecoveryTargetName = values.getOrNull(9) as? String ?: "Password",
+  1267	            forgotPasswordSubmissionStateName = values.getOrNull(10) as? String ?: "Idle",
+  1268	            rememberMeChecked = values.getOrNull(11) as? Boolean ?: false,
+  1269	            createAvatarIndex = values.getOrNull(12) as? Int ?: 0,
+  1270	            portraitProfileIndex = values.getOrNull(13) as? Int ?: 0
+  1271	        )
+  1272	    }
+  1273	)
 
 
 ============================================================
