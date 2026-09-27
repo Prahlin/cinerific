@@ -150,12 +150,14 @@ fun CinerificApp() {
     }
     var introView by remember { mutableStateOf<CinerificIntroView?>(null) }
     var welcomeInputBlockedUntilMillis by remember { mutableStateOf(0L) }
+    var signOutLoadingVisible by remember { mutableStateOf(false) }
 
     fun selectProfile(profile: CinerificProfile) {
         if (SystemClock.uptimeMillis() < welcomeInputBlockedUntilMillis) return
         introSnapshot = CinerificIntroSnapshot()
         signedInProfile = profile
         signInSessionId += 1
+        signOutLoadingVisible = false
         showHome = true
     }
 
@@ -163,22 +165,7 @@ fun CinerificApp() {
         introView?.handleSystemBack()
     }
 
-    if (showHome) {
-        CinerificLocalizedResources(selectedLanguage) {
-            CinerificMainExperience(
-                signInSessionId = signInSessionId,
-                signedInProfile = signedInProfile,
-                selectedLanguage = selectedLanguage,
-                onLanguageSelected = { selectedLanguage = it },
-                onSignOut = {
-                    welcomeInputBlockedUntilMillis = SystemClock.uptimeMillis() + 500L
-                    signedInProfile = CinerificProfile.Guest
-                    introSnapshot = CinerificIntroSnapshot()
-                    showHome = false
-                }
-            )
-        }
-    } else {
+    Box(modifier = Modifier.fillMaxSize()) {
         AndroidView(
             modifier = Modifier.fillMaxSize(),
             factory = { context ->
@@ -203,6 +190,30 @@ fun CinerificApp() {
                 view.onAvatarSelected = ::selectProfile
             }
         )
+
+        if (showHome) {
+            CinerificLocalizedResources(selectedLanguage) {
+                CinerificMainExperience(
+                    signInSessionId = signInSessionId,
+                    signedInProfile = signedInProfile,
+                    selectedLanguage = selectedLanguage,
+                    onLanguageSelected = { selectedLanguage = it },
+                    onSignOutLoadingStarted = { signOutLoadingVisible = true },
+                    onSignOut = {
+                        signOutLoadingVisible = true
+                        welcomeInputBlockedUntilMillis = SystemClock.uptimeMillis() + 500L
+                        signedInProfile = CinerificProfile.Guest
+                        introSnapshot = CinerificIntroSnapshot()
+                        showHome = false
+                        signOutLoadingVisible = false
+                    }
+                )
+            }
+        }
+
+        if (signOutLoadingVisible) {
+            SignOutLoadingOverlay(modifier = Modifier.fillMaxSize())
+        }
     }
 }
 
@@ -231,6 +242,7 @@ private fun CinerificMainExperience(
     signedInProfile: CinerificProfile,
     selectedLanguage: CinerificLanguage,
     onLanguageSelected: (CinerificLanguage) -> Unit,
+    onSignOutLoadingStarted: () -> Unit,
     onSignOut: () -> Unit
 ) {
     var destination by rememberSaveable(signInSessionId) { mutableStateOf(CinerificDestination.Home) }
@@ -481,6 +493,7 @@ private fun CinerificMainExperience(
                     onConfirm = {
                         showSignOutConfirmation = false
                         signOutInProgress = true
+                        onSignOutLoadingStarted()
                         scope.launch {
                             delay(SIGN_OUT_LOADING_MS)
                             onSignOut()
@@ -489,10 +502,6 @@ private fun CinerificMainExperience(
                     onDismiss = { showSignOutConfirmation = false },
                     modifier = Modifier.fillMaxSize()
                 )
-            }
-
-            if (signOutInProgress) {
-                SignOutLoadingOverlay(modifier = Modifier.fillMaxSize())
             }
         }
     }
