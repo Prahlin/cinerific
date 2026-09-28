@@ -176,6 +176,13 @@ private const val MOCK_CREATE_AVATAR_CHEVRON_HIT_WIDTH = 62f
 private const val MOCK_CREATE_AVATAR_CHEVRON_HIT_HEIGHT = 92f
 private const val MOCK_CREATE_AVATAR_DRAG_COMMIT_PROGRESS = 0.12f
 private const val MOCK_CREATE_AVATAR_BUBBLE_INNER_INSET_RATIO = 0.105f
+private const val MOCK_CREATE_AVATAR_CLIP_RADIUS_RATIO =
+    0.5f - MOCK_CREATE_AVATAR_BUBBLE_INNER_INSET_RATIO
+private const val MOCK_CREATE_AVATAR_OUTLINE_RADIUS_PX = 18
+private const val MOCK_CREATE_AVATAR_BOTTOM_STROKE_DEPTH_PX = 24
+private const val MOCK_CREATE_AVATAR_BOTTOM_STROKE_SIDE_EXTEND_PX = 12
+private const val MOCK_CREATE_AVATAR_BOTTOM_STROKE_START_RATIO = 0.72f
+private const val MOCK_CREATE_AVATAR_STROKE_CHANNEL = 31
 private const val MOCK_FORM_TITLE_TEXT_SIZE = 33f
 private const val MOCK_FORM_TITLE_BASELINE_GAP = 24f
 private const val MOCK_FORM_PORTRAIT_TITLE_BASELINE_GAP = 32f
@@ -283,10 +290,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private val martinAvatar = decode(R.drawable.martin_avatar_bubble_edge50_body0_test)
     private val jannyAvatar = decode(R.drawable.janny_avatar_bubble_edge50_body0_test)
     private val guestAvatar = decode(R.drawable.guest_avatar_bubble_edge50_body0_test)
-    private val createAvatarBubbleShell = createAvatarBubbleShellBitmap(steveAvatar)
-    private val steveCreateAvatarCharacter = createAvatarCharacterBitmap(steveAvatar)
-    private val martinCreateAvatarCharacter = createAvatarCharacterBitmap(martinAvatar, includeDarkSaturatedPixels = true)
-    private val jannyCreateAvatarCharacter = createAvatarCharacterBitmap(jannyAvatar)
+    private val createAvatarLayers = createAvatarCarouselLayers(steveAvatar, martinAvatar, jannyAvatar)
     private val steveName = decode(R.drawable.steve_name)
     private val martinName = decode(R.drawable.martin_name)
     private val jannyName = decode(R.drawable.janny_name)
@@ -2313,76 +2317,28 @@ internal class CinerificIntroView(context: Context) : View(context) {
             scaledAvatarSize,
             scaledAvatarSize
         )
-        val carouselProgress = mockCreateAvatarCarouselProgress()
-        val slideDirection = mockCreateAvatarCarouselDirection.stageDirection
-        val slideDistance = mockCreateAvatarSlideDistance(scaledAvatarSize)
-        val dragDirection = mockCreateAvatarDragDirection()
-        val dragProgress = mockCreateAvatarDragProgress(slideDistance, stageScale)
-
-        drawMockCreateAvatarBubbleShell(canvas, avatarBounds, stageLeft, stageTop, stageScale, alpha)
-
         canvas.save()
-        clipMockCreateAvatarBubbleInterior(canvas, avatarBounds, stageLeft, stageTop, stageScale)
-        if (
-            activeMockCreateAvatarDrag &&
-            mockCreateAvatarDragMoved &&
-            dragDirection != null &&
-            !isMockCreateAvatarCarouselAnimating()
-        ) {
-            val dragSlideDirection = dragDirection.stageDirection
-            drawMockCreateAvatarBitmap(
-                canvas,
-                mockCreateAvatarIndex,
-                avatarBounds,
-                -dragSlideDirection * dragProgress * slideDistance,
-                stageLeft,
-                stageTop,
-                stageScale,
-                alpha
-            )
-            drawMockCreateAvatarBitmap(
-                canvas,
-                mockCreateAvatarIndexForDirection(dragDirection),
-                avatarBounds,
-                dragSlideDirection * (1f - dragProgress) * slideDistance,
-                stageLeft,
-                stageTop,
-                stageScale,
-                alpha
-            )
-        } else if (isMockCreateAvatarCarouselAnimating()) {
-            drawMockCreateAvatarBitmap(
-                canvas,
-                mockCreateAvatarCarouselFromIndex,
-                avatarBounds,
-                -slideDirection * carouselProgress * slideDistance,
-                stageLeft,
-                stageTop,
-                stageScale,
-                alpha
-            )
-            drawMockCreateAvatarBitmap(
-                canvas,
-                mockCreateAvatarCarouselToIndex,
-                avatarBounds,
-                slideDirection * (1f - carouselProgress) * slideDistance,
-                stageLeft,
-                stageTop,
-                stageScale,
-                alpha
-            )
-        } else {
-            drawMockCreateAvatarBitmap(
-                canvas,
-                mockCreateAvatarIndex,
-                avatarBounds,
-                0f,
-                stageLeft,
-                stageTop,
-                stageScale,
-                alpha
-            )
-        }
+        clipMockCreateAvatarCarousel(canvas, avatarBounds, stageLeft, stageTop, stageScale)
+        drawMockCreateAvatarMotionLayer(
+            canvas, createAvatarLayers.characters, avatarBounds,
+            stageLeft, stageTop, stageScale, alpha
+        )
+        canvas.restore()
+        drawFigmaBitmap(
+            canvas,
+            createAvatarLayers.bubble,
+            avatarBounds,
+            stageLeft,
+            stageTop,
+            stageScale,
+            alpha
+        )
+        canvas.save()
+        clipMockCreateAvatarCarousel(canvas, avatarBounds, stageLeft, stageTop, stageScale)
+        drawMockCreateAvatarMotionLayer(
+            canvas, createAvatarLayers.bottomStrokes, avatarBounds,
+            stageLeft, stageTop, stageScale, alpha
+        )
         canvas.restore()
         drawMockCreateAvatarChevron(
             canvas,
@@ -2404,47 +2360,50 @@ internal class CinerificIntroView(context: Context) : View(context) {
         )
     }
 
-    private fun drawMockCreateAvatarBitmap(
+    private fun drawMockCreateAvatarMotionLayer(
         canvas: Canvas,
-        avatarIndex: Int,
+        bitmaps: List<Bitmap>,
         bounds: Bounds,
-        offsetX: Float,
         stageLeft: Float,
         stageTop: Float,
         stageScale: Float,
         alpha: Float
     ) {
-        drawFigmaBitmap(
-            canvas,
-            mockCreateAvatarBitmap(avatarIndex),
-            Bounds(bounds.x + offsetX, bounds.y, bounds.w, bounds.h),
-            stageLeft,
-            stageTop,
-            stageScale,
-            alpha
-        )
+        val carouselProgress = mockCreateAvatarCarouselProgress()
+        val slideDirection = mockCreateAvatarCarouselDirection.stageDirection
+        val slideDistance = mockCreateAvatarSlideDistance(bounds.w)
+        val dragDirection = mockCreateAvatarDragDirection()
+        val dragProgress = mockCreateAvatarDragProgress(slideDistance, stageScale)
+        val isDraggingAvatar = activeMockCreateAvatarDrag &&
+            mockCreateAvatarDragMoved &&
+            dragDirection != null &&
+            !isMockCreateAvatarCarouselAnimating()
+
+        fun draw(index: Int, offsetX: Float) {
+            drawFigmaBitmap(
+                canvas,
+                bitmaps[index.coerceIn(0, MOCK_CREATE_AVATAR_COUNT - 1)],
+                Bounds(bounds.x + offsetX, bounds.y, bounds.w, bounds.h),
+                stageLeft,
+                stageTop,
+                stageScale,
+                alpha
+            )
+        }
+
+        if (isDraggingAvatar && dragDirection != null) {
+            val direction = dragDirection.stageDirection
+            draw(mockCreateAvatarIndex, -direction * dragProgress * slideDistance)
+            draw(mockCreateAvatarIndexForDirection(dragDirection), direction * (1f - dragProgress) * slideDistance)
+        } else if (isMockCreateAvatarCarouselAnimating()) {
+            draw(mockCreateAvatarCarouselFromIndex, -slideDirection * carouselProgress * slideDistance)
+            draw(mockCreateAvatarCarouselToIndex, slideDirection * (1f - carouselProgress) * slideDistance)
+        } else {
+            draw(mockCreateAvatarIndex, 0f)
+        }
     }
 
-    private fun drawMockCreateAvatarBubbleShell(
-        canvas: Canvas,
-        avatarBounds: Bounds,
-        stageLeft: Float,
-        stageTop: Float,
-        stageScale: Float,
-        alpha: Float
-    ) {
-        drawFigmaBitmap(
-            canvas,
-            createAvatarBubbleShell,
-            avatarBounds,
-            stageLeft,
-            stageTop,
-            stageScale,
-            alpha
-        )
-    }
-
-    private fun clipMockCreateAvatarBubbleInterior(
+    private fun clipMockCreateAvatarCarousel(
         canvas: Canvas,
         avatarBounds: Bounds,
         stageLeft: Float,
@@ -2455,14 +2414,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
         tempPath.addCircle(
             stageLeft + (avatarBounds.x + avatarBounds.w / 2f) * stageScale,
             stageTop + (avatarBounds.y + avatarBounds.h / 2f) * stageScale,
-            mockCreateAvatarBubbleInnerRadius(avatarBounds, stageScale),
+            avatarBounds.w * MOCK_CREATE_AVATAR_CLIP_RADIUS_RATIO * stageScale,
             Path.Direction.CW
         )
         canvas.clipPath(tempPath)
-    }
-
-    private fun mockCreateAvatarBubbleInnerRadius(avatarBounds: Bounds, stageScale: Float): Float {
-        return (avatarBounds.w / 2f - avatarBounds.w * MOCK_CREATE_AVATAR_BUBBLE_INNER_INSET_RATIO) * stageScale
     }
 
     private fun drawMockCreateAvatarChevron(
@@ -2864,22 +2819,79 @@ internal class CinerificIntroView(context: Context) : View(context) {
         return BitmapFactory.decodeResource(resources, resId, bitmapOptions)
     }
 
-    private fun createAvatarCharacterBitmap(
-        source: Bitmap,
-        includeDarkSaturatedPixels: Boolean = false
-    ): Bitmap {
+    private data class CreateAvatarLayers(
+        val bubble: Bitmap,
+        val characters: List<Bitmap>,
+        val bottomStrokes: List<Bitmap>
+    )
+
+    private fun createAvatarCarouselLayers(vararg avatars: Bitmap): CreateAvatarLayers {
+        require(avatars.size == MOCK_CREATE_AVATAR_COUNT)
+        val bitmapWidth = avatars.first().width
+        val bitmapHeight = avatars.first().height
+        require(avatars.all { it.width == bitmapWidth && it.height == bitmapHeight })
+        return CreateAvatarLayers(
+            bubble = createAvatarBubbleShellBitmap(avatars.first()),
+            characters = avatars.map(::createAvatarCharacterBitmap),
+            bottomStrokes = avatars.map(::createAvatarBottomStrokeBitmap)
+        )
+    }
+
+    private fun createAvatarBottomStrokeBitmap(source: Bitmap): Bitmap {
         val bitmapWidth = source.width
         val bitmapHeight = source.height
         val pixels = IntArray(bitmapWidth * bitmapHeight)
         source.getPixels(pixels, 0, bitmapWidth, 0, 0, bitmapWidth, bitmapHeight)
+        val strokePixels = IntArray(pixels.size)
+        val minimumBodyY = (bitmapHeight * MOCK_CREATE_AVATAR_BOTTOM_STROKE_START_RATIO).roundToInt()
 
-        val mask = createAvatarCharacterMask(pixels, bitmapWidth, bitmapHeight, includeDarkSaturatedPixels)
-        val outputPixels = IntArray(pixels.size) { index ->
-            if (mask[index]) pixels[index] else Color.TRANSPARENT
+        for (x in 0 until bitmapWidth) {
+            var bodyBottomY = -1
+            for (y in minimumBodyY until bitmapHeight) {
+                if (isAvatarCharacterFillPixel(pixels[y * bitmapWidth + x])) bodyBottomY = y
+            }
+            if (bodyBottomY < 0) continue
+            val strokeBottomY = minOf(bitmapHeight - 1, bodyBottomY + MOCK_CREATE_AVATAR_BOTTOM_STROKE_DEPTH_PX)
+            for (y in bodyBottomY + 1..strokeBottomY) {
+                val index = y * bitmapWidth + x
+                val sourceAlpha = Color.alpha(pixels[index])
+                if (sourceAlpha <= 16) continue
+                strokePixels[index] = Color.argb(
+                    sourceAlpha,
+                    MOCK_CREATE_AVATAR_STROKE_CHANNEL,
+                    MOCK_CREATE_AVATAR_STROKE_CHANNEL,
+                    MOCK_CREATE_AVATAR_STROKE_CHANNEL
+                )
+            }
         }
-        return Bitmap.createBitmap(bitmapWidth, bitmapHeight, Bitmap.Config.ARGB_8888).apply {
-            setPixels(outputPixels, 0, bitmapWidth, 0, 0, bitmapWidth, bitmapHeight)
+        val cornerFilledStrokePixels = strokePixels.copyOf()
+        for (y in minimumBodyY until bitmapHeight) {
+            val rowStart = y * bitmapWidth
+            for (x in 0 until bitmapWidth) {
+                if (strokePixels[rowStart + x] == Color.TRANSPARENT) continue
+                val sideStart = maxOf(0, x - MOCK_CREATE_AVATAR_BOTTOM_STROKE_SIDE_EXTEND_PX)
+                val sideEnd = minOf(bitmapWidth - 1, x + MOCK_CREATE_AVATAR_BOTTOM_STROKE_SIDE_EXTEND_PX)
+                for (sideX in sideStart..sideEnd) {
+                    val index = rowStart + sideX
+                    val sourceAlpha = Color.alpha(pixels[index])
+                    if (sourceAlpha <= 16 || isAvatarCharacterFillPixel(pixels[index])) continue
+                    cornerFilledStrokePixels[index] = Color.argb(
+                        sourceAlpha,
+                        MOCK_CREATE_AVATAR_STROKE_CHANNEL,
+                        MOCK_CREATE_AVATAR_STROKE_CHANNEL,
+                        MOCK_CREATE_AVATAR_STROKE_CHANNEL
+                    )
+                }
+            }
         }
+        return bitmapFromPixels(cornerFilledStrokePixels, bitmapWidth, bitmapHeight)
+    }
+
+    private fun isAvatarCharacterFillPixel(pixel: Int): Boolean {
+        if (Color.alpha(pixel) <= 16) return false
+        val channelMax = maxOf(Color.red(pixel), Color.green(pixel), Color.blue(pixel))
+        val channelMin = minOf(Color.red(pixel), Color.green(pixel), Color.blue(pixel))
+        return channelMax > 40 && channelMax - channelMin > 8
     }
 
     private fun createAvatarBubbleShellBitmap(source: Bitmap): Bitmap {
@@ -2890,83 +2902,95 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
         val centerX = (bitmapWidth - 1f) / 2f
         val centerY = (bitmapHeight - 1f) / 2f
-        val innerRadius = min(bitmapWidth, bitmapHeight) * (0.5f - MOCK_CREATE_AVATAR_BUBBLE_INNER_INSET_RATIO)
+        val innerRadius = min(bitmapWidth, bitmapHeight) *
+            (0.5f - MOCK_CREATE_AVATAR_BUBBLE_INNER_INSET_RATIO)
         val innerRadiusSquared = innerRadius * innerRadius
-
-        val outputPixels = IntArray(pixels.size) { index ->
+        val shellPixels = IntArray(pixels.size) { index ->
             val x = index % bitmapWidth
             val y = index / bitmapWidth
             val dx = x - centerX
             val dy = y - centerY
-            if (dx * dx + dy * dy < innerRadiusSquared) {
-                Color.TRANSPARENT
-            } else {
-                pixels[index]
-            }
+            if (dx * dx + dy * dy >= innerRadiusSquared) pixels[index] else Color.TRANSPARENT
         }
-        return Bitmap.createBitmap(bitmapWidth, bitmapHeight, Bitmap.Config.ARGB_8888).apply {
-            setPixels(outputPixels, 0, bitmapWidth, 0, 0, bitmapWidth, bitmapHeight)
-        }
+        return bitmapFromPixels(shellPixels, bitmapWidth, bitmapHeight)
     }
 
-    private fun createAvatarCharacterMask(
-        pixels: IntArray,
-        bitmapWidth: Int,
-        bitmapHeight: Int,
-        includeDarkSaturatedPixels: Boolean
-    ): BooleanArray {
-        val coloredPixels = BooleanArray(pixels.size)
-        pixels.forEachIndexed { index, pixel ->
-            coloredPixels[index] = isColorfulAvatarPixel(pixel, includeDarkSaturatedPixels)
+    private fun createAvatarCharacterBitmap(source: Bitmap): Bitmap {
+        val bitmapWidth = source.width
+        val bitmapHeight = source.height
+        val pixels = IntArray(bitmapWidth * bitmapHeight)
+        source.getPixels(pixels, 0, bitmapWidth, 0, 0, bitmapWidth, bitmapHeight)
+
+        val centerX = (bitmapWidth - 1f) / 2f
+        val centerY = (bitmapHeight - 1f) / 2f
+        val innerRadius = min(bitmapWidth, bitmapHeight) * MOCK_CREATE_AVATAR_CLIP_RADIUS_RATIO
+        val innerRadiusSquared = innerRadius * innerRadius
+        val distance = IntArray(pixels.size) { -1 }
+        val queue = IntArray(pixels.size)
+        var queueStart = 0
+        var queueEnd = 0
+
+        pixels.indices.forEach { index ->
+            val x = index % bitmapWidth
+            val y = index / bitmapWidth
+            val dx = x - centerX
+            val dy = y - centerY
+            if (dx * dx + dy * dy < innerRadiusSquared && isAvatarCharacterColor(pixels[index])) {
+                distance[index] = 0
+                queue[queueEnd++] = index
+            }
         }
 
-        val mask = BooleanArray(pixels.size)
-        val outlineRadius = 7
-        for (y in 0 until bitmapHeight) {
-            for (x in 0 until bitmapWidth) {
-                val index = y * bitmapWidth + x
-                if (!coloredPixels[index]) continue
-
-                mask[index] = true
-                for (dy in -outlineRadius..outlineRadius) {
-                    val sampleY = y + dy
-                    if (sampleY !in 0 until bitmapHeight) continue
-                    for (dx in -outlineRadius..outlineRadius) {
-                        val sampleX = x + dx
-                        if (sampleX !in 0 until bitmapWidth) continue
-                        val sampleIndex = sampleY * bitmapWidth + sampleX
-                        val samplePixel = pixels[sampleIndex]
-                        val sampleAlpha = Color.alpha(samplePixel)
-                        val sampleMax = maxOf(
-                            Color.red(samplePixel),
-                            Color.green(samplePixel),
-                            Color.blue(samplePixel)
-                        )
-                        if (sampleAlpha > 16 && sampleMax <= 44) {
-                            mask[sampleIndex] = true
-                        }
-                    }
+        while (queueStart < queueEnd) {
+            val index = queue[queueStart++]
+            val currentDistance = distance[index]
+            if (currentDistance >= MOCK_CREATE_AVATAR_OUTLINE_RADIUS_PX) continue
+            val x = index % bitmapWidth
+            val y = index / bitmapWidth
+            for (dy in -1..1) {
+                val nextY = y + dy
+                if (nextY !in 0 until bitmapHeight) continue
+                for (dx in -1..1) {
+                    if (dx == 0 && dy == 0) continue
+                    val nextX = x + dx
+                    if (nextX !in 0 until bitmapWidth) continue
+                    val nextIndex = nextY * bitmapWidth + nextX
+                    if (distance[nextIndex] >= 0 || !isAvatarOutlinePixel(pixels[nextIndex])) continue
+                    val centerDx = nextX - centerX
+                    val centerDy = nextY - centerY
+                    if (centerDx * centerDx + centerDy * centerDy >= innerRadiusSquared) continue
+                    distance[nextIndex] = currentDistance + 1
+                    queue[queueEnd++] = nextIndex
                 }
             }
         }
-        return mask
+
+        val characterPixels = IntArray(pixels.size) { index ->
+            if (distance[index] >= 0) pixels[index] else Color.TRANSPARENT
+        }
+        return bitmapFromPixels(characterPixels, bitmapWidth, bitmapHeight)
     }
 
-    private fun isColorfulAvatarPixel(
-        pixel: Int,
-        includeDarkSaturatedPixels: Boolean
-    ): Boolean {
-        val alpha = Color.alpha(pixel)
+    private fun isAvatarCharacterColor(pixel: Int): Boolean {
+        if (Color.alpha(pixel) <= 16) return false
         val red = Color.red(pixel)
         val green = Color.green(pixel)
         val blue = Color.blue(pixel)
         val channelMax = maxOf(red, green, blue)
         val channelMin = minOf(red, green, blue)
-        if (alpha <= 16) return false
+        val isNeutralBubbleOrRing = channelMax - channelMin <= 4
+        return (Color.alpha(pixel) >= 250 && !isNeutralBubbleOrRing) ||
+            (channelMax > 40 && channelMax - channelMin > 8)
+    }
 
-        val chroma = channelMax - channelMin
-        return (channelMax > 48 && chroma > 22) ||
-            (includeDarkSaturatedPixels && channelMax > 36 && chroma > 14)
+    private fun isAvatarOutlinePixel(pixel: Int): Boolean {
+        return Color.alpha(pixel) > 24 && maxOf(Color.red(pixel), Color.green(pixel), Color.blue(pixel)) <= 80
+    }
+
+    private fun bitmapFromPixels(pixels: IntArray, width: Int, height: Int): Bitmap {
+        return Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888).apply {
+            setPixels(pixels, 0, width, 0, 0, width, height)
+        }
     }
 
     private fun standardSignInBackgroundForSize(): Bitmap? {
@@ -4429,14 +4453,6 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private fun mockCreateAvatarDragProgress(slideDistance: Float, stageScale: Float): Float {
         val slideDistancePx = (slideDistance * stageScale).coerceAtLeast(1f)
         return (abs(mockCreateAvatarDragDeltaX) / slideDistancePx).coerceIn(0f, 1f)
-    }
-
-    private fun mockCreateAvatarBitmap(index: Int): Bitmap {
-        return when (index.coerceIn(0, MOCK_CREATE_AVATAR_COUNT - 1)) {
-            0 -> steveCreateAvatarCharacter
-            1 -> martinCreateAvatarCharacter
-            else -> jannyCreateAvatarCharacter
-        }
     }
 
     private fun mockCreateAvatarCarouselProgress(): Float {
