@@ -40,7 +40,7 @@ internal fun CinerificViewportGenreNav(
             genre = ViewportGenre.All,
             selected = selectedGenre == ViewportGenre.All,
             x = 0f,
-            y = 0.93f,
+            y = GENRE_GRID_TOP_Y,
             width = GENRE_ALL_CHIP_SIZE,
             height = GENRE_ALL_CHIP_SIZE,
             scale = scale,
@@ -50,8 +50,8 @@ internal fun CinerificViewportGenreNav(
         GenreChip(
             genre = ViewportGenre.Action,
             selected = selectedGenre == ViewportGenre.Action,
-            x = 43.59f,
-            y = 2.78f,
+            x = genreGridColumnX(1),
+            y = GENRE_GRID_TOP_Y,
             scale = scale,
             textScale = textScale,
             onClick = onGenreSelected
@@ -59,8 +59,8 @@ internal fun CinerificViewportGenreNav(
         GenreChip(
             genre = ViewportGenre.Comedy,
             selected = selectedGenre == ViewportGenre.Comedy,
-            x = 85.33f,
-            y = 2.78f,
+            x = genreGridColumnX(2),
+            y = GENRE_GRID_TOP_Y,
             scale = scale,
             textScale = textScale,
             onClick = onGenreSelected
@@ -68,8 +68,8 @@ internal fun CinerificViewportGenreNav(
         GenreChip(
             genre = ViewportGenre.Crime,
             selected = selectedGenre == ViewportGenre.Crime,
-            x = 127.07f,
-            y = 2.78f,
+            x = genreGridColumnX(3),
+            y = GENRE_GRID_TOP_Y,
             scale = scale,
             textScale = textScale,
             onClick = onGenreSelected
@@ -77,8 +77,8 @@ internal fun CinerificViewportGenreNav(
         GenreChip(
             genre = ViewportGenre.Documentary,
             selected = selectedGenre == ViewportGenre.Documentary,
-            x = 1.86f,
-            y = 44.52f,
+            x = genreGridColumnX(0),
+            y = GENRE_GRID_BOTTOM_Y,
             scale = scale,
             textScale = textScale,
             onClick = onGenreSelected
@@ -86,8 +86,8 @@ internal fun CinerificViewportGenreNav(
         GenreChip(
             genre = ViewportGenre.Drama,
             selected = selectedGenre == ViewportGenre.Drama,
-            x = 43.59f,
-            y = 44.52f,
+            x = genreGridColumnX(1),
+            y = GENRE_GRID_BOTTOM_Y,
             scale = scale,
             textScale = textScale,
             onClick = onGenreSelected
@@ -95,8 +95,8 @@ internal fun CinerificViewportGenreNav(
         GenreChip(
             genre = ViewportGenre.Horror,
             selected = selectedGenre == ViewportGenre.Horror,
-            x = 85.33f,
-            y = 44.52f,
+            x = genreGridColumnX(2),
+            y = GENRE_GRID_BOTTOM_Y,
             scale = scale,
             textScale = textScale,
             onClick = onGenreSelected
@@ -104,8 +104,8 @@ internal fun CinerificViewportGenreNav(
         GenreChip(
             genre = ViewportGenre.Thriller,
             selected = selectedGenre == ViewportGenre.Thriller,
-            x = 127.07f,
-            y = 44.52f,
+            x = genreGridColumnX(3),
+            y = GENRE_GRID_BOTTOM_Y,
             scale = scale,
             textScale = textScale,
             onClick = onGenreSelected
@@ -119,8 +119,8 @@ private fun GenreChip(
     selected: Boolean,
     x: Float,
     y: Float,
-    width: Float = GENRE_TEXT_CHIP_SIZE,
-    height: Float = GENRE_TEXT_CHIP_SIZE,
+    width: Float = GENRE_ALL_CHIP_SIZE,
+    height: Float = GENRE_ALL_CHIP_SIZE,
     scale: Float,
     textScale: Float,
     onClick: (ViewportGenre) -> Unit
@@ -145,9 +145,9 @@ private fun GenreChip(
             Text(
                 text = stringResource(genre.compactLabelResId ?: genre.displayNameResId),
                 color = ink,
-                fontSize = (11f * textScale).sp,
+                fontSize = (11f * GENRE_TEXT_TO_ALL_SCALE * textScale).sp,
                 fontWeight = FontWeight.Black,
-                lineHeight = (11f * textScale).sp,
+                lineHeight = (11f * GENRE_TEXT_TO_ALL_SCALE * textScale).sp,
                 letterSpacing = 0.sp,
                 maxLines = 1,
                 textAlign = TextAlign.Center
@@ -155,6 +155,15 @@ private fun GenreChip(
         }
     }
 }
+
+private const val GENRE_GRID_TOP_Y = 0.93f
+private const val GENRE_GRID_BOTTOM_Y = GENRE_GROUP_HEIGHT - GENRE_ALL_CHIP_SIZE
+private const val GENRE_GRID_HORIZONTAL_GAP =
+    (GENRE_GROUP_WIDTH - GENRE_ALL_CHIP_SIZE * 4f) / 3f
+private const val GENRE_TEXT_TO_ALL_SCALE = GENRE_ALL_CHIP_SIZE / GENRE_TEXT_CHIP_SIZE
+
+private fun genreGridColumnX(column: Int): Float =
+    column * (GENRE_ALL_CHIP_SIZE + GENRE_GRID_HORIZONTAL_GAP)
 
 @Composable
 private fun AllGenreGlyph(color: Color, scale: Float) {
