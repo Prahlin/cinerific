@@ -1,0 +1,306 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [4 0 R 6 0 R 8 0 R 10 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 5 0 R >>
+endobj
+5 0 obj
+<< /Length 8519 >>
+stream
+BT /F1 15.00 Tf 52.00 749.00 Td (Cinerific Android App Work Log - September 29, 2026 \(U.S. EST\)) Tj ET
+BT /F1 8.15 Tf 52.00 722.00 Td (Compiled summary for Tuesday, September 29, 2026 \(U.S. Eastern Time\) - focus: refining the three authentication screens and their return) Tj ET
+BT /F1 8.15 Tf 52.00 712.35 Td (navigation, turning Favorites into a persistent playback-analytics view, and adapting the complete Settings experience to portrait phones) Tj ET
+BT /F1 8.15 Tf 52.00 702.70 Td (while preserving the established tablet composition. Generated after reviewing every prior Cinerific worklog, the refreshed project) Tj ET
+BT /F1 8.15 Tf 52.00 693.05 Td (snapshot, the four September 29 commits, source diffs, build output, and runtime behavior on the connected Samsung phone and Standard) Tj ET
+BT /F1 8.15 Tf 52.00 683.40 Td (tablet emulator.) Tj ET
+BT /F1 8.15 Tf 52.00 670.75 Td (Generated in continuity with the established Cinerific worklog cadence from July 12 through September 28: compact opening summary,) Tj ET
+BT /F1 8.15 Tf 52.00 661.10 Td (source-material review, baseline state, goals, themed work-completed sections, validation, files touched, follow-up context, and) Tj ET
+BT /F1 8.15 Tf 52.00 651.45 Td (output-artifact close. No September 29 PDF existed before this pass, so this artifact uses the first-log-of-the-day filename without a part) Tj ET
+BT /F1 8.15 Tf 52.00 641.80 Td (suffix. Eastern time was independently verified live as Tuesday, September 29, 2026 in EDT, UTC-04:00; the title retains the historical U.S.) Tj ET
+BT /F1 8.15 Tf 52.00 632.15 Td (EST label while the body records the seasonally accurate offset. This report records work through HEAD 1f58536, Adapted Settings for) Tj ET
+BT /F1 8.15 Tf 52.00 622.50 Td (portrait phones, plus the mechanically refreshed project snapshot produced during this documentation pass.) Tj ET
+BT /F1 10.50 Tf 52.00 606.65 Td (Source Materials Reviewed) Tj ET
+BT /F1 8.15 Tf 52.00 595.85 Td (- Reviewed all 28 pre-existing Cinerific worklog PDFs at the repository root: July 12, July 14, July 15 Part 1, July 15, July 16, July 18,) Tj ET
+BT /F1 8.15 Tf 58.00 586.20 Td (July 19, July 20, July 22, July 23, July 24, July 25, July 27, July 28 Part 1, July 28 Part 2, July 29, August 1, August 3, August 4, August) Tj ET
+BT /F1 8.15 Tf 58.00 576.55 Td (5, September 19, September 21, September 21 Part 2, September 23, September 24, September 26, September 27, and September 28.) Tj ET
+BT /F1 8.15 Tf 52.00 566.90 Td (- Extracted and indexed the complete PDF corpus, reviewed its recurring headings and chronology, and read the latest September 28) Tj ET
+BT /F1 8.15 Tf 58.00 557.25 Td (document in full to preserve naming, technical voice, density, section order, four-page length, and closing conventions.) Tj ET
+BT /F1 8.15 Tf 52.00 547.60 Td (- Traced the historical content progression from the original intro-animation and Figma-asset work through authentication,) Tj ET
+BT /F1 8.15 Tf 58.00 537.95 Td (responsive destination screens, navigation, playback presentation, September portrait restoration, and the current account-aware) Tj ET
+BT /F1 8.15 Tf 58.00 528.30 Td (analytics phase. This made the report additive to the project record rather than a repetition of the latest commit messages.) Tj ET
+BT /F1 8.15 Tf 52.00 518.65 Td (- Confirmed the latest artifacts use U.S. Letter geometry, Helvetica typography, PDF 1.4 compatibility, OpenAI Codex authoring metadata,) Tj ET
+BT /F1 8.15 Tf 58.00 509.00 Td (extractable text, repeated page titles, and right-aligned page footers.) Tj ET
+BT /F1 8.15 Tf 52.00 499.35 Td (- Ran read_project.sh and reviewed cinerific_PROJECT_SNAPSHOT.txt, Git status, the commit range from 0a79012 through 1f58536,) Tj ET
+BT /F1 8.15 Tf 58.00 489.70 Td (commit statistics, localized resources, and the Compose implementation changed during the day.) Tj ET
+BT /F1 8.15 Tf 52.00 480.05 Td (- Reviewed the user-provided Settings reference screenshot together with live phone and tablet captures, then checked the authenticated) Tj ET
+BT /F1 8.15 Tf 58.00 470.40 Td (Favorites data flow, playback timers, navigation gestures, responsive branches, and device-specific layout behavior.) Tj ET
+BT /F1 8.15 Tf 52.00 460.75 Td (- Compared the four September 29 commits against the September 28 worklog baseline rather than against the working tree alone,) Tj ET
+BT /F1 8.15 Tf 58.00 451.10 Td (ensuring that all committed work since the last PDF is represented even where later refinements superseded intermediate values.) Tj ET
+BT /F1 8.15 Tf 52.00 441.45 Td (- Inspected the authentication additions for their portrait-only guards, animation timing, touch-state eligibility, scroll-bottom) Tj ET
+BT /F1 8.15 Tf 58.00 431.80 Td (calculation, paint ordering, and invalidation behavior instead of relying on surface screenshots alone.) Tj ET
+BT /F1 8.15 Tf 52.00 422.15 Td (- Inspected the Favorites state pipeline from hero play callbacks through SharedPreferences, elapsed-realtime accumulation, leader) Tj ET
+BT /F1 8.15 Tf 58.00 412.50 Td (selection, formatted display, genre aggregation, and the destination screen's card-row composition.) Tj ET
+BT /F1 8.15 Tf 52.00 402.85 Td (- Inspected the device record schema and account prefixing that corrected cross-profile leakage, including stable hardware identifiers,) Tj ET
+BT /F1 8.15 Tf 58.00 393.20 Td (per-account device sets, use-count comparison, last-used tie breaking, and the known-model display mapping.) Tj ET
+BT /F1 8.15 Tf 52.00 383.55 Td (- Inspected the Settings width-class decision and both resulting compositions, confirming that the new narrow branch does not alter the) Tj ET
+BT /F1 8.15 Tf 58.00 373.90 Td (tablet's absolute signed-in column or its accepted design constants.) Tj ET
+BT /F1 10.50 Tf 52.00 361.05 Td (Baseline Status Before September 29 Work) Tj ET
+BT /F1 8.15 Tf 52.00 350.25 Td (- The September 28 baseline had completed portrait-first authentication composition and avatar fidelity, but the live Broadway) Tj ET
+BT /F1 8.15 Tf 58.00 340.60 Td (username, form controls, sticky chevrons, and inter-element spacing still needed coordinated motion and depth behavior.) Tj ET
+BT /F1 8.15 Tf 52.00 330.95 Td (- Returning from Create My Account, Sign In, or Forgot Password could leave Welcome link labels visually absent until another touch) Tj ET
+BT /F1 8.15 Tf 58.00 321.30 Td (caused recomposition. Bottom-of-page upward finger motion was not yet a deliberate return gesture.) Tj ET
+BT /F1 8.15 Tf 52.00 311.65 Td (- Favorites still presented title-card geometry and static summary placeholders rather than durable per-title view counts, active playback) Tj ET
+BT /F1 8.15 Tf 58.00 302.00 Td (runtimes, favorite-genre calculation, or account-scoped device usage.) Tj ET
+BT /F1 8.15 Tf 52.00 292.35 Td (- Hero cards returned from their spinner state after a fixed interval, so the application had no continuous session from which to) Tj ET
+BT /F1 8.15 Tf 58.00 282.70 Td (measure a longest playtime. Header copy still embedded sample totals that could not represent live data.) Tj ET
+BT /F1 8.15 Tf 52.00 273.05 Td (- Settings matched the tablet reference composition, including a detached right-side account panel, but that two-column geometry did not) Tj ET
+BT /F1 8.15 Tf 58.00 263.40 Td (collapse cleanly into the narrow portrait-phone canvas.) Tj ET
+BT /F1 10.50 Tf 52.00 250.55 Td (Main Goals for September 29) Tj ET
+BT /F1 8.15 Tf 52.00 239.75 Td (- Complete portrait authentication spacing and transitions without disturbing landscape or tablet behavior, and make the sticky return) Tj ET
+BT /F1 8.15 Tf 58.00 230.10 Td (affordance respond coherently to horizontal and vertical navigation.) Tj ET
+BT /F1 8.15 Tf 52.00 220.45 Td (- Give Favorites list-sized, flingable title rows and replace its sample statistics with persistent, live account data derived from actual) Tj ET
+BT /F1 8.15 Tf 58.00 210.80 Td (hero playback.) Tj ET
+BT /F1 8.15 Tf 52.00 201.15 Td (- Create a reversible portrait-phone Settings branch with readable full-width rows and an in-flow account card, while leaving the) Tj ET
+BT /F1 8.15 Tf 58.00 191.50 Td (accepted tablet branch visually unchanged.) Tj ET
+BT /F1 8.15 Tf 52.00 181.85 Td (- Validate all three workstreams on the physical USB handset and preserve the tablet emulator as a regression reference before) Tj ET
+BT /F1 8.15 Tf 58.00 172.20 Td (documenting the completed state.) Tj ET
+BT /F1 7.10 Tf 368.61 27.00 Td (Cinerific Work Log - September 29, 2026 \(U.S. EST\) Page 1) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 7 0 R >>
+endobj
+7 0 obj
+<< /Length 8839 >>
+stream
+BT /F1 15.00 Tf 52.00 749.00 Td (Cinerific Android App Work Log - September 29, 2026 \(U.S. EST\)) Tj ET
+BT /F1 10.50 Tf 52.00 718.80 Td (Work Completed - Portrait Authentication Rhythm and Username Reveal) Tj ET
+BT /F1 8.15 Tf 52.00 708.00 Td (- Vertically centered the bottom sticky chevron inside its banner on portrait phone and tablet modes for Create My Account, Sign In,) Tj ET
+BT /F1 8.15 Tf 58.00 698.35 Td (and Forgot Password. Increased the banner height by 50 percent and slightly thickened the downward chevron so the return) Tj ET
+BT /F1 8.15 Tf 58.00 688.70 Td (affordance reads more clearly.) Tj ET
+BT /F1 8.15 Tf 52.00 679.05 Td (- Moved the Broadway-rendered username below the avatar bubbles instead of above them. Rebalanced the Create My Account title,) Tj ET
+BT /F1 8.15 Tf 58.00 669.40 Td (bubble, live username, and Username field so the surrounding vertical intervals use one intentional rhythm.) Tj ET
+BT /F1 8.15 Tf 52.00 659.75 Td (- Made the Username field and every following Create My Account asset remain in its original resting position until the Broadway name) Tj ET
+BT /F1 8.15 Tf 58.00 650.10 Td (begins to appear. As input arrives, that lower form group slides down; clearing the field completely reverses the transition and slides) Tj ET
+BT /F1 8.15 Tf 58.00 640.45 Td (the content back up.) Tj ET
+BT /F1 8.15 Tf 52.00 630.80 Td (- Placed the Broadway username at a lower draw depth than the downward-chevron banner, preventing the animated name from painting) Tj ET
+BT /F1 8.15 Tf 58.00 621.15 Td (over the fixed return region during narrow or transitional layouts.) Tj ET
+BT /F1 8.15 Tf 52.00 611.50 Td (- Renamed the Forgot Password prompt from Recover my: to Recover: and moved the recovery choices onto a new row) Tj ET
+BT /F1 8.15 Tf 58.00 601.85 Td (following No Sign-In Information?, improving the portrait reading order.) Tj ET
+BT /F1 8.15 Tf 52.00 592.20 Td (- Scoped the chevron centering and reveal-spacing changes to portrait modes so previously accepted landscape arrangements and) Tj ET
+BT /F1 8.15 Tf 58.00 582.55 Td (non-phone/tablet branches retain their existing coordinates.) Tj ET
+BT /F1 8.15 Tf 52.00 572.90 Td (- Kept the avatar carousel itself stable while moving the dependent username and form content, avoiding a second source of motion) Tj ET
+BT /F1 8.15 Tf 58.00 563.25 Td (during typing and preserving the selected character as the visual anchor.) Tj ET
+BT /F1 8.15 Tf 52.00 553.60 Td (- Used a 280ms reveal progression with FastOutSlowIn easing and frame invalidation while the empty/non-empty target changes. The) Tj ET
+BT /F1 8.15 Tf 58.00 543.95 Td (collapsed and expanded form offsets derive from avatar bounds and text metrics rather than a second arbitrary resting coordinate.) Tj ET
+BT /F1 10.50 Tf 52.00 531.10 Td (Work Completed - Authentication Navigation and Welcome Recovery) Tj ET
+BT /F1 8.15 Tf 52.00 520.30 Td (- Timed the bottom chevron banner's slide-in and slide-out animation with the existing right/left chevron transition across all three) Tj ET
+BT /F1 8.15 Tf 58.00 510.65 Td (authentication destinations, so the horizontal navigation chrome now moves as a coordinated set.) Tj ET
+BT /F1 8.15 Tf 52.00 501.00 Td (- Added a bottom-gated return gesture: after the user has reached the true end of Create My Account, Sign In, or Forgot Password,) Tj ET
+BT /F1 8.15 Tf 58.00 491.35 Td (continued scrolling downward through an upward finger motion navigates back to Welcome. The gesture remains inactive before the) Tj ET
+BT /F1 8.15 Tf 58.00 481.70 Td (bottom boundary is reached.) Tj ET
+BT /F1 8.15 Tf 52.00 472.05 Td (- Adjusted scroll and gesture arbitration after device testing clarified that the requested action was content scrolling downward, not a) Tj ET
+BT /F1 8.15 Tf 58.00 462.40 Td (downward-moving finger. Preserved normal form scrolling and avoided premature navigation from the middle of a screen.) Tj ET
+BT /F1 8.15 Tf 52.00 452.75 Td (- Corrected Welcome re-entry state so link names reliably render immediately after returning from any authentication screen instead of) Tj ET
+BT /F1 8.15 Tf 58.00 443.10 Td (remaining invisible until the next touch or frame-triggering interaction.) Tj ET
+BT /F1 8.15 Tf 52.00 433.45 Td (- Rebuilt and rebooted the application on the USB device between gesture revisions so the reported behavior reflects the installed APK) Tj ET
+BT /F1 8.15 Tf 58.00 423.80 Td (rather than stale process state or an emulator-only result.) Tj ET
+BT /F1 8.15 Tf 52.00 414.15 Td (- Captured bottom eligibility at touch-down and required the upward finger travel to exceed the return threshold and dominate) Tj ET
+BT /F1 8.15 Tf 58.00 404.50 Td (horizontal displacement. Create Account and Forgot Password use their calculated maximum scroll values; the shorter Sign In path) Tj ET
+BT /F1 8.15 Tf 58.00 394.85 Td (resolves directly at its bottom.) Tj ET
+BT /F1 10.50 Tf 52.00 382.00 Td (Work Completed - Favorites Card Geometry and Interaction) Tj ET
+BT /F1 8.15 Tf 52.00 371.20 Td (- Resized Favorites title-card placeholders and populated title cards to equal the card dimensions used by the rightmost list-view mode) Tj ET
+BT /F1 8.15 Tf 58.00 361.55 Td (on Movies and Shows. The empty and filled states now share the same geometry.) Tj ET
+BT /F1 8.15 Tf 52.00 351.90 Td (- Enabled bidirectional horizontal dragging and velocity-based fling behavior for the Movies and Shows title-holder rows on) Tj ET
+BT /F1 8.15 Tf 58.00 342.25 Td (Favorites, allowing the card strips to travel naturally in either direction.) Tj ET
+BT /F1 8.15 Tf 52.00 332.60 Td (- Doubled the visible minus/remove control over each title card while retaining its overlay relationship and removal behavior.) Tj ET
+BT /F1 8.15 Tf 52.00 322.95 Td (- Applied the card and gesture treatment consistently to placeholders and populated rows, preventing layout jumps when a saved favorite) Tj ET
+BT /F1 8.15 Tf 58.00 313.30 Td (becomes available or is removed.) Tj ET
+BT /F1 8.15 Tf 52.00 303.65 Td (- Based Favorites dimensions on DESTINATION_LIST_IMAGE_WIDTH and DESTINATION_LIST_IMAGE_HEIGHT, then applied the) Tj ET
+BT /F1 8.15 Tf 58.00 294.00 Td (established portrait list scale multiplier on phones so the visual match follows the same responsive math as Movies and Shows.) Tj ET
+BT /F1 10.50 Tf 52.00 281.15 Td (Work Completed - Persistent Views and Indefinite Hero Playback) Tj ET
+BT /F1 8.15 Tf 52.00 270.35 Td (- Added persistent per-title playback statistics in CinerificApp.kt and connected every hero play action to the shared analytics store. A title) Tj ET
+BT /F1 8.15 Tf 58.00 260.70 Td (is counted as viewed as soon as its play control changes into the rolling spinner.) Tj ET
+BT /F1 8.15 Tf 52.00 251.05 Td (- Changed hero playback spinners to remain active indefinitely instead of automatically returning to play controls. Active sessions) Tj ET
+BT /F1 8.15 Tf 58.00 241.40 Td (accumulate elapsed time once per second and survive ordinary recomposition.) Tj ET
+BT /F1 8.15 Tf 52.00 231.75 Td (- Displayed the most frequently viewed title beneath its header by name, followed by the multiplication sign and count in the form TITLE \327) Tj ET
+BT /F1 8.15 Tf 58.00 222.10 Td (N. Removed the former hard-coded \(7 times\) suffix from the English, Spanish, and Mandarin header resources.) Tj ET
+BT /F1 8.15 Tf 52.00 212.45 Td (- Displayed the longest-running title beneath Longest Playtime with a live TITLE \327 HH: MM: SS value. Removed the former hard-coded) Tj ET
+BT /F1 8.15 Tf 58.00 202.80 Td (\(32 hours\) suffix from all three localized resource sets.) Tj ET
+BT /F1 8.15 Tf 52.00 193.15 Td (- Corrected active-session ownership so the timer is not stopped by the same state transition that starts the indefinite spinner. The) Tj ET
+BT /F1 8.15 Tf 58.00 183.50 Td (displayed duration consequently advances every second while the hero remains active.) Tj ET
+BT /F1 8.15 Tf 52.00 173.85 Td (- Stored totals per title and derived the leader from recorded values, allowing the most-viewed title and longest-running title to differ as) Tj ET
+BT /F1 8.15 Tf 58.00 164.20 Td (the user tests repeated short plays against one long session.) Tj ET
+BT /F1 8.15 Tf 52.00 154.55 Td (- Used the most recently played title as the deterministic tie breaker when two titles share a maximum count or duration. This keeps the) Tj ET
+BT /F1 8.15 Tf 58.00 144.90 Td (visible leader understandable during early testing without discarding the complete per-title maps.) Tj ET
+BT /F1 8.15 Tf 52.00 135.25 Td (- Stopped and flushed an active timer only when its hero leaves composition, using the latest loading state inside disposal so ordinary) Tj ET
+BT /F1 8.15 Tf 58.00 125.60 Td (recomposition does not accidentally terminate an ongoing session.) Tj ET
+BT /F1 7.10 Tf 366.63 27.00 Td (Cinerific Work Log - September 29, 2026 \(U.S. EST\) Page 2) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 9 0 R >>
+endobj
+9 0 obj
+<< /Length 8870 >>
+stream
+BT /F1 15.00 Tf 52.00 749.00 Td (Cinerific Android App Work Log - September 29, 2026 \(U.S. EST\)) Tj ET
+BT /F1 10.50 Tf 52.00 718.80 Td (Work Completed - Favorites Statistics, Typography, and Spacing) Tj ET
+BT /F1 8.15 Tf 52.00 708.00 Td (- Uppercased every displayed title reference used by Most Frequently Viewed, Longest Playtime, and Favorite Genre while leaving the) Tj ET
+BT /F1 8.15 Tf 58.00 698.35 Td (multiplication symbol and numeric values untouched.) Tj ET
+BT /F1 8.15 Tf 52.00 688.70 Td (- Reduced statistic title names to 16sp, then restored the multiplication sign, count, and elapsed-time quantities to their prior 20sp) Tj ET
+BT /F1 8.15 Tf 58.00 679.05 Td (treatment. This preserves emphasis on the measured value without allowing long uppercase names to dominate the panel.) Tj ET
+BT /F1 8.15 Tf 52.00 669.40 Td (- Calculated Favorite Genre from cumulative playback duration rather than raw play taps. Once at least one title has played, the genre with) Tj ET
+BT /F1 8.15 Tf 58.00 659.75 Td (the longest total runtime appears in uppercase beneath its header using the same title typography as the other analytics values.) Tj ET
+BT /F1 8.15 Tf 52.00 650.10 Td (- Reworked the four analytics stacks so each white header stays paired with its own uppercase value. Final header-to-value spacing is) Tj ET
+BT /F1 8.15 Tf 58.00 640.45 Td (20 design units, while the inter-stack gap follows the established distance from the Shows card row to Most Frequently Viewed.) Tj ET
+BT /F1 8.15 Tf 52.00 630.80 Td (- Kept value rendering conditional so an untouched account does not receive fabricated titles, counts, durations, genres, or devices.) Tj ET
+BT /F1 8.15 Tf 58.00 621.15 Td (Each section becomes informative only after its corresponding state exists.) Tj ET
+BT /F1 8.15 Tf 52.00 611.50 Td (- Formatted duration as zero-padded hours, minutes, and seconds while allowing accumulated hours to continue beyond a single) Tj ET
+BT /F1 8.15 Tf 58.00 601.85 Td (clock cycle. The multiplication sign remains a distinct value element rather than part of the uppercased program name.) Tj ET
+BT /F1 8.15 Tf 52.00 592.20 Td (- Derived genre leadership from the full per-title playtime map and the catalog metadata associated with each movie or show, then) Tj ET
+BT /F1 8.15 Tf 58.00 582.55 Td (compared aggregate duration by genre. This ensures several sessions in one genre can collectively outrank a single long title in) Tj ET
+BT /F1 8.15 Tf 58.00 572.90 Td (another.) Tj ET
+BT /F1 8.15 Tf 52.00 563.25 Td (- Kept the white metric labels and their uppercase values as deliberate two-line stacks, then separated those stacks from one another.) Tj ET
+BT /F1 8.15 Tf 58.00 553.60 Td (This corrected the intermediate layout in which a value appeared visually attached to the following header.) Tj ET
+BT /F1 10.50 Tf 52.00 540.75 Td (Work Completed - Account-Scoped Most Used Device) Tj ET
+BT /F1 8.15 Tf 52.00 529.95 Td (- Added durable device-use records keyed to the signed-in account rather than to a shared application-wide identity. Each record stores) Tj ET
+BT /F1 8.15 Tf 58.00 520.30 Td (manufacturer, model, release year, use count, and last-used state, preventing unrelated profiles such as Martin and Janny from) Tj ET
+BT /F1 8.15 Tf 58.00 510.65 Td (inheriting another account's device label.) Tj ET
+BT /F1 8.15 Tf 52.00 501.00 Td (- Resolved the connected handset as Samsung Galaxy S21 FE 5G, model SM-G990U, released in 2022, and exposed that label beneath) Tj ET
+BT /F1 8.15 Tf 58.00 491.35 Td (Most Used Device for the active account. Unknown combinations retain a defensive manufacturer/model fallback.) Tj ET
+BT /F1 8.15 Tf 52.00 481.70 Td (- Updated device usage when the account enters the authenticated experience, while preserving the separation between account identity,) Tj ET
+BT /F1 8.15 Tf 58.00 472.05 Td (playback statistics, and visual Favorites state.) Tj ET
+BT /F1 8.15 Tf 52.00 462.40 Td (- Encoded the normalized manufacturer and hardware model into a stable, URL-safe identifier, stored the display) Tj ET
+BT /F1 8.15 Tf 58.00 452.75 Td (manufacturer/model/year independently, and retained the raw model for future mappings without exposing preference-key punctuation.) Tj ET
+BT /F1 8.15 Tf 52.00 443.10 Td (- Selected Most Used Device first by use count and then by last-used timestamp. Because the preference key begins with the active profile) Tj ET
+BT /F1 8.15 Tf 58.00 433.45 Td (name, identical hardware can accrue independent histories for Steve, Martin, Janny, or later accounts.) Tj ET
+BT /F1 8.15 Tf 52.00 423.80 Td (- Recorded device usage in a dedicated preference store instead of mixing it into playback statistics. The separate schema limits) Tj ET
+BT /F1 8.15 Tf 58.00 414.15 Td (migration risk and keeps removal or revision of one analytics family from corrupting the other.) Tj ET
+BT /F1 10.50 Tf 52.00 401.30 Td (Work Completed - Portrait-Phone Settings Adaptation) Tj ET
+BT /F1 8.15 Tf 52.00 390.50 Td (- Introduced an explicit portrait-phone breakpoint below 600dp and kept the existing tablet layout as a separate unchanged branch. The) Tj ET
+BT /F1 8.15 Tf 58.00 380.85 Td (work is therefore reversible and isolated rather than a wholesale replacement of the reference composition.) Tj ET
+BT /F1 8.15 Tf 52.00 371.20 Td (- Moved Signed in as, the avatar, uppercase account name, and Sign out control into a compact in-flow account card at the top of) Tj ET
+BT /F1 8.15 Tf 58.00 361.55 Td (phone Settings. This removes the tablet-only detached right column and gives the remaining controls the full narrow width.) Tj ET
+BT /F1 8.15 Tf 52.00 351.90 Td (- Rebuilt phone setting rows with weighted text and control columns, balanced side padding, 22sp setting labels, 16sp supporting copy,) Tj ET
+BT /F1 8.15 Tf 58.00 342.25 Td (and phone-specific vertical gaps. Toggle and language controls use a 0.7 component scale while retaining practical touch targets.) Tj ET
+BT /F1 8.15 Tf 52.00 332.60 Td (- Adjusted phone section headers to 24sp with suitable container height, preserved the Accessibility and Playback grouping, and added) Tj ET
+BT /F1 8.15 Tf 58.00 322.95 Td (bottom clearance so the final rows scroll above the persistent navigation area.) Tj ET
+BT /F1 8.15 Tf 52.00 313.30 Td (- Kept the breakpoint dependent on both portrait orientation and a maximum width below 600dp. A narrow landscape surface therefore) Tj ET
+BT /F1 8.15 Tf 58.00 303.65 Td (does not silently inherit the portrait stack, and a portrait tablet remains on the established reference layout.) Tj ET
+BT /F1 8.15 Tf 52.00 294.00 Td (- Placed the phone account card inside the same vertically scrolling content rather than as a canvas overlay, allowing long settings) Tj ET
+BT /F1 8.15 Tf 58.00 284.35 Td (content and system insets to determine its natural position without covering controls.) Tj ET
+BT /F1 8.15 Tf 52.00 274.70 Td (- Allowed the setting-description column to take the remaining row width and held the language selector or switch in a compact trailing) Tj ET
+BT /F1 8.15 Tf 58.00 265.05 Td (column with a fixed gap. Long explanatory copy can wrap without forcing controls beyond the viewport.) Tj ET
+BT /F1 8.15 Tf 52.00 255.40 Td (- Preserved the tablet's signed-in scale and measured sign-out-center alignment only in the non-phone branch. The new phone card) Tj ET
+BT /F1 8.15 Tf 58.00 245.75 Td (owns its own avatar and action arrangement, so phone tuning cannot feed coordinates back into the reference panel.) Tj ET
+BT /F1 10.50 Tf 52.00 232.90 Td (Work Completed - Runtime Comparison and Refinement) Tj ET
+BT /F1 8.15 Tf 52.00 222.10 Td (- Installed and exercised the same debug APK on the connected Samsung device R5CRC33MGNZ at 1080 by 2340 portrait and on) Tj ET
+BT /F1 8.15 Tf 58.00 212.45 Td (emulator-5554, the Standard tablet emulator with an 800 by 1280 logical portrait capture.) Tj ET
+BT /F1 8.15 Tf 52.00 202.80 Td (- Checked the phone Settings screen at the top, middle, and bottom of its scroll range, including language-dropdown expansion, all) Tj ET
+BT /F1 8.15 Tf 58.00 193.15 Td (toggle rows, account actions, section labels, clipping behavior, and final bottom-navigation clearance.) Tj ET
+BT /F1 8.15 Tf 52.00 183.50 Td (- Compared the tablet result directly with the supplied screenshot and confirmed that the accepted two-column account placement,) Tj ET
+BT /F1 8.15 Tf 58.00 173.85 Td (section widths, row rhythm, and control scale remained on the pre-existing tablet path.) Tj ET
+BT /F1 8.15 Tf 52.00 164.20 Td (- Verified the physical phone's compact account block, Accessibility rows, Playback rows, and terminal Wi-Fi/download controls as) Tj ET
+BT /F1 8.15 Tf 58.00 154.55 Td (separate visual checkpoints rather than treating a single top-of-page screenshot as complete coverage.) Tj ET
+BT /F1 7.10 Tf 366.63 27.00 Td (Cinerific Work Log - September 29, 2026 \(U.S. EST\) Page 3) Tj ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 11 0 R >>
+endobj
+11 0 obj
+<< /Length 8029 >>
+stream
+BT /F1 15.00 Tf 52.00 749.00 Td (Cinerific Android App Work Log - September 29, 2026 \(U.S. EST\)) Tj ET
+BT /F1 10.50 Tf 52.00 718.80 Td (Implementation Scope Recorded) Tj ET
+BT /F1 8.15 Tf 52.00 708.00 Td (- Commit 3b12c6c refined portrait authentication spacing and username transitions; commit 5c9a4a3 refined authentication navigation) Tj ET
+BT /F1 8.15 Tf 58.00 698.35 Td (and return transitions; commit 8c33f91 added Favorites analytics and playback tracking; commit 1f58536 adapted Settings for portrait) Tj ET
+BT /F1 8.15 Tf 58.00 688.70 Td (phones.) Tj ET
+BT /F1 8.15 Tf 52.00 679.05 Td (- Across the September 29 commit range, seven tracked files changed with 835 insertions and 130 deletions before the documentation) Tj ET
+BT /F1 8.15 Tf 58.00 669.40 Td (refresh. The primary implementation remained concentrated in the three Compose source files and three localized string catalogs.) Tj ET
+BT /F1 8.15 Tf 52.00 659.75 Td (- CinerificIntroView.kt accounted for 207 additions and 60 deletions across the range; CinerificApp.kt added 245 lines of state and) Tj ET
+BT /F1 8.15 Tf 58.00 650.10 Td (persistence; CinerificDestinationScreen.kt carried 375 additions and 63 deletions for Favorites and Settings presentation.) Tj ET
+BT /F1 10.50 Tf 52.00 637.25 Td (Validation and Checks Performed) Tj ET
+BT /F1 8.15 Tf 52.00 626.45 Td (- Verified the date twice in America/New_York: Tuesday, September 29, 2026, with daylight-saving offset EDT, UTC-04:00. Preserved) Tj ET
+BT /F1 8.15 Tf 58.00 616.80 Td (U.S. EST only where required by the historical title and footer convention.) Tj ET
+BT /F1 8.15 Tf 52.00 607.15 Td (- Ran the project snapshot script after the final source commit and reviewed the resulting inventory and source excerpts. The snapshot) Tj ET
+BT /F1 8.15 Tf 58.00 597.50 Td (is intentionally left refreshed beside this PDF for the next work session.) Tj ET
+BT /F1 8.15 Tf 52.00 587.85 Td (- Confirmed the September 29 commit range and totals with Git, reviewed each commit's file-level statistics, and checked the current) Tj ET
+BT /F1 8.15 Tf 58.00 578.20 Td (worktree so the report distinguishes committed implementation from documentation artifacts.) Tj ET
+BT /F1 8.15 Tf 52.00 568.55 Td (- Built the debug application successfully after the implemented changes and installed the same APK on both the USB-connected Samsung) Tj ET
+BT /F1 8.15 Tf 58.00 558.90 Td (phone and Standard tablet emulator.) Tj ET
+BT /F1 8.15 Tf 52.00 549.25 Td (- Exercised Create My Account, Sign In, and Forgot Password in portrait, including username entry and clearing, Broadway-name) Tj ET
+BT /F1 8.15 Tf 58.00 539.60 Td (motion, sticky-chevron depth, banner synchronization, bottom-only return gesture, and Welcome label restoration.) Tj ET
+BT /F1 8.15 Tf 52.00 529.95 Td (- Exercised Favorites card sizing, empty and filled holders, two-way dragging and fling, enlarged removal controls, view-count) Tj ET
+BT /F1 8.15 Tf 58.00 520.30 Td (updates, indefinite spinners, second-by-second runtime display, uppercase values, 16sp titles, genre selection, device ownership, and) Tj ET
+BT /F1 8.15 Tf 58.00 510.65 Td (final statistic spacing.) Tj ET
+BT /F1 8.15 Tf 52.00 501.00 Td (- Exercised portrait-phone Settings through its complete scroll range and confirmed the tablet branch remained visually stable. Checked) Tj ET
+BT /F1 8.15 Tf 58.00 491.35 Td (expanded language controls, toggles, account actions, lower rows, and navigation clearance.) Tj ET
+BT /F1 8.15 Tf 52.00 481.70 Td (- Compared logical and physical display characteristics when interpreting captures: the phone reported 1080 by 2340 portrait, while the) Tj ET
+BT /F1 8.15 Tf 58.00 472.05 Td (rotated emulator exposed an 800 by 1280 logical portrait surface over its tablet profile.) Tj ET
+BT /F1 8.15 Tf 52.00 462.40 Td (- Confirmed that each localized Favorites header now names the metric without carrying an obsolete example quantity, leaving the) Tj ET
+BT /F1 8.15 Tf 58.00 452.75 Td (common live-value renderer responsible for the actual count or duration.) Tj ET
+BT /F1 8.15 Tf 52.00 443.10 Td (- Validated this output as a four-page U.S. Letter PDF 1.4 document with Helvetica, OpenAI Codex metadata, extractable text, repeated) Tj ET
+BT /F1 8.15 Tf 58.00 433.45 Td (titles, and right-aligned numbered footers. Rendered all pages to images and inspected them for clipping, overlap, orphaned headings,) Tj ET
+BT /F1 8.15 Tf 58.00 423.80 Td (and uneven density.) Tj ET
+BT /F1 10.50 Tf 52.00 410.95 Td (Files Touched During September 29) Tj ET
+BT /F1 8.15 Tf 52.00 400.15 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt - portrait authentication spacing, username reveal, chevron/banner) Tj ET
+BT /F1 8.15 Tf 58.00 390.50 Td (animation, bottom-gated return navigation, and Welcome re-entry visibility.) Tj ET
+BT /F1 8.15 Tf 52.00 380.85 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt - persistent playback counters, elapsed sessions, genre duration totals,) Tj ET
+BT /F1 8.15 Tf 58.00 371.20 Td (and account-scoped device-use state.) Tj ET
+BT /F1 8.15 Tf 52.00 361.55 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt - Favorites card interaction and analytics presentation,) Tj ET
+BT /F1 8.15 Tf 58.00 351.90 Td (device label rendering, statistics spacing, and responsive Settings branches.) Tj ET
+BT /F1 8.15 Tf 52.00 342.25 Td (- app/src/main/res/values/strings.xml, values-es/strings.xml, and values-zh-rCN/strings.xml - removed obsolete parenthetical) Tj ET
+BT /F1 8.15 Tf 58.00 332.60 Td (placeholder statistics from Favorites headers.) Tj ET
+BT /F1 8.15 Tf 52.00 322.95 Td (- cinerific_PROJECT_SNAPSHOT.txt - mechanically refreshed after the committed implementation to record the current repository) Tj ET
+BT /F1 8.15 Tf 58.00 313.30 Td (state.) Tj ET
+BT /F1 8.15 Tf 52.00 303.65 Td (- cinerific_worklog_september 29.pdf - generated as today's first and latest worklog artifact.) Tj ET
+BT /F1 10.50 Tf 52.00 290.80 Td (Follow-Up Context) Tj ET
+BT /F1 8.15 Tf 52.00 280.00 Td (- Favorites analytics are now driven by locally persisted interactions and can be tested by starting one or more hero titles, leaving their) Tj ET
+BT /F1 8.15 Tf 58.00 270.35 Td (spinners active, and returning to Favorites to compare count, duration, genre, and current-account device results.) Tj ET
+BT /F1 8.15 Tf 52.00 260.70 Td (- The portrait Settings implementation is isolated behind the narrow breakpoint. Future refinements can adjust phone-only constants) Tj ET
+BT /F1 8.15 Tf 58.00 251.05 Td (without moving the established tablet reference, and landscape behavior remains available for separate evaluation.) Tj ET
+BT /F1 8.15 Tf 52.00 241.40 Td (- The current snapshot contains mechanically captured source whitespace that predates this report's PDF validation; it was not) Tj ET
+BT /F1 8.15 Tf 58.00 231.75 Td (reformatted because the snapshot is generated evidence rather than hand-maintained application source.) Tj ET
+BT /F1 8.15 Tf 52.00 222.10 Td (- No source edits were introduced solely to manufacture this worklog. The new PDF and refreshed snapshot are the only expected) Tj ET
+BT /F1 8.15 Tf 58.00 212.45 Td (uncommitted documentation artifacts at handoff.) Tj ET
+BT /F1 10.50 Tf 52.00 199.60 Td (Output Artifact) Tj ET
+BT /F1 8.15 Tf 52.00 188.80 Td (Created cinerific_worklog_september 29.pdf at the repository root. The filename follows the established lowercase Cinerific) Tj ET
+BT /F1 8.15 Tf 52.00 179.15 Td (convention, retains the historical space before the day number, and omits a part suffix because this is the first September 29 worklog. The) Tj ET
+BT /F1 8.15 Tf 52.00 169.50 Td (artifact is a four-page U.S. Letter PDF with searchable text, stable pagination, matching metadata, and a complete technical record of the) Tj ET
+BT /F1 8.15 Tf 52.00 159.85 Td (authentication, Favorites, device-tracking, and portrait Settings work completed through 1f58536.) Tj ET
+BT /F1 7.10 Tf 366.63 27.00 Td (Cinerific Work Log - September 29, 2026 \(U.S. EST\) Page 4) Tj ET
+endstream
+endobj
+12 0 obj
+<< /Title (Cinerific Android App Work Log - September 29, 2026 \(U.S. EST\)) /Author (OpenAI Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260929151552-04'00') >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000140 00000 n 
+0000000237 00000 n 
+0000000363 00000 n 
+0000008933 00000 n 
+0000009059 00000 n 
+0000017949 00000 n 
+0000018075 00000 n 
+0000026996 00000 n 
+0000027124 00000 n 
+0000035205 00000 n 
+trailer
+<< /Size 13 /Root 1 0 R /Info 12 0 R >>
+startxref
+35461
+%%EOF
