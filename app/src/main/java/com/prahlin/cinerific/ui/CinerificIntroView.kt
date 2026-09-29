@@ -118,7 +118,9 @@ private const val MOCK_FORM_PORTRAIT_LOGO_HEADER_ALIGNMENT_Y = 12f
 private const val MOCK_FORM_LANDSCAPE_LOGO_HEADER_ALIGNMENT_Y = -1f
 private const val MOCK_CREATE_PORTRAIT_VIEWPORT_GAP = 18f
 private const val MOCK_CREATE_PORTRAIT_VIEWPORT_BOTTOM_RESERVE = 92f
-private const val MOCK_PORTRAIT_STICKY_BOTTOM_SCALE = 2f
+private const val MOCK_PORTRAIT_STICKY_BOTTOM_SCALE = 3f
+private const val MOCK_PORTRAIT_STICKY_BOTTOM_CHEVRON_SCALE = 2f
+private const val MOCK_PORTRAIT_STICKY_BOTTOM_CHEVRON_STROKE_SCALE = 1.15f
 private const val MOCK_CREATE_PORTRAIT_CONTENT_BOTTOM_GAP = 44f
 private const val MOCK_FORM_FIELD_RADIUS = 10f
 private const val MOCK_FORM_LABEL_TEXT_SIZE = 24f
@@ -177,6 +179,7 @@ private const val MOCK_CREATE_USERNAME_LETTER_SPACING = 0.10f
 private const val MOCK_CREATE_USERNAME_STROKE_WIDTH = 3f
 private const val MOCK_CREATE_USERNAME_SHADOW_RADIUS = 10f
 private const val MOCK_CREATE_USERNAME_SHADOW_OFFSET_Y = 4f
+private const val MOCK_CREATE_USERNAME_REVEAL_MS = 280
 private const val MOCK_CREATE_AVATAR_CAROUSEL_MS = 280
 private const val MOCK_CREATE_AVATAR_CHEVRON_SIDE_GAP = 20f
 private const val MOCK_CREATE_AVATAR_CHEVRON_WIDTH = 18f
@@ -198,9 +201,9 @@ private const val MOCK_FORM_TITLE_TEXT_SIZE = 33f
 private const val MOCK_FORM_TITLE_BASELINE_GAP = 24f
 private const val MOCK_FORM_TITLE_OPTICAL_BOTTOM_OFFSET = 7f
 private const val MOCK_FORGOT_PASSWORD_USERNAME_BODY_TEXT =
-    "No Sign-In Information? No problem.\n\nSelect what to recover - Username or Password - and receive a helper email in just a few seconds.\n\nAs long as you have a Cinerific account, the email we send will contain all the information required to get you back on track, pronto."
+    "No Sign-In Information?\nNo problem.\n\nSelect what to recover - Username or Password - and receive a helper email in just a few seconds.\n\nAs long as you have a Cinerific account, the email we send will contain all the information required to get you back on track, pronto."
 private const val MOCK_FORGOT_PASSWORD_PASSWORD_BODY_TEXT =
-    "No Sign-In Information? No problem.\n\nSelect what to recover - Username or Password - and receive a helper email in just a few seconds.\n\nAs long as you have a Cinerific account, the email we send will contain all the information required to get you back on track, pronto."
+    "No Sign-In Information?\nNo problem.\n\nSelect what to recover - Username or Password - and receive a helper email in just a few seconds.\n\nAs long as you have a Cinerific account, the email we send will contain all the information required to get you back on track, pronto."
 private const val MOCK_FORGOT_PASSWORD_EMPTY_HELP_TEXT =
     "Enter your email address to continue. We'll only reply if an account exists."
 private const val MOCK_FORGOT_PASSWORD_USERNAME_HELP_TEXT =
@@ -213,7 +216,7 @@ private const val MOCK_FORGOT_PASSWORD_USERNAME_SENT_HELP_TEXT =
     "Check your inbox for the username associated with this account."
 private const val MOCK_FORGOT_PASSWORD_PASSWORD_SENT_HELP_TEXT =
     "Check your inbox for the next step. Reset links expire soon."
-private const val MOCK_FORGOT_PASSWORD_SELECTOR_TEXT = "Recover my:"
+private const val MOCK_FORGOT_PASSWORD_SELECTOR_TEXT = "Recover:"
 private const val MOCK_FORGOT_PASSWORD_USERNAME_BUTTON_TEXT = "Send Reminder Link"
 private const val MOCK_FORGOT_PASSWORD_PASSWORD_BUTTON_TEXT = "Send Reset Link"
 private const val MOCK_FORGOT_PASSWORD_LOADING_BUTTON_TEXT = "Sending..."
@@ -442,6 +445,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private var mockInputDimActiveDropdown: MockDropdown? = null
     private var rememberMeChecked = false
     private var usernameText = ""
+    private var mockCreateUsernameRevealProgress = 0f
+    private var lastMockCreateUsernameRevealMillis = SystemClock.uptimeMillis()
     private var passwordText = ""
     private var confirmPasswordText = ""
     private var emailText = ""
@@ -536,6 +541,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
         rememberMeChecked = snapshot.rememberMeChecked
         usernameText = snapshot.usernameText
+        mockCreateUsernameRevealProgress = if (usernameText.isEmpty()) 0f else 1f
         passwordText = snapshot.passwordText
         confirmPasswordText = snapshot.confirmPasswordText
         emailText = snapshot.emailText
@@ -631,6 +637,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         updateMockFormFocusAnimation()
         updateMockLandscapeInputLiftAnimation()
         updateMockInputDimAnimation()
+        updateMockCreateUsernameRevealAnimation()
         val formFocusMotion = FastOutSlowInEasing.transform(mockFormFocusProgress)
 
         val logoAlpha = linearSegmentMs(progress, 90, LOGO_ENTRY_START_MS)
@@ -677,19 +684,6 @@ internal class CinerificIntroView(context: Context) : View(context) {
             } else {
                 drawMockSignInForm(canvas, stage.left, stage.top, stage.scale, mockMotion, formFocusMotion)
             }
-            drawBackChevron(
-                canvas,
-                ACCOUNT_PROMPT_SIGN_IN_CENTER_X,
-                mockBackChevronRowTopY(),
-                stage.left,
-                if (usesPortraitStackedAuthLayout()) {
-                    stage.top
-                } else {
-                    accountPromptStageTop(stage.scale)
-                },
-                stage.scale,
-                mockMotion
-            )
         }
         drawAccountPrompt(
             canvas = canvas,
@@ -709,6 +703,27 @@ internal class CinerificIntroView(context: Context) : View(context) {
             mockMotion,
             formFocusMotion
         )
+        if (mockSignInStartMillis != null) {
+            drawPortraitStickyBottomBannerForeground(
+                canvas,
+                stage,
+                blackToPurple,
+                purpleToSettle
+            )
+            drawBackChevron(
+                canvas,
+                ACCOUNT_PROMPT_SIGN_IN_CENTER_X,
+                mockBackChevronRowTopY(),
+                stage.left,
+                if (usesPortraitStackedAuthLayout()) {
+                    stage.top
+                } else {
+                    accountPromptStageTop(stage.scale)
+                },
+                stage.scale,
+                mockMotion
+            )
+        }
 
         if (
             progress < 1f ||
@@ -720,7 +735,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
             isPortraitProfileCarouselAnimating() ||
             isMockCreateAvatarCarouselAnimating() ||
             isMockForgotPasswordSubmissionAnimating() ||
-            isMockInputDimAnimating()
+            isMockInputDimAnimating() ||
+            isMockCreateUsernameRevealAnimating()
         ) {
             postInvalidateOnAnimation()
         }
@@ -2350,7 +2366,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
             stageScale,
             alpha,
             MOCK_FORGOT_PASSWORD_BODY_LEAD_TEXT_SIZE,
-            MOCK_FORGOT_PASSWORD_BODY_LEAD_LINE_HEIGHT
+            MOCK_FORGOT_PASSWORD_BODY_LEAD_LINE_HEIGHT,
+            forceLineBreaks = true
         )
         val middleText = paragraphs.getOrNull(1) ?: return leadBottomY
         val middleBottomY = drawMockFormParagraph(
@@ -2397,13 +2414,20 @@ internal class CinerificIntroView(context: Context) : View(context) {
         alpha: Float,
         textSize: Float,
         lineHeight: Float,
-        textAlign: Paint.Align = Paint.Align.CENTER
+        textAlign: Paint.Align = Paint.Align.CENTER,
+        forceLineBreaks: Boolean = false
     ): Float {
         formInputPaint.textSize = textSize * stageScale
         formInputPaint.alpha = (alpha.coerceIn(0f, 1f) * 218f).roundToInt()
         formInputPaint.textAlign = textAlign
 
-        val lines = wrappedTextLines(text, maxWidth * stageScale, formInputPaint)
+        val lines = if (forceLineBreaks) {
+            text.split('\n').flatMap { line ->
+                wrappedTextLines(line, maxWidth * stageScale, formInputPaint)
+            }
+        } else {
+            wrappedTextLines(text, maxWidth * stageScale, formInputPaint)
+        }
         val metrics = formInputPaint.fontMetrics
         val x = when (textAlign) {
             Paint.Align.LEFT -> stageLeft + (centerX - maxWidth / 2f) * stageScale
@@ -2427,22 +2451,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
         stageScale: Float,
         alpha: Float
     ) {
-        val avatarScale = MOCK_CREATE_AVATAR_STACK_SCALE
-        val scaledAvatarSize = MOCK_CREATE_AVATAR_SIZE * avatarScale
-        val labelBaselineFromTop = MOCK_CREATE_AVATAR_LABEL_BASELINE_FROM_TOP * avatarScale
-        val avatarTopGap = MOCK_CREATE_AVATAR_TOP_GAP * avatarScale
         val centerX = stageLeft + (columnX + MOCK_FORM_WIDTH / 2f) * stageScale
-        val baselineY = stageTop + (firstFieldY + labelBaselineFromTop) * stageScale
-        drawMockCreateUsername(canvas, centerX, baselineY, stageScale, alpha)
-
-        val avatarLeftX = columnX + (MOCK_FORM_WIDTH - scaledAvatarSize) / 2f
-        val avatarTopY = firstFieldY + labelBaselineFromTop + avatarTopGap
-        val avatarBounds = Bounds(
-            avatarLeftX,
-            avatarTopY,
-            scaledAvatarSize,
-            scaledAvatarSize
-        )
+        val avatarBounds = mockCreateAvatarBounds(columnX, firstFieldY)
         val usesSeparatedMotionLayers = isMockCreateAvatarCarouselAnimating() ||
             (activeMockCreateAvatarDrag && mockCreateAvatarDragMoved)
         if (usesSeparatedMotionLayers) {
@@ -2558,6 +2568,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
             stageScale,
             alpha
         )
+        val usernameBaselineY = stageTop + mockCreateUsernameBaselineY(firstFieldY) * stageScale
+        drawMockCreateUsername(canvas, centerX, usernameBaselineY, stageScale, alpha)
     }
 
     private fun drawMockCreateAvatarTransitionOverlay(
@@ -2650,12 +2662,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 portraitAuthViewportBottomPx(stage)
             )
         }
-        val labelBaselineFromTop =
-            MOCK_CREATE_AVATAR_LABEL_BASELINE_FROM_TOP * MOCK_CREATE_AVATAR_STACK_SCALE
         drawMockCreateUsername(
             canvas,
             contentStage.left + (columnX + MOCK_FORM_WIDTH / 2f) * contentStage.scale,
-            contentStage.top + (sectionY + labelBaselineFromTop) * contentStage.scale,
+            contentStage.top + mockCreateUsernameBaselineY(sectionY) * contentStage.scale,
             contentStage.scale,
             1f
         )
@@ -3340,7 +3350,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
     ) {
         val chevronAlpha = alpha.coerceIn(0f, 1f) * if (pressedBackChevron) 0.68f else 0.92f
         val chevronScale = if (isPortraitIntroLayout()) {
-            MOCK_PORTRAIT_STICKY_BOTTOM_SCALE
+            MOCK_PORTRAIT_STICKY_BOTTOM_CHEVRON_SCALE
         } else {
             1f
         }
@@ -3350,10 +3360,35 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val halfWidth = MOCK_BACK_CHEVRON_WIDTH * chevronScale * stageScale / 2f
 
         backChevronPaint.alpha = (chevronAlpha * 255f).roundToInt()
-        backChevronPaint.strokeWidth = MOCK_BACK_CHEVRON_STROKE_WIDTH * chevronScale * stageScale
+        val strokeScale = if (isPortraitIntroLayout()) {
+            MOCK_PORTRAIT_STICKY_BOTTOM_CHEVRON_STROKE_SCALE
+        } else {
+            1f
+        }
+        backChevronPaint.strokeWidth =
+            MOCK_BACK_CHEVRON_STROKE_WIDTH * chevronScale * strokeScale * stageScale
         canvas.drawLine(center - halfWidth, top, center, bottom, backChevronPaint)
         canvas.drawLine(center, bottom, center + halfWidth, top, backChevronPaint)
         backChevronPaint.alpha = 255
+    }
+
+    private fun drawPortraitStickyBottomBannerForeground(
+        canvas: Canvas,
+        stage: StageMetrics,
+        solidProgress: Float,
+        gradientProgress: Float
+    ) {
+        if (!usesPortraitStackedAuthLayout()) return
+
+        canvas.save()
+        canvas.clipRect(
+            0f,
+            portraitAuthViewportBottomPx(stage),
+            width.toFloat(),
+            (height - systemBarInsetBottomPx).toFloat()
+        )
+        drawIntroBackground(canvas, solidProgress, gradientProgress)
+        canvas.restore()
     }
 
     private fun decode(resId: Int): Bitmap {
@@ -4078,7 +4113,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         stage: StageMetrics
     ): Boolean {
         val chevronScale = if (isPortraitIntroLayout()) {
-            MOCK_PORTRAIT_STICKY_BOTTOM_SCALE
+            MOCK_PORTRAIT_STICKY_BOTTOM_CHEVRON_SCALE
         } else {
             1f
         }
@@ -4102,12 +4137,21 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val scaledAvatarSize = MOCK_CREATE_AVATAR_SIZE * MOCK_CREATE_AVATAR_STACK_SCALE
         return Bounds(
             columnX + (MOCK_FORM_WIDTH - scaledAvatarSize) / 2f,
-            firstFieldY +
-                MOCK_CREATE_AVATAR_LABEL_BASELINE_FROM_TOP * MOCK_CREATE_AVATAR_STACK_SCALE +
-                MOCK_CREATE_AVATAR_TOP_GAP * MOCK_CREATE_AVATAR_STACK_SCALE,
+            mockCreateAvatarTopY(firstFieldY),
             scaledAvatarSize,
             scaledAvatarSize
         )
+    }
+
+    private fun mockCreateAvatarTopY(firstFieldY: Float): Float {
+        val originalTopOffset =
+            (MOCK_CREATE_AVATAR_LABEL_BASELINE_FROM_TOP + MOCK_CREATE_AVATAR_TOP_GAP) *
+                MOCK_CREATE_AVATAR_STACK_SCALE
+        if (!isPortraitIntroLayout()) return firstFieldY + originalTopOffset
+
+        val titleBottomFromContentTop =
+            -mockFormFieldGap() * 2f + MOCK_FORM_TITLE_OPTICAL_BOTTOM_OFFSET
+        return firstFieldY + titleBottomFromContentTop + MOCK_CREATE_PORTRAIT_SECTION_GAP
     }
 
     private fun mockCreateAvatarCarouselBounds(
@@ -4228,13 +4272,32 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun mockCreateAvatarStackHeight(): Float {
-        return (MOCK_CREATE_AVATAR_LABEL_BASELINE_FROM_TOP +
-            MOCK_CREATE_AVATAR_TOP_GAP + MOCK_CREATE_AVATAR_SIZE) *
+        return (MOCK_CREATE_AVATAR_LABEL_BASELINE_FROM_TOP * 2f +
+            MOCK_CREATE_AVATAR_TOP_GAP * 2f + MOCK_CREATE_AVATAR_SIZE) *
             MOCK_CREATE_AVATAR_STACK_SCALE
     }
 
+    private fun mockCreateUsernameBaselineY(firstFieldY: Float): Float {
+        if (!isPortraitIntroLayout()) return firstFieldY + mockCreateAvatarStackHeight()
+
+        createUsernameFillPaint.textSize = MOCK_CREATE_USERNAME_TEXT_SIZE
+        val usernameTextTopFromBaseline = createUsernameFillPaint.fontMetrics.ascent
+        val avatarBottomY = mockCreateAvatarTopY(firstFieldY) +
+            MOCK_CREATE_AVATAR_SIZE * MOCK_CREATE_AVATAR_STACK_SCALE
+        return avatarBottomY + MOCK_CREATE_PORTRAIT_SECTION_GAP - usernameTextTopFromBaseline
+    }
+
     private fun mockCreatePortraitUsernameOffsetY(): Float {
-        return mockCreateAvatarStackHeight() + MOCK_CREATE_PORTRAIT_SECTION_GAP
+        createUsernameFillPaint.textSize = MOCK_CREATE_USERNAME_TEXT_SIZE
+        val metrics = createUsernameFillPaint.fontMetrics
+        val collapsedOffset = mockCreateAvatarTopY(0f) +
+            MOCK_CREATE_AVATAR_SIZE * MOCK_CREATE_AVATAR_STACK_SCALE +
+            MOCK_CREATE_PORTRAIT_SECTION_GAP
+        val expandedOffset = mockCreateUsernameBaselineY(0f) +
+            metrics.descent +
+            MOCK_CREATE_PORTRAIT_SECTION_GAP
+        val revealMotion = FastOutSlowInEasing.transform(mockCreateUsernameRevealProgress)
+        return lerpFloat(collapsedOffset, expandedOffset, revealMotion)
     }
 
     private fun mockCreatePortraitPasswordOffsetY(): Float {
@@ -4473,7 +4536,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
             formTopY + mockForgotPasswordBodyTopGap(),
             copyWidth,
             MOCK_FORGOT_PASSWORD_BODY_LEAD_TEXT_SIZE,
-            MOCK_FORGOT_PASSWORD_BODY_LEAD_LINE_HEIGHT
+            MOCK_FORGOT_PASSWORD_BODY_LEAD_LINE_HEIGHT,
+            forceLineBreaks = true
         )
         paragraphs.getOrNull(1)?.let { middleText ->
             bottomY = mockParagraphBottomY(
@@ -4522,10 +4586,18 @@ internal class CinerificIntroView(context: Context) : View(context) {
         topY: Float,
         maxWidth: Float,
         textSize: Float,
-        lineHeight: Float
+        lineHeight: Float,
+        forceLineBreaks: Boolean = false
     ): Float {
         formInputPaint.textSize = textSize
-        return topY + wrappedTextLines(text, maxWidth, formInputPaint).size * lineHeight
+        val lineCount = if (forceLineBreaks) {
+            text.split('\n').sumOf { line ->
+                wrappedTextLines(line, maxWidth, formInputPaint).size
+            }
+        } else {
+            wrappedTextLines(text, maxWidth, formInputPaint).size
+        }
+        return topY + lineCount * lineHeight
     }
 
     private fun mockForgotRecoverySelectorLayout(
@@ -4654,9 +4726,12 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun mockBackChevronRowTopY(): Float {
         if (usesPortraitStackedAuthLayout()) {
-            return portraitSafeBottom() -
-                MOCK_CREATE_PORTRAIT_VIEWPORT_BOTTOM_RESERVE * MOCK_PORTRAIT_STICKY_BOTTOM_SCALE +
-                26f * MOCK_PORTRAIT_STICKY_BOTTOM_SCALE
+            val stickyBottomHeight =
+                MOCK_CREATE_PORTRAIT_VIEWPORT_BOTTOM_RESERVE * MOCK_PORTRAIT_STICKY_BOTTOM_SCALE
+            val chevronHeight =
+                MOCK_BACK_CHEVRON_HEIGHT * MOCK_PORTRAIT_STICKY_BOTTOM_CHEVRON_SCALE
+            return portraitSafeBottom() - stickyBottomHeight +
+                (stickyBottomHeight - chevronHeight) / 2f
         }
         return ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + signInAccountPromptExtraShiftY() +
             MOCK_BACK_CHEVRON_ROW_TOP_GAP
@@ -5188,6 +5263,19 @@ internal class CinerificIntroView(context: Context) : View(context) {
         }
     }
 
+    private fun updateMockCreateUsernameRevealAnimation() {
+        val now = SystemClock.uptimeMillis()
+        val elapsed = (now - lastMockCreateUsernameRevealMillis).coerceIn(0L, 48L)
+        lastMockCreateUsernameRevealMillis = now
+        val step = elapsed / MOCK_CREATE_USERNAME_REVEAL_MS.toFloat()
+        val target = if (usernameText.isEmpty()) 0f else 1f
+        mockCreateUsernameRevealProgress = moveToward(
+            mockCreateUsernameRevealProgress,
+            target,
+            step
+        )
+    }
+
     private fun isMockFormLabelAnimating(): Boolean {
         if (mockSignInStartMillis == null) return false
         return mockFieldLabelFloatProgress.any { (field, progress) ->
@@ -5207,6 +5295,11 @@ internal class CinerificIntroView(context: Context) : View(context) {
         return mockInputDimProgress != mockInputDimTarget()
     }
 
+    private fun isMockCreateUsernameRevealAnimating(): Boolean {
+        val target = if (usernameText.isEmpty()) 0f else 1f
+        return mockCreateUsernameRevealProgress != target
+    }
+
     private fun restartMockFormLabelAnimation() {
         lastFormLabelAnimationMillis = SystemClock.uptimeMillis() - 16L
     }
@@ -5221,6 +5314,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun restartMockInputDimAnimation() {
         lastMockInputDimAnimationMillis = SystemClock.uptimeMillis() - 16L
+    }
+
+    private fun restartMockCreateUsernameRevealAnimation() {
+        lastMockCreateUsernameRevealMillis = SystemClock.uptimeMillis() - 16L
     }
 
     private fun mockLandscapeInputLiftTarget(): Float {
@@ -5349,6 +5446,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun setMockSignInFieldText(field: MockSignInField, text: String) {
         val limitedText = text.take(MOCK_FORM_INPUT_MAX_CHARS)
+        val usernameWasEmpty = usernameText.isEmpty()
         when (field) {
             MockSignInField.Username -> usernameText = limitedText
             MockSignInField.Password -> passwordText = limitedText
@@ -5357,6 +5455,9 @@ internal class CinerificIntroView(context: Context) : View(context) {
             MockSignInField.Month -> monthText = limitedText
             MockSignInField.Day -> dayText = limitedText
             MockSignInField.Year -> yearText = limitedText
+        }
+        if (field == MockSignInField.Username && usernameWasEmpty != usernameText.isEmpty()) {
+            restartMockCreateUsernameRevealAnimation()
         }
         if (activeMockFlow == MockAccountFlow.ForgotPassword && field == MockSignInField.Email) {
             resetMockForgotPasswordSubmission()
