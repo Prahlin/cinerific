@@ -437,6 +437,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private var portraitAuthScrollStartOffset = 0f
     private var portraitAuthScrollMoved = false
     private var mockDragReturnInProgress = false
+    private var mockDragReturnEligibleAtTouchDown = false
     private var focusedMockField: MockSignInField? = null
     private var mockInputDimProgress = 0f
     private var lastMockInputDimAnimationMillis = SystemClock.uptimeMillis()
@@ -747,6 +748,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             MotionEvent.ACTION_DOWN -> {
                 mockTouchDownX = event.x
                 mockTouchDownY = event.y
+                mockDragReturnEligibleAtTouchDown = false
                 portraitProfileSwipeMoved = false
                 portraitProfileDragDeltaX = 0f
                 if (mockSignInStartMillis != null) {
@@ -758,6 +760,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     if (isMockFlowSwitchAnimating()) {
                         return true
                     }
+                    mockDragReturnEligibleAtTouchDown = isMockAuthScreenAtBottom()
                     pressedCreateAccountPrompt = settledCreateAccountPromptHit(event.x, event.y)
                     pressedSignInPrompt = !pressedCreateAccountPrompt &&
                         settledSignInPromptHit(event.x, event.y)
@@ -887,6 +890,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     }
                     if (mockDropdownOptionsHit(mockTouchDownX, mockTouchDownY) == null && shouldStartMockDragReturn(event)) {
                         mockDragReturnInProgress = true
+                        portraitAuthScrollMoved = false
                         closeMockSignInScreen()
                     }
                     return true
@@ -909,6 +913,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     pressedAvatarProfile != null
             }
             MotionEvent.ACTION_UP -> {
+                mockDragReturnEligibleAtTouchDown = false
                 if (portraitAuthScrollMoved) {
                     portraitAuthScrollMoved = false
                     pressedMockField = null
@@ -1155,6 +1160,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 activeMockDropdownScroll = null
                 mockDropdownScrollMoved = false
                 mockDragReturnInProgress = false
+                mockDragReturnEligibleAtTouchDown = false
                 portraitAuthScrollMoved = false
                 portraitProfileSwipeMoved = false
                 portraitProfileDragDeltaX = 0f
@@ -3975,6 +3981,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val deltaY = event.y - portraitAuthScrollStartY
         if (!portraitAuthScrollMoved) {
             if (abs(deltaY) <= touchSlop || abs(deltaY) <= abs(deltaX)) return false
+            if (mockDragReturnEligibleAtTouchDown && deltaY < 0f) return false
+            mockDragReturnEligibleAtTouchDown = false
             portraitAuthScrollMoved = true
             pressedMockField = null
             pressedMockDropdown = null
@@ -4014,13 +4022,42 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun shouldStartMockDragReturn(event: MotionEvent): Boolean {
-        if (mockDragReturnInProgress || isMockSignInClosing()) return false
+        if (
+            mockDragReturnInProgress ||
+            isMockSignInClosing() ||
+            !mockDragReturnEligibleAtTouchDown
+        ) {
+            return false
+        }
 
-        val upwardDragY = mockTouchDownY - event.y
-        if (upwardDragY <= mockBackDragThresholdPx()) return false
+        val downwardScrollY = mockTouchDownY - event.y
+        if (downwardScrollY <= mockBackDragThresholdPx()) return false
 
         val dragX = event.x - mockTouchDownX
-        return upwardDragY > abs(dragX)
+        return downwardScrollY > abs(dragX)
+    }
+
+    private fun isMockAuthScreenAtBottom(): Boolean {
+        if (activeMockFlow == null) return false
+        if (!isPortraitIntroLayout()) return true
+
+        val stage = currentStageMetrics() ?: return false
+        val progress = FastOutSlowInEasing.transform(mockSignInProgress())
+        val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
+        val focusShiftY = mockFormFocusShiftY(
+            FastOutSlowInEasing.transform(mockFormFocusProgress)
+        )
+        val maxScrollY = when (activeMockFlow) {
+            MockAccountFlow.CreateAccount -> portraitCreateMaxScrollY(stage, yOffset, focusShiftY)
+            MockAccountFlow.ForgotPassword -> portraitForgotPasswordMaxScrollY(
+                stage,
+                yOffset,
+                focusShiftY
+            )
+            MockAccountFlow.SignIn -> 0f
+            null -> return false
+        }
+        return portraitAuthScrollY >= maxScrollY - maxOf(1f, stage.scale)
     }
 
     private fun mockBackDragThresholdPx(): Float {
@@ -4390,9 +4427,11 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun portraitAuthViewportBottomPx(stage: StageMetrics): Float {
-        return height - systemBarInsetBottomPx -
+        val stickyBottomHeight =
             MOCK_CREATE_PORTRAIT_VIEWPORT_BOTTOM_RESERVE *
-            MOCK_PORTRAIT_STICKY_BOTTOM_SCALE * stage.scale
+                MOCK_PORTRAIT_STICKY_BOTTOM_SCALE * stage.scale
+        return height - systemBarInsetBottomPx -
+            stickyBottomHeight * portraitStickyBottomMotion()
     }
 
     private fun portraitAuthPointerInViewport(y: Float, stage: StageMetrics): Boolean {
@@ -4730,11 +4769,17 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 MOCK_CREATE_PORTRAIT_VIEWPORT_BOTTOM_RESERVE * MOCK_PORTRAIT_STICKY_BOTTOM_SCALE
             val chevronHeight =
                 MOCK_BACK_CHEVRON_HEIGHT * MOCK_PORTRAIT_STICKY_BOTTOM_CHEVRON_SCALE
-            return portraitSafeBottom() - stickyBottomHeight +
+            val settledTop = portraitSafeBottom() - stickyBottomHeight +
                 (stickyBottomHeight - chevronHeight) / 2f
+            return settledTop + stickyBottomHeight * (1f - portraitStickyBottomMotion())
         }
         return ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + signInAccountPromptExtraShiftY() +
             MOCK_BACK_CHEVRON_ROW_TOP_GAP
+    }
+
+    private fun portraitStickyBottomMotion(): Float {
+        if (!usesPortraitStackedAuthLayout()) return 0f
+        return FastOutSlowInEasing.transform(mockSignInProgress()).coerceIn(0f, 1f)
     }
 
     private fun mockCreateFormColumnForIndex(index: Int): Int {
@@ -6039,6 +6084,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             resetMockForgotPasswordSubmission()
             resetMockCreateAvatarCarousel()
             notifyIntroSnapshotChanged()
+            postInvalidateOnAnimation()
             return
         }
 
