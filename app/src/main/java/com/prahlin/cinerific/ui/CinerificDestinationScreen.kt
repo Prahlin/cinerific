@@ -41,6 +41,7 @@ import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
@@ -52,11 +53,13 @@ import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameNanos
@@ -215,7 +218,6 @@ private const val FAVORITE_BURST_STROKE = 2.4f
 private const val FAVORITE_BURST_DURATION_MS = 240
 private const val DETAIL_LOADING_SPINNER_WIDTH = 190f
 private const val DETAIL_LOADING_SCRIM_MAX_ALPHA = 0.68f
-private const val DETAIL_PLAY_LOADING_FEEDBACK_MS = 900L
 private const val DETAIL_HERO_LOGO_WIDTH = 300f
 private const val DETAIL_HERO_LOGO_HEIGHT = 214f
 internal const val DETAIL_HERO_LOGO_CENTER_Y = DETAIL_HERO_LOGO_HEIGHT / 2f
@@ -265,12 +267,12 @@ private const val DETAIL_CARD_REVEAL_DELAY_MS = 2400L
 private const val DETAIL_CARD_REVEAL_ANIMATION_MS = 900
 internal const val CINERIFIC_FAVORITES_CAPACITY = 5
 private const val FAVORITES_PLACEHOLDER_COUNT = CINERIFIC_FAVORITES_CAPACITY
-private const val FAVORITES_CARD_WIDTH = 198.786f
-private const val FAVORITES_CARD_HEIGHT = 138.85f
+private const val FAVORITES_CARD_WIDTH = DESTINATION_LIST_IMAGE_WIDTH
+private const val FAVORITES_CARD_HEIGHT = DESTINATION_LIST_IMAGE_HEIGHT
 private const val FAVORITES_CARD_RADIUS = 6.619f
 private const val FAVORITES_CARD_BORDER = 3.971f
 private const val FAVORITES_CARD_SHADOW = 10.59f
-private const val FAVORITES_REMOVE_BUTTON_SIZE = 33.131f
+private const val FAVORITES_REMOVE_BUTTON_SIZE = 66.262f
 private const val FAVORITES_REMOVE_BUTTON_MARGIN = 6.619f
 
 private val DestinationTop = Color(0xFF080007)
@@ -301,6 +303,12 @@ internal fun CinerificDestinationScreen(
     onFavoriteToggled: (String) -> Unit = {},
     userProgramRatings: Map<String, Int> = emptyMap(),
     onProgramRated: (String, Int) -> Unit = { _, _ -> },
+    mostFrequentlyViewedProgramTitle: String? = null,
+    mostFrequentlyViewedPlayCount: Int? = null,
+    longestPlaytimeProgramTitle: String? = null,
+    longestPlaytimeMillis: Long? = null,
+    programPlaytimeMillis: Map<String, Long> = emptyMap(),
+    mostUsedDeviceName: String? = null,
     onProgramSelected: (String) -> Unit = {},
     catalogRoute: CinerificCatalogRoute? = null,
     onVerticalScrollabilityChanged: (Boolean) -> Unit = {},
@@ -334,6 +342,12 @@ internal fun CinerificDestinationScreen(
         CinerificDestination.Favorites -> CinerificFavoritesScreen(
             favoriteProgramTitles = favoriteProgramTitles,
             onFavoriteToggled = onFavoriteToggled,
+            mostFrequentlyViewedProgramTitle = mostFrequentlyViewedProgramTitle,
+            mostFrequentlyViewedPlayCount = mostFrequentlyViewedPlayCount,
+            longestPlaytimeProgramTitle = longestPlaytimeProgramTitle,
+            longestPlaytimeMillis = longestPlaytimeMillis,
+            programPlaytimeMillis = programPlaytimeMillis,
+            mostUsedDeviceName = mostUsedDeviceName,
             onProgramSelected = onProgramSelected,
             onVerticalScrollabilityChanged = onVerticalScrollabilityChanged,
             modifier = modifier
@@ -1274,6 +1288,9 @@ internal fun CinerificProgramDetailsScreen(
     onFavoriteToggled: (String) -> Unit = {},
     userProgramRatings: Map<String, Int> = emptyMap(),
     onProgramRated: (String, Int) -> Unit = { _, _ -> },
+    onProgramPlayed: (String) -> Unit = {},
+    onProgramPlaybackStarted: (String) -> Unit = {},
+    onProgramPlaybackStopped: (String) -> Unit = {},
     onProgramSelected: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -1344,11 +1361,14 @@ internal fun CinerificProgramDetailsScreen(
             detailScrollState.animateScrollTo(0)
         }
 
-        LaunchedEffect(program.title, playLoading) {
-            if (!playLoading) return@LaunchedEffect
-            delay(DETAIL_PLAY_LOADING_FEEDBACK_MS)
-            playLoading = false
-            playbackSessionController.onUserInitiatedPlaybackFinished()
+        val latestPlayLoading by rememberUpdatedState(playLoading)
+        DisposableEffect(program.title) {
+            onDispose {
+                if (latestPlayLoading) {
+                    onProgramPlaybackStopped(program.title)
+                    playbackSessionController.onUserInitiatedPlaybackFinished()
+                }
+            }
         }
 
         Column(
@@ -1377,6 +1397,8 @@ internal fun CinerificProgramDetailsScreen(
                 onPrevious = { onProgramSelected(previousProgramTitle) },
                 onPlay = {
                     playLoading = true
+                    onProgramPlayed(program.title)
+                    onProgramPlaybackStarted(program.title)
                     if (!playbackSessionController.isUserInitiatedPlaybackActive) {
                         playbackSessionController.onActionablePlayTapped()
                     }
@@ -2695,6 +2717,12 @@ private fun CinerificSettingsScreen(
 private fun CinerificFavoritesScreen(
     favoriteProgramTitles: List<String>,
     onFavoriteToggled: (String) -> Unit,
+    mostFrequentlyViewedProgramTitle: String?,
+    mostFrequentlyViewedPlayCount: Int?,
+    longestPlaytimeProgramTitle: String?,
+    longestPlaytimeMillis: Long?,
+    programPlaytimeMillis: Map<String, Long>,
+    mostUsedDeviceName: String?,
     onProgramSelected: (String) -> Unit,
     onVerticalScrollabilityChanged: (Boolean) -> Unit,
     modifier: Modifier = Modifier
@@ -2708,6 +2736,20 @@ private fun CinerificFavoritesScreen(
         val density = LocalDensity.current
         val horizontalPadding = destinationDp(50f, scale)
         val rightPadding = destinationDp(150f, scale)
+        val isPortrait = maxHeight > maxWidth
+        val isPortraitPhone = isPortrait && maxWidth < 600.dp
+        val favoritesCardScale = if (isPortrait) {
+            val listBaseScale =
+                ((maxWidth - horizontalPadding * 2f).value / DESTINATION_LIST_REFERENCE_WIDTH)
+                    .coerceAtLeast(0.01f)
+            listBaseScale * if (isPortraitPhone) {
+                DESTINATION_PHONE_PORTRAIT_LIST_SCALE_MULTIPLIER
+            } else {
+                1f
+            }
+        } else {
+            scale
+        }
         val navScale = cinerificNavScale(maxWidth, maxHeight)
         val titleBottomPadding = destinationDp(DESTINATION_TOP_BAR_TITLE_BOTTOM, navScale)
         val statusBarTop = with(density) { WindowInsets.statusBars.getTop(this).toDp() }
@@ -2726,6 +2768,49 @@ private fun CinerificFavoritesScreen(
         val favoriteShows = favoritePrograms
             .filter { it.isShow }
             .take(FAVORITES_PLACEHOLDER_COUNT)
+        val mostFrequentlyViewedTitle = mostFrequentlyViewedProgramTitle?.let { programTitle ->
+            detailProgramSpec(programTitle)?.let { program ->
+                stringResource(program.titleResId)
+            } ?: programTitle
+        }?.uppercase()
+        val mostFrequentlyViewedLabel = if (
+            mostFrequentlyViewedTitle != null &&
+            mostFrequentlyViewedPlayCount != null
+        ) {
+            "$mostFrequentlyViewedTitle × $mostFrequentlyViewedPlayCount"
+        } else {
+            mostFrequentlyViewedTitle
+        }
+        val longestPlaytimeTitle = longestPlaytimeProgramTitle?.let { programTitle ->
+            detailProgramSpec(programTitle)?.let { program ->
+                stringResource(program.titleResId)
+            } ?: programTitle
+        }?.uppercase()
+        val longestPlaytimeLabel = if (
+            longestPlaytimeTitle != null &&
+            longestPlaytimeMillis != null
+        ) {
+            "$longestPlaytimeTitle × ${favoritesPlaytimeText(longestPlaytimeMillis)}"
+        } else {
+            longestPlaytimeTitle
+        }
+        val favoriteGenre = remember(programPlaytimeMillis) {
+            programPlaytimeMillis
+                .asSequence()
+                .filter { (_, durationMillis) -> durationMillis > 0L }
+                .mapNotNull { (programTitle, durationMillis) ->
+                    detailProgramSpec(programTitle)?.genre?.let { genre ->
+                        genre to durationMillis
+                    }
+                }
+                .groupBy(keySelector = { it.first }, valueTransform = { it.second })
+                .mapValues { (_, durations) -> durations.sum() }
+                .maxByOrNull { (_, durationMillis) -> durationMillis }
+                ?.key
+        }
+        val favoriteGenreTitle = favoriteGenre
+            ?.let { genre -> stringResource(genre.displayNameResId).uppercase() }
+        val mostUsedDeviceTitle = mostUsedDeviceName?.uppercase()
 
         Column(
             modifier = Modifier
@@ -2745,7 +2830,8 @@ private fun CinerificFavoritesScreen(
                 onFavoriteToggled = onFavoriteToggled,
                 onProgramSelected = onProgramSelected,
                 horizontalPadding = horizontalPadding,
-                scale = scale
+                scale = scale,
+                cardScale = favoritesCardScale
             )
             Spacer(modifier = Modifier.height(destinationDp(82f, scale)))
             FavoritesPlaceholderSection(
@@ -2754,9 +2840,14 @@ private fun CinerificFavoritesScreen(
                 onFavoriteToggled = onFavoriteToggled,
                 onProgramSelected = onProgramSelected,
                 horizontalPadding = horizontalPadding,
-                scale = scale
+                scale = scale,
+                cardScale = favoritesCardScale
             )
             FavoritesSummaryHeaders(
+                mostFrequentlyViewedTitle = mostFrequentlyViewedLabel,
+                longestPlaytimeTitle = longestPlaytimeLabel,
+                mostUsedDeviceTitle = mostUsedDeviceTitle,
+                favoriteGenreTitle = favoriteGenreTitle,
                 horizontalPadding = horizontalPadding,
                 scale = scale
             )
@@ -2779,7 +2870,8 @@ private fun FavoritesPlaceholderSection(
     onFavoriteToggled: (String) -> Unit,
     onProgramSelected: (String) -> Unit,
     horizontalPadding: Dp,
-    scale: Float
+    scale: Float,
+    cardScale: Float
 ) {
     Column(
         modifier = Modifier
@@ -2797,12 +2889,15 @@ private fun FavoritesPlaceholderSection(
         )
         Spacer(modifier = Modifier.height(destinationDp(24f, scale)))
         Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(destinationDp(50f, scale))
         ) {
             repeat(FAVORITES_PLACEHOLDER_COUNT) { index ->
                 FavoritePlaceholderCard(
                     program = programs.getOrNull(index),
-                    scale = scale,
+                    scale = cardScale,
                     onFavoriteToggled = onFavoriteToggled,
                     onProgramSelected = onProgramSelected
                 )
@@ -2896,6 +2991,10 @@ private fun FavoriteRemoveButton(
 
 @Composable
 private fun FavoritesSummaryHeaders(
+    mostFrequentlyViewedTitle: String?,
+    longestPlaytimeTitle: String?,
+    mostUsedDeviceTitle: String?,
+    favoriteGenreTitle: String?,
     horizontalPadding: Dp,
     scale: Float
 ) {
@@ -2903,15 +3002,84 @@ private fun FavoritesSummaryHeaders(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = horizontalPadding)
-            .padding(top = destinationDp(105f, scale))
+            .padding(top = destinationDp(105f, scale)),
+        verticalArrangement = Arrangement.spacedBy(destinationDp(105f, scale))
     ) {
-        FavoritesSummaryHeader(text = stringResource(R.string.favorites_most_frequently_viewed))
-        Spacer(modifier = Modifier.height(destinationDp(96f, scale)))
-        FavoritesSummaryHeader(text = stringResource(R.string.favorites_longest_playtime))
-        Spacer(modifier = Modifier.height(destinationDp(134f, scale)))
-        FavoritesSummaryHeader(text = stringResource(R.string.favorites_most_used_device))
-        Spacer(modifier = Modifier.height(destinationDp(51f, scale)))
-        FavoritesSummaryHeader(text = stringResource(R.string.favorites_favorite_genre))
+        FavoritesSummarySection(
+            header = stringResource(R.string.favorites_most_frequently_viewed),
+            value = mostFrequentlyViewedTitle,
+            scale = scale
+        )
+        FavoritesSummarySection(
+            header = stringResource(R.string.favorites_longest_playtime),
+            value = longestPlaytimeTitle,
+            scale = scale
+        )
+        FavoritesSummarySection(
+            header = stringResource(R.string.favorites_most_used_device),
+            value = mostUsedDeviceTitle,
+            scale = scale
+        )
+        FavoritesSummarySection(
+            header = stringResource(R.string.favorites_favorite_genre),
+            value = favoriteGenreTitle,
+            scale = scale
+        )
+    }
+}
+
+@Composable
+private fun FavoritesSummarySection(
+    header: String,
+    value: String?,
+    scale: Float
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(destinationDp(20f, scale))) {
+        FavoritesSummaryHeader(text = header)
+        if (value != null) {
+            FavoritesStatisticTitle(text = value)
+        }
+    }
+}
+
+@Composable
+private fun FavoritesStatisticTitle(text: String) {
+    Text(
+        text = favoritesStatisticText(text),
+        color = DestinationSubtle,
+        fontFamily = CinerificAppTextFontFamily,
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Normal,
+        lineHeight = 30.sp,
+        letterSpacing = 0.sp
+    )
+}
+
+private fun favoritesStatisticText(value: String): AnnotatedString {
+    val suffixStart = value.indexOf(" × ")
+    return buildAnnotatedString {
+        if (suffixStart < 0) {
+            withStyle(SpanStyle(fontSize = 16.sp)) {
+                append(value)
+            }
+        } else {
+            withStyle(SpanStyle(fontSize = 16.sp)) {
+                append(value.substring(0, suffixStart))
+            }
+            withStyle(SpanStyle(fontSize = 20.sp)) {
+                append(value.substring(suffixStart))
+            }
+        }
+    }
+}
+
+private fun favoritesPlaytimeText(durationMillis: Long): String {
+    val totalSeconds = (durationMillis.coerceAtLeast(0L) / 1_000L)
+    val hours = totalSeconds / 3_600L
+    val minutes = totalSeconds % 3_600L / 60L
+    val seconds = totalSeconds % 60L
+    return listOf(hours, minutes, seconds).joinToString(": ") { value ->
+        value.toString().padStart(2, '0')
     }
 }
 

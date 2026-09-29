@@ -78,8 +78,8 @@
     <string name="settings_signed_in_as">Signed in as</string>
     <string name="settings_sign_out">Sign out</string>
 
-    <string name="favorites_most_frequently_viewed">Most Frequently Viewed (7 times)</string>
-    <string name="favorites_longest_playtime">Longest Playtime (32 hrs)</string>
+    <string name="favorites_most_frequently_viewed">Most Frequently Viewed</string>
+    <string name="favorites_longest_playtime">Longest Playtime</string>
     <string name="favorites_most_used_device">Most Used Device</string>
     <string name="favorites_favorite_genre">Favorite Genre</string>
 

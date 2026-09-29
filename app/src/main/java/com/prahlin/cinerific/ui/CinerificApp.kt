@@ -1,7 +1,10 @@
 package com.prahlin.cinerific.ui
 
+import android.content.SharedPreferences
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.SystemClock
+import android.util.Base64
 import androidx.annotation.DrawableRes
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
@@ -110,6 +113,12 @@ private const val FAVORITES_FULL_PROMPT_TEXT_Y = 37f
 private const val FAVORITES_FULL_PROMPT_TEXT_WIDTH = 68f
 private const val FAVORITES_FULL_PROMPT_TEXT_HEIGHT = 84f
 private const val FAVORITES_FULL_PROMPT_VISIBLE_MS = 2200L
+private const val PLAYBACK_STATS_PREFERENCES = "cinerific_playback_stats"
+private const val PLAYBACK_COUNT_KEY_PREFIX = "play_count:"
+private const val PLAYBACK_TIME_KEY_PREFIX = "play_time_ms:"
+private const val MOST_RECENTLY_PLAYED_TITLE_KEY = "most_recently_played_title"
+private const val ACCOUNT_DEVICE_PREFERENCES = "cinerific_account_devices"
+private const val ACCOUNT_DEVICE_IDS_KEY_SUFFIX = ":device_ids"
 private const val SIGN_IN_AVATAR_SIZE = 176f
 private const val SIGN_IN_PORTRAIT_STACK_SHIFT_Y = -51f
 private const val SIGN_IN_LANDSCAPE_STACK_SHIFT_Y = -61f
@@ -236,6 +245,109 @@ internal enum class CinerificProfile(
     Guest(R.drawable.guest_avatar_bubble_edge50_body0_test, R.drawable.guest_name)
 }
 
+private data class CinerificDeviceIdentity(
+    val manufacturer: String,
+    val modelName: String,
+    val hardwareModel: String,
+    val releaseYear: Int?
+) {
+    val stableId: String
+        get() = Base64.encodeToString(
+            "$manufacturer|$hardwareModel".lowercase().toByteArray(Charsets.UTF_8),
+            Base64.URL_SAFE or Base64.NO_WRAP or Base64.NO_PADDING
+        )
+
+    val displayName: String
+        get() = buildString {
+            append(manufacturer)
+            append(' ')
+            append(modelName)
+            releaseYear?.let { year ->
+                append(" (")
+                append(year)
+                append(')')
+            }
+        }
+}
+
+private fun currentCinerificDevice(): CinerificDeviceIdentity {
+    val rawManufacturer = Build.MANUFACTURER.trim().ifBlank { "Unknown" }
+    val manufacturer = rawManufacturer.lowercase().replaceFirstChar { character ->
+        character.titlecase()
+    }
+    val hardwareModel = Build.MODEL.trim().ifBlank { "Unknown model" }
+    val normalizedManufacturer = rawManufacturer.lowercase()
+    val normalizedModel = hardwareModel.uppercase()
+    val knownModel = when {
+        normalizedManufacturer == "samsung" && normalizedModel.startsWith("SM-G990") ->
+            "Galaxy S21 FE 5G" to 2022
+        else -> hardwareModel to null
+    }
+    return CinerificDeviceIdentity(
+        manufacturer = manufacturer,
+        modelName = knownModel.first,
+        hardwareModel = hardwareModel,
+        releaseYear = knownModel.second
+    )
+}
+
+private fun accountDevicePrefix(profile: CinerificProfile): String =
+    "account:${profile.name}"
+
+private fun recordAccountDeviceUse(
+    preferences: SharedPreferences,
+    profile: CinerificProfile,
+    device: CinerificDeviceIdentity
+) {
+    val accountPrefix = accountDevicePrefix(profile)
+    val idsKey = accountPrefix + ACCOUNT_DEVICE_IDS_KEY_SUFFIX
+    val devicePrefix = "$accountPrefix:device:${device.stableId}"
+    val deviceIds = preferences.getStringSet(idsKey, emptySet()).orEmpty().toMutableSet()
+    deviceIds += device.stableId
+    preferences.edit()
+        .putStringSet(idsKey, deviceIds)
+        .putString("$devicePrefix:manufacturer", device.manufacturer)
+        .putString("$devicePrefix:model", device.modelName)
+        .putInt("$devicePrefix:release_year", device.releaseYear ?: 0)
+        .putInt(
+            "$devicePrefix:use_count",
+            preferences.getInt("$devicePrefix:use_count", 0) + 1
+        )
+        .putLong("$devicePrefix:last_used", System.currentTimeMillis())
+        .apply()
+}
+
+private fun mostUsedDeviceName(
+    preferences: SharedPreferences,
+    profile: CinerificProfile
+): String? {
+    val accountPrefix = accountDevicePrefix(profile)
+    val deviceIds = preferences
+        .getStringSet(accountPrefix + ACCOUNT_DEVICE_IDS_KEY_SUFFIX, emptySet())
+        .orEmpty()
+    val mostUsedDeviceId = deviceIds.maxWithOrNull(
+        compareBy<String> { deviceId ->
+            preferences.getInt("$accountPrefix:device:$deviceId:use_count", 0)
+        }.thenBy { deviceId ->
+            preferences.getLong("$accountPrefix:device:$deviceId:last_used", 0L)
+        }
+    ) ?: return null
+    val devicePrefix = "$accountPrefix:device:$mostUsedDeviceId"
+    val manufacturer = preferences.getString("$devicePrefix:manufacturer", null) ?: return null
+    val modelName = preferences.getString("$devicePrefix:model", null) ?: return null
+    val releaseYear = preferences.getInt("$devicePrefix:release_year", 0)
+    return buildString {
+        append(manufacturer)
+        append(' ')
+        append(modelName)
+        if (releaseYear > 0) {
+            append(" (")
+            append(releaseYear)
+            append(')')
+        }
+    }
+}
+
 @Composable
 private fun CinerificMainExperience(
     signInSessionId: Int,
@@ -252,12 +364,47 @@ private fun CinerificMainExperience(
     var selectedProgramTitle by rememberSaveable(signInSessionId) { mutableStateOf("Sink or Swim") }
     var favoriteProgramTitles by rememberSaveable { mutableStateOf(emptyList<String>()) }
     var userProgramRatings by rememberSaveable { mutableStateOf(emptyMap<String, Int>()) }
+    val context = LocalContext.current
+    val playbackStatsPreferences = remember(context) {
+        context.getSharedPreferences(PLAYBACK_STATS_PREFERENCES, 0)
+    }
+    val accountDevicePreferences = remember(context) {
+        context.getSharedPreferences(ACCOUNT_DEVICE_PREFERENCES, 0)
+    }
+    var mostUsedDeviceName by remember(signedInProfile) {
+        mutableStateOf(mostUsedDeviceName(accountDevicePreferences, signedInProfile))
+    }
+    var programPlayCounts by remember {
+        mutableStateOf(
+            playbackStatsPreferences.all.mapNotNull { (key, value) ->
+                if (!key.startsWith(PLAYBACK_COUNT_KEY_PREFIX)) return@mapNotNull null
+                val count = value as? Int ?: return@mapNotNull null
+                key.removePrefix(PLAYBACK_COUNT_KEY_PREFIX) to count
+            }.toMap()
+        )
+    }
+    var programPlaytimeMillis by remember {
+        mutableStateOf(
+            playbackStatsPreferences.all.mapNotNull { (key, value) ->
+                if (!key.startsWith(PLAYBACK_TIME_KEY_PREFIX)) return@mapNotNull null
+                val durationMillis = value as? Long ?: return@mapNotNull null
+                key.removePrefix(PLAYBACK_TIME_KEY_PREFIX) to durationMillis
+            }.toMap()
+        )
+    }
+    var mostRecentlyPlayedTitle by remember {
+        mutableStateOf(
+            playbackStatsPreferences.getString(MOST_RECENTLY_PLAYED_TITLE_KEY, null)
+        )
+    }
     var catalogRouteDestinationName by rememberSaveable(signInSessionId) { mutableStateOf("") }
     var catalogRouteGenreName by rememberSaveable(signInSessionId) { mutableStateOf("") }
     var catalogRouteModeName by rememberSaveable(signInSessionId) { mutableStateOf("") }
     var favoritesFullPromptRequestId by remember { mutableStateOf(0) }
     var autoLogoutEnabled by rememberSaveable { mutableStateOf(false) }
     var userInitiatedPlaybackActive by remember { mutableStateOf(false) }
+    var activePlaybackTitle by remember { mutableStateOf<String?>(null) }
+    var activePlaybackLastTickMillis by remember { mutableStateOf(0L) }
     var lastInteractionMillis by remember { mutableStateOf(SystemClock.uptimeMillis()) }
     var primaryDestinationCanScroll by remember(destination) { mutableStateOf<Boolean?>(null) }
     var portraitBottomNavHiddenFraction by remember(signInSessionId) { mutableFloatStateOf(1f) }
@@ -275,6 +422,15 @@ private fun CinerificMainExperience(
         CinerificDestination.Favorites,
         CinerificDestination.Settings
     )
+
+    LaunchedEffect(signInSessionId, signedInProfile) {
+        recordAccountDeviceUse(
+            preferences = accountDevicePreferences,
+            profile = signedInProfile,
+            device = currentCinerificDevice()
+        )
+        mostUsedDeviceName = mostUsedDeviceName(accountDevicePreferences, signedInProfile)
+    }
     val portraitBottomNavScrollConnection = remember(
         isPortrait,
         destination,
@@ -338,6 +494,58 @@ private fun CinerificMainExperience(
             modeName = catalogRouteModeName
         )
     }
+    val mostFrequentlyViewedProgramTitle = remember(
+        programPlayCounts,
+        mostRecentlyPlayedTitle
+    ) {
+        val highestPlayCount = programPlayCounts.values.maxOrNull()
+        if (highestPlayCount == null) {
+            null
+        } else {
+            mostRecentlyPlayedTitle?.takeIf { title ->
+                programPlayCounts[title] == highestPlayCount
+            } ?: programPlayCounts.entries.firstOrNull { (_, count) ->
+                count == highestPlayCount
+            }?.key
+        }
+    }
+    val mostFrequentlyViewedPlayCount = mostFrequentlyViewedProgramTitle?.let { title ->
+        programPlayCounts[title]
+    }
+    val longestPlaytimeProgramTitle = remember(
+        programPlaytimeMillis,
+        mostRecentlyPlayedTitle
+    ) {
+        val longestDuration = programPlaytimeMillis.values.maxOrNull()
+        if (longestDuration == null) {
+            null
+        } else {
+            mostRecentlyPlayedTitle?.takeIf { title ->
+                programPlaytimeMillis[title] == longestDuration
+            } ?: programPlaytimeMillis.entries.firstOrNull { (_, duration) ->
+                duration == longestDuration
+            }?.key
+        }
+    }
+    val longestPlaytimeMillis = longestPlaytimeProgramTitle?.let { title ->
+        programPlaytimeMillis[title]
+    }
+
+    LaunchedEffect(activePlaybackTitle) {
+        val title = activePlaybackTitle ?: return@LaunchedEffect
+        while (activePlaybackTitle == title) {
+            delay(1_000L)
+            if (activePlaybackTitle != title) break
+            val now = SystemClock.elapsedRealtime()
+            val elapsedMillis = (now - activePlaybackLastTickMillis).coerceAtLeast(0L)
+            activePlaybackLastTickMillis = now
+            val updatedDuration = (programPlaytimeMillis[title] ?: 0L) + elapsedMillis
+            programPlaytimeMillis = programPlaytimeMillis + (title to updatedDuration)
+            playbackStatsPreferences.edit()
+                .putLong(PLAYBACK_TIME_KEY_PREFIX + title, updatedDuration)
+                .apply()
+        }
+    }
 
     fun clearCatalogRoute() {
         catalogRouteDestinationName = ""
@@ -375,6 +583,34 @@ private fun CinerificMainExperience(
 
     fun rateProgram(title: String, rating: Int) {
         userProgramRatings = userProgramRatings + (title to rating.coerceIn(1, 5))
+    }
+
+    fun recordProgramPlay(title: String) {
+        val updatedCount = (programPlayCounts[title] ?: 0) + 1
+        programPlayCounts = programPlayCounts + (title to updatedCount)
+        mostRecentlyPlayedTitle = title
+        playbackStatsPreferences.edit()
+            .putInt(PLAYBACK_COUNT_KEY_PREFIX + title, updatedCount)
+            .putString(MOST_RECENTLY_PLAYED_TITLE_KEY, title)
+            .apply()
+    }
+
+    fun startProgramPlaybackTimer(title: String) {
+        activePlaybackTitle = title
+        activePlaybackLastTickMillis = SystemClock.elapsedRealtime()
+    }
+
+    fun stopProgramPlaybackTimer(title: String) {
+        if (activePlaybackTitle != title) return
+        val now = SystemClock.elapsedRealtime()
+        val elapsedMillis = (now - activePlaybackLastTickMillis).coerceAtLeast(0L)
+        val updatedDuration = (programPlaytimeMillis[title] ?: 0L) + elapsedMillis
+        programPlaytimeMillis = programPlaytimeMillis + (title to updatedDuration)
+        playbackStatsPreferences.edit()
+            .putLong(PLAYBACK_TIME_KEY_PREFIX + title, updatedDuration)
+            .apply()
+        activePlaybackTitle = null
+        activePlaybackLastTickMillis = 0L
     }
 
     fun toggleFavoriteProgram(title: String) {
@@ -451,6 +687,12 @@ private fun CinerificMainExperience(
                         onFavoriteToggled = ::toggleFavoriteProgram,
                         userProgramRatings = userProgramRatings,
                         onProgramRated = ::rateProgram,
+                        mostFrequentlyViewedProgramTitle = mostFrequentlyViewedProgramTitle,
+                        mostFrequentlyViewedPlayCount = mostFrequentlyViewedPlayCount,
+                        longestPlaytimeProgramTitle = longestPlaytimeProgramTitle,
+                        longestPlaytimeMillis = longestPlaytimeMillis,
+                        programPlaytimeMillis = programPlaytimeMillis,
+                        mostUsedDeviceName = mostUsedDeviceName,
                         onProgramSelected = ::showProgramDetails,
                         catalogRoute = catalogRoute?.takeIf { it.destination == destination },
                         onVerticalScrollabilityChanged = { primaryDestinationCanScroll = it },
@@ -462,6 +704,9 @@ private fun CinerificMainExperience(
                         onFavoriteToggled = ::toggleFavoriteProgram,
                         userProgramRatings = userProgramRatings,
                         onProgramRated = ::rateProgram,
+                        onProgramPlayed = ::recordProgramPlay,
+                        onProgramPlaybackStarted = ::startProgramPlaybackTimer,
+                        onProgramPlaybackStopped = ::stopProgramPlaybackTimer,
                         onProgramSelected = ::showProgramDetails,
                         modifier = Modifier.fillMaxSize()
                     )

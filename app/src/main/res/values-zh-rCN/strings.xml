@@ -78,8 +78,8 @@
     <string name="settings_signed_in_as">已登录为</string>
     <string name="settings_sign_out">退出登录</string>
 
-    <string name="favorites_most_frequently_viewed">最常观看（7 次）</string>
-    <string name="favorites_longest_playtime">最长播放时间（32 小时）</string>
+    <string name="favorites_most_frequently_viewed">最常观看</string>
+    <string name="favorites_longest_playtime">最长播放时间</string>
     <string name="favorites_most_used_device">最常用设备</string>
     <string name="favorites_favorite_genre">最喜欢的类型</string>
 
