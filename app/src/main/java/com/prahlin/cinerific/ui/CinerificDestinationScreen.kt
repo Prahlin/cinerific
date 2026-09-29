@@ -203,6 +203,12 @@ private const val SETTINGS_SIGN_OUT_BUTTON_HEIGHT = 75f
 private const val SETTINGS_SIGN_OUT_TEXT_SIZE = 24f
 private const val SETTINGS_SIGN_OUT_LINE_HEIGHT = 36f
 private const val SETTINGS_SIGN_OUT_MIN_TEXT_SIZE = 12f
+private const val SETTINGS_PHONE_BREAKPOINT_DP = 600
+private const val SETTINGS_PHONE_COMPONENT_SCALE = 0.7f
+private const val SETTINGS_PHONE_SECTION_GAP = 36f
+private const val SETTINGS_PHONE_ROW_TOP_PADDING = 24f
+private const val SETTINGS_PHONE_ROW_HORIZONTAL_PADDING = 16f
+private const val SETTINGS_PHONE_CONTROL_GAP = 12f
 private const val DETAIL_FAVORITE_X = 994f
 private const val DETAIL_FAVORITE_Y = 30f
 private const val DETAIL_FAVORITE_WIDTH = 61f
@@ -2525,8 +2531,13 @@ private fun CinerificSettingsScreen(
         val scale = maxWidth.value / DESTINATION_FRAME_WIDTH
         val density = LocalDensity.current
         val isPortrait = maxHeight > maxWidth
+        val isPortraitPhone = isPortrait && maxWidth < SETTINGS_PHONE_BREAKPOINT_DP.dp
         val horizontalPadding = destinationDp(SETTINGS_SCREEN_HORIZONTAL_PADDING, scale)
-        val rightPadding = destinationDp(160f, scale)
+        val rightPadding = if (isPortraitPhone) {
+            horizontalPadding
+        } else {
+            destinationDp(160f, scale)
+        }
         val navScale = cinerificNavScale(maxWidth, maxHeight)
         val titleBottomPadding = destinationDp(DESTINATION_TOP_BAR_TITLE_BOTTOM, navScale)
         val statusBarTop = with(density) { WindowInsets.statusBars.getTop(this).toDp() }
@@ -2552,7 +2563,7 @@ private fun CinerificSettingsScreen(
         val signedInStackTop = accessibilityHeaderCenterY -
             destinationDp(SETTINGS_SIGNED_IN_TITLE_CENTER, signedInScale)
         val settingsBottomSpacer = if (isPortrait) {
-            SETTINGS_SECTION_VERTICAL_GAP.dp +
+            (if (isPortraitPhone) SETTINGS_PHONE_SECTION_GAP.dp else SETTINGS_SECTION_VERTICAL_GAP.dp) +
                 cinerificPortraitBottomNavContentHeight(maxWidth, maxHeight)
         } else {
             bottomAlignmentSpacer
@@ -2607,6 +2618,13 @@ private fun CinerificSettingsScreen(
                     bottom = bottomSystemPadding
                 )
         ) {
+            if (isPortraitPhone) {
+                Spacer(modifier = Modifier.height(SETTINGS_PHONE_SECTION_GAP.dp))
+                SettingsSignedInPhoneCard(
+                    profile = signedInProfile,
+                    onSignOut = onSignOut
+                )
+            }
             SettingsSection(
                 titleResId = R.string.settings_accessibility,
                 rows = listOf(
@@ -2625,6 +2643,7 @@ private fun CinerificSettingsScreen(
                     )
                 ),
                 scale = scale,
+                isPortraitPhone = isPortraitPhone,
                 selectedLanguage = selectedLanguage,
                 onLanguageSelected = onLanguageSelected
             )
@@ -2645,6 +2664,7 @@ private fun CinerificSettingsScreen(
                     )
                 ),
                 scale = scale,
+                isPortraitPhone = isPortraitPhone,
                 selectedLanguage = selectedLanguage,
                 onLanguageSelected = onLanguageSelected
             )
@@ -2661,6 +2681,7 @@ private fun CinerificSettingsScreen(
                     )
                 ),
                 scale = scale,
+                isPortraitPhone = isPortraitPhone,
                 selectedLanguage = selectedLanguage,
                 onLanguageSelected = onLanguageSelected
             )
@@ -2679,6 +2700,7 @@ private fun CinerificSettingsScreen(
                     )
                 ),
                 scale = scale,
+                isPortraitPhone = isPortraitPhone,
                 selectedLanguage = selectedLanguage,
                 onLanguageSelected = onLanguageSelected,
                 onLastToggleCenterMeasured = if (isPortrait) {
@@ -2690,18 +2712,20 @@ private fun CinerificSettingsScreen(
             Spacer(modifier = Modifier.height(settingsBottomSpacer))
         }
 
-        SettingsSignedInColumn(
-            profile = signedInProfile,
-            scale = signedInScale,
-            onSignOut = onSignOut,
-            onSignOutCenterMeasured = { signOutCenterY = it },
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(
-                    x = destinationDp(SETTINGS_SIGNED_IN_LEFT, scale),
-                    y = signedInStackTop
-                )
-        )
+        if (!isPortraitPhone) {
+            SettingsSignedInColumn(
+                profile = signedInProfile,
+                scale = signedInScale,
+                onSignOut = onSignOut,
+                onSignOutCenterMeasured = { signOutCenterY = it },
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .offset(
+                        x = destinationDp(SETTINGS_SIGNED_IN_LEFT, scale),
+                        y = signedInStackTop
+                    )
+            )
+        }
 
         DestinationTopBar(
             title = stringResource(R.string.destination_settings),
@@ -3138,26 +3162,52 @@ private fun SettingsSection(
     @StringRes titleResId: Int,
     rows: List<SettingsRowSpec>,
     scale: Float,
+    isPortraitPhone: Boolean,
     selectedLanguage: CinerificLanguage,
     onLanguageSelected: (CinerificLanguage) -> Unit,
     onLastToggleCenterMeasured: ((Float) -> Unit)? = null
 ) {
-    val sectionShape = RoundedCornerShape(destinationDp(SETTINGS_SECTION_BACKGROUND_RADIUS, scale))
+    val componentScale = if (isPortraitPhone) SETTINGS_PHONE_COMPONENT_SCALE else scale
+    val sectionShape = RoundedCornerShape(
+        destinationDp(SETTINGS_SECTION_BACKGROUND_RADIUS, componentScale)
+    )
+    val sectionTopPadding = if (isPortraitPhone) {
+        SETTINGS_PHONE_SECTION_GAP.dp
+    } else {
+        SETTINGS_SECTION_VERTICAL_GAP.dp
+    }
+    val sectionBottomPadding = if (isPortraitPhone) {
+        24.dp
+    } else {
+        destinationDp(SETTINGS_SECTION_BOTTOM_PADDING, scale)
+    }
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = SETTINGS_SECTION_VERTICAL_GAP.dp)
+            .padding(top = sectionTopPadding)
             .background(Color.Black.copy(alpha = 0.14f), sectionShape)
-            .border(destinationDp(1f, scale), Color.White.copy(alpha = 0.035f), sectionShape)
-            .padding(bottom = destinationDp(SETTINGS_SECTION_BOTTOM_PADDING, scale))
+            .border(destinationDp(1f, componentScale), Color.White.copy(alpha = 0.035f), sectionShape)
+            .padding(bottom = sectionBottomPadding)
     ) {
-        SettingsSectionHeader(title = stringResource(titleResId), scale = scale)
+        SettingsSectionHeader(
+            title = stringResource(titleResId),
+            layoutScale = scale,
+            componentScale = componentScale,
+            isPortraitPhone = isPortraitPhone
+        )
 
         rows.forEachIndexed { index, row ->
-            val rowTopPadding = 34.dp +
+            val rowTopPadding = (if (isPortraitPhone) {
+                SETTINGS_PHONE_ROW_TOP_PADDING.dp
+            } else {
+                34.dp
+            }) +
                 if (rows.getOrNull(index - 1)?.control == SettingsControl.LanguageDropdown) {
-                    destinationDp(SETTINGS_LANGUAGE_MENU_HEIGHT - SETTINGS_CONTROL_HEIGHT, scale)
+                    destinationDp(
+                        SETTINGS_LANGUAGE_MENU_HEIGHT - SETTINGS_CONTROL_HEIGHT,
+                        componentScale
+                    )
                 } else {
                     0.dp
                 }
@@ -3166,19 +3216,33 @@ private fun SettingsSection(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
-                        start = destinationDp(SETTINGS_SECTION_BODY_START_PADDING, scale),
-                        top = rowTopPadding
+                        start = if (isPortraitPhone) {
+                            SETTINGS_PHONE_ROW_HORIZONTAL_PADDING.dp
+                        } else {
+                            destinationDp(SETTINGS_SECTION_BODY_START_PADDING, scale)
+                        },
+                        top = rowTopPadding,
+                        end = if (isPortraitPhone) {
+                            SETTINGS_PHONE_ROW_HORIZONTAL_PADDING.dp
+                        } else {
+                            0.dp
+                        }
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                val textColumnModifier = if (isPortraitPhone) {
+                    Modifier.weight(1f)
+                } else {
+                    Modifier.width(destinationDp(SETTINGS_ROW_TEXT_WIDTH, scale))
+                }
                 Column(
-                    modifier = Modifier.width(destinationDp(SETTINGS_ROW_TEXT_WIDTH, scale))
+                    modifier = textColumnModifier
                 ) {
                     Text(
                         text = stringResource(row.labelResId),
                         color = DestinationText,
                         fontFamily = CinerificAppTextFontFamily,
-                        fontSize = 28.sp,
+                        fontSize = if (isPortraitPhone) 22.sp else 28.sp,
                         fontWeight = FontWeight.SemiBold,
                         letterSpacing = 0.sp
                     )
@@ -3186,15 +3250,25 @@ private fun SettingsSection(
                         text = stringResource(row.detailResId),
                         color = DestinationSubtle,
                         fontFamily = CinerificAppTextFontFamily,
-                        fontSize = 20.sp,
-                        lineHeight = 28.sp,
+                        fontSize = if (isPortraitPhone) 16.sp else 20.sp,
+                        lineHeight = if (isPortraitPhone) 22.sp else 28.sp,
                         letterSpacing = 0.sp,
-                        modifier = Modifier.padding(top = 8.dp)
+                        modifier = Modifier.padding(top = if (isPortraitPhone) 4.dp else 8.dp)
                     )
                 }
-                Spacer(modifier = Modifier.width(destinationDp(SETTINGS_CONTROL_COLUMN_GAP, scale)))
+                Spacer(
+                    modifier = Modifier.width(
+                        if (isPortraitPhone) {
+                            SETTINGS_PHONE_CONTROL_GAP.dp
+                        } else {
+                            destinationDp(SETTINGS_CONTROL_COLUMN_GAP, scale)
+                        }
+                    )
+                )
                 Box(
-                    modifier = Modifier.width(destinationDp(SETTINGS_CONTROL_WIDTH, scale)),
+                    modifier = Modifier.width(
+                        destinationDp(SETTINGS_CONTROL_WIDTH, componentScale)
+                    ),
                     contentAlignment = Alignment.Center
                 ) {
                     val toggleModifier = if (
@@ -3214,7 +3288,7 @@ private fun SettingsSection(
                     when (row.control) {
                         SettingsControl.Toggle -> SettingsAnimatedToggle(
                             stateKey = row.labelResId,
-                            scale = scale,
+                            scale = componentScale,
                             checked = row.checked,
                             onCheckedChange = row.onCheckedChange,
                             modifier = toggleModifier
@@ -3222,12 +3296,69 @@ private fun SettingsSection(
                         SettingsControl.LanguageDropdown -> SettingsLanguageDropdown(
                             selectedLanguage = selectedLanguage,
                             onLanguageSelected = onLanguageSelected,
-                            scale = scale
+                            scale = componentScale
                         )
                     }
                 }
-                Spacer(modifier = Modifier.weight(1f))
+                if (!isPortraitPhone) {
+                    Spacer(modifier = Modifier.weight(1f))
+                }
             }
+        }
+    }
+}
+
+@Composable
+private fun SettingsSignedInPhoneCard(
+    profile: CinerificProfile,
+    onSignOut: () -> Unit
+) {
+    val shape = RoundedCornerShape(16.dp)
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.Black.copy(alpha = 0.14f), shape)
+            .border(1.dp, Color.White.copy(alpha = 0.035f), shape)
+            .padding(horizontal = 16.dp, vertical = 14.dp)
+    ) {
+        Text(
+            text = stringResource(R.string.settings_signed_in_as),
+            color = DestinationText,
+            fontFamily = CinerificAppTextFontFamily,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            lineHeight = 28.sp,
+            letterSpacing = 0.sp
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(profile.avatarResId),
+                contentDescription = null,
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier
+                    .size(64.dp)
+                    .clip(CircleShape)
+            )
+            Image(
+                painter = painterResource(profile.nameResId),
+                contentDescription = null,
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier
+                    .padding(start = 12.dp)
+                    .width(80.dp)
+                    .height(16.dp)
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            SettingsSignOutButton(
+                scale = SETTINGS_PHONE_COMPONENT_SCALE,
+                onSignOut = onSignOut,
+                onCenterMeasured = {}
+            )
         }
     }
 }
@@ -3401,19 +3532,32 @@ private fun SettingsSignOutLabelText(
 @Composable
 private fun SettingsSectionHeader(
     title: String,
-    scale: Float
+    layoutScale: Float,
+    componentScale: Float,
+    isPortraitPhone: Boolean
 ) {
-    val shape = RoundedCornerShape(destinationDp(SETTINGS_SECTION_HEADER_RADIUS, scale))
+    val shape = RoundedCornerShape(
+        destinationDp(SETTINGS_SECTION_HEADER_RADIUS, componentScale)
+    )
+    val headerHeight = destinationDp(SETTINGS_SECTION_HEADER_HEIGHT, componentScale)
 
     Box(
         modifier = Modifier
-            .offset(x = destinationDp(-(SETTINGS_SCREEN_HORIZONTAL_PADDING + SETTINGS_SECTION_HEADER_LEFT_BLEED), scale))
-            .height(destinationDp(SETTINGS_SECTION_HEADER_HEIGHT, scale))
+            .offset(
+                x = destinationDp(
+                    -(SETTINGS_SCREEN_HORIZONTAL_PADDING + SETTINGS_SECTION_HEADER_LEFT_BLEED),
+                    layoutScale
+                )
+            )
+            .height(headerHeight)
             .clip(shape)
             .background(Color(0xFF303030).copy(alpha = 0.96f), shape)
             .padding(
-                start = destinationDp(SETTINGS_SCREEN_HORIZONTAL_PADDING + SETTINGS_SECTION_HEADER_LEFT_BLEED, scale),
-                end = destinationDp(SETTINGS_SECTION_HEADER_HORIZONTAL_PADDING, scale)
+                start = destinationDp(
+                    SETTINGS_SCREEN_HORIZONTAL_PADDING + SETTINGS_SECTION_HEADER_LEFT_BLEED,
+                    layoutScale
+                ),
+                end = destinationDp(SETTINGS_SECTION_HEADER_HORIZONTAL_PADDING, layoutScale)
             ),
         contentAlignment = Alignment.CenterStart
     ) {
@@ -3421,12 +3565,12 @@ private fun SettingsSectionHeader(
             text = title,
             color = DestinationText,
             fontFamily = CinerificAppTextFontFamily,
-            fontSize = 32.sp,
+            fontSize = if (isPortraitPhone) 24.sp else 32.sp,
             fontWeight = FontWeight.Black,
-            lineHeight = destinationSp(SETTINGS_SECTION_HEADER_HEIGHT, scale),
+            lineHeight = destinationSp(SETTINGS_SECTION_HEADER_HEIGHT, componentScale),
             letterSpacing = 0.sp,
             textAlign = TextAlign.Center,
-            modifier = Modifier.height(destinationDp(SETTINGS_SECTION_HEADER_HEIGHT, scale))
+            modifier = Modifier.height(headerHeight)
         )
     }
 }
