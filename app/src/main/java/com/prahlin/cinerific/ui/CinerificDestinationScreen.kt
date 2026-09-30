@@ -37,6 +37,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
@@ -70,6 +71,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.zIndex
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.geometry.Size
@@ -2544,6 +2546,9 @@ private fun CinerificSettingsScreen(
         val topBarHeight = destinationTopBarHeight(maxWidth, maxHeight, statusBarTop)
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
         val settingsScrollState = rememberScrollState()
+        val phoneSignedInStickyOffset = with(density) {
+            settingsScrollState.value.toDp()
+        }
         LaunchedEffect(settingsScrollState.maxValue) {
             onVerticalScrollabilityChanged(settingsScrollState.maxValue > 0)
         }
@@ -2612,7 +2617,7 @@ private fun CinerificSettingsScreen(
                     )
                 )
                 .padding(
-                    start = horizontalPadding,
+                    start = if (isPortraitPhone) 0.dp else horizontalPadding,
                     top = topBarHeight,
                     end = rightPadding,
                     bottom = bottomSystemPadding
@@ -2622,7 +2627,10 @@ private fun CinerificSettingsScreen(
                 Spacer(modifier = Modifier.height(SETTINGS_PHONE_SECTION_GAP.dp))
                 SettingsSignedInPhoneCard(
                     profile = signedInProfile,
-                    onSignOut = onSignOut
+                    onSignOut = onSignOut,
+                    modifier = Modifier
+                        .offset(y = phoneSignedInStickyOffset)
+                        .zIndex(1f)
                 )
             }
             SettingsSection(
@@ -3168,9 +3176,17 @@ private fun SettingsSection(
     onLastToggleCenterMeasured: ((Float) -> Unit)? = null
 ) {
     val componentScale = if (isPortraitPhone) SETTINGS_PHONE_COMPONENT_SCALE else scale
-    val sectionShape = RoundedCornerShape(
-        destinationDp(SETTINGS_SECTION_BACKGROUND_RADIUS, componentScale)
-    )
+    val sectionRadius = destinationDp(SETTINGS_SECTION_BACKGROUND_RADIUS, componentScale)
+    val sectionShape = if (isPortraitPhone) {
+        RoundedCornerShape(
+            topStart = 0.dp,
+            topEnd = sectionRadius,
+            bottomEnd = sectionRadius,
+            bottomStart = 0.dp
+        )
+    } else {
+        RoundedCornerShape(sectionRadius)
+    }
     val sectionTopPadding = if (isPortraitPhone) {
         SETTINGS_PHONE_SECTION_GAP.dp
     } else {
@@ -3311,29 +3327,37 @@ private fun SettingsSection(
 @Composable
 private fun SettingsSignedInPhoneCard(
     profile: CinerificProfile,
-    onSignOut: () -> Unit
+    onSignOut: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    val shape = RoundedCornerShape(16.dp)
+    val shape = RoundedCornerShape(
+        topStart = 0.dp,
+        topEnd = 16.dp,
+        bottomEnd = 16.dp,
+        bottomStart = 0.dp
+    )
+    val signOutWidth = destinationDp(SETTINGS_SIGN_OUT_BUTTON_WIDTH, SETTINGS_PHONE_COMPONENT_SCALE)
+    val nameVisibleWidthFraction = when (profile) {
+        CinerificProfile.Steve -> 418f / 880f
+        CinerificProfile.Martin -> 505f / 880f
+        CinerificProfile.Janny -> 414f / 880f
+        CinerificProfile.Guest -> 422f / 800f
+    }
+    val nameCanvasAspectRatio = when (profile) {
+        CinerificProfile.Guest -> 800f / 288f
+        else -> 880f / 288f
+    }
+    val nameCanvasWidth = signOutWidth / nameVisibleWidthFraction
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .background(Color.Black.copy(alpha = 0.14f), shape)
+            .background(Color.Black.copy(alpha = 0.84f), shape)
             .border(1.dp, Color.White.copy(alpha = 0.035f), shape)
             .padding(horizontal = 16.dp, vertical = 14.dp)
     ) {
-        Text(
-            text = stringResource(R.string.settings_signed_in_as),
-            color = DestinationText,
-            fontFamily = CinerificAppTextFontFamily,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            lineHeight = 28.sp,
-            letterSpacing = 0.sp
-        )
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp),
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
@@ -3341,24 +3365,34 @@ private fun SettingsSignedInPhoneCard(
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier
-                    .size(64.dp)
+                    .offset(y = 3.dp)
+                    .size(128.dp)
                     .clip(CircleShape)
             )
-            Image(
-                painter = painterResource(profile.nameResId),
-                contentDescription = null,
-                contentScale = ContentScale.FillBounds,
+            Column(
                 modifier = Modifier
-                    .padding(start = 12.dp)
-                    .width(80.dp)
-                    .height(16.dp)
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            SettingsSignOutButton(
-                scale = SETTINGS_PHONE_COMPONENT_SCALE,
-                onSignOut = onSignOut,
-                onCenterMeasured = {}
-            )
+                    .width(signOutWidth)
+                    .height(128.dp)
+                    .offset(y = (-10).dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Image(
+                    painter = painterResource(profile.nameResId),
+                    contentDescription = null,
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier
+                        .offset(y = 9.dp)
+                        .requiredWidth(nameCanvasWidth)
+                        .aspectRatio(nameCanvasAspectRatio)
+                )
+                SettingsSignOutButton(
+                    scale = SETTINGS_PHONE_COMPONENT_SCALE,
+                    onSignOut = onSignOut,
+                    onCenterMeasured = {},
+                    modifier = Modifier.offset(y = (-3).dp)
+                )
+            }
         }
     }
 }
@@ -3517,7 +3551,7 @@ private fun SettingsSignOutLabelText(
             color = DestinationText,
             fontFamily = CinerificAppTextFontFamily,
             fontSize = fittedFontSize.sp,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.Black,
             lineHeight = settingsSignOutLineHeight(fittedFontSize).sp,
             letterSpacing = 0.sp,
             textAlign = TextAlign.Center,
@@ -3536,16 +3570,30 @@ private fun SettingsSectionHeader(
     componentScale: Float,
     isPortraitPhone: Boolean
 ) {
-    val shape = RoundedCornerShape(
-        destinationDp(SETTINGS_SECTION_HEADER_RADIUS, componentScale)
-    )
+    val headerRadius = destinationDp(SETTINGS_SECTION_HEADER_RADIUS, componentScale)
+    val shape = if (isPortraitPhone) {
+        RoundedCornerShape(
+            topStart = 0.dp,
+            topEnd = headerRadius,
+            bottomEnd = headerRadius,
+            bottomStart = 0.dp
+        )
+    } else {
+        RoundedCornerShape(headerRadius)
+    }
     val headerHeight = destinationDp(SETTINGS_SECTION_HEADER_HEIGHT, componentScale)
 
     Box(
         modifier = Modifier
             .offset(
                 x = destinationDp(
-                    -(SETTINGS_SCREEN_HORIZONTAL_PADDING + SETTINGS_SECTION_HEADER_LEFT_BLEED),
+                    -(
+                        if (isPortraitPhone) {
+                            SETTINGS_SECTION_HEADER_LEFT_BLEED
+                        } else {
+                            SETTINGS_SCREEN_HORIZONTAL_PADDING + SETTINGS_SECTION_HEADER_LEFT_BLEED
+                        }
+                    ),
                     layoutScale
                 )
             )
@@ -3611,7 +3659,7 @@ private fun SettingsAnimatedToggle(
         label = "settings-toggle-knob-x"
     )
     val knobSize by animateDpAsState(
-        targetValue = destinationDp(if (isChecked) 61f else 47f, scale),
+        targetValue = destinationDp(if (isChecked) 61f else 49.35f, scale),
         animationSpec = spring(
             dampingRatio = Spring.DampingRatioMediumBouncy,
             stiffness = Spring.StiffnessMedium
@@ -3643,6 +3691,7 @@ private fun SettingsAnimatedToggle(
     ) {
         Box(
             modifier = Modifier
+                .align(Alignment.CenterStart)
                 .offset(x = knobOffset)
                 .size(knobSize)
                 .clip(RoundedCornerShape(50))
