@@ -1,0 +1,252 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [4 0 R 6 0 R 8 0 R 10 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 5 0 R >>
+endobj
+5 0 obj
+<< /Length 6373 >>
+stream
+BT /F1 15.00 Tf 52.00 749.00 Td (Cinerific Android App Work Log - September 29, 2026 Part 2 \(U.S. EST\)) Tj ET
+BT /F1 8.15 Tf 52.00 722.00 Td (Compiled summary for Tuesday, September 29, 2026 \(U.S. Eastern Time\) - focus: standardizing Movies and Shows genre navigation) Tj ET
+BT /F1 8.15 Tf 52.00 712.35 Td (across responsive layouts, then completing a sustained portrait-phone Settings refinement pass covering profile identity,) Tj ET
+BT /F1 8.15 Tf 52.00 702.70 Td (sticky behavior, section geometry, toggle proportions, and physical-device validation.) Tj ET
+BT /F1 8.15 Tf 52.00 690.05 Td (Generated in continuity with the established Cinerific worklog cadence from July 12 through September 29: compact opening) Tj ET
+BT /F1 8.15 Tf 52.00 680.40 Td (summary, source-material review, baseline state, goals, themed work-completed sections, validation, files touched, follow-up) Tj ET
+BT /F1 8.15 Tf 52.00 670.75 Td (context, and output-artifact close. A September 29 PDF already existed, so this artifact follows the established same-day) Tj ET
+BT /F1 8.15 Tf 52.00 661.10 Td (convention and uses the Part 2 suffix. Eastern time was independently verified live as Tuesday, September 29, 2026 in EDT,) Tj ET
+BT /F1 8.15 Tf 52.00 651.45 Td (UTC-04:00; the title retains the historical U.S. EST label. This report records work through HEAD 1d4ac8b plus the refreshed) Tj ET
+BT /F1 8.15 Tf 52.00 641.80 Td (project snapshot generated during this documentation pass.) Tj ET
+BT /F1 10.50 Tf 52.00 625.95 Td (Source Materials Reviewed) Tj ET
+BT /F1 8.15 Tf 52.00 615.15 Td (- Reviewed all 29 pre-existing Cinerific worklog PDFs at the repository root, spanning July 12 through the first September) Tj ET
+BT /F1 8.15 Tf 58.00 605.50 Td (29 report, including every same-day Part 1 and Part 2 artifact.) Tj ET
+BT /F1 8.15 Tf 52.00 595.85 Td (- Extracted the full PDF corpus with pdftotext, checked every document with pdfinfo, indexed recurring headings across the) Tj ET
+BT /F1 8.15 Tf 58.00 586.20 Td (archive, and compared representative early, middle, and latest logs in detail.) Tj ET
+BT /F1 8.15 Tf 52.00 576.55 Td (- Confirmed that every prior Cinerific worklog uses four U.S.-Letter pages and that the latest convention uses Helvetica,) Tj ET
+BT /F1 8.15 Tf 58.00 566.90 Td (PDF 1.4, extractable text, a repeated page title, a right-aligned footer, and OpenAI Codex authoring metadata.) Tj ET
+BT /F1 8.15 Tf 52.00 557.25 Td (- Read the first September 29 worklog as the direct baseline so this Part 2 report covers only the later genre-navigation) Tj ET
+BT /F1 8.15 Tf 58.00 547.60 Td (and Settings sessions instead of repeating the authentication, Favorites analytics, device tracking, and initial phone) Tj ET
+BT /F1 8.15 Tf 58.00 537.95 Td (Settings adaptation already documented.) Tj ET
+BT /F1 8.15 Tf 52.00 528.30 Td (- Reviewed commits c55b7a2, Standardized Movies and Shows genre navigation sizing, and 1d4ac8b, Refined phone-portrait) Tj ET
+BT /F1 8.15 Tf 58.00 518.65 Td (Settings layout and profile controls, together with their full source diffs and commit statistics.) Tj ET
+BT /F1 8.15 Tf 52.00 509.00 Td (- Reviewed CinerificViewportGenreNav.kt, CinerificDestinationScreen.kt, CinerificTextFonts.kt, the profile-name PNG) Tj ET
+BT /F1 8.15 Tf 58.00 499.35 Td (resources, .vscode/settings.json, the refreshed project snapshot, and the current clean Git state on main tracking) Tj ET
+BT /F1 8.15 Tf 58.00 489.70 Td (origin/main.) Tj ET
+BT /F1 8.15 Tf 52.00 480.05 Td (- Used live screenshots, Android resource measurements, Gradle output, adb installation results, and repeated launches on) Tj ET
+BT /F1 8.15 Tf 58.00 470.40 Td (the connected Samsung SM-G990U handset to distinguish layout-box geometry from visible artwork bounds.) Tj ET
+BT /F1 10.50 Tf 52.00 457.55 Td (Baseline Status Before September 29 Part 2 Work) Tj ET
+BT /F1 8.15 Tf 52.00 446.75 Td (- The first September 29 pass had created a dedicated portrait-phone Settings branch, but its compact signed-in card still) Tj ET
+BT /F1 8.15 Tf 58.00 437.10 Td (showed Signed in as, a 64dp avatar, a small profile-name image, and a detached Sign out control.) Tj ET
+BT /F1 8.15 Tf 52.00 427.45 Td (- The account card scrolled with the rest of Settings, its translucent fill matched the other sections, and its layout had) Tj ET
+BT /F1 8.15 Tf 58.00 417.80 Td (not yet been tuned around the visible transparent margins inside the Broadway username assets.) Tj ET
+BT /F1 8.15 Tf 52.00 408.15 Td (- Movies and Shows used responsive genre navigation, but the lettered genre buttons remained smaller than the All Genres) Tj ET
+BT /F1 8.15 Tf 58.00 398.50 Td (control and left comparatively loose gaps inside the accepted overall navigation footprint.) Tj ET
+BT /F1 8.15 Tf 52.00 388.85 Td (- Phone Settings section cards retained a left outer margin and rounded left corners. The profile card, section headers,) Tj ET
+BT /F1 8.15 Tf 58.00 379.20 Td (and section bodies therefore did not yet form the requested flush-left visual edge.) Tj ET
+BT /F1 8.15 Tf 52.00 369.55 Td (- OFF-state toggle knobs remained at 47 design units while ON-state knobs used 61, and the larger requested OFF appearance) Tj ET
+BT /F1 8.15 Tf 58.00 359.90 Td (had not yet been applied or explicitly anchored to the track's vertical center.) Tj ET
+BT /F1 10.50 Tf 52.00 347.05 Td (Main Goals for September 29 Part 2) Tj ET
+BT /F1 8.15 Tf 52.00 336.25 Td (- Make every lettered genre control match the All Genres button scale while preserving the navigation's total width and) Tj ET
+BT /F1 8.15 Tf 58.00 326.60 Td (height across devices and orientations.) Tj ET
+BT /F1 8.15 Tf 52.00 316.95 Td (- Recompose the portrait-phone Settings identity card around a large avatar, correctly scaled Broadway username,) Tj ET
+BT /F1 8.15 Tf 58.00 307.30 Td (accessible sign-out control, and balanced visual spacing.) Tj ET
+BT /F1 8.15 Tf 52.00 297.65 Td (- Keep the complete identity card and its banner gap sticky during vertical scrolling, then refine the surrounding card) Tj ET
+BT /F1 8.15 Tf 58.00 288.00 Td (and header edges without changing tablet or landscape layouts.) Tj ET
+BT /F1 8.15 Tf 52.00 278.35 Td (- Validate each narrow visual revision through clean builds and repeated deployment to the physical USB handset.) Tj ET
+BT /F1 7.10 Tf 352.11 27.00 Td (Cinerific Work Log - September 29, 2026 Part 2 \(U.S. EST\) Page 1) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 7 0 R >>
+endobj
+7 0 obj
+<< /Length 5514 >>
+stream
+BT /F1 15.00 Tf 52.00 749.00 Td (Cinerific Android App Work Log - September 29, 2026 Part 2 \(U.S. EST\)) Tj ET
+BT /F1 10.50 Tf 52.00 718.80 Td (Work Completed - Genre Navigation Standardization) Tj ET
+BT /F1 8.15 Tf 52.00 708.00 Td (- Resized every lettered genre button in the shared Movies and Shows viewport navigation to match the dimensions of the) Tj ET
+BT /F1 8.15 Tf 58.00 698.35 Td (top-left All Genres button instead of preserving a visibly smaller secondary tier.) Tj ET
+BT /F1 8.15 Tf 52.00 688.70 Td (- Increased the apparent genre typography together with the boxes, satisfying the request to enlarge the complete controls) Tj ET
+BT /F1 8.15 Tf 58.00 679.05 Td (rather than merely thickening their borders.) Tj ET
+BT /F1 8.15 Tf 52.00 669.40 Td (- Recalculated horizontal and vertical gaps around the enlarged genre buttons so the controls remain inside the previously) Tj ET
+BT /F1 8.15 Tf 58.00 659.75 Td (accepted navigation width and height.) Tj ET
+BT /F1 8.15 Tf 52.00 650.10 Td (- Kept the responsive implementation shared across phone, tablet, portrait, and landscape branches, preventing a) Tj ET
+BT /F1 8.15 Tf 58.00 640.45 Td (correction on one viewport from leaving the tablet emulator unchanged.) Tj ET
+BT /F1 8.15 Tf 52.00 630.80 Td (- Preserved the All Genres control as the sizing reference, the existing selection behavior, the navigation's outer) Tj ET
+BT /F1 8.15 Tf 58.00 621.15 Td (placement, and the surrounding destination-screen composition.) Tj ET
+BT /F1 8.15 Tf 52.00 611.50 Td (- Built and rebooted the tablet/runtime context after the initial visual report, then committed the final shared geometry) Tj ET
+BT /F1 8.15 Tf 58.00 601.85 Td (in c55b7a2.) Tj ET
+BT /F1 10.50 Tf 52.00 589.00 Td (Work Completed - Portrait Settings Identity Card) Tj ET
+BT /F1 8.15 Tf 52.00 578.20 Td (- Doubled the phone-portrait avatar from 64dp to 128dp while leaving the accepted tablet signed-in column on its existing) Tj ET
+BT /F1 8.15 Tf 58.00 568.55 Td (scale and coordinate system.) Tj ET
+BT /F1 8.15 Tf 52.00 558.90 Td (- Replaced the small adjacent username treatment with the same Broadway-rendered PNG artwork used by Welcome and Create My) Tj ET
+BT /F1 8.15 Tf 58.00 549.25 Td (Account, preserving each profile's intended canvas proportions.) Tj ET
+BT /F1 8.15 Tf 52.00 539.60 Td (- Removed the Signed in as label and its dedicated follow-on spacing so the identity content begins directly at the card's) Tj ET
+BT /F1 8.15 Tf 58.00 529.95 Td (normal top padding without an empty placeholder region.) Tj ET
+BT /F1 8.15 Tf 52.00 520.30 Td (- Moved the username from beneath the avatar into a right-side vertical stack above the gray Sign out button, keeping the) Tj ET
+BT /F1 8.15 Tf 58.00 510.65 Td (avatar as the left-side visual anchor.) Tj ET
+BT /F1 8.15 Tf 52.00 501.00 Td (- Distributed the avatar and right-side stack evenly across the available card width instead of relying on a weighted) Tj ET
+BT /F1 8.15 Tf 58.00 491.35 Td (spacer that left unequal edge distances.) Tj ET
+BT /F1 8.15 Tf 52.00 481.70 Td (- Kept the avatar's requested 3dp downward visual nudge as an image-only offset so its layout footprint, the username) Tj ET
+BT /F1 8.15 Tf 58.00 472.05 Td (position, and the card dimensions remained stable.) Tj ET
+BT /F1 8.15 Tf 52.00 462.40 Td (- Set the right-side stack to the same 128dp inner height as the avatar and refined its visible position by eye,) Tj ET
+BT /F1 8.15 Tf 58.00 452.75 Td (accounting for the transparent padding inside the rendered image assets.) Tj ET
+BT /F1 8.15 Tf 52.00 443.10 Td (- Shifted the username artwork down a cumulative 9dp toward the Sign out button without changing the stack's measured size) Tj ET
+BT /F1 8.15 Tf 58.00 433.45 Td (or moving other elements.) Tj ET
+BT /F1 10.50 Tf 52.00 420.60 Td (Work Completed - Visible Broadway Username Calibration) Tj ET
+BT /F1 8.15 Tf 52.00 409.80 Td (- Diagnosed the failed first width match: assigning the PNG canvas the button width made the visible letters much smaller) Tj ET
+BT /F1 8.15 Tf 58.00 400.15 Td (because the files contain substantial transparent margins on both sides.) Tj ET
+BT /F1 8.15 Tf 52.00 390.50 Td (- Measured the alpha bounds of Steve, Martin, Janny, and Guest directly from their PNG resources rather than assuming that) Tj ET
+BT /F1 8.15 Tf 58.00 380.85 Td (canvas dimensions represented visible lettering.) Tj ET
+BT /F1 8.15 Tf 52.00 371.20 Td (- Recorded visible-width fractions of 418/880 for Steve, 505/880 for Martin, 414/880 for Janny, and 422/800 for Guest,) Tj ET
+BT /F1 8.15 Tf 58.00 361.55 Td (while retaining the 880x288 or 800x288 canvas aspect ratios.) Tj ET
+BT /F1 8.15 Tf 52.00 351.90 Td (- Derived a profile-specific canvas width from the rendered gray Sign out button width divided by each visible-width) Tj ET
+BT /F1 8.15 Tf 58.00 342.25 Td (fraction. The visible Broadway letters now span the button width consistently without distortion.) Tj ET
+BT /F1 8.15 Tf 52.00 332.60 Td (- Used required width inside the fixed sign-out column so the transparent canvas can extend beyond that column while the) Tj ET
+BT /F1 8.15 Tf 58.00 322.95 Td (visible lettering stays centered directly above the button.) Tj ET
+BT /F1 8.15 Tf 52.00 313.30 Td (- Preserved ContentScale.Fit and the native image aspect ratios, avoiding the stretched Broadway appearance seen during) Tj ET
+BT /F1 8.15 Tf 58.00 303.65 Td (earlier username experiments.) Tj ET
+BT /F1 7.10 Tf 352.11 27.00 Td (Cinerific Work Log - September 29, 2026 Part 2 \(U.S. EST\) Page 2) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 9 0 R >>
+endobj
+9 0 obj
+<< /Length 5370 >>
+stream
+BT /F1 15.00 Tf 52.00 749.00 Td (Cinerific Android App Work Log - September 29, 2026 Part 2 \(U.S. EST\)) Tj ET
+BT /F1 10.50 Tf 52.00 718.80 Td (Work Completed - Sticky Profile Card) Tj ET
+BT /F1 8.15 Tf 52.00 708.00 Td (- Added a scroll-linked offset and elevated z-order to the complete portrait-phone identity card so the avatar, username,) Tj ET
+BT /F1 8.15 Tf 58.00 698.35 Td (and Sign out control remain together above the scrolling Settings sections.) Tj ET
+BT /F1 8.15 Tf 52.00 688.70 Td (- Initially allowed the 36dp lead-in gap to collapse before the card pinned beneath the Settings banner, then revised the) Tj ET
+BT /F1 8.15 Tf 58.00 679.05 Td (calculation after user review so the gap itself participates in the sticky behavior.) Tj ET
+BT /F1 8.15 Tf 52.00 669.40 Td (- The final behavior offsets the card by the current scroll value, preserving the full vertical breathing room beneath the) Tj ET
+BT /F1 8.15 Tf 58.00 659.75 Td (fixed Settings banner throughout scrolling.) Tj ET
+BT /F1 8.15 Tf 52.00 650.10 Td (- Kept the sticky implementation inside the portrait-phone branch. Portrait tablets, landscape layouts, and the existing) Tj ET
+BT /F1 8.15 Tf 58.00 640.45 Td (detached tablet account column retain their previous behavior.) Tj ET
+BT /F1 8.15 Tf 52.00 630.80 Td (- Raised the card's black fill from 14 percent through several visual comparison steps to a final 84 percent opacity,) Tj ET
+BT /F1 8.15 Tf 58.00 621.15 Td (improving separation from content that scrolls beneath the sticky surface.) Tj ET
+BT /F1 10.50 Tf 52.00 608.30 Td (Work Completed - Flush-Left Settings Geometry) Tj ET
+BT /F1 8.15 Tf 52.00 597.50 Td (- Removed the phone-portrait content column's left outer padding so the identity card and the Accessibility, Playback,) Tj ET
+BT /F1 8.15 Tf 58.00 587.85 Td (Billing & Payment, and Security parent boxes now reach the screen's left edge.) Tj ET
+BT /F1 8.15 Tf 52.00 578.20 Td (- Preserved the existing right margin and each card's internal row padding, so controls and explanatory copy did not) Tj ET
+BT /F1 8.15 Tf 58.00 568.55 Td (become cramped when the parent surfaces expanded leftward.) Tj ET
+BT /F1 8.15 Tf 52.00 558.90 Td (- Restored the gray section-header label position after the parent boxes moved. Reduced only the negative header bleed) Tj ET
+BT /F1 8.15 Tf 58.00 549.25 Td (while retaining the original internal start padding.) Tj ET
+BT /F1 8.15 Tf 52.00 539.60 Td (- Squared the top-left and bottom-left corners of every gray section-header pill while keeping both right corners rounded.) Tj ET
+BT /F1 8.15 Tf 52.00 529.95 Td (- Squared the left edge of the identity card and all phone Settings section bodies, retaining rounded top-right and) Tj ET
+BT /F1 8.15 Tf 58.00 520.30 Td (bottom-right corners for the established trailing-edge treatment.) Tj ET
+BT /F1 8.15 Tf 52.00 510.65 Td (- Left the Settings banner title alignment unchanged, separating the requested card-edge revision from global screen) Tj ET
+BT /F1 8.15 Tf 58.00 501.00 Td (chrome.) Tj ET
+BT /F1 10.50 Tf 52.00 488.15 Td (Work Completed - Toggle and Sign-Out Refinements) Tj ET
+BT /F1 8.15 Tf 52.00 477.35 Td (- Increased only the OFF-state switch knob endpoint by exactly five percent, from 47 to 49.35 design units. The ON-state) Tj ET
+BT /F1 8.15 Tf 58.00 467.70 Td (endpoint remains 61 and therefore remains visibly larger.) Tj ET
+BT /F1 8.15 Tf 52.00 458.05 Td (- Preserved the existing horizontal travel, MediumBouncy damping ratio, Medium spring stiffness, color tweens, interaction) Tj ET
+BT /F1 8.15 Tf 58.00 448.40 Td (behavior, timing, and bounce/jiggle character.) Tj ET
+BT /F1 8.15 Tf 52.00 438.75 Td (- Made the knob's CenterStart alignment explicit in addition to the track's centered content alignment, keeping both) Tj ET
+BT /F1 8.15 Tf 58.00 429.10 Td (animated sizes vertically centered throughout the spring.) Tj ET
+BT /F1 8.15 Tf 52.00 419.45 Td (- Changed the Sign out label request from Bold to Black weight, then traced the lack of visual difference to) Tj ET
+BT /F1 8.15 Tf 58.00 409.80 Td (CinerificTextFonts.kt, where Normal through Black all map to the same manrope.ttf outlines.) Tj ET
+BT /F1 8.15 Tf 52.00 400.15 Td (- Deferred a synthetic thickening effect or new font asset after documenting the cause, avoiding an unrelated font-system) Tj ET
+BT /F1 8.15 Tf 58.00 390.50 Td (change during the layout pass.) Tj ET
+BT /F1 10.50 Tf 52.00 377.65 Td (Work Completed - Runtime Iteration and Workspace Detail) Tj ET
+BT /F1 8.15 Tf 52.00 366.85 Td (- Built, installed, force-stopped, and relaunched the debug application on USB device R5CRC33MGNZ after each accepted) Tj ET
+BT /F1 8.15 Tf 58.00 357.20 Td (revision so the handset consistently reflected the current source.) Tj ET
+BT /F1 8.15 Tf 52.00 347.55 Td (- Captured live screenshots during spacing work and used the visible avatar, Broadway letters, gray button, and) Tj ET
+BT /F1 8.15 Tf 58.00 337.90 Td (parent-card edges as the basis for later visual offsets rather than trusting layout bounds alone.) Tj ET
+BT /F1 8.15 Tf 52.00 328.25 Td (- Updated the VS Code inactive status-bar background to the established workspace accent color, keeping the editor chrome) Tj ET
+BT /F1 8.15 Tf 58.00 318.60 Td (consistent with the active Peacock theme.) Tj ET
+BT /F1 7.10 Tf 352.11 27.00 Td (Cinerific Work Log - September 29, 2026 Part 2 \(U.S. EST\) Page 3) Tj ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 11 0 R >>
+endobj
+11 0 obj
+<< /Length 6324 >>
+stream
+BT /F1 15.00 Tf 52.00 749.00 Td (Cinerific Android App Work Log - September 29, 2026 Part 2 \(U.S. EST\)) Tj ET
+BT /F1 10.50 Tf 52.00 718.80 Td (Validation and Checks Performed) Tj ET
+BT /F1 8.15 Tf 52.00 708.00 Td (- Verified Eastern time independently as Tuesday, September 29, 2026 at 10:30 PM EDT, UTC-04:00, before selecting the) Tj ET
+BT /F1 8.15 Tf 58.00 698.35 Td (same-day Part 2 filename.) Tj ET
+BT /F1 8.15 Tf 52.00 688.70 Td (- Ran ./gradlew :app:assembleDebug throughout the implementation pass. Each final revision compiled successfully under the) Tj ET
+BT /F1 8.15 Tf 58.00 679.05 Td (existing Gradle 8.7 project configuration.) Tj ET
+BT /F1 8.15 Tf 52.00 669.40 Td (- Ran git diff --check before deployment sequences to detect whitespace errors; no blocking diff-format issues were) Tj ET
+BT /F1 8.15 Tf 58.00 659.75 Td (reported.) Tj ET
+BT /F1 8.15 Tf 52.00 650.10 Td (- Installed app/build/outputs/apk/debug/app-debug.apk with adb -s R5CRC33MGNZ install -r and received Success after the) Tj ET
+BT /F1 8.15 Tf 58.00 640.45 Td (accepted genre-navigation and Settings changes.) Tj ET
+BT /F1 8.15 Tf 52.00 630.80 Td (- Force-stopped and relaunched com.prahlin.cinerific/.MainActivity after installation so visual review used the rebuilt) Tj ET
+BT /F1 8.15 Tf 58.00 621.15 Td (package rather than a stale process.) Tj ET
+BT /F1 8.15 Tf 52.00 611.50 Td (- Measured the profile-name PNG canvas sizes and nontransparent alpha bounds to verify the visible-width compensation used) Tj ET
+BT /F1 8.15 Tf 58.00 601.85 Td (by the Settings username artwork.) Tj ET
+BT /F1 8.15 Tf 52.00 592.20 Td (- Reviewed the final commit range from the first September 29 worklog through c55b7a2 and 1d4ac8b, then confirmed main) Tj ET
+BT /F1 8.15 Tf 58.00 582.55 Td (matched origin/main with a clean tree before refreshing the snapshot.) Tj ET
+BT /F1 8.15 Tf 52.00 572.90 Td (- Ran read_project.sh immediately before worklog generation. The refreshed cinerific_PROJECT_SNAPSHOT.txt now records the) Tj ET
+BT /F1 8.15 Tf 58.00 563.25 Td (current repository tree, selected sources, tooling, and binary inventory.) Tj ET
+BT /F1 8.15 Tf 52.00 553.60 Td (- Validated this PDF with pdfinfo and pdftotext after generation, including page count, U.S.-Letter geometry, PDF version,) Tj ET
+BT /F1 8.15 Tf 58.00 543.95 Td (metadata, extractable text, section ordering, and footer presence.) Tj ET
+BT /F1 10.50 Tf 52.00 531.10 Td (Files Touched During September 29 Part 2) Tj ET
+BT /F1 8.15 Tf 52.00 520.30 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificViewportGenreNav.kt - standardized genre-button dimensions,) Tj ET
+BT /F1 8.15 Tf 58.00 510.65 Td (typography scale, and internal gaps without expanding the navigation footprint.) Tj ET
+BT /F1 8.15 Tf 52.00 501.00 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt - refined the phone Settings identity card,) Tj ET
+BT /F1 8.15 Tf 58.00 491.35 Td (Broadway name measurement, sticky positioning, section geometry, toggle knob, and sign-out label weight.) Tj ET
+BT /F1 8.15 Tf 52.00 481.70 Td (- .vscode/settings.json - added the inactive status-bar background color used by the workspace theme.) Tj ET
+BT /F1 8.15 Tf 52.00 472.05 Td (- cinerific_PROJECT_SNAPSHOT.txt - refreshed the generated project snapshot for the current handoff.) Tj ET
+BT /F1 8.15 Tf 52.00 462.40 Td (- cinerific_worklog_september 29 part 2.pdf - added this second September 29 session artifact at the repository root.) Tj ET
+BT /F1 10.50 Tf 52.00 449.55 Td (Follow-Up Context) Tj ET
+BT /F1 8.15 Tf 52.00 438.75 Td (- The accepted phone profile card is now deliberately dense and high-contrast: 84 percent black, flush-left, square on the) Tj ET
+BT /F1 8.15 Tf 58.00 429.10 Td (left, rounded on the right, and sticky with its full banner gap preserved.) Tj ET
+BT /F1 8.15 Tf 52.00 419.45 Td (- Future Settings changes should continue to remain inside the portrait-phone branch unless the user explicitly requests) Tj ET
+BT /F1 8.15 Tf 58.00 409.80 Td (tablet or landscape parity; those layouts were intentionally protected during this pass.) Tj ET
+BT /F1 8.15 Tf 52.00 400.15 Td (- The Broadway username calculation depends on the measured alpha bounds of the current four PNGs. Replacing an asset) Tj ET
+BT /F1 8.15 Tf 58.00 390.50 Td (requires updating its visible-width fraction or trimming the replacement file.) Tj ET
+BT /F1 8.15 Tf 52.00 380.85 Td (- A genuinely heavier Sign out label requires a distinct heavier Manrope font file or a deliberate rendering effect) Tj ET
+BT /F1 8.15 Tf 58.00 371.20 Td (because all declared weights currently reference one physical font resource.) Tj ET
+BT /F1 8.15 Tf 52.00 361.55 Td (- The current genre navigation should retain its accepted outer bounds. Additional chip growth must be paid for by gap) Tj ET
+BT /F1 8.15 Tf 58.00 351.90 Td (changes or a deliberate request to enlarge the navigation container.) Tj ET
+BT /F1 8.15 Tf 52.00 342.25 Td (- The connected physical device remains the primary phone-portrait reference; the Standard tablet emulator remains the) Tj ET
+BT /F1 8.15 Tf 58.00 332.60 Td (regression target for shared and non-phone layouts.) Tj ET
+BT /F1 10.50 Tf 52.00 319.75 Td (Output Artifact) Tj ET
+BT /F1 8.15 Tf 52.00 308.95 Td (- Created /Users/prahlin/gh/cinerific/cinerific_worklog_september 29 part 2.pdf using the established lowercase filename,) Tj ET
+BT /F1 8.15 Tf 58.00 299.30 Td (month/day spacing, and same-day Part 2 suffix.) Tj ET
+BT /F1 8.15 Tf 52.00 289.65 Td (- Kept the established four-page U.S.-Letter structure, Helvetica typography, compact technical density, repeated title,) Tj ET
+BT /F1 8.15 Tf 58.00 280.00 Td (right-aligned footer, PDF 1.4 compatibility, and extractable text.) Tj ET
+BT /F1 8.15 Tf 52.00 270.35 Td (- Scoped the report to work completed after the first September 29 artifact and recorded the final accepted values rather) Tj ET
+BT /F1 8.15 Tf 58.00 260.70 Td (than every discarded intermediate experiment.) Tj ET
+BT /F1 8.15 Tf 52.00 251.05 Td (- No source commit was created by the PDF-generation step; the new worklog and mechanically refreshed snapshot remain) Tj ET
+BT /F1 8.15 Tf 58.00 241.40 Td (available for review and the next repository commit.) Tj ET
+BT /F1 7.10 Tf 352.11 27.00 Td (Cinerific Work Log - September 29, 2026 Part 2 \(U.S. EST\) Page 4) Tj ET
+endstream
+endobj
+12 0 obj
+<< /Title (Cinerific Android App Work Log - September 29, 2026 Part 2 \(U.S. EST\)) /Author (OpenAI Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20260929223353-0400) >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000140 00000 n 
+0000000237 00000 n 
+0000000363 00000 n 
+0000006788 00000 n 
+0000006914 00000 n 
+0000012480 00000 n 
+0000012606 00000 n 
+0000018028 00000 n 
+0000018156 00000 n 
+0000024533 00000 n 
+trailer
+<< /Size 13 /Root 1 0 R /Info 12 0 R >>
+startxref
+24794
+%%EOF
