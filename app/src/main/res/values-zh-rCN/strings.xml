@@ -82,6 +82,7 @@
     <string name="favorites_longest_playtime">最长播放时间</string>
     <string name="favorites_most_used_device">最常用设备</string>
     <string name="favorites_favorite_genre">最喜欢的类型</string>
+    <string name="favorite_added_toast">已添加到收藏！</string>
 
     <string name="program_one_last_breath">最后一口气</string>
     <string name="program_sink_or_swim">成败在此一举</string>

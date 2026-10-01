@@ -82,6 +82,7 @@
     <string name="favorites_longest_playtime">Mayor tiempo de reproducción</string>
     <string name="favorites_most_used_device">Dispositivo más usado</string>
     <string name="favorites_favorite_genre">Género favorito</string>
+    <string name="favorite_added_toast">¡Añadido a Favoritos!</string>
 
     <string name="program_one_last_breath">Un último aliento</string>
     <string name="program_sink_or_swim">Hundirse o nadar</string>

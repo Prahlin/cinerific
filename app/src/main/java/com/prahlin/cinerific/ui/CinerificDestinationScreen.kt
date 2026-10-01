@@ -2,7 +2,12 @@ package com.prahlin.cinerific.ui
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.animateFloatAsState
@@ -105,6 +110,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.prahlin.cinerific.R
@@ -123,6 +129,8 @@ private const val DESTINATION_PORTRAIT_TOP_BAR_HEIGHT_MULTIPLIER = 1.2f
 private val DESTINATION_PHONE_PORTRAIT_HEADER_GAP = 28.dp
 private const val DESTINATION_CARD_ASPECT = 350f / 263f
 private const val DESTINATION_CARD_SCALE = 0.8f
+private const val DESTINATION_CARD_CLEAR_STROKE_PX = 10f
+private const val DESTINATION_CARD_OUTER_STROKE_PX = 3f
 private const val DESTINATION_LIST_IMAGE_WIDTH = 300f
 private const val DESTINATION_LIST_IMAGE_HEIGHT = 225f
 private const val DESTINATION_LIST_TEXT_COLUMN_HEIGHT = 222f
@@ -224,6 +232,18 @@ private val DETAIL_PHONE_PORTRAIT_LOGO_TOP_GAP = (-2).dp
 private const val FAVORITE_BURST_PADDING = 22f
 private const val FAVORITE_BURST_STROKE = 2.4f
 private const val FAVORITE_BURST_DURATION_MS = 240
+private const val FAVORITE_ADDED_TOAST_DURATION_MS = 2400L
+private const val FAVORITE_ADDED_TOAST_WIDTH = 400f
+private const val FAVORITE_ADDED_TOAST_HEIGHT = 116f
+private const val FAVORITE_ADDED_TOAST_PHONE_SCALE_MULTIPLIER = 2.35f
+private const val FAVORITE_ADDED_TOAST_GAP = 28f
+private const val FAVORITE_ADDED_TOAST_RADIUS = 24f
+private const val FAVORITE_ADDED_TOAST_BORDER = 2.4f
+private const val FAVORITE_ADDED_TOAST_HORIZONTAL_PADDING = 22f
+private const val FAVORITE_ADDED_TOAST_ICON_CONTAINER_SIZE = 72f
+private const val FAVORITE_ADDED_TOAST_ICON_SIZE = 42f
+private const val FAVORITE_ADDED_TOAST_ICON_GAP = 20f
+private const val FAVORITE_ADDED_TOAST_FONT_SIZE = 28f
 private const val DETAIL_LOADING_SPINNER_WIDTH = 190f
 private const val DETAIL_LOADING_SCRIM_MAX_ALPHA = 0.68f
 private const val DETAIL_HERO_LOGO_WIDTH = 300f
@@ -289,6 +309,9 @@ private val DestinationBottom = Color(0xFF060004)
 private val DestinationText = Color(0xFFE7E7E7)
 private val DestinationSubtle = Color(0xFFBDBDBD)
 private val FavoriteBurstYellow = Color(0xFFFFD43B)
+private val FavoriteToastBackground = Color(0xF21A0D21)
+private val FavoriteToastPurple = Color(0xFFB86CFF)
+private val FavoriteToastDeepPurple = Color(0xFF69219A)
 private val DetailInfoPanelBackgroundFill =
     Color.Black.copy(alpha = DETAIL_INFO_PANEL_BACKGROUND_ALPHA)
 private val DetailInfoPanelBackgroundTransparent = Color.Black.copy(alpha = 0f)
@@ -454,6 +477,31 @@ private fun CinerificCatalogScreen(
         } else {
             rows.filter { it.genre == selectedGenre }
         }
+        val collageCardCenters = remember(titleResId, selectedGenre, selectedMode) {
+            mutableStateMapOf<String, Offset>()
+        }
+        val visibleCollageProgramTitles = if (selectedMode != ViewportMode.List) {
+            visibleRows.flatMap { it.programs }.map { it.title }
+        } else {
+            emptyList()
+        }
+        val selectedCollageProgramTitle = if (selectedMode != ViewportMode.List) {
+            val viewportCenter = Offset(
+                x = with(density) { maxWidth.toPx() / 2f },
+                y = with(density) { maxHeight.toPx() / 2f }
+            )
+            collageCardCenters
+                .filterKeys { it in visibleCollageProgramTitles }
+                .minByOrNull { (_, center) ->
+                    val dx = center.x - viewportCenter.x
+                    val dy = center.y - viewportCenter.y
+                    dx * dx + dy * dy
+                }
+                ?.key
+                ?: visibleCollageProgramTitles.firstOrNull()
+        } else {
+            null
+        }
         val listCardCenterYs = remember(titleResId, selectedGenre, selectedMode) {
             mutableStateMapOf<String, Float>()
         }
@@ -527,6 +575,15 @@ private fun CinerificCatalogScreen(
                             cardWidth = cardWidth,
                             cardHeight = cardHeight,
                             cardGap = cardGap,
+                            frameScale = scale,
+                            sectionHeaderLineHeightSp = if (
+                                isShows && row.genre == ViewportGenre.Documentary
+                            ) 44f else null,
+                            selectedProgramTitle = selectedCollageProgramTitle,
+                            selectionStrokeAlpha = selectionStrokeAlpha,
+                            onProgramCenterChanged = { programTitle, center ->
+                                collageCardCenters[programTitle] = center
+                            },
                             onProgramSelected = onProgramSelected,
                             topPadding = destinationSectionTopPadding(index = index, showViewportNav = showViewportNav)
                         )
@@ -541,6 +598,14 @@ private fun CinerificCatalogScreen(
                             rightPadding = rightPadding,
                             scale = scale,
                             portraitPhoneCardWidth = smallCollagePortraitPhoneCardWidth,
+                            sectionHeaderLineHeightSp = if (
+                                isShows && row.genre == ViewportGenre.Documentary
+                            ) 44f else null,
+                            selectedProgramTitle = selectedCollageProgramTitle,
+                            selectionStrokeAlpha = selectionStrokeAlpha,
+                            onProgramCenterChanged = { programTitle, center ->
+                                collageCardCenters[programTitle] = center
+                            },
                             onProgramSelected = onProgramSelected,
                             topPadding = destinationSectionTopPadding(index = index, showViewportNav = showViewportNav)
                         )
@@ -556,6 +621,9 @@ private fun CinerificCatalogScreen(
                             rightPadding = listRightPadding,
                             scale = listScale,
                             horizontalWidthScale = listHorizontalWidthScale,
+                            sectionHeaderLineHeightSp = if (
+                                isShows && row.genre == ViewportGenre.Documentary
+                            ) 44f else null,
                             selectedProgramTitle = selectedListProgramTitle,
                             selectionStrokeAlpha = selectionStrokeAlpha,
                             onProgramCenterChanged = { programTitle, centerY ->
@@ -637,6 +705,11 @@ private fun DestinationProgramRow(
     cardWidth: Dp,
     cardHeight: Dp,
     cardGap: Dp,
+    frameScale: Float,
+    sectionHeaderLineHeightSp: Float?,
+    selectedProgramTitle: String?,
+    selectionStrokeAlpha: Float,
+    onProgramCenterChanged: (String, Offset) -> Unit,
     onProgramSelected: (String) -> Unit,
     topPadding: Dp
 ) {
@@ -648,7 +721,8 @@ private fun DestinationProgramRow(
         DestinationSectionHeader(
             title = title,
             horizontalPadding = horizontalPadding,
-            rightPadding = rightPadding
+            rightPadding = rightPadding,
+            lineHeightSp = sectionHeaderLineHeightSp
         )
 
         CinerificCircularCardRow(
@@ -660,10 +734,17 @@ private fun DestinationProgramRow(
                 .padding(top = 20.dp),
             contentPadding = PaddingValues(start = horizontalPadding, end = rightPadding)
         ) { programIndex, _ ->
+            val program = programs[programIndex]
             DestinationProgramCard(
-                program = programs[programIndex],
+                program = program,
                 width = cardWidth,
                 height = cardHeight,
+                frameScale = frameScale,
+                selected = program.title == selectedProgramTitle,
+                selectionStrokeAlpha = selectionStrokeAlpha,
+                onCenterChanged = { center ->
+                    onProgramCenterChanged(program.title, center)
+                },
                 onProgramSelected = onProgramSelected
             )
         }
@@ -674,7 +755,8 @@ private fun DestinationProgramRow(
 private fun DestinationSectionHeader(
     title: String,
     horizontalPadding: Dp,
-    rightPadding: Dp
+    rightPadding: Dp,
+    lineHeightSp: Float? = null
 ) {
     Text(
         text = title,
@@ -682,6 +764,7 @@ private fun DestinationSectionHeader(
         fontFamily = CinerificAppTextFontFamily,
         fontSize = CINERIFIC_GENRE_HEADER_FONT_SIZE_SP.sp,
         fontWeight = FontWeight.Black,
+        lineHeight = lineHeightSp?.sp ?: TextUnit.Unspecified,
         letterSpacing = 0.sp,
         modifier = Modifier.padding(start = horizontalPadding, end = rightPadding)
     )
@@ -695,6 +778,10 @@ private fun DestinationProgramSmallCollage(
     rightPadding: Dp,
     scale: Float,
     portraitPhoneCardWidth: Dp?,
+    sectionHeaderLineHeightSp: Float?,
+    selectedProgramTitle: String?,
+    selectionStrokeAlpha: Float,
+    onProgramCenterChanged: (String, Offset) -> Unit,
     onProgramSelected: (String) -> Unit,
     topPadding: Dp
 ) {
@@ -712,7 +799,8 @@ private fun DestinationProgramSmallCollage(
         DestinationSectionHeader(
             title = title,
             horizontalPadding = horizontalPadding,
-            rightPadding = rightPadding
+            rightPadding = rightPadding,
+            lineHeightSp = sectionHeaderLineHeightSp
         )
 
         if (portraitPhoneCardWidth != null) {
@@ -725,11 +813,17 @@ private fun DestinationProgramSmallCollage(
                     .padding(top = 20.dp),
                 contentPadding = PaddingValues(start = horizontalPadding, end = rightPadding)
             ) { programIndex, _ ->
+                val program = programs[programIndex]
                 DestinationSmallCollageCard(
-                    program = programs[programIndex],
+                    program = program,
                     width = itemWidth,
                     cardHeight = cardHeight,
                     scale = scale,
+                    selected = program.title == selectedProgramTitle,
+                    selectionStrokeAlpha = selectionStrokeAlpha,
+                    onCenterChanged = { center ->
+                        onProgramCenterChanged(program.title, center)
+                    },
                     onProgramSelected = onProgramSelected
                 )
             }
@@ -749,6 +843,11 @@ private fun DestinationProgramSmallCollage(
                                 width = itemWidth,
                                 cardHeight = cardHeight,
                                 scale = scale,
+                                selected = program.title == selectedProgramTitle,
+                                selectionStrokeAlpha = selectionStrokeAlpha,
+                                onCenterChanged = { center ->
+                                    onProgramCenterChanged(program.title, center)
+                                },
                                 onProgramSelected = onProgramSelected
                             )
                         }
@@ -765,6 +864,9 @@ private fun DestinationSmallCollageCard(
     width: Dp,
     cardHeight: Dp,
     scale: Float,
+    selected: Boolean,
+    selectionStrokeAlpha: Float,
+    onCenterChanged: (Offset) -> Unit,
     onProgramSelected: (String) -> Unit
 ) {
     val shape = RoundedCornerShape(destinationDp(30f, scale))
@@ -779,6 +881,22 @@ private fun DestinationSmallCollageCard(
             modifier = Modifier
                 .width(width)
                 .height(cardHeight)
+                .onGloballyPositioned { coordinates ->
+                    val position = coordinates.positionInRoot()
+                    onCenterChanged(
+                        Offset(
+                            x = position.x + coordinates.size.width / 2f,
+                            y = position.y + coordinates.size.height / 2f
+                        )
+                    )
+                }
+                .destinationListCardFrame(
+                    selected = selected,
+                    clearStrokeWidth = destinationDp(DESTINATION_CARD_CLEAR_STROKE_PX, scale),
+                    outerStrokeWidth = destinationDp(DESTINATION_CARD_OUTER_STROKE_PX, scale),
+                    strokeAlpha = selectionStrokeAlpha,
+                    cornerRadius = destinationDp(30f, scale)
+                )
                 .shadow(destinationDp(14f, scale), shape, clip = false)
                 .clip(shape)
                 .clickable(enabled = program.hasDetailHero) {
@@ -818,6 +936,7 @@ private fun DestinationProgramList(
     rightPadding: Dp,
     scale: Float,
     horizontalWidthScale: Float,
+    sectionHeaderLineHeightSp: Float?,
     selectedProgramTitle: String?,
     selectionStrokeAlpha: Float,
     onProgramCenterChanged: (String, Float) -> Unit,
@@ -832,7 +951,8 @@ private fun DestinationProgramList(
         DestinationSectionHeader(
             title = title,
             horizontalPadding = horizontalPadding,
-            rightPadding = rightPadding
+            rightPadding = rightPadding,
+            lineHeightSp = sectionHeaderLineHeightSp
         )
 
         Column(
@@ -1266,6 +1386,10 @@ private fun DestinationProgramCard(
     program: DestinationProgramSpec,
     width: Dp,
     height: Dp,
+    frameScale: Float,
+    selected: Boolean,
+    selectionStrokeAlpha: Float,
+    onCenterChanged: (Offset) -> Unit,
     onProgramSelected: (String) -> Unit
 ) {
     val shape = RoundedCornerShape(22.dp)
@@ -1273,6 +1397,22 @@ private fun DestinationProgramCard(
         modifier = Modifier
             .width(width)
             .height(height)
+            .onGloballyPositioned { coordinates ->
+                val position = coordinates.positionInRoot()
+                onCenterChanged(
+                    Offset(
+                        x = position.x + coordinates.size.width / 2f,
+                        y = position.y + coordinates.size.height / 2f
+                    )
+                )
+            }
+            .destinationListCardFrame(
+                selected = selected,
+                clearStrokeWidth = destinationDp(DESTINATION_CARD_CLEAR_STROKE_PX, frameScale),
+                outerStrokeWidth = destinationDp(DESTINATION_CARD_OUTER_STROKE_PX, frameScale),
+                strokeAlpha = selectionStrokeAlpha,
+                cornerRadius = 22.dp
+            )
             .shadow(12.dp, shape, clip = false)
             .clip(shape)
             .clickable(enabled = program.hasDetailHero) {
@@ -1601,9 +1741,11 @@ private fun HeroFavoriteToggleButton(
     val favoriteBounceScale = remember { Animatable(1f) }
     val favoriteBurstProgress = remember { Animatable(1f) }
     var previousIsFavorited by remember { mutableStateOf(isFavorited) }
+    var showAddedToast by remember { mutableStateOf(false) }
 
     LaunchedEffect(isFavorited) {
         if (isFavorited && !previousIsFavorited) {
+            showAddedToast = true
             launch {
                 favoriteBurstProgress.snapTo(0f)
                 favoriteBurstProgress.animateTo(
@@ -1613,6 +1755,10 @@ private fun HeroFavoriteToggleButton(
                         easing = FastOutSlowInEasing
                     )
                 )
+            }
+            launch {
+                delay(FAVORITE_ADDED_TOAST_DURATION_MS)
+                showAddedToast = false
             }
             favoriteBounceScale.snapTo(1.08f)
             favoriteBounceScale.animateTo(
@@ -1641,6 +1787,7 @@ private fun HeroFavoriteToggleButton(
                 )
             )
         } else if (!isFavorited) {
+            showAddedToast = false
             favoriteBounceScale.snapTo(1f)
             favoriteBurstProgress.snapTo(1f)
         }
@@ -1653,6 +1800,14 @@ private fun HeroFavoriteToggleButton(
     val controlHeight = destinationDp(scaledFavoriteHeight, scale)
     val burstPadding = destinationDp(FAVORITE_BURST_PADDING * sizeMultiplier, scale)
     val favoriteX = DETAIL_FAVORITE_X + DETAIL_FAVORITE_WIDTH - scaledFavoriteWidth
+    val toastSizeMultiplier = if (sizeMultiplier > 1f) {
+        FAVORITE_ADDED_TOAST_PHONE_SCALE_MULTIPLIER
+    } else {
+        1f
+    }
+    val toastWidth = destinationDp(FAVORITE_ADDED_TOAST_WIDTH * toastSizeMultiplier, scale)
+    val toastHeight = destinationDp(FAVORITE_ADDED_TOAST_HEIGHT * toastSizeMultiplier, scale)
+    val toastGap = destinationDp(FAVORITE_ADDED_TOAST_GAP * sizeMultiplier, scale)
     val favoriteTop = if (centerVerticallyOnLogo) {
         logoTopOffset + destinationDp(
             (DETAIL_HERO_LOGO_HEIGHT * sizeMultiplier - scaledFavoriteHeight) / 2f,
@@ -1670,27 +1825,115 @@ private fun HeroFavoriteToggleButton(
             )
             .width(controlWidth + burstPadding + burstPadding)
             .height(controlHeight + burstPadding + burstPadding)
-            .graphicsLayer {
-                scaleX = favoriteBounceScale.value
-                scaleY = favoriteBounceScale.value
-            }
+            .zIndex(2f)
     ) {
-        HeroImageControlButton(
-            drawableId = if (isFavorited) {
-                R.drawable.hero_control_favorite_active
-            } else {
-                R.drawable.hero_control_favorite
-            },
-            contentDescription = if (isFavorited) "Remove from favorites" else "Add to favorites",
-            width = controlWidth,
-            height = controlHeight,
-            role = Role.Checkbox,
-            onClick = onFavoriteToggled,
-            modifier = Modifier.offset(x = burstPadding, y = burstPadding)
-        )
-        FavoriteStarBurstLines(
-            progress = favoriteBurstProgress.value,
-            modifier = Modifier.fillMaxSize()
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .graphicsLayer {
+                    scaleX = favoriteBounceScale.value
+                    scaleY = favoriteBounceScale.value
+                }
+        ) {
+            HeroImageControlButton(
+                drawableId = if (isFavorited) {
+                    R.drawable.hero_control_favorite_active
+                } else {
+                    R.drawable.hero_control_favorite
+                },
+                contentDescription = if (isFavorited) "Remove from favorites" else "Add to favorites",
+                width = controlWidth,
+                height = controlHeight,
+                role = Role.Checkbox,
+                onClick = onFavoriteToggled,
+                modifier = Modifier.offset(x = burstPadding, y = burstPadding)
+            )
+            FavoriteStarBurstLines(
+                progress = favoriteBurstProgress.value,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+        AnimatedVisibility(
+            visible = showAddedToast,
+            modifier = Modifier.offset(
+                x = burstPadding + controlWidth - toastWidth,
+                y = burstPadding + controlHeight + toastGap
+            ),
+            enter = fadeIn(animationSpec = tween(durationMillis = 160)) +
+                slideInVertically(
+                    initialOffsetY = { -it / 4 },
+                    animationSpec = tween(durationMillis = 220, easing = FastOutSlowInEasing)
+                ),
+            exit = fadeOut(animationSpec = tween(durationMillis = 180)) +
+                slideOutVertically(
+                    targetOffsetY = { -it / 6 },
+                    animationSpec = tween(durationMillis = 180, easing = FastOutSlowInEasing)
+                )
+        ) {
+            FavoriteAddedToast(
+                width = toastWidth,
+                height = toastHeight,
+                scale = scale * toastSizeMultiplier
+            )
+        }
+    }
+}
+
+@Composable
+private fun FavoriteAddedToast(
+    width: Dp,
+    height: Dp,
+    scale: Float,
+    modifier: Modifier = Modifier
+) {
+    val shape = RoundedCornerShape(destinationDp(FAVORITE_ADDED_TOAST_RADIUS, scale))
+    Row(
+        modifier = modifier
+            .width(width)
+            .height(height)
+            .shadow(
+                elevation = destinationDp(18f, scale),
+                shape = shape,
+                clip = false
+            )
+            .background(FavoriteToastBackground, shape)
+            .border(
+                width = destinationDp(FAVORITE_ADDED_TOAST_BORDER, scale),
+                brush = Brush.horizontalGradient(
+                    colors = listOf(FavoriteToastPurple, FavoriteToastDeepPurple)
+                ),
+                shape = shape
+            )
+            .padding(horizontal = destinationDp(FAVORITE_ADDED_TOAST_HORIZONTAL_PADDING, scale)),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .size(destinationDp(FAVORITE_ADDED_TOAST_ICON_CONTAINER_SIZE, scale))
+                .background(FavoriteToastDeepPurple.copy(alpha = 0.48f), CircleShape)
+                .border(
+                    width = destinationDp(2f, scale),
+                    color = FavoriteToastPurple.copy(alpha = 0.68f),
+                    shape = CircleShape
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.Star,
+                contentDescription = null,
+                tint = FavoriteToastPurple,
+                modifier = Modifier.size(destinationDp(FAVORITE_ADDED_TOAST_ICON_SIZE, scale))
+            )
+        }
+        Spacer(modifier = Modifier.width(destinationDp(FAVORITE_ADDED_TOAST_ICON_GAP, scale)))
+        Text(
+            text = stringResource(R.string.favorite_added_toast),
+            color = DestinationText,
+            fontFamily = CinerificAppTextFontFamily,
+            fontSize = (FAVORITE_ADDED_TOAST_FONT_SIZE * scale).sp,
+            fontWeight = FontWeight.Bold,
+            maxLines = 1,
+            overflow = TextOverflow.Clip
         )
     }
 }
@@ -3351,7 +3594,7 @@ private fun SettingsSignedInPhoneCard(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(Color.Black.copy(alpha = 0.84f), shape)
+            .background(Color.Black.copy(alpha = 0.90f), shape)
             .border(1.dp, Color.White.copy(alpha = 0.035f), shape)
             .padding(horizontal = 16.dp, vertical = 14.dp)
     ) {

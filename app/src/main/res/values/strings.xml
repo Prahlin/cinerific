@@ -82,6 +82,7 @@
     <string name="favorites_longest_playtime">Longest Playtime</string>
     <string name="favorites_most_used_device">Most Used Device</string>
     <string name="favorites_favorite_genre">Favorite Genre</string>
+    <string name="favorite_added_toast">Added to Favorites!</string>
 
     <string name="program_one_last_breath">One Last Breath</string>
     <string name="program_sink_or_swim">Sink or Swim</string>
