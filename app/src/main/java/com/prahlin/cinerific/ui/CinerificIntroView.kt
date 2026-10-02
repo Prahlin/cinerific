@@ -306,7 +306,6 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private val jannyAvatar = decode(R.drawable.janny_avatar_bubble_edge50_body0_test)
     private val guestAvatar = decode(R.drawable.guest_avatar_bubble_edge50_body0_test)
     private val createAvatarBitmaps = listOf(steveAvatar, martinAvatar, jannyAvatar)
-    private val createAvatarLayers = createAvatarCarouselLayers(steveAvatar, martinAvatar, jannyAvatar)
     private val steveName = decode(R.drawable.steve_name)
     private val martinName = decode(R.drawable.martin_name)
     private val jannyName = decode(R.drawable.janny_name)
@@ -872,10 +871,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 } else {
                     settledAvatarHitProfile(event.x, event.y)
                 }
-                pressedCreateAccountPrompt ||
-                    pressedSignInPrompt ||
-                    pressedForgotPasswordPrompt ||
-                    pressedAvatarProfile != null
+                // This custom view owns the entire welcome surface. Returning false for a
+                // slightly imprecise DOWN lets AndroidView's parent cancel the rest of the
+                // gesture, so a valid UP never reaches the link or avatar hit test.
+                true
             }
             MotionEvent.ACTION_MOVE -> {
                 if (mockSignInStartMillis != null) {
@@ -907,10 +906,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     }
                     return true
                 }
-                pressedCreateAccountPrompt ||
-                    pressedSignInPrompt ||
-                    pressedForgotPasswordPrompt ||
-                    pressedAvatarProfile != null
+                true
             }
             MotionEvent.ACTION_UP -> {
                 mockDragReturnEligibleAtTouchDown = false
@@ -953,13 +949,13 @@ internal class CinerificIntroView(context: Context) : View(context) {
                         return true
                     }
                     val requestedFlow = when {
-                        pressedCreateAccountPrompt && settledCreateAccountPromptHit(event.x, event.y) -> {
+                        settledCreateAccountPromptHit(event.x, event.y) -> {
                             MockAccountFlow.CreateAccount
                         }
-                        pressedSignInPrompt && settledSignInPromptHit(event.x, event.y) -> {
+                        settledSignInPromptHit(event.x, event.y) -> {
                             MockAccountFlow.SignIn
                         }
-                        pressedForgotPasswordPrompt && settledForgotPasswordPromptHit(event.x, event.y) -> {
+                        settledForgotPasswordPromptHit(event.x, event.y) -> {
                             MockAccountFlow.ForgotPassword
                         }
                         else -> null
@@ -1090,10 +1086,14 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     }
                     return true
                 }
-                val shouldOpenMockCreateAccount = pressedCreateAccountPrompt &&
+                val tapStayedWithinSlop =
+                    abs(event.x - mockTouchDownX) <= touchSlop &&
+                        abs(event.y - mockTouchDownY) <= touchSlop
+                val shouldOpenMockCreateAccount = tapStayedWithinSlop &&
                     settledCreateAccountPromptHit(event.x, event.y)
-                val shouldOpenMockSignIn = pressedSignInPrompt && settledSignInPromptHit(event.x, event.y)
-                val shouldOpenMockForgotPassword = pressedForgotPasswordPrompt &&
+                val shouldOpenMockSignIn = tapStayedWithinSlop &&
+                    settledSignInPromptHit(event.x, event.y)
+                val shouldOpenMockForgotPassword = tapStayedWithinSlop &&
                     settledForgotPasswordPromptHit(event.x, event.y)
                 val releasedAvatarProfile = settledAvatarHitProfile(event.x, event.y)
                 val swipeDirection = portraitProfileSwipeDirection()
@@ -1103,9 +1103,11 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     portraitProfileSwipeMoved &&
                     swipeProgress >= PORTRAIT_PROFILE_SWIPE_COMMIT_PROGRESS &&
                     swipeDirection != null
-                val shouldNavigate = !shouldSwipeProfile && !portraitProfileSwipeMoved &&
-                    pressedAvatarProfile != null && pressedAvatarProfile == releasedAvatarProfile
-                clickAvatarProfile = pressedAvatarProfile
+                val shouldNavigate = tapStayedWithinSlop &&
+                    !shouldSwipeProfile &&
+                    !portraitProfileSwipeMoved &&
+                    releasedAvatarProfile != null
+                clickAvatarProfile = releasedAvatarProfile
                 pressedAvatarProfile = null
                 pressedCreateAccountPrompt = false
                 pressedSignInPrompt = false
@@ -1136,7 +1138,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     portraitProfileSwipeMoved = false
                     portraitProfileDragDeltaX = 0f
                     postInvalidateOnAnimation()
-                    false
+                    true
                 }
             }
             MotionEvent.ACTION_CANCEL -> {
@@ -1164,7 +1166,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 portraitAuthScrollMoved = false
                 portraitProfileSwipeMoved = false
                 portraitProfileDragDeltaX = 0f
-                false
+                true
             }
             else -> pressedCreateAccountPrompt ||
                 pressedSignInPrompt ||
@@ -2462,89 +2464,18 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val usesSeparatedMotionLayers = isMockCreateAvatarCarouselAnimating() ||
             (activeMockCreateAvatarDrag && mockCreateAvatarDragMoved)
         if (usesSeparatedMotionLayers) {
-            val carouselAnimating = isMockCreateAvatarCarouselAnimating()
-            val motionProgress = if (carouselAnimating) {
-                mockCreateAvatarCarouselProgress()
-            } else {
-                mockCreateAvatarDragProgress()
-            }
-            val startBlend = FastOutSlowInEasing.transform(
-                (motionProgress / MOCK_CREATE_AVATAR_LAYER_BLEND_PROGRESS).coerceIn(0f, 1f)
-            )
-            val endBlend = if (carouselAnimating) {
-                FastOutSlowInEasing.transform(
-                    ((motionProgress - (1f - MOCK_CREATE_AVATAR_LAYER_BLEND_PROGRESS)) /
-                        MOCK_CREATE_AVATAR_LAYER_BLEND_PROGRESS).coerceIn(0f, 1f)
-                )
-            } else {
-                0f
-            }
-            val effectiveMotionProgress = when {
-                motionProgress <= MOCK_CREATE_AVATAR_LAYER_BLEND_PROGRESS -> 0f
-                carouselAnimating &&
-                    motionProgress >= 1f - MOCK_CREATE_AVATAR_LAYER_BLEND_PROGRESS -> 1f
-                carouselAnimating -> {
-                    (motionProgress - MOCK_CREATE_AVATAR_LAYER_BLEND_PROGRESS) /
-                        (1f - MOCK_CREATE_AVATAR_LAYER_BLEND_PROGRESS * 2f)
-                }
-                else -> {
-                    (motionProgress - MOCK_CREATE_AVATAR_LAYER_BLEND_PROGRESS) /
-                        (1f - MOCK_CREATE_AVATAR_LAYER_BLEND_PROGRESS)
-                }
-            }.coerceIn(0f, 1f)
-            val separatedAlpha = alpha * minOf(startBlend, 1f - endBlend)
             canvas.save()
             clipMockCreateAvatarCarousel(canvas, avatarBounds, stageLeft, stageTop, stageScale)
             drawMockCreateAvatarMotionLayer(
-                canvas, createAvatarLayers.characters, avatarBounds,
-                stageLeft, stageTop, stageScale, separatedAlpha, effectiveMotionProgress
+                canvas = canvas,
+                bitmaps = createAvatarBitmaps,
+                bounds = avatarBounds,
+                stageLeft = stageLeft,
+                stageTop = stageTop,
+                stageScale = stageScale,
+                alpha = alpha
             )
             canvas.restore()
-            drawFigmaBitmap(
-                canvas,
-                createAvatarLayers.bubble,
-                avatarBounds,
-                stageLeft,
-                stageTop,
-                stageScale,
-                separatedAlpha
-            )
-            canvas.save()
-            clipMockCreateAvatarCarousel(canvas, avatarBounds, stageLeft, stageTop, stageScale)
-            drawMockCreateAvatarMotionLayer(
-                canvas, createAvatarLayers.bottomStrokes, avatarBounds,
-                stageLeft, stageTop, stageScale, separatedAlpha, effectiveMotionProgress
-            )
-            canvas.restore()
-            if (startBlend < 1f) {
-                val sourceIndex = if (carouselAnimating) {
-                    mockCreateAvatarCarouselFromIndex
-                } else {
-                    mockCreateAvatarIndex
-                }
-                drawFigmaBitmap(
-                    canvas,
-                    createAvatarBitmaps[sourceIndex.coerceIn(0, MOCK_CREATE_AVATAR_COUNT - 1)],
-                    avatarBounds,
-                    stageLeft,
-                    stageTop,
-                    stageScale,
-                    alpha * (1f - startBlend)
-                )
-            }
-            if (endBlend > 0f) {
-                drawFigmaBitmap(
-                    canvas,
-                    createAvatarBitmaps[
-                        mockCreateAvatarCarouselToIndex.coerceIn(0, MOCK_CREATE_AVATAR_COUNT - 1)
-                    ],
-                    avatarBounds,
-                    stageLeft,
-                    stageTop,
-                    stageScale,
-                    alpha * endBlend
-                )
-            }
         } else {
             drawFigmaBitmap(
                 canvas,
@@ -2964,7 +2895,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         tempPath.addCircle(
             stageLeft + (avatarBounds.x + avatarBounds.w / 2f) * stageScale,
             stageTop + (avatarBounds.y + avatarBounds.h / 2f) * stageScale,
-            avatarBounds.w * MOCK_CREATE_AVATAR_CLIP_RADIUS_RATIO * stageScale,
+            avatarBounds.w * 0.5f * stageScale,
             Path.Direction.CW
         )
         canvas.clipPath(tempPath)
@@ -3636,8 +3567,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             return portraitPromptHit(
                 x,
                 y,
-                portraitPromptCreateCenterY(),
-                ACCOUNT_PROMPT_CREATE_HIT_WIDTH
+                portraitPromptCreateCenterY()
             )
         }
         val centerX = stage.left + accountPromptCreateCenterX() * stage.scale
@@ -3657,8 +3587,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             return portraitPromptHit(
                 x,
                 y,
-                portraitPromptSignInCenterY(),
-                ACCOUNT_PROMPT_SIGN_IN_HIT_WIDTH
+                portraitPromptSignInCenterY()
             )
         }
         val centerX = stage.left + ACCOUNT_PROMPT_SIGN_IN_CENTER_X * stage.scale
@@ -3678,8 +3607,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             return portraitPromptHit(
                 x,
                 y,
-                portraitPromptForgotCenterY(),
-                ACCOUNT_PROMPT_FORGOT_HIT_WIDTH
+                portraitPromptForgotCenterY()
             )
         }
         val centerX = stage.left + accountPromptForgotCenterX() * stage.scale
@@ -3691,13 +3619,12 @@ internal class CinerificIntroView(context: Context) : View(context) {
             y in (centerY - halfHeight)..(centerY + halfHeight)
     }
 
-    private fun portraitPromptHit(x: Float, y: Float, centerY: Float, hitWidth: Float): Boolean {
+    private fun portraitPromptHit(x: Float, y: Float, centerY: Float): Boolean {
         val stage = currentStageMetrics() ?: return false
-        val physicalCenterX = stage.left + FIGMA_FRAME_WIDTH * stage.scale / 2f
         val physicalCenterY = stage.top + centerY * stage.scale
-        val halfWidth = hitWidth * PORTRAIT_ACTION_SCALE * stage.scale / 2f
-        val halfHeight = ACCOUNT_PROMPT_SIGN_IN_HIT_HEIGHT * PORTRAIT_ACTION_SCALE * stage.scale / 2f
-        return x in (physicalCenterX - halfWidth)..(physicalCenterX + halfWidth) &&
+        val linkCenterStep = portraitPromptCenterSpacing() * PORTRAIT_LINK_SPACING_SCALE
+        val halfHeight = linkCenterStep * stage.scale / 2f
+        return x in 0f..width.toFloat() &&
             y in (physicalCenterY - halfHeight)..(physicalCenterY + halfHeight)
     }
 
