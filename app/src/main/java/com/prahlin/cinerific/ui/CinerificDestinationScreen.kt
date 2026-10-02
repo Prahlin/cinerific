@@ -232,8 +232,8 @@ private val DETAIL_PHONE_PORTRAIT_LOGO_TOP_GAP = (-2).dp
 private const val FAVORITE_BURST_PADDING = 22f
 private const val FAVORITE_BURST_STROKE = 2.4f
 private const val FAVORITE_BURST_DURATION_MS = 240
-private const val FAVORITE_ADDED_TOAST_DURATION_MS = 2400L
-private const val FAVORITE_ADDED_TOAST_WIDTH = 400f
+private const val FAVORITE_TOAST_DURATION_MS = 2400L
+private const val FAVORITE_ADDED_TOAST_WIDTH = 460f
 private const val FAVORITE_ADDED_TOAST_HEIGHT = 116f
 private const val FAVORITE_ADDED_TOAST_PHONE_SCALE_MULTIPLIER = 2.35f
 private const val FAVORITE_ADDED_TOAST_GAP = 28f
@@ -1458,6 +1458,12 @@ internal fun CinerificProgramDetailsScreen(
         val infoPanelScale = (heroHeight.value / DETAIL_HERO_DESIGN_HEIGHT).coerceAtLeast(0.01f)
         val isPortrait = maxHeight > maxWidth
         val isPortraitPhone = isPortrait && maxWidth < 600.dp
+        val heroChromeScale = if (isPortraitPhone) PHONE_PORTRAIT_HERO_ART_SCALE else 1f
+        val detailLogoTopOffset = if (isPortraitPhone) {
+            topSystemPadding + DETAIL_PHONE_PORTRAIT_LOGO_TOP_GAP
+        } else {
+            0.dp
+        }
         val program = detailProgramSpec(programTitle) ?: detailProgramSpec(SINK_OR_SWIM_TITLE)!!
         val title = stringResource(program.titleResId)
         val details = programDetails(
@@ -1482,6 +1488,11 @@ internal fun CinerificProgramDetailsScreen(
             adjacentDetailProgramTitle(program.title, offset = 1)
         }
         val isFavorited = program.title in favoriteProgramTitles
+        var showFavoriteToast by remember(program.title) { mutableStateOf(false) }
+        var favoriteToastMessageResId by remember(program.title) {
+            mutableStateOf(R.string.favorite_added_toast)
+        }
+        var favoriteToastRequestId by remember(program.title) { mutableStateOf(0) }
         val cardReveal = remember(program.title) { Animatable(0f) }
         var playLoading by remember(program.title) { mutableStateOf(false) }
         val userRating = userProgramRatings[program.title]
@@ -1509,6 +1520,15 @@ internal fun CinerificProgramDetailsScreen(
             detailScrollState.animateScrollTo(0)
         }
 
+        LaunchedEffect(favoriteToastRequestId) {
+            if (favoriteToastRequestId == 0) return@LaunchedEffect
+            showFavoriteToast = false
+            withFrameNanos { }
+            showFavoriteToast = true
+            delay(FAVORITE_TOAST_DURATION_MS)
+            showFavoriteToast = false
+        }
+
         val latestPlayLoading by rememberUpdatedState(playLoading)
         DisposableEffect(program.title) {
             onDispose {
@@ -1533,15 +1553,19 @@ internal fun CinerificProgramDetailsScreen(
                 scale = scale,
                 isPortrait = isPortrait,
                 isPortraitPhone = isPortraitPhone,
-                phonePortraitLogoTopOffset = if (isPortraitPhone) {
-                    topSystemPadding + DETAIL_PHONE_PORTRAIT_LOGO_TOP_GAP
-                } else {
-                    0.dp
-                },
+                phonePortraitLogoTopOffset = detailLogoTopOffset,
                 preserveBottomTitle = detailHeroPreservesBottomTitle(program.title),
                 isFavorited = isFavorited,
                 playLoading = playLoading,
-                onFavoriteToggled = { onFavoriteToggled(program.title) },
+                onFavoriteToggled = {
+                    favoriteToastMessageResId = if (isFavorited) {
+                        R.string.favorite_removed_toast
+                    } else {
+                        R.string.favorite_added_toast
+                    }
+                    favoriteToastRequestId += 1
+                    onFavoriteToggled(program.title)
+                },
                 onPrevious = { onProgramSelected(previousProgramTitle) },
                 onPlay = {
                     playLoading = true
@@ -1592,6 +1616,49 @@ internal fun CinerificProgramDetailsScreen(
                 )
             }
             Spacer(modifier = Modifier.height(bottomSystemPadding + destinationDp(72f, scale)))
+        }
+
+        val toastSizeMultiplier = if (heroChromeScale > 1f) {
+            FAVORITE_ADDED_TOAST_PHONE_SCALE_MULTIPLIER
+        } else {
+            1f
+        }
+        val scaledFavoriteHeight = DETAIL_FAVORITE_HEIGHT * heroChromeScale
+        val favoriteTop = if (isPortrait) {
+            detailLogoTopOffset + destinationDp(
+                (DETAIL_HERO_LOGO_HEIGHT * heroChromeScale - scaledFavoriteHeight) / 2f,
+                scale
+            )
+        } else {
+            destinationDp(DETAIL_FAVORITE_Y, scale)
+        }
+        val toastTop = favoriteTop +
+            destinationDp(scaledFavoriteHeight, scale) +
+            destinationDp(FAVORITE_ADDED_TOAST_GAP * heroChromeScale, scale)
+
+        AnimatedVisibility(
+            visible = showFavoriteToast,
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .offset(y = toastTop)
+                .zIndex(10f),
+            enter = fadeIn(animationSpec = tween(durationMillis = 160)) +
+                slideInVertically(
+                    initialOffsetY = { -it / 4 },
+                    animationSpec = tween(durationMillis = 220, easing = FastOutSlowInEasing)
+                ),
+            exit = fadeOut(animationSpec = tween(durationMillis = 180)) +
+                slideOutVertically(
+                    targetOffsetY = { -it / 6 },
+                    animationSpec = tween(durationMillis = 180, easing = FastOutSlowInEasing)
+                )
+        ) {
+            FavoriteStatusToast(
+                width = destinationDp(FAVORITE_ADDED_TOAST_WIDTH * toastSizeMultiplier, scale),
+                height = destinationDp(FAVORITE_ADDED_TOAST_HEIGHT * toastSizeMultiplier, scale),
+                scale = scale * toastSizeMultiplier,
+                messageResId = favoriteToastMessageResId
+            )
         }
     }
 }
@@ -1741,11 +1808,11 @@ private fun HeroFavoriteToggleButton(
     val favoriteBounceScale = remember { Animatable(1f) }
     val favoriteBurstProgress = remember { Animatable(1f) }
     var previousIsFavorited by remember { mutableStateOf(isFavorited) }
-    var showAddedToast by remember { mutableStateOf(false) }
 
     LaunchedEffect(isFavorited) {
-        if (isFavorited && !previousIsFavorited) {
-            showAddedToast = true
+        val favoriteStateChanged = isFavorited != previousIsFavorited
+        previousIsFavorited = isFavorited
+        if (favoriteStateChanged && isFavorited) {
             launch {
                 favoriteBurstProgress.snapTo(0f)
                 favoriteBurstProgress.animateTo(
@@ -1755,10 +1822,6 @@ private fun HeroFavoriteToggleButton(
                         easing = FastOutSlowInEasing
                     )
                 )
-            }
-            launch {
-                delay(FAVORITE_ADDED_TOAST_DURATION_MS)
-                showAddedToast = false
             }
             favoriteBounceScale.snapTo(1.08f)
             favoriteBounceScale.animateTo(
@@ -1786,12 +1849,10 @@ private fun HeroFavoriteToggleButton(
                     stiffness = Spring.StiffnessMedium
                 )
             )
-        } else if (!isFavorited) {
-            showAddedToast = false
+        } else if (favoriteStateChanged || !isFavorited) {
             favoriteBounceScale.snapTo(1f)
             favoriteBurstProgress.snapTo(1f)
         }
-        previousIsFavorited = isFavorited
     }
 
     val scaledFavoriteWidth = DETAIL_FAVORITE_WIDTH * sizeMultiplier
@@ -1800,14 +1861,8 @@ private fun HeroFavoriteToggleButton(
     val controlHeight = destinationDp(scaledFavoriteHeight, scale)
     val burstPadding = destinationDp(FAVORITE_BURST_PADDING * sizeMultiplier, scale)
     val favoriteX = DETAIL_FAVORITE_X + DETAIL_FAVORITE_WIDTH - scaledFavoriteWidth
-    val toastSizeMultiplier = if (sizeMultiplier > 1f) {
-        FAVORITE_ADDED_TOAST_PHONE_SCALE_MULTIPLIER
-    } else {
-        1f
-    }
-    val toastWidth = destinationDp(FAVORITE_ADDED_TOAST_WIDTH * toastSizeMultiplier, scale)
-    val toastHeight = destinationDp(FAVORITE_ADDED_TOAST_HEIGHT * toastSizeMultiplier, scale)
-    val toastGap = destinationDp(FAVORITE_ADDED_TOAST_GAP * sizeMultiplier, scale)
+    val favoriteAreaWidth = controlWidth + burstPadding + burstPadding
+    val favoriteAreaHeight = controlHeight + burstPadding + burstPadding
     val favoriteTop = if (centerVerticallyOnLogo) {
         logoTopOffset + destinationDp(
             (DETAIL_HERO_LOGO_HEIGHT * sizeMultiplier - scaledFavoriteHeight) / 2f,
@@ -1823,8 +1878,8 @@ private fun HeroFavoriteToggleButton(
                 x = destinationDp(favoriteX, scale) - burstPadding,
                 y = favoriteTop - burstPadding
             )
-            .width(controlWidth + burstPadding + burstPadding)
-            .height(controlHeight + burstPadding + burstPadding)
+            .width(favoriteAreaWidth)
+            .height(favoriteAreaHeight)
             .zIndex(2f)
     ) {
         Box(
@@ -1853,37 +1908,15 @@ private fun HeroFavoriteToggleButton(
                 modifier = Modifier.fillMaxSize()
             )
         }
-        AnimatedVisibility(
-            visible = showAddedToast,
-            modifier = Modifier.offset(
-                x = burstPadding + controlWidth - toastWidth,
-                y = burstPadding + controlHeight + toastGap
-            ),
-            enter = fadeIn(animationSpec = tween(durationMillis = 160)) +
-                slideInVertically(
-                    initialOffsetY = { -it / 4 },
-                    animationSpec = tween(durationMillis = 220, easing = FastOutSlowInEasing)
-                ),
-            exit = fadeOut(animationSpec = tween(durationMillis = 180)) +
-                slideOutVertically(
-                    targetOffsetY = { -it / 6 },
-                    animationSpec = tween(durationMillis = 180, easing = FastOutSlowInEasing)
-                )
-        ) {
-            FavoriteAddedToast(
-                width = toastWidth,
-                height = toastHeight,
-                scale = scale * toastSizeMultiplier
-            )
-        }
     }
 }
 
 @Composable
-private fun FavoriteAddedToast(
+private fun FavoriteStatusToast(
     width: Dp,
     height: Dp,
     scale: Float,
+    @StringRes messageResId: Int,
     modifier: Modifier = Modifier
 ) {
     val shape = RoundedCornerShape(destinationDp(FAVORITE_ADDED_TOAST_RADIUS, scale))
@@ -1927,11 +1960,13 @@ private fun FavoriteAddedToast(
         }
         Spacer(modifier = Modifier.width(destinationDp(FAVORITE_ADDED_TOAST_ICON_GAP, scale)))
         Text(
-            text = stringResource(R.string.favorite_added_toast),
+            text = stringResource(messageResId),
+            modifier = Modifier.weight(1f),
             color = DestinationText,
             fontFamily = CinerificAppTextFontFamily,
             fontSize = (FAVORITE_ADDED_TOAST_FONT_SIZE * scale).sp,
             fontWeight = FontWeight.Bold,
+            softWrap = false,
             maxLines = 1,
             overflow = TextOverflow.Clip
         )

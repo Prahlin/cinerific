@@ -632,6 +632,22 @@ private fun CinerificMainExperience(
         favoriteProgramTitles = favoriteProgramTitles + title
     }
 
+    fun requestSignOut() {
+        if (signOutInProgress) return
+        showSignOutConfirmation = true
+    }
+
+    fun confirmSignOut() {
+        if (signOutInProgress) return
+        showSignOutConfirmation = false
+        signOutInProgress = true
+        onSignOutLoadingStarted()
+        scope.launch {
+            delay(SIGN_OUT_LOADING_MS)
+            onSignOut()
+        }
+    }
+
     BackHandler {
         when {
             signOutInProgress -> Unit
@@ -643,7 +659,7 @@ private fun CinerificMainExperience(
                 clearCatalogRoute()
                 destination = CinerificDestination.Home
             }
-            else -> showSignOutConfirmation = true
+            else -> requestSignOut()
         }
     }
 
@@ -682,7 +698,7 @@ private fun CinerificMainExperience(
                             autoLogoutEnabled = enabled
                             lastInteractionMillis = SystemClock.uptimeMillis()
                         },
-                        onSignOut = onSignOut,
+                        onSignOut = ::requestSignOut,
                         favoriteProgramTitles = favoriteProgramTitles,
                         onFavoriteToggled = ::toggleFavoriteProgram,
                         userProgramRatings = userProgramRatings,
@@ -735,15 +751,7 @@ private fun CinerificMainExperience(
 
             if (showSignOutConfirmation) {
                 SignOutConfirmationOverlay(
-                    onConfirm = {
-                        showSignOutConfirmation = false
-                        signOutInProgress = true
-                        onSignOutLoadingStarted()
-                        scope.launch {
-                            delay(SIGN_OUT_LOADING_MS)
-                            onSignOut()
-                        }
-                    },
+                    onConfirm = ::confirmSignOut,
                     onDismiss = { showSignOutConfirmation = false },
                     modifier = Modifier.fillMaxSize()
                 )
