@@ -1,0 +1,263 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R 11 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 5872 >>
+stream
+BT /F2 11 Tf 36 758 Td (Cinerific Android App Work Log - October 5, 2026 \(U.S. EST\)) Tj ET
+BT /F1 8.2 Tf 36 739.00 Td (Compiled summary for Monday, October 5, 2026 \(U.S. Eastern Time\) - focus: diagnosing a cluster of tablet-only) Tj ET
+BT /F1 8.2 Tf 36 729.45 Td (interaction failures that initially appeared to be unrelated application regressions, separating ADB-injected taps from) Tj ET
+BT /F1 8.2 Tf 36 719.90 Td (physical desktop mouse input, tracing the failures to the custom QEMU skin, replacing that skin with direct frameless) Tj ET
+BT /F1 8.2 Tf 36 710.35 Td (pointer mapping, recovering the low-disk emulator runtime, isolating tablet interaction surfaces without destabilizing) Tj ET
+BT /F1 8.2 Tf 36 700.80 Td (the phone, and adapting the accepted phone-portrait Settings composition to tablet portrait.) Tj ET
+BT /F1 8.2 Tf 36 689.85 Td (Generated in continuity with the established Cinerific worklog cadence from July 12 through October 1: compact opening) Tj ET
+BT /F1 8.2 Tf 36 680.30 Td (summary, source-material review, baseline state, goals, themed work-completed sections, validation, files touched,) Tj ET
+BT /F1 8.2 Tf 36 670.75 Td (follow-up context, and output-artifact close. No October 5 PDF existed before this pass, so this artifact uses the) Tj ET
+BT /F1 8.2 Tf 36 661.20 Td (first-log-of-the-day filename without a part suffix. Eastern Time was verified live as Monday, October 5, 2026 at 11:03) Tj ET
+BT /F1 8.2 Tf 36 651.65 Td (PM EDT, UTC-04:00; the title retains the historical U.S. EST label. This report records commits 10b65bc and 7270b55) Tj ET
+BT /F1 8.2 Tf 36 642.10 Td (through current HEAD 7270b55, plus the refreshed project snapshot generated during this documentation pass.) Tj ET
+BT /F2 9.5 Tf 36 627.15 Td (Source Materials Reviewed) Tj ET
+BT /F1 8.2 Tf 36 615.15 Td (- Reviewed all 31 pre-existing Cinerific worklog PDFs at the repository root, spanning July 12 through October 1 and) Tj ET
+BT /F1 8.2 Tf 36 605.60 Td (  including every same-day continuation artifact.) Tj ET
+BT /F1 8.2 Tf 36 595.80 Td (- Extracted the complete 31-document corpus with pdftotext and compared each report's title, opening scope,) Tj ET
+BT /F1 8.2 Tf 36 586.25 Td (  recurring headings, chronological baseline, technical density, validation language, files-touched inventory,) Tj ET
+BT /F1 8.2 Tf 36 576.70 Td (  follow-up guidance, and output-artifact close.) Tj ET
+BT /F1 8.2 Tf 36 566.90 Td (- Checked every prior PDF with pdfinfo and confirmed the uninterrupted four-page U.S.-Letter convention; compared) Tj ET
+BT /F1 8.2 Tf 36 557.35 Td (  early, middle, and latest artifacts with pdffonts and rendered the October 1 baseline for direct visual reference.) Tj ET
+BT /F1 8.2 Tf 36 547.55 Td (- Confirmed the current convention uses Helvetica and Helvetica-Bold, PDF 1.4, extractable text, repeated page) Tj ET
+BT /F1 8.2 Tf 36 538.00 Td (  titles, right-aligned page footers, and OpenAI Codex authoring metadata.) Tj ET
+BT /F1 8.2 Tf 36 528.20 Td (- Read the October 1 report in full as the direct baseline so this report covers only the later October 5 emulator,) Tj ET
+BT /F1 8.2 Tf 36 518.65 Td (  tablet-interaction, navigation, sign-out, and portrait Settings work.) Tj ET
+BT /F1 8.2 Tf 36 508.85 Td (- Ran read_project.sh and reviewed the refreshed cinerific_PROJECT_SNAPSHOT.txt, current source tree, launch) Tj ET
+BT /F1 8.2 Tf 36 499.30 Td (  configuration, AVD guard script, custom skin layout, and documentation state.) Tj ET
+BT /F1 8.2 Tf 36 489.50 Td (- Reviewed commits 10b65bc and 7270b55 with their complete messages, statistics, and affected files, and compared) Tj ET
+BT /F1 8.2 Tf 36 479.95 Td (  runtime evidence from the standalone tablet emulator and USB Samsung phone used during implementation.) Tj ET
+BT /F2 9.5 Tf 36 466.15 Td (Baseline Status Before October 5 Work) Tj ET
+BT /F1 8.2 Tf 36 454.15 Td (- On the standalone tablet emulator, Create My Account could resolve as an avatar login, Settings could reload or) Tj ET
+BT /F1 8.2 Tf 36 444.60 Td (  route incorrectly, the landscape burger could ignore clicks, and the sign-out confirmation buttons could remain) Tj ET
+BT /F1 8.2 Tf 36 435.05 Td (  visible but unactionable.) Tj ET
+BT /F1 8.2 Tf 36 425.25 Td (- The failures survived multiple application-level hit-target changes and appeared in both orientations, while the) Tj ET
+BT /F1 8.2 Tf 36 415.70 Td (  equivalent phone flows remained sensitive to changes made in shared code.) Tj ET
+BT /F1 8.2 Tf 36 405.90 Td (- ADB input tap commands repeatedly activated the expected controls even when physical mouse clicks in the QEMU) Tj ET
+BT /F1 8.2 Tf 36 396.35 Td (  window failed, creating conflicting test results until the two input paths were treated separately.) Tj ET
+BT /F1 8.2 Tf 36 386.55 Td (- Tablet portrait Settings still used the landscape-oriented signed-in profile column instead of the accepted) Tj ET
+BT /F1 8.2 Tf 36 377.00 Td (  phone-portrait stacked identity card and edge-to-edge section structure.) Tj ET
+BT /F2 9.5 Tf 36 363.20 Td (Main Goals for October 5) Tj ET
+BT /F1 8.2 Tf 36 351.20 Td (- Find the common cause behind the tablet-only click failures instead of continuing to compensate for them with) Tj ET
+BT /F1 8.2 Tf 36 341.65 Td (  increasingly brittle application hit regions.) Tj ET
+BT /F1 8.2 Tf 36 331.85 Td (- Keep the Standard tablet AVD lightweight, standalone, freely rotating, and representative at 1280x800 and 160 dpi) Tj ET
+BT /F1 8.2 Tf 36 322.30 Td (  while preserving the established phone behavior.) Tj ET
+BT /F1 8.2 Tf 36 312.50 Td (- Provide explicit tablet interaction ownership where appropriate, then make portrait Settings visually consistent) Tj ET
+BT /F1 8.2 Tf 36 302.95 Td (  across phone and tablet without changing the landscape composition.) Tj ET
+BT /F1 7.5 Tf 370 26 Td (Cinerific Work Log - October 5, 2026 \(U.S. EST\) Page 1) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 5226 >>
+stream
+BT /F2 11 Tf 36 758 Td (Cinerific Android App Work Log - October 5, 2026 \(U.S. EST\)) Tj ET
+BT /F2 9.5 Tf 36 735.00 Td (Work Completed - Input-Layer Diagnosis) Tj ET
+BT /F1 8.2 Tf 36 723.00 Td (- Reproduced the reported Welcome, Settings, burger-menu, and sign-out symptoms in the only running) Tj ET
+BT /F1 8.2 Tf 36 713.45 Td (  qemu-system-aarch64 tablet process and verified that the app package and expected Standard tablet AVD were active.) Tj ET
+BT /F1 8.2 Tf 36 703.65 Td (- Compared physical mouse behavior with adb shell input tap results. Injected Android coordinates consistently) Tj ET
+BT /F1 8.2 Tf 36 694.10 Td (  reached the intended Compose or Android View targets, while real QEMU-window clicks landed incorrectly or failed,) Tj ET
+BT /F1 8.2 Tf 36 684.55 Td (  proving that successful ADB tests were not evidence that desktop input was healthy.) Tj ET
+BT /F1 8.2 Tf 36 674.75 Td (- Captured raw getevent activity from the emulator and observed distorted absolute pointer coordinates and movement) Tj ET
+BT /F1 8.2 Tf 36 665.20 Td (  inconsistent with the visible click location, moving the investigation below the application UI layer.) Tj ET
+BT /F1 8.2 Tf 36 655.40 Td (- Inspected emulator/skins/cinerific_pixel_tablet_1280/layout and found that the repository-owned skin defined only) Tj ET
+BT /F1 8.2 Tf 36 645.85 Td (  one host layout named landscape, with the Android display mounted at a fixed 60-by-59 pixel offset inside) Tj ET
+BT /F1 8.2 Tf 36 636.30 Td (  1400-by-919 artwork.) Tj ET
+BT /F1 8.2 Tf 36 626.50 Td (- Confirmed that the part named portrait was merely background artwork rather than a true portrait layout, so) Tj ET
+BT /F1 8.2 Tf 36 616.95 Td (  rotating Android did not provide QEMU with a corresponding host-coordinate map.) Tj ET
+BT /F1 8.2 Tf 36 607.15 Td (- Concluded that the shared symptom across unrelated controls was coordinate translation through the decorative) Tj ET
+BT /F1 8.2 Tf 36 597.60 Td (  frame, not Compose navigation, the lower 1280x800 pixel count, the 160 dpi density, or shared phone/tablet source) Tj ET
+BT /F1 8.2 Tf 36 588.05 Td (  code.) Tj ET
+BT /F2 9.5 Tf 36 574.25 Td (Work Completed - Frameless Emulator Recovery) Tj ET
+BT /F1 8.2 Tf 36 562.25 Td (- Removed the custom -skin and -skindir arguments from the LaunchAgent and launched the Standard tablet with) Tj ET
+BT /F1 8.2 Tf 36 552.70 Td (  -no-skin so the host pointer maps directly to the Android display surface.) Tj ET
+BT /F1 8.2 Tf 36 542.90 Td (- Changed the persistent AVD configuration from showDeviceFrame=yes to showDeviceFrame=no and restored dynamic skin) Tj ET
+BT /F1 8.2 Tf 36 533.35 Td (  handling, eliminating the incorrect fixed frame without changing the Android display profile.) Tj ET
+BT /F1 8.2 Tf 36 523.55 Td (- Updated start_cinerific_android_standard.sh to require a frameless AVD instead of enforcing the broken custom) Tj ET
+BT /F1 8.2 Tf 36 514.00 Td (  skin, while retaining AVD identity, connection, boot-completion, physical-size, density, core-count, app-launch,) Tj ET
+BT /F1 8.2 Tf 36 504.45 Td (  and logging guards.) Tj ET
+BT /F1 8.2 Tf 36 494.65 Td (- Preserved the low-load QA contract at 1280x800, 160 dpi, two guest CPU cores, host GPU acceleration, port 5554,) Tj ET
+BT /F1 8.2 Tf 36 485.10 Td (  and automatic app startup.) Tj ET
+BT /F1 8.2 Tf 36 475.30 Td (- Added -no-snapshot to the persistent launcher so later starts use a deterministic cold boot and do not recreate) Tj ET
+BT /F1 8.2 Tf 36 465.75 Td (  the oversized Quick Boot state that had concealed stale input behavior.) Tj ET
+BT /F1 8.2 Tf 36 455.95 Td (- Diagnosed the first frameless restart failure as host storage exhaustion: only about 890 MB remained, below the) Tj ET
+BT /F1 8.2 Tf 36 446.40 Td (  emulator safety requirement for the configured 2560 MB guest RAM.) Tj ET
+BT /F1 8.2 Tf 36 436.60 Td (- Removed the regenerable 2.5 GB default_boot Quick Boot snapshot, recovered roughly 4.1 GB of host free space, and) Tj ET
+BT /F1 8.2 Tf 36 427.05 Td (  restarted the emulator without deleting source, application data, or the AVD itself.) Tj ET
+BT /F1 8.2 Tf 36 417.25 Td (- Updated README.md to describe the frameless display and direct host-pointer mapping rather than presenting the) Tj ET
+BT /F1 8.2 Tf 36 407.70 Td (  rounded bezel as a QA requirement.) Tj ET
+BT /F2 9.5 Tf 36 393.90 Td (Runtime Outcome - Root Cause Resolved) Tj ET
+BT /F1 8.2 Tf 36 381.90 Td (- The same physical mouse that had produced divergent results immediately regained correct Create Account, Settings,) Tj ET
+BT /F1 8.2 Tf 36 372.35 Td (  burger-menu, and sign-out behavior after the frame was removed.) Tj ET
+BT /F1 8.2 Tf 36 362.55 Td (- Responsiveness improved at the same time because the emulator no longer rendered the custom frame or maintained a) Tj ET
+BT /F1 8.2 Tf 36 353.00 Td (  multi-gigabyte Quick Boot snapshot.) Tj ET
+BT /F1 8.2 Tf 36 343.20 Td (- This established an important QA distinction: resolution, density, and orientation are test constraints;) Tj ET
+BT /F1 8.2 Tf 36 333.65 Td (  decorative emulator framing is not and must not be allowed to alter the host input coordinate system.) Tj ET
+BT /F1 7.5 Tf 370 26 Td (Cinerific Work Log - October 5, 2026 \(U.S. EST\) Page 2) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 10 0 R >>
+endobj
+10 0 obj
+<< /Length 5783 >>
+stream
+BT /F2 11 Tf 36 758 Td (Cinerific Android App Work Log - October 5, 2026 \(U.S. EST\)) Tj ET
+BT /F2 9.5 Tf 36 735.00 Td (Work Completed - Tablet Presentation Isolation) Tj ET
+BT /F1 8.2 Tf 36 723.00 Td (- Added CinerificTabletPresentation.kt and classified tablets at a smallest-width threshold of 600dp, creating an) Tj ET
+BT /F1 8.2 Tf 36 713.45 Td (  explicit tablet presentation boundary while leaving the accepted phone navigation and sign-out presentation in) Tj ET
+BT /F1 8.2 Tf 36 703.90 Td (  place.) Tj ET
+BT /F1 8.2 Tf 36 694.10 Td (- Added transparent, semantics-aware Compose targets for Create My Account, Sign In, and Forgot Password over the) Tj ET
+BT /F1 8.2 Tf 36 684.55 Td (  established tablet Welcome artwork, with separate portrait placement and landscape distribution.) Tj ET
+BT /F1 8.2 Tf 36 674.75 Td (- Exposed direct tablet-host entry points from CinerificIntroView to the three account flows so tablet interaction) Tj ET
+BT /F1 8.2 Tf 36 665.20 Td (  ownership no longer needed to compete with avatar selection inside the legacy custom View.) Tj ET
+BT /F1 8.2 Tf 36 655.40 Td (- Hardened the underlying Welcome gesture logic by requiring account actions to be released on the action pressed at) Tj ET
+BT /F1 8.2 Tf 36 645.85 Td (  ACTION_DOWN and requiring avatar releases to match the originally pressed profile.) Tj ET
+BT /F1 8.2 Tf 36 636.05 Td (- Kept swipe-based avatar behavior and touch-slop validation intact while preventing displaced or overlapping) Tj ET
+BT /F1 8.2 Tf 36 626.50 Td (  releases from opening a neighboring account route or profile.) Tj ET
+BT /F2 9.5 Tf 36 612.70 Td (Work Completed - Tablet Navigation and Sign Out) Tj ET
+BT /F1 8.2 Tf 36 600.70 Td (- Implemented a tablet portrait bottom bar with five equal full-height destinations, selected-state artwork,) Tj ET
+BT /F1 8.2 Tf 36 591.15 Td (  system-navigation-bar inset handling, measured height reporting, and the existing scroll-linked hide fraction.) Tj ET
+BT /F1 8.2 Tf 36 581.35 Td (- Implemented a tablet landscape side rail with an explicit menu button, persistent expanded destination state, Home) Tj ET
+BT /F1 8.2 Tf 36 571.80 Td (  behavior, independent Movies, Shows, Favorites, and Settings targets, and protected bottom-system inset spacing.) Tj ET
+BT /F1 8.2 Tf 36 562.00 Td (- Raised navigation layering above content, protected the shared menu toggle with explicit z-ordering, and removed) Tj ET
+BT /F1 8.2 Tf 36 552.45 Td (  the old five-second Home auto-collapse that could make the landscape rail appear nonresponsive.) Tj ET
+BT /F1 8.2 Tf 36 542.65 Td (- Replaced competing portrait child click handlers in the shared phone navigation with one evenly divided overlay) Tj ET
+BT /F1 8.2 Tf 36 533.10 Td (  row, preserving the visual items while giving each destination one unambiguous hit owner.) Tj ET
+BT /F1 8.2 Tf 36 523.30 Td (- Added a tablet-only platform Dialog for sign-out confirmation with separately actionable Yes and No Material) Tj ET
+BT /F1 8.2 Tf 36 513.75 Td (  buttons, modal scrim dismissal, and the shared sign-out callback.) Tj ET
+BT /F1 8.2 Tf 36 503.95 Td (- Preserved the phone confirmation overlay and raised it above the remaining phone content with an explicit z-index,) Tj ET
+BT /F1 8.2 Tf 36 494.40 Td (  preventing tablet corrections from rewriting the phone experience.) Tj ET
+BT /F2 9.5 Tf 36 480.60 Td (Work Completed - Portrait Settings Consistency) Tj ET
+BT /F1 8.2 Tf 36 468.60 Td (- Changed Settings layout selection from a portrait-phone width cutoff to an orientation rule, so every portrait) Tj ET
+BT /F1 8.2 Tf 36 459.05 Td (  viewport now receives the same accepted stacked Settings composition.) Tj ET
+BT /F1 8.2 Tf 36 449.25 Td (- Applied the phone portrait signed-in card beneath the Settings title on the tablet, including avatar, Broadway) Tj ET
+BT /F1 8.2 Tf 36 439.70 Td (  name artwork, sign-out action, sticky scroll offset, and the dark rounded identity surface.) Tj ET
+BT /F1 8.2 Tf 36 429.90 Td (- Extended the phone portrait edge-to-edge section geometry, flush-left headers, compact typography, control sizing,) Tj ET
+BT /F1 8.2 Tf 36 420.35 Td (  row padding, section gaps, and right-aligned toggles and language selector to tablet portrait.) Tj ET
+BT /F1 8.2 Tf 36 410.55 Td (- Retained portrait bottom-navigation clearance and vertical scrolling so Billing and Payment, Security, and later) Tj ET
+BT /F1 8.2 Tf 36 401.00 Td (  rows remain reachable without being obscured by application or system navigation.) Tj ET
+BT /F1 8.2 Tf 36 391.20 Td (- Renamed phone-specific internal layout flags and the signed-in card composable around their new portrait-wide) Tj ET
+BT /F1 8.2 Tf 36 381.65 Td (  role, clarifying that the implementation is shared by orientation rather than duplicated by device class.) Tj ET
+BT /F1 8.2 Tf 36 371.85 Td (- Left tablet landscape on its wider section geometry and side signed-in profile column, preserving the composition) Tj ET
+BT /F1 8.2 Tf 36 362.30 Td (  already accepted for horizontal space.) Tj ET
+BT /F2 9.5 Tf 36 348.50 Td (Phone Protection) Tj ET
+BT /F1 8.2 Tf 36 336.50 Td (- Built and installed the same APK on the USB Samsung phone during the interaction pass, explicitly relaunched) Tj ET
+BT /F1 8.2 Tf 36 326.95 Td (  Cinerific after Samsung Messages stole foreground focus, and verified the phone Welcome, Home, Settings,) Tj ET
+BT /F1 8.2 Tf 36 317.40 Td (  navigation, and portrait Settings structure remained intact.) Tj ET
+BT /F1 8.2 Tf 36 307.60 Td (- Kept phone behavior on the existing presentation branch except for shared gesture hardening and navigation hit) Tj ET
+BT /F1 8.2 Tf 36 298.05 Td (  ownership that were independently regression-tested.) Tj ET
+BT /F1 7.5 Tf 370 26 Td (Cinerific Work Log - October 5, 2026 \(U.S. EST\) Page 3) Tj ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 12 0 R >>
+endobj
+12 0 obj
+<< /Length 6965 >>
+stream
+BT /F2 11 Tf 36 758 Td (Cinerific Android App Work Log - October 5, 2026 \(U.S. EST\)) Tj ET
+BT /F2 9.5 Tf 36 735.00 Td (Validation and Checks Performed) Tj ET
+BT /F1 8.2 Tf 36 723.00 Td (- Verified the report date live with TZ=America/New_York as Monday, October 5, 2026 in EDT, UTC-04:00, before) Tj ET
+BT /F1 8.2 Tf 36 713.45 Td (  selecting the no-part filename.) Tj ET
+BT /F1 8.2 Tf 36 703.65 Td (- Ran ./gradlew :app:assembleDebug after the final source state; all 35 tasks completed successfully under the) Tj ET
+BT /F1 8.2 Tf 36 694.10 Td (  existing Gradle 8.7 configuration.) Tj ET
+BT /F1 8.2 Tf 36 684.30 Td (- Installed and relaunched the final debug APK on emulator-5554 and the connected Samsung device during) Tj ET
+BT /F1 8.2 Tf 36 674.75 Td (  implementation, then confirmed Cinerific resumed as the foreground activity on each target.) Tj ET
+BT /F1 8.2 Tf 36 664.95 Td (- Verified the standalone emulator process now launches Cinerific_Standard_Tablet with -no-skin, -no-snapshot, two) Tj ET
+BT /F1 8.2 Tf 36 655.40 Td (  cores, and host GPU acceleration.) Tj ET
+BT /F1 8.2 Tf 36 645.60 Td (- Verified the running tablet reports physical size 1280x800 and physical density 160, while accelerometer rotation) Tj ET
+BT /F1 8.2 Tf 36 636.05 Td (  remains enabled and user rotation remains free.) Tj ET
+BT /F1 8.2 Tf 36 626.25 Td (- Exercised tablet Welcome account routing, landscape menu expansion, all navigation destinations, Settings, the) Tj ET
+BT /F1 8.2 Tf 36 616.70 Td (  sign-out Dialog, portrait Settings, scrolling, and orientation changes.) Tj ET
+BT /F1 8.2 Tf 36 606.90 Td (- Visually compared tablet portrait Settings with the phone portrait reference and confirmed the shared) Tj ET
+BT /F1 8.2 Tf 36 597.35 Td (  identity-card and section structure; separately rotated to landscape and confirmed the side-profile composition) Tj ET
+BT /F1 8.2 Tf 36 587.80 Td (  remained intact.) Tj ET
+BT /F1 8.2 Tf 36 578.00 Td (- Ran source-focused git diff --check without whitespace errors. The mechanically generated snapshot continues to) Tj ET
+BT /F1 8.2 Tf 36 568.45 Td (  reproduce pre-existing trailing whitespace from its line-numbered source capture.) Tj ET
+BT /F1 8.2 Tf 36 558.65 Td (- Ran read_project.sh after the source commits so cinerific_PROJECT_SNAPSHOT.txt records the final October 5 code,) Tj ET
+BT /F1 8.2 Tf 36 549.10 Td (  repository tree, launcher configuration, and worklog inventory baseline for the next session.) Tj ET
+BT /F2 9.5 Tf 36 535.30 Td (Files Touched During October 5) Tj ET
+BT /F1 8.2 Tf 36 523.30 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt - introduced tablet classification and routed tablet) Tj ET
+BT /F1 8.2 Tf 36 513.75 Td (  Welcome actions, navigation, and sign-out confirmation through the dedicated presentation layer.) Tj ET
+BT /F1 8.2 Tf 36 503.95 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificTabletPresentation.kt - added the complete tablet-only Welcome) Tj ET
+BT /F1 8.2 Tf 36 494.40 Td (  targets, portrait bottom navigation, landscape side rail, destination items, and platform sign-out Dialog.) Tj ET
+BT /F1 8.2 Tf 36 484.60 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt - exposed tablet account-flow entry points and) Tj ET
+BT /F1 8.2 Tf 36 475.05 Td (  tightened press-to-release ownership for account links and avatars.) Tj ET
+BT /F1 8.2 Tf 36 465.25 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificRightSideNavBar.kt - clarified portrait hit ownership,) Tj ET
+BT /F1 8.2 Tf 36 455.70 Td (  strengthened layering, protected the menu target, and removed timed landscape collapse.) Tj ET
+BT /F1 8.2 Tf 36 445.90 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificDestinationScreen.kt - reused the accepted phone portrait) Tj ET
+BT /F1 8.2 Tf 36 436.35 Td (  Settings presentation for tablet portrait while preserving landscape.) Tj ET
+BT /F1 8.2 Tf 36 426.55 Td (- launchd/com.cinerific.standardavd.plist and start_cinerific_android_standard.sh - replaced custom-skin startup) Tj ET
+BT /F1 8.2 Tf 36 417.00 Td (  with guarded frameless, no-snapshot execution.) Tj ET
+BT /F1 8.2 Tf 36 407.20 Td (- README.md - documented direct pointer mapping for the Standard tablet profile; cinerific_PROJECT_SNAPSHOT.txt -) Tj ET
+BT /F1 8.2 Tf 36 397.65 Td (  refreshed the generated project handoff.) Tj ET
+BT /F2 9.5 Tf 36 383.85 Td (Follow-Up Context) Tj ET
+BT /F1 8.2 Tf 36 371.85 Td (- Do not restore cinerific_pixel_tablet_1280 as the active host skin unless it gains complete, tested host layouts) Tj ET
+BT /F1 8.2 Tf 36 362.30 Td (  and coordinate mappings for every supported orientation; decorative framing must remain separate from QA display) Tj ET
+BT /F1 8.2 Tf 36 352.75 Td (  requirements.) Tj ET
+BT /F1 8.2 Tf 36 342.95 Td (- Do not treat adb shell input tap as proof that standalone mouse input works. When results diverge, compare raw) Tj ET
+BT /F1 8.2 Tf 36 333.40 Td (  emulator input before rewriting unrelated application hit targets.) Tj ET
+BT /F1 8.2 Tf 36 323.60 Td (- Keep automatic rotation enabled and user rotation free. Use emulator rotation commands for testing rather than) Tj ET
+BT /F1 8.2 Tf 36 314.05 Td (  locking the AVD to make one screenshot convenient.) Tj ET
+BT /F1 8.2 Tf 36 304.25 Td (- Continue building, installing, relaunching, and regression-testing the same APK on tablet and phone after) Tj ET
+BT /F1 8.2 Tf 36 294.70 Td (  shared-source changes, while using the dedicated tablet presentation boundary for truly tablet-specific behavior.) Tj ET
+BT /F1 8.2 Tf 36 284.90 Td (- Portrait Settings is intentionally shared across phone and tablet; future portrait changes should normally update) Tj ET
+BT /F1 8.2 Tf 36 275.35 Td (  that one composition, while landscape may retain its horizontal profile column.) Tj ET
+BT /F2 9.5 Tf 36 261.55 Td (Output Artifact) Tj ET
+BT /F1 8.2 Tf 36 249.55 Td (- Created /Users/prahlin/gh/cinerific/cinerific_worklog_october 5.pdf using the established lowercase filename and) Tj ET
+BT /F1 8.2 Tf 36 240.00 Td (  month/day spacing, without a part suffix because no earlier October 5 worklog existed.) Tj ET
+BT /F1 8.2 Tf 36 230.20 Td (- Kept the established four-page U.S.-Letter structure, Helvetica typography, compact technical density, repeated) Tj ET
+BT /F1 8.2 Tf 36 220.65 Td (  title, right-aligned footer, PDF 1.4 compatibility, and extractable text.) Tj ET
+BT /F1 8.2 Tf 36 210.85 Td (- Scoped the report to work completed after the October 1 baseline and recorded both the root-cause emulator) Tj ET
+BT /F1 8.2 Tf 36 201.30 Td (  correction and the follow-on tablet portrait consistency pass through HEAD 7270b55.) Tj ET
+BT /F1 8.2 Tf 36 191.50 Td (- No application source was changed during this documentation pass; the refreshed snapshot and generated PDF remain) Tj ET
+BT /F1 8.2 Tf 36 181.95 Td (  ready for review and the next commit.) Tj ET
+BT /F1 7.5 Tf 370 26 Td (Cinerific Work Log - October 5, 2026 \(U.S. EST\) Page 4) Tj ET
+endstream
+endobj
+13 0 obj
+<< /Title (Cinerific Android App Work Log - October 5, 2026 \(U.S. EST\)) /Author (OpenAI Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20261005230735-04'00') >>
+endobj
+xref
+0 14
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000140 00000 n 
+0000000237 00000 n 
+0000000339 00000 n 
+0000000475 00000 n 
+0000006398 00000 n 
+0000006534 00000 n 
+0000011811 00000 n 
+0000011948 00000 n 
+0000017783 00000 n 
+0000017921 00000 n 
+0000024938 00000 n 
+trailer
+<< /Size 14 /Root 1 0 R /Info 13 0 R >>
+startxref
+25191
+%%EOF
