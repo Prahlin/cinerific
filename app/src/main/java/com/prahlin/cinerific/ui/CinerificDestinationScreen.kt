@@ -213,7 +213,6 @@ private const val SETTINGS_SIGN_OUT_BUTTON_HEIGHT = 75f
 private const val SETTINGS_SIGN_OUT_TEXT_SIZE = 24f
 private const val SETTINGS_SIGN_OUT_LINE_HEIGHT = 36f
 private const val SETTINGS_SIGN_OUT_MIN_TEXT_SIZE = 12f
-private const val SETTINGS_PHONE_BREAKPOINT_DP = 600
 private const val SETTINGS_PHONE_COMPONENT_SCALE = 0.7f
 private const val SETTINGS_PHONE_SECTION_GAP = 36f
 private const val SETTINGS_PHONE_ROW_TOP_PADDING = 24f
@@ -2811,9 +2810,9 @@ private fun CinerificSettingsScreen(
         val scale = maxWidth.value / DESTINATION_FRAME_WIDTH
         val density = LocalDensity.current
         val isPortrait = maxHeight > maxWidth
-        val isPortraitPhone = isPortrait && maxWidth < SETTINGS_PHONE_BREAKPOINT_DP.dp
+        val usesPortraitSettingsLayout = isPortrait
         val horizontalPadding = destinationDp(SETTINGS_SCREEN_HORIZONTAL_PADDING, scale)
-        val rightPadding = if (isPortraitPhone) {
+        val rightPadding = if (usesPortraitSettingsLayout) {
             horizontalPadding
         } else {
             destinationDp(160f, scale)
@@ -2824,7 +2823,7 @@ private fun CinerificSettingsScreen(
         val topBarHeight = destinationTopBarHeight(maxWidth, maxHeight, statusBarTop)
         val bottomSystemPadding = with(density) { WindowInsets.navigationBars.getBottom(this).toDp() }
         val settingsScrollState = rememberScrollState()
-        val phoneSignedInStickyOffset = with(density) {
+        val portraitSignedInStickyOffset = with(density) {
             settingsScrollState.value.toDp()
         }
         LaunchedEffect(settingsScrollState.maxValue) {
@@ -2846,7 +2845,7 @@ private fun CinerificSettingsScreen(
         val signedInStackTop = accessibilityHeaderCenterY -
             destinationDp(SETTINGS_SIGNED_IN_TITLE_CENTER, signedInScale)
         val settingsBottomSpacer = if (isPortrait) {
-            (if (isPortraitPhone) SETTINGS_PHONE_SECTION_GAP.dp else SETTINGS_SECTION_VERTICAL_GAP.dp) +
+            SETTINGS_PHONE_SECTION_GAP.dp +
                 cinerificPortraitBottomNavContentHeight(maxWidth, maxHeight)
         } else {
             bottomAlignmentSpacer
@@ -2895,19 +2894,19 @@ private fun CinerificSettingsScreen(
                     )
                 )
                 .padding(
-                    start = if (isPortraitPhone) 0.dp else horizontalPadding,
+                    start = if (usesPortraitSettingsLayout) 0.dp else horizontalPadding,
                     top = topBarHeight,
                     end = rightPadding,
                     bottom = bottomSystemPadding
                 )
         ) {
-            if (isPortraitPhone) {
+            if (usesPortraitSettingsLayout) {
                 Spacer(modifier = Modifier.height(SETTINGS_PHONE_SECTION_GAP.dp))
-                SettingsSignedInPhoneCard(
+                SettingsSignedInPortraitCard(
                     profile = signedInProfile,
                     onSignOut = onSignOut,
                     modifier = Modifier
-                        .offset(y = phoneSignedInStickyOffset)
+                        .offset(y = portraitSignedInStickyOffset)
                         .zIndex(1f)
                 )
             }
@@ -2929,7 +2928,7 @@ private fun CinerificSettingsScreen(
                     )
                 ),
                 scale = scale,
-                isPortraitPhone = isPortraitPhone,
+                usesPortraitLayout = usesPortraitSettingsLayout,
                 selectedLanguage = selectedLanguage,
                 onLanguageSelected = onLanguageSelected
             )
@@ -2950,7 +2949,7 @@ private fun CinerificSettingsScreen(
                     )
                 ),
                 scale = scale,
-                isPortraitPhone = isPortraitPhone,
+                usesPortraitLayout = usesPortraitSettingsLayout,
                 selectedLanguage = selectedLanguage,
                 onLanguageSelected = onLanguageSelected
             )
@@ -2967,7 +2966,7 @@ private fun CinerificSettingsScreen(
                     )
                 ),
                 scale = scale,
-                isPortraitPhone = isPortraitPhone,
+                usesPortraitLayout = usesPortraitSettingsLayout,
                 selectedLanguage = selectedLanguage,
                 onLanguageSelected = onLanguageSelected
             )
@@ -2986,7 +2985,7 @@ private fun CinerificSettingsScreen(
                     )
                 ),
                 scale = scale,
-                isPortraitPhone = isPortraitPhone,
+                usesPortraitLayout = usesPortraitSettingsLayout,
                 selectedLanguage = selectedLanguage,
                 onLanguageSelected = onLanguageSelected,
                 onLastToggleCenterMeasured = if (isPortrait) {
@@ -2998,7 +2997,7 @@ private fun CinerificSettingsScreen(
             Spacer(modifier = Modifier.height(settingsBottomSpacer))
         }
 
-        if (!isPortraitPhone) {
+        if (!usesPortraitSettingsLayout) {
             SettingsSignedInColumn(
                 profile = signedInProfile,
                 scale = signedInScale,
@@ -3448,14 +3447,14 @@ private fun SettingsSection(
     @StringRes titleResId: Int,
     rows: List<SettingsRowSpec>,
     scale: Float,
-    isPortraitPhone: Boolean,
+    usesPortraitLayout: Boolean,
     selectedLanguage: CinerificLanguage,
     onLanguageSelected: (CinerificLanguage) -> Unit,
     onLastToggleCenterMeasured: ((Float) -> Unit)? = null
 ) {
-    val componentScale = if (isPortraitPhone) SETTINGS_PHONE_COMPONENT_SCALE else scale
+    val componentScale = if (usesPortraitLayout) SETTINGS_PHONE_COMPONENT_SCALE else scale
     val sectionRadius = destinationDp(SETTINGS_SECTION_BACKGROUND_RADIUS, componentScale)
-    val sectionShape = if (isPortraitPhone) {
+    val sectionShape = if (usesPortraitLayout) {
         RoundedCornerShape(
             topStart = 0.dp,
             topEnd = sectionRadius,
@@ -3465,12 +3464,12 @@ private fun SettingsSection(
     } else {
         RoundedCornerShape(sectionRadius)
     }
-    val sectionTopPadding = if (isPortraitPhone) {
+    val sectionTopPadding = if (usesPortraitLayout) {
         SETTINGS_PHONE_SECTION_GAP.dp
     } else {
         SETTINGS_SECTION_VERTICAL_GAP.dp
     }
-    val sectionBottomPadding = if (isPortraitPhone) {
+    val sectionBottomPadding = if (usesPortraitLayout) {
         24.dp
     } else {
         destinationDp(SETTINGS_SECTION_BOTTOM_PADDING, scale)
@@ -3488,11 +3487,11 @@ private fun SettingsSection(
             title = stringResource(titleResId),
             layoutScale = scale,
             componentScale = componentScale,
-            isPortraitPhone = isPortraitPhone
+            usesPortraitLayout = usesPortraitLayout
         )
 
         rows.forEachIndexed { index, row ->
-            val rowTopPadding = (if (isPortraitPhone) {
+            val rowTopPadding = (if (usesPortraitLayout) {
                 SETTINGS_PHONE_ROW_TOP_PADDING.dp
             } else {
                 34.dp
@@ -3510,13 +3509,13 @@ private fun SettingsSection(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
-                        start = if (isPortraitPhone) {
+                        start = if (usesPortraitLayout) {
                             SETTINGS_PHONE_ROW_HORIZONTAL_PADDING.dp
                         } else {
                             destinationDp(SETTINGS_SECTION_BODY_START_PADDING, scale)
                         },
                         top = rowTopPadding,
-                        end = if (isPortraitPhone) {
+                        end = if (usesPortraitLayout) {
                             SETTINGS_PHONE_ROW_HORIZONTAL_PADDING.dp
                         } else {
                             0.dp
@@ -3524,7 +3523,7 @@ private fun SettingsSection(
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val textColumnModifier = if (isPortraitPhone) {
+                val textColumnModifier = if (usesPortraitLayout) {
                     Modifier.weight(1f)
                 } else {
                     Modifier.width(destinationDp(SETTINGS_ROW_TEXT_WIDTH, scale))
@@ -3536,7 +3535,7 @@ private fun SettingsSection(
                         text = stringResource(row.labelResId),
                         color = DestinationText,
                         fontFamily = CinerificAppTextFontFamily,
-                        fontSize = if (isPortraitPhone) 22.sp else 28.sp,
+                        fontSize = if (usesPortraitLayout) 22.sp else 28.sp,
                         fontWeight = FontWeight.SemiBold,
                         letterSpacing = 0.sp
                     )
@@ -3544,15 +3543,15 @@ private fun SettingsSection(
                         text = stringResource(row.detailResId),
                         color = DestinationSubtle,
                         fontFamily = CinerificAppTextFontFamily,
-                        fontSize = if (isPortraitPhone) 16.sp else 20.sp,
-                        lineHeight = if (isPortraitPhone) 22.sp else 28.sp,
+                        fontSize = if (usesPortraitLayout) 16.sp else 20.sp,
+                        lineHeight = if (usesPortraitLayout) 22.sp else 28.sp,
                         letterSpacing = 0.sp,
-                        modifier = Modifier.padding(top = if (isPortraitPhone) 4.dp else 8.dp)
+                        modifier = Modifier.padding(top = if (usesPortraitLayout) 4.dp else 8.dp)
                     )
                 }
                 Spacer(
                     modifier = Modifier.width(
-                        if (isPortraitPhone) {
+                        if (usesPortraitLayout) {
                             SETTINGS_PHONE_CONTROL_GAP.dp
                         } else {
                             destinationDp(SETTINGS_CONTROL_COLUMN_GAP, scale)
@@ -3594,7 +3593,7 @@ private fun SettingsSection(
                         )
                     }
                 }
-                if (!isPortraitPhone) {
+                if (!usesPortraitLayout) {
                     Spacer(modifier = Modifier.weight(1f))
                 }
             }
@@ -3603,7 +3602,7 @@ private fun SettingsSection(
 }
 
 @Composable
-private fun SettingsSignedInPhoneCard(
+private fun SettingsSignedInPortraitCard(
     profile: CinerificProfile,
     onSignOut: () -> Unit,
     modifier: Modifier = Modifier
@@ -3846,10 +3845,10 @@ private fun SettingsSectionHeader(
     title: String,
     layoutScale: Float,
     componentScale: Float,
-    isPortraitPhone: Boolean
+    usesPortraitLayout: Boolean
 ) {
     val headerRadius = destinationDp(SETTINGS_SECTION_HEADER_RADIUS, componentScale)
-    val shape = if (isPortraitPhone) {
+    val shape = if (usesPortraitLayout) {
         RoundedCornerShape(
             topStart = 0.dp,
             topEnd = headerRadius,
@@ -3866,7 +3865,7 @@ private fun SettingsSectionHeader(
             .offset(
                 x = destinationDp(
                     -(
-                        if (isPortraitPhone) {
+                        if (usesPortraitLayout) {
                             SETTINGS_SECTION_HEADER_LEFT_BLEED
                         } else {
                             SETTINGS_SCREEN_HORIZONTAL_PADDING + SETTINGS_SECTION_HEADER_LEFT_BLEED
@@ -3891,7 +3890,7 @@ private fun SettingsSectionHeader(
             text = title,
             color = DestinationText,
             fontFamily = CinerificAppTextFontFamily,
-            fontSize = if (isPortraitPhone) 24.sp else 32.sp,
+            fontSize = if (usesPortraitLayout) 24.sp else 32.sp,
             fontWeight = FontWeight.Black,
             lineHeight = destinationSp(SETTINGS_SECTION_HEADER_HEIGHT, componentScale),
             letterSpacing = 0.sp,
