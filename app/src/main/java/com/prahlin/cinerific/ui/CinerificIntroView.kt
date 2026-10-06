@@ -292,6 +292,18 @@ private object IntroAnimationClock {
 internal class CinerificIntroView(context: Context) : View(context) {
     var onAvatarSelected: ((CinerificProfile) -> Unit)? = null
     var onIntroSnapshotChanged: ((CinerificIntroSnapshot) -> Unit)? = null
+
+    fun showCreateAccountFromTabletHost() {
+        openMockCreateAccountScreen()
+    }
+
+    fun showSignInFromTabletHost() {
+        openMockSignInScreen()
+    }
+
+    fun showForgotPasswordFromTabletHost() {
+        openMockForgotPasswordScreen()
+    }
     private var appliedIntroSnapshot = CinerificIntroSnapshot()
 
     private val bitmapOptions = BitmapFactory.Options().apply {
@@ -949,13 +961,16 @@ internal class CinerificIntroView(context: Context) : View(context) {
                         return true
                     }
                     val requestedFlow = when {
-                        settledCreateAccountPromptHit(event.x, event.y) -> {
+                        pressedCreateAccountPrompt &&
+                            settledCreateAccountPromptHit(event.x, event.y) -> {
                             MockAccountFlow.CreateAccount
                         }
-                        settledSignInPromptHit(event.x, event.y) -> {
+                        pressedSignInPrompt &&
+                            settledSignInPromptHit(event.x, event.y) -> {
                             MockAccountFlow.SignIn
                         }
-                        settledForgotPasswordPromptHit(event.x, event.y) -> {
+                        pressedForgotPasswordPrompt &&
+                            settledForgotPasswordPromptHit(event.x, event.y) -> {
                             MockAccountFlow.ForgotPassword
                         }
                         else -> null
@@ -1090,10 +1105,13 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     abs(event.x - mockTouchDownX) <= touchSlop &&
                         abs(event.y - mockTouchDownY) <= touchSlop
                 val shouldOpenMockCreateAccount = tapStayedWithinSlop &&
+                    pressedCreateAccountPrompt &&
                     settledCreateAccountPromptHit(event.x, event.y)
                 val shouldOpenMockSignIn = tapStayedWithinSlop &&
+                    pressedSignInPrompt &&
                     settledSignInPromptHit(event.x, event.y)
                 val shouldOpenMockForgotPassword = tapStayedWithinSlop &&
+                    pressedForgotPasswordPrompt &&
                     settledForgotPasswordPromptHit(event.x, event.y)
                 val releasedAvatarProfile = settledAvatarHitProfile(event.x, event.y)
                 val swipeDirection = portraitProfileSwipeDirection()
@@ -1106,7 +1124,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 val shouldNavigate = tapStayedWithinSlop &&
                     !shouldSwipeProfile &&
                     !portraitProfileSwipeMoved &&
-                    releasedAvatarProfile != null
+                    pressedAvatarProfile != null &&
+                    pressedAvatarProfile == releasedAvatarProfile
                 clickAvatarProfile = releasedAvatarProfile
                 pressedAvatarProfile = null
                 pressedCreateAccountPrompt = false

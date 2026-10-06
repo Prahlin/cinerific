@@ -14,7 +14,7 @@ APP_ACTIVITY="${APP_PACKAGE}/.MainActivity"
 EXPECTED_SIZE="1280x800"
 EXPECTED_DENSITY="160"
 EXPECTED_CORES="2"
-EXPECTED_SKIN="cinerific_pixel_tablet_1280"
+EXPECTED_FRAME="no"
 BOOT_TIMEOUT_SECONDS="${BOOT_TIMEOUT_SECONDS:-180}"
 LOG_DIR="$HOME/Library/Logs/Cinerific"
 LOG="$LOG_DIR/standard-emulator.log"
@@ -33,10 +33,8 @@ fail() {
 [[ -f "$AVD_CONFIG" ]] || fail "AVD configuration not found at $AVD_CONFIG"
 "$EMU" -list-avds | grep -qx "$AVD" || fail "AVD $AVD was not found"
 
-config_skin="$(sed -n 's/^skin.name=//p' "$AVD_CONFIG")"
 config_frame="$(sed -n 's/^showDeviceFrame=//p' "$AVD_CONFIG")"
-[[ "$config_skin" == "$EXPECTED_SKIN" ]] || fail "Expected skin $EXPECTED_SKIN, got $config_skin"
-[[ "$config_frame" == "yes" ]] || fail "Device frame is not enabled in $AVD_CONFIG"
+[[ "$config_frame" == "$EXPECTED_FRAME" ]] || fail "Expected a frameless AVD, got showDeviceFrame=$config_frame"
 
 mkdir -p "$LOG_DIR"
 

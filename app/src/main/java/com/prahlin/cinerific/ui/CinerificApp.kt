@@ -80,6 +80,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.zIndex
 import com.prahlin.cinerific.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -150,6 +151,8 @@ private val ColorFavoritesFullPromptAccent = Color(0xFF858585)
 
 @Composable
 fun CinerificApp() {
+    val configuration = LocalConfiguration.current
+    val isTablet = isCinerificTablet(configuration.smallestScreenWidthDp)
     var showHome by rememberSaveable { mutableStateOf(false) }
     var signedInProfile by rememberSaveable { mutableStateOf(CinerificProfile.Guest) }
     var signInSessionId by rememberSaveable { mutableStateOf(0) }
@@ -200,9 +203,18 @@ fun CinerificApp() {
             }
         )
 
+        if (isTablet && !showHome && introSnapshot.activeFlowName.isBlank()) {
+            CinerificTabletIntroAccountActions(
+                onCreateAccount = { introView?.showCreateAccountFromTabletHost() },
+                onSignIn = { introView?.showSignInFromTabletHost() },
+                onForgotPassword = { introView?.showForgotPasswordFromTabletHost() }
+            )
+        }
+
         if (showHome) {
             CinerificLocalizedResources(selectedLanguage) {
                 CinerificMainExperience(
+                    isTablet = isTablet,
                     signInSessionId = signInSessionId,
                     signedInProfile = signedInProfile,
                     selectedLanguage = selectedLanguage,
@@ -350,6 +362,7 @@ private fun mostUsedDeviceName(
 
 @Composable
 private fun CinerificMainExperience(
+    isTablet: Boolean,
     signInSessionId: Int,
     signedInProfile: CinerificProfile,
     selectedLanguage: CinerificLanguage,
@@ -729,18 +742,32 @@ private fun CinerificMainExperience(
                 }
             }
 
-            CinerificRightSideNavBar(
-                currentDestination = destination,
-                portraitHiddenFraction = portraitBottomNavHiddenFraction,
-                onPortraitBarHeightChanged = { heightPx ->
-                    portraitBottomNavHeightPx = heightPx.coerceAtLeast(1f)
-                },
-                onDestinationSelected = {
-                    clearCatalogRoute()
-                    destination = it
-                },
-                modifier = Modifier.fillMaxSize()
-            )
+            if (isTablet) {
+                CinerificTabletNavigation(
+                    currentDestination = destination,
+                    portraitHiddenFraction = portraitBottomNavHiddenFraction,
+                    onPortraitBarHeightChanged = { heightPx ->
+                        portraitBottomNavHeightPx = heightPx.coerceAtLeast(1f)
+                    },
+                    onDestinationSelected = {
+                        clearCatalogRoute()
+                        destination = it
+                    }
+                )
+            } else {
+                CinerificRightSideNavBar(
+                    currentDestination = destination,
+                    portraitHiddenFraction = portraitBottomNavHiddenFraction,
+                    onPortraitBarHeightChanged = { heightPx ->
+                        portraitBottomNavHeightPx = heightPx.coerceAtLeast(1f)
+                    },
+                    onDestinationSelected = {
+                        clearCatalogRoute()
+                        destination = it
+                    },
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
 
             FavoritesFullPromptOverlay(
                 requestId = favoritesFullPromptRequestId,
@@ -750,11 +777,20 @@ private fun CinerificMainExperience(
             )
 
             if (showSignOutConfirmation) {
-                SignOutConfirmationOverlay(
-                    onConfirm = ::confirmSignOut,
-                    onDismiss = { showSignOutConfirmation = false },
-                    modifier = Modifier.fillMaxSize()
-                )
+                if (isTablet) {
+                    CinerificTabletSignOutDialog(
+                        onConfirm = ::confirmSignOut,
+                        onDismiss = { showSignOutConfirmation = false }
+                    )
+                } else {
+                    SignOutConfirmationOverlay(
+                        onConfirm = ::confirmSignOut,
+                        onDismiss = { showSignOutConfirmation = false },
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .zIndex(20f)
+                    )
+                }
             }
         }
     }

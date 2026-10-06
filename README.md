@@ -37,8 +37,8 @@ Use the guarded launcher for the persistent low-load QA profile:
 ```
 
 The launcher requests and verifies `1280x800` at `160 dpi`, two guest CPU cores,
-host GPU acceleration, and the repository-owned rounded tablet bezel before
-opening Cinerific. It refuses to continue if the running AVD does not match.
+host GPU acceleration, and a frameless display with direct host-pointer mapping
+before opening Cinerific. It refuses to continue if the running AVD does not match.
 Emulator logs are written to
 `~/Library/Logs/Cinerific/standard-emulator.log`.
 
