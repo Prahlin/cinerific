@@ -1,0 +1,260 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R 11 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 5733 >>
+stream
+BT /F2 11.5 Tf 38 759 Td (Cinerific Android App Work Log - November 5, 2026 \(U.S. EST\)) Tj ET
+BT /F1 8.15 Tf 38 739.00 Td (Compiled summary for Thursday, November 5, 2026 \(U.S. Eastern Time\) - focus: reviewing the three Welcome) Tj ET
+BT /F1 8.15 Tf 38 729.35 Td (authentication paths, extending Create My Account from a visual form into a validated four-step account-creation) Tj ET
+BT /F1 8.15 Tf 38 719.70 Td (prototype, rebuilding the landscape composition around sticky chrome and scrollable content, preserving the accepted) Tj ET
+BT /F1 8.15 Tf 38 710.05 Td (portrait behavior, adding Terms and Privacy consent, expanding payment choices beyond Google Play, introducing a) Tj ET
+BT /F1 8.15 Tf 38 700.40 Td (final review step, and refining membership-tier imagery, descriptions, and pricing across the connected Samsung) Tj ET
+BT /F1 8.15 Tf 38 690.75 Td (phone and Standard tablet AVD.) Tj ET
+BT /F1 8.15 Tf 38 678.00 Td (Generated in continuity with the established Cinerific worklog cadence from July 12 through October 5: compact) Tj ET
+BT /F1 8.15 Tf 38 668.35 Td (opening summary, source-material review, baseline state, goals, themed work-completed sections, validation, files) Tj ET
+BT /F1 8.15 Tf 38 658.70 Td (touched, follow-up context, and output-artifact close. This report is intentionally called November 5 as requested.) Tj ET
+BT /F1 8.15 Tf 38 649.05 Td (It covers commit 7e000c2, created at 10:42 PM EST, and the continuous late-session refinement committed as e748daf) Tj ET
+BT /F1 8.15 Tf 38 639.40 Td (at 12:27 AM EST on November 6.) Tj ET
+BT /F2 9.25 Tf 38 624.45 Td (Source Materials Reviewed) Tj ET
+BT /F1 8.15 Tf 38 612.45 Td (- Reviewed all 32 pre-existing Cinerific worklog PDFs at the repository root, spanning July 12 through October 5) Tj ET
+BT /F1 8.15 Tf 38 602.80 Td (  and including every same-day continuation artifact.) Tj ET
+BT /F1 8.15 Tf 38 590.05 Td (- Extracted the full worklog corpus with pdftotext and indexed its title, source-review, baseline, goals,) Tj ET
+BT /F1 8.15 Tf 38 580.40 Td (  work-completed, validation, files-touched, follow-up, and output-artifact conventions. Every existing Cinerific) Tj ET
+BT /F1 8.15 Tf 38 570.75 Td (  worklog remained a four-page report.) Tj ET
+BT /F1 8.15 Tf 38 558.00 Td (- Compared early, middle, and latest reports in full, with October 1 and October 5 used as the direct visual and) Tj ET
+BT /F1 8.15 Tf 38 548.35 Td (  structural baseline for current technical density and page rhythm.) Tj ET
+BT /F1 8.15 Tf 38 535.60 Td (- Checked the October 5 PDF with pdfinfo and pdffonts: U.S. Letter at 612 by 792 points, PDF 1.4, Helvetica and) Tj ET
+BT /F1 8.15 Tf 38 525.95 Td (  Helvetica-Bold, extractable text, OpenAI Codex metadata, repeated page titles, and right-aligned page footers.) Tj ET
+BT /F1 8.15 Tf 38 513.20 Td (- Reviewed read_project.sh, the November 1 project snapshot, the current source tree, both November commits, their) Tj ET
+BT /F1 8.15 Tf 38 503.55 Td (  complete commit messages and statistics, and the final clean main branch state.) Tj ET
+BT /F1 8.15 Tf 38 490.80 Td (- Reviewed the implemented Compose continuation flow and the custom CinerificIntroView form, validation,) Tj ET
+BT /F1 8.15 Tf 38 481.15 Td (  scrolling, hit-testing, membership, and responsive-layout code rather than relying only on the visible) Tj ET
+BT /F1 8.15 Tf 38 471.50 Td (  screenshots or commit summaries.) Tj ET
+BT /F2 9.25 Tf 38 456.55 Td (Baseline Status Before November 5 Work) Tj ET
+BT /F1 8.15 Tf 38 444.55 Td (- Create My Account already exposed the core identity fields, avatar carousel, birthday selectors, and Basic, Pro,) Tj ET
+BT /F1 8.15 Tf 38 434.90 Td (  and Rock Star tier choices, but the screen ended without a complete continuation path into consent, payment,) Tj ET
+BT /F1 8.15 Tf 38 425.25 Td (  review, and account creation.) Tj ET
+BT /F1 8.15 Tf 38 412.50 Td (- The three Welcome-related authentication screens shared floating-label behavior, but the smallest label state) Tj ET
+BT /F1 8.15 Tf 38 402.85 Td (  could become grainy and difficult to read on the tablet, and its active animation needed one global treatment) Tj ET
+BT /F1 8.15 Tf 38 393.20 Td (  across Create Account, Sign In, and Forgot Password.) Tj ET
+BT /F1 8.15 Tf 38 380.45 Td (- Portrait Create Account had a workable sticky-header, scrollable-middle, and sticky-bottom model. Landscape) Tj ET
+BT /F1 8.15 Tf 38 370.80 Td (  still allowed dense form content and lower navigation to compete for limited height, especially on smaller) Tj ET
+BT /F1 8.15 Tf 38 361.15 Td (  tablets.) Tj ET
+BT /F1 8.15 Tf 38 348.40 Td (- Landscape account creation did not yet include Confirm Email, actionable field-completion feedback, a complete) Tj ET
+BT /F1 8.15 Tf 38 338.75 Td (  payment-provider set, or selection-aware membership descriptions and pricing beside the enlarged tier artwork.) Tj ET
+BT /F2 9.25 Tf 38 323.80 Td (Main Goals for November 5) Tj ET
+BT /F1 8.15 Tf 38 311.80 Td (- Preserve the Welcome screen while making all three authentication destinations visually consistent and ready for) Tj ET
+BT /F1 8.15 Tf 38 302.15 Td (  later backend integration.) Tj ET
+BT /F1 8.15 Tf 38 289.40 Td (- Give Create My Account a clear first impression, reliable validation, responsive landscape scrolling, and a) Tj ET
+BT /F1 8.15 Tf 38 279.75 Td (  functional path through consent, payment, review, and local completion.) Tj ET
+BT /F1 8.15 Tf 38 267.00 Td (- Protect the accepted portrait experience and ship the same source behavior to the USB phone and tablet AVD) Tj ET
+BT /F1 8.15 Tf 38 257.35 Td (  unless a change was explicitly landscape-only.) Tj ET
+BT /F1 7.5 Tf 369.40 24 Td (Cinerific Work Log - November 5, 2026 \(U.S. EST\) Page 1) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 5571 >>
+stream
+BT /F2 11.5 Tf 38 759 Td (Cinerific Android App Work Log - November 5, 2026 \(U.S. EST\)) Tj ET
+BT /F2 9.25 Tf 38 736.80 Td (Work Completed - Authentication Flow Review and Shared Labels) Tj ET
+BT /F1 8.15 Tf 38 724.80 Td (- Inspected Create My Account, Sign In, and Forgot Password as one Welcome-related system and identified the) Tj ET
+BT /F1 8.15 Tf 38 715.15 Td (  missing functional bridge between the account-details form and later product steps.) Tj ET
+BT /F1 8.15 Tf 38 702.40 Td (- Kept placeholder text at its normal readable size while a field receives input, then increased the smallest) Tj ET
+BT /F1 8.15 Tf 38 692.75 Td (  floating-label state enough to remove the tablet's grainy, barely legible appearance.) Tj ET
+BT /F1 8.15 Tf 38 680.00 Td (- Applied the corrected floating-label sizing, inset, baseline, input, caret, stroke, and animation scaling) Tj ET
+BT /F1 8.15 Tf 38 670.35 Td (  consistently across the authentication fields instead of limiting the change to one device or one screen.) Tj ET
+BT /F1 8.15 Tf 38 657.60 Td (- Left the main Welcome screen composition unchanged while allowing authentication screens to use their own sticky) Tj ET
+BT /F1 8.15 Tf 38 647.95 Td (  and scrollable layout behavior.) Tj ET
+BT /F2 9.25 Tf 38 633.00 Td (Work Completed - Responsive Create Account Foundation) Tj ET
+BT /F1 8.15 Tf 38 621.00 Td (- Brought the portrait sticky-chrome concept into landscape: the Cinerific logo and screen title remain in the) Tj ET
+BT /F1 8.15 Tf 38 611.35 Td (  upper zone, the form content scrolls vertically, and the back chevron remains protected at the bottom.) Tj ET
+BT /F1 8.15 Tf 38 598.60 Td (- Organized the landscape first impression into a left headline and Username stack plus a right avatar and) Tj ET
+BT /F1 8.15 Tf 38 588.95 Td (  Broadway-name stack. The headline became the two-line 'Let's get you started.' statement, with larger type,) Tj ET
+BT /F1 8.15 Tf 38 579.30 Td (  expanded line spacing, and vertical centering against the avatar bubble.) Tj ET
+BT /F1 8.15 Tf 38 566.55 Td (- Centered the avatar carousel between its left and right arrows, nudged the stack downward through visual checks,) Tj ET
+BT /F1 8.15 Tf 38 556.90 Td (  enlarged the Broadway username treatment, and added the default 'YOUR NAME' preview that disappears as soon as a) Tj ET
+BT /F1 8.15 Tf 38 547.25 Td (  unique username is entered.) Tj ET
+BT /F1 8.15 Tf 38 534.50 Td (- Kept the Username field and Broadway preview on the same baseline, separated the two first-impression columns) Tj ET
+BT /F1 8.15 Tf 38 524.85 Td (  horizontally, and added enough vertical breathing room that small, medium, and large tablets initially show only) Tj ET
+BT /F1 8.15 Tf 38 515.20 Td (  this identity stage before later form rows are reached by scrolling.) Tj ET
+BT /F1 8.15 Tf 38 502.45 Td (- Reordered the main form into paired landscape rows: Password with Email Address, Confirm Password with Confirm) Tj ET
+BT /F1 8.15 Tf 38 492.80 Td (  Email, Birthday label with Month/Day/Year controls, and Subscription Tier with the membership-information panel.) Tj ET
+BT /F1 8.15 Tf 38 480.05 Td (- Moved the enlarged password and email columns outward to preserve their original center gutter, scaled their) Tj ET
+BT /F1 8.15 Tf 38 470.40 Td (  visual geometry and touch targets together, and maintained the same vertical row centers.) Tj ET
+BT /F1 8.15 Tf 38 457.65 Td (- Added Confirm Email to the landscape field sequence and to the saved intro snapshot so the account draft) Tj ET
+BT /F1 8.15 Tf 38 448.00 Td (  survives Compose state restoration and can be handed into the continuation flow.) Tj ET
+BT /F2 9.25 Tf 38 433.05 Td (Work Completed - Validation and Continue Action) Tj ET
+BT /F1 8.15 Tf 38 421.05 Td (- Added a visible Continue control and made it actionable only after the required account details are valid. The) Tj ET
+BT /F1 8.15 Tf 38 411.40 Td (  control retains its disabled presentation until the current validation requirement is satisfied.) Tj ET
+BT /F1 8.15 Tf 38 398.65 Td (- Implemented contextual warning copy for short usernames, passwords under eight characters, mismatched passwords,) Tj ET
+BT /F1 8.15 Tf 38 389.00 Td (  malformed email addresses, mismatched landscape email confirmation, an unselected membership tier, and an) Tj ET
+BT /F1 8.15 Tf 38 379.35 Td (  incomplete birthday.) Tj ET
+BT /F1 8.15 Tf 38 366.60 Td (- Placed the warning above the Continue action in a warm contrasting color and sized it to remain legible without) Tj ET
+BT /F1 8.15 Tf 38 356.95 Td (  overpowering the form or colliding with the sticky bottom navigation.) Tj ET
+BT /F1 8.15 Tf 38 344.20 Td (- Connected successful Continue activation to a Compose-owned continuation surface while preserving the complete) Tj ET
+BT /F1 8.15 Tf 38 334.55 Td (  account draft, selected avatar, Android Back behavior, and return-to-details path.) Tj ET
+BT /F2 9.25 Tf 38 319.60 Td (Work Completed - Sticky Scrolling and Content Reachability) Tj ET
+BT /F1 8.15 Tf 38 307.60 Td (- Calculated content height from the real final controls, enlarged membership artwork, Continue button, and device) Tj ET
+BT /F1 8.15 Tf 38 297.95 Td (  viewport rather than from the former fixed form stack.) Tj ET
+BT /F1 8.15 Tf 38 285.20 Td (- Extended scroll limits and clipping so Confirm Email, Birthday, Subscription Tier details, pricing, Continue,) Tj ET
+BT /F1 8.15 Tf 38 275.55 Td (  and the sticky chevron remain reachable without shrinking the form fields.) Tj ET
+BT /F1 7.5 Tf 369.40 24 Td (Cinerific Work Log - November 5, 2026 \(U.S. EST\) Page 2) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 10 0 R >>
+endobj
+10 0 obj
+<< /Length 5533 >>
+stream
+BT /F2 11.5 Tf 38 759 Td (Cinerific Android App Work Log - November 5, 2026 \(U.S. EST\)) Tj ET
+BT /F2 9.25 Tf 38 736.80 Td (Work Completed - Terms, Payment, and Review Continuation) Tj ET
+BT /F1 8.15 Tf 38 724.80 Td (- Added CinerificCreateAccountFlow.kt as a responsive Compose continuation surface with preserved state,) Tj ET
+BT /F1 8.15 Tf 38 715.15 Td (  system-bar padding, centered tablet width limits, phone-friendly horizontal padding, and vertical scrolling.) Tj ET
+BT /F1 8.15 Tf 38 702.40 Td (- Implemented a Terms and Privacy step with explanatory prototype copy, separate Terms and Conditions and Privacy) Tj ET
+BT /F1 8.15 Tf 38 692.75 Td (  Policy acknowledgements, and a disabled Continue to payment action until both consents are checked.) Tj ET
+BT /F1 8.15 Tf 38 680.00 Td (- Expanded payment selection from the initially questioned Google Play-only direction to four explicit choices:) Tj ET
+BT /F1 8.15 Tf 38 670.35 Td (  Google Play Billing, PayPal, Credit Card, and Set up later.) Tj ET
+BT /F1 8.15 Tf 38 657.60 Td (- Clarified that the prototype does not collect card or PayPal credentials locally and that production payment) Tj ET
+BT /F1 8.15 Tf 38 647.95 Td (  will require Google Play Billing or a backend-provided secure hosted checkout session.) Tj ET
+BT /F1 8.15 Tf 38 635.20 Td (- Added a final review step that summarizes username, email, birthday, profile, membership, and payment before) Tj ET
+BT /F1 8.15 Tf 38 625.55 Td (  local account completion, while identifying email verification, secure session creation, and entitlements as) Tj ET
+BT /F1 8.15 Tf 38 615.90 Td (  later backend responsibilities.) Tj ET
+BT /F1 8.15 Tf 38 603.15 Td (- Added step progress, back navigation between stages, and final Create Account routing into the selected local) Tj ET
+BT /F1 8.15 Tf 38 593.50 Td (  profile so the prototype can complete end to end without pretending that production services already exist.) Tj ET
+BT /F2 9.25 Tf 38 578.55 Td (Work Completed - Membership Tier Presentation) Tj ET
+BT /F1 8.15 Tf 38 566.55 Td (- Repositioned Subscription Tier into its own landscape row and doubled the dropdown height, wrapped 'Subscription) Tj ET
+BT /F1 8.15 Tf 38 556.90 Td (  Tier' onto two lines, enlarged the internal text, and preserved upward-opening options to avoid bottom clipping.) Tj ET
+BT /F1 8.15 Tf 38 544.15 Td (- Enlarged the Basic house-and-tree, Pro car, and Rock Star crown-and-staff artwork beyond the earlier four-times) Tj ET
+BT /F1 8.15 Tf 38 534.50 Td (  scale and centered each selected image beneath the dropdown.) Tj ET
+BT /F1 8.15 Tf 38 521.75 Td (- Added a right-side membership panel with selection-specific title, description, and U.S.-dollar price. Basic now) Tj ET
+BT /F1 8.15 Tf 38 512.10 Td (  displays FREE in uppercase, Pro displays $9.99 per month, and Rock Star displays $19.99 per month.) Tj ET
+BT /F1 8.15 Tf 38 499.35 Td (- Suppressed the monthly-price label and price value before a tier is selected, tightened the title-to-description) Tj ET
+BT /F1 8.15 Tf 38 489.70 Td (  gap for Basic and Rock Star to match Pro, and aligned artwork and paragraph bottoms to reduce awkward empty) Tj ET
+BT /F1 8.15 Tf 38 480.05 Td (  space.) Tj ET
+BT /F2 9.25 Tf 38 465.10 Td (Work Completed - Final Landscape Scale and Alignment Pass) Tj ET
+BT /F1 8.15 Tf 38 453.10 Td (- Reduced the landscape authentication logo to 80 percent as the app moves away from Welcome and pulled Create My) Tj ET
+BT /F1 8.15 Tf 38 443.45 Td (  Account, Sign In, and Forgot Password headers upward with it, reducing the sticky top zone without changing) Tj ET
+BT /F1 8.15 Tf 38 433.80 Td (  Welcome itself.) Tj ET
+BT /F1 8.15 Tf 38 421.05 Td (- Increased the headline, avatar and arrows, Username field, and Broadway preview by 10 percent; increased the) Tj ET
+BT /F1 8.15 Tf 38 411.40 Td (  password and email rows by the same amount; and expanded corresponding strokes, labels, text, carets, and hit) Tj ET
+BT /F1 8.15 Tf 38 401.75 Td (  regions.) Tj ET
+BT /F1 8.15 Tf 38 389.00 Td (- Increased headline row spacing while keeping the two-line block vertically centered against the avatar and) Tj ET
+BT /F1 8.15 Tf 38 379.35 Td (  separated the headline/avatar row from the Username/Broadway row.) Tj ET
+BT /F1 8.15 Tf 38 366.60 Td (- Resized the Birthday label and all three date controls by 10 percent, scaled their internal gaps, and aligned) Tj ET
+BT /F1 8.15 Tf 38 356.95 Td (  their visible left and right edges exactly with the enlarged right-hand email column.) Tj ET
+BT /F1 8.15 Tf 38 344.20 Td (- Widened and repositioned the doubled Subscription Tier control so its visible edges exactly match the enlarged) Tj ET
+BT /F1 8.15 Tf 38 334.55 Td (  left-hand password column.) Tj ET
+BT /F2 9.25 Tf 38 319.60 Td (Device and Orientation Protection) Tj ET
+BT /F1 8.15 Tf 38 307.60 Td (- Treated responsive changes as global across devices unless explicitly marked landscape-only, while keeping the) Tj ET
+BT /F1 8.15 Tf 38 297.95 Td (  detailed size and reorientation work scoped away from the accepted portrait arrangement.) Tj ET
+BT /F1 8.15 Tf 38 285.20 Td (- Built and installed the same debug APK repeatedly on the connected Samsung phone and emulator-5554 Standard) Tj ET
+BT /F1 8.15 Tf 38 275.55 Td (  tablet, force-stopped stale processes, relaunched Cinerific, and used live landscape screenshots to verify) Tj ET
+BT /F1 8.15 Tf 38 265.90 Td (  clipping, spacing, and column alignment.) Tj ET
+BT /F1 7.5 Tf 369.40 24 Td (Cinerific Work Log - November 5, 2026 \(U.S. EST\) Page 3) Tj ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 12 0 R >>
+endobj
+12 0 obj
+<< /Length 6373 >>
+stream
+BT /F2 11.5 Tf 38 759 Td (Cinerific Android App Work Log - November 5, 2026 \(U.S. EST\)) Tj ET
+BT /F2 9.25 Tf 38 736.80 Td (Validation and Checks Performed) Tj ET
+BT /F1 8.15 Tf 38 724.80 Td (- Ran ./gradlew :app:assembleDebug after both implementation phases. The final Gradle 8.7 debug build completed) Tj ET
+BT /F1 8.15 Tf 38 715.15 Td (  successfully with all expected Android tasks.) Tj ET
+BT /F1 8.15 Tf 38 702.40 Td (- Ran git diff --check during the layout passes and resolved the work without introducing whitespace errors into) Tj ET
+BT /F1 8.15 Tf 38 692.75 Td (  the edited Kotlin source.) Tj ET
+BT /F1 8.15 Tf 38 680.00 Td (- Installed the generated app-debug.apk on USB device R5CRC33MGNZ and tablet AVD emulator-5554, then force-stopped) Tj ET
+BT /F1 8.15 Tf 38 670.35 Td (  and relaunched com.prahlin.cinerific so runtime checks used the current build.) Tj ET
+BT /F1 8.15 Tf 38 657.60 Td (- Opened Create My Account on the tablet, scrolled through the sticky middle viewport, and visually verified the) Tj ET
+BT /F1 8.15 Tf 38 647.95 Td (  first-impression stage, password and email rows, Birthday row, doubled Subscription Tier control, tier artwork,) Tj ET
+BT /F1 8.15 Tf 38 638.30 Td (  membership copy, pricing, Continue placement, and bottom chevron.) Tj ET
+BT /F1 8.15 Tf 38 625.55 Td (- Confirmed the final Birthday group shares the exact visible edges of the right-side form fields and the) Tj ET
+BT /F1 8.15 Tf 38 615.90 Td (  Subscription Tier control shares the exact visible edges of the left-side fields after correcting an) Tj ET
+BT /F1 8.15 Tf 38 606.25 Td (  intermediate coordinate-basis offset.) Tj ET
+BT /F1 8.15 Tf 38 593.50 Td (- Confirmed the repository is on main tracking origin/main with a clean working tree after commits 7e000c2 and) Tj ET
+BT /F1 8.15 Tf 38 583.85 Td (  e748daf.) Tj ET
+BT /F2 9.25 Tf 38 568.90 Td (Files Touched During November 5) Tj ET
+BT /F1 8.15 Tf 38 556.90 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt - added shared label refinement, landscape) Tj ET
+BT /F1 8.15 Tf 38 547.25 Td (  sticky scrolling, responsive first-impression geometry, Confirm Email, validation and Continue behavior,) Tj ET
+BT /F1 8.15 Tf 38 537.60 Td (  membership presentation, and the final logo, field, Birthday, and Subscription Tier scale pass.) Tj ET
+BT /F1 8.15 Tf 38 524.85 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificCreateAccountFlow.kt - added the Terms and Privacy, payment) Tj ET
+BT /F1 8.15 Tf 38 515.20 Td (  selection, review, and local account-completion continuation flow.) Tj ET
+BT /F1 8.15 Tf 38 502.45 Td (- app/src/main/java/com/prahlin/cinerific/ui/CinerificApp.kt - connected intro snapshot data to the continuation) Tj ET
+BT /F1 8.15 Tf 38 492.80 Td (  flow, preserved Confirm Email and selected profile state, and added Android Back handling for the account) Tj ET
+BT /F1 8.15 Tf 38 483.15 Td (  stages.) Tj ET
+BT /F1 8.15 Tf 38 470.40 Td (- cinerific_PROJECT_SNAPSHOT.txt - refreshed during the main November 5 implementation commit. The snapshot header) Tj ET
+BT /F1 8.15 Tf 38 460.75 Td (  records November 1 and does not include the post-midnight e748daf refinement as a later regeneration.) Tj ET
+BT /F2 9.25 Tf 38 445.80 Td (Commits and Repository State) Tj ET
+BT /F1 8.15 Tf 38 433.80 Td (- 7e000c2 - Expanded account creation and onboarding flows: 1,267 insertions and 93 deletions across four files,) Tj ET
+BT /F1 8.15 Tf 38 424.15 Td (  including the new 433-line continuation implementation.) Tj ET
+BT /F1 8.15 Tf 38 411.40 Td (- e748daf - Refined landscape authentication and account creation layouts: 335 insertions and 88 deletions in) Tj ET
+BT /F1 8.15 Tf 38 401.75 Td (  CinerificIntroView.kt.) Tj ET
+BT /F1 8.15 Tf 38 389.00 Td (- No application source changes were created by this documentation pass; only the requested November 5 PDF worklog) Tj ET
+BT /F1 8.15 Tf 38 379.35 Td (  was added after the clean committed source state.) Tj ET
+BT /F2 9.25 Tf 38 364.40 Td (Follow-Up Context) Tj ET
+BT /F1 8.15 Tf 38 352.40 Td (- Replace the draft Terms and Privacy language with reviewed legal documents before release and provide durable) Tj ET
+BT /F1 8.15 Tf 38 342.75 Td (  links or full-document presentation appropriate to the production app.) Tj ET
+BT /F1 8.15 Tf 38 330.00 Td (- Connect account creation to a backend that enforces username uniqueness, validates age and birthday rules, sends) Tj ET
+BT /F1 8.15 Tf 38 320.35 Td (  email verification, hashes credentials outside the client, establishes a secure session, and returns) Tj ET
+BT /F1 8.15 Tf 38 310.70 Td (  authoritative membership entitlements.) Tj ET
+BT /F1 8.15 Tf 38 297.95 Td (- Integrate Google Play Billing and secure provider-hosted PayPal or credit-card checkout rather than collecting) Tj ET
+BT /F1 8.15 Tf 38 288.30 Td (  payment credentials in the application UI.) Tj ET
+BT /F1 8.15 Tf 38 275.55 Td (- Preserve the current device contract: shared behavior should continue to be tested with the same APK on phone) Tj ET
+BT /F1 8.15 Tf 38 265.90 Td (  and tablet, while landscape-specific geometry must not regress portrait or modify the Welcome main screen.) Tj ET
+BT /F1 8.15 Tf 38 253.15 Td (- Regenerate cinerific_PROJECT_SNAPSHOT.txt in a later explicit snapshot pass so its timestamp and included source) Tj ET
+BT /F1 8.15 Tf 38 243.50 Td (  list reflect CinerificCreateAccountFlow.kt and the final e748daf landscape refinements.) Tj ET
+BT /F2 9.25 Tf 38 228.55 Td (Output Artifact) Tj ET
+BT /F1 8.15 Tf 38 216.55 Td (- Created /Users/prahlin/gh/cinerific/cinerific_worklog_november 5.pdf using the established lowercase filename,) Tj ET
+BT /F1 8.15 Tf 38 206.90 Td (  month/day spacing, and no part suffix because no earlier November 5 worklog existed.) Tj ET
+BT /F1 8.15 Tf 38 194.15 Td (- Kept the established four-page U.S.-Letter structure, Helvetica typography, compact technical density, repeated) Tj ET
+BT /F1 8.15 Tf 38 184.50 Td (  title, right-aligned footer, PDF 1.4 compatibility, and extractable text.) Tj ET
+BT /F1 8.15 Tf 38 171.75 Td (- Scoped the report to the continuous November 5 account-creation session through e748daf and recorded the) Tj ET
+BT /F1 8.15 Tf 38 162.10 Td (  midnight commit boundary without renaming the user-requested worklog date.) Tj ET
+BT /F1 7.5 Tf 369.40 24 Td (Cinerific Work Log - November 5, 2026 \(U.S. EST\) Page 4) Tj ET
+endstream
+endobj
+13 0 obj
+<< /Title (Cinerific Android App Work Log - November 5, 2026 \(U.S. EST\)) /Author (OpenAI Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20261106003223-05'00') >>
+endobj
+xref
+0 14
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000140 00000 n 
+0000000237 00000 n 
+0000000339 00000 n 
+0000000475 00000 n 
+0000006260 00000 n 
+0000006396 00000 n 
+0000012019 00000 n 
+0000012156 00000 n 
+0000017742 00000 n 
+0000017880 00000 n 
+0000024306 00000 n 
+trailer
+<< /Size 14 /Root 1 0 R /Info 13 0 R >>
+startxref
+24560
+%%EOF
