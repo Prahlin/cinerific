@@ -112,6 +112,15 @@ private const val MOCK_FORM_PORTRAIT_FIELD_GAP = MOCK_FORM_FIELD_GAP / 2f
 private const val MOCK_CREATE_FORM_COLUMNS = 3
 private const val MOCK_CREATE_FORM_ROWS = 3
 private const val MOCK_CREATE_FORM_COLUMN_GAP = MOCK_FORM_FIELD_GAP
+private const val MOCK_CREATE_LANDSCAPE_ROW_GAP = 48f
+private const val MOCK_CREATE_LANDSCAPE_PRIMARY_ROW_SHIFT_DOWN = 24f
+private const val MOCK_CREATE_LANDSCAPE_BOTTOM_SECTION_GAP = 36f
+private const val MOCK_CREATE_LANDSCAPE_HEADING_TEXT = "Let's get you\nstarted."
+private const val MOCK_CREATE_LANDSCAPE_HEADING_TEXT_SIZE = 55.2f
+private const val MOCK_CREATE_LANDSCAPE_HEADING_LINE_HEIGHT = 70f
+private const val MOCK_CREATE_LANDSCAPE_AVATAR_SHIFT_UP = 34f
+private const val MOCK_CREATE_LANDSCAPE_HERO_CENTER_SHIFT_UP = 18f
+private const val MOCK_CREATE_LANDSCAPE_USERNAME_DISPLAY_GAP = 24f
 private const val MOCK_CREATE_PORTRAIT_SECTION_GAP = 36f
 private const val MOCK_CREATE_PORTRAIT_LOGO_GAP = 120f
 private const val MOCK_FORM_PORTRAIT_LOGO_HEADER_ALIGNMENT_Y = 12f
@@ -122,9 +131,10 @@ private const val MOCK_PORTRAIT_STICKY_BOTTOM_SCALE = 3f
 private const val MOCK_PORTRAIT_STICKY_BOTTOM_CHEVRON_SCALE = 2f
 private const val MOCK_PORTRAIT_STICKY_BOTTOM_CHEVRON_STROKE_SCALE = 1.15f
 private const val MOCK_CREATE_PORTRAIT_CONTENT_BOTTOM_GAP = 44f
+private const val MOCK_LANDSCAPE_STICKY_BOTTOM_RESERVE = 92f
 private const val MOCK_FORM_FIELD_RADIUS = 10f
 private const val MOCK_FORM_LABEL_TEXT_SIZE = 24f
-private const val MOCK_FORM_FLOATING_LABEL_SCALE = 0.30f
+private const val MOCK_FORM_FLOATING_LABEL_SCALE = 0.55f
 private const val MOCK_FORM_LABEL_FLOAT_ANIMATION_MS = 180
 private const val MOCK_FORM_FIELD_STROKE_WIDTH = 2f
 private const val MOCK_FORM_LABEL_INSET_X = 22f
@@ -136,6 +146,7 @@ private const val MOCK_FORM_USERNAME_TEXT = "Username"
 private const val MOCK_FORM_PASSWORD_TEXT = "Password"
 private const val MOCK_FORM_CONFIRM_PASSWORD_TEXT = "Confirm Password"
 private const val MOCK_FORM_EMAIL_TEXT = "Email Address"
+private const val MOCK_FORM_CONFIRM_EMAIL_TEXT = "Confirm Email"
 private const val MOCK_FORM_SUBSCRIPTION_TIER_TEXT = "Subscription Tier"
 private const val MOCK_FORM_MONTH_TEXT = "Mon"
 private const val MOCK_FORM_DAY_TEXT = "Day"
@@ -150,9 +161,16 @@ private const val MOCK_MEMBERSHIP_LEGACY_OPTION_3_TEXT = "Option 3"
 private const val MOCK_MEMBERSHIP_TIER_OPTION_ICON_SIZE = 114f
 private const val MOCK_MEMBERSHIP_TIER_CONTROL_ICON_SIZE = 46f
 private const val MOCK_MEMBERSHIP_TIER_ICON_TEXT_GAP = 10f
+private const val MOCK_CREATE_LANDSCAPE_MEMBERSHIP_ARTWORK_SCALE = 5f
+private const val MOCK_CREATE_LANDSCAPE_MEMBERSHIP_ARTWORK_TOP_GAP = 24f
+private const val MOCK_CREATE_MEMBERSHIP_DETAILS_TITLE_SIZE = 28f
+private const val MOCK_CREATE_MEMBERSHIP_DETAILS_BODY_SIZE = 19f
+private const val MOCK_CREATE_MEMBERSHIP_DETAILS_BODY_LINE_HEIGHT = 27f
+private const val MOCK_CREATE_MEMBERSHIP_DETAILS_PRICE_LABEL_SIZE = 14f
+private const val MOCK_CREATE_MEMBERSHIP_DETAILS_PRICE_SIZE = 30f
 private const val MOCK_DATE_FIELD_GAP = 10f
 private const val MOCK_CREATE_BIRTHDAY_LABEL_HEIGHT = MOCK_FORM_LABEL_TEXT_SIZE
-private const val MOCK_CREATE_BIRTHDAY_LABEL_TO_FIELDS_GAP = 10f
+private const val MOCK_CREATE_BIRTHDAY_LABEL_TO_FIELDS_GAP = 18f
 private const val MOCK_DATE_MONTH_WIDTH = 96f
 private const val MOCK_DATE_DAY_WIDTH = MOCK_DATE_MONTH_WIDTH
 private const val MOCK_DATE_YEAR_WIDTH = MOCK_FORM_WIDTH - MOCK_DATE_MONTH_WIDTH - MOCK_DATE_DAY_WIDTH - MOCK_DATE_FIELD_GAP * 2f
@@ -174,6 +192,9 @@ private const val MOCK_CREATE_AVATAR_STACK_SCALE = 1.25f
 private const val MOCK_CREATE_AVATAR_LABEL_BASELINE_FROM_TOP = 24f
 private const val MOCK_CREATE_AVATAR_TOP_GAP = 16f
 private const val MOCK_CREATE_USERNAME_TEXT_SIZE = 36f
+private const val MOCK_CREATE_LANDSCAPE_USERNAME_TEXT_SCALE = 1.2f
+private const val MOCK_CREATE_USERNAME_PLACEHOLDER_TEXT = "YOUR NAME"
+private const val MOCK_CREATE_USERNAME_PLACEHOLDER_ALPHA = 0.48f
 private const val MOCK_CREATE_USERNAME_MAX_WIDTH_INSET = 12f
 private const val MOCK_CREATE_USERNAME_LETTER_SPACING = 0.10f
 private const val MOCK_CREATE_USERNAME_STROKE_WIDTH = 3f
@@ -200,6 +221,7 @@ private const val MOCK_CREATE_AVATAR_STROKE_CHANNEL = 31
 private const val MOCK_FORM_TITLE_TEXT_SIZE = 33f
 private const val MOCK_FORM_TITLE_BASELINE_GAP = 24f
 private const val MOCK_FORM_TITLE_OPTICAL_BOTTOM_OFFSET = 7f
+private const val MOCK_FORM_TITLE_TO_FIELDS_EXTRA_GAP = 12f
 private const val MOCK_FORGOT_PASSWORD_USERNAME_BODY_TEXT =
     "No Sign-In Information?\nNo problem.\n\nSelect what to recover - Username or Password - and receive a helper email in just a few seconds.\n\nAs long as you have a Cinerific account, the email we send will contain all the information required to get you back on track, pronto."
 private const val MOCK_FORGOT_PASSWORD_PASSWORD_BODY_TEXT =
@@ -225,6 +247,12 @@ private const val MOCK_FORGOT_PASSWORD_PASSWORD_SENT_BUTTON_TEXT = "Link Sent"
 private const val MOCK_FORGOT_PASSWORD_SUBMIT_MS = 720
 private const val MOCK_FORGOT_PASSWORD_SENT_CHECK_SIZE = 16f
 private const val MOCK_FORGOT_PASSWORD_SENT_CHECK_GAP = 10f
+private const val MOCK_CREATE_CONTINUE_TOP_GAP = 28f
+private const val MOCK_CREATE_CONTINUE_BUTTON_TEXT = "Continue"
+private const val MOCK_CREATE_CONTINUE_DISABLED_TEXT = "Complete required fields"
+private const val MOCK_CREATE_VALIDATION_TEXT_SIZE = 14f
+private const val MOCK_CREATE_VALIDATION_BASELINE_GAP = 12f
+private val MOCK_CREATE_VALIDATION_COLOR = Color.rgb(255, 190, 112)
 private const val MOCK_FORGOT_PASSWORD_USABLE_WIDTH =
     MOCK_FORM_WIDTH * MOCK_CREATE_FORM_COLUMNS + MOCK_CREATE_FORM_COLUMN_GAP * (MOCK_CREATE_FORM_COLUMNS - 1)
 private const val MOCK_FORGOT_PASSWORD_STACK_GAP = MOCK_CREATE_FORM_COLUMN_GAP * 2f
@@ -291,6 +319,7 @@ private object IntroAnimationClock {
 
 internal class CinerificIntroView(context: Context) : View(context) {
     var onAvatarSelected: ((CinerificProfile) -> Unit)? = null
+    var onCreateAccountContinue: (() -> Unit)? = null
     var onIntroSnapshotChanged: ((CinerificIntroSnapshot) -> Unit)? = null
 
     fun showCreateAccountFromTabletHost() {
@@ -437,6 +466,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private var pressedMockDropdownOption: MockDropdownOption? = null
     private var pressedForgotRecoveryTarget: MockForgotRecoveryTarget? = null
     private var pressedForgotPasswordSubmit = false
+    private var pressedCreateAccountContinue = false
+    private var showCreateAccountValidationWarning = false
     private var activeMockDropdownScroll: MockDropdown? = null
     private var mockDropdownScrollStartY = 0f
     private var mockDropdownScrollStartOffset = 0
@@ -462,6 +493,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private var passwordText = ""
     private var confirmPasswordText = ""
     private var emailText = ""
+    private var confirmEmailText = ""
     private var monthText = MOCK_FORM_MONTH_TEXT
     private var dayText = MOCK_FORM_DAY_TEXT
     private var yearText = MOCK_FORM_YEAR_TEXT
@@ -530,6 +562,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         pressedMockDropdownOption = null
         pressedForgotRecoveryTarget = null
         pressedForgotPasswordSubmit = false
+        pressedCreateAccountContinue = false
         activeMockDropdownScroll = null
         mockDropdownScrollMoved = false
         mockDragReturnInProgress = false
@@ -557,6 +590,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         passwordText = snapshot.passwordText
         confirmPasswordText = snapshot.confirmPasswordText
         emailText = snapshot.emailText
+        confirmEmailText = snapshot.confirmEmailText
         monthText = snapshot.monthText
         dayText = snapshot.dayText
         yearText = snapshot.yearText
@@ -608,6 +642,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         pressedMockDropdownOption = null
         pressedForgotRecoveryTarget = null
         pressedForgotPasswordSubmit = false
+        pressedCreateAccountContinue = false
         activeMockDropdownScroll = null
         mockDropdownScrollMoved = false
         mockDragReturnInProgress = false
@@ -727,7 +762,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 ACCOUNT_PROMPT_SIGN_IN_CENTER_X,
                 mockBackChevronRowTopY(),
                 stage.left,
-                if (usesPortraitStackedAuthLayout()) {
+                if (usesStickyAuthChrome()) {
                     stage.top
                 } else {
                     accountPromptStageTop(stage.scale)
@@ -814,11 +849,18 @@ internal class CinerificIntroView(context: Context) : View(context) {
                         pressedMockDropdown == null &&
                         pressedForgotRecoveryTarget == null &&
                         mockForgotPasswordSubmitHit(event.x, event.y)
+                    pressedCreateAccountContinue = touchedDropdownOptions == null &&
+                        pressedMockDropdownOption == null &&
+                        pressedMockDropdown == null &&
+                        pressedForgotRecoveryTarget == null &&
+                        !pressedForgotPasswordSubmit &&
+                        mockCreateAccountContinueHit(event.x, event.y)
                     val touchedCreateAvatarCarousel = touchedDropdownOptions == null &&
                         pressedMockDropdownOption == null &&
                         pressedMockDropdown == null &&
                         pressedForgotRecoveryTarget == null &&
                         !pressedForgotPasswordSubmit &&
+                        !pressedCreateAccountContinue &&
                         mockCreateAvatarCarouselHit(event.x, event.y) &&
                         !isMockCreateAvatarCarouselAnimating()
                     activeMockCreateAvatarDrag = touchedCreateAvatarCarousel
@@ -844,6 +886,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                         pressedForgotRecoveryTarget == null &&
                         pressedMockCreateAvatarNav == null &&
                         !pressedForgotPasswordSubmit &&
+                        !pressedCreateAccountContinue &&
                         !touchedCreateAvatarCarousel
                     ) {
                         mockSignInFieldHit(event.x, event.y)
@@ -864,6 +907,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                         pressedForgotRecoveryTarget == null &&
                         pressedMockCreateAvatarNav == null &&
                         !pressedForgotPasswordSubmit &&
+                        !pressedCreateAccountContinue &&
                         mockBackChevronHit(event.x, event.y)
                     postInvalidateOnAnimation()
                     return true
@@ -949,6 +993,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     pressedMockDropdownOption = null
                     pressedForgotRecoveryTarget = null
                     pressedForgotPasswordSubmit = false
+                    pressedCreateAccountContinue = false
                     activeMockDropdownScroll = null
                     mockDropdownScrollMoved = false
                     return true
@@ -991,6 +1036,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     val releasedCreateAvatarNav = mockCreateAvatarNavHit(event.x, event.y)
                     val releasedForgotRecoveryTarget = mockForgotRecoveryTargetHit(event.x, event.y)
                     val releasedForgotPasswordSubmit = mockForgotPasswordSubmitHit(event.x, event.y)
+                    val releasedCreateAccountContinue = mockCreateAccountContinueHit(event.x, event.y)
                     val wasTouchingDropdownOptions = activeMockDropdownScroll != null ||
                         mockDropdownOptionsHit(mockTouchDownX, mockTouchDownY) != null
                     val wasScrollingDropdown = mockDropdownScrollMoved
@@ -998,6 +1044,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     val wasPressingBackChevron = pressedBackChevron
                     val wasPressingForgotRecoveryTarget = pressedForgotRecoveryTarget != null
                     val wasPressingForgotPasswordSubmit = pressedForgotPasswordSubmit
+                    val wasPressingCreateAccountContinue = pressedCreateAccountContinue
                     val wasDraggingCreateAvatar = activeMockCreateAvatarDrag
                     val createAvatarDragMoved = mockCreateAvatarDragMoved
                     val createAvatarDragDirection = mockCreateAvatarDragDirection()
@@ -1015,6 +1062,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     val shouldToggleRememberMe = wasPressingRememberMe && releasedRememberMe
                     val shouldCloseMockSignIn = wasPressingBackChevron && releasedBackChevron
                     val shouldSubmitForgotPassword = wasPressingForgotPasswordSubmit && releasedForgotPasswordSubmit
+                    val shouldContinueCreateAccount = wasPressingCreateAccountContinue &&
+                        releasedCreateAccountContinue
                     val shouldNavigateCreateAvatar = pressedCreateAvatarNav != null &&
                         !createAvatarDragMoved &&
                         pressedCreateAvatarNav == releasedCreateAvatarNav
@@ -1028,6 +1077,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                         !wasPressingBackChevron &&
                         !wasPressingForgotRecoveryTarget &&
                         !wasPressingForgotPasswordSubmit &&
+                        !wasPressingCreateAccountContinue &&
                         !wasDraggingCreateAvatar &&
                         pressedDropdown == null &&
                         pressedOption == null &&
@@ -1045,6 +1095,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     pressedMockDropdownOption = null
                     this.pressedForgotRecoveryTarget = null
                     pressedForgotPasswordSubmit = false
+                    pressedCreateAccountContinue = false
                     activeMockDropdownScroll = null
                     mockDropdownScrollMoved = false
                     super.performClick()
@@ -1082,6 +1133,16 @@ internal class CinerificIntroView(context: Context) : View(context) {
                         setMockForgotRecoveryTarget(pressedForgotRecoverySelection)
                     } else if (shouldSubmitForgotPassword) {
                         startMockForgotPasswordSubmission()
+                    } else if (shouldContinueCreateAccount) {
+                        if (mockCreateAccountCanContinue()) {
+                            showCreateAccountValidationWarning = false
+                            expandedMockDropdown = null
+                            clearMockSignInFieldFocus()
+                            onCreateAccountContinue?.invoke()
+                        } else {
+                            showCreateAccountValidationWarning = true
+                            postInvalidateOnAnimation()
+                        }
                     } else if (shouldFocusField && releasedField != null) {
                         expandedMockDropdown = null
                         restartMockLandscapeInputLiftAnimation()
@@ -1178,6 +1239,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 pressedMockDropdownOption = null
                 pressedForgotRecoveryTarget = null
                 pressedForgotPasswordSubmit = false
+                pressedCreateAccountContinue = false
                 activeMockDropdownScroll = null
                 mockDropdownScrollMoved = false
                 mockDragReturnInProgress = false
@@ -1204,7 +1266,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
         outAttrs.inputType = when (field) {
             MockSignInField.Password,
             MockSignInField.ConfirmPassword -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            MockSignInField.Email -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+            MockSignInField.Email,
+            MockSignInField.ConfirmEmail -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
             MockSignInField.Month,
             MockSignInField.Day,
             MockSignInField.Year -> InputType.TYPE_CLASS_NUMBER
@@ -1478,8 +1541,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
         yOffset: Float,
         alpha: Float
     ) {
-        if (usesPortraitStackedAuthLayout(activeMockFlow) ||
-            usesPortraitStackedAuthLayout(outgoingMockFlow)
+        if (usesStickyAuthChrome(activeMockFlow) ||
+            usesStickyAuthChrome(outgoingMockFlow)
         ) {
             return
         }
@@ -1597,17 +1660,17 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
         val rememberMeY = passwordY + MOCK_FORM_FIELD_HEIGHT + MOCK_REMEMBER_ME_TOP_GAP + focusShiftY
         val titleFieldY = usernameY + if (isPortraitIntroLayout()) 0f else focusShiftY
-        if (isPortraitIntroLayout()) {
+        if (usesStickyAuthChrome()) {
             canvas.save()
             canvas.clipRect(
                 0f,
-                stageTop + portraitLogoVisibleBottom() * stageScale,
+                authTitleClipTopPx(baseStage),
                 width.toFloat(),
                 portraitAuthViewportBottomPx(baseStage)
             )
         }
         drawMockSignInTitle(canvas, titleFieldY, stageLeft, stageTop, stageScale, alpha)
-        if (isPortraitIntroLayout()) {
+        if (usesStickyAuthChrome()) {
             canvas.restore()
             canvas.save()
             canvas.clipRect(
@@ -1637,7 +1700,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             yOffset,
             focusShiftY
         )
-        if (isPortraitIntroLayout()) {
+        if (usesStickyAuthChrome()) {
             canvas.restore()
         }
 
@@ -1672,26 +1735,36 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
         val firstFieldY = mockPrimaryFormY() + yOffset + focusShiftY
         val titleFieldY = firstFieldY - if (isPortraitIntroLayout()) focusShiftY else 0f
-        if (isPortraitIntroLayout()) {
+        if (usesStickyAuthChrome()) {
             canvas.save()
             canvas.clipRect(
                 0f,
-                stageTop + portraitLogoVisibleBottom() * stageScale,
+                authTitleClipTopPx(baseStage),
                 width.toFloat(),
                 portraitAuthViewportBottomPx(baseStage)
             )
         }
         drawMockCreateAccountTitle(canvas, titleFieldY, stageLeft, stageTop, stageScale, alpha)
-        if (isPortraitIntroLayout()) {
+        if (usesStickyAuthChrome()) {
             canvas.restore()
         }
-        if (isPortraitIntroLayout()) {
+        if (usesStickyAuthChrome()) {
             canvas.save()
             canvas.clipRect(
                 0f,
                 portraitAuthViewportTopPx(baseStage),
                 width.toFloat(),
                 portraitAuthViewportBottomPx(baseStage)
+            )
+        }
+        if (!isPortraitIntroLayout()) {
+            drawMockCreateLandscapeHeading(
+                canvas = canvas,
+                baselineY = mockCreateLandscapeHeadingBaselineY(yOffset, focusShiftY),
+                stageLeft = contentLeft,
+                stageTop = contentTop,
+                stageScale = contentScale,
+                alpha = alpha
             )
         }
         activeMockFields().forEach { field ->
@@ -1719,7 +1792,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         )
         drawMockCreateBirthdayLabel(
             canvas,
-            mockDropdownX(MockDropdown.Month),
+            mockCreateBirthdayCenterX(),
             mockCreateBirthdayLabelY(yOffset, focusShiftY),
             contentLeft,
             contentTop,
@@ -1739,6 +1812,26 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 mockDropdownWidth(dropdown)
             )
         }
+        if (!isPortraitIntroLayout()) {
+            drawMockCreateLandscapeMembershipDetails(
+                canvas = canvas,
+                yOffset = yOffset,
+                focusShiftY = focusShiftY,
+                stageLeft = contentLeft,
+                stageTop = contentTop,
+                stageScale = contentScale,
+                alpha = alpha
+            )
+            drawMockCreateLandscapeMembershipArtwork(
+                canvas = canvas,
+                yOffset = yOffset,
+                focusShiftY = focusShiftY,
+                stageLeft = contentLeft,
+                stageTop = contentTop,
+                stageScale = contentScale,
+                alpha = alpha
+            )
+        }
         if (!isMockCreateWelcomeTransition()) {
             drawMockCreateAccountAvatarText(
                 canvas,
@@ -1750,6 +1843,24 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 alpha
             )
         }
+        drawMockCreateAccountContinueButton(
+            canvas = canvas,
+            x = mockCreateContinueButtonX(),
+            y = mockCreateContinueButtonY(yOffset, focusShiftY),
+            stageLeft = contentLeft,
+            stageTop = contentTop,
+            stageScale = contentScale,
+            alpha = alpha
+        )
+        drawMockCreateAccountValidationWarning(
+            canvas = canvas,
+            x = mockCreateContinueButtonX(),
+            buttonY = mockCreateContinueButtonY(yOffset, focusShiftY),
+            stageLeft = contentLeft,
+            stageTop = contentTop,
+            stageScale = contentScale,
+            alpha = alpha
+        )
         drawMockDropdownOptions(canvas, contentLeft, contentTop, contentScale, alpha)
         drawMockInputDimOverlayAndActiveControl(
             canvas,
@@ -1760,7 +1871,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             yOffset,
             focusShiftY
         )
-        if (isPortraitIntroLayout()) {
+        if (usesStickyAuthChrome()) {
             canvas.restore()
         }
 
@@ -1768,6 +1879,31 @@ internal class CinerificIntroView(context: Context) : View(context) {
         formInputPaint.alpha = 255
         formTitlePaint.alpha = 255
         formCaretPaint.alpha = 255
+    }
+
+    private fun drawMockCreateLandscapeHeading(
+        canvas: Canvas,
+        baselineY: Float,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float
+    ) {
+        formTitlePaint.textSize = MOCK_CREATE_LANDSCAPE_HEADING_TEXT_SIZE * stageScale
+        formTitlePaint.textAlign = Paint.Align.CENTER
+        formTitlePaint.color = Color.WHITE
+        formTitlePaint.alpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
+        val centerX = stageLeft + (mockCreateFormX() + MOCK_FORM_WIDTH / 2f) * stageScale
+        MOCK_CREATE_LANDSCAPE_HEADING_TEXT.split('\n').forEachIndexed { index, line ->
+            canvas.drawText(
+                line,
+                centerX,
+                stageTop +
+                    (baselineY + index * MOCK_CREATE_LANDSCAPE_HEADING_LINE_HEIGHT) * stageScale,
+                formTitlePaint
+            )
+        }
+        formTitlePaint.alpha = 255
     }
 
     private fun drawMockForgotPasswordForm(
@@ -1807,20 +1943,20 @@ internal class CinerificIntroView(context: Context) : View(context) {
         formFieldStrokePaint.strokeWidth = MOCK_FORM_FIELD_STROKE_WIDTH * contentScale
         formCaretPaint.strokeWidth = 1.45f * contentScale
 
-        if (isPortraitIntroLayout()) {
+        if (usesStickyAuthChrome()) {
             canvas.save()
             canvas.clipRect(
                 0f,
-                stageTop + portraitLogoVisibleBottom() * stageScale,
+                authTitleClipTopPx(baseStage),
                 width.toFloat(),
                 portraitAuthViewportBottomPx(baseStage)
             )
         }
         drawMockForgotPasswordTitle(canvas, titleFormTopY, stageLeft, stageTop, stageScale, alpha)
-        if (isPortraitIntroLayout()) {
+        if (usesStickyAuthChrome()) {
             canvas.restore()
         }
-        if (isPortraitIntroLayout()) {
+        if (usesStickyAuthChrome()) {
             canvas.save()
             canvas.clipRect(
                 0f,
@@ -1893,7 +2029,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             yOffset,
             focusShiftY
         )
-        if (isPortraitIntroLayout()) {
+        if (usesStickyAuthChrome()) {
             canvas.restore()
         }
 
@@ -2133,6 +2269,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val contentScaleRatio = if (isPortraitIntroLayout()) portraitCreateContentScale() else 1f
         return stageTop + contentTopY * stageScale -
             mockFormFieldGap() * 2f * stageScale * contentScaleRatio -
+            MOCK_FORM_TITLE_TO_FIELDS_EXTRA_GAP * stageScale * contentScaleRatio -
             titleBounds.bottom +
             MOCK_FORM_TITLE_OPTICAL_BOTTOM_OFFSET * stageScale * contentScaleRatio
     }
@@ -2234,6 +2371,92 @@ internal class CinerificIntroView(context: Context) : View(context) {
             baselineY,
             formTitlePaint
         )
+    }
+
+    private fun drawMockCreateAccountContinueButton(
+        canvas: Canvas,
+        x: Float,
+        y: Float,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float
+    ) {
+        tempRect.set(
+            stageLeft + x * stageScale,
+            stageTop + y * stageScale,
+            stageLeft + (x + MOCK_FORM_WIDTH) * stageScale,
+            stageTop + (y + MOCK_FORGOT_PASSWORD_BUTTON_HEIGHT) * stageScale
+        )
+        val enabled = mockCreateAccountCanContinue()
+        val pressed = pressedCreateAccountContinue && enabled
+        val radius = MOCK_FORGOT_PASSWORD_BUTTON_RADIUS * stageScale
+        val fillAlpha = when {
+            pressed -> 100f
+            enabled -> 76f
+            else -> 18f
+        }
+        val strokeAlpha = when {
+            pressed -> 250f
+            enabled -> 224f
+            else -> 118f
+        }
+        formFieldFillPaint.shader = null
+        formFieldFillPaint.color = Color.argb((alpha * fillAlpha).roundToInt(), 255, 255, 255)
+        formFieldStrokePaint.color = Color.argb((alpha * strokeAlpha).roundToInt(), 255, 255, 255)
+        formFieldStrokePaint.strokeWidth = MOCK_FORM_FIELD_STROKE_WIDTH * stageScale
+        canvas.drawRoundRect(tempRect, radius, radius, formFieldFillPaint)
+        canvas.drawRoundRect(tempRect, radius, radius, formFieldStrokePaint)
+
+        formTitlePaint.textSize = MOCK_REMEMBER_ME_TEXT_SIZE * stageScale
+        formTitlePaint.textAlign = Paint.Align.CENTER
+        formTitlePaint.alpha = (alpha.coerceIn(0f, 1f) * if (enabled) 255f else 150f).roundToInt()
+        val metrics = formTitlePaint.fontMetrics
+        val baselineY = tempRect.centerY() - (metrics.ascent + metrics.descent) / 2f
+        val maxTextWidth = MOCK_FORM_WIDTH * stageScale -
+            MOCK_FORM_LABEL_INSET_X * stageScale * 2f
+        val buttonText = if (!isPortraitIntroLayout() || enabled) {
+            MOCK_CREATE_CONTINUE_BUTTON_TEXT
+        } else {
+            MOCK_CREATE_CONTINUE_DISABLED_TEXT
+        }
+        canvas.drawText(
+            trailingFittingText(
+                buttonText,
+                maxTextWidth,
+                formTitlePaint
+            ),
+            tempRect.centerX(),
+            baselineY,
+            formTitlePaint
+        )
+    }
+
+    private fun drawMockCreateAccountValidationWarning(
+        canvas: Canvas,
+        x: Float,
+        buttonY: Float,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float
+    ) {
+        if (!showCreateAccountValidationWarning) return
+        val message = mockCreateAccountValidationMessage() ?: return
+
+        formTitlePaint.textSize = MOCK_CREATE_VALIDATION_TEXT_SIZE * stageScale
+        formTitlePaint.textAlign = Paint.Align.CENTER
+        formTitlePaint.color = MOCK_CREATE_VALIDATION_COLOR
+        formTitlePaint.alpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
+        val maxTextWidth = (MOCK_FORM_WIDTH - MOCK_FORM_LABEL_INSET_X * 2f) * stageScale
+        canvas.drawText(
+            trailingFittingText(message, maxTextWidth, formTitlePaint),
+            stageLeft + (x + MOCK_FORM_WIDTH / 2f) * stageScale,
+            stageTop + (buttonY - MOCK_CREATE_VALIDATION_BASELINE_GAP) * stageScale,
+            formTitlePaint
+        )
+        formTitlePaint.color = Color.WHITE
+        formTitlePaint.alpha = 255
     }
 
     private fun drawMockForgotPasswordButtonShimmer(
@@ -2803,19 +3026,34 @@ internal class CinerificIntroView(context: Context) : View(context) {
         stageScale: Float,
         alpha: Float
     ) {
-        if (usernameText.isEmpty()) return
+        val showPlaceholder =
+            !isPortraitIntroLayout() &&
+                usernameText.isEmpty() &&
+                focusedMockField != MockSignInField.Username
+        if (usernameText.isEmpty() && !showPlaceholder) return
+
+        val displayText = if (showPlaceholder) {
+            MOCK_CREATE_USERNAME_PLACEHOLDER_TEXT
+        } else {
+            usernameText
+        }
+        val displayAlpha = if (showPlaceholder) {
+            alpha * MOCK_CREATE_USERNAME_PLACEHOLDER_ALPHA
+        } else {
+            alpha
+        }
 
         val maxTextWidth =
             (MOCK_FORM_WIDTH - MOCK_CREATE_USERNAME_MAX_WIDTH_INSET * 2f) * stageScale
-        val preferredTextSize = MOCK_CREATE_USERNAME_TEXT_SIZE * stageScale
+        val preferredTextSize = mockCreateUsernameTextSize() * stageScale
         createUsernameFillPaint.textSize = preferredTextSize
-        val preferredTextWidth = createUsernameFillPaint.measureText(usernameText)
+        val preferredTextWidth = createUsernameFillPaint.measureText(displayText)
         val fittedTextSize = if (preferredTextWidth > maxTextWidth && preferredTextWidth > 0f) {
             preferredTextSize * maxTextWidth / preferredTextWidth
         } else {
             preferredTextSize
         }
-        val paintAlpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
+        val paintAlpha = (displayAlpha.coerceIn(0f, 1f) * 255f).roundToInt()
 
         createUsernameStrokePaint.textSize = fittedTextSize
         createUsernameStrokePaint.strokeWidth = MOCK_CREATE_USERNAME_STROKE_WIDTH * stageScale
@@ -2826,12 +3064,12 @@ internal class CinerificIntroView(context: Context) : View(context) {
             MOCK_CREATE_USERNAME_SHADOW_OFFSET_Y * stageScale,
             Color.argb((paintAlpha * 0.25f).roundToInt(), 0, 0, 0)
         )
-        canvas.drawText(usernameText, centerX, baselineY, createUsernameStrokePaint)
+        canvas.drawText(displayText, centerX, baselineY, createUsernameStrokePaint)
         createUsernameStrokePaint.clearShadowLayer()
 
         createUsernameFillPaint.textSize = fittedTextSize
         createUsernameFillPaint.alpha = paintAlpha
-        canvas.drawText(usernameText, centerX, baselineY, createUsernameFillPaint)
+        canvas.drawText(displayText, centerX, baselineY, createUsernameFillPaint)
 
         createUsernameStrokePaint.alpha = 255
         createUsernameFillPaint.alpha = 255
@@ -2839,7 +3077,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun drawMockCreateBirthdayLabel(
         canvas: Canvas,
-        columnX: Float,
+        centerX: Float,
         labelTopY: Float,
         stageLeft: Float,
         stageTop: Float,
@@ -2850,10 +3088,16 @@ internal class CinerificIntroView(context: Context) : View(context) {
         formLabelPaint.alpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
         formLabelPaint.textAlign = Paint.Align.CENTER
         val metrics = formLabelPaint.fontMetrics
+        val baselineY = if (isPortraitIntroLayout()) {
+            stageTop + labelTopY * stageScale - metrics.ascent
+        } else {
+            val centerY = stageTop + (labelTopY + MOCK_FORM_FIELD_HEIGHT / 2f) * stageScale
+            centerY - (metrics.ascent + metrics.descent) / 2f
+        }
         canvas.drawText(
             MOCK_FORM_BIRTHDAY_TEXT,
-            stageLeft + (columnX + MOCK_FORM_WIDTH / 2f) * stageScale,
-            stageTop + labelTopY * stageScale - metrics.ascent,
+            stageLeft + centerX * stageScale,
+            baselineY,
             formLabelPaint
         )
     }
@@ -2978,7 +3222,9 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val chevronInset = mockDropdownChevronInsetX(dropdown) * stageScale
         val displayText = mockDropdownDisplayText(dropdown)
         val membershipIcon = membershipTierArtworkIconForOption(displayText)
-            ?.takeIf { dropdown == MockDropdown.SubscriptionTier }
+            ?.takeIf {
+                dropdown == MockDropdown.SubscriptionTier && isPortraitIntroLayout()
+            }
         val iconLaneWidth = if (membershipIcon != null) {
             (MOCK_MEMBERSHIP_TIER_CONTROL_ICON_SIZE + MOCK_MEMBERSHIP_TIER_ICON_TEXT_GAP) * stageScale
         } else {
@@ -3124,6 +3370,146 @@ internal class CinerificIntroView(context: Context) : View(context) {
         imagePaint.alpha = alpha.coerceIn(0, 255)
         canvas.drawBitmap(bitmap, null, tempIconRect, imagePaint)
         imagePaint.alpha = 255
+    }
+
+    private fun drawMockCreateLandscapeMembershipArtwork(
+        canvas: Canvas,
+        yOffset: Float,
+        focusShiftY: Float,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float
+    ) {
+        if (expandedMockDropdown == MockDropdown.SubscriptionTier) return
+        val bitmap = membershipTierArtworkIconForOption(subscriptionTierText) ?: return
+        val artworkSize = MOCK_MEMBERSHIP_TIER_CONTROL_ICON_SIZE *
+            MOCK_CREATE_LANDSCAPE_MEMBERSHIP_ARTWORK_SCALE * stageScale
+        val bitmapAspect = bitmap.width.toFloat() / bitmap.height.toFloat()
+        val width = if (bitmapAspect >= 1f) artworkSize else artworkSize * bitmapAspect
+        val height = if (bitmapAspect >= 1f) artworkSize / bitmapAspect else artworkSize
+        val centerX = stageLeft +
+            (mockDropdownX(MockDropdown.SubscriptionTier) + MOCK_FORM_WIDTH / 2f) * stageScale
+        val top = stageTop +
+            (mockDropdownY(MockDropdown.SubscriptionTier, yOffset, focusShiftY) +
+                MOCK_FORM_FIELD_HEIGHT +
+                MOCK_CREATE_LANDSCAPE_MEMBERSHIP_ARTWORK_TOP_GAP) * stageScale
+        val bottom = top + height
+        tempIconRect.set(
+            centerX - width / 2f,
+            top,
+            centerX + width / 2f,
+            bottom
+        )
+        imagePaint.alpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
+        canvas.drawBitmap(bitmap, null, tempIconRect, imagePaint)
+        imagePaint.alpha = 255
+    }
+
+    private fun drawMockCreateLandscapeMembershipDetails(
+        canvas: Canvas,
+        yOffset: Float,
+        focusShiftY: Float,
+        stageLeft: Float,
+        stageTop: Float,
+        stageScale: Float,
+        alpha: Float
+    ): Float {
+        val details = mockMembershipTierDetails()
+        val panelLeft = mockCreateLandscapeSecondColumnX()
+        val panelCenterX = panelLeft + MOCK_FORM_WIDTH / 2f
+        val panelTop = mockDropdownY(
+            MockDropdown.SubscriptionTier,
+            yOffset,
+            focusShiftY
+        )
+        val paintAlpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
+
+        formTitlePaint.textSize = MOCK_CREATE_MEMBERSHIP_DETAILS_TITLE_SIZE * stageScale
+        formTitlePaint.textAlign = Paint.Align.LEFT
+        formTitlePaint.color = Color.WHITE
+        formTitlePaint.alpha = paintAlpha
+        val titleMetrics = formTitlePaint.fontMetrics
+        canvas.drawText(
+            details.title,
+            stageLeft + panelLeft * stageScale,
+            stageTop + panelTop * stageScale - titleMetrics.ascent,
+            formTitlePaint
+        )
+
+        val defaultBodyTop = panelTop + MOCK_CREATE_MEMBERSHIP_DETAILS_TITLE_SIZE + 12f
+        formInputPaint.textSize = MOCK_CREATE_MEMBERSHIP_DETAILS_BODY_SIZE * stageScale
+        val bodyBottom = drawMockFormParagraph(
+            canvas = canvas,
+            text = details.description,
+            centerX = panelCenterX,
+            topY = defaultBodyTop,
+            maxWidth = MOCK_FORM_WIDTH,
+            stageLeft = stageLeft,
+            stageTop = stageTop,
+            stageScale = stageScale,
+            alpha = alpha,
+            textSize = MOCK_CREATE_MEMBERSHIP_DETAILS_BODY_SIZE,
+            lineHeight = MOCK_CREATE_MEMBERSHIP_DETAILS_BODY_LINE_HEIGHT,
+            textAlign = Paint.Align.LEFT
+        )
+
+        if (membershipTierArtworkIconForOption(subscriptionTierText) == null) {
+            formInputPaint.alpha = 255
+            formTitlePaint.alpha = 255
+            return bodyBottom
+        }
+
+        val priceLabelTop = bodyBottom + 10f
+        formInputPaint.textSize = MOCK_CREATE_MEMBERSHIP_DETAILS_PRICE_LABEL_SIZE * stageScale
+        formInputPaint.textAlign = Paint.Align.LEFT
+        formInputPaint.alpha = (alpha.coerceIn(0f, 1f) * 190f).roundToInt()
+        val labelMetrics = formInputPaint.fontMetrics
+        canvas.drawText(
+            "MONTHLY PRICE (USD)",
+            stageLeft + panelLeft * stageScale,
+            stageTop + priceLabelTop * stageScale - labelMetrics.ascent,
+            formInputPaint
+        )
+
+        formTitlePaint.textSize = MOCK_CREATE_MEMBERSHIP_DETAILS_PRICE_SIZE * stageScale
+        formTitlePaint.textAlign = Paint.Align.LEFT
+        formTitlePaint.alpha = paintAlpha
+        val priceMetrics = formTitlePaint.fontMetrics
+        canvas.drawText(
+            details.price,
+            stageLeft + panelLeft * stageScale,
+            stageTop + (priceLabelTop + 26f) * stageScale - priceMetrics.ascent,
+            formTitlePaint
+        )
+        formInputPaint.alpha = 255
+        formTitlePaint.alpha = 255
+        return bodyBottom
+    }
+
+    private fun mockMembershipTierDetails(): MockMembershipTierDetails {
+        return when (normalizedMembershipTierSelection(subscriptionTierText)) {
+            MOCK_MEMBERSHIP_BASIC_TEXT -> MockMembershipTierDetails(
+                title = "Basic membership",
+                description = "Essential access for discovering films, building personal watchlists, and joining community conversations. Ideal for casual viewers getting started, browsing confidently, and planning easy movie nights.",
+                price = "FREE"
+            )
+            MOCK_MEMBERSHIP_PRO_TEXT -> MockMembershipTierDetails(
+                title = "Pro membership",
+                description = "Expanded access for dedicated movie lovers, with richer discovery tools, enhanced lists, and more ways to organize favorites, share recommendations, and shape every movie night.",
+                price = "\$9.99 / month"
+            )
+            MOCK_MEMBERSHIP_ROCK_STAR_TEXT -> MockMembershipTierDetails(
+                title = "Rock Star membership",
+                description = "Our complete experience for cinema superfans, combining premium discovery, advanced community features, exclusive ways to participate, and the fullest Cinerific membership available.",
+                price = "\$19.99 / month"
+            )
+            else -> MockMembershipTierDetails(
+                title = "Membership details",
+                description = "Choose a subscription tier to preview its included features, membership benefits, community access, and monthly billing price.",
+                price = "\$--.-- / month"
+            )
+        }
     }
 
     private fun drawMockDropdownScrollbar(
@@ -3334,7 +3720,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         solidProgress: Float,
         gradientProgress: Float
     ) {
-        if (!usesPortraitStackedAuthLayout()) return
+        if (!usesStickyAuthChrome()) return
 
         canvas.save()
         canvas.clipRect(
@@ -3649,7 +4035,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun accountPromptCanOpen(flow: MockAccountFlow): Boolean {
         if (!isFinalFrameSettled() || isMockSignInClosing() || isMockFlowSwitchAnimating()) return false
-        if (usesPortraitStackedAuthLayout()) return false
+        if (usesStickyAuthChrome()) return false
         return mockSignInStartMillis == null || activeMockFlow != flow
     }
 
@@ -3725,6 +4111,30 @@ internal class CinerificIntroView(context: Context) : View(context) {
             mockForgotPasswordButtonY(yOffset, focusShiftY),
             stage,
             mockForgotPasswordFormWidth()
+        )
+    }
+
+    private fun mockCreateAccountContinueHit(x: Float, y: Float): Boolean {
+        if (
+            mockSignInStartMillis == null ||
+            activeMockFlow != MockAccountFlow.CreateAccount ||
+            isMockSignInClosing()
+        ) {
+            return false
+        }
+
+        val baseStage = currentStageMetrics() ?: return false
+        val progress = FastOutSlowInEasing.transform(mockSignInProgress())
+        val yOffset = MOCK_FORM_ENTRY_Y * (1f - progress)
+        val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
+        if (!portraitAuthPointerInViewport(y, baseStage)) return false
+        val stage = mockCreateContentStageMetrics(baseStage, yOffset, focusShiftY)
+        return mockForgotPasswordButtonContains(
+            x,
+            y,
+            mockCreateContinueButtonX(),
+            mockCreateContinueButtonY(yOffset, focusShiftY),
+            stage
         )
     }
 
@@ -3913,8 +4323,9 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun updatePortraitAuthScroll(event: MotionEvent): Boolean {
         if (
-            !isPortraitIntroLayout() ||
+            !usesStickyAuthChrome() ||
             activeMockFlow !in listOf(
+                MockAccountFlow.SignIn,
                 MockAccountFlow.CreateAccount,
                 MockAccountFlow.ForgotPassword
             ) ||
@@ -3927,7 +4338,9 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val deltaY = event.y - portraitAuthScrollStartY
         if (!portraitAuthScrollMoved) {
             if (abs(deltaY) <= touchSlop || abs(deltaY) <= abs(deltaX)) return false
-            if (mockDragReturnEligibleAtTouchDown && deltaY < 0f) return false
+            if (isPortraitIntroLayout() && mockDragReturnEligibleAtTouchDown && deltaY < 0f) {
+                return false
+            }
             mockDragReturnEligibleAtTouchDown = false
             portraitAuthScrollMoved = true
             pressedMockField = null
@@ -3946,7 +4359,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val focusShiftY = mockFormFocusShiftY(FastOutSlowInEasing.transform(mockFormFocusProgress))
         val maxScrollY = when (activeMockFlow) {
             MockAccountFlow.ForgotPassword -> portraitForgotPasswordMaxScrollY(stage, yOffset, focusShiftY)
-            else -> portraitCreateMaxScrollY(stage, yOffset, focusShiftY)
+            MockAccountFlow.CreateAccount -> portraitCreateMaxScrollY(stage, yOffset, focusShiftY)
+            else -> authSignInMaxScrollY(stage, yOffset, focusShiftY)
         }
         portraitAuthScrollY = (portraitAuthScrollStartOffset - deltaY).coerceIn(0f, maxScrollY)
         postInvalidateOnAnimation()
@@ -3969,6 +4383,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun shouldStartMockDragReturn(event: MotionEvent): Boolean {
         if (
+            !isPortraitIntroLayout() ||
             mockDragReturnInProgress ||
             isMockSignInClosing() ||
             !mockDragReturnEligibleAtTouchDown
@@ -3985,7 +4400,6 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun isMockAuthScreenAtBottom(): Boolean {
         if (activeMockFlow == null) return false
-        if (!isPortraitIntroLayout()) return true
 
         val stage = currentStageMetrics() ?: return false
         val progress = FastOutSlowInEasing.transform(mockSignInProgress())
@@ -4000,7 +4414,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 yOffset,
                 focusShiftY
             )
-            MockAccountFlow.SignIn -> 0f
+            MockAccountFlow.SignIn -> authSignInMaxScrollY(stage, yOffset, focusShiftY)
             null -> return false
         }
         return portraitAuthScrollY >= maxScrollY - maxOf(1f, stage.scale)
@@ -4104,7 +4518,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val hitHalfWidth = MOCK_BACK_CHEVRON_HIT_WIDTH * chevronScale * stage.scale / 2f
         val left = center - hitHalfWidth
         val right = center + hitHalfWidth
-        val backStageTop = if (usesPortraitStackedAuthLayout()) {
+        val backStageTop = if (usesStickyAuthChrome()) {
             stage.top
         } else {
             accountPromptStageTop(stage.scale)
@@ -4130,7 +4544,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val originalTopOffset =
             (MOCK_CREATE_AVATAR_LABEL_BASELINE_FROM_TOP + MOCK_CREATE_AVATAR_TOP_GAP) *
                 MOCK_CREATE_AVATAR_STACK_SCALE
-        if (!isPortraitIntroLayout()) return firstFieldY + originalTopOffset
+        if (!isPortraitIntroLayout()) {
+            return firstFieldY + originalTopOffset -
+                MOCK_CREATE_LANDSCAPE_HERO_CENTER_SHIFT_UP
+        }
 
         val titleBottomFromContentTop =
             -mockFormFieldGap() * 2f + MOCK_FORM_TITLE_OPTICAL_BOTTOM_OFFSET
@@ -4241,8 +4658,11 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun mockCreateFormWidth(): Float {
-        return MOCK_CREATE_FORM_COLUMNS * MOCK_FORM_WIDTH +
-            (MOCK_CREATE_FORM_COLUMNS - 1) * MOCK_CREATE_FORM_COLUMN_GAP
+        return if (isPortraitIntroLayout()) {
+            MOCK_FORM_WIDTH
+        } else {
+            MOCK_FORM_WIDTH * 2f + MOCK_CREATE_FORM_COLUMN_GAP
+        }
     }
 
     private fun mockCreateFirstSectionHeight(): Float {
@@ -4261,7 +4681,21 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun mockCreateUsernameBaselineY(firstFieldY: Float): Float {
-        if (!isPortraitIntroLayout()) return firstFieldY + mockCreateAvatarStackHeight()
+        if (!isPortraitIntroLayout()) {
+            val baseBaseline = mockCreateAvatarTopY(firstFieldY) +
+                MOCK_CREATE_AVATAR_SIZE * MOCK_CREATE_AVATAR_STACK_SCALE +
+                MOCK_CREATE_LANDSCAPE_USERNAME_DISPLAY_GAP +
+                MOCK_CREATE_LANDSCAPE_HERO_CENTER_SHIFT_UP
+            createUsernameFillPaint.textSize = MOCK_CREATE_USERNAME_TEXT_SIZE
+            val originalCenterFromBaseline = createUsernameFillPaint.fontMetrics.let {
+                (it.ascent + it.descent) / 2f
+            }
+            createUsernameFillPaint.textSize = mockCreateUsernameTextSize()
+            val scaledCenterFromBaseline = createUsernameFillPaint.fontMetrics.let {
+                (it.ascent + it.descent) / 2f
+            }
+            return baseBaseline + originalCenterFromBaseline - scaledCenterFromBaseline
+        }
 
         createUsernameFillPaint.textSize = MOCK_CREATE_USERNAME_TEXT_SIZE
         val usernameTextTopFromBaseline = createUsernameFillPaint.fontMetrics.ascent
@@ -4283,6 +4717,14 @@ internal class CinerificIntroView(context: Context) : View(context) {
         return lerpFloat(collapsedOffset, expandedOffset, revealMotion)
     }
 
+    private fun mockCreateUsernameTextSize(): Float {
+        return MOCK_CREATE_USERNAME_TEXT_SIZE * if (isPortraitIntroLayout()) {
+            1f
+        } else {
+            MOCK_CREATE_LANDSCAPE_USERNAME_TEXT_SCALE
+        }
+    }
+
     private fun mockCreatePortraitPasswordOffsetY(): Float {
         return mockCreatePortraitUsernameOffsetY() + MOCK_FORM_FIELD_HEIGHT +
             mockFormFieldGap() * 2f
@@ -4290,6 +4732,39 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun mockCreateFormX(): Float {
         return (FIGMA_FRAME_WIDTH - mockCreateFormWidth()) / 2f
+    }
+
+    private fun mockCreateContinueButtonX(): Float {
+        return if (isPortraitIntroLayout()) {
+            mockCreateAvatarColumnX()
+        } else {
+            mockCreatePortraitColumnX()
+        }
+    }
+
+    private fun mockCreateContinueButtonY(yOffset: Float, focusShiftY: Float): Float {
+        if (!isPortraitIntroLayout()) {
+            val finalControlBottomY = maxOf(
+                mockDropdownY(MockDropdown.SubscriptionTier, yOffset, focusShiftY),
+                mockDropdownY(MockDropdown.Year, yOffset, focusShiftY)
+            ) + MOCK_FORM_FIELD_HEIGHT
+            val membershipArtworkBottomY =
+                mockDropdownY(MockDropdown.SubscriptionTier, yOffset, focusShiftY) +
+                    MOCK_FORM_FIELD_HEIGHT +
+                    MOCK_CREATE_LANDSCAPE_MEMBERSHIP_ARTWORK_TOP_GAP +
+                    MOCK_MEMBERSHIP_TIER_CONTROL_ICON_SIZE *
+                    MOCK_CREATE_LANDSCAPE_MEMBERSHIP_ARTWORK_SCALE
+            return maxOf(finalControlBottomY, membershipArtworkBottomY) +
+                MOCK_CREATE_LANDSCAPE_BOTTOM_SECTION_GAP
+        }
+        val finalControlBottomY = maxOf(
+            mockDropdownY(MockDropdown.Year, yOffset, focusShiftY),
+            mockDropdownY(MockDropdown.SubscriptionTier, yOffset, focusShiftY)
+        ) + MOCK_FORM_FIELD_HEIGHT
+        val usernameBottomY = mockCreateUsernameBaselineY(
+            mockCreateAvatarSectionY(yOffset, focusShiftY)
+        ) + MOCK_FORM_LABEL_TEXT_SIZE
+        return maxOf(finalControlBottomY, usernameBottomY) + MOCK_CREATE_CONTINUE_TOP_GAP
     }
 
     private fun mockCreatePortraitColumnX(): Float {
@@ -4301,13 +4776,15 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun usesPortraitStackedAuthLayout(flow: MockAccountFlow? = activeMockFlow): Boolean {
-        return isPortraitIntroLayout() &&
-            mockSignInStartMillis != null &&
-            flow in listOf(
-                MockAccountFlow.SignIn,
-                MockAccountFlow.CreateAccount,
-                MockAccountFlow.ForgotPassword
-            )
+        return isPortraitIntroLayout() && usesStickyAuthChrome(flow)
+    }
+
+    private fun usesStickyAuthChrome(flow: MockAccountFlow? = activeMockFlow): Boolean {
+        return mockSignInStartMillis != null && flow in listOf(
+            MockAccountFlow.SignIn,
+            MockAccountFlow.CreateAccount,
+            MockAccountFlow.ForgotPassword
+        )
     }
 
     private fun mockSignInContentStageMetrics(
@@ -4315,9 +4792,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
         yOffset: Float,
         focusShiftY: Float
     ): StageMetrics {
-        if (!usesPortraitStackedAuthLayout(MockAccountFlow.SignIn) ||
-            activeMockFlow != MockAccountFlow.SignIn
-        ) return stage
+        if (activeMockFlow != MockAccountFlow.SignIn) return stage
+        if (!isPortraitIntroLayout()) {
+            return stage.copy(top = stage.top - portraitAuthScrollY)
+        }
 
         val contentScale = stage.scale * portraitCreateContentScale()
         val centerX = stage.left + FIGMA_FRAME_WIDTH * stage.scale / 2f
@@ -4335,7 +4813,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
         yOffset: Float,
         focusShiftY: Float
     ): StageMetrics {
-        if (!isPortraitIntroLayout() || activeMockFlow != MockAccountFlow.ForgotPassword) return stage
+        if (activeMockFlow != MockAccountFlow.ForgotPassword) return stage
+        if (!isPortraitIntroLayout()) {
+            return stage.copy(top = stage.top - portraitAuthScrollY)
+        }
 
         val contentScale = stage.scale * portraitCreateContentScale()
         val centerX = stage.left + FIGMA_FRAME_WIDTH * stage.scale / 2f
@@ -4356,7 +4837,11 @@ internal class CinerificIntroView(context: Context) : View(context) {
             null -> null
         }
         if (title != null) {
-            val titleTextSize = ACCOUNT_PROMPT_TEXT_SIZE * PORTRAIT_ACTION_SCALE * stage.scale
+            val titleTextSize = if (isPortraitIntroLayout()) {
+                ACCOUNT_PROMPT_TEXT_SIZE * PORTRAIT_ACTION_SCALE * stage.scale
+            } else {
+                MOCK_FORM_TITLE_TEXT_SIZE * stage.scale
+            }
             val titleBaseline = mockFormTitleTargetBaseline(
                 title,
                 mockPrimaryFormY(),
@@ -4365,23 +4850,42 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 titleTextSize
             )
             formTitlePaint.textSize = titleTextSize
+            val contentScale = if (isPortraitIntroLayout()) portraitCreateContentScale() else 1f
+            val titleToViewportGap = if (
+                activeMockFlow == MockAccountFlow.CreateAccount && !isPortraitIntroLayout()
+            ) {
+                MOCK_FORM_TITLE_OPTICAL_BOTTOM_OFFSET
+            } else {
+                mockFormFieldGap()
+            }
             return titleBaseline + formTitlePaint.fontMetrics.descent +
-                mockFormFieldGap() * stage.scale * portraitCreateContentScale()
+                titleToViewportGap * stage.scale * contentScale
         }
         return stage.top +
             (portraitLogoVisibleBottom() + MOCK_CREATE_PORTRAIT_VIEWPORT_GAP) * stage.scale
     }
 
+    private fun authTitleClipTopPx(stage: StageMetrics): Float {
+        return if (isPortraitIntroLayout()) {
+            stage.top + portraitLogoVisibleBottom() * stage.scale
+        } else {
+            0f
+        }
+    }
+
     private fun portraitAuthViewportBottomPx(stage: StageMetrics): Float {
-        val stickyBottomHeight =
+        val stickyBottomHeight = if (isPortraitIntroLayout()) {
             MOCK_CREATE_PORTRAIT_VIEWPORT_BOTTOM_RESERVE *
                 MOCK_PORTRAIT_STICKY_BOTTOM_SCALE * stage.scale
+        } else {
+            MOCK_LANDSCAPE_STICKY_BOTTOM_RESERVE * stage.scale
+        }
         return height - systemBarInsetBottomPx -
             stickyBottomHeight * portraitStickyBottomMotion()
     }
 
     private fun portraitAuthPointerInViewport(y: Float, stage: StageMetrics): Boolean {
-        return !isPortraitIntroLayout() ||
+        return !usesStickyAuthChrome() ||
             y in portraitAuthViewportTopPx(stage)..portraitAuthViewportBottomPx(stage)
     }
 
@@ -4390,7 +4894,9 @@ internal class CinerificIntroView(context: Context) : View(context) {
         yOffset: Float,
         focusShiftY: Float
     ): StageMetrics {
-        if (!isPortraitIntroLayout()) return stage
+        if (!isPortraitIntroLayout()) {
+            return stage.copy(top = stage.top - portraitAuthScrollY)
+        }
 
         val contentScale = stage.scale * portraitCreateContentScale()
         val centerX = stage.left + FIGMA_FRAME_WIDTH * stage.scale / 2f
@@ -4408,19 +4914,19 @@ internal class CinerificIntroView(context: Context) : View(context) {
         yOffset: Float,
         focusShiftY: Float
     ): Float {
-        if (!isPortraitIntroLayout()) return 0f
         val contentStage = mockCreateContentStageMetrics(stage, yOffset, focusShiftY)
         val avatarSectionY = mockCreateAvatarSectionY(yOffset, focusShiftY)
         val avatarBottomY = mockCreateAvatarBounds(
             mockCreateAvatarColumnX(),
             avatarSectionY
         ).let { it.y + it.h }
-        val finalControlBottomY = mockDropdownY(
-            MockDropdown.Year,
-            yOffset,
-            focusShiftY
+        val finalControlBottomY = maxOf(
+            mockDropdownY(MockDropdown.Year, yOffset, focusShiftY),
+            mockDropdownY(MockDropdown.SubscriptionTier, yOffset, focusShiftY)
         ) + MOCK_FORM_FIELD_HEIGHT
-        val contentBottomY = maxOf(avatarBottomY, finalControlBottomY)
+        val continueButtonBottomY = mockCreateContinueButtonY(yOffset, focusShiftY) +
+            MOCK_FORGOT_PASSWORD_BUTTON_HEIGHT
+        val contentBottomY = maxOf(avatarBottomY, finalControlBottomY, continueButtonBottomY)
         val contentBottom = contentStage.top + contentBottomY * contentStage.scale +
             MOCK_CREATE_PORTRAIT_CONTENT_BOTTOM_GAP * stage.scale + portraitAuthScrollY
         return (contentBottom - portraitAuthViewportBottomPx(stage)).coerceAtLeast(0f)
@@ -4431,10 +4937,24 @@ internal class CinerificIntroView(context: Context) : View(context) {
         yOffset: Float,
         focusShiftY: Float
     ): Float {
-        if (!isPortraitIntroLayout()) return 0f
         val contentStage = mockForgotPasswordContentStageMetrics(stage, yOffset, focusShiftY)
         val helpBottomY = mockForgotPasswordHelpBottomY(yOffset, focusShiftY)
         val contentBottom = contentStage.top + helpBottomY * contentStage.scale +
+            MOCK_CREATE_PORTRAIT_CONTENT_BOTTOM_GAP * stage.scale + portraitAuthScrollY
+        return (contentBottom - portraitAuthViewportBottomPx(stage)).coerceAtLeast(0f)
+    }
+
+    private fun authSignInMaxScrollY(
+        stage: StageMetrics,
+        yOffset: Float,
+        focusShiftY: Float
+    ): Float {
+        val contentStage = mockSignInContentStageMetrics(stage, yOffset, focusShiftY)
+        val passwordY = mockPrimaryFormY() + yOffset +
+            MOCK_FORM_FIELD_HEIGHT + mockFormFieldGap()
+        val contentBottomY = passwordY + MOCK_FORM_FIELD_HEIGHT +
+            MOCK_REMEMBER_ME_TOP_GAP + MOCK_REMEMBER_ME_BOX_SIZE + focusShiftY
+        val contentBottom = contentStage.top + contentBottomY * contentStage.scale +
             MOCK_CREATE_PORTRAIT_CONTENT_BOTTOM_GAP * stage.scale + portraitAuthScrollY
         return (contentBottom - portraitAuthViewportBottomPx(stage)).coerceAtLeast(0f)
     }
@@ -4452,17 +4972,69 @@ internal class CinerificIntroView(context: Context) : View(context) {
         return if (isPortraitIntroLayout()) {
             mockPrimaryFormY() + yOffset + focusShiftY
         } else {
-            mockPrimaryFormY() + yOffset + focusShiftY
+            val avatarTopOffset =
+                (MOCK_CREATE_AVATAR_LABEL_BASELINE_FROM_TOP + MOCK_CREATE_AVATAR_TOP_GAP) *
+                    MOCK_CREATE_AVATAR_STACK_SCALE
+            mockPrimaryFormY() + yOffset + focusShiftY - avatarTopOffset -
+                MOCK_CREATE_LANDSCAPE_AVATAR_SHIFT_UP
         }
+    }
+
+    private fun mockCreateLandscapeFormTopY(yOffset: Float, focusShiftY: Float): Float {
+        val avatarSectionY = mockCreateAvatarSectionY(yOffset, focusShiftY)
+        return mockCreateUsernameBaselineY(avatarSectionY) + MOCK_CREATE_LANDSCAPE_ROW_GAP
+    }
+
+    private fun mockCreateLandscapeHeadingBaselineY(
+        yOffset: Float,
+        focusShiftY: Float
+    ): Float {
+        val avatarSectionY = mockCreateAvatarSectionY(yOffset, focusShiftY)
+        val avatarBounds = mockCreateAvatarBounds(
+            mockCreateAvatarColumnX(),
+            avatarSectionY
+        )
+        val avatarCenterY = avatarBounds.y + avatarBounds.h / 2f
+        formTitlePaint.textSize = MOCK_CREATE_LANDSCAPE_HEADING_TEXT_SIZE
+        val textPath = Path()
+        val textBounds = RectF()
+        var blockTop = Float.MAX_VALUE
+        var blockBottom = -Float.MAX_VALUE
+        MOCK_CREATE_LANDSCAPE_HEADING_TEXT.split('\n').forEachIndexed { index, line ->
+            textPath.reset()
+            formTitlePaint.getTextPath(line, 0, line.length, 0f, 0f, textPath)
+            textPath.computeBounds(textBounds, true)
+            val lineOffsetY = index * MOCK_CREATE_LANDSCAPE_HEADING_LINE_HEIGHT
+            blockTop = minOf(blockTop, textBounds.top + lineOffsetY)
+            blockBottom = maxOf(blockBottom, textBounds.bottom + lineOffsetY)
+        }
+        val headlineCenterFromFirstBaseline = (blockTop + blockBottom) / 2f
+        return avatarCenterY - headlineCenterFromFirstBaseline
+    }
+
+    private fun mockCreateLandscapeUsernameFieldY(
+        yOffset: Float,
+        focusShiftY: Float
+    ): Float {
+        val avatarSectionY = mockCreateAvatarSectionY(yOffset, focusShiftY)
+        val usernameBaselineY = mockCreateUsernameBaselineY(avatarSectionY)
+        createUsernameFillPaint.textSize = mockCreateUsernameTextSize()
+        val metrics = createUsernameFillPaint.fontMetrics
+        val usernameVisualCenterY = usernameBaselineY +
+            (metrics.ascent + metrics.descent) / 2f
+        return usernameVisualCenterY - MOCK_FORM_FIELD_HEIGHT / 2f
     }
 
     private fun mockCreateAvatarColumnX(): Float {
         return if (isPortraitIntroLayout()) {
             mockCreatePortraitColumnX()
         } else {
-            mockCreateFormX() +
-                (MOCK_CREATE_FORM_COLUMNS - 1) * (MOCK_FORM_WIDTH + MOCK_CREATE_FORM_COLUMN_GAP)
+            mockCreateLandscapeSecondColumnX()
         }
+    }
+
+    private fun mockCreateLandscapeSecondColumnX(): Float {
+        return mockCreateFormX() + MOCK_FORM_WIDTH + MOCK_CREATE_FORM_COLUMN_GAP
     }
 
     private fun mockForgotPasswordFormX(): Float {
@@ -4615,7 +5187,11 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun activeMockFields(): List<MockSignInField> {
         return when (activeMockFlow) {
-            MockAccountFlow.CreateAccount -> MOCK_CREATE_ACCOUNT_FIELDS
+            MockAccountFlow.CreateAccount -> if (isPortraitIntroLayout()) {
+                MOCK_CREATE_ACCOUNT_FIELDS
+            } else {
+                MOCK_CREATE_ACCOUNT_LANDSCAPE_FIELDS
+            }
             MockAccountFlow.ForgotPassword -> MOCK_FORGOT_PASSWORD_FIELDS
             else -> MOCK_SIGN_IN_FIELDS
         }
@@ -4629,13 +5205,14 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val middleColumnX = if (isPortraitIntroLayout()) {
             mockCreatePortraitColumnX()
         } else {
-            mockCreateFormX() + MOCK_FORM_WIDTH + MOCK_CREATE_FORM_COLUMN_GAP
+            mockCreateLandscapeSecondColumnX()
         }
         return when (field) {
             MockSignInField.Username,
             MockSignInField.Password,
             MockSignInField.ConfirmPassword -> firstColumnX
-            MockSignInField.Email -> middleColumnX
+            MockSignInField.Email,
+            MockSignInField.ConfirmEmail -> middleColumnX
             MockSignInField.Month -> middleColumnX
             MockSignInField.Day -> middleColumnX + MOCK_DATE_MONTH_WIDTH + MOCK_DATE_FIELD_GAP
             MockSignInField.Year -> middleColumnX + MOCK_DATE_MONTH_WIDTH + MOCK_DATE_DAY_WIDTH + MOCK_DATE_FIELD_GAP * 2f
@@ -4645,6 +5222,13 @@ internal class CinerificIntroView(context: Context) : View(context) {
     private fun mockActiveFieldY(field: MockSignInField, yOffset: Float, focusShiftY: Float): Float {
         if (activeMockFlow == MockAccountFlow.ForgotPassword) {
             return mockForgotPasswordFieldY(yOffset, focusShiftY)
+        }
+        if (
+            activeMockFlow == MockAccountFlow.CreateAccount &&
+            !isPortraitIntroLayout() &&
+            field == MockSignInField.Username
+        ) {
+            return mockCreateLandscapeUsernameFieldY(yOffset, focusShiftY)
         }
 
         val usesSecondSection = activeMockFlow == MockAccountFlow.CreateAccount &&
@@ -4657,6 +5241,10 @@ internal class CinerificIntroView(context: Context) : View(context) {
             )
         val sectionTop = if (usesSecondSection) {
             mockCreateSecondSectionY(yOffset, focusShiftY)
+        } else if (
+            activeMockFlow == MockAccountFlow.CreateAccount && !isPortraitIntroLayout()
+        ) {
+            mockCreateLandscapeFormTopY(yOffset, focusShiftY)
         } else {
             mockPrimaryFormY() + yOffset + focusShiftY
         }
@@ -4667,17 +5255,26 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 } else {
                     0f
                 }
-                MockSignInField.Email -> 0f
+                MockSignInField.Email -> if (isPortraitIntroLayout()) {
+                    0f
+                } else {
+                    MOCK_CREATE_LANDSCAPE_PRIMARY_ROW_SHIFT_DOWN
+                }
+                MockSignInField.ConfirmEmail -> if (isPortraitIntroLayout()) {
+                    0f
+                } else {
+                    mockCreateLandscapeRowOffset(1)
+                }
                 MockSignInField.Password -> if (isPortraitIntroLayout()) {
                     mockCreatePortraitPasswordOffsetY()
                 } else {
-                    MOCK_FORM_FIELD_HEIGHT + mockFormFieldGap() * 2f
+                    MOCK_CREATE_LANDSCAPE_PRIMARY_ROW_SHIFT_DOWN
                 }
                 MockSignInField.ConfirmPassword -> if (isPortraitIntroLayout()) {
                     mockCreatePortraitPasswordOffsetY() +
                         MOCK_FORM_FIELD_HEIGHT + mockFormFieldGap()
                 } else {
-                    MOCK_FORM_FIELD_HEIGHT * 2f + mockFormFieldGap() * 3f
+                    mockCreateLandscapeRowOffset(1)
                 }
                 MockSignInField.Month,
                 MockSignInField.Day,
@@ -4688,6 +5285,11 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 (MOCK_FORM_FIELD_HEIGHT + mockFormFieldGap())
         }
         return sectionTop + fieldOffsetY
+    }
+
+    private fun mockCreateLandscapeRowOffset(row: Int): Float {
+        return row.coerceAtLeast(0) *
+            (MOCK_FORM_FIELD_HEIGHT + MOCK_CREATE_LANDSCAPE_ROW_GAP)
     }
 
     private fun mockActiveFieldWidth(field: MockSignInField): Float {
@@ -4710,12 +5312,28 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun mockBackChevronRowTopY(): Float {
-        if (usesPortraitStackedAuthLayout()) {
-            val stickyBottomHeight =
+        if (usesStickyAuthChrome()) {
+            val stickyBottomHeight = if (isPortraitIntroLayout()) {
                 MOCK_CREATE_PORTRAIT_VIEWPORT_BOTTOM_RESERVE * MOCK_PORTRAIT_STICKY_BOTTOM_SCALE
-            val chevronHeight =
-                MOCK_BACK_CHEVRON_HEIGHT * MOCK_PORTRAIT_STICKY_BOTTOM_CHEVRON_SCALE
-            val settledTop = portraitSafeBottom() - stickyBottomHeight +
+            } else {
+                MOCK_LANDSCAPE_STICKY_BOTTOM_RESERVE
+            }
+            val chevronHeight = MOCK_BACK_CHEVRON_HEIGHT * if (isPortraitIntroLayout()) {
+                MOCK_PORTRAIT_STICKY_BOTTOM_CHEVRON_SCALE
+            } else {
+                1f
+            }
+            val safeBottom = if (isPortraitIntroLayout()) {
+                portraitSafeBottom()
+            } else {
+                val stage = currentStageMetrics()
+                if (stage == null) {
+                    FIGMA_FRAME_HEIGHT
+                } else {
+                    (height - systemBarInsetBottomPx - stage.top) / stage.scale
+                }
+            }
+            val settledTop = safeBottom - stickyBottomHeight +
                 (stickyBottomHeight - chevronHeight) / 2f
             return settledTop + stickyBottomHeight * (1f - portraitStickyBottomMotion())
         }
@@ -4724,7 +5342,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun portraitStickyBottomMotion(): Float {
-        if (!usesPortraitStackedAuthLayout()) return 0f
+        if (!usesStickyAuthChrome()) return 0f
         return FastOutSlowInEasing.transform(mockSignInProgress()).coerceIn(0f, 1f)
     }
 
@@ -4737,13 +5355,22 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun mockDropdownX(dropdown: MockDropdown): Float {
+        val firstColumnX = if (isPortraitIntroLayout()) {
+            mockCreatePortraitColumnX()
+        } else {
+            mockCreateFormX()
+        }
         val middleColumnX = if (isPortraitIntroLayout()) {
             mockCreatePortraitColumnX()
         } else {
             mockCreateFormX() + MOCK_FORM_WIDTH + MOCK_CREATE_FORM_COLUMN_GAP
         }
         return when (dropdown) {
-            MockDropdown.SubscriptionTier -> middleColumnX
+            MockDropdown.SubscriptionTier -> if (isPortraitIntroLayout()) {
+                middleColumnX
+            } else {
+                firstColumnX
+            }
             MockDropdown.Month -> middleColumnX
             MockDropdown.Day -> middleColumnX + MOCK_DATE_MONTH_WIDTH + MOCK_DATE_FIELD_GAP
             MockDropdown.Year -> middleColumnX + MOCK_DATE_MONTH_WIDTH + MOCK_DATE_DAY_WIDTH + MOCK_DATE_FIELD_GAP * 2f
@@ -4752,7 +5379,11 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun mockDropdownY(dropdown: MockDropdown, yOffset: Float, focusShiftY: Float): Float {
         val dropdownOffsetY = when (dropdown) {
-            MockDropdown.SubscriptionTier -> MOCK_FORM_FIELD_HEIGHT + mockFormFieldGap() * 2f
+            MockDropdown.SubscriptionTier -> if (isPortraitIntroLayout()) {
+                MOCK_FORM_FIELD_HEIGHT + mockFormFieldGap() * 2f
+            } else {
+                mockCreateLandscapeRowOffset(3)
+            }
             MockDropdown.Month,
             MockDropdown.Day,
             MockDropdown.Year -> mockCreateDateRowOffsetY()
@@ -4760,7 +5391,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val sectionTop = if (isPortraitIntroLayout()) {
             mockCreateSecondSectionY(yOffset, focusShiftY)
         } else {
-            mockPrimaryFormY() + yOffset + focusShiftY
+            mockCreateLandscapeFormTopY(yOffset, focusShiftY)
         }
         return sectionTop + dropdownOffsetY
     }
@@ -4769,13 +5400,12 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val sectionTop = if (isPortraitIntroLayout()) {
             mockCreateSecondSectionY(yOffset, focusShiftY)
         } else {
-            mockPrimaryFormY() + yOffset + focusShiftY
+            mockCreateLandscapeFormTopY(yOffset, focusShiftY)
         }
         val labelOffsetY = if (isPortraitIntroLayout()) {
             MOCK_FORM_FIELD_HEIGHT * 2f + mockFormFieldGap() * 3f
         } else {
-            MOCK_FORM_FIELD_HEIGHT * 2f + mockFormFieldGap() * 2f +
-                (mockFormFieldGap() - MOCK_CREATE_BIRTHDAY_LABEL_HEIGHT) / 2f
+            mockCreateLandscapeRowOffset(2)
         }
         return sectionTop + labelOffsetY
     }
@@ -4786,7 +5416,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             dateRowOffsetY + MOCK_CREATE_BIRTHDAY_LABEL_HEIGHT +
                 MOCK_CREATE_BIRTHDAY_LABEL_TO_FIELDS_GAP
         } else {
-            dateRowOffsetY
+            mockCreateLandscapeRowOffset(2)
         }
     }
 
@@ -4796,6 +5426,14 @@ internal class CinerificIntroView(context: Context) : View(context) {
             MockDropdown.Month -> MOCK_DATE_MONTH_WIDTH
             MockDropdown.Day -> MOCK_DATE_DAY_WIDTH
             MockDropdown.Year -> MOCK_DATE_YEAR_WIDTH
+        }
+    }
+
+    private fun mockCreateBirthdayCenterX(): Float {
+        return if (isPortraitIntroLayout()) {
+            mockCreatePortraitColumnX() + MOCK_FORM_WIDTH / 2f
+        } else {
+            mockCreateFormX() + MOCK_FORM_WIDTH / 2f
         }
     }
 
@@ -5008,6 +5646,36 @@ internal class CinerificIntroView(context: Context) : View(context) {
             emailText.trim().isNotEmpty()
     }
 
+    private fun mockCreateAccountCanContinue(): Boolean {
+        return activeMockFlow == MockAccountFlow.CreateAccount &&
+            mockCreateAccountValidationMessage() == null
+    }
+
+    private fun mockCreateAccountValidationMessage(): String? {
+        val normalizedEmail = emailText.trim()
+        return when {
+            usernameText.trim().length < 3 -> "Username needs at least 3 characters"
+            passwordText.length < 8 -> "Password needs at least 8 characters"
+            passwordText != confirmPasswordText -> "Passwords do not match"
+            !normalizedEmail.contains('@') ||
+                !normalizedEmail.substringAfterLast('@', "").contains('.') -> {
+                "Enter a valid email address"
+            }
+            !isPortraitIntroLayout() && confirmEmailText.trim() != normalizedEmail -> {
+                "Email addresses do not match"
+            }
+            subscriptionTierText == MOCK_FORM_SUBSCRIPTION_TIER_TEXT -> {
+                "Select a subscription tier"
+            }
+            monthText == MOCK_FORM_MONTH_TEXT ||
+                dayText == MOCK_FORM_DAY_TEXT ||
+                yearText == MOCK_FORM_YEAR_TEXT -> {
+                "Select your complete birthday"
+            }
+            else -> null
+        }
+    }
+
     private fun startMockForgotPasswordSubmission() {
         if (!mockForgotPasswordCanSubmit()) {
             postInvalidateOnAnimation()
@@ -5052,6 +5720,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun resetMockForgotPasswordSubmission() {
         pressedForgotPasswordSubmit = false
+        pressedCreateAccountContinue = false
         forgotPasswordSubmissionState = MockForgotPasswordSubmissionState.Idle
         forgotPasswordSubmissionStartMillis = null
         notifyIntroSnapshotChanged()
@@ -5379,6 +6048,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun mockLogoFocusShiftY(): Float {
+        if (usesStickyAuthChrome()) return 0f
         return if (width > height) {
             val liftMotion = FastOutSlowInEasing.transform(mockLandscapeInputLiftProgress)
             -(LOGO_FINAL_TOP + LOGO_FINAL_HEIGHT + 64f) * liftMotion
@@ -5405,6 +6075,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             MockSignInField.Password -> MOCK_FORM_PASSWORD_TEXT
             MockSignInField.ConfirmPassword -> MOCK_FORM_CONFIRM_PASSWORD_TEXT
             MockSignInField.Email -> MOCK_FORM_EMAIL_TEXT
+            MockSignInField.ConfirmEmail -> MOCK_FORM_CONFIRM_EMAIL_TEXT
             MockSignInField.Month -> MOCK_FORM_MONTH_TEXT
             MockSignInField.Day -> MOCK_FORM_DAY_TEXT
             MockSignInField.Year -> MOCK_FORM_YEAR_TEXT
@@ -5417,6 +6088,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             MockSignInField.Password -> passwordText
             MockSignInField.ConfirmPassword -> confirmPasswordText
             MockSignInField.Email -> emailText
+            MockSignInField.ConfirmEmail -> confirmEmailText
             MockSignInField.Month -> monthText
             MockSignInField.Day -> dayText
             MockSignInField.Year -> yearText
@@ -5429,6 +6101,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             MockSignInField.Password -> "*".repeat(passwordText.length)
             MockSignInField.ConfirmPassword -> "*".repeat(confirmPasswordText.length)
             MockSignInField.Email -> emailText
+            MockSignInField.ConfirmEmail -> confirmEmailText
             MockSignInField.Month -> monthText
             MockSignInField.Day -> dayText
             MockSignInField.Year -> yearText
@@ -5443,6 +6116,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             MockSignInField.Password -> passwordText = limitedText
             MockSignInField.ConfirmPassword -> confirmPasswordText = limitedText
             MockSignInField.Email -> emailText = limitedText
+            MockSignInField.ConfirmEmail -> confirmEmailText = limitedText
             MockSignInField.Month -> monthText = limitedText
             MockSignInField.Day -> dayText = limitedText
             MockSignInField.Year -> yearText = limitedText
@@ -5788,7 +6462,9 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun accountPromptCreateCenterX(): Float {
-        return mockCreateFormX() + MOCK_FORM_WIDTH / 2f
+        val originalThreeColumnWidth = MOCK_CREATE_FORM_COLUMNS * MOCK_FORM_WIDTH +
+            (MOCK_CREATE_FORM_COLUMNS - 1) * MOCK_CREATE_FORM_COLUMN_GAP
+        return (FIGMA_FRAME_WIDTH - originalThreeColumnWidth) / 2f + MOCK_FORM_WIDTH / 2f
     }
 
     private fun accountPromptForgotCenterX(): Float {
@@ -5807,6 +6483,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             passwordText = passwordText,
             confirmPasswordText = confirmPasswordText,
             emailText = emailText,
+            confirmEmailText = confirmEmailText,
             monthText = monthText,
             dayText = dayText,
             yearText = yearText,
@@ -5857,10 +6534,13 @@ internal class CinerificIntroView(context: Context) : View(context) {
         pressedMockDropdownOption = null
         pressedForgotRecoveryTarget = null
         pressedForgotPasswordSubmit = false
+        pressedCreateAccountContinue = false
+        showCreateAccountValidationWarning = false
         resetMockCreateAvatarCarousel()
         if (flow == MockAccountFlow.ForgotPassword) {
             forgotRecoveryTarget = MockForgotRecoveryTarget.Password
             emailText = ""
+            confirmEmailText = ""
             resetMockForgotPasswordSubmission()
         }
         outgoingMockFlow = previousFlow
@@ -5890,6 +6570,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val currentProgress = mockSignInProgress()
         portraitAuthScrollY = 0f
         portraitAuthScrollMoved = false
+        showCreateAccountValidationWarning = false
         activeMockFlow = MockAccountFlow.CreateAccount
         mockSignInStartMillis = SystemClock.uptimeMillis()
         mockSignInTransitionStartProgress = currentProgress
@@ -5906,6 +6587,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         activeMockFlow = MockAccountFlow.ForgotPassword
         forgotRecoveryTarget = MockForgotRecoveryTarget.Password
         emailText = ""
+        confirmEmailText = ""
         resetMockForgotPasswordSubmission()
         mockSignInStartMillis = SystemClock.uptimeMillis()
         mockSignInTransitionStartProgress = currentProgress
@@ -5925,6 +6607,8 @@ internal class CinerificIntroView(context: Context) : View(context) {
         pressedMockDropdownOption = null
         pressedForgotRecoveryTarget = null
         pressedForgotPasswordSubmit = false
+        pressedCreateAccountContinue = false
+        showCreateAccountValidationWarning = false
         activeMockDropdownScroll = null
         mockDropdownScrollMoved = false
         portraitAuthScrollY = 0f
@@ -5935,6 +6619,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         passwordText = ""
         confirmPasswordText = ""
         emailText = ""
+        confirmEmailText = ""
         monthText = MOCK_FORM_MONTH_TEXT
         dayText = MOCK_FORM_DAY_TEXT
         yearText = MOCK_FORM_YEAR_TEXT
@@ -6024,6 +6709,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             pressedMockDropdownOption = null
             pressedForgotRecoveryTarget = null
             pressedForgotPasswordSubmit = false
+            pressedCreateAccountContinue = false
             activeMockDropdownScroll = null
             mockDropdownScrollMoved = false
             mockDragReturnInProgress = false
@@ -6100,6 +6786,7 @@ internal data class CinerificIntroSnapshot(
     val passwordText: String = "",
     val confirmPasswordText: String = "",
     val emailText: String = "",
+    val confirmEmailText: String = "",
     val monthText: String = MOCK_FORM_MONTH_TEXT,
     val dayText: String = MOCK_FORM_DAY_TEXT,
     val yearText: String = MOCK_FORM_YEAR_TEXT,
@@ -6122,6 +6809,7 @@ private enum class MockSignInField {
     Password,
     ConfirmPassword,
     Email,
+    ConfirmEmail,
     Month,
     Day,
     Year
@@ -6182,6 +6870,12 @@ private data class MockDropdownOption(
     val option: String
 )
 
+private data class MockMembershipTierDetails(
+    val title: String,
+    val description: String,
+    val price: String
+)
+
 private data class ForgotRecoverySelectorLayout(
     val labelX: Float,
     val usernameBoxX: Float,
@@ -6199,6 +6893,14 @@ private val MOCK_CREATE_ACCOUNT_FIELDS = listOf(
     MockSignInField.Password,
     MockSignInField.ConfirmPassword,
     MockSignInField.Email
+)
+
+private val MOCK_CREATE_ACCOUNT_LANDSCAPE_FIELDS = listOf(
+    MockSignInField.Username,
+    MockSignInField.Password,
+    MockSignInField.Email,
+    MockSignInField.ConfirmPassword,
+    MockSignInField.ConfirmEmail
 )
 
 private val MOCK_FORGOT_PASSWORD_FIELDS = listOf(

@@ -163,6 +163,7 @@ fun CinerificApp() {
     var introView by remember { mutableStateOf<CinerificIntroView?>(null) }
     var welcomeInputBlockedUntilMillis by remember { mutableStateOf(0L) }
     var signOutLoadingVisible by remember { mutableStateOf(false) }
+    var showCreateAccountContinuation by rememberSaveable { mutableStateOf(false) }
 
     fun selectProfile(profile: CinerificProfile) {
         if (SystemClock.uptimeMillis() < welcomeInputBlockedUntilMillis) return
@@ -173,7 +174,15 @@ fun CinerificApp() {
         showHome = true
     }
 
-    BackHandler(enabled = !showHome && introSnapshot.activeFlowName.isNotBlank()) {
+    BackHandler(enabled = showCreateAccountContinuation) {
+        showCreateAccountContinuation = false
+    }
+
+    BackHandler(
+        enabled = !showHome &&
+            !showCreateAccountContinuation &&
+            introSnapshot.activeFlowName.isNotBlank()
+    ) {
         introView?.handleSystemBack()
     }
 
@@ -190,6 +199,7 @@ fun CinerificApp() {
                     }
                     restoreIntroSnapshot(introSnapshot)
                     onAvatarSelected = ::selectProfile
+                    onCreateAccountContinue = { showCreateAccountContinuation = true }
                 }
             },
             update = { view ->
@@ -200,8 +210,34 @@ fun CinerificApp() {
                 }
                 view.restoreIntroSnapshot(introSnapshot)
                 view.onAvatarSelected = ::selectProfile
+                view.onCreateAccountContinue = { showCreateAccountContinuation = true }
             }
         )
+
+        if (showCreateAccountContinuation) {
+            CinerificCreateAccountContinuation(
+                draft = CinerificCreateAccountDraft(
+                    username = introSnapshot.usernameText,
+                    email = introSnapshot.emailText,
+                    birthday = listOf(
+                        introSnapshot.monthText,
+                        introSnapshot.dayText,
+                        introSnapshot.yearText
+                    ).joinToString(" "),
+                    membershipTier = introSnapshot.subscriptionTierText,
+                    profile = listOf(
+                        CinerificProfile.Steve,
+                        CinerificProfile.Martin,
+                        CinerificProfile.Janny
+                    ).getOrElse(introSnapshot.createAvatarIndex) { CinerificProfile.Steve }
+                ),
+                onBackToDetails = { showCreateAccountContinuation = false },
+                onAccountCreated = { profile ->
+                    showCreateAccountContinuation = false
+                    selectProfile(profile)
+                }
+            )
+        }
 
         if (isTablet && !showHome && introSnapshot.activeFlowName.isBlank()) {
             CinerificTabletIntroAccountActions(
@@ -1745,7 +1781,8 @@ private val CinerificIntroSnapshotSaver = listSaver<CinerificIntroSnapshot, Any>
             snapshot.forgotPasswordSubmissionStateName,
             snapshot.rememberMeChecked,
             snapshot.createAvatarIndex,
-            snapshot.portraitProfileIndex
+            snapshot.portraitProfileIndex,
+            snapshot.confirmEmailText
         )
     },
     restore = { values ->
@@ -1763,7 +1800,8 @@ private val CinerificIntroSnapshotSaver = listSaver<CinerificIntroSnapshot, Any>
             forgotPasswordSubmissionStateName = values.getOrNull(10) as? String ?: "Idle",
             rememberMeChecked = values.getOrNull(11) as? Boolean ?: false,
             createAvatarIndex = values.getOrNull(12) as? Int ?: 0,
-            portraitProfileIndex = values.getOrNull(13) as? Int ?: 0
+            portraitProfileIndex = values.getOrNull(13) as? Int ?: 0,
+            confirmEmailText = values.getOrNull(14) as? String ?: ""
         )
     }
 )
