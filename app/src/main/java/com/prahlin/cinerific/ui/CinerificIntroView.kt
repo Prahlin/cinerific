@@ -88,6 +88,7 @@ private const val PORTRAIT_PROFILE_SWIPE_HIT_HORIZONTAL_PADDING = 72f
 private const val PORTRAIT_PROFILE_SWIPE_HIT_BOTTOM_PADDING = 28f
 private const val SIGN_IN_PORTRAIT_STACK_SHIFT_Y = -51f
 private const val SIGN_IN_LANDSCAPE_STACK_SHIFT_Y = -61f
+private const val PHONE_LANDSCAPE_WELCOME_ASSET_SCALE = 1.2f
 private const val SIGN_IN_NAME_TOP = 655f
 private const val SIGN_IN_LANDSCAPE_ACCOUNT_PROMPT_EXTRA_SHIFT_Y = -36f
 private const val ACCOUNT_PROMPT_CREATE_TEXT = "Create My Account"
@@ -1369,14 +1370,22 @@ internal class CinerificIntroView(context: Context) : View(context) {
         )
 
         if (logoEntry >= 0.999f) {
-            drawFigmaBitmap(canvas, logoCombined, lerpBounds(base, final, finalProgress), stageLeft, stageTop, stageScale, alpha)
+            drawFigmaBitmap(
+                canvas,
+                logoCombined,
+                phoneLandscapeWelcomeBounds(lerpBounds(base, final, finalProgress)),
+                stageLeft,
+                stageTop,
+                stageScale,
+                alpha
+            )
             return
         }
 
         val simpleEntry = lerpBounds(Bounds(447f, 1037f, 300f, 214f), base, logoEntry)
         val eyesEntry = lerpBounds(Bounds(453f, -417f, 300f, 214f), base, logoEntry)
-        drawFigmaBitmap(canvas, logoSimple, lerpBounds(simpleEntry, final, finalProgress), stageLeft, stageTop, stageScale, alpha)
-        drawFigmaBitmap(canvas, logoEyes, lerpBounds(eyesEntry, final, finalProgress), stageLeft, stageTop, stageScale, alpha)
+        drawFigmaBitmap(canvas, logoSimple, phoneLandscapeWelcomeBounds(lerpBounds(simpleEntry, final, finalProgress)), stageLeft, stageTop, stageScale, alpha)
+        drawFigmaBitmap(canvas, logoEyes, phoneLandscapeWelcomeBounds(lerpBounds(eyesEntry, final, finalProgress)), stageLeft, stageTop, stageScale, alpha)
     }
 
     private fun drawPortraitProfile(
@@ -1427,15 +1436,15 @@ internal class CinerificIntroView(context: Context) : View(context) {
         }
 
         val stackShiftY = signInStackShiftY()
-        drawFigmaBitmap(canvas, steveAvatar, Bounds(152f, 450f + stackShiftY + yOffset, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stage.left, stage.top, stage.scale, alpha)
-        drawFigmaBitmap(canvas, martinAvatar, Bounds(390f, 450f + stackShiftY + yOffset, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stage.left, stage.top, stage.scale, alpha)
-        drawFigmaBitmap(canvas, jannyAvatar, Bounds(628f, 454f + stackShiftY + yOffset, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stage.left, stage.top, stage.scale, alpha)
-        drawFigmaBitmap(canvas, guestAvatar, Bounds(866f, 450f + stackShiftY + yOffset, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE), stage.left, stage.top, stage.scale, alpha)
+        drawFigmaBitmap(canvas, steveAvatar, phoneLandscapeWelcomeBounds(Bounds(152f, 450f + stackShiftY + yOffset, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE)), stage.left, stage.top, stage.scale, alpha)
+        drawFigmaBitmap(canvas, martinAvatar, phoneLandscapeWelcomeBounds(Bounds(390f, 450f + stackShiftY + yOffset, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE)), stage.left, stage.top, stage.scale, alpha)
+        drawFigmaBitmap(canvas, jannyAvatar, phoneLandscapeWelcomeBounds(Bounds(628f, 454f + stackShiftY + yOffset, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE)), stage.left, stage.top, stage.scale, alpha)
+        drawFigmaBitmap(canvas, guestAvatar, phoneLandscapeWelcomeBounds(Bounds(866f, 450f + stackShiftY + yOffset, SIGN_IN_AVATAR_SIZE, SIGN_IN_AVATAR_SIZE)), stage.left, stage.top, stage.scale, alpha)
 
-        drawFigmaBitmap(canvas, steveName, Bounds(130f, SIGN_IN_NAME_TOP + stackShiftY + yOffset, 220f, 72f), stage.left, stage.top, stage.scale, alpha)
-        drawFigmaBitmap(canvas, martinName, Bounds(368f, SIGN_IN_NAME_TOP + stackShiftY + yOffset, 220f, 72f), stage.left, stage.top, stage.scale, alpha)
-        drawFigmaBitmap(canvas, jannyName, Bounds(606f, SIGN_IN_NAME_TOP + stackShiftY + yOffset, 220f, 72f), stage.left, stage.top, stage.scale, alpha)
-        drawFigmaBitmap(canvas, guestName, Bounds(854f, SIGN_IN_NAME_TOP + stackShiftY + yOffset, 200f, 72f), stage.left, stage.top, stage.scale, alpha)
+        drawFigmaBitmap(canvas, steveName, phoneLandscapeWelcomeBounds(Bounds(130f, SIGN_IN_NAME_TOP + stackShiftY + yOffset, 220f, 72f)), stage.left, stage.top, stage.scale, alpha)
+        drawFigmaBitmap(canvas, martinName, phoneLandscapeWelcomeBounds(Bounds(368f, SIGN_IN_NAME_TOP + stackShiftY + yOffset, 220f, 72f)), stage.left, stage.top, stage.scale, alpha)
+        drawFigmaBitmap(canvas, jannyName, phoneLandscapeWelcomeBounds(Bounds(606f, SIGN_IN_NAME_TOP + stackShiftY + yOffset, 220f, 72f)), stage.left, stage.top, stage.scale, alpha)
+        drawFigmaBitmap(canvas, guestName, phoneLandscapeWelcomeBounds(Bounds(854f, SIGN_IN_NAME_TOP + stackShiftY + yOffset, 200f, 72f)), stage.left, stage.top, stage.scale, alpha)
     }
 
 
@@ -1575,7 +1584,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             signInAccountPromptTextSize(),
             ACCOUNT_PROMPT_TEXT_SIZE * PORTRAIT_ACTION_SCALE,
             portraitAmount
-        ) * stageScale
+        ) * phoneLandscapeWelcomeAssetScale() * stageScale
         val paintAlpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
         accountPromptPaint.textSize = textSize
         formTitlePaint.textSize = textSize
@@ -1583,8 +1592,9 @@ internal class CinerificIntroView(context: Context) : View(context) {
         formTitlePaint.alpha = paintAlpha
 
         val accountPromptShiftY = if (isLandscape) SIGN_IN_LANDSCAPE_ACCOUNT_PROMPT_EXTRA_SHIFT_Y else 0f
-        val standardCenterY = stageTop +
-            (ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + accountPromptShiftY + yOffset) * stageScale
+        val standardCenterY = stageTop + phoneLandscapeWelcomeY(
+            ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + accountPromptShiftY + yOffset
+        ) * stageScale
         val secondaryMetrics = accountPromptPaint.fontMetrics
         val primaryMetrics = formTitlePaint.fontMetrics
         fun promptCenterY(portraitCenterY: Float): Float = lerpFloat(
@@ -2963,7 +2973,9 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val source = FINAL_AVATAR_TARGETS[
             mockCreateAvatarIndex.coerceIn(0, MOCK_CREATE_AVATAR_COUNT - 1)
         ].bounds
-        return Bounds(source.x, source.y + signInStackShiftY(), source.w, source.h)
+        return phoneLandscapeWelcomeBounds(
+            Bounds(source.x, source.y + signInStackShiftY(), source.w, source.h)
+        )
     }
 
     private fun drawWelcomeAvatarRelatedAssetsForCreateTransition(
@@ -3009,11 +3021,13 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 drawFigmaBitmap(
                     canvas,
                     avatarBitmaps[index],
-                    Bounds(
-                        target.bounds.x,
-                        target.bounds.y + stackShiftY + exitY,
-                        target.bounds.w,
-                        target.bounds.h
+                    phoneLandscapeWelcomeBounds(
+                        Bounds(
+                            target.bounds.x,
+                            target.bounds.y + stackShiftY + exitY,
+                            target.bounds.w,
+                            target.bounds.h
+                        )
                     ),
                     stage.left,
                     stage.top,
@@ -3024,11 +3038,13 @@ internal class CinerificIntroView(context: Context) : View(context) {
             drawFigmaBitmap(
                 canvas,
                 nameBitmaps[index],
-                Bounds(
-                    target.bounds.x - if (index == 3) 12f else 22f,
-                    SIGN_IN_NAME_TOP + stackShiftY + exitY,
-                    nameWidths[index],
-                    72f
+                phoneLandscapeWelcomeBounds(
+                    Bounds(
+                        target.bounds.x - if (index == 3) 12f else 22f,
+                        SIGN_IN_NAME_TOP + stackShiftY + exitY,
+                        nameWidths[index],
+                        72f
+                    )
                 ),
                 stage.left,
                 stage.top,
@@ -4021,9 +4037,16 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
         val stackShiftY = signInStackShiftY()
         return FINAL_AVATAR_TARGETS.firstOrNull { target ->
-            val bounds = target.bounds
+            val bounds = phoneLandscapeWelcomeBounds(
+                Bounds(
+                    target.bounds.x,
+                    target.bounds.y + stackShiftY,
+                    target.bounds.w,
+                    target.bounds.h
+                )
+            )
             val centerX = stage.left + (bounds.x + bounds.w / 2f) * stage.scale
-            val centerY = stage.top + (bounds.y + stackShiftY + bounds.h / 2f) * stage.scale
+            val centerY = stage.top + (bounds.y + bounds.h / 2f) * stage.scale
             val radius = min(bounds.w, bounds.h) * stage.scale / 2f
             val dx = x - centerX
             val dy = y - centerY
@@ -4043,10 +4066,12 @@ internal class CinerificIntroView(context: Context) : View(context) {
             )
         }
         val centerX = stage.left + accountPromptCreateCenterX() * stage.scale
-        val centerY = accountPromptStageTop(stage.scale) +
-            (ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + signInAccountPromptExtraShiftY()) * stage.scale
-        val halfWidth = ACCOUNT_PROMPT_CREATE_HIT_WIDTH * stage.scale / 2f
-        val halfHeight = ACCOUNT_PROMPT_CREATE_HIT_HEIGHT * stage.scale / 2f
+        val centerY = accountPromptStageTop(stage.scale) + phoneLandscapeWelcomeY(
+            ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + signInAccountPromptExtraShiftY()
+        ) * stage.scale
+        val assetScale = phoneLandscapeWelcomeAssetScale()
+        val halfWidth = ACCOUNT_PROMPT_CREATE_HIT_WIDTH * assetScale * stage.scale / 2f
+        val halfHeight = ACCOUNT_PROMPT_CREATE_HIT_HEIGHT * assetScale * stage.scale / 2f
         return x in (centerX - halfWidth)..(centerX + halfWidth) &&
             y in (centerY - halfHeight)..(centerY + halfHeight)
     }
@@ -4063,10 +4088,12 @@ internal class CinerificIntroView(context: Context) : View(context) {
             )
         }
         val centerX = stage.left + ACCOUNT_PROMPT_SIGN_IN_CENTER_X * stage.scale
-        val centerY = accountPromptStageTop(stage.scale) +
-            (ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + signInAccountPromptExtraShiftY()) * stage.scale
-        val halfWidth = ACCOUNT_PROMPT_SIGN_IN_HIT_WIDTH * stage.scale / 2f
-        val halfHeight = ACCOUNT_PROMPT_SIGN_IN_HIT_HEIGHT * stage.scale / 2f
+        val centerY = accountPromptStageTop(stage.scale) + phoneLandscapeWelcomeY(
+            ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + signInAccountPromptExtraShiftY()
+        ) * stage.scale
+        val assetScale = phoneLandscapeWelcomeAssetScale()
+        val halfWidth = ACCOUNT_PROMPT_SIGN_IN_HIT_WIDTH * assetScale * stage.scale / 2f
+        val halfHeight = ACCOUNT_PROMPT_SIGN_IN_HIT_HEIGHT * assetScale * stage.scale / 2f
         return x in (centerX - halfWidth)..(centerX + halfWidth) &&
             y in (centerY - halfHeight)..(centerY + halfHeight)
     }
@@ -4083,10 +4110,12 @@ internal class CinerificIntroView(context: Context) : View(context) {
             )
         }
         val centerX = stage.left + accountPromptForgotCenterX() * stage.scale
-        val centerY = accountPromptStageTop(stage.scale) +
-            (ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + signInAccountPromptExtraShiftY()) * stage.scale
-        val halfWidth = ACCOUNT_PROMPT_FORGOT_HIT_WIDTH * stage.scale / 2f
-        val halfHeight = ACCOUNT_PROMPT_FORGOT_HIT_HEIGHT * stage.scale / 2f
+        val centerY = accountPromptStageTop(stage.scale) + phoneLandscapeWelcomeY(
+            ACCOUNT_PROMPT_CENTER_Y + signInStackShiftY() + signInAccountPromptExtraShiftY()
+        ) * stage.scale
+        val assetScale = phoneLandscapeWelcomeAssetScale()
+        val halfWidth = ACCOUNT_PROMPT_FORGOT_HIT_WIDTH * assetScale * stage.scale / 2f
+        val halfHeight = ACCOUNT_PROMPT_FORGOT_HIT_HEIGHT * assetScale * stage.scale / 2f
         return x in (centerX - halfWidth)..(centerX + halfWidth) &&
             y in (centerY - halfHeight)..(centerY + halfHeight)
     }
@@ -6696,6 +6725,45 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun signInAccountPromptExtraShiftY(): Float {
         return if (width > height) SIGN_IN_LANDSCAPE_ACCOUNT_PROMPT_EXTRA_SHIFT_Y else 0f
+    }
+
+    private fun isPhoneLandscapeWelcomeLayout(): Boolean {
+        return width > height &&
+            !isCinerificTablet(resources.configuration.smallestScreenWidthDp)
+    }
+
+    private fun phoneLandscapeWelcomeAssetScale(): Float {
+        return if (isPhoneLandscapeWelcomeLayout()) {
+            lerpFloat(
+                PHONE_LANDSCAPE_WELCOME_ASSET_SCALE,
+                1f,
+                landscapeAuthMotion()
+            )
+        } else {
+            1f
+        }
+    }
+
+    private fun phoneLandscapeWelcomeY(y: Float): Float {
+        val scale = phoneLandscapeWelcomeAssetScale()
+        val frameCenterY = FIGMA_FRAME_HEIGHT / 2f
+        return frameCenterY + (y - frameCenterY) * scale
+    }
+
+    private fun phoneLandscapeWelcomeBounds(bounds: Bounds): Bounds {
+        val scale = phoneLandscapeWelcomeAssetScale()
+        if (scale == 1f) return bounds
+
+        val centerX = bounds.x + bounds.w / 2f
+        val centerY = phoneLandscapeWelcomeY(bounds.y + bounds.h / 2f)
+        val scaledWidth = bounds.w * scale
+        val scaledHeight = bounds.h * scale
+        return Bounds(
+            x = centerX - scaledWidth / 2f,
+            y = centerY - scaledHeight / 2f,
+            w = scaledWidth,
+            h = scaledHeight
+        )
     }
 
     private fun accountPromptCreateCenterX(): Float {
