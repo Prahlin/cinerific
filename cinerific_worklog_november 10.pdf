@@ -1,0 +1,418 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R 11 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 10686 >>
+stream
+BT /F2 11.20 Tf 1 0 0 1 36.00 764.00 Tm (Cinerific Android App Work Log - November 10, 2026 \(U.S. EST\)) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 744.00 Tm (Compiled summary for Tuesday, November 10, 2026 \(U.S. Eastern Time\) - focus: resuming the post-November-5 landscape authentication) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 733.75 Tm (pass, restoring the Android and ADB runtime across three Samsung phones, a Galaxy Tab A tablet, and two Cinerific AVDs, enlarging and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 723.50 Tm (rebalancing the phone-landscape Welcome composition, stabilizing its return transitions, scaling Create My Account independently for) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 713.25 Tm (tablets and phones, rebuilding the landscape Birthday row and dropdown behavior, correcting phone keyboard presentation, protecting) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 703.00 Tm (short A3-class screens from lower-chevron collisions, validating the same APK across physical devices, and recording the completed work) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 692.75 Tm (in two commits.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 679.50 Tm (Generated in continuity with the established Cinerific worklog cadence from July 12 through November 5: compact opening summary,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 669.25 Tm (source-material review, baseline state, goals, themed work-completed sections, validation, files touched, follow-up context, and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 659.00 Tm (output-artifact close. No November 10 PDF existed before this pass, so this artifact uses the first-log-of-the-day filename without a) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 648.75 Tm (part suffix. Eastern Time was verified live as Tuesday, November 10, 2026 in EST, UTC-05:00. This report records commits e322942 and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 638.50 Tm (db1e9b8 through current HEAD db1e9b8, plus the refreshed project snapshot generated during this documentation pass.) Tj ET
+BT /F2 8.95 Tf 1 0 0 1 36.00 620.85 Tm (Source Materials Reviewed) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 609.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 609.60 Tm (Reviewed all 33 pre-existing Cinerific worklog PDFs at the repository root, spanning July 12 through November 5 and including every) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 599.35 Tm (same-day continuation artifact.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 588.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 588.60 Tm (Extracted the worklog corpus with pdftotext, checked every document with pdfinfo, and compared each title, opening scope, recurring) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 578.35 Tm (heading sequence, technical density, validation language, file inventory, follow-up guidance, and output-artifact close.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 567.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 567.60 Tm (Confirmed the uninterrupted four-page U.S.-Letter convention. The current format uses PDF 1.4, Helvetica and Helvetica-Bold,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 557.35 Tm (extractable text, repeated page titles, right-aligned page footers, and OpenAI Codex authoring metadata.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 546.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 546.60 Tm (Read the November 5 report in full as the direct baseline so this artifact covers only the later November 10 device setup,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 536.35 Tm (Welcome-screen work, and landscape Create Account refinements.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 525.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 525.60 Tm (Ran read_project.sh and reviewed the refreshed cinerific_PROJECT_SNAPSHOT.txt, current source tree, Git state, both November) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 515.35 Tm (10 commits, their complete messages and statistics, and the final CinerificIntroView implementation.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 504.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 504.60 Tm (Reviewed Gradle build output, ADB device identities and authorization states, APK deployment commands, physical-device screenshots,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 494.35 Tm (emulator configuration changes, and the final short-screen versus tall-phone layout checks from the active session.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 483.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 483.60 Tm (Compared the two November 10 commit bodies with their source diffs instead of treating the final commit summary as a substitute) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 473.35 Tm (for the intermediate Welcome, Birthday, keyboard, dropdown, and device-protection decisions.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 462.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 462.60 Tm (Reviewed the phone-landscape detection helper, stage-scale calculation, first-appearance offset conversion, landscape form anchoring,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 452.35 Tm (date-field sizing, popup option placement, and IME editor flags in CinerificIntroView.kt.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 441.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 441.60 Tm (Used the active session chronology to include non-source work that the Git diff cannot show: hub diagnosis, USB cable verification,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 431.35 Tm (Samsung authorization, emulator startup, custom-skin removal, APK deployment, and screenshot comparison.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 420.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 420.60 Tm (Verified the repository date against UTC-05:00 rather than relying only on the filename request or host calendar; November 10, 2026) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 410.35 Tm (is the seasonally correct U.S. Eastern Standard Time date.) Tj ET
+BT /F2 8.95 Tf 1 0 0 1 36.00 395.20 Tm (Baseline Status Before November 10 Work) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 383.95 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 383.95 Tm (The November 5 account-creation continuation, validation, membership presentation, sticky landscape chrome, and portrait-protected) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 373.70 Tm (layout were already committed and documented.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 362.95 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 362.95 Tm (Phone landscape Welcome still left avoidable lower-screen whitespace and rendered its logo, avatars, names, and route links smaller) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 352.70 Tm (than the available viewport supported.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 341.95 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 341.95 Tm (Returning from Create Account, Sign In, or Forgot Password could briefly place the Welcome route links too high, allowing them to) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 331.70 Tm (overlap the Broadway profile-name artwork before settling.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 320.95 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 320.95 Tm (Landscape Birthday controls still used the earlier Month/Day/Year geometry and narrow abbreviated Month label instead of aligning) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 310.70 Tm (cleanly with the two-column form system.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 299.95 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 299.95 Tm (Phone text fields could request Android's extract/fullscreen editor presentation, producing a blank overlay instead of the normal) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 289.70 Tm (keyboard behavior already accepted on tablets.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 278.95 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 278.95 Tm (The Birthday row did not yet use a common individual width across Month, Day, and Year, and its internal text and chevron insets were) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 268.70 Tm (visually tighter than the surrounding input fields.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 257.95 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 257.95 Tm (Date popups used a fixed smaller option font and narrow scrollbar even after the controls themselves had been enlarged, weakening) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 247.70 Tm (hierarchy and perceived actionability.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 236.95 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 236.95 Tm (The enlarged phone first-impression stack exposed a second responsive problem: a shared downward correction that cleared the profile) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 226.70 Tm (bubble on tall phones could push the A3 Username field into the bottom chevron zone.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 215.95 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 215.95 Tm (Runtime coverage was fragmented at the start of the session because USB enumeration, RSA authorization, Android USB ownership,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 205.70 Tm (AVD state, and the Small emulator window treatment each required separate recovery.) Tj ET
+BT /F2 8.95 Tf 1 0 0 1 36.00 190.55 Tm (Main Goals for November 10) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 179.30 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 179.30 Tm (Use the extra phone-landscape space without changing portrait or the accepted tablet Welcome composition.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 168.55 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 168.55 Tm (Make Create Account landscape assets intentionally device-responsive while keeping the form reachable and avoiding clipping at both) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 158.30 Tm (the top profile bubble and bottom chevron.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 147.55 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 147.55 Tm (Standardize Birthday controls, dropdown typography, option capacity, padding, chevrons, and action cues across supported devices.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 136.80 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 136.80 Tm (Restore dependable USB/ADB and emulator coverage so the same build could be inspected on short, tall, phone, and tablet targets.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 126.05 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 126.05 Tm (Keep the Welcome main screen, portrait authentication layouts, account-continuation flow, membership presentation, and existing) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 115.80 Tm (tablet behavior outside the scope of phone-only corrections.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 105.05 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 105.05 Tm (Treat touch targets, text insets, strokes, carets, option rows, and scroll indicators as part of each scale change instead of enlarging) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 94.80 Tm (artwork alone.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 84.05 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 84.05 Tm (Leave the application in a buildable, deployable state with clear Git checkpoints and a refreshed source snapshot for the next session.) Tj ET
+BT /F1 7.80 Tf 1 0 0 1 370.77 18.00 Tm (Cinerific Work Log - November 10, 2026 \(U.S. EST\) Page 1) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 9263 >>
+stream
+BT /F2 11.20 Tf 1 0 0 1 36.00 764.00 Tm (Cinerific Android App Work Log - November 10, 2026 \(U.S. EST\)) Tj ET
+BT /F2 8.95 Tf 1 0 0 1 36.00 739.60 Tm (Work Completed - USB Hub, Cable, and ADB Diagnosis) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 728.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 728.35 Tm (Inspected macOS USB and ADB state repeatedly while the user changed cables and ports, distinguishing a power-capable connection) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 718.10 Tm (from an enumerated USB data path.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 707.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 707.35 Tm (Identified the pictured Plugable seven-port USB 3.0/USB-C charging hub as data-capable when its upstream host connection is used,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 697.10 Tm (while clarifying that charging ports or a downstream-to-downstream cable path cannot expose the hub to macOS.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 686.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 686.35 Tm (Confirmed that a cable advertising power and data is only one part of the path: the hub's host/upstream port, included USB-C adapter,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 676.10 Tm (macOS enumeration, Android USB mode, and device authorization must all be correct.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 665.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 665.35 Tm (Directed the Mac connection to the hub's attached or included USB-C host adapter rather than an arbitrary charging port, matching) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 655.10 Tm (the product's USB 3.0/USB-C dual-host design.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 644.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 644.35 Tm (Used direct-device tests to separate cable capability from hub-path problems: a phone that enumerates directly proves the cable data) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 634.10 Tm (pair, while failure only through the hub points back to the upstream port, adapter, power state, or hub hardware.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 623.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 623.35 Tm (Guided the Samsung devices through Developer options, USB debugging, USB controlled by Connected device, the Allow USB debugging) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 613.10 Tm (prompt, and RSA authorization instead of treating an enabled debugging toggle as proof that ADB was authorized.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 602.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 602.35 Tm (Clarified the A3 Developer options path through About phone and Software information, then used its USB debugging and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 592.10 Tm (connection-mode controls to bring the older handset into the same ADB workflow as the newer phones.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 581.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 581.35 Tm (Rechecked adb devices after each cable, authorization, and USB-control change so an unauthorized serial, an offline transport, and a) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 571.10 Tm (fully available device were not conflated.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 560.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 560.35 Tm (Identified and worked with the Galaxy A3 SM-A320FL, Galaxy S20 SM-G988U1, Galaxy S21 FE SM-G990U, and Galaxy Tab A SM-T580) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 550.10 Tm (as the physical QA targets available during the session.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 539.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 539.35 Tm (Confirmed the A3 cable carried data after the phone became visible to ADB, shifting the remaining troubleshooting away from the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 529.10 Tm (cable claim and toward authorization and connection state.) Tj ET
+BT /F2 8.95 Tf 1 0 0 1 36.00 513.95 Tm (Work Completed - Physical Devices and Emulator Runtime) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 502.70 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 502.70 Tm (Installed and launched Cinerific on the connected Samsung phones and tablet as authorization became available, force-stopping stale app) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 492.45 Tm (processes before relaunches so screenshots reflected the current APK.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 481.70 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 481.70 Tm (Booted Cinerific on the S20 and S21 during the physical-device setup, then launched the same package on the Galaxy Tab A when its USB) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 471.45 Tm (path became available.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 460.70 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 460.70 Tm (Confirmed the Cinerific Standard, Small, and Large AVD inventory, then booted the Small AVD as a standalone emulator alongside) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 450.45 Tm (Standard for responsive Android QA.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 439.70 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 439.70 Tm (Kept the Small AVD independent from Standard so its process, window, and app state could be moved or restarted without replacing) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 429.45 Tm (the established tablet reference.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 418.70 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 418.70 Tm (Removed the Small AVD's custom skin and corner rounding after the frameless window lacked a normal repositionable toolbar,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 408.45 Tm (preserving a standard desktop window surface for future runs.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 397.70 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 397.70 Tm (Recorded the frameless/no-rounded-corner choice as the preferred Small AVD state going forward rather than treating it as a) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 387.45 Tm (one-time launch workaround.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 376.70 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 376.70 Tm (Restored the Cinerific Standard AVD after it was unintentionally shut down and relaunched the app so tablet-landscape comparisons) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 366.45 Tm (could continue.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 355.70 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 355.70 Tm (Used the physical Galaxy A3, S20, and S21 plus the Standard tablet AVD to compare short and tall phone landscapes against the tablet) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 345.45 Tm (layout without relying on a single emulator profile.) Tj ET
+BT /F2 8.95 Tf 1 0 0 1 36.00 330.30 Tm (Work Completed - Phone Landscape Welcome) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 319.05 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 319.05 Tm (Created commit e322942, Improved the phone landscape welcome layout, as the first November 10 source checkpoint.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 308.30 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 308.30 Tm (Increased the phone-landscape Welcome logo, four profile bubbles, Broadway names, and account-route actions to 120 percent of their) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 298.05 Tm (prior size while leaving portrait and tablet Welcome geometry unchanged.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 287.30 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 287.30 Tm (Reached the final Welcome scale through live 10-, 15-, and 20-percent review steps, using the physical phones to judge remaining) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 277.05 Tm (whitespace rather than locking the first acceptable increment.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 266.30 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 266.30 Tm (Redistributed the scaled Welcome stack around the vertical center, reducing the awkward unused lower gap without forcing the action) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 256.05 Tm (links into the bottom system-navigation region.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 245.30 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 245.30 Tm (Scaled the avatar and route-action touch targets with their visible geometry so the larger presentation remained accurately tappable.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 234.55 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 234.55 Tm (Returned the Welcome assets to their normal transition scale once an authentication route begins, preventing the landscape-only) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 224.30 Tm (enlargement from leaking into Create Account, Sign In, or Forgot Password.) Tj ET
+BT /F2 8.95 Tf 1 0 0 1 36.00 209.15 Tm (Work Completed - Welcome Return Transition) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 197.90 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 197.90 Tm (Changed the phone-landscape sign-in stack exit behavior so Welcome assets move and fade with the active authentication transition) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 187.65 Tm (instead of briefly retaining stale vertical placement.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 176.90 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 176.90 Tm (Protected Create My Account, Sign In, and Forgot Password links from overlapping the Broadway name artwork when navigating back) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 166.65 Tm (to Welcome, eliminating the visible high-position jump before the screen resettled.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 155.90 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 155.90 Tm (Kept the correction scoped to phone landscape and preserved the existing return behavior on portrait phones and tablets.) Tj ET
+BT /F1 7.80 Tf 1 0 0 1 370.77 18.00 Tm (Cinerific Work Log - November 10, 2026 \(U.S. EST\) Page 2) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 10 0 R >>
+endobj
+10 0 obj
+<< /Length 9235 >>
+stream
+BT /F2 11.20 Tf 1 0 0 1 36.00 764.00 Tm (Cinerific Android App Work Log - November 10, 2026 \(U.S. EST\)) Tj ET
+BT /F2 8.95 Tf 1 0 0 1 36.00 739.60 Tm (Work Completed - Responsive Landscape Create Account Scale) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 728.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 728.35 Tm (Created commit db1e9b8, Refined landscape onboarding layouts and input behavior, as the second November 10 source checkpoint.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 717.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 717.60 Tm (Separated the former shared landscape first-impression scale into device-class values: 1.15 for landscape tablets and 1.60 for) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 707.35 Tm (landscape phones.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 696.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 696.60 Tm (Reached the final values through an initial shared five-percent enlargement followed by three additional phone-only fifteen-percent) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 686.35 Tm (passes, preserving the accepted tablet result while continuing the phone review.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 675.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 675.60 Tm (Applied the device-aware scale consistently to the headline, avatar and arrows, Username field, Broadway-name preview,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 665.35 Tm (password/email rows, Birthday controls, Subscription Tier treatment, strokes, labels, carets, and relevant hit geometry.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 654.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 654.60 Tm (Centralized the landscape scale decision in mockCreateLandscapeFirstImpressionScale so later geometry calculations draw from the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 644.35 Tm (same phone-versus-tablet contract.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 633.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 633.60 Tm (Generalized the existing phone-landscape Welcome test into isPhoneLandscapeLayout and retained a Welcome-specific wrapper,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 623.35 Tm (allowing authentication code to share device classification without changing call-site meaning.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 612.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 612.60 Tm (Preserved the tablet-landscape result after its accepted five-percent increase while allowing the more spacious phone landscape) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 602.35 Tm (composition to receive the larger staged increases requested during live review.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 591.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 591.60 Tm (Kept the lower landscape form anchor independent from the visual first-appearance offset so profile-bubble clipping could be fixed) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 581.35 Tm (without dragging every later form row toward the chevron.) Tj ET
+BT /F2 8.95 Tf 1 0 0 1 36.00 566.20 Tm (Work Completed - Birthday Row Reconstruction) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 554.95 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 554.95 Tm (Moved the Month dropdown beside the Birthday label in the left form column and aligned its right edge with the visible right edge of) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 544.70 Tm (that column.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 533.95 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 533.95 Tm (Split Day and Year evenly across the right column, using the protected inter-column gap between them and sizing the combined pair to) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 523.70 Tm (match the width of the right-hand email column.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 512.95 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 512.95 Tm (Calculated each landscape date-field width from the rendered column width and the protected gap instead of reusing the narrow) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 502.70 Tm (portrait Month, Day, and Year constants.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 491.95 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 491.95 Tm (Made Month the same individual width as Day and Year while retaining its right-edge placement, then replaced the abbreviated Mon) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 481.70 Tm (placeholder with the full Month label.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 470.95 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 470.95 Tm (Recentered the Birthday label within the remaining left-column space before Month so the label and control behave as one balanced) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 460.70 Tm (stack rather than competing for the same centerline.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 449.95 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 449.95 Tm (Matched left text padding to the other form inputs and mirrored that visual inset on the dropdown chevrons' right edges.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 439.20 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 439.20 Tm (Applied the same landscape Birthday principle to tablets and phones while retaining the established portrait arrangement.) Tj ET
+BT /F2 8.95 Tf 1 0 0 1 36.00 424.05 Tm (Work Completed - Dropdown Popup Behavior) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 412.80 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 412.80 Tm (Reworked the date dropdown viewport through the requested three-value experiment and final five-value result, allowing up to five) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 402.55 Tm (options while growing the popup upward to avoid lower-screen crowding.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 391.80 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 391.80 Tm (Changed the popup's date-option origin to derive from the active control and visible option count, allowing the list to expand upward) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 381.55 Tm (consistently across Month, Day, and Year.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 370.80 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 370.80 Tm (Matched option typography to the Month, Day, and Year control text and to the broader input-field font scale instead of retaining the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 360.55 Tm (smaller dedicated option font.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 349.80 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 349.80 Tm (Applied the revised landscape text inset to popup options and doubled the scrollbar width from 3.5 to 7 design units to make the list's) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 339.55 Tm (scroll action more apparent.) Tj ET
+BT /F2 8.95 Tf 1 0 0 1 36.00 324.40 Tm (Work Completed - Phone Keyboard Presentation) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 313.15 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 313.15 Tm (Added IME_FLAG_NO_EXTRACT_UI and IME_FLAG_NO_FULLSCREEN to authentication field editor options while preserving Next and) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 302.90 Tm (Done actions.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 292.15 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 292.15 Tm (Applied the keyboard correction at the shared input-connection layer so every authentication text field receives the same phone-safe) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 281.90 Tm (editor behavior rather than patching individual forms.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 271.15 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 271.15 Tm (Prevented Android phones from replacing the expected keyboard with a blank fullscreen editor overlay, bringing phone behavior into line) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 260.90 Tm (with the accepted tablet interaction.) Tj ET
+BT /F2 8.95 Tf 1 0 0 1 36.00 245.75 Tm (Work Completed - Short-Screen First Appearance Protection) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 234.50 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 234.50 Tm (Added a physical-pixel-aware phone-landscape first-appearance offset so enlarged profile artwork remains below the invisible top) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 224.25 Tm (clipping boundary without moving the lower form stack.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 213.50 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 213.50 Tm (Converted the requested screen-pixel movement back through the active stage scale, keeping a five-, ten-, twenty-five-, or) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 203.25 Tm (forty-pixel visual correction consistent across different framebuffer densities.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 192.50 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 192.50 Tm (Used a 40-pixel downward offset on taller phone landscapes after 5- and 10-pixel tests still clipped the profile bubble, then verified) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 182.25 Tm (the full rounded top on the S20 and S21 class layouts.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 171.50 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 171.50 Tm (Added a compact-screen branch for A3-class landscapes using a 25-pixel offset, effectively moving the first-impression stack 15) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 161.25 Tm (pixels upward from the tall-phone position so Username clears the bottom chevron while the profile bubble remains intact.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 150.50 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 150.50 Tm (Classified compact phone landscapes by stage scale below 1.0 instead of hardcoding the A3 model name, allowing similarly short future) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 140.25 Tm (devices to receive the protected offset automatically.) Tj ET
+BT /F1 7.80 Tf 1 0 0 1 370.77 18.00 Tm (Cinerific Work Log - November 10, 2026 \(U.S. EST\) Page 3) Tj ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 12 0 R >>
+endobj
+12 0 obj
+<< /Length 9522 >>
+stream
+BT /F2 11.20 Tf 1 0 0 1 36.00 764.00 Tm (Cinerific Android App Work Log - November 10, 2026 \(U.S. EST\)) Tj ET
+BT /F2 8.95 Tf 1 0 0 1 36.00 739.60 Tm (Validation and Checks Performed) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 728.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 728.35 Tm (Ran ./gradlew :app:assembleDebug throughout the landscape passes. The final Gradle 8.7 debug build completed successfully with all) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 718.10 Tm (expected Android tasks.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 707.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 707.35 Tm (Installed app/build/outputs/apk/debug/app-debug.apk on physical devices 5203d5fe5b41c393, R3CN6035T0D, and R5CRC33MGNZ, then) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 697.10 Tm (force-stopped and relaunched com.prahlin.cinerific for current-build checks.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 686.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 686.35 Tm (Forced landscape where required, reopened Create Account, and captured comparison screenshots from the A3, S20, and S21 test) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 676.10 Tm (paths.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 665.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 665.35 Tm (Rebooted the app on all three phones after the initial screenshots still appeared clipped, eliminating stale activity state as an) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 655.10 Tm (explanation before increasing the offset.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 644.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 644.35 Tm (Compared the five- and ten-pixel builds before adopting forty pixels on tall phones, then performed a separate compact-screen) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 634.10 Tm (correction instead of weakening the verified tall-phone result.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 623.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 623.35 Tm (Verified on the A3 that the profile bubble remained fully rounded while the Username field regained visible clearance above the chevron) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 613.10 Tm (bar under the compact 25-pixel branch.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 602.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 602.35 Tm (Verified the taller S20 layout retained the established 40-pixel position with complete profile-bubble curvature and protected lower) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 592.10 Tm (navigation; the S21 build and branch were preserved while its live orientation state was restored after testing.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 581.35 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 581.35 Tm (Ran git diff --check during implementation and completed both source passes without whitespace errors.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 570.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 570.60 Tm (Reviewed the final Git history: e322942 contains 146 changed Kotlin lines plus the earlier snapshot refresh; db1e9b8 contains 122) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 560.35 Tm (insertions and 45 deletions in CinerificIntroView.kt.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 549.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 549.60 Tm (Checked PDF metadata and font usage against the November 5 artifact and rendered all four generated pages for visual inspection) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 539.35 Tm (before finalizing this report.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 528.60 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 528.60 Tm (Confirmed main is currently one commit ahead of origin/main at HEAD db1e9b8. The documentation pass refreshed) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 518.35 Tm (cinerific_PROJECT_SNAPSHOT.txt after that commit, leaving the generated snapshot modified for later review.) Tj ET
+BT /F2 8.95 Tf 1 0 0 1 36.00 503.20 Tm (Files Touched During November 10) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 491.95 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 491.95 Tm (app/src/main/java/com/prahlin/cinerific/ui/CinerificIntroView.kt - added phone-landscape Welcome scale and distribution, transition) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 481.70 Tm (stabilization, independent phone/tablet Create Account scale, landscape Birthday geometry, dropdown styling and option behavior,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 471.45 Tm (keyboard flags, and short-screen first-appearance offsets.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 460.70 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 460.70 Tm (cinerific_PROJECT_SNAPSHOT.txt - refreshed in commit e322942 and refreshed again during this documentation pass so the) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 450.45 Tm (generated context includes the completed db1e9b8 implementation.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 439.70 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 439.70 Tm (app/build/outputs/apk/debug/app-debug.apk - regenerated for deployment validation; retained as normal Gradle output rather than) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 429.45 Tm (source-controlled application state.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 418.70 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 418.70 Tm (cinerific_worklog_november 10.pdf - generated at the repository root as today's four-page worklog artifact.) Tj ET
+BT /F2 8.95 Tf 1 0 0 1 36.00 403.55 Tm (Commits and Repository State) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 392.30 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 392.30 Tm (e322942 - Improved the phone landscape welcome layout: scaled and redistributed Welcome assets, updated touch targets, protected) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 382.05 Tm (other layouts and transitions, and refreshed the project snapshot.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 371.30 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 371.30 Tm (db1e9b8 - Refined landscape onboarding layouts and input behavior: added responsive Create Account scaling, compact-screen) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 361.05 Tm (protection, Birthday/dropdown reconstruction, keyboard correction, and stable Welcome return links.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 350.30 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 350.30 Tm (No application source changes were created by this documentation pass; only the generated snapshot refresh and requested PDF) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 340.05 Tm (worklog were produced after the committed source state.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 329.30 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 329.30 Tm (The active source commits remain authored on November 10 in UTC-05:00, while the earlier November 5 report and its application) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 319.05 Tm (commits remain the documented baseline rather than being repeated as new work.) Tj ET
+BT /F2 8.95 Tf 1 0 0 1 36.00 303.90 Tm (Follow-Up Context) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 292.65 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 292.65 Tm (Continue validating the 1.60 phone-landscape Create Account scale on additional short or unusually wide phones; keep compact) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 282.40 Tm (positioning behind the stage-scale threshold instead of weakening the accepted S20/S21 geometry.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 271.65 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 271.65 Tm (Preserve the separation between Welcome scaling, authentication-transition scaling, and Create Account scaling so future layout) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 261.40 Tm (changes do not leak across screens.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 250.65 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 250.65 Tm (Keep the five-row upward-opening date popup and enlarged scrollbar unless later accessibility testing identifies a stronger interaction) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 240.40 Tm (pattern.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 229.65 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 229.65 Tm (Retain the phone IME no-extract and no-fullscreen flags when backend-ready field validation is added; removing them would) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 219.40 Tm (reintroduce the blank landscape editor overlay.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 208.65 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 208.65 Tm (Use the same A3, S20, S21, Galaxy Tab A, Small AVD, and Standard AVD coverage when future authentication geometry changes cross) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 198.40 Tm (short-phone, tall-phone, and tablet boundaries.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 187.65 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 187.65 Tm (Commit the refreshed cinerific_PROJECT_SNAPSHOT.txt and this worklog when ready, then push db1e9b8 and the documentation) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 177.40 Tm (artifacts so origin/main matches the tested local state.) Tj ET
+BT /F2 8.95 Tf 1 0 0 1 36.00 162.25 Tm (Output Artifact) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 151.00 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 151.00 Tm (Created /Users/prahlin/gh/cinerific/cinerific_worklog_november 10.pdf using the established lowercase filename, month/day spacing,) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 140.75 Tm (and no part suffix.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 130.00 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 130.00 Tm (Kept the established four-page U.S.-Letter structure, Helvetica typography, compact technical density, repeated title, right-aligned) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 119.75 Tm (footer, PDF 1.4 compatibility, and extractable text.) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 36.00 109.00 Tm (-) Tj ET
+BT /F1 8.65 Tf 1 0 0 1 46.00 109.00 Tm (Scoped the report to the November 10 USB/ADB/AVD runtime work and the two landscape onboarding commits through db1e9b8.) Tj ET
+BT /F1 7.80 Tf 1 0 0 1 370.77 18.00 Tm (Cinerific Work Log - November 10, 2026 \(U.S. EST\) Page 4) Tj ET
+endstream
+endobj
+13 0 obj
+<< /Title (Cinerific Android App Work Log - November 10, 2026 \(U.S. EST\)) /Author (OpenAI Codex) /Creator (Codex standard-library PDF generator) /Producer (Codex standard-library PDF generator) /CreationDate (D:20261110232251-05'00') >>
+endobj
+xref
+0 14
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000140 00000 n 
+0000000237 00000 n 
+0000000339 00000 n 
+0000000475 00000 n 
+0000011213 00000 n 
+0000011349 00000 n 
+0000020663 00000 n 
+0000020800 00000 n 
+0000030087 00000 n 
+0000030225 00000 n 
+0000039799 00000 n 
+trailer
+<< /Size 14 /Root 1 0 R /Info 13 0 R >>
+startxref
+40054
+%%EOF
