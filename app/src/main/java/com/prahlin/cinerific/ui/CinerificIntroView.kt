@@ -119,7 +119,11 @@ private const val MOCK_CREATE_LANDSCAPE_BOTTOM_SECTION_GAP = 36f
 private const val MOCK_CREATE_LANDSCAPE_HEADING_TEXT = "Let's get you\nstarted."
 private const val MOCK_CREATE_LANDSCAPE_HEADING_TEXT_SIZE = 55.2f
 private const val MOCK_CREATE_LANDSCAPE_HEADING_LINE_HEIGHT = 80f
-private const val MOCK_CREATE_LANDSCAPE_FIRST_IMPRESSION_SCALE = 1.1f
+private const val MOCK_CREATE_TABLET_LANDSCAPE_FIRST_IMPRESSION_SCALE = 1.15f
+private const val MOCK_CREATE_PHONE_LANDSCAPE_FIRST_IMPRESSION_SCALE = 1.6f
+private const val MOCK_CREATE_PHONE_LANDSCAPE_FIRST_APPEARANCE_SHIFT_DOWN_PX = 40f
+private const val MOCK_CREATE_SHORT_PHONE_LANDSCAPE_FIRST_APPEARANCE_SHIFT_DOWN_PX = 25f
+private const val MOCK_CREATE_SHORT_PHONE_LANDSCAPE_MAX_STAGE_SCALE = 1f
 private const val MOCK_CREATE_LANDSCAPE_AVATAR_SHIFT_UP = 34f
 private const val MOCK_CREATE_LANDSCAPE_HERO_CENTER_SHIFT_UP = 18f
 private const val MOCK_CREATE_LANDSCAPE_USERNAME_DISPLAY_GAP = 34f
@@ -152,7 +156,7 @@ private const val MOCK_FORM_CONFIRM_PASSWORD_TEXT = "Confirm Password"
 private const val MOCK_FORM_EMAIL_TEXT = "Email Address"
 private const val MOCK_FORM_CONFIRM_EMAIL_TEXT = "Confirm Email"
 private const val MOCK_FORM_SUBSCRIPTION_TIER_TEXT = "Subscription Tier"
-private const val MOCK_FORM_MONTH_TEXT = "Mon"
+private const val MOCK_FORM_MONTH_TEXT = "Month"
 private const val MOCK_FORM_DAY_TEXT = "Day"
 private const val MOCK_FORM_YEAR_TEXT = "Year"
 private const val MOCK_FORM_BIRTHDAY_TEXT = "Birthday"
@@ -182,9 +186,8 @@ private const val MOCK_DATE_YEAR_WIDTH = MOCK_FORM_WIDTH - MOCK_DATE_MONTH_WIDTH
 private const val MOCK_DROPDOWN_OPTION_HEIGHT = 126f
 private const val MOCK_DROPDOWN_CHEVRON_SIZE = 12f
 private const val MOCK_DATE_DROPDOWN_VISIBLE_OPTION_COUNT = 5
-private const val MOCK_DATE_DROPDOWN_VISIBLE_OPTION_COUNT_FLOAT = 5f
-private const val MOCK_DATE_DROPDOWN_OPTION_TEXT_SIZE = 12f
-private const val MOCK_DATE_DROPDOWN_SCROLLBAR_WIDTH = 3.5f
+private const val MOCK_DATE_DROPDOWN_COMFORTABLE_ROW_COUNT_FLOAT = 3f
+private const val MOCK_DATE_DROPDOWN_SCROLLBAR_WIDTH = 7f
 private const val MOCK_DATE_DROPDOWN_SCROLLBAR_INSET_X = 4f
 private const val MOCK_DATE_DROPDOWN_SCROLLBAR_INSET_Y = 4f
 private const val MOCK_DATE_DROPDOWN_TEXT_SIZE = 22f
@@ -750,12 +753,16 @@ internal class CinerificIntroView(context: Context) : View(context) {
             stageLeft = stage.left,
             stageTop = if (isPortraitIntroLayout()) stage.top else accountPromptStageTop(stage.scale),
             stageScale = stage.scale,
-            yOffset = if (mockSignInStartMillis == null) {
-                lerpFloat(56f, 0f, avatarAlpha)
-            } else {
-                0f
+            yOffset = when {
+                mockSignInStartMillis == null -> lerpFloat(56f, 0f, avatarAlpha)
+                isPhoneLandscapeWelcomeLayout() -> MOCK_SIGN_IN_STACK_EXIT_Y * mockMotion
+                else -> 0f
             },
-            alpha = avatarAlpha
+            alpha = if (isPhoneLandscapeWelcomeLayout()) {
+                avatarAlpha * (1f - mockMotion)
+            } else {
+                avatarAlpha
+            }
         )
         drawMockCreateAvatarTransitionOverlay(
             canvas,
@@ -1286,11 +1293,14 @@ internal class CinerificIntroView(context: Context) : View(context) {
             MockSignInField.Year -> InputType.TYPE_CLASS_NUMBER
             else -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
         }
-        outAttrs.imeOptions = if (field == activeMockFields().lastOrNull()) {
+        val action = if (field == activeMockFields().lastOrNull()) {
             EditorInfo.IME_ACTION_DONE
         } else {
             EditorInfo.IME_ACTION_NEXT
         }
+        outAttrs.imeOptions = action or
+            EditorInfo.IME_FLAG_NO_EXTRACT_UI or
+            EditorInfo.IME_FLAG_NO_FULLSCREEN
         val textLength = mockSignInFieldText(field).length
         outAttrs.initialSelStart = textLength
         outAttrs.initialSelEnd = textLength
@@ -1924,7 +1934,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         alpha: Float
     ) {
         formTitlePaint.textSize = MOCK_CREATE_LANDSCAPE_HEADING_TEXT_SIZE *
-            MOCK_CREATE_LANDSCAPE_FIRST_IMPRESSION_SCALE * stageScale
+            mockCreateLandscapeFirstImpressionScale() * stageScale
         formTitlePaint.textAlign = Paint.Align.CENTER
         formTitlePaint.color = Color.WHITE
         formTitlePaint.alpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
@@ -1936,7 +1946,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
                 centerX,
                 stageTop +
                     (baselineY + index * MOCK_CREATE_LANDSCAPE_HEADING_LINE_HEIGHT *
-                        MOCK_CREATE_LANDSCAPE_FIRST_IMPRESSION_SCALE) * stageScale,
+                        mockCreateLandscapeFirstImpressionScale()) * stageScale,
                 formTitlePaint
             )
         }
@@ -3089,7 +3099,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         val landscapeScale = if (isPortraitIntroLayout()) {
             1f
         } else {
-            MOCK_CREATE_LANDSCAPE_FIRST_IMPRESSION_SCALE
+            mockCreateLandscapeFirstImpressionScale()
         }
         val maxTextWidth =
             (MOCK_FORM_WIDTH - MOCK_CREATE_USERNAME_MAX_WIDTH_INSET * 2f) *
@@ -4771,7 +4781,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun mockDateDropdownOptionHeight(): Float {
         return (MOCK_FORM_FIELD_HEIGHT + mockFormFieldGap()) * 2f /
-            MOCK_DATE_DROPDOWN_VISIBLE_OPTION_COUNT_FLOAT
+            MOCK_DATE_DROPDOWN_COMFORTABLE_ROW_COUNT_FLOAT
     }
 
     private fun mockCreateFormWidth(): Float {
@@ -4839,7 +4849,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             1f
         } else {
             MOCK_CREATE_LANDSCAPE_USERNAME_TEXT_SCALE *
-                MOCK_CREATE_LANDSCAPE_FIRST_IMPRESSION_SCALE
+                mockCreateLandscapeFirstImpressionScale()
         }
     }
 
@@ -4847,8 +4857,30 @@ internal class CinerificIntroView(context: Context) : View(context) {
         return if (isPortraitIntroLayout()) {
             1f
         } else {
-            MOCK_CREATE_LANDSCAPE_FIRST_IMPRESSION_SCALE
+            mockCreateLandscapeFirstImpressionScale()
         }
+    }
+
+    private fun mockCreateLandscapeFirstImpressionScale(): Float {
+        return if (isPhoneLandscapeLayout()) {
+            MOCK_CREATE_PHONE_LANDSCAPE_FIRST_IMPRESSION_SCALE
+        } else {
+            MOCK_CREATE_TABLET_LANDSCAPE_FIRST_IMPRESSION_SCALE
+        }
+    }
+
+    private fun mockCreatePhoneLandscapeFirstAppearanceShiftY(): Float {
+        if (!isPhoneLandscapeLayout()) return 0f
+        val stageScale = min(
+            width / FIGMA_FRAME_WIDTH,
+            height / FIGMA_FRAME_HEIGHT
+        ).coerceAtLeast(0.0001f)
+        val shiftDownPx = if (stageScale < MOCK_CREATE_SHORT_PHONE_LANDSCAPE_MAX_STAGE_SCALE) {
+            MOCK_CREATE_SHORT_PHONE_LANDSCAPE_FIRST_APPEARANCE_SHIFT_DOWN_PX
+        } else {
+            MOCK_CREATE_PHONE_LANDSCAPE_FIRST_APPEARANCE_SHIFT_DOWN_PX
+        }
+        return shiftDownPx / stageScale
     }
 
     private fun mockCreatePortraitPasswordOffsetY(): Float {
@@ -5109,12 +5141,14 @@ internal class CinerificIntroView(context: Context) : View(context) {
                     MOCK_CREATE_AVATAR_STACK_SCALE
             mockPrimaryFormY() + yOffset + focusShiftY - avatarTopOffset -
                 MOCK_CREATE_LANDSCAPE_AVATAR_SHIFT_UP +
-                MOCK_CREATE_LANDSCAPE_HERO_TOP_BREATHING_ROOM
+                MOCK_CREATE_LANDSCAPE_HERO_TOP_BREATHING_ROOM +
+                mockCreatePhoneLandscapeFirstAppearanceShiftY()
         }
     }
 
     private fun mockCreateLandscapeFormTopY(yOffset: Float, focusShiftY: Float): Float {
-        val avatarSectionY = mockCreateAvatarSectionY(yOffset, focusShiftY)
+        val avatarSectionY = mockCreateAvatarSectionY(yOffset, focusShiftY) -
+            mockCreatePhoneLandscapeFirstAppearanceShiftY()
         val heroBasedTop = mockCreateUsernameBaselineY(avatarSectionY) +
             MOCK_CREATE_LANDSCAPE_ROW_GAP
         val stage = currentStageMetrics() ?: return heroBasedTop
@@ -5136,7 +5170,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         )
         val avatarCenterY = avatarBounds.y + avatarBounds.h / 2f
         formTitlePaint.textSize = MOCK_CREATE_LANDSCAPE_HEADING_TEXT_SIZE *
-            MOCK_CREATE_LANDSCAPE_FIRST_IMPRESSION_SCALE
+            mockCreateLandscapeFirstImpressionScale()
         val textPath = Path()
         val textBounds = RectF()
         var blockTop = Float.MAX_VALUE
@@ -5146,7 +5180,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             formTitlePaint.getTextPath(line, 0, line.length, 0f, 0f, textPath)
             textPath.computeBounds(textBounds, true)
             val lineOffsetY = index * MOCK_CREATE_LANDSCAPE_HEADING_LINE_HEIGHT *
-                MOCK_CREATE_LANDSCAPE_FIRST_IMPRESSION_SCALE
+                mockCreateLandscapeFirstImpressionScale()
             blockTop = minOf(blockTop, textBounds.top + lineOffsetY)
             blockBottom = maxOf(blockBottom, textBounds.bottom + lineOffsetY)
         }
@@ -5184,7 +5218,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             0f
         } else {
             MOCK_FORM_WIDTH *
-                (MOCK_CREATE_LANDSCAPE_FIRST_IMPRESSION_SCALE - 1f) / 2f
+                (mockCreateLandscapeFirstImpressionScale() - 1f) / 2f
         }
     }
 
@@ -5363,7 +5397,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             !isPortraitIntroLayout() &&
             isScaledCreateField
         ) {
-            MOCK_CREATE_LANDSCAPE_FIRST_IMPRESSION_SCALE
+            mockCreateLandscapeFirstImpressionScale()
         } else {
             1f
         }
@@ -5383,7 +5417,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
             0f
         } else {
             MOCK_FORM_WIDTH *
-                (MOCK_CREATE_LANDSCAPE_FIRST_IMPRESSION_SCALE - 1f) / 2f
+                (mockCreateLandscapeFirstImpressionScale() - 1f) / 2f
         }
         return when (field) {
             MockSignInField.Username -> if (isPortraitIntroLayout()) {
@@ -5395,9 +5429,9 @@ internal class CinerificIntroView(context: Context) : View(context) {
             MockSignInField.ConfirmPassword -> firstColumnX - enlargedFieldOutwardShift
             MockSignInField.Email,
             MockSignInField.ConfirmEmail -> middleColumnX + enlargedFieldOutwardShift
-            MockSignInField.Month -> middleColumnX
-            MockSignInField.Day -> middleColumnX + MOCK_DATE_MONTH_WIDTH + MOCK_DATE_FIELD_GAP
-            MockSignInField.Year -> middleColumnX + MOCK_DATE_MONTH_WIDTH + MOCK_DATE_DAY_WIDTH + MOCK_DATE_FIELD_GAP * 2f
+            MockSignInField.Month -> mockDropdownX(MockDropdown.Month)
+            MockSignInField.Day -> mockDropdownX(MockDropdown.Day)
+            MockSignInField.Year -> mockDropdownX(MockDropdown.Year)
         }
     }
 
@@ -5478,9 +5512,9 @@ internal class CinerificIntroView(context: Context) : View(context) {
         if (activeMockFlow == MockAccountFlow.ForgotPassword) return mockForgotPasswordFormWidth()
 
         return when (field) {
-            MockSignInField.Month -> MOCK_DATE_MONTH_WIDTH
-            MockSignInField.Day -> MOCK_DATE_DAY_WIDTH
-            MockSignInField.Year -> MOCK_DATE_YEAR_WIDTH
+            MockSignInField.Month -> mockDropdownWidth(MockDropdown.Month)
+            MockSignInField.Day -> mockDropdownWidth(MockDropdown.Day)
+            MockSignInField.Year -> mockDropdownWidth(MockDropdown.Year)
             else -> MOCK_FORM_WIDTH
         }
     }
@@ -5553,12 +5587,18 @@ internal class CinerificIntroView(context: Context) : View(context) {
             } else {
                 firstColumnX - mockCreateBirthdayOutwardShift() * 2f
             }
-            MockDropdown.Month -> middleColumnX
-            MockDropdown.Day -> middleColumnX +
-                mockDropdownWidth(MockDropdown.Month) + mockCreateBirthdayFieldGap()
-            MockDropdown.Year -> middleColumnX +
-                mockDropdownWidth(MockDropdown.Month) + mockDropdownWidth(MockDropdown.Day) +
-                mockCreateBirthdayFieldGap() * 2f
+            MockDropdown.Month -> if (isPortraitIntroLayout()) {
+                middleColumnX
+            } else {
+                firstColumnX + MOCK_FORM_WIDTH - mockDropdownWidth(MockDropdown.Month)
+            }
+            MockDropdown.Day -> middleColumnX
+            MockDropdown.Year -> middleColumnX + mockDropdownWidth(MockDropdown.Day) +
+                if (isPortraitIntroLayout()) {
+                    mockCreateBirthdayFieldGap()
+                } else {
+                    MOCK_CREATE_FORM_COLUMN_GAP
+                }
         }
     }
 
@@ -5611,6 +5651,13 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun mockDropdownWidth(dropdown: MockDropdown): Float {
+        if (
+            !isPortraitIntroLayout() &&
+            dropdown in listOf(MockDropdown.Month, MockDropdown.Day, MockDropdown.Year)
+        ) {
+            return mockCreateLandscapeDateFieldWidth()
+        }
+
         val baseWidth = when (dropdown) {
             MockDropdown.SubscriptionTier -> MOCK_FORM_WIDTH
             MockDropdown.Month -> MOCK_DATE_MONTH_WIDTH
@@ -5644,7 +5691,7 @@ internal class CinerificIntroView(context: Context) : View(context) {
         return if (isPortraitIntroLayout()) {
             1f
         } else {
-            MOCK_CREATE_LANDSCAPE_FIRST_IMPRESSION_SCALE
+            mockCreateLandscapeFirstImpressionScale()
         }
     }
 
@@ -5657,21 +5704,37 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun mockCreateBirthdayFieldGap(): Float {
-        return MOCK_DATE_FIELD_GAP * mockCreateBirthdayVisualScale()
+        return if (isPhoneLandscapeLayout()) {
+            (MOCK_CREATE_FORM_COLUMN_GAP + MOCK_DATE_FIELD_GAP) *
+                mockCreateBirthdayVisualScale()
+        } else {
+            MOCK_DATE_FIELD_GAP * mockCreateBirthdayVisualScale()
+        }
+    }
+
+    private fun mockCreateLandscapeDateFieldWidth(): Float {
+        val renderedColumnWidth = MOCK_FORM_WIDTH *
+            mockCreateLandscapeFirstImpressionScale()
+        return (renderedColumnWidth - MOCK_CREATE_FORM_COLUMN_GAP) / 2f
     }
 
     private fun mockCreateBirthdayCenterX(): Float {
         return if (isPortraitIntroLayout()) {
             mockCreatePortraitColumnX() + MOCK_FORM_WIDTH / 2f
         } else {
-            mockCreateFormX() + MOCK_FORM_WIDTH / 2f - mockCreateBirthdayOutwardShift()
+            val firstColumnX = mockCreateFormX()
+            val monthLeft = firstColumnX + MOCK_FORM_WIDTH -
+                mockDropdownWidth(MockDropdown.Month)
+            val labelRight = monthLeft - mockCreateBirthdayFieldGap()
+            (firstColumnX + labelRight) / 2f
         }
     }
 
     private fun mockDropdownOptionsY(dropdown: MockDropdown, yOffset: Float, focusShiftY: Float): Float {
         val controlY = mockDropdownY(dropdown, yOffset, focusShiftY)
         return if (mockDropdownUsesDateViewport(dropdown)) {
-            mockActiveFieldY(MockSignInField.Email, yOffset, focusShiftY)
+            controlY - mockDropdownVisibleOptionCount(dropdown) *
+                mockDropdownOptionHeight(dropdown)
         } else if (dropdown == MockDropdown.SubscriptionTier && !isPortraitIntroLayout()) {
             controlY - mockDropdownVisibleOptionCount(dropdown) *
                 mockDropdownOptionHeight(dropdown)
@@ -5696,15 +5759,27 @@ internal class CinerificIntroView(context: Context) : View(context) {
 
     private fun mockDropdownTextInsetX(dropdown: MockDropdown): Float {
         return if (mockDropdownOpensUp(dropdown)) {
-            MOCK_DATE_DROPDOWN_TEXT_INSET_X * mockCreateBirthdayVisualScale()
+            mockDateDropdownTextInsetX()
         } else {
             MOCK_FORM_LABEL_INSET_X
         }
     }
 
+    private fun mockDateDropdownTextInsetX(): Float {
+        return if (isPortraitIntroLayout()) {
+            MOCK_DATE_DROPDOWN_TEXT_INSET_X
+        } else {
+            MOCK_FORM_LABEL_INSET_X * mockCreateLandscapeFirstImpressionScale()
+        }
+    }
+
     private fun mockDropdownChevronInsetX(dropdown: MockDropdown): Float {
         return if (mockDropdownOpensUp(dropdown)) {
-            MOCK_DATE_DROPDOWN_CHEVRON_INSET_X * mockCreateBirthdayVisualScale()
+            if (isPortraitIntroLayout()) {
+                MOCK_DATE_DROPDOWN_CHEVRON_INSET_X
+            } else {
+                MOCK_FORM_LABEL_INSET_X * mockCreateLandscapeFirstImpressionScale()
+            }
         } else {
             20f
         }
@@ -5723,11 +5798,11 @@ internal class CinerificIntroView(context: Context) : View(context) {
     }
 
     private fun mockDropdownOptionTextSize(dropdown: MockDropdown): Float {
-        return if (mockDropdownOpensUp(dropdown)) MOCK_DATE_DROPDOWN_OPTION_TEXT_SIZE else 18f
+        return if (mockDropdownOpensUp(dropdown)) mockDropdownTextSize(dropdown) else 18f
     }
 
     private fun mockDropdownOptionTextInsetX(dropdown: MockDropdown): Float {
-        return if (mockDropdownUsesDateViewport(dropdown)) MOCK_DATE_DROPDOWN_TEXT_INSET_X else MOCK_FORM_LABEL_INSET_X
+        return if (mockDropdownUsesDateViewport(dropdown)) mockDateDropdownTextInsetX() else MOCK_FORM_LABEL_INSET_X
     }
 
     private fun mockDropdownUsesDateViewport(dropdown: MockDropdown): Boolean {
@@ -6727,10 +6802,12 @@ internal class CinerificIntroView(context: Context) : View(context) {
         return if (width > height) SIGN_IN_LANDSCAPE_ACCOUNT_PROMPT_EXTRA_SHIFT_Y else 0f
     }
 
-    private fun isPhoneLandscapeWelcomeLayout(): Boolean {
+    private fun isPhoneLandscapeLayout(): Boolean {
         return width > height &&
             !isCinerificTablet(resources.configuration.smallestScreenWidthDp)
     }
+
+    private fun isPhoneLandscapeWelcomeLayout(): Boolean = isPhoneLandscapeLayout()
 
     private fun phoneLandscapeWelcomeAssetScale(): Float {
         return if (isPhoneLandscapeWelcomeLayout()) {
